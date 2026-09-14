@@ -114,6 +114,8 @@
 
   window.addEventListener("hashchange", () => applyHash({ scroll: true }));
   applyHash({ scroll: true });
+  panels.forEach((p) => p.classList.remove("is-entering")); // ไม่ต้อง animate ตอนโหลดหน้า
+  requestAnimationFrame(() => requestAnimationFrame(() => tablist.classList.add("is-ready")));
   if (document.fonts && document.fonts.ready) {
     document.fonts.ready.then(() => {
       const active = tabs.find((t) => t.getAttribute("aria-selected") === "true");
@@ -225,11 +227,27 @@
     result.focus({ preventScroll: true });
   }
 
-  // แยกไว้เพื่อให้ส่วน motion เปลี่ยนเป็นนับขึ้นได้
+  // นับคะแนนขึ้นพร้อมวงแหวน = ให้เวลาสายตาจับ "ผลลัพธ์" · ลดการเคลื่อนไหว → แสดงทันที
   function renderScore(score, pct) {
-    scoreNum.textContent = score;
-    scorePct.textContent = pct;
-    result.style.setProperty("--pct", pct);
+    const paint = (s, p) => {
+      scoreNum.textContent = s;
+      scorePct.textContent = p;
+      result.style.setProperty("--pct", p);
+    };
+    if (reducedMotion.matches) {
+      paint(score, pct);
+      return;
+    }
+    const duration = 900;
+    const start = performance.now();
+    const step = (now) => {
+      const t = Math.min(1, (now - start) / duration);
+      const eased = 1 - Math.pow(1 - t, 3);
+      paint(Math.round(score * eased), Math.round(pct * eased));
+      if (t < 1) requestAnimationFrame(step);
+    };
+    paint(0, 0);
+    requestAnimationFrame(step);
   }
 
   form.addEventListener("submit", (e) => {

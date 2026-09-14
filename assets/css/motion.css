@@ -1,0 +1,115 @@
+/* ==========================================================================
+   Motion: keyframes ที่ใช้ร่วมกัน + การเคารพ prefers-reduced-motion
+   หลัก: animation ต้องบอกอะไรบางอย่าง (เปลี่ยนสถานะ / ทิศทาง / ผลลัพธ์)
+   โหลดเป็นไฟล์สุดท้ายเสมอ
+   ========================================================================== */
+
+/* แท็บใหม่เลื่อนขึ้นมาเล็กน้อย = "เนื้อหาชุดใหม่แทนที่ชุดเดิม" */
+@keyframes panel-in {
+  from { opacity: 0; transform: translateY(8px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* จุด radio เด้งเข้า = "เลือกแล้ว" */
+@keyframes pop {
+  0%   { transform: scale(0); }
+  60%  { transform: scale(1.25); }
+  100% { transform: scale(1); }
+}
+
+/* ส่ายเบาๆ = "ตอบผิด" */
+@keyframes shake {
+  0%, 100% { transform: translateX(0); }
+  20% { transform: translateX(-5px); }
+  40% { transform: translateX(4px); }
+  60% { transform: translateX(-3px); }
+  80% { transform: translateX(2px); }
+}
+
+/* วงแหวนกระจายออก = "ตอบถูก" */
+@keyframes ring-out {
+  from { box-shadow: 0 0 0 0 rgba(127, 207, 166, 0.45); }
+  to   { box-shadow: 0 0 0 10px rgba(127, 207, 166, 0); }
+}
+
+/* ขีดเครื่องหมายถูก/ผิด */
+@keyframes draw {
+  to { stroke-dashoffset: 0; }
+}
+
+/* ผลคะแนนปรากฏ */
+@keyframes rise-in {
+  from { opacity: 0; transform: translateY(12px) scale(0.98); }
+  to   { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+/* ข้อที่ยังไม่ได้ตอบ ถูกไฮไลต์ให้เห็น */
+@keyframes attention {
+  0%, 100% { border-color: var(--border-subtle); }
+  50% { border-color: var(--warn); }
+}
+
+/* ---------------------------------------------------------------- Tabs */
+/* pill เลื่อนตามแท็บ บอกทิศทางว่ามาจากไหนไปไหน (.is-ready กันไม่ให้ animate ตอนโหลดหน้า) */
+.tabs.is-ready .tab-indicator {
+  transition: transform var(--dur-slow) var(--ease-out), width var(--dur-slow) var(--ease-out);
+}
+.tab { transition: color var(--dur) var(--ease-out); }
+.panel.is-entering { animation: panel-in var(--dur-slow) var(--ease-out) both; }
+
+/* ----------------------------------------------------------- Accordion */
+.acc-item { transition: border-color var(--dur) var(--ease-out); }
+.acc-trigger { transition: background-color var(--dur) var(--ease-out); }
+.acc-index { transition: background-color var(--dur) var(--ease-out), border-color var(--dur) var(--ease-out), color var(--dur) var(--ease-out); }
+.acc-chevron { transition: transform var(--dur-slow) var(--ease-out), stroke var(--dur) var(--ease-out); }
+
+/* เปิด: ขยายความสูง + เนื้อหาจางเข้า · ปิด: ยุบก่อน แล้วค่อยซ่อน (visibility หน่วงไว้) */
+.acc-panel {
+  transition: grid-template-rows var(--dur-slow) var(--ease-in-out), visibility 0s linear 0s;
+}
+.js .acc-item:not(.is-open) .acc-panel {
+  transition: grid-template-rows var(--dur-slow) var(--ease-in-out), visibility 0s linear var(--dur-slow);
+}
+.acc-body { transition: opacity var(--dur-slow) var(--ease-out); }
+.js .acc-item:not(.is-open) .acc-body { opacity: 0; }
+
+/* ---------------------------------------------------------------- Quiz */
+.opt { transition: border-color var(--dur) var(--ease-out), background-color var(--dur) var(--ease-out), opacity var(--dur-slow) var(--ease-out); }
+.opt-key { transition: border-color var(--dur) var(--ease-out), background-color var(--dur) var(--ease-out), color var(--dur) var(--ease-out); }
+.opt input:checked + .opt-key { animation: pop 300ms var(--ease-out); }
+.opt:active:not(:has(input:disabled)) { transform: scale(0.995); }
+
+.progress-fill { transition: transform var(--dur-slow) var(--ease-out); }
+.q { transition: border-color var(--dur-slow) var(--ease-out); }
+.q.is-missing { animation: attention 900ms var(--ease-in-out) 2; }
+
+.quiz.is-checked .opt.is-wrong { animation: shake 420ms var(--ease-out); }
+.quiz.is-checked .q.is-right .opt.is-correct .opt-key { animation: ring-out 700ms ease-out; }
+
+.q-feedback {
+  transition: grid-template-rows var(--dur-slow) var(--ease-out), visibility 0s linear var(--dur-slow);
+}
+.q.is-revealed .q-feedback {
+  transition: grid-template-rows var(--dur-slow) var(--ease-out), visibility 0s linear 0s;
+}
+.q-verdict .draw {
+  stroke-dasharray: 1;
+  stroke-dashoffset: 1;
+  animation: draw 380ms var(--ease-out) 150ms forwards;
+}
+.quiz-result.is-entering { animation: rise-in var(--dur-slow) var(--ease-out) both; }
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  .opt:active { transform: none !important; }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 1ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 1ms !important;
+    transition-delay: 0ms !important;
+    scroll-behavior: auto !important;
+  }
+}
