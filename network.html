@@ -1,0 +1,1229 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>ITDS231 Computer Networks · โต๊ะทบทวน</title>
+<meta name="description" content="สรุปเนื้อหา ITDS231 Computer Networks: Chapter 1, Internet Architecture, Network Topography พร้อม cheat sheet และแบบฝึกหัด 20 ข้อ" />
+<meta name="theme-color" content="#17151a" />
+<link rel="icon" href="assets/favicon.svg" type="image/svg+xml" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link
+  href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500..700&family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans+Thai:wght@500;600&family=IBM+Plex+Sans+Thai+Looped:wght@400;500;600&display=swap"
+  rel="stylesheet"
+/>
+<link rel="stylesheet" href="assets/css/tokens.css" />
+<link rel="stylesheet" href="assets/css/base.css" />
+<link rel="stylesheet" href="assets/css/network.css" />
+<script>document.documentElement.classList.add("js");</script>
+</head>
+<body>
+  <a class="skip-link" href="#tabs">ข้ามไปที่เนื้อหา</a>
+
+  <header class="site-header">
+    <div class="wrap">
+      <a class="wordmark" href="index.html" aria-label="โต๊ะทบทวน หน้าแรก">
+        <img class="wordmark-mark" src="assets/favicon.svg" alt="" width="26" height="26" />
+        <span class="wordmark-text">โต๊ะ<span>ทบทวน</span></span>
+      </a>
+      <a class="crumb" href="index.html"><span class="arrow" aria-hidden="true">←</span> รายวิชาทั้งหมด</a>
+    </div>
+  </header>
+
+  <main>
+    <section class="course-hero wrap">
+      <span class="eyebrow">ITDS231 · Faculty of ICT, Mahidol University</span>
+      <h1>Computer Networks</h1>
+      <p class="course-lede">สรุปจากสไลด์ 3 ไฟล์ — Chapter 1 (Kurose &amp; Ross), Internet Architecture และ Network Topography อ่านเนื้อหา ทบทวนสูตรใน cheat sheet แล้วลองทำแบบฝึกหัด 20 ข้อ</p>
+      <ul class="course-meta" aria-label="ข้อมูลรายวิชา">
+        <li class="chip chip--accent">สอบกลางภาค 28 ก.ย. – 2 ต.ค. 2569</li>
+        <li class="chip">3 ไฟล์สไลด์</li>
+        <li class="chip">แบบฝึกหัด 20 ข้อ</li>
+      </ul>
+    </section>
+
+    <div class="tabbar" id="tabs">
+      <div class="wrap">
+        <div class="tabs" role="tablist" aria-label="ส่วนของหน้า">
+          <button class="tab" role="tab" id="tab-content" aria-controls="content" aria-selected="true" type="button">
+            <svg class="tab-icon" viewBox="0 0 20 20" aria-hidden="true"><path d="M4 3.5h8.5L16 7v9.5H4z M12 3.5V7h4 M7 10h6 M7 13h4" /></svg>
+            เนื้อหา
+          </button>
+          <button class="tab" role="tab" id="tab-summary" aria-controls="summary" aria-selected="false" type="button">
+            <svg class="tab-icon" viewBox="0 0 20 20" aria-hidden="true"><path d="M3.5 4h13v12h-13z M3.5 8h13 M8.5 8v8" /></svg>
+            สรุป
+          </button>
+          <button class="tab" role="tab" id="tab-quiz" aria-controls="quiz" aria-selected="false" type="button">
+            <svg class="tab-icon" viewBox="0 0 20 20" aria-hidden="true"><path d="M10 17a7 7 0 1 0 0-14 7 7 0 0 0 0 14z M6.8 10.2l2.2 2.2 4.2-4.6" /></svg>
+            แบบฝึกหัด
+          </button>
+          <span class="tab-indicator" aria-hidden="true"></span>
+        </div>
+      </div>
+    </div>
+
+    <div class="wrap panels">
+
+      <!-- =============================================================
+           แท็บ 1: เนื้อหา
+           ============================================================= -->
+      <section class="panel" id="content" role="tabpanel" aria-labelledby="tab-content" tabindex="-1">
+        <div class="panel-head">
+          <h2>เนื้อหาแยกตามไฟล์สไลด์</h2>
+          <div class="panel-actions">
+            <button class="btn btn--ghost btn--sm" type="button" data-acc-all="open">เปิดทั้งหมด</button>
+            <button class="btn btn--ghost btn--sm" type="button" data-acc-all="close">ปิดทั้งหมด</button>
+          </div>
+        </div>
+
+        <div class="acc">
+
+          <!-- ---------- ไฟล์ 1 ---------- -->
+          <div class="acc-item is-open">
+            <h3 class="acc-heading">
+              <button class="acc-trigger" type="button" aria-expanded="true" aria-controls="acc-ch1" id="acc-ch1-btn">
+                <span class="acc-index">01</span>
+                <span class="acc-title">
+                  <span class="acc-name">Chapter 1: Introduction to Computer Networks</span>
+                  <span class="acc-file">Chapter_1_Intro_rev1.pdf · 117 หน้า · Kurose &amp; Ross 9th ed.</span>
+                </span>
+                <svg class="acc-chevron" viewBox="0 0 20 20" aria-hidden="true"><path d="M5 7.5l5 5 5-5" /></svg>
+              </button>
+            </h3>
+            <div class="acc-panel" id="acc-ch1" role="region" aria-labelledby="acc-ch1-btn">
+              <div class="acc-panel-inner">
+                <div class="acc-body">
+
+                  <nav class="toc" aria-label="หัวข้อใน Chapter 1">
+                    <a href="#ch1-internet">อินเทอร์เน็ตคืออะไร</a>
+                    <a href="#ch1-protocol">โปรโตคอล</a>
+                    <a href="#ch1-edge">Network edge</a>
+                    <a href="#ch1-media">Physical media</a>
+                    <a href="#ch1-core">Network core</a>
+                    <a href="#ch1-structure">Internet structure</a>
+                    <a href="#ch1-perf">Delay · Loss · Throughput</a>
+                    <a href="#ch1-security">Security</a>
+                    <a href="#ch1-layers">Layers &amp; Encapsulation</a>
+                    <a href="#ch1-link">Ethernet &amp; Wireless LAN</a>
+                    <a href="#ch1-history">History</a>
+                  </nav>
+
+                  <section class="topic" id="ch1-internet">
+                    <h4>อินเทอร์เน็ตคืออะไร (What is the Internet?)</h4>
+                    <p><strong>มุมมอง "nuts and bolts"</strong> — ส่วนประกอบของอินเทอร์เน็ต:</p>
+                    <ul>
+                      <li><strong>Hosts = end systems</strong> อุปกรณ์หลายพันล้านเครื่อง รันแอปพลิเคชันเครือข่ายอยู่ที่ "ขอบ" (edge) ของอินเทอร์เน็ต</li>
+                      <li><strong>Packet switches</strong> (routers, switches) ส่งต่อ packets (ข้อมูลเป็นก้อนๆ)</li>
+                      <li><strong>Communication links</strong> — fiber, copper, radio, satellite · อัตราการส่ง (transmission rate) = <em>bandwidth</em></li>
+                      <li><strong>Networks</strong> — กลุ่มของอุปกรณ์ เราเตอร์ และลิงก์ ที่องค์กรหนึ่งดูแล</li>
+                    </ul>
+                    <ul>
+                      <li>อินเทอร์เน็ตคือ <strong>"network of networks"</strong> — ISP หลายรายเชื่อมต่อกัน ไม่มีศูนย์กลางใดควบคุม แต่ขับเคลื่อนด้วยชุดโปรโตคอลมาตรฐาน (TCP/IP)</li>
+                      <li><strong>โปรโตคอลอยู่ทุกที่</strong> ควบคุมการรับ-ส่งข้อความ เช่น HTTP (Web), streaming video, Skype, TCP, IP, WiFi, 4G/5G, Ethernet</li>
+                      <li><strong>มาตรฐานอินเทอร์เน็ต:</strong> RFC (Request for Comments), IETF (Internet Engineering Task Force)</li>
+                    </ul>
+                    <p><strong>มุมมอง "services"</strong> — โครงสร้างพื้นฐานที่ให้บริการแก่แอปพลิเคชัน (Web, streaming video, multimedia teleconferencing, email, games, e-commerce, social media ฯลฯ) และมี programming interface ("hooks") ให้แอปที่รับ-ส่งข้อมูลใช้บริการ transport ของอินเทอร์เน็ต เปรียบได้กับบริการไปรษณีย์ที่มีตัวเลือกบริการหลายแบบ</p>
+                    <div class="callout">
+                      <strong>ส่วนประกอบ 3 ส่วน (สไลด์ภาษาไทย):</strong>
+                      <b>Network Core</b> โครงข่ายของเราเตอร์และสายสัญญาณระดับภูมิภาคที่เชื่อม ISP เข้าด้วยกัน ·
+                      <b>Network Edge</b> อุปกรณ์ปลายทาง เช่น เซิร์ฟเวอร์ คอมพิวเตอร์ สมาร์ทโฟน ·
+                      <b>Communication Links</b> ตัวกลางส่งข้อมูล (fiber optics, copper, radio) ที่รวมข้อมูลเป็น packets
+                    </div>
+                    <p>แนวคิดการออกแบบ: การเชื่อมทุกจุดเข้าหากันโดยตรง (fully interconnected) มีขีดจำกัด · รูปแบบเชิงทฤษฎีมี <em>Centralized</em>, <em>Decentralized</em>, <em>Distributed</em> — อินเทอร์เน็ตจริงทำงานแบบกระจาย (Distributed) · เปรียบเทียบ <em>Dedicated links</em> (สิ้นเปลืองความจุ) กับ <em>Multiplexing</em> (ใช้ประโยชน์สูง แต่มีความเสี่ยงชนกัน)</p>
+                  </section>
+
+                  <section class="topic" id="ch1-protocol">
+                    <h4>โปรโตคอลคืออะไร (What's a protocol?)</h4>
+                    <blockquote class="quote">Protocols define the <strong>format</strong>, <strong>order</strong> of messages sent and received among network entities, and <strong>actions taken</strong> on message transmission, receipt</blockquote>
+                    <ul>
+                      <li>Human protocols: "what's the time?", "I have a question", การแนะนำตัว — มีข้อความเฉพาะที่ส่ง และการกระทำเฉพาะเมื่อได้รับข้อความ</li>
+                      <li>Network protocols: ใช้กับอุปกรณ์แทนมนุษย์ · <em>ทุกกิจกรรมการสื่อสารในอินเทอร์เน็ตถูกควบคุมด้วยโปรโตคอล</em></li>
+                      <li>ตัวอย่าง: Hi → Hi → Got the time? → 2:00 เทียบกับ TCP connection request → TCP connection response → <code>GET http://gaia.cs.umass.edu/kurose_ross</code> → &lt;file&gt;</li>
+                      <li>หากไม่มีมาตรฐาน (Standards) กำหนดลำดับ อุปกรณ์จากผู้ผลิตต่างค่ายจะสื่อสารกันไม่ได้ (Interoperability)</li>
+                    </ul>
+                  </section>
+
+                  <section class="topic" id="ch1-edge">
+                    <h4>Network edge และ Access networks</h4>
+                    <ul>
+                      <li><strong>Network edge:</strong> hosts ได้แก่ clients และ servers (servers มักอยู่ใน data centers)</li>
+                      <li><strong>Access networks, physical media:</strong> ลิงก์สื่อสารแบบมีสายและไร้สาย</li>
+                      <li><strong>Network core:</strong> เราเตอร์ที่เชื่อมต่อกัน, network of networks</li>
+                    </ul>
+                    <p>จะเชื่อม end systems เข้ากับ edge router อย่างไร? — residential access nets, institutional access networks (โรงเรียน บริษัท), mobile access networks (WiFi, 4G/5G)</p>
+                    <div class="table-scroll">
+                      <table>
+                        <thead><tr><th>Access network</th><th>รายละเอียดจากสไลด์</th></tr></thead>
+                        <tbody>
+                          <tr><td>Cable-based (HFC)</td><td>HFC: hybrid fiber coax (เช่น Cable TV) · ใช้ <strong>FDM</strong> ส่ง data และ TV คนละความถี่บนสายที่แชร์กัน · <strong>asymmetric</strong>: downstream 40 Mbps – 1.2 Gbps, upstream 30–100 Mbps · บ้านหลายหลัง<strong>แชร์</strong> access network ไปยัง cable headend (CMTS: cable modem termination system)</td></tr>
+                          <tr><td>DSL</td><td>ใช้สายโทรศัพท์เดิมไปยัง <strong>DSLAM</strong> (DSL access multiplexer) ที่ central office · data → Internet, voice → telephone net · <strong>dedicated</strong> downstream 24–52 Mbps, upstream 3.5–16 Mbps</td></tr>
+                          <tr><td>Home network</td><td>cable/DSL modem + router, firewall, NAT (มักรวมอยู่ในกล่องเดียว) · wired Ethernet (1 Gbps) · WiFi access point (54, 450 Mbps)</td></tr>
+                          <tr><td>Wireless LAN (WLAN)</td><td>ภายใน/รอบอาคาร (~100 ft) · 802.11b/g/n (WiFi): 11, 54, 450 Mbps · เชื่อมผ่าน base station หรือ "access point"</td></tr>
+                          <tr><td>Wide-area cellular</td><td>ให้บริการโดยผู้ให้บริการเครือข่ายมือถือ (ระยะ 10's km) · 10's Mbps · 4G/5G</td></tr>
+                          <tr><td>Enterprise</td><td>บริษัท มหาวิทยาลัย · ผสม switches และ routers · Ethernet: 100 Mbps, 1 Gbps, 10 Gbps · WiFi: 11, 54, 450 Mbps</td></tr>
+                          <tr><td>Data center</td><td>ลิงก์แบนด์วิดท์สูง (10s – 100s Gbps) เชื่อมเซิร์ฟเวอร์หลักร้อยถึงหลักพันเครื่องเข้าด้วยกันและกับอินเทอร์เน็ต</td></tr>
+                        </tbody>
+                      </table>
+                    </div>
+                    <p><strong>Host: ส่ง packets อย่างไร</strong> — รับ application message → แบ่งเป็นก้อนเล็กเรียกว่า <em>packets</em> ยาว <var>L</var> bits → ส่งเข้า access network ด้วยอัตรา <var>R</var> (link transmission rate หรือ link capacity หรือ link bandwidth)</p>
+                    <code class="formula">packet transmission delay = L (bits) / R (bits/sec)</code>
+                  </section>
+
+                  <section class="topic" id="ch1-media">
+                    <h4>Links: Physical media</h4>
+                    <ul>
+                      <li><strong>bit</strong> เดินทางระหว่างคู่ transmitter/receiver · <strong>physical link</strong> คือสิ่งที่อยู่ระหว่าง transmitter กับ receiver</li>
+                      <li><strong>Guided media:</strong> สัญญาณเดินทางในสื่อของแข็ง — copper, fiber, coax</li>
+                      <li><strong>Unguided media:</strong> สัญญาณแพร่กระจายอย่างอิสระ เช่น radio</li>
+                    </ul>
+                    <div class="table-scroll">
+                      <table>
+                        <thead><tr><th>สื่อ</th><th>คุณสมบัติ</th></tr></thead>
+                        <tbody>
+                          <tr><td>Twisted pair (TP)</td><td>สายทองแดงหุ้มฉนวน 2 เส้น · Category 5: 100 Mbps, 1 Gbps Ethernet · Category 6: 10 Gbps Ethernet</td></tr>
+                          <tr><td>Coaxial cable</td><td>ตัวนำทองแดง 2 ชั้นที่มีจุดศูนย์กลางร่วมกัน (concentric) · bidirectional · broadband: หลายช่องความถี่บนสาย 100's Mbps ต่อช่อง (เช่น cable internet, ระบบกล้องวงจรปิด)</td></tr>
+                          <tr><td>Fiber optic cable</td><td>ใยแก้วนำพัลส์แสง แต่ละพัลส์คือ 1 bit · ความเร็วสูง point-to-point (10's–100's Gbps) · error ต่ำ: repeater ห่างกันได้ไกล, ไม่ถูกรบกวนจากคลื่นแม่เหล็กไฟฟ้า</td></tr>
+                          <tr><td>Wireless radio</td><td>สัญญาณอยู่ใน "bands" ของสเปกตรัมแม่เหล็กไฟฟ้า · ไม่มีสาย · broadcast, "half-duplex" · ผลกระทบ: reflection, obstruction by objects, interference/noise</td></tr>
+                        </tbody>
+                      </table>
+                    </div>
+                    <p><strong>Radio link types:</strong> Wireless LAN (WiFi) 10–100's Mbps ระยะ 10's เมตร · wide-area (4G/5G cellular) 10's Mbps (4G) ระยะ ~10 km · Bluetooth: ใช้แทนสาย ระยะสั้น อัตราจำกัด · terrestrial microwave: point-to-point ช่องละ 45 Mbps · satellite: downlink สูงสุด &lt; 100 Mbps (Starlink), end-end delay 270 msec (geostationary)</p>
+                  </section>
+
+                  <section class="topic" id="ch1-core">
+                    <h4>Network core: Packet switching vs Circuit switching</h4>
+                    <p>Network core คือ mesh ของเราเตอร์ที่เชื่อมต่อกัน · <strong>packet-switching:</strong> hosts แบ่ง application-layer messages เป็น packets แล้วเครือข่ายส่งต่อ packets จากเราเตอร์หนึ่งไปยังอีกตัวตามเส้นทางจากต้นทางถึงปลายทาง</p>
+                    <div class="compare">
+                      <div class="compare-col">
+                        <h5>Forwarding <span class="chip">local</span></h5>
+                        <p>หรือ "switching" — การย้าย packet ที่เข้ามาทาง input link ของเราเตอร์ ไปยัง output link ที่เหมาะสม โดยดูจาก destination address ใน header กับ <em>local forwarding table</em></p>
+                      </div>
+                      <div class="compare-col">
+                        <h5>Routing <span class="chip">global</span></h5>
+                        <p>การกำหนดเส้นทาง source–destination ที่ packets ใช้ ด้วย <em>routing algorithms</em></p>
+                      </div>
+                    </div>
+                    <ul>
+                      <li><strong>Store-and-forward:</strong> packet ต้องมาถึงเราเตอร์ครบทั้งก้อนก่อนจึงส่งต่อไปลิงก์ถัดไปได้ · ใช้เวลา L/R วินาทีในการส่ง L-bit packet ที่ R bps · ตัวอย่าง L = 10 Kbits, R = 100 Mbps → one-hop transmission delay = 0.1 msec</li>
+                      <li><strong>Queueing:</strong> เกิดเมื่องานเข้ามาเร็วกว่าที่ให้บริการได้ — ถ้า arrival rate (bps) &gt; transmission rate ของลิงก์ช่วงหนึ่ง packets จะเข้าคิวรอ และถูก drop (lost) ถ้า buffer ของเราเตอร์เต็ม</li>
+                    </ul>
+                    <p><strong>Circuit switching</strong> — จองทรัพยากร end-end ไว้ให้ "call" ระหว่างต้นทางและปลายทาง · dedicated resources ไม่แชร์ → ประสิทธิภาพแบบรับประกัน (circuit-like) · ถ้า call ไม่ใช้ช่วงนั้นก็ว่างทิ้งไว้ · ใช้ในเครือข่ายโทรศัพท์แบบดั้งเดิม</p>
+                    <ul>
+                      <li><strong>FDM</strong> (Frequency Division Multiplexing): แบ่งความถี่เป็นแถบแคบ แต่ละ call ได้แถบของตัวเอง ส่งได้เต็มอัตราของแถบแคบนั้น</li>
+                      <li><strong>TDM</strong> (Time Division Multiplexing): แบ่งเวลาเป็น slots แต่ละ call ได้ slot เป็นรอบ ส่งได้เต็มอัตราของแถบความถี่ (กว้าง) เฉพาะช่วง slot ของตัวเอง</li>
+                    </ul>
+                    <div class="callout">
+                      <strong>ตัวอย่าง:</strong> ลิงก์ 1 Gb/s ผู้ใช้แต่ละคนใช้ 100 Mb/s เมื่อ "active" และ active 10% ของเวลา
+                      → <b>circuit-switching: 10 users</b> ·
+                      <b>packet switching:</b> ที่ 35 users ความน่าจะเป็นที่ &gt; 10 คน active พร้อมกันน้อยกว่า .0004
+                    </div>
+                    <p><strong>Packet switching</strong> เหมาะกับข้อมูลแบบ "bursty" (บางช่วงมีข้อมูล บางช่วงไม่มี) — แชร์ทรัพยากร, ง่ายกว่า ไม่ต้อง call setup · แต่อาจเกิด congestion มากเกินไป: packet delay และ loss จาก buffer overflow → ต้องมีโปรโตคอลสำหรับ reliable data transfer และ congestion control</p>
+                    <p>สไลด์ภาษาไทยเปรียบ: <em>การสลับสาย</em> (โทรศัพท์เดิม) = จองโต๊ะไว้ล่วงหน้า (Reserved) ไม่ส่งข้อมูลก็เสียเปล่า · <em>การสลับแพ็กเก็ต</em> (อินเทอร์เน็ต) = ทางด่วนที่แชร์กัน (Shared Highway) ข้อมูลถูกแบ่งเป็นชิ้นเล็กแทรกตัวไป ใช้ทรัพยากรได้เต็มประสิทธิภาพ แต่อาจ "รถติด" (Queuing Delay) ถ้าข้อมูลมาพร้อมกันมากเกินไป</p>
+                  </section>
+
+                  <section class="topic" id="ch1-structure">
+                    <h4>Internet structure: "network of networks"</h4>
+                    <ol class="steps">
+                      <li>hosts เชื่อมต่ออินเทอร์เน็ตผ่าน <strong>access ISPs</strong> และ access ISPs ต้องเชื่อมถึงกัน เพื่อให้สองโฮสต์ใดๆ ส่ง packets หากันได้ (วิวัฒนาการขับเคลื่อนด้วยเศรษฐศาสตร์และนโยบายแห่งชาติ)</li>
+                      <li>เชื่อม access ISP ทุกคู่เข้าหากันโดยตรง <strong>ไม่ scale</strong>: O(N²) connections</li>
+                      <li>เชื่อมแต่ละ access ISP กับ <strong>global transit ISP</strong> — customer และ provider ISP มีข้อตกลงทางเศรษฐกิจ</li>
+                      <li>ถ้า global ISP ทำกำไรได้ ก็จะมีคู่แข่ง (ISP A, B, C) ซึ่งต้องเชื่อมถึงกันผ่าน <strong>peering link</strong> และ <strong>IXP</strong> (Internet exchange point)</li>
+                      <li>เกิด <strong>regional networks</strong> เชื่อม access nets เข้ากับ ISPs</li>
+                      <li><strong>content provider networks</strong> (Google, Microsoft, Akamai) สร้างเครือข่ายของตัวเอง เพื่อนำบริการและเนื้อหาไปใกล้ผู้ใช้</li>
+                    </ol>
+                    <p>ที่ "ศูนย์กลาง": เครือข่ายใหญ่จำนวนน้อยที่เชื่อมต่อกันดี — <strong>"tier-1" commercial ISPs</strong> (เช่น Level 3, Sprint, AT&amp;T, NTT) ครอบคลุมระดับประเทศและนานาชาติ · <strong>content provider networks</strong> (เช่น Google, Facebook) เครือข่ายส่วนตัวที่เชื่อม data centers เข้ากับอินเทอร์เน็ต มักข้าม (bypass) tier-1 และ regional ISPs</p>
+                    <div class="table-scroll">
+                      <table>
+                        <thead><tr><th>ลำดับชั้น (ISP Hierarchy)</th><th>บทบาท</th></tr></thead>
+                        <tbody>
+                          <tr><td>Tier 1 ISPs</td><td>ผู้ให้บริการระดับโลก (เช่น AT&amp;T, Sprint) มีเครือข่ายใยแก้วนำแสงข้ามทวีป เชื่อมต่อกันเองโดยไม่คิดค่าบริการ (Settlement-free)</td></tr>
+                          <tr><td>Regional ISPs</td><td>ผู้ให้บริการระดับภูมิภาคหรือระดับประเทศ เชื่อมเครือข่ายท้องถิ่นเข้ากับ Tier 1</td></tr>
+                          <tr><td>Access ISPs</td><td>ผู้ให้บริการระดับท้องถิ่น (เครือข่ายบ้าน/องค์กร)</td></tr>
+                        </tbody>
+                      </table>
+                    </div>
+                    <ul>
+                      <li><strong>POP (Point of Presence):</strong> จุดที่ลูกค้าหรือ ISP ย่อยนำเราเตอร์มาเชื่อมกับเครือข่ายของ ISP รายใหญ่</li>
+                      <li><strong>IXP (Internet Exchange Point):</strong> อาคารศูนย์กลางที่ผู้ให้บริการหลายรายมาเชื่อมต่อกัน — Peering ผ่าน IXP ทำให้แลกเปลี่ยนข้อมูลกันโดยตรง ลดความหน่วง (Latency) และหลีกเลี่ยงการจ่ายเงินให้ Tier-1 ISP</li>
+                      <li><strong>Content Provider Network:</strong> บริษัทยักษ์ใหญ่ (Google, Microsoft) สร้างเครือข่ายส่วนตัวครอบคลุมทั่วโลก ข้ามลำดับชั้น (Bypass) นำเซิร์ฟเวอร์ไปใกล้ผู้ใช้ผ่าน IXP หรือ Access ISP โดยตรง → ควบคุมคุณภาพได้ ลดต้นทุนส่งผ่านข้อมูล ให้บริการเนื้อหา (YouTube, Search) ได้รวดเร็ว</li>
+                    </ul>
+                    <p><strong>ติดตามการเดินทางของ 1 แพ็กเก็ต:</strong> (1) Edge — แอปบนสมาร์ทโฟนสร้างคำขอ HTTP และถูก Encapsulate ผ่าน TCP/IP → (2) Access — วิ่งผ่าน 5G หรือ WiFi เข้าเครือข่ายผู้ให้บริการ → (3) Core — เราเตอร์อ่าน IP ปลายทางและ Forwarding ตามสายไฟเบอร์ → (4) Peering — อาจผ่าน IXP ตัดตรงเข้าเครือข่ายผู้ให้บริการเนื้อหา → (5) Edge ปลายทาง — Data Center แกะข้อมูล (Decapsulation) และประมวลผล</p>
+                    <p><strong>The Invisible Infrastructure:</strong> (1) <em>Intelligence is at the Edge</em> — ความซับซ้อนอยู่ที่อุปกรณ์ปลายทาง แกนกลางมีหน้าที่แค่ส่งของให้เร็วที่สุด (2) <em>Network of Networks</em> — กระจายศูนย์ ไม่มีใครควบคุมเบ็ดเสร็จ เชื่อมกันด้วยข้อตกลงทางธุรกิจและ IXP (3) <em>The Spanning Layer (IP)</em> — IP ที่เรียบง่ายเป็นกาวใจผสานฮาร์ดแวร์ทุกยุค</p>
+                  </section>
+
+                  <section class="topic" id="ch1-perf">
+                    <h4>Performance: Delay, Loss, Throughput</h4>
+                    <p>packets เข้าคิวใน buffer ของเราเตอร์รอส่ง · คิวยาวขึ้นเมื่อ arrival rate สูงกว่า output link capacity ชั่วคราว · packet loss เกิดเมื่อหน่วยความจำที่เก็บคิวเต็ม</p>
+                    <code class="formula">d<sub>nodal</sub> = d<sub>proc</sub> + d<sub>queue</sub> + d<sub>trans</sub> + d<sub>prop</sub></code>
+                    <div class="table-scroll">
+                      <table>
+                        <thead><tr><th>Delay</th><th>คืออะไร</th><th>ขึ้นกับ</th></tr></thead>
+                        <tbody>
+                          <tr><td>d<sub>proc</sub> nodal processing</td><td>ตรวจ bit errors, หา output link</td><td>ปกติ &lt; microsecs</td></tr>
+                          <tr><td>d<sub>queue</sub> queueing</td><td>เวลารอที่ output link ก่อนได้ส่ง</td><td>ระดับ congestion ของเราเตอร์</td></tr>
+                          <tr><td>d<sub>trans</sub> transmission</td><td>d<sub>trans</sub> = L/R</td><td>L: ความยาว packet (bits), R: link transmission rate (bps)</td></tr>
+                          <tr><td>d<sub>prop</sub> propagation</td><td>d<sub>prop</sub> = d/s</td><td>d: ความยาวลิงก์, s: ความเร็วสัญญาณ (~2x10<sup>8</sup> m/sec)</td></tr>
+                        </tbody>
+                      </table>
+                    </div>
+                    <p><strong>Caravan analogy</strong> (car ~ bit, caravan ~ packet, toll service ~ link transmission): toll booth ใช้ 12 วินาทีต่อคัน, รถ "propagate" 100 km/hr, ระยะ 100 km, ขบวน 10 คัน → ดันทั้งขบวนผ่านด่าน = 12×10 = 120 sec = 2 นาที, คันสุดท้ายเดินทางถึงด่านที่ 2 = 100km/(100km/hr) = 1 ชม. → <strong>คำตอบ 62 นาที</strong> · ถ้ารถวิ่ง 1000 km/hr และด่านใช้ 1 นาทีต่อคัน: รถจะถึงด่านที่ 2 ก่อนที่ด่านแรกบริการครบทุกคัน — หลัง 7 นาทีคันแรกถึงด่านที่ 2 ขณะที่ยังเหลือ 3 คันที่ด่านแรก</p>
+                    <p><strong>Traffic intensity</strong> (a: average packet arrival rate, L: packet length, R: link bandwidth)</p>
+                    <code class="formula">traffic intensity = La / R</code>
+                    <ul>
+                      <li>La/R ~ 0: queueing delay เฉลี่ยน้อย</li>
+                      <li>La/R → 1: queueing delay เฉลี่ยมาก</li>
+                      <li>La/R &gt; 1: "งาน" เข้ามามากกว่าที่ให้บริการได้ — delay เฉลี่ย <strong>infinite!</strong></li>
+                    </ul>
+                    <p><strong>traceroute:</strong> วัด delay จากต้นทางไปยังเราเตอร์ตามเส้นทางสู่ปลายทาง — สำหรับทุก i ส่ง 3 packets ไปถึงเราเตอร์ตัวที่ i (ค่า time-to-live = i) เราเตอร์ส่งกลับ ผู้ส่งวัดช่วงเวลา · <code>* * *</code> หมายถึงไม่มีการตอบ (probe lost หรือเราเตอร์ไม่ตอบ) · ในตัวอย่าง gaia.cs.umass.edu → www.eurecom.fr delay กระโดดจาก ~22 ms เป็น ~104 ms ที่ trans-oceanic link</p>
+                    <p><strong>Packet loss:</strong> คิว (buffer) หน้าลิงก์มีความจุจำกัด · packet ที่มาถึงตอนคิวเต็มจะถูก drop (lost) · packet ที่หายอาจถูกส่งซ้ำโดย node ก่อนหน้า, โดย source end system หรือไม่ส่งซ้ำเลย</p>
+                    <p><strong>Throughput:</strong> อัตรา (bits/time unit) ที่ bits ถูกส่งจาก sender ถึง receiver — <em>instantaneous</em> (ณ ขณะหนึ่ง) และ <em>average</em> (ช่วงเวลายาว) · ลิงก์ที่จำกัด throughput end-end เรียกว่า <strong>bottleneck link</strong></p>
+                    <code class="formula">Rs &lt; Rc → Rs &nbsp;·&nbsp; Rs &gt; Rc → Rc &nbsp;·&nbsp; 10 connections แชร์ R: min(Rc, Rs, R/10)</code>
+                    <p>ในทางปฏิบัติ Rc หรือ Rs มักเป็น bottleneck</p>
+                  </section>
+
+                  <section class="topic" id="ch1-security">
+                    <h4>Network security</h4>
+                    <p>อินเทอร์เน็ตไม่ได้ออกแบบมาโดยคำนึงถึงความปลอดภัยมากนัก — วิสัยทัศน์เดิมคือ "a group of mutually trusting users attached to a transparent network" ผู้ออกแบบโปรโตคอลจึงต้องไล่ตาม และต้องพิจารณาความปลอดภัยในทุกเลเยอร์</p>
+                    <div class="table-scroll">
+                      <table>
+                        <thead><tr><th>การโจมตี</th><th>คำอธิบาย</th></tr></thead>
+                        <tbody>
+                          <tr><td>Packet sniffing</td><td>บน broadcast media (shared Ethernet, wireless) · network interface แบบ promiscuous อ่าน/บันทึกทุก packet ที่ผ่าน (รวมถึงรหัสผ่าน!) · Wireshark เป็น packet-sniffer ฟรีที่ใช้ในแล็บ</td></tr>
+                          <tr><td>IP spoofing</td><td>การปลอมแปลง IP: แทรก packet ที่มี source address ปลอม — ผู้โจมตีสร้างแพ็กเก็ตโดยปลอม IP ผู้ส่งเป็นของเครื่องอื่น เพื่อหลอกปลายทางว่ามาจากแหล่งที่น่าเชื่อถือ</td></tr>
+                          <tr><td>DoS</td><td>Denial of Service: ทำให้ทรัพยากร (server, bandwidth) ใช้งานไม่ได้ ด้วย traffic ปลอมจำนวนมาก — โจมตีจากเครื่องเดียวหรือแหล่งเดียว</td></tr>
+                          <tr><td>DDoS</td><td>Distributed DoS: โจมตีจากหลายเครื่องพร้อมกัน มักใช้ botnet ที่กระจายทั่วโลก รับมือยากกว่ามาก · ขั้นตอน: 1. select target 2. break into hosts around the network (botnet) 3. send packets to target from compromised hosts</td></tr>
+                          <tr><td>Self-replicating malware</td><td>มัลแวร์ (เช่น Worms) แพร่และคัดลอกตัวเองไปยัง Host อื่นที่มีช่องโหว่โดยอัตโนมัติ ไม่ต้องพึ่งการกระทำของผู้ใช้ <span class="src">(Architecture)</span></td></tr>
+                          <tr><td>Man-in-the-Middle</td><td>ผู้ไม่หวังดี (Trudy) แทรกระหว่างการสื่อสาร Alice–Bob เพื่อดักอ่าน ปลอมแปลง หรือแก้ไขข้อมูล <span class="src">(Architecture)</span></td></tr>
+                        </tbody>
+                      </table>
+                    </div>
+                    <p><strong>Lines of defense:</strong></p>
+                    <ul>
+                      <li><strong>authentication</strong> — พิสูจน์ว่าคุณคือคนที่อ้าง (cellular มี hardware identity ผ่าน SIM card; อินเทอร์เน็ตแบบเดิมไม่มี)</li>
+                      <li><strong>confidentiality</strong> — ผ่าน encryption</li>
+                      <li><strong>integrity checks</strong> — digital signatures ป้องกัน/ตรวจจับการแก้ไข</li>
+                      <li><strong>access restrictions</strong> — password-protected VPNs</li>
+                      <li><strong>firewalls</strong> — "middleboxes" ใน access และ core networks: off-by-default กรอง packets ขาเข้าเพื่อจำกัด senders, receivers, applications และตรวจจับ/รับมือ DoS</li>
+                    </ul>
+                  </section>
+
+                  <section class="topic" id="ch1-layers">
+                    <h4>Protocol layers, Encapsulation และ OSI</h4>
+                    <p><strong>ทำไมต้องแบ่งเลเยอร์?</strong> ระบบเครือข่ายซับซ้อน (hosts, routers, links, applications, protocols, hardware, software) · ตัวอย่าง<em>การเดินทางด้วยเครื่องบิน</em>: ticket → baggage → gates → runway → airplane routing แต่ละเลเยอร์ทำบริการหนึ่งอย่างผ่าน action ภายในของตัวเอง และพึ่งบริการจากเลเยอร์ด้านล่าง</p>
+                    <ul>
+                      <li>โครงสร้างชัดเจน ช่วยระบุส่วนต่างๆ และความสัมพันธ์ (layered reference model)</li>
+                      <li>modularization ช่วยให้ดูแลและอัปเดตง่าย — เปลี่ยน implementation ของเลเยอร์หนึ่งโดยไม่กระทบส่วนอื่น (เช่นเปลี่ยนขั้นตอนที่ gate ไม่กระทบระบบที่เหลือ)</li>
+                    </ul>
+                    <div class="table-scroll">
+                      <table>
+                        <thead><tr><th>Layer</th><th>หน้าที่</th><th>ตัวอย่างโปรโตคอล</th><th>PDU</th></tr></thead>
+                        <tbody>
+                          <tr><td>5. Application</td><td>รองรับแอปพลิเคชันเครือข่าย</td><td>HTTP, IMAP, SMTP, DNS</td><td>Message</td></tr>
+                          <tr><td>4. Transport</td><td>process-process data transfer</td><td>TCP, UDP</td><td>Segment</td></tr>
+                          <tr><td>3. Network</td><td>routing datagrams จากต้นทางถึงปลายทาง</td><td>IP, routing protocols</td><td>Datagram</td></tr>
+                          <tr><td>2. Link</td><td>ส่งข้อมูลระหว่าง network elements ที่อยู่ติดกัน</td><td>Ethernet, 802.11 (WiFi), PPP</td><td>Frame</td></tr>
+                          <tr><td>1. Physical</td><td>bits "on the wire"</td><td>—</td><td>Bits</td></tr>
+                        </tbody>
+                      </table>
+                    </div>
+                    <p><strong>Encapsulation</strong> (เหมือนตุ๊กตาแม่ลูกดก Matryoshka):</p>
+                    <ol class="steps">
+                      <li>Application สร้าง message <code>M</code></li>
+                      <li>Transport ใส่ header <code>Ht</code> (หมายเลขพอร์ตต้นทาง/ปลายทาง) → <strong>segment</strong> <code>[Ht | M]</code></li>
+                      <li>Network ใส่ <code>Hn</code> (IP address เหมือนจ่าหน้าซองจดหมาย) → <strong>datagram</strong> <code>[Hn | [Ht | M]]</code></li>
+                      <li>Link ใส่ <code>Hl</code> บรรจุลงกรอบเพื่อส่งผ่านสายเฉพาะหน้า → <strong>frame</strong> <code>[Hl | [Hn | [Ht | M]]]</code></li>
+                    </ol>
+                    <p>ปลายทางแกะออกทีละชั้น (<strong>Decapsulation</strong>) จนเหลือข้อมูลเดิม · ระหว่างทาง <strong>switch</strong> ประมวลผลถึงชั้น link และ <strong>router</strong> อ่านถึงชั้น Network (IP) เพื่อตัดสินใจเส้นทาง โดยไม่แตะเนื้อหาของแอปพลิเคชัน · เลเยอร์ระดับล่าง (node-to-node): เทคโนโลยีในชั้น Link เปลี่ยนไปตามช่วงทาง (เช่น WiFi → Fiber optic → ISP core switch) และฮาร์ดแวร์ชั้น Physical แปลงเฟรมเป็นสัญญาณแสง คลื่นวิทยุ หรือกระแสไฟฟ้า</p>
+                    <p><strong>ISO/OSI reference model (7 layers):</strong> application · <mark>presentation</mark> · <mark>session</mark> · transport · network · link · physical</p>
+                    <ul>
+                      <li><strong>presentation:</strong> ให้แอปตีความหมายของข้อมูล เช่น encryption, compression, machine-specific conventions</li>
+                      <li><strong>session:</strong> synchronization, checkpointing, recovery of data exchange</li>
+                      <li>Internet stack "ขาด" 2 เลเยอร์นี้ — ถ้าต้องการ ต้อง implement ในแอปพลิเคชันเอง</li>
+                    </ul>
+                    <p><strong>Logical vs Physical network diagram:</strong> Logical = แสดงหน้าที่และการไหลของข้อมูล (how data flows) · Physical = แสดงฮาร์ดแวร์จริงและการเชื่อมต่อทางกายภาพ (what it looks like) — เครือข่ายสมัยใหม่ใช้ทั้งสองแบบ</p>
+                    <p><strong>Wireshark:</strong> packet capture (pcap) รับสำเนาของทุก Ethernet frame ที่รับ-ส่ง แล้ว packet analyzer แสดงข้อมูลแต่ละเลเยอร์</p>
+                  </section>
+
+                  <section class="topic" id="ch1-link">
+                    <h4>Ethernet และ Wireless LAN (สไลด์เสริมท้ายบท)</h4>
+                    <p><strong>การจำแนกเครือข่ายตามขนาด:</strong> PAN 1m – 10m (Bluetooth) · LAN 10m – 1km (Wi-Fi, ระดับตึก/วิทยาเขต) · MAN 10km (เคเบิลทีวี, WiMAX, ระดับเมือง) · WAN 100km – Planet (Internet, ระดับประเทศ/โลก) — ยิ่งไกล เทคโนโลยีและโปรโตคอลยิ่งต่างกัน</p>
+                    <p><strong>Accessing the Edge:</strong> Wired Access IEEE 802.3 (Ethernet) เชื่อมผ่านสาย เน้นความเร็วและเสถียรภาพ เหมาะกับองค์กร/เซิร์ฟเวอร์ · Wireless Access IEEE 802.11 (Wi-Fi) ผ่านคลื่นวิทยุ เน้นความยืดหยุ่นและ Mobility เหมาะกับอุปกรณ์พกพา — ทั้งสองแบบใช้เทคโนโลยี MAC (Medium Access Control) ต่างกัน</p>
+                    <div class="table-scroll">
+                      <table>
+                        <thead><tr><th>วิวัฒนาการของ Ethernet</th><th>ลักษณะ</th></tr></thead>
+                        <tbody>
+                          <tr><td>ยุคเริ่มต้น (Classic Ethernet)</td><td>ใช้สาย Coaxial ร่วมกัน ส่งพร้อมกันจะเกิดการชนกัน (Collisions)</td></tr>
+                          <tr><td>ยุคกลาง (Hubs)</td><td>ใช้สาย Twisted Pair รวมศูนย์ที่ Hub แต่ยังแชร์แบนด์วิดท์และชนกันได้</td></tr>
+                          <tr><td>ยุคปัจจุบัน (Switches)</td><td>แต่ละพอร์ตมีช่องทางเฉพาะ (Dedicated lanes) ตัดปัญหาการชนกันอย่างสมบูรณ์</td></tr>
+                        </tbody>
+                      </table>
+                    </div>
+                    <p><strong>Switched Ethernet:</strong> Independent Collision Domains (แต่ละพอร์ตแยกกัน ส่งแบบขนานได้) · Full-Duplex (ส่งและรับพร้อมกัน) · High-Speed Backplane (ประมวลผลคิวและส่งต่อแบบ Store-and-forward ระดับ Gbps) — เรียบง่าย (Plug-and-play) ราคาถูก ประสิทธิภาพสูง</p>
+                    <p><strong>Wireless LANs (IEEE 802.11):</strong> ออกแบบเพื่อ Mobility · ใช้คลื่นวิทยุแทนสาย ทำให้มีเงื่อนไขใหม่ เช่น สัญญาณรบกวน สิ่งกีดขวาง ระยะทาง · <strong>Basic Service Set:</strong> Access Point (AP) เป็นสถานีฐานเชื่อมเครือข่ายไร้สายกับมีสาย · Infrastructure Mode ทุกการสื่อสารวิ่งผ่าน AP · Association อุปกรณ์ต้องลงทะเบียนกับ AP ก่อนส่งข้อมูลออกอินเทอร์เน็ต</p>
+                    <div class="callout">
+                      <strong>Hidden Terminal:</strong> A ส่งให้ B, C ก็ต้องการส่งให้ B แต่ C ไม่ได้ยินสัญญาณของ A จึงคิดว่าช่องว่างแล้วส่ง → ชนกันที่ B โดยที่ A และ C ไม่รู้ตัว
+                      → เครือข่ายไร้สายจึงใช้การตรวจจับการชน (CSMA/CD) แบบ LAN มีสายไม่ได้ ต้องใช้กลไกหลีกเลี่ยงและยืนยันการรับส่งแทน
+                    </div>
+                    <div class="table-scroll">
+                      <table>
+                        <thead><tr><th></th><th>Ethernet (Wired)</th><th>Wi-Fi (Wireless)</th></tr></thead>
+                        <tbody>
+                          <tr><td>สื่อกลาง</td><td>สายทองแดง (Twisted pair) / Fiber optic</td><td>คลื่นวิทยุ (Radio frequencies)</td></tr>
+                          <tr><td>การจัดการช่องสัญญาณ</td><td>Switched (แยกช่องทางเด็ดขาด ไม่มี Collisions)</td><td>Shared Medium (แชร์ช่องสัญญาณ เสี่ยงต่อ Hidden Terminals)</td></tr>
+                          <tr><td>การเคลื่อนที่</td><td>อุปกรณ์อยู่กับที่ (Fixed)</td><td>เคลื่อนที่และ Roaming ข้าม Access Point ได้</td></tr>
+                          <tr><td>ความปลอดภัยเบื้องต้น</td><td>อาศัยความปลอดภัยทางกายภาพ (ต้องเสียบสาย)</td><td>สัญญาณกระจายในอากาศ ต้องใช้โปรโตคอลเข้ารหัส (WEP/WPA) เสมอ</td></tr>
+                        </tbody>
+                      </table>
+                    </div>
+                    <p><strong>The Packet Journey:</strong> (1) Wireless Edge — อุปกรณ์พกพาส่งผ่าน 802.11 เข้า AP → (2) Wired LAN — AP ส่งต่อเข้า Switched Ethernet โดยไม่มีการชน → (3) Gateway — Router ตรวจเส้นทาง (Routing) → (4) Internet Core — เข้าสู่เครือข่าย ISPs แบบ Store-and-Forward</p>
+                    <p><strong>Architectural Pillars:</strong> The Internet (Macro) · Ethernet (Physical Edge) · Wireless LAN (Invisible Edge) · <strong>Customer-Visible Properties</strong>: Delivery, Correctness, Fault Tolerance, Timeliness, Cost ↔ <strong>Tunable Engineering Knobs</strong>: Network Topology, Communication Protocols, Network Architecture, Components, Physical Medium</p>
+                  </section>
+
+                  <section class="topic" id="ch1-history">
+                    <h4>Internet history</h4>
+                    <ol class="timeline">
+                      <li><span class="tl-era">1961–1972</span><span><strong>Early packet-switching principles</strong> — 1961 Kleinrock: queueing theory แสดงประสิทธิภาพของ packet-switching · 1964 Baran: packet-switching ในเครือข่ายทหาร · 1967 ARPAnet ถูกคิดขึ้นโดย Advanced Research Projects Agency · 1969 ARPAnet node แรกทำงาน · 1972 ARPAnet public demo, NCP (Network Control Protocol) host-host protocol แรก, โปรแกรม e-mail แรก, ARPAnet มี 15 nodes</span></li>
+                      <li><span class="tl-era">1972–1980</span><span><strong>Internetworking, new and proprietary networks</strong> — 1970 ALOHAnet satellite network ในฮาวาย · 1974 Cerf and Kahn: สถาปัตยกรรมเชื่อมเครือข่าย (minimalism, autonomy; best-effort service model; stateless routing; decentralized control — กำหนดสถาปัตยกรรมอินเทอร์เน็ตปัจจุบัน) · 1976 Ethernet ที่ Xerox PARC · ปลายยุค 70 proprietary architectures: DECnet, SNA, XNA · 1979 ARPAnet มี 200 nodes</span></li>
+                      <li><span class="tl-era">1980–1990</span><span><strong>New protocols, a proliferation of networks</strong> — 1982 smtp e-mail protocol · 1983 deployment of TCP/IP · 1983 DNS (name-to-IP-address translation) · 1985 ftp · 1988 TCP congestion control · เครือข่ายใหม่: CSnet, BITnet, NSFnet, Minitel · 100,000 hosts</span></li>
+                      <li><span class="tl-era">1990, 2000s</span><span><strong>Commercialization, the Web, new applications</strong> — ต้นยุค 90 ARPAnet ถูกปลดระวาง · 1991 NSF ยกเลิกข้อจำกัดการใช้ NSFnet เชิงพาณิชย์ (ปลดระวาง 1995) · ต้นยุค 90 Web: hypertext [Bush 1945, Nelson 1960's], HTML, HTTP: Berners-Lee, 1994 Mosaic ต่อมาเป็น Netscape, ปลายยุค 90 Web เชิงพาณิชย์ · ปลาย 90s–2000s: instant messaging, P2P file sharing, network security, ~50 million hosts, 100 million+ users, backbone ระดับ Gbps</span></li>
+                      <li><span class="tl-era">2005–present</span><span><strong>Scale, SDN, mobility, cloud</strong> — broadband home access (10–100's Mbps) · 2008 software-defined networking (SDN) · 4G/5G, WiFi · Google, FB, Microsoft สร้างเครือข่ายของตัวเอง · องค์กรใช้ cloud (AWS, Microsoft Azure) · 2017 อุปกรณ์มือถือมากกว่าอุปกรณ์ประจำที่ · ~15B devices (2023, statista.com)</span></li>
+                    </ol>
+                  </section>
+
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- ---------- ไฟล์ 2 ---------- -->
+          <div class="acc-item">
+            <h3 class="acc-heading">
+              <button class="acc-trigger" type="button" aria-expanded="false" aria-controls="acc-arch" id="acc-arch-btn">
+                <span class="acc-index">02</span>
+                <span class="acc-title">
+                  <span class="acc-name">โครงข่ายพิมพ์เขียว: สถาปัตยกรรมและฟิสิกส์ของอินเทอร์เน็ต</span>
+                  <span class="acc-file">ITDS231_Internet_Architecture_rev1.pdf · 20 หน้า · มีโจทย์พร้อมเฉลย</span>
+                </span>
+                <svg class="acc-chevron" viewBox="0 0 20 20" aria-hidden="true"><path d="M5 7.5l5 5 5-5" /></svg>
+              </button>
+            </h3>
+            <div class="acc-panel" id="acc-arch" role="region" aria-labelledby="acc-arch-btn">
+              <div class="acc-panel-inner">
+                <div class="acc-body">
+
+                  <section class="topic">
+                    <h4>End Systems และ Protocols &amp; Standards</h4>
+                    <ul>
+                      <li><strong>ปลายทางของเครือข่าย (End Systems / Hosts):</strong> อุปกรณ์ทุกชนิดที่เชื่อมต่ออินเทอร์เน็ต ตั้งแต่เซิร์ฟเวอร์ขนาดใหญ่ไปจนถึงอุปกรณ์ IoT ถือเป็น Host หรือ End System ทั้งสิ้น</li>
+                      <li><strong>กฎเกณฑ์ทางการทูตดิจิทัล (Protocols &amp; Standards):</strong> การสื่อสารต้องการ Protocol (เช่น HTTP, TCP) เปรียบเสมือนธรรมเนียมปฏิบัติทางการทูต หากปราศจากมาตรฐานที่กำหนดลำดับ อุปกรณ์ต่างผู้ผลิตจะสื่อสารกันไม่ได้ (Interoperability)</li>
+                    </ul>
+                  </section>
+
+                  <section class="topic">
+                    <h4>Access Networks Matrix</h4>
+                    <div class="table-scroll">
+                      <table>
+                        <thead><tr><th>เทคโนโลยี</th><th>ประเภท</th><th>สื่อกลาง</th><th>แบนด์วิดท์</th><th>ความเร็วโดยประมาณ</th></tr></thead>
+                        <tbody>
+                          <tr><td>FTTH</td><td>Home Access</td><td>Fiber Optic</td><td><span class="tag tag--ded">Dedicated</span></td><td>100 Mbps – 1 Gbps+</td></tr>
+                          <tr><td>HFC (Cable)</td><td>Home Access</td><td>Coaxial</td><td><span class="tag tag--shr">Shared</span></td><td>10s – 100s Mbps</td></tr>
+                          <tr><td>DSL</td><td>Home Access</td><td>Copper Wire</td><td><span class="tag tag--ded">Dedicated</span></td><td>&lt;10 Mbps – 10s Mbps</td></tr>
+                          <tr><td>Ethernet</td><td>Enterprise</td><td>Copper / Fiber</td><td><span class="tag tag--ded">Dedicated</span></td><td>10 Mbps – 100 Gbps</td></tr>
+                          <tr><td>Wi-Fi</td><td>Home / Enterprise</td><td>Wireless (Unlicensed)</td><td><span class="tag tag--shr">Shared</span></td><td>High speed, short range</td></tr>
+                          <tr><td>4G / 5G</td><td>Wide-Area</td><td>Wireless (Licensed)</td><td><span class="tag tag--shr">Shared</span></td><td>Moderate speed, high mobility</td></tr>
+                        </tbody>
+                      </table>
+                    </div>
+                    <p>สรุปภาษาไทย (Access Networks: เส้นทางแรกเข้าสู่มหานครดิจิทัล): FTTH ใยแก้วนำแสง ส่วนตัว ความเร็วสูงมาก · Cable (HFC) สายโคแอกเชียล (ทองแดง/แสง) แชร์พื้นที่ อสมมาตร ดาวน์โหลดเร็วกว่าอัปโหลด · DSL สายโทรศัพท์ (ทองแดง) ส่วนตัว จำกัดตามระยะทางจากตู้ชุมสาย · 5G/Wireless คลื่นวิทยุ แชร์พื้นที่ เน้นความคล่องตัว (Mobility)</p>
+                  </section>
+
+                  <section class="topic">
+                    <h4>แกนกลางเครือข่าย: Circuit vs Packet Switching</h4>
+                    <div class="compare">
+                      <div class="compare-col">
+                        <h5>Circuit Switching</h5>
+                        <ul>
+                          <li>รับประกันทรัพยากร (Bandwidth) คงที่ตลอดการเชื่อมต่อ (Dedicated path, TDM slots)</li>
+                          <li>ประสิทธิภาพคาดการณ์ได้แน่นอน แต่สูญเปล่าหากไม่มีการส่งข้อมูล</li>
+                          <li>ตัวอย่าง: ลิงก์ 2 Mbps หากผู้ใช้ใช้คนละ 1 Mbps จะรองรับได้สูงสุดเพียง <strong>2 คนถ้วน</strong></li>
+                        </ul>
+                      </div>
+                      <div class="compare-col">
+                        <h5>Packet Switching</h5>
+                        <ul>
+                          <li>แชร์ทรัพยากรร่วมกัน (Store-and-forward) เหมาะกับข้อมูลที่มาเป็นระลอก (Bursty)</li>
+                          <li>อนุญาตให้ผู้ใช้เข้าถึงเครือข่ายได้มากกว่า แต่มีความเสี่ยงเกิดคิวสะสม (Queuing Delay)</li>
+                          <li>ตัวอย่าง: ลิงก์ 2 Mbps รองรับผู้ใช้ได้<strong>มากกว่า 3 คน</strong> หากไม่ได้ส่งข้อมูลพร้อมกันตลอดเวลา</li>
+                        </ul>
+                      </div>
+                    </div>
+                  </section>
+
+                  <section class="topic">
+                    <h4>โครงสร้างพื้นฐานอินเทอร์เน็ต (Internet Backbone)</h4>
+                    <p>พีระมิดลำดับชั้น: Tier-1 ISP → Regional ISP → Access ISP โดยมี IXP อยู่ระหว่าง Tier-1</p>
+                    <ul>
+                      <li><strong>Peering เพื่อลดต้นทุน:</strong> ISP ระดับเดียวกันมักเชื่อมต่อกันเอง (Peer) หรือผ่าน IXP เพื่อหลีกเลี่ยงการจ่ายค่าผ่านทาง (Transit fee) ให้ ISP ระดับบน</li>
+                      <li><strong>Google's Private Network:</strong> ผู้ให้บริการเนื้อหารายใหญ่สร้างโครงข่ายส่วนตัวเชื่อมโยง Data Center ทั่วโลก เพื่อลดต้นทุนค่า Transit และนำข้อมูลเข้าใกล้ผู้ใช้ปลายทางมากที่สุด (Content Provider Network)</li>
+                    </ul>
+                  </section>
+
+                  <section class="topic">
+                    <h4>ฟิสิกส์ของเครือข่าย: ความหน่วง 4 ประเภท</h4>
+                    <code class="formula">d<sub>end-to-end</sub> = d<sub>proc</sub> + d<sub>queue</sub> + d<sub>trans</sub> + d<sub>prop</sub></code>
+                    <div class="table-scroll">
+                      <table>
+                        <thead><tr><th>Delay</th><th>ลักษณะ</th><th>ความหมาย</th></tr></thead>
+                        <tbody>
+                          <tr><td>Processing Delay (d_proc)</td><td>คงที่</td><td>เวลาตรวจสอบ Header และตัดสินใจหาเส้นทาง</td></tr>
+                          <tr><td>Queuing Delay (d_queue)</td><td><strong>แปรผัน</strong></td><td>เวลารอในคิวหากทราฟฟิกหนาแน่น</td></tr>
+                          <tr><td>Transmission Delay (d_trans)</td><td>คงที่</td><td>เวลาที่ใช้ดันบิตทั้งหมดของแพ็กเก็ตลงสู่สาย</td></tr>
+                          <tr><td>Propagation Delay (d_prop)</td><td>คงที่</td><td>เวลาเดินทางของสัญญาณฟิสิกส์ตามสื่อกลาง (ความเร็วแสง)</td></tr>
+                        </tbody>
+                      </table>
+                    </div>
+                    <div class="compare">
+                      <div class="compare-col">
+                        <h5>Transmission Delay = L / R</h5>
+                        <p>L = ความยาวแพ็กเก็ต (Bits), R = อัตราการส่ง/แบนด์วิดท์ (bps)</p>
+                        <p><strong>เปรียบเทียบ:</strong> เวลาที่ด่านเก็บเงินใช้ปล่อยรถทีละคันจนครบทั้งขบวน</p>
+                      </div>
+                      <div class="compare-col">
+                        <h5>Propagation Delay = d / s</h5>
+                        <p>d = ระยะทาง (Meters), s = ความเร็วสัญญาณ (~2.5 x 10^8 m/s)</p>
+                        <p><strong>กฎเหล็ก:</strong> d_prop ไม่ขึ้นอยู่กับขนาดแพ็กเก็ต (L) หรือความเร็วอินเทอร์เน็ต (R) แต่ขึ้นกับระยะทางฟิสิกส์ล้วนๆ</p>
+                      </div>
+                    </div>
+                    <p class="note">หมายเหตุ: สไลด์ Chapter 1 ใช้ s ≈ 2x10<sup>8</sup> m/sec และโจทย์ในไฟล์นี้ก็ใช้ 2 × 10^8 m/s ในการคำนวณ</p>
+                    <p><strong>Physical Properties (Fluid Flow Analogy):</strong> เทน้ำลงกรวย = Transmission Delay · น้ำไหลไปตามท่อ = Propagation Delay · ลิงก์ 10 Mbps ส่งข้อความเดียวกันใช้ช่วงเวลาสั้นกว่าลิงก์ 1 Mbps 10 เท่า (1 bit = 1 μs เทียบกับ 100 ns)</p>
+                  </section>
+
+                  <section class="topic">
+                    <h4>ปริมาณข้อมูลและคอขวด (Throughput &amp; The Bottleneck)</h4>
+                    <p>Throughput แบบ End-to-End คืออัตราที่ข้อมูลส่งถึงปลายทางได้สำเร็จ</p>
+                    <code class="formula">Throughput = min(R1, R2, R3)</code>
+                    <p><strong>ผลลัพธ์:</strong> Server → R1 = 2 Mbps → R2 = 100 kbps → R3 = 1 Mbps → Client · แม้จะมีอินเทอร์เน็ตแรง 2 Mbps แต่ถ้าลิงก์ระหว่างทางมีคอขวดที่ 100 kbps ความเร็วรวมจะถูกจำกัดที่ <strong>100 kbps</strong> เท่านั้น</p>
+                  </section>
+
+                  <section class="topic">
+                    <h4>คิวและการสูญหายของข้อมูล (Queuing &amp; Packet Loss)</h4>
+                    <code class="formula">I = La / R &nbsp;&nbsp;(Traffic Intensity)</code>
+                    <p>เมื่อ <strong>I &gt; 1</strong> ข้อมูลไหลเข้าเร็วกว่าที่ Router จะระบายออกได้ → คิวยาวขึ้นเรื่อยๆ จนพื้นที่ Buffer เต็ม ทำให้แพ็กเก็ตใหม่ถูกทิ้งเกิดเป็น <strong>Packet Loss</strong> · กราฟ Queuing Delay พุ่งสูงเมื่อ I เข้าใกล้ 1 (Unstable Region)</p>
+                  </section>
+
+                  <section class="topic">
+                    <h4>โจทย์คำนวณพร้อมเฉลย</h4>
+                    <div class="worked">
+                      <p class="worked-q"><strong>โจทย์ 1:</strong> เครื่องคอมพิวเตอร์ต้องการส่ง Packet ขนาด <strong>4,000 บิต (bits)</strong> ผ่านสายสัญญาณที่มีความเร็ว <strong>2 Mbps</strong> จงหาค่า Transmission Delay</p>
+                      <ul>
+                        <li>แปลงหน่วยความเร็ว R = 2 Mbps = 2 × 10<sup>6</sup> bps (หรือ 2,000,000 bps)</li>
+                        <li>แทนค่าในสูตร: D<sub>trans</sub> = 4,000 bits / 2,000,000 bps = 0.002</li>
+                      </ul>
+                      <p class="worked-a">คำตอบ: 2 ms</p>
+                    </div>
+                    <div class="worked">
+                      <p class="worked-q"><strong>โจทย์ 2:</strong> โฮสต์ต้นทางต้องการส่งไฟล์รูปภาพขนาด <strong>5 MegaBytes (MB)</strong> ผ่านสายเคเบิลแบบ <strong>Cable-based access (HFC)</strong> ที่มีความเร็วขาขึ้น (Upstream Rate) อยู่ที่ <strong>10 Mbps</strong> จะใช้เวลาในการผลักข้อมูลลงสายสัญญาณเท่าใด</p>
+                      <ul>
+                        <li>แปลงขนาดไฟล์ L จาก Bytes เป็น bits: L = 5 × 10<sup>6</sup> × 8 = 40,000,000 bits</li>
+                        <li>แปลงหน่วยความเร็ว R = 10 Mbps = 10,000,000 bps</li>
+                        <li>แทนค่าในสูตร: D<sub>trans</sub> = 40,000,000 bits / 10,000,000 bps = 4</li>
+                      </ul>
+                      <p class="worked-a">คำตอบ: 4 วินาที</p>
+                    </div>
+                    <div class="worked">
+                      <p class="worked-q"><strong>โจทย์ 3:</strong> คอมพิวเตอร์ A ส่งข้อมูลขนาด <strong>1,000 Bytes</strong> ไปยัง Router โดยผ่านสายสัญญาณมีความยาว <strong>2,000 กิโลเมตร</strong> มีแบนด์วิดท์ <strong>10 Mbps</strong> และสัญญาณเดินทางด้วยความเร็วแสงในสายคือ (2 * 10^8 m/s) จงหาค่า Transmission Delay และ Propagation Delay ว่าต่างกันอย่างไร</p>
+                      <ul>
+                        <li>D<sub>trans</sub>: แปลง L = 1,000 Bytes × 8 = 8,000 bits · แปลง R = 10 Mbps = 10,000,000 bps · คำนวณ 8,000 / 10,000,000 = 0.0008 = <strong>0.8 ms</strong></li>
+                        <li>D<sub>prop</sub> = Distance / Speed: แปลงระยะทาง 2,000 km = 2,000,000 m · คำนวณ 2,000,000 m / 2×10<sup>8</sup> m/s = 0.01 = <strong>10 ms</strong></li>
+                      </ul>
+                      <p class="worked-a">คำตอบ: D<sub>trans</sub> = 0.8 ms, D<sub>prop</sub> = 10 ms</p>
+                    </div>
+                  </section>
+
+                  <section class="topic">
+                    <h4>สถาปัตยกรรม 5 เลเยอร์ (The Protocol Stack)</h4>
+                    <div class="table-scroll">
+                      <table>
+                        <thead><tr><th>Layer</th><th>หน้าที่</th><th>ข้อมูลเรียกว่า</th></tr></thead>
+                        <tbody>
+                          <tr><td>5. Application Layer</td><td>รองรับแอปพลิเคชันเครือข่าย (HTTP, SMTP, DNS)</td><td>Message</td></tr>
+                          <tr><td>4. Transport Layer</td><td>ส่งข้อมูลโพรเซส-ต่อ-โพรเซส (TCP, UDP)</td><td>Segment</td></tr>
+                          <tr><td>3. Network Layer</td><td>กำหนดเส้นทางจากต้นทางถึงปลายทาง (IP)</td><td>Datagram</td></tr>
+                          <tr><td>2. Link Layer</td><td>เคลื่อนย้ายข้อมูลระหว่างโหนดที่ติดกัน</td><td>Frame</td></tr>
+                          <tr><td>1. Physical Layer</td><td>ส่งผ่านสัญญาณฟิสิกส์แต่ละบิตลงสื่อกลาง</td><td>Bits</td></tr>
+                        </tbody>
+                      </table>
+                    </div>
+                    <p><strong>การห่อหุ้มข้อมูล (Encapsulation):</strong> Host A ห่อ Payload ด้วย H4, H3, H2 → <strong>Link-layer Switch</strong> แกะซองถึงแค่ชั้น Link (L2) → <strong>Router</strong> แกะซองถึงชั้น Network (L3) เพื่อหา IP ปลายทาง → Host B</p>
+                    <p><strong>เปรียบเสมือนการเดินทางด้วยเครื่องบิน:</strong> การเช็คอินติดป้ายกระเป๋า (Header 1) ประตูขึ้นเครื่องตรวจ Boarding Pass (Header 2) อุปกรณ์แกนกลางไม่ได้อ่านข้อมูลทั้งหมด</p>
+                  </section>
+
+                  <section class="topic">
+                    <h4>พลังของการแบ่งแพ็กเก็ต (Why Segmentation Matters)</h4>
+                    <p>ทดสอบส่งข้อความ 10^6 บิต ผ่าน 3 ลิงก์ (5 Mbps) — สถาปัตยกรรมแบบ Packet Switching อาศัยการหั่นข้อมูลเป็นชิ้นเล็กๆ เพื่อทะลวงขีดจำกัดด้านความเร็วของเครือข่าย</p>
+                    <div class="compare">
+                      <div class="compare-col">
+                        <h5>ไม่แบ่งแพ็กเก็ต (Store-and-forward)</h5>
+                        <p>Large Block (10^6 bits) ใช้ลิงก์ละ 0.2s × 3 ลิงก์ → ใช้เวลา <strong>0.6 วินาที</strong></p>
+                      </div>
+                      <div class="compare-col">
+                        <h5>แบ่งเป็น 100 แพ็กเก็ต (Pipelining)</h5>
+                        <p>Small Packet (10^4 bits) ส่งต่อกันเป็นสายพาน → ใช้เวลาเพียง <strong>0.204 วินาที</strong></p>
+                      </div>
+                    </div>
+                  </section>
+
+                  <section class="topic">
+                    <h4>ภัยคุกคามเครือข่าย (Network Security Threats)</h4>
+                    <ol class="steps">
+                      <li><strong>Self-Replicating Malware:</strong> มัลแวร์ (เช่น Worms) ที่แพร่กระจายและคัดลอกตัวเองไปยัง Host อื่นๆ ที่มีช่องโหว่โดยอัตโนมัติ ไม่ต้องพึ่งพาการกระทำของผู้ใช้</li>
+                      <li><strong>Botnets &amp; DDoS Attack:</strong> มัลแวร์ยึดครอง Host จำนวนมากให้กลายเป็น Bot รอคำสั่งจากศูนย์กลาง เพื่อส่งทราฟฟิกขยะปริมาณมหาศาลไปถล่มเป้าหมายเดียวพร้อมกันจนระบบล่ม</li>
+                      <li><strong>Man-in-the-Middle (MITM):</strong> ผู้ไม่หวังดีแทรกตัวระหว่างการสื่อสาร (Alice → Trudy → Bob) เพื่อดักอ่าน ปลอมแปลง หรือแก้ไขข้อมูลที่กำลังเดินทางผ่านลิงก์</li>
+                    </ol>
+                  </section>
+
+                  <section class="topic">
+                    <h4>บทสรุปภาพรวม (The Internet Blueprint)</h4>
+                    <ul class="checklist">
+                      <li>เครือข่ายอินเทอร์เน็ตคือสถาปัตยกรรมวิศวกรรมที่ซับซ้อนแต่น่าทึ่ง</li>
+                      <li>ขับเคลื่อนโดย HOSTS ที่ขอบข่าย</li>
+                      <li>เชื่อมต่อด้วย PROTOCOLS ที่เป็นมาตรฐานสากล</li>
+                      <li>ข้อมูลถูกหั่นและห่อหุ้มผ่าน 5 LAYERS</li>
+                      <li>เดินทางแบบ PACKET SWITCHING ผ่านเราเตอร์ที่ต้องต่อสู้กับ 4 DELAYS</li>
+                      <li>เพื่อนำส่งข้อมูลจากมุมหนึ่งของโลกไปยังอีกมุมหนึ่งในเสี้ยววินาที</li>
+                    </ul>
+                  </section>
+
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- ---------- ไฟล์ 3 ---------- -->
+          <div class="acc-item">
+            <h3 class="acc-heading">
+              <button class="acc-trigger" type="button" aria-expanded="false" aria-controls="acc-topo" id="acc-topo-btn">
+                <span class="acc-index">03</span>
+                <span class="acc-title">
+                  <span class="acc-name">สถาปัตยกรรมแห่งการเชื่อมต่อ (Network Topography)</span>
+                  <span class="acc-file">ITDS231_Network_Topography.pdf · 15 หน้า · จากอุปกรณ์ส่วนบุคคลสู่โครงสร้างระดับโลก</span>
+                </span>
+                <svg class="acc-chevron" viewBox="0 0 20 20" aria-hidden="true"><path d="M5 7.5l5 5 5-5" /></svg>
+              </button>
+            </h3>
+            <div class="acc-panel" id="acc-topo" role="region" aria-labelledby="acc-topo-btn">
+              <div class="acc-panel-inner">
+                <div class="acc-body">
+
+                  <section class="topic">
+                    <h4>เครือข่ายของเครือข่าย (The Internetwork)</h4>
+                    <p>อินเทอร์เน็ตไม่ใช่เพียงเครือข่ายเดียว แต่คือ <strong>"เครือข่ายที่เชื่อมต่อเครือข่ายเข้าด้วยกัน"</strong> — เครือข่ายระดับภูมิภาค เครือข่ายองค์กร และเครือข่ายมือถือ เชื่อมผ่านโครงข่ายหลัก (Global ISP)</p>
+                  </section>
+
+                  <section class="topic">
+                    <h4>มาตรวัดขนาดของเครือข่าย</h4>
+                    <div class="table-scroll">
+                      <table>
+                        <thead><tr><th>ระยะห่าง</th><th>พื้นที่ครอบคลุม</th><th>ประเภทเครือข่าย</th><th>เทคโนโลยีตัวอย่าง</th></tr></thead>
+                        <tbody>
+                          <tr><td>1 เมตร</td><td>พื้นที่ส่วนบุคคล</td><td>PAN (Personal Area Network)</td><td>Bluetooth</td></tr>
+                          <tr><td>10 ม. - 1 กม.</td><td>ห้อง / อาคาร / วิทยาเขต</td><td>LAN (Local Area Network)</td><td>Ethernet, WiFi</td></tr>
+                          <tr><td>10 กม.</td><td>เมือง</td><td>MAN (Metropolitan Area Network)</td><td>Cable, 802.16</td></tr>
+                          <tr><td>100 กม.+</td><td>ประเทศ / ทวีป</td><td>WAN (Wide Area Network)</td><td>Optical Backbone, 5G</td></tr>
+                          <tr><td>10,000 กม.</td><td>โลก</td><td>The Internet</td><td>TCP/IP</td></tr>
+                        </tbody>
+                      </table>
+                    </div>
+                  </section>
+
+                  <section class="topic">
+                    <h4>ตัวอย่างที่ 1: เครือข่ายส่วนบุคคล (PAN)</h4>
+                    <p>เครือข่ายไร้สายระยะสั้นรอบตัวบุคคล</p>
+                    <ul>
+                      <li><strong>Master Device:</strong> ควบคุมการเชื่อมต่อและจัดสรรความถี่</li>
+                      <li><strong>Slave Devices:</strong> อุปกรณ์ต่อพ่วงที่เชื่อมต่อแบบ Piconet</li>
+                      <li><strong>Technology:</strong> Bluetooth (ตัดปัญหาสายสัญญาณทับซ้อน)</li>
+                    </ul>
+                  </section>
+
+                  <section class="topic">
+                    <h4>ตัวอย่างที่ 2: เครือข่ายในที่พักอาศัย (Home Access Networks)</h4>
+                    <p>การหลอมรวมของอุปกรณ์หลากหลายประเภทในพื้นที่อยู่อาศัย</p>
+                    <ul>
+                      <li><strong>Gateway:</strong> เราเตอร์หลักที่เชื่อมโยงบ้านเข้ากับ ISP</li>
+                      <li><strong>DSL/Cable modem:</strong> ที่เชื่อมโยงบ้านเข้ากับ ISP</li>
+                      <li><strong>Convergence:</strong> รองรับทั้งข้อมูลแบบ Elastic (เว็บเพจ) และ Time-Sensitive (สตรีมมิ่งวิดีโอ)</li>
+                      <li><strong>IoT Integration:</strong> เซ็นเซอร์และอุปกรณ์เครื่องใช้ไฟฟ้าที่ต้องการความเสถียร</li>
+                    </ul>
+                    <div class="callout">
+                      <strong>กลไกเบื้องหลัง: Network Address Translation (NAT)</strong><br />
+                      เครือข่ายส่วนตัว 10.0.0.1, 10.0.0.2, 10.0.0.3 → NAT Router → 138.76.29.7 → อินเทอร์เน็ตสาธารณะ ·
+                      IP ภายในมีความหมายแค่ในบ้าน · NAT Router ทำหน้าที่แปลงที่อยู่ · ใช้ IP เดียวเป็นตัวแทนของทั้งบ้าน
+                    </div>
+                  </section>
+
+                  <section class="topic">
+                    <h4>ตัวอย่างที่ 3: เครือข่ายองค์กร (Enterprise LAN)</h4>
+                    <p>โครงสร้างพื้นฐานแบบมีสายความเร็วสูงสำหรับองค์กร: Institutional Router → Core/Edge Switches → End Systems (Workstations, Servers)</p>
+                    <ul>
+                      <li><strong>Link-Layer Switches:</strong> ขจัดปัญหาการชนกันของข้อมูลโดยส่งเฟรมข้อมูลแยกตามพอร์ตอย่างอิสระ</li>
+                      <li><strong>High Throughput:</strong> รองรับความเร็วระดับ 1 Gbps ถึง 10 Gbps</li>
+                      <li><strong>Resource Sharing:</strong> การแชร์ข้อมูลและเซิร์ฟเวอร์ส่วนกลางอย่างมีประสิทธิภาพ</li>
+                    </ul>
+                    <div class="compare">
+                      <div class="compare-col">
+                        <h5>Physical LAN</h5>
+                        <p><strong>ข้อจำกัดทางภูมิศาสตร์:</strong> การจัดกลุ่มถูกกำหนดโดยสายเคเบิล</p>
+                      </div>
+                      <div class="compare-col">
+                        <h5>Logical: Virtual LANs (VLAN)</h5>
+                        <p><strong>นิยามใหม่ด้วยซอฟต์แวร์:</strong> จัดกลุ่มเครือข่ายตามแผนกหรือความปลอดภัย ไม่ใช่ตามชั้นของอาคาร</p>
+                      </div>
+                    </div>
+                  </section>
+
+                  <section class="topic">
+                    <h4>ตัวอย่างที่ 4: เครือข่ายไร้สาย (WiFi / 802.11)</h4>
+                    <div class="compare">
+                      <div class="compare-col">
+                        <h5>Infrastructure Mode</h5>
+                        <p>อุปกรณ์ไร้สายสื่อสารผ่าน Access Point (Base Station) ที่เชื่อมต่อกับอินเทอร์เน็ตแบบมีสาย (Wired Network)</p>
+                      </div>
+                      <div class="compare-col">
+                        <h5>Ad-hoc Mode</h5>
+                        <p>อุปกรณ์สื่อสารกันเองโดยตรง โดยไม่ต้องใช้โครงสร้างพื้นฐาน</p>
+                      </div>
+                    </div>
+                    <p><strong>Bandwidth:</strong> แชร์ช่องสัญญาณวิทยุร่วมกันภายในรัศมี</p>
+                  </section>
+
+                  <section class="topic">
+                    <h4>ตัวอย่างที่ 5: เครือข่ายมือถือ (Cellular 4G/5G)</h4>
+                    <p>เครือข่ายไร้สายระยะไกลที่ครอบคลุมระดับประเทศ</p>
+                    <ul>
+                      <li><strong>Mobile Device (UE):</strong> อุปกรณ์เคลื่อนที่ซึ่งมีรหัสยืนยันตัวตนผ่านซิมการ์ด</li>
+                      <li><strong>Base Station (eNode-B):</strong> เสาสัญญาณที่บริหารจัดการทรัพยากรคลื่นวิทยุในพื้นที่เซลล์</li>
+                      <li><strong>Core Network:</strong> ศูนย์กลางการจัดการข้อมูลและการเคลื่อนที่ของผู้ใช้งาน</li>
+                    </ul>
+                    <p><strong>กลไกเบื้องหลัง: Mobility &amp; Handover</strong></p>
+                    <ol class="steps">
+                      <li><strong>Association:</strong> อุปกรณ์เชื่อมต่อกับเสาสัญญาณปัจจุบัน (Tower A, Hexagon A)</li>
+                      <li><strong>Coordination:</strong> ระบบประเมินความแรงสัญญาณและเตรียมโอนย้าย</li>
+                      <li><strong>Handover:</strong> ส่งมอบการเชื่อมต่อไปยังเสาสัญญาณใหม่ (Tower B) โดยไม่ทำให้การดาวน์โหลดสะดุด</li>
+                    </ol>
+                  </section>
+
+                  <section class="topic">
+                    <h4>ตัวอย่างที่ 6: เครือข่ายศูนย์ข้อมูล (Data Center / The Cloud)</h4>
+                    <p>โครงสร้างพื้นฐานขนาดใหญ่เบื้องหลังบริการคลาวด์และสตรีมมิ่ง: Internet → Core Routers → Edge Switches → Server Racks</p>
+                    <ul>
+                      <li><strong>Massive Scale:</strong> เชื่อมต่อโฮสต์หลายหมื่นเครื่องภายในศูนย์ข้อมูลเดียว</li>
+                      <li><strong>Load Balancing:</strong> กระจายภาระงานอย่างชาญฉลาดเพื่อไม่ให้เซิร์ฟเวอร์ใดทำงานหนักเกินไป</li>
+                      <li><strong>Purpose:</strong> ประมวลผลแบบขนานและให้บริการเนื้อหา (เช่น Netflix, Google)</li>
+                    </ul>
+                  </section>
+
+                  <section class="topic">
+                    <h4>สรุปเปรียบเทียบ: Wired vs. Wireless Architecture</h4>
+                    <div class="table-scroll">
+                      <table>
+                        <thead><tr><th></th><th>สถาปัตยกรรมแบบมีสาย (Wired)</th><th>สถาปัตยกรรมแบบไร้สาย (Wireless)</th></tr></thead>
+                        <tbody>
+                          <tr><td>ตัวกลาง (Medium)</td><td>สายทองแดง / เคเบิลใยแก้วนำแสง</td><td>คลื่นวิทยุ (Radio Spectrum)</td></tr>
+                          <tr><td>การจัดการข้อมูล (Collision Mgt.)</td><td>ใช้สวิตช์แยกช่องสัญญาณ ป้องกันการชนกันของข้อมูล</td><td>ใช้สื่อกลางร่วมกัน ต้องมีกลไกหลีกเลี่ยงการชน</td></tr>
+                          <tr><td>ความคล่องตัว (Mobility)</td><td>อุปกรณ์อยู่กับที่ (Stationary devices)</td><td>รองรับอุปกรณ์เคลื่อนที่และการโอนย้าย</td></tr>
+                          <tr><td>เทคโนโลยีตัวอย่าง</td><td>Ethernet, Fiber Backbone</td><td>WiFi (802.11), 4G/5G, Bluetooth</td></tr>
+                        </tbody>
+                      </table>
+                    </div>
+                  </section>
+
+                  <section class="topic">
+                    <h4>วิถีแห่งข้อมูล: A Day in the Life of a Packet</h4>
+                    <p>เมื่อคุณกดสตรีมภาพยนตร์ 1 เรื่อง ข้อมูลเดินทางผ่านเครือข่ายอะไรบ้าง?</p>
+                    <ol class="steps">
+                      <li><strong>Step 1 (PAN/Mobile):</strong> สมาร์ทโฟนส่งคำขอผ่านสัญญาณ 5G</li>
+                      <li><strong>Step 2 (Cellular Edge):</strong> Base Station รับสัญญาณและส่งเข้าโครงข่ายหลัก</li>
+                      <li><strong>Step 3 (Global WAN):</strong> ข้อมูลเดินทางข้ามประเทศผ่าน Optical Backbone</li>
+                      <li><strong>Step 4 (Data Center):</strong> Load Balancer ส่งคำขอเซิร์ฟเวอร์ที่เก็บภาพยนตร์</li>
+                    </ol>
+                  </section>
+
+                  <section class="topic">
+                    <h4>The Network of Networks</h4>
+                    <p>วงซ้อน: PAN (1m) ⊂ LAN/Home (10m–1km) ⊂ MAN/Cellular (10km) ⊂ WAN/Internet (Global)</p>
+                    <ul class="checklist">
+                      <li>เครือข่ายมีหลากหลายขนาดและบริบท แต่ละประเภทถูกออกแบบมาเพื่อแก้ปัญหาเฉพาะทาง</li>
+                      <li>จาก 1 เมตรถึง 10,000 กิโลเมตร ทุกเครือข่ายสื่อสารกันได้ผ่านโปรโตคอลมาตรฐาน</li>
+                      <li>การหลอมรวมของเทคโนโลยีเหล่านี้คือสถาปัตยกรรมที่ขับเคลื่อนโลกดิจิทัลในปัจจุบัน</li>
+                    </ul>
+                  </section>
+
+                </div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </section>
+
+      <!-- =============================================================
+           แท็บ 2: สรุป (cheat sheet)
+           ============================================================= -->
+      <section class="panel" id="summary" role="tabpanel" aria-labelledby="tab-summary" tabindex="-1">
+        <div class="panel-head">
+          <h2>Cheat sheet</h2>
+          <p class="panel-sub">สูตร ตาราง และคำที่มักออกสอบ รวมไว้ในหน้าเดียว</p>
+        </div>
+
+        <div class="sheet">
+
+          <article class="sheet-card sheet-card--wide">
+            <h3><span class="sheet-num">01</span> ความหน่วง 4 ประเภท</h3>
+            <code class="formula">d<sub>nodal</sub> = d<sub>proc</sub> + d<sub>queue</sub> + d<sub>trans</sub> + d<sub>prop</sub></code>
+            <dl class="defs">
+              <div><dt>d<sub>proc</sub></dt><dd>ตรวจ bit errors + หา output link · &lt; microsecs</dd></div>
+              <div><dt>d<sub>queue</sub></dt><dd>รอที่ output link · ขึ้นกับ congestion (ตัวเดียวที่แปรผัน)</dd></div>
+              <div><dt>d<sub>trans</sub> = L/R</dt><dd>L = bits, R = bps · ขึ้นกับขนาดแพ็กเก็ตและแบนด์วิดท์</dd></div>
+              <div><dt>d<sub>prop</sub> = d/s</dt><dd>d = เมตร, s ≈ 2×10<sup>8</sup> m/s · ขึ้นกับระยะทางเท่านั้น</dd></div>
+            </dl>
+          </article>
+
+          <article class="sheet-card">
+            <h3><span class="sheet-num">02</span> แปลงหน่วยก่อนคำนวณ</h3>
+            <ul class="tight">
+              <li>1 Byte = <strong>8 bits</strong> → 5 MB = 5×10<sup>6</sup>×8 bits</li>
+              <li>1 Mbps = 10<sup>6</sup> bps · 1 kbps = 10<sup>3</sup> bps</li>
+              <li>1 km = 1,000 m</li>
+              <li>0.001 s = 1 ms · 0.000001 s = 1 μs</li>
+            </ul>
+            <p class="note">กับดักที่พบบ่อย: ลืมคูณ 8 ตอนแปลง Bytes → bits</p>
+          </article>
+
+          <article class="sheet-card">
+            <h3><span class="sheet-num">03</span> Throughput &amp; Queue</h3>
+            <code class="formula">Throughput = min(R1, R2, …)</code>
+            <p>ลิงก์ที่ช้าสุด = <strong>bottleneck link</strong> · 10 connections แชร์ R: min(Rc, Rs, R/10)</p>
+            <code class="formula">Traffic intensity I = La/R</code>
+            <p>~0 คิวน้อย · →1 คิวมาก · <strong>&gt;1 delay → ∞</strong> buffer เต็ม → packet loss</p>
+          </article>
+
+          <article class="sheet-card">
+            <h3><span class="sheet-num">04</span> ตัวอย่างคำตอบที่ควรจำ</h3>
+            <ul class="tight">
+              <li>4,000 bits @ 2 Mbps → <strong>2 ms</strong></li>
+              <li>5 MB @ 10 Mbps → <strong>4 s</strong></li>
+              <li>1,000 Bytes, 2,000 km, 10 Mbps → trans <strong>0.8 ms</strong>, prop <strong>10 ms</strong></li>
+              <li>10 Kbits @ 100 Mbps → <strong>0.1 msec</strong> / hop</li>
+              <li>10<sup>6</sup> bits, 3 ลิงก์ 5 Mbps → <strong>0.6 s</strong> (ไม่แบ่ง) / <strong>0.204 s</strong> (100 แพ็กเก็ต)</li>
+              <li>Caravan 10 คัน, 12 s/คัน, 100 km @ 100 km/hr → <strong>62 นาที</strong></li>
+            </ul>
+          </article>
+
+          <article class="sheet-card sheet-card--wide">
+            <h3><span class="sheet-num">05</span> Protocol stack &amp; PDU</h3>
+            <div class="table-scroll">
+              <table>
+                <thead><tr><th>Internet (5)</th><th>OSI (7)</th><th>PDU</th><th>โปรโตคอล</th><th>อุปกรณ์อ่านถึง</th></tr></thead>
+                <tbody>
+                  <tr><td rowspan="3">Application</td><td>Application</td><td rowspan="3">Message</td><td rowspan="3">HTTP, IMAP, SMTP, DNS</td><td rowspan="3">Host</td></tr>
+                  <tr><td><mark>Presentation</mark></td></tr>
+                  <tr><td><mark>Session</mark></td></tr>
+                  <tr><td>Transport</td><td>Transport</td><td>Segment</td><td>TCP, UDP</td><td>Host</td></tr>
+                  <tr><td>Network</td><td>Network</td><td>Datagram</td><td>IP, routing protocols</td><td>Router (L3)</td></tr>
+                  <tr><td>Link</td><td>Link</td><td>Frame</td><td>Ethernet, 802.11, PPP</td><td>Switch (L2)</td></tr>
+                  <tr><td>Physical</td><td>Physical</td><td>Bits</td><td>—</td><td></td></tr>
+                </tbody>
+              </table>
+            </div>
+            <p class="note">ไฮไลต์ = 2 เลเยอร์ของ OSI ที่ Internet stack ไม่มี ต้องทำในแอปพลิเคชันเอง</p>
+          </article>
+
+          <article class="sheet-card sheet-card--wide">
+            <h3><span class="sheet-num">06</span> Circuit vs Packet switching</h3>
+            <div class="table-scroll">
+              <table>
+                <thead><tr><th></th><th>Circuit</th><th>Packet</th></tr></thead>
+                <tbody>
+                  <tr><td>ทรัพยากร</td><td>จอง end-end (dedicated)</td><td>แชร์ on-demand</td></tr>
+                  <tr><td>ประสิทธิภาพ</td><td>รับประกัน แต่ว่างทิ้งถ้าไม่ใช้</td><td>ใช้เต็มที่ แต่มี queue delay/loss</td></tr>
+                  <tr><td>เหมาะกับ</td><td>โทรศัพท์แบบดั้งเดิม</td><td>ข้อมูลแบบ bursty</td></tr>
+                  <tr><td>แบ่งช่อง</td><td>FDM / TDM</td><td>store-and-forward</td></tr>
+                  <tr><td>1 Gb/s, 100 Mb/s ต่อคน</td><td>10 users</td><td>35 users (P &lt; .0004)</td></tr>
+                </tbody>
+              </table>
+            </div>
+          </article>
+
+          <article class="sheet-card">
+            <h3><span class="sheet-num">07</span> Forwarding vs Routing</h3>
+            <dl class="defs">
+              <div><dt>Forwarding</dt><dd>aka switching · <strong>local</strong> · input link → output link ตาม forwarding table</dd></div>
+              <div><dt>Routing</dt><dd><strong>global</strong> · หาเส้นทาง source → destination ด้วย routing algorithms</dd></div>
+            </dl>
+          </article>
+
+          <article class="sheet-card">
+            <h3><span class="sheet-num">08</span> ขนาดเครือข่าย</h3>
+            <div class="table-scroll">
+              <table>
+                <thead><tr><th>ประเภท</th><th>ระยะ</th><th>ตัวอย่าง</th></tr></thead>
+                <tbody>
+                  <tr><td>PAN</td><td>1 ม.</td><td>Bluetooth</td></tr>
+                  <tr><td>LAN</td><td>10 ม. – 1 กม.</td><td>Ethernet, WiFi</td></tr>
+                  <tr><td>MAN</td><td>10 กม. (เมือง)</td><td>Cable, 802.16</td></tr>
+                  <tr><td>WAN</td><td>100 กม.+</td><td>Optical Backbone, 5G</td></tr>
+                  <tr><td>Internet</td><td>10,000 กม.</td><td>TCP/IP</td></tr>
+                </tbody>
+              </table>
+            </div>
+          </article>
+
+          <article class="sheet-card sheet-card--wide">
+            <h3><span class="sheet-num">09</span> Access networks</h3>
+            <div class="table-scroll">
+              <table>
+                <thead><tr><th>เทคโนโลยี</th><th>สื่อกลาง</th><th>แบนด์วิดท์</th><th>จุดจำ</th></tr></thead>
+                <tbody>
+                  <tr><td>FTTH</td><td>Fiber Optic</td><td><span class="tag tag--ded">Dedicated</span></td><td>100 Mbps – 1 Gbps+</td></tr>
+                  <tr><td>HFC (Cable)</td><td>Coaxial</td><td><span class="tag tag--shr">Shared</span></td><td>FDM · asymmetric · CMTS ที่ headend</td></tr>
+                  <tr><td>DSL</td><td>สายโทรศัพท์ทองแดง</td><td><span class="tag tag--ded">Dedicated</span></td><td>DSLAM ที่ central office · จำกัดตามระยะทาง</td></tr>
+                  <tr><td>Ethernet</td><td>Copper / Fiber</td><td><span class="tag tag--ded">Dedicated</span></td><td>Enterprise · 10 Mbps – 100 Gbps</td></tr>
+                  <tr><td>Wi-Fi</td><td>Wireless (Unlicensed)</td><td><span class="tag tag--shr">Shared</span></td><td>เร็ว ระยะสั้น · 802.11</td></tr>
+                  <tr><td>4G / 5G</td><td>Wireless (Licensed)</td><td><span class="tag tag--shr">Shared</span></td><td>ความเร็วปานกลาง mobility สูง</td></tr>
+                </tbody>
+              </table>
+            </div>
+          </article>
+
+          <article class="sheet-card">
+            <h3><span class="sheet-num">10</span> Internet structure</h3>
+            <ul class="tight">
+              <li>เชื่อมทุกคู่ตรงๆ = O(N²) ไม่ scale</li>
+              <li><strong>Tier-1</strong> (Level 3, Sprint, AT&amp;T, NTT) peer กันแบบ settlement-free</li>
+              <li><strong>Regional ISP</strong> → <strong>Access ISP</strong></li>
+              <li><strong>IXP</strong> = จุดที่ ISP หลายรายมา peer กัน ลด latency + ค่า transit</li>
+              <li><strong>POP</strong> = จุดที่ ISP ย่อยต่อเข้า ISP ใหญ่</li>
+              <li><strong>Content provider network</strong> (Google) bypass tier-1</li>
+            </ul>
+          </article>
+
+          <article class="sheet-card">
+            <h3><span class="sheet-num">11</span> Security</h3>
+            <dl class="defs">
+              <div><dt>Sniffing</dt><dd>อ่าน packet บน broadcast media (promiscuous NIC)</dd></div>
+              <div><dt>IP spoofing</dt><dd>ปลอม source address</dd></div>
+              <div><dt>DoS / DDoS</dt><dd>ท่วมด้วย bogus traffic · DDoS ใช้ botnet</dd></div>
+              <div><dt>MITM</dt><dd>Trudy แทรกกลาง Alice–Bob</dd></div>
+              <div><dt>Worms</dt><dd>แพร่ตัวเองอัตโนมัติ</dd></div>
+            </dl>
+            <p class="note">ป้องกัน: authentication · encryption · digital signatures · VPN · firewalls</p>
+          </article>
+
+          <article class="sheet-card">
+            <h3><span class="sheet-num">12</span> Topography keywords</h3>
+            <ul class="tight">
+              <li><strong>PAN:</strong> Master / Slave · Piconet · Bluetooth</li>
+              <li><strong>NAT:</strong> 10.0.0.x → 1 public IP</li>
+              <li><strong>VLAN:</strong> จัดกลุ่มด้วยซอฟต์แวร์ ไม่ใช่ตามสาย/ชั้น</li>
+              <li><strong>WiFi:</strong> Infrastructure (ผ่าน AP) vs Ad-hoc (ตรง)</li>
+              <li><strong>Cellular:</strong> UE (SIM) · eNode-B · Core Network</li>
+              <li><strong>Handover:</strong> Association → Coordination → Handover</li>
+              <li><strong>Data center:</strong> Load Balancing · Massive Scale</li>
+              <li><strong>Hidden terminal:</strong> ไร้สายใช้ CSMA/CD ไม่ได้</li>
+            </ul>
+          </article>
+
+          <article class="sheet-card">
+            <h3><span class="sheet-num">13</span> ปีที่ควรจำ</h3>
+            <dl class="defs defs--years">
+              <div><dt>1961</dt><dd>Kleinrock queueing theory</dd></div>
+              <div><dt>1969</dt><dd>ARPAnet node แรก</dd></div>
+              <div><dt>1972</dt><dd>NCP, e-mail แรก, 15 nodes</dd></div>
+              <div><dt>1974</dt><dd>Cerf &amp; Kahn internetworking</dd></div>
+              <div><dt>1976</dt><dd>Ethernet @ Xerox PARC</dd></div>
+              <div><dt>1983</dt><dd>TCP/IP deployment, DNS</dd></div>
+              <div><dt>1988</dt><dd>TCP congestion control</dd></div>
+              <div><dt>2008</dt><dd>SDN</dd></div>
+            </dl>
+          </article>
+
+        </div>
+      </section>
+
+      <!-- =============================================================
+           แท็บ 3: แบบฝึกหัด (20 ข้อ)
+           data-answer = ตัวเลือกที่ถูก
+           ============================================================= -->
+      <section class="panel" id="quiz" role="tabpanel" aria-labelledby="tab-quiz" tabindex="-1">
+        <div class="panel-head">
+          <h2>แบบฝึกหัด 20 ข้อ</h2>
+          <p class="panel-sub">เลือกคำตอบให้ครบแล้วกด "ตรวจคำตอบ" ด้านล่าง ระบบจะเฉลยพร้อมคำอธิบายทุกข้อ</p>
+        </div>
+
+        <form class="quiz" id="quiz-form" novalidate>
+
+          <fieldset class="q" data-answer="b">
+            <legend class="q-head"><span class="q-num">01</span><span class="q-text">ตามนิยามในสไลด์ Chapter 1 โปรโตคอล (Protocol) กำหนดสิ่งใด</span></legend>
+            <div class="q-options">
+              <label class="opt"><input type="radio" name="q1" value="a" /><span class="opt-key">A</span><span class="opt-text">ความเร็วสูงสุดของลิงก์ที่อุปกรณ์ใช้ได้</span></label>
+              <label class="opt"><input type="radio" name="q1" value="b" /><span class="opt-key">B</span><span class="opt-text">รูปแบบและลำดับของข้อความที่รับ-ส่งระหว่าง network entities และการกระทำเมื่อส่งหรือรับข้อความ</span></label>
+              <label class="opt"><input type="radio" name="q1" value="c" /><span class="opt-key">C</span><span class="opt-text">เส้นทางทางกายภาพของสายสัญญาณระหว่างเราเตอร์</span></label>
+              <label class="opt"><input type="radio" name="q1" value="d" /><span class="opt-key">D</span><span class="opt-text">จำนวนโฮสต์สูงสุดที่เชื่อมต่อกับ ISP ได้</span></label>
+            </div>
+            <div class="q-feedback"><div class="q-feedback-inner"><p class="q-verdict" aria-live="polite"></p><p class="q-explain">"Protocols define the format, order of messages sent and received among network entities, and actions taken on message transmission, receipt"</p></div></div>
+          </fieldset>
+
+          <fieldset class="q" data-answer="c">
+            <legend class="q-head"><span class="q-num">02</span><span class="q-text">การย้ายแพ็กเก็ตจาก input link ของเราเตอร์ไปยัง output link ที่เหมาะสม โดยดูจาก local forwarding table เรียกว่าอะไร</span></legend>
+            <div class="q-options">
+              <label class="opt"><input type="radio" name="q2" value="a" /><span class="opt-key">A</span><span class="opt-text">Routing</span></label>
+              <label class="opt"><input type="radio" name="q2" value="b" /><span class="opt-key">B</span><span class="opt-text">Multiplexing</span></label>
+              <label class="opt"><input type="radio" name="q2" value="c" /><span class="opt-key">C</span><span class="opt-text">Forwarding</span></label>
+              <label class="opt"><input type="radio" name="q2" value="d" /><span class="opt-key">D</span><span class="opt-text">Encapsulation</span></label>
+            </div>
+            <div class="q-feedback"><div class="q-feedback-inner"><p class="q-verdict" aria-live="polite"></p><p class="q-explain">Forwarding (aka "switching") เป็น local action ย้าย packet จาก input link ไป output link · ส่วน Routing เป็น global action กำหนดเส้นทาง source–destination ด้วย routing algorithms</p></div></div>
+          </fieldset>
+
+          <fieldset class="q" data-answer="b">
+            <legend class="q-head"><span class="q-num">03</span><span class="q-text">เครื่องคอมพิวเตอร์ต้องการส่ง Packet ขนาด 4,000 บิต ผ่านสายสัญญาณที่มีความเร็ว 2 Mbps ค่า Transmission Delay คือเท่าใด</span></legend>
+            <div class="q-options">
+              <label class="opt"><input type="radio" name="q3" value="a" /><span class="opt-key">A</span><span class="opt-text">0.2 ms</span></label>
+              <label class="opt"><input type="radio" name="q3" value="b" /><span class="opt-key">B</span><span class="opt-text">2 ms</span></label>
+              <label class="opt"><input type="radio" name="q3" value="c" /><span class="opt-key">C</span><span class="opt-text">20 ms</span></label>
+              <label class="opt"><input type="radio" name="q3" value="d" /><span class="opt-key">D</span><span class="opt-text">2 s</span></label>
+            </div>
+            <div class="q-feedback"><div class="q-feedback-inner"><p class="q-verdict" aria-live="polite"></p><p class="q-explain">R = 2 Mbps = 2,000,000 bps → D<sub>trans</sub> = L/R = 4,000 / 2,000,000 = 0.002 s = 2 ms</p></div></div>
+          </fieldset>
+
+          <fieldset class="q" data-answer="c">
+            <legend class="q-head"><span class="q-num">04</span><span class="q-text">ส่งไฟล์รูปภาพขนาด 5 MegaBytes (MB) ผ่าน Cable-based access (HFC) ที่มี Upstream Rate 10 Mbps จะใช้เวลาผลักข้อมูลลงสายสัญญาณเท่าใด</span></legend>
+            <div class="q-options">
+              <label class="opt"><input type="radio" name="q4" value="a" /><span class="opt-key">A</span><span class="opt-text">0.5 วินาที</span></label>
+              <label class="opt"><input type="radio" name="q4" value="b" /><span class="opt-key">B</span><span class="opt-text">40 วินาที</span></label>
+              <label class="opt"><input type="radio" name="q4" value="c" /><span class="opt-key">C</span><span class="opt-text">4 วินาที</span></label>
+              <label class="opt"><input type="radio" name="q4" value="d" /><span class="opt-key">D</span><span class="opt-text">0.4 วินาที</span></label>
+            </div>
+            <div class="q-feedback"><div class="q-feedback-inner"><p class="q-verdict" aria-live="polite"></p><p class="q-explain">L = 5 × 10<sup>6</sup> × 8 = 40,000,000 bits · R = 10,000,000 bps → 40,000,000 / 10,000,000 = 4 วินาที (ถ้าลืมคูณ 8 จะได้ 0.5 วินาทีซึ่งผิด)</p></div></div>
+          </fieldset>
+
+          <fieldset class="q" data-answer="a">
+            <legend class="q-head"><span class="q-num">05</span><span class="q-text">คอมพิวเตอร์ A ส่งข้อมูล 1,000 Bytes ไปยัง Router ผ่านสายยาว 2,000 กม. แบนด์วิดท์ 10 Mbps สัญญาณเดินทาง 2×10<sup>8</sup> m/s ค่า Transmission Delay และ Propagation Delay ตามลำดับคือ</span></legend>
+            <div class="q-options">
+              <label class="opt"><input type="radio" name="q5" value="a" /><span class="opt-key">A</span><span class="opt-text">0.8 ms และ 10 ms</span></label>
+              <label class="opt"><input type="radio" name="q5" value="b" /><span class="opt-key">B</span><span class="opt-text">0.1 ms และ 10 ms</span></label>
+              <label class="opt"><input type="radio" name="q5" value="c" /><span class="opt-key">C</span><span class="opt-text">0.8 ms และ 1 ms</span></label>
+              <label class="opt"><input type="radio" name="q5" value="d" /><span class="opt-key">D</span><span class="opt-text">10 ms และ 0.8 ms</span></label>
+            </div>
+            <div class="q-feedback"><div class="q-feedback-inner"><p class="q-verdict" aria-live="polite"></p><p class="q-explain">D<sub>trans</sub> = 8,000 bits / 10,000,000 bps = 0.0008 s = 0.8 ms · D<sub>prop</sub> = 2,000,000 m / 2×10<sup>8</sup> m/s = 0.01 s = 10 ms</p></div></div>
+          </fieldset>
+
+          <fieldset class="q" data-answer="d">
+            <legend class="q-head"><span class="q-num">06</span><span class="q-text">ความหน่วงประเภทใด "ไม่ขึ้นอยู่กับขนาดแพ็กเก็ต (L) หรือแบนด์วิดท์ (R)" แต่ขึ้นกับระยะทางทางกายภาพล้วนๆ</span></legend>
+            <div class="q-options">
+              <label class="opt"><input type="radio" name="q6" value="a" /><span class="opt-key">A</span><span class="opt-text">Processing Delay</span></label>
+              <label class="opt"><input type="radio" name="q6" value="b" /><span class="opt-key">B</span><span class="opt-text">Queuing Delay</span></label>
+              <label class="opt"><input type="radio" name="q6" value="c" /><span class="opt-key">C</span><span class="opt-text">Transmission Delay</span></label>
+              <label class="opt"><input type="radio" name="q6" value="d" /><span class="opt-key">D</span><span class="opt-text">Propagation Delay</span></label>
+            </div>
+            <div class="q-feedback"><div class="q-feedback-inner"><p class="q-verdict" aria-live="polite"></p><p class="q-explain">กฎเหล็กในสไลด์: d<sub>prop</sub> = d/s ไม่ขึ้นอยู่กับ L หรือ R แต่ขึ้นกับระยะทางฟิสิกส์ล้วนๆ · ส่วน d<sub>trans</sub> = L/R ขึ้นกับทั้งสองค่า</p></div></div>
+          </fieldset>
+
+          <fieldset class="q" data-answer="c">
+            <legend class="q-head"><span class="q-num">07</span><span class="q-text">ถ้า traffic intensity La/R มีค่ามากกว่า 1 จะเกิดอะไรขึ้น</span></legend>
+            <div class="q-options">
+              <label class="opt"><input type="radio" name="q7" value="a" /><span class="opt-key">A</span><span class="opt-text">queueing delay เฉลี่ยน้อยมาก</span></label>
+              <label class="opt"><input type="radio" name="q7" value="b" /><span class="opt-key">B</span><span class="opt-text">transmission delay ลดลงครึ่งหนึ่ง</span></label>
+              <label class="opt"><input type="radio" name="q7" value="c" /><span class="opt-key">C</span><span class="opt-text">งานที่เข้ามามากกว่าที่ให้บริการได้ queueing delay เฉลี่ยเข้าสู่ infinite และ buffer เต็มจนเกิด packet loss</span></label>
+              <label class="opt"><input type="radio" name="q7" value="d" /><span class="opt-key">D</span><span class="opt-text">propagation delay เพิ่มขึ้นตามจำนวนแพ็กเก็ต</span></label>
+            </div>
+            <div class="q-feedback"><div class="q-feedback-inner"><p class="q-verdict" aria-live="polite"></p><p class="q-explain">La/R ~ 0: delay น้อย · La/R → 1: delay มาก · La/R &gt; 1: "งาน" เข้ามามากกว่าที่ให้บริการได้ average delay infinite — คิวยาวขึ้นจน Buffer เต็ม แพ็กเก็ตใหม่ถูกทิ้ง (Packet Loss)</p></div></div>
+          </fieldset>
+
+          <fieldset class="q" data-answer="d">
+            <legend class="q-head"><span class="q-num">08</span><span class="q-text">Server ส่งข้อมูลถึง Client ผ่าน 3 ลิงก์ R1 = 2 Mbps, R2 = 100 kbps, R3 = 1 Mbps throughput แบบ end-to-end คือเท่าใด</span></legend>
+            <div class="q-options">
+              <label class="opt"><input type="radio" name="q8" value="a" /><span class="opt-key">A</span><span class="opt-text">3.1 Mbps</span></label>
+              <label class="opt"><input type="radio" name="q8" value="b" /><span class="opt-key">B</span><span class="opt-text">1 Mbps</span></label>
+              <label class="opt"><input type="radio" name="q8" value="c" /><span class="opt-key">C</span><span class="opt-text">2 Mbps</span></label>
+              <label class="opt"><input type="radio" name="q8" value="d" /><span class="opt-key">D</span><span class="opt-text">100 kbps</span></label>
+            </div>
+            <div class="q-feedback"><div class="q-feedback-inner"><p class="q-verdict" aria-live="polite"></p><p class="q-explain">Throughput = min(R1, R2, R3) = 100 kbps — ลิงก์ R2 เป็น bottleneck ความเร็วรวมถูกจำกัดที่ลิงก์ที่ช้าที่สุด</p></div></div>
+          </fieldset>
+
+          <fieldset class="q" data-answer="a">
+            <legend class="q-head"><span class="q-num">09</span><span class="q-text">ลิงก์ 1 Gb/s ผู้ใช้แต่ละคนใช้ 100 Mb/s เมื่อ active (active 10% ของเวลา) ถ้าใช้ circuit switching จะรองรับผู้ใช้ได้กี่คน</span></legend>
+            <div class="q-options">
+              <label class="opt"><input type="radio" name="q9" value="a" /><span class="opt-key">A</span><span class="opt-text">10 คน</span></label>
+              <label class="opt"><input type="radio" name="q9" value="b" /><span class="opt-key">B</span><span class="opt-text">35 คน</span></label>
+              <label class="opt"><input type="radio" name="q9" value="c" /><span class="opt-key">C</span><span class="opt-text">100 คน</span></label>
+              <label class="opt"><input type="radio" name="q9" value="d" /><span class="opt-key">D</span><span class="opt-text">1 คน</span></label>
+            </div>
+            <div class="q-feedback"><div class="q-feedback-inner"><p class="q-verdict" aria-live="polite"></p><p class="q-explain">Circuit switching จอง 100 Mb/s ให้แต่ละคนตลอด → 1 Gb/s ÷ 100 Mb/s = 10 users · 35 คนคือกรณี packet switching (โอกาสที่ &gt; 10 คน active พร้อมกันน้อยกว่า .0004)</p></div></div>
+          </fieldset>
+
+          <fieldset class="q" data-answer="c">
+            <legend class="q-head"><span class="q-num">10</span><span class="q-text">ส่งข้อความ 10<sup>6</sup> bits ผ่าน 3 ลิงก์ ลิงก์ละ 5 Mbps ถ้าแบ่งเป็น 100 แพ็กเก็ต (แพ็กเก็ตละ 10<sup>4</sup> bits) จะใช้เวลาทั้งหมดเท่าใด</span></legend>
+            <div class="q-options">
+              <label class="opt"><input type="radio" name="q10" value="a" /><span class="opt-key">A</span><span class="opt-text">0.6 วินาที</span></label>
+              <label class="opt"><input type="radio" name="q10" value="b" /><span class="opt-key">B</span><span class="opt-text">0.2 วินาที</span></label>
+              <label class="opt"><input type="radio" name="q10" value="c" /><span class="opt-key">C</span><span class="opt-text">0.204 วินาที</span></label>
+              <label class="opt"><input type="radio" name="q10" value="d" /><span class="opt-key">D</span><span class="opt-text">0.006 วินาที</span></label>
+            </div>
+            <div class="q-feedback"><div class="q-feedback-inner"><p class="q-verdict" aria-live="polite"></p><p class="q-explain">แต่ละแพ็กเก็ตใช้ 10<sup>4</sup> / 5×10<sup>6</sup> = 2 ms ต่อลิงก์ แพ็กเก็ตสุดท้ายออกจากต้นทางที่ 100 × 2 ms = 0.2 s แล้วผ่านอีก 2 ลิงก์ (+4 ms) = 0.204 s · ถ้าไม่แบ่งจะใช้ 0.2 s × 3 = 0.6 s</p></div></div>
+          </fieldset>
+
+          <fieldset class="q" data-answer="a">
+            <legend class="q-head"><span class="q-num">11</span><span class="q-text">ลำดับชื่อข้อมูลในการห่อหุ้ม (Encapsulation) จาก Application ลงไปถึง Link ข้อใดถูกต้อง</span></legend>
+            <div class="q-options">
+              <label class="opt"><input type="radio" name="q11" value="a" /><span class="opt-key">A</span><span class="opt-text">Message → Segment → Datagram → Frame</span></label>
+              <label class="opt"><input type="radio" name="q11" value="b" /><span class="opt-key">B</span><span class="opt-text">Frame → Datagram → Segment → Message</span></label>
+              <label class="opt"><input type="radio" name="q11" value="c" /><span class="opt-key">C</span><span class="opt-text">Message → Datagram → Segment → Frame</span></label>
+              <label class="opt"><input type="radio" name="q11" value="d" /><span class="opt-key">D</span><span class="opt-text">Segment → Message → Frame → Datagram</span></label>
+            </div>
+            <div class="q-feedback"><div class="q-feedback-inner"><p class="q-verdict" aria-live="polite"></p><p class="q-explain">Application: message M → Transport ใส่ Ht: segment → Network ใส่ Hn: datagram → Link ใส่ Hl: frame (ข้อ B คือทิศทาง decapsulation ที่ปลายทาง)</p></div></div>
+          </fieldset>
+
+          <fieldset class="q" data-answer="b">
+            <legend class="q-head"><span class="q-num">12</span><span class="q-text">เลเยอร์ใดใน ISO/OSI reference model ที่ "ไม่มี" ใน Internet protocol stack</span></legend>
+            <div class="q-options">
+              <label class="opt"><input type="radio" name="q12" value="a" /><span class="opt-key">A</span><span class="opt-text">Session และ Transport</span></label>
+              <label class="opt"><input type="radio" name="q12" value="b" /><span class="opt-key">B</span><span class="opt-text">Presentation และ Session</span></label>
+              <label class="opt"><input type="radio" name="q12" value="c" /><span class="opt-key">C</span><span class="opt-text">Network และ Link</span></label>
+              <label class="opt"><input type="radio" name="q12" value="d" /><span class="opt-key">D</span><span class="opt-text">Application และ Presentation</span></label>
+            </div>
+            <div class="q-feedback"><div class="q-feedback-inner"><p class="q-verdict" aria-live="polite"></p><p class="q-explain">Presentation (encryption, compression, machine-specific conventions) และ Session (synchronization, checkpointing, recovery) — ถ้าต้องการต้อง implement ในแอปพลิเคชัน</p></div></div>
+          </fieldset>
+
+          <fieldset class="q" data-answer="a">
+            <legend class="q-head"><span class="q-num">13</span><span class="q-text">ระหว่างทาง Link-layer Switch และ Router "แกะซอง" ข้อมูลถึงชั้นใด ตามลำดับ</span></legend>
+            <div class="q-options">
+              <label class="opt"><input type="radio" name="q13" value="a" /><span class="opt-key">A</span><span class="opt-text">Link (L2) และ Network (L3)</span></label>
+              <label class="opt"><input type="radio" name="q13" value="b" /><span class="opt-key">B</span><span class="opt-text">Network (L3) และ Transport (L4)</span></label>
+              <label class="opt"><input type="radio" name="q13" value="c" /><span class="opt-key">C</span><span class="opt-text">Physical (L1) และ Link (L2)</span></label>
+              <label class="opt"><input type="radio" name="q13" value="d" /><span class="opt-key">D</span><span class="opt-text">Transport (L4) และ Application (L5)</span></label>
+            </div>
+            <div class="q-feedback"><div class="q-feedback-inner"><p class="q-verdict" aria-live="polite"></p><p class="q-explain">Link-layer Switch แกะซองถึงแค่ชั้น Link (L2) · Router แกะซองถึงชั้น Network (L3) เพื่อหา IP ปลายทาง โดยไม่แตะเนื้อหาของแอปพลิเคชัน</p></div></div>
+          </fieldset>
+
+          <fieldset class="q" data-answer="d">
+            <legend class="q-head"><span class="q-num">14</span><span class="q-text">เทคโนโลยี Home Access ใดที่บ้านหลายหลัง "แชร์" แบนด์วิดท์ร่วมกัน (Shared)</span></legend>
+            <div class="q-options">
+              <label class="opt"><input type="radio" name="q14" value="a" /><span class="opt-key">A</span><span class="opt-text">FTTH</span></label>
+              <label class="opt"><input type="radio" name="q14" value="b" /><span class="opt-key">B</span><span class="opt-text">DSL</span></label>
+              <label class="opt"><input type="radio" name="q14" value="c" /><span class="opt-key">C</span><span class="opt-text">Ethernet</span></label>
+              <label class="opt"><input type="radio" name="q14" value="d" /><span class="opt-key">D</span><span class="opt-text">HFC (Cable)</span></label>
+            </div>
+            <div class="q-feedback"><div class="q-feedback-inner"><p class="q-verdict" aria-live="polite"></p><p class="q-explain">ใน Access Networks Matrix: HFC (Cable), Wi-Fi, 4G/5G เป็น Shared · FTTH, DSL, Ethernet เป็น Dedicated — บ้านที่ใช้ cable แชร์ access network ไปยัง cable headend</p></div></div>
+          </fieldset>
+
+          <fieldset class="q" data-answer="b">
+            <legend class="q-head"><span class="q-num">15</span><span class="q-text">DSL ใช้สายโทรศัพท์เดิมส่งข้อมูลไปยังอุปกรณ์ใดที่ central office</span></legend>
+            <div class="q-options">
+              <label class="opt"><input type="radio" name="q15" value="a" /><span class="opt-key">A</span><span class="opt-text">CMTS</span></label>
+              <label class="opt"><input type="radio" name="q15" value="b" /><span class="opt-key">B</span><span class="opt-text">DSLAM</span></label>
+              <label class="opt"><input type="radio" name="q15" value="c" /><span class="opt-key">C</span><span class="opt-text">IXP</span></label>
+              <label class="opt"><input type="radio" name="q15" value="d" /><span class="opt-key">D</span><span class="opt-text">Access Point</span></label>
+            </div>
+            <div class="q-feedback"><div class="q-feedback-inner"><p class="q-verdict" aria-live="polite"></p><p class="q-explain">DSL ใช้สายโทรศัพท์ไปยัง DSLAM (DSL access multiplexer) ที่ central office · CMTS (cable modem termination system) เป็นอุปกรณ์ของ cable/HFC</p></div></div>
+          </fieldset>
+
+          <fieldset class="q" data-answer="d">
+            <legend class="q-head"><span class="q-num">16</span><span class="q-text">ข้อใดอธิบาย IXP (Internet Exchange Point) ได้ถูกต้อง</span></legend>
+            <div class="q-options">
+              <label class="opt"><input type="radio" name="q16" value="a" /><span class="opt-key">A</span><span class="opt-text">อุปกรณ์ในบ้านที่แปลง IP ภายในเป็น IP สาธารณะ</span></label>
+              <label class="opt"><input type="radio" name="q16" value="b" /><span class="opt-key">B</span><span class="opt-text">Tier-1 ISP ที่ให้บริการระดับโลก</span></label>
+              <label class="opt"><input type="radio" name="q16" value="c" /><span class="opt-key">C</span><span class="opt-text">เสาสัญญาณที่บริหารทรัพยากรคลื่นวิทยุในพื้นที่เซลล์</span></label>
+              <label class="opt"><input type="radio" name="q16" value="d" /><span class="opt-key">D</span><span class="opt-text">จุดศูนย์กลางที่ผู้ให้บริการหลายรายมาเชื่อมต่อ (peering) กัน ช่วยลด latency และหลีกเลี่ยงการจ่ายค่า transit ให้ Tier-1</span></label>
+            </div>
+            <div class="q-feedback"><div class="q-feedback-inner"><p class="q-verdict" aria-live="polite"></p><p class="q-explain">IXP คืออาคารศูนย์กลางที่ผู้ให้บริการหลายรายมาเชื่อมต่อกัน การทำ Peering ผ่าน IXP ทำให้แลกเปลี่ยนข้อมูลกันโดยตรง · ข้อ A คือ NAT router, ข้อ C คือ Base Station (eNode-B)</p></div></div>
+          </fieldset>
+
+          <fieldset class="q" data-answer="c">
+            <legend class="q-head"><span class="q-num">17</span><span class="q-text">เครือข่ายที่ครอบคลุมระดับเมือง ระยะประมาณ 10 กม. ใช้เทคโนโลยีเช่น Cable, 802.16 จัดเป็นประเภทใด</span></legend>
+            <div class="q-options">
+              <label class="opt"><input type="radio" name="q17" value="a" /><span class="opt-key">A</span><span class="opt-text">PAN</span></label>
+              <label class="opt"><input type="radio" name="q17" value="b" /><span class="opt-key">B</span><span class="opt-text">LAN</span></label>
+              <label class="opt"><input type="radio" name="q17" value="c" /><span class="opt-key">C</span><span class="opt-text">MAN</span></label>
+              <label class="opt"><input type="radio" name="q17" value="d" /><span class="opt-key">D</span><span class="opt-text">WAN</span></label>
+            </div>
+            <div class="q-feedback"><div class="q-feedback-inner"><p class="q-verdict" aria-live="polite"></p><p class="q-explain">MAN (Metropolitan Area Network): 10 กม. ระดับเมือง · PAN 1 ม. · LAN 10 ม.–1 กม. · WAN 100 กม.+</p></div></div>
+          </fieldset>
+
+          <fieldset class="q" data-answer="a">
+            <legend class="q-head"><span class="q-num">18</span><span class="q-text">อุปกรณ์ในบ้านที่มี IP 10.0.0.1, 10.0.0.2, 10.0.0.3 ออกอินเทอร์เน็ตโดยใช้ IP 138.76.29.7 เพียงตัวเดียว เป็นหน้าที่ของกลไกใด</span></legend>
+            <div class="q-options">
+              <label class="opt"><input type="radio" name="q18" value="a" /><span class="opt-key">A</span><span class="opt-text">NAT (Network Address Translation)</span></label>
+              <label class="opt"><input type="radio" name="q18" value="b" /><span class="opt-key">B</span><span class="opt-text">VLAN</span></label>
+              <label class="opt"><input type="radio" name="q18" value="c" /><span class="opt-key">C</span><span class="opt-text">Handover</span></label>
+              <label class="opt"><input type="radio" name="q18" value="d" /><span class="opt-key">D</span><span class="opt-text">Load Balancing</span></label>
+            </div>
+            <div class="q-feedback"><div class="q-feedback-inner"><p class="q-verdict" aria-live="polite"></p><p class="q-explain">NAT Router ทำหน้าที่แปลงที่อยู่ — IP ภายในมีความหมายแค่ในบ้าน และใช้ IP เดียวเป็นตัวแทนของทั้งบ้าน</p></div></div>
+          </fieldset>
+
+          <fieldset class="q" data-answer="d">
+            <legend class="q-head"><span class="q-num">19</span><span class="q-text">ลำดับขั้นตอน Mobility &amp; Handover ของเครือข่ายมือถือข้อใดถูกต้อง</span></legend>
+            <div class="q-options">
+              <label class="opt"><input type="radio" name="q19" value="a" /><span class="opt-key">A</span><span class="opt-text">Handover → Association → Coordination</span></label>
+              <label class="opt"><input type="radio" name="q19" value="b" /><span class="opt-key">B</span><span class="opt-text">Coordination → Association → Handover</span></label>
+              <label class="opt"><input type="radio" name="q19" value="c" /><span class="opt-key">C</span><span class="opt-text">Association → Handover → Coordination</span></label>
+              <label class="opt"><input type="radio" name="q19" value="d" /><span class="opt-key">D</span><span class="opt-text">Association → Coordination → Handover</span></label>
+            </div>
+            <div class="q-feedback"><div class="q-feedback-inner"><p class="q-verdict" aria-live="polite"></p><p class="q-explain">Step 1 Association: เชื่อมกับเสาปัจจุบัน → Step 2 Coordination: ประเมินความแรงสัญญาณและเตรียมโอนย้าย → Step 3 Handover: ส่งมอบการเชื่อมต่อไปเสาใหม่โดยไม่ทำให้ดาวน์โหลดสะดุด</p></div></div>
+          </fieldset>
+
+          <fieldset class="q" data-answer="b">
+            <legend class="q-head"><span class="q-num">20</span><span class="q-text">การที่ผู้โจมตีสร้างแพ็กเก็ตโดยปลอม source address ให้เป็นของเครื่องอื่น เพื่อหลอกปลายทางว่ามาจากแหล่งที่น่าเชื่อถือ เรียกว่าอะไร</span></legend>
+            <div class="q-options">
+              <label class="opt"><input type="radio" name="q20" value="a" /><span class="opt-key">A</span><span class="opt-text">Packet sniffing</span></label>
+              <label class="opt"><input type="radio" name="q20" value="b" /><span class="opt-key">B</span><span class="opt-text">IP spoofing</span></label>
+              <label class="opt"><input type="radio" name="q20" value="c" /><span class="opt-key">C</span><span class="opt-text">DDoS</span></label>
+              <label class="opt"><input type="radio" name="q20" value="d" /><span class="opt-key">D</span><span class="opt-text">Man-in-the-Middle</span></label>
+            </div>
+            <div class="q-feedback"><div class="q-feedback-inner"><p class="q-verdict" aria-live="polite"></p><p class="q-explain">IP spoofing: injection of packet with false source address · Sniffing คือดักอ่าน packet, DDoS คือท่วมเป้าหมายจากหลายเครื่อง, MITM คือแทรกกลางการสื่อสาร</p></div></div>
+          </fieldset>
+
+          <div class="quiz-result" id="quiz-result" hidden tabindex="-1">
+            <div class="score-ring" aria-hidden="true">
+              <svg viewBox="0 0 120 120">
+                <circle class="ring-track" cx="60" cy="60" r="52" />
+                <circle class="ring-fill" cx="60" cy="60" r="52" pathLength="100" />
+              </svg>
+              <span class="score-pct"><span id="score-pct">0</span>%</span>
+            </div>
+            <div class="score-body">
+              <p class="score-line" role="status">ได้ <strong id="score-num">0</strong> / 20 คะแนน</p>
+              <p class="score-msg" id="score-msg"></p>
+              <div class="score-actions">
+                <button class="btn btn--ghost btn--sm" type="button" id="toggle-wrong" aria-pressed="false">ดูเฉพาะข้อที่ผิด</button>
+              </div>
+            </div>
+          </div>
+
+          <div class="quiz-bar">
+            <div class="quiz-progress">
+              <span class="quiz-count"><span id="answered">0</span> / 20 ข้อ</span>
+              <span class="progress" aria-hidden="true"><span class="progress-fill" id="progress-fill"></span></span>
+              <span class="quiz-hint" id="quiz-hint" aria-live="polite"></span>
+            </div>
+            <div class="quiz-actions">
+              <button class="btn btn--ghost" type="reset" id="quiz-reset">ทำใหม่</button>
+              <button class="btn btn--primary" type="submit" id="quiz-submit">ตรวจคำตอบ</button>
+            </div>
+          </div>
+        </form>
+      </section>
+
+    </div>
+  </main>
+
+  <footer class="site-footer">
+    <div class="wrap">
+      <p>สรุปจากสไลด์ ITDS231 Computer Networks (Faculty of ICT, Mahidol University) เพื่อใช้ทบทวนส่วนตัว — ถ้าเนื้อหาขัดกับสไลด์ ให้ยึดสไลด์เป็นหลัก</p>
+    </div>
+  </footer>
+
+  <script src="assets/js/network.js" defer></script>
+</body>
+</html>
