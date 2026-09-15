@@ -1,0 +1,1186 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>ITDS241 บทที่ 2: Media, Forms &amp; Semantic · โต๊ะทบทวน</title>
+<meta name="description" content="ITDS241 Web Technologies and Applications บทที่ 2: HTML audio/video, HTML form และ input ประเภทต่างๆ, form validation, form submission (GET/POST), semantic elements และ web layouts พร้อม cheat sheet และแบบฝึกหัด 20 ข้อ" />
+<meta name="theme-color" content="#17151a" />
+<link rel="icon" href="assets/favicon.svg" type="image/svg+xml" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link
+  href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500..700&family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans+Thai:wght@500;600&family=IBM+Plex+Sans+Thai+Looped:wght@400;500;600&display=swap"
+  rel="stylesheet"
+/>
+<link rel="stylesheet" href="assets/css/tokens.css" />
+<link rel="stylesheet" href="assets/css/base.css" />
+<link rel="stylesheet" href="assets/css/network.css" />
+<link rel="stylesheet" href="assets/css/motion.css" />
+<script>document.documentElement.classList.add("js");</script>
+</head>
+<body>
+  <a class="skip-link" href="#tabs">ข้ามไปที่เนื้อหา</a>
+
+  <svg class="dg-defs" aria-hidden="true" focusable="false">
+    <defs>
+      <marker id="arr" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path class="dg-arrow" d="M0 0L10 5L0 10z" /></marker>
+      <marker id="arr-muted" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path class="dg-arrow--muted" d="M0 0L10 5L0 10z" /></marker>
+      <marker id="arr-ok" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path class="dg-arrow--ok" d="M0 0L10 5L0 10z" /></marker>
+      <marker id="arr-bad" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path class="dg-arrow--bad" d="M0 0L10 5L0 10z" /></marker>
+    </defs>
+  </svg>
+
+  <header class="site-header">
+    <div class="wrap">
+      <a class="wordmark" href="index.html" aria-label="โต๊ะทบทวน หน้าแรก">
+        <img class="wordmark-mark" src="assets/favicon.svg" alt="" width="26" height="26" />
+        <span class="wordmark-text">โต๊ะ<span>ทบทวน</span></span>
+      </a>
+      <a class="crumb" href="index.html"><span class="arrow" aria-hidden="true">←</span> รายวิชาทั้งหมด</a>
+    </div>
+  </header>
+
+  <main>
+    <section class="course-hero wrap">
+      <nav class="course-nav" aria-label="เลือกวิชาและบท">
+        <div class="subject-switch">
+          <button class="subject-btn" type="button" data-subject="network" aria-pressed="false"><span class="subject-code">ITDS231</span> Network</button>
+          <button class="subject-btn" type="button" data-subject="web" aria-pressed="true"><span class="subject-code">ITDS241</span> Web</button>
+        </div>
+        <div class="chapter-nav" data-subject="network" data-label="ITDS231 Computer Networks" role="group" aria-label="บทของวิชา ITDS231 Computer Networks">
+          <a class="chapter-link" href="network.html"><span class="chapter-num">บทที่ 1</span><span class="chapter-name">Intro &amp; Topology</span></a>
+          <a class="chapter-link" href="network-application-layer.html"><span class="chapter-num">บทที่ 2</span><span class="chapter-name">Application Layer</span></a>
+          <a class="chapter-link" href="network-data-link-layer.html"><span class="chapter-num">บทที่ 3</span><span class="chapter-name">Data Link Layer</span></a>
+          <a class="chapter-link" href="network-mac-ethernet.html"><span class="chapter-num">บทที่ 4</span><span class="chapter-name">MAC + Ethernet</span></a>
+        </div>
+        <div class="chapter-nav" data-subject="web" data-label="ITDS241 Web Technologies and Applications" role="group" aria-label="บทของวิชา ITDS241 Web Technologies and Applications">
+          <a class="chapter-link" href="web-intro-html-basics.html"><span class="chapter-num">บทที่ 1</span><span class="chapter-name">Internet &amp; HTML Basics</span></a>
+          <a class="chapter-link" href="web-media-forms-semantic.html" aria-current="page"><span class="chapter-num">บทที่ 2</span><span class="chapter-name">Media, Forms &amp; Semantic</span></a>
+        </div>
+      </nav>
+      <span class="eyebrow">ITDS241 · บทที่ 2 · Lecture 02</span>
+      <h1>Media, Forms &amp; Semantic</h1>
+      <p class="course-lede">HTML ส่วนที่ 2 — ใส่เสียงและวิดีโอด้วย HTML5, สร้าง form รับข้อมูลด้วย input หลายประเภท, ตรวจสอบข้อมูลด้วย validation attributes, ส่ง form ด้วย GET/POST และวางโครงหน้าเว็บด้วย semantic elements</p>
+      <ul class="course-meta" aria-label="ข้อมูลบทเรียน">
+        <li class="chip chip--accent">ITDS241 Web Technologies and Applications</li>
+        <li class="chip">1 ไฟล์สไลด์ · 63 หน้า</li>
+        <li class="chip">แบบฝึกหัด 20 ข้อ</li>
+      </ul>
+    </section>
+
+    <div class="tabbar" id="tabs">
+      <div class="wrap">
+        <div class="tabs" role="tablist" aria-label="ส่วนของหน้า">
+          <button class="tab" role="tab" id="tab-content" aria-controls="content" aria-selected="true" type="button">
+            <svg class="tab-icon" viewBox="0 0 20 20" aria-hidden="true"><path d="M4 3.5h8.5L16 7v9.5H4z M12 3.5V7h4 M7 10h6 M7 13h4" /></svg>
+            เนื้อหา
+          </button>
+          <button class="tab" role="tab" id="tab-summary" aria-controls="summary" aria-selected="false" type="button">
+            <svg class="tab-icon" viewBox="0 0 20 20" aria-hidden="true"><path d="M3.5 4h13v12h-13z M3.5 8h13 M8.5 8v8" /></svg>
+            สรุป
+          </button>
+          <button class="tab" role="tab" id="tab-quiz" aria-controls="quiz" aria-selected="false" type="button">
+            <svg class="tab-icon" viewBox="0 0 20 20" aria-hidden="true"><path d="M10 17a7 7 0 1 0 0-14 7 7 0 0 0 0 14z M6.8 10.2l2.2 2.2 4.2-4.6" /></svg>
+            แบบฝึกหัด
+          </button>
+          <span class="tab-indicator" aria-hidden="true"></span>
+        </div>
+      </div>
+    </div>
+
+    <div class="wrap panels">
+
+      <!-- =============================================================
+           แท็บ 1: เนื้อหา
+           ============================================================= -->
+      <section class="panel" id="content" role="tabpanel" aria-labelledby="tab-content" tabindex="-1">
+        <div class="panel-head">
+          <h2>เนื้อหาแยกตามหัวข้อในสไลด์</h2>
+          <div class="panel-actions">
+            <button class="btn btn--ghost btn--sm" type="button" data-acc-all="open">เปิดทั้งหมด</button>
+            <button class="btn btn--ghost btn--sm" type="button" data-acc-all="close">ปิดทั้งหมด</button>
+          </div>
+        </div>
+
+        <div class="acc">
+
+          <!-- ================= 01 Media ================= -->
+          <div class="acc-item is-open">
+            <h3 class="acc-heading">
+              <button class="acc-trigger" type="button" aria-expanded="true" aria-controls="acc-av" id="acc-av-btn">
+                <span class="acc-index">01</span>
+                <span class="acc-title">
+                  <span class="acc-name">HTML Media: Audio, Video และ YouTube</span>
+                  <span class="acc-file">69-1-ITDS241-Lecture02 · สไลด์ 11–13</span>
+                </span>
+                <svg class="acc-chevron" viewBox="0 0 20 20" aria-hidden="true"><path d="M5 7.5l5 5 5-5" /></svg>
+              </button>
+            </h3>
+            <div class="acc-panel" id="acc-av" role="region" aria-labelledby="acc-av-btn">
+              <div class="acc-panel-inner">
+                <div class="acc-body">
+
+                  <nav class="toc" aria-label="หัวข้อในการ์ด HTML Media">
+                    <a href="#w2-audio">Audio</a>
+                    <a href="#w2-video">Video</a>
+                    <a href="#w2-youtube">YouTube</a>
+                  </nav>
+
+                  <section class="topic" id="w2-audio">
+                    <h4>HTML5: Audio <code>&lt;audio&gt;</code></h4>
+                    <p>HTML5 มี tag <code>&lt;audio&gt;</code> สำหรับใส่เสียงลงในหน้าเว็บ และรองรับไฟล์เสียง <strong>3 รูปแบบ ได้แก่ MP3, WAV และ OGG</strong> พฤติกรรมของเครื่องเล่นกำหนดได้ด้วย attribute 2 ตัวหลัก</p>
+                    <dl class="defs defs--stack">
+                      <div><dt>autoplay</dt><dd>เริ่มเล่นอัตโนมัติเมื่อเปิดหน้า</dd></div>
+                      <div><dt>controls</dt><dd>เพิ่มปุ่มควบคุมเสียง (audio controls) ให้ผู้ใช้กดเล่น/หยุด/ปรับเสียงได้เอง</dd></div>
+                    </dl>
+                    <p>ไฟล์เสียงระบุด้วย <code>&lt;source&gt;</code> ที่อยู่ภายใน <code>&lt;audio&gt;</code> พร้อม <code>src</code> (ที่อยู่ไฟล์) และ <code>type</code> (ชนิดไฟล์) ส่วนข้อความที่อยู่ภายใน tag คือข้อความที่จะแสดงเมื่อ browser ไม่รองรับ tag audio</p>
+                    <pre class="code-block" data-lang="html"><code>&lt;audio autoplay controls&gt;
+    &lt;source src="LetItGo.mp3" type="audio/mp3"&gt;
+    Your browser does not support the audio tag.
+&lt;/audio&gt;</code></pre>
+                  </section>
+
+                  <section class="topic" id="w2-video">
+                    <h4>HTML5: Video <code>&lt;video&gt;</code></h4>
+                    <p><strong>ก่อนมี HTML5 วิดีโอจะเล่นใน browser ได้ก็ต่อเมื่อมี plug-in</strong> (เช่น Flash) เท่านั้น HTML5 จึงเพิ่ม tag <code>&lt;video&gt;</code> ที่รองรับไฟล์วิดีโอรูปแบบ <strong>MP4, WebM และ OGG</strong> โดยใช้ attribute เหมือนกับ audio คือ <code>autoplay</code> เพื่อเริ่มเล่นอัตโนมัติ และ <code>controls</code> เพื่อเพิ่มปุ่มควบคุมวิดีโอ เช่น play, pause และ volume</p>
+                    <p>ตัวอย่างในสไลด์กำหนดขนาดด้วย <code>width="320"</code> และ <code>height="240"</code> และระบุ <code>&lt;source&gt;</code> ไว้ 2 ไฟล์ คือ <code>small.mp4</code> (type <code>video/mp4</code>) และ <code>small.ogg</code> (type <code>video/ogg</code>)</p>
+                    <pre class="code-block" data-lang="html"><code>&lt;video width="320" height="240" autoplay controls&gt;
+    &lt;source src="small.mp4" type="video/mp4"&gt;
+    &lt;source src="small.ogg" type="video/ogg"&gt;
+    Your browser does not support the video tag.
+&lt;/video&gt;</code></pre>
+                    <div class="callout callout--warn">
+                      <span class="callout-label">ข้อควรระวัง: อย่าสลับรูปแบบไฟล์</span>
+                      <p><strong>Audio</strong> = MP3, WAV, OGG · <strong>Video</strong> = MP4, WebM, OGG — มีแค่ <b>OGG</b> ที่อยู่ทั้งสองกลุ่ม</p>
+                    </div>
+                  </section>
+
+                  <section class="topic" id="w2-youtube">
+                    <h4>HTML5: ฝังวิดีโอ YouTube</h4>
+                    <p>ถ้าวิดีโออยู่บน YouTube ไม่ต้องใช้ <code>&lt;video&gt;</code> แต่ให้ใช้ <strong><code>&lt;iframe&gt;</code></strong> ร่วมกับ <strong>YouTube Video Id</strong> เพื่ออ้างอิงวิดีโอในโค้ด HTML ในตัวอย่างนี้ Video Id คือ <code>62bIsvRcPv0</code> ซึ่งอยู่ท้าย URL <code>https://www.youtube.com/embed/</code></p>
+                    <pre class="code-block" data-lang="html"><code>&lt;iframe width="320" height="240"
+  src="https://www.youtube.com/embed/62bIsvRcPv0"&gt;
+&lt;/iframe&gt;</code></pre>
+                  </section>
+
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- ================= 02 Form elements ================= -->
+          <div class="acc-item">
+            <h3 class="acc-heading">
+              <button class="acc-trigger" type="button" aria-expanded="false" aria-controls="acc-form" id="acc-form-btn">
+                <span class="acc-index">02</span>
+                <span class="acc-title">
+                  <span class="acc-name">HTML Form และ Form Elements</span>
+                  <span class="acc-file">69-1-ITDS241-Lecture02 · สไลด์ 15–34</span>
+                </span>
+                <svg class="acc-chevron" viewBox="0 0 20 20" aria-hidden="true"><path d="M5 7.5l5 5 5-5" /></svg>
+              </button>
+            </h3>
+            <div class="acc-panel" id="acc-form" role="region" aria-labelledby="acc-form-btn">
+              <div class="acc-panel-inner">
+                <div class="acc-body">
+
+                  <nav class="toc" aria-label="หัวข้อในการ์ด HTML Form">
+                    <a href="#w2-form">Form คืออะไร</a>
+                    <a href="#w2-elements">Form elements</a>
+                    <a href="#w2-text">text &amp; password</a>
+                    <a href="#w2-radio">radio &amp; checkbox</a>
+                    <a href="#w2-tel">tel, email, date</a>
+                    <a href="#w2-pattern">pattern &amp; regex</a>
+                    <a href="#w2-textarea">textarea &amp; select</a>
+                    <a href="#w2-button">button &amp; fieldset</a>
+                  </nav>
+
+                  <section class="topic" id="w2-form">
+                    <h4>HTML Form คืออะไร</h4>
+                    <p><strong>HTML form</strong> คือกลุ่มของชุดคำสั่งที่สร้างขึ้นเพื่อ<strong>รับ input จากผู้ใช้</strong> การสร้าง form เริ่มจาก tag <code>&lt;form&gt;...&lt;/form&gt;</code> แล้วจึงใส่ <strong>form element</strong> ต่างๆ เช่น <code>&lt;input&gt;</code>, <code>&lt;button&gt;</code> ไว้ระหว่าง tag เปิดและปิดของ form</p>
+                    <p>ตัวอย่าง form สมบูรณ์จากสไลด์ (Application Form) ประกอบด้วยกรอบ <code>&lt;fieldset&gt;</code> ที่มีหัวข้อ "Student Information" ช่องกรอก Student ID และ Name (type text) ช่องเลือกวันเกิด (type date) และปุ่ม Submit ทุก <code>&lt;label&gt;</code> ผูกกับช่องกรอกของตัวเองผ่าน <code>for</code> ที่ตรงกับ <code>id</code></p>
+                    <pre class="code-block" data-lang="html" data-render="200"><code>&lt;form&gt;
+    &lt;fieldset&gt;
+        &lt;legend&gt;Student Information&lt;/legend&gt;
+        &lt;label for="txtStudentID"&gt;Student ID&lt;/label&gt;&lt;br&gt;
+        &lt;input type="text" id="txtStudentID"&gt;&lt;br&gt;
+        &lt;label for="txtName"&gt;Name&lt;/label&gt;&lt;br&gt;
+        &lt;input type="text" id="txtName"&gt;&lt;br&gt;
+        &lt;label for="cldBD"&gt;Birth Date&lt;/label&gt;&lt;br&gt;
+        &lt;input type="date" id="cldBD"&gt;
+        &lt;button type="submit"&gt;Submit&lt;/button&gt;
+    &lt;/fieldset&gt;
+&lt;/form&gt;</code></pre>
+                  </section>
+
+                  <section class="topic" id="w2-elements">
+                    <h4>Form Elements ภาพรวม</h4>
+                    <div class="table-scroll">
+                      <table>
+                        <thead><tr><th>Tag</th><th>คำอธิบาย</th></tr></thead>
+                        <tbody>
+                          <tr><td><code>&lt;input&gt;</code></td><td>ช่องที่ผู้ใช้กรอกข้อมูลได้ (input field)</td></tr>
+                          <tr><td><code>&lt;textarea&gt;</code></td><td>กล่องรับข้อความหลายบรรทัด (multi-line text input)</td></tr>
+                          <tr><td><code>&lt;select&gt;</code></td><td>สร้าง drop-down list ใช้คู่กับ <code>&lt;option&gt;</code></td></tr>
+                          <tr><td><code>&lt;option&gt;</code></td><td>ตัวเลือกหนึ่งรายการใน select list</td></tr>
+                          <tr><td><code>&lt;button&gt;</code></td><td>ปุ่มที่คลิกได้ (type: submit, reset, button)</td></tr>
+                          <tr><td><code>&lt;fieldset&gt;</code></td><td>วาดกรอบจัดกลุ่ม element ที่เกี่ยวข้องกันใน form</td></tr>
+                        </tbody>
+                      </table>
+                    </div>
+                    <div class="callout callout--warn">
+                      <span class="callout-label">ข้อสำคัญ (Note ในสไลด์)</span>
+                      <p><strong>All form elements must be within &lt;form&gt; tags</strong> — form element ทุกตัวต้องอยู่ภายใน <code>&lt;form&gt;</code> เท่านั้น</p>
+                    </div>
+                    <p><code>&lt;input&gt;</code> เป็นชุดคำสั่งหลักสำหรับรับค่าใน form และ<strong>ระบุประเภทด้วย attribute <code>type</code></strong> ประเภทที่เรียนในบทนี้คือ text, password, radio, checkbox, email, tel และ date (รวมถึงตัวแปรอื่นของวันเวลา เช่น month, week, datetime-local)</p>
+                  </section>
+
+                  <section class="topic" id="w2-text">
+                    <h4><code>type="text"</code> และ <code>type="password"</code></h4>
+                    <p><strong><code>type="text"</code></strong> สร้างช่องกรอกข้อความ<strong>บรรทัดเดียว</strong> (one-line text input field) ใช้คู่กับ <code>&lt;label&gt;</code> ที่มี attribute <code>for</code> เพื่อกำหนดป้ายชื่อให้ form element โดยค่าของ <code>for</code> ต้องตรงกับ <code>id</code> ของช่องที่ต้องการผูก</p>
+                    <pre class="code-block" data-lang="html" data-render="90"><code>&lt;label for="txtFN"&gt;First name&lt;/label&gt;
+&lt;input type="text" id="txtFN"&gt;&lt;br&gt;
+&lt;label for="txtLN"&gt;Last name&lt;/label&gt;
+&lt;input type="text" id="txtLN"&gt;</code></pre>
+                    <div class="callout callout--why">
+                      <span class="callout-label">ทำไมต้องผูก label ด้วย for/id</span>
+                      <p>สไลด์ระบุว่า <code>&lt;label&gt;</code> กับ attribute <code>for</code> ที่อ้างถึง id <b>มีประโยชน์มากสำหรับ screen readers</b> — โปรแกรมอ่านหน้าจอจะรู้ว่าช่องกรอกนั้นชื่ออะไร</p>
+                    </div>
+                    <p><strong><code>type="password"</code></strong> สร้างช่องกรอกบรรทัดเดียวที่<strong>ปิดบังตัวอักษร (masked)</strong> ใช้สำหรับรหัสผ่าน</p>
+                    <pre class="code-block" data-lang="html" data-render="90"><code>&lt;label for="txtLogin"&gt;Login&lt;/label&gt;
+&lt;input type="text" id="txtLogin"&gt;&lt;br&gt;
+&lt;label for="txtPwd"&gt;Password&lt;/label&gt;
+&lt;input type="password" id="txtPwd"&gt;</code></pre>
+                  </section>
+
+                  <section class="topic" id="w2-radio">
+                    <h4><code>type="radio"</code> และ <code>type="checkbox"</code></h4>
+                    <p><strong><code>type="radio"</code></strong> สร้างปุ่มตัวเลือกที่ใช้เมื่อ<strong>เลือกได้เพียงตัวเลือกเดียว</strong> ตัวอย่างในสไลด์เป็นการเลือกกรุ๊ปเลือด 4 ตัวเลือก ทุกปุ่มมี <code>name="bloodGr"</code> เหมือนกัน แต่ <code>value</code> ต่างกัน และปุ่ม A มี <code>checked</code> จึงถูกเลือกไว้ตั้งแต่แรก</p>
+                    <pre class="code-block" data-lang="html" data-render="120"><code>Blood Group: &lt;br&gt;
+&lt;input type="radio" name="bloodGr" value="A" checked&gt;A&lt;br&gt;
+&lt;input type="radio" name="bloodGr" value="B"&gt;B&lt;br&gt;
+&lt;input type="radio" name="bloodGr" value="AB"&gt;AB&lt;br&gt;
+&lt;input type="radio" name="bloodGr" value="O"&gt;O&lt;br&gt;</code></pre>
+                    <div class="callout callout--why">
+                      <span class="callout-label">ทำไม name ต้องเหมือนกัน</span>
+                      <p>ค่าของ attribute <code>name</code> <b>ต้องเหมือนกันเพื่อจัดกลุ่ม</b> radio buttons — browser จึงรู้ว่าปุ่มเหล่านี้อยู่กลุ่มเดียวกันและให้เลือกได้ตัวเดียว ถ้า name ต่างกัน แต่ละปุ่มจะกลายเป็นคนละกลุ่ม</p>
+                      <p>ใช้ <code>checked</code> เพื่อกำหนดปุ่มที่ถูกเลือกเป็นค่าเริ่มต้น</p>
+                    </div>
+                    <p><strong><code>type="checkbox"</code></strong> สร้างกล่องเลือกที่ใช้เมื่อ<strong>เลือกได้หลายตัวเลือกพร้อมกัน</strong> (multiple-choice) หลักการตั้ง <code>name</code> ให้เหมือนกันเพื่อจัดกลุ่ม และใช้ <code>checked</code> กำหนดกล่องที่ถูกเลือกไว้ตั้งแต่แรก (กี่กล่องก็ได้) เหมือนกับ radio</p>
+                    <pre class="code-block" data-lang="html" data-render="110"><code>What should I have for lunch? &lt;br&gt;
+&lt;input type="checkbox" name="food" value="SW"&gt;Sandwich&lt;br&gt;
+&lt;input type="checkbox" name="food" value="FC"&gt;Fried Chicken&lt;br&gt;
+&lt;input type="checkbox" name="food" value="HB"&gt;Hamburger&lt;br&gt;</code></pre>
+                    <div class="compare">
+                      <div class="compare-col"><h5>radio</h5><p>เลือกได้ <strong>1 ตัวเลือก</strong> ต่อกลุ่ม (กลุ่ม = name เดียวกัน)</p></div>
+                      <div class="compare-col"><h5>checkbox</h5><p>เลือกได้<strong>หลายตัวเลือก</strong>พร้อมกัน</p></div>
+                    </div>
+                  </section>
+
+                  <section class="topic" id="w2-tel">
+                    <h4><code>type="tel"</code>, <code>type="email"</code> และ <code>type="date"</code></h4>
+                    <p><strong><code>type="tel"</code></strong> สร้างช่องสำหรับเบอร์โทรศัพท์ ซึ่ง<strong>จะถูกตรวจสอบว่าตรงกับรูปแบบ (pattern) ที่กำหนดเมื่อ submit form</strong> รูปแบบนั้นเขียนเป็น regular expression ใน attribute <code>pattern</code> ตัวอย่างนี้บังคับรูปแบบ XXX-XXX-XXXX</p>
+                    <pre class="code-block" data-lang="html"><code>What is your mobile phone?
+&lt;input type="tel" name="mobile" pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}"&gt;
+&lt;!-- Pattern: XXX-XXX-XXXX --&gt;
+&lt;button type="submit"&gt;Submit&lt;/button&gt;</code></pre>
+                    <p><strong><code>type="email"</code></strong> สร้างช่องสำหรับอีเมล ซึ่ง<strong>จะถูกตรวจสอบว่าเป็นรูปแบบของอีเมลเมื่อ submit form</strong> โดยไม่ต้องเขียน pattern เอง</p>
+                    <pre class="code-block" data-lang="html"><code>What is your email?
+&lt;input type="email" name="userEmail"&gt;
+&lt;button type="submit"&gt;Submit&lt;/button&gt;</code></pre>
+                    <p><strong><code>type="date"</code></strong> แสดง <strong>date picker</strong> ให้ผู้ใช้เลือกวันที่ และจำกัดช่วงวันที่ได้ด้วย attribute <code>min</code> และ <code>max</code> ในตัวอย่างนี้ <code>max="2010-01-01"</code> หมายความว่าเลือกวันที่หลังจาก 1 มกราคม 2010 ไม่ได้</p>
+                    <pre class="code-block" data-lang="html" data-render="60"><code>When is your birthday?
+&lt;input type="date" name="bd_d" max="2010-01-01"&gt;</code></pre>
+                    <p>นอกจาก date ยังมีตัวแปรอื่นที่เกี่ยวกับวันและเวลาอีก ได้แก่ <code>type="week"</code>, <code>type="month"</code>, <code>type="datetime-local"</code> และ <code>type="time"</code></p>
+                    <pre class="code-block" data-lang="html" data-render="150"><code>&lt;input type="week"&gt;&lt;br&gt;
+&lt;input type="month"&gt;&lt;br&gt;
+&lt;input type="datetime-local"&gt;&lt;br&gt;
+&lt;input type="time"&gt;</code></pre>
+                    <div class="callout callout--warn">
+                      <span class="callout-label">ข้อควรระวัง: min / max</span>
+                      <p><code>max</code> = ค่าสูงสุด → ห้ามเลือก<strong>หลัง</strong>วันนั้น · <code>min</code> = ค่าต่ำสุด → ห้ามเลือก<strong>ก่อน</strong>วันนั้น — <code>max="2010-01-01"</code> ไม่ได้บังคับให้เลือกวันนั้นพอดี</p>
+                    </div>
+                  </section>
+
+                  <section class="topic" id="w2-pattern">
+                    <h4>attribute <code>pattern</code> และ Regular Expression</h4>
+                    <p>attribute <strong><code>pattern</code></strong> กำหนด <strong>regular expression</strong> ที่ค่าของ <code>&lt;input&gt;</code> จะถูกนำไปตรวจสอบเมื่อ submit form ส่วน regular expression คือลำดับของตัวอักษรที่ประกอบกันเป็นรูปแบบสำหรับค้นหา (search pattern) ตัวอย่างในสไลด์มีดังนี้</p>
+                    <div class="table-scroll">
+                      <table>
+                        <thead><tr><th>Regular Expression</th><th>ความหมาย</th><th>ตัวอย่างค่าที่ผ่าน</th></tr></thead>
+                        <tbody>
+                          <tr><td><code>[A-Za-z]{3}</code></td><td>ตัวอักษรภาษาอังกฤษ 3 ตัวเท่านั้น</td><td>THA · tha · Tha · tHA</td></tr>
+                          <tr><td><code>[A-Z]{5,}</code></td><td>ตัวพิมพ์ใหญ่ 5 ตัวขึ้นไป</td><td>HELLO · WORLD</td></tr>
+                          <tr><td><code>.{2,4}</code></td><td>ตัวอักษรใดก็ได้ 2 ถึง 4 ตัว</td><td>$o · Wh@+ · T0o</td></tr>
+                          <tr><td><code>[0-9]{2}88[0-9]{3}</code></td><td>ตัวเลขรูปแบบ ##88###</td><td>5088111 · 6288999</td></tr>
+                        </tbody>
+                      </table>
+                    </div>
+                    <div class="demo-box" data-widget="pattern-tester">
+                      <span class="demo-box-title">ลองเล่น: ทดสอบ pattern จากสไลด์ (ตรวจด้วย browser จริง)</span>
+                      <div class="seg" role="group" aria-label="เลือก pattern">
+                        <button type="button" aria-pressed="true" data-pattern="[A-Za-z]{3}" data-examples="THA · tha · Tha · tHA"><code>[A-Za-z]{3}</code></button>
+                        <button type="button" aria-pressed="false" data-pattern="[A-Z]{5,}" data-examples="HELLO · WORLD"><code>[A-Z]{5,}</code></button>
+                        <button type="button" aria-pressed="false" data-pattern=".{2,4}" data-examples="$o · Wh@+ · T0o"><code>.{2,4}</code></button>
+                        <button type="button" aria-pressed="false" data-pattern="[0-9]{2}88[0-9]{3}" data-examples="5088111 · 6288999"><code>[0-9]{2}88[0-9]{3}</code></button>
+                      </div>
+                      <div class="demo-field">
+                        <label for="pt-value">ค่าที่จะทดสอบ</label>
+                        <input class="demo-input" id="pt-value" type="text" pattern="[A-Za-z]{3}" autocomplete="off" spellcheck="false" />
+                        <p class="demo-hint">ตัวอย่างค่าที่ผ่านจากสไลด์: <span data-examples>THA · tha · Tha · tHA</span></p>
+                      </div>
+                      <p class="demo-status" aria-live="polite"></p>
+                    </div>
+                  </section>
+
+                  <section class="topic" id="w2-textarea">
+                    <h4><code>&lt;textarea&gt;</code> และ <code>&lt;select&gt;</code></h4>
+                    <p><strong><code>&lt;textarea&gt;</code></strong> สร้างช่องรับข้อความ<strong>หลายบรรทัด</strong> (multi-line text input control) ขนาดของกล่องกำหนดได้ด้วย attribute <code>cols</code> (จำนวนคอลัมน์) และ <code>rows</code> (จำนวนแถว) ข้อความที่อยู่ระหว่าง tag เปิดและปิดจะแสดงอยู่ในกล่องตั้งแต่แรก</p>
+                    <pre class="code-block" data-lang="html" data-render="100"><code>Address:&lt;br&gt;
+&lt;textarea rows="3" cols="20"&gt;Input your
+Thai Address here&lt;/textarea&gt;</code></pre>
+                    <p><strong><code>&lt;select&gt;</code></strong> สร้าง drop-down list โดยใส่ <code>&lt;option&gt;</code> ไว้ภายในเพื่อกำหนดตัวเลือกแต่ละรายการ ใช้ attribute <code>selected</code> กับ option ที่ต้องการให้เป็นค่าเริ่มต้น</p>
+                    <pre class="code-block" data-lang="html" data-render="60"><code>Major:
+&lt;select name="majors"&gt;
+    &lt;option value="CS"&gt;Comp.Sci.&lt;/option&gt;
+    &lt;option value="CE"&gt;Comp.Eng.&lt;/option&gt;
+    &lt;option value="IS"&gt;Info.Sci.&lt;/option&gt;
+    &lt;option value="IT"&gt;Info.Tech.&lt;/option&gt;
+&lt;/select&gt;</code></pre>
+                  </section>
+
+                  <section class="topic" id="w2-button">
+                    <h4><code>&lt;button&gt;</code> และ <code>&lt;fieldset&gt;</code></h4>
+                    <p><strong><code>&lt;button&gt;</code></strong> กำหนดปุ่มที่คลิกได้ ซึ่งภายในใส่ได้ทั้งข้อความและรูปภาพ ปุ่มมี <strong>3 ประเภท</strong> ตาม attribute <code>type</code></p>
+                    <dl class="defs defs--stack">
+                      <div><dt>type="button"</dt><dd>ปุ่มทั่วไป (general-purpose) เช่น คลิกเพื่อเรียกใช้ฟังก์ชัน</dd></div>
+                      <div><dt>type="reset"</dt><dd>ปุ่มสำหรับตั้งค่า form <strong>กลับสู่สถานะเริ่มต้น</strong></dd></div>
+                      <div><dt>type="submit"</dt><dd>ปุ่มสำหรับ<strong>ส่ง input ทั้งหมดใน form</strong> ไปยังปลายทาง</dd></div>
+                    </dl>
+                    <p>ตัวอย่างในสไลด์มีทั้งปุ่ม submit และปุ่ม reset (ข้อความ Clear) ภายใน form ที่ส่งไปยัง <code>somewhere.html</code> ด้วย method GET (รายละเอียดเรื่อง action/method อยู่ในการ์ดถัดไป)</p>
+                    <pre class="code-block" data-lang="html" data-render="100"><code>&lt;form action="somewhere.html" method="GET"&gt;
+    First name:&lt;input type="text" name="fistname"&gt;&lt;br&gt;
+    Last name:&lt;input type="text" name="lastname"&gt;&lt;br&gt;
+    &lt;button type="submit"&gt;Submit&lt;/button&gt;
+    &lt;button type="reset"&gt;Clear&lt;/button&gt;
+&lt;/form&gt;</code></pre>
+                    <p><strong><code>&lt;fieldset&gt;</code></strong> วาดกรอบรอบกลุ่ม element ที่เกี่ยวข้องกันใน form พร้อมหัวข้อกำกับ (caption) ซึ่งกำหนดด้วย <code>&lt;legend&gt;</code></p>
+                    <pre class="code-block" data-lang="html" data-render="150"><code>&lt;fieldset&gt;
+    &lt;legend&gt;Name&lt;/legend&gt;
+    First name:&lt;br&gt;
+    &lt;input type="text" name="fistname"&gt;&lt;br&gt;
+    Last name:&lt;br&gt;
+    &lt;input type="text" name="lastname"&gt;&lt;br&gt;
+&lt;/fieldset&gt;</code></pre>
+                    <div class="callout callout--def">
+                      <span class="callout-label">แบบฝึกหัดในสไลด์: [EX2] Sign-Up Form</span>
+                      <p>จงสร้าง Sign-up Form ที่ประกอบด้วย input box สำหรับชื่อนักศึกษา · input box สำหรับอีเมล · input box ลักษณะปฏิทินที่วันที่สิ้นสุดคือ 1 มกราคม 2565 · ปุ่ม submit · ปุ่ม reset</p>
+                    </div>
+                  </section>
+
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- ================= 03 Validation & submission ================= -->
+          <div class="acc-item">
+            <h3 class="acc-heading">
+              <button class="acc-trigger" type="button" aria-expanded="false" aria-controls="acc-valid" id="acc-valid-btn">
+                <span class="acc-index">03</span>
+                <span class="acc-title">
+                  <span class="acc-name">Form Validation และ Form Submission (GET / POST)</span>
+                  <span class="acc-file">69-1-ITDS241-Lecture02 · สไลด์ 36–44</span>
+                </span>
+                <svg class="acc-chevron" viewBox="0 0 20 20" aria-hidden="true"><path d="M5 7.5l5 5 5-5" /></svg>
+              </button>
+            </h3>
+            <div class="acc-panel" id="acc-valid" role="region" aria-labelledby="acc-valid-btn">
+              <div class="acc-panel-inner">
+                <div class="acc-body">
+
+                  <nav class="toc" aria-label="หัวข้อในการ์ด validation และ submission">
+                    <a href="#w2-validation">Form validation</a>
+                    <a href="#w2-attrs">HTML5 form attributes</a>
+                    <a href="#w2-submit">Form submission</a>
+                    <a href="#w2-flow">Form ทำงานอย่างไร</a>
+                    <a href="#w2-getpost">GET vs POST</a>
+                  </nav>
+
+                  <section class="topic" id="w2-validation">
+                    <h4>Form Validation</h4>
+                    <p>เมื่อผู้ใช้กรอกข้อมูล <strong>browser จะตรวจสอบว่าข้อมูลอยู่ในรูปแบบที่ถูกต้อง และอยู่ภายในเงื่อนไข (constraints) ที่กำหนด</strong> การตรวจสอบ form ฝั่ง client ทำได้ 2 วิธี คือ</p>
+                    <div class="compare">
+                      <div class="compare-col"><h5>HTML5</h5><p>ใช้ form attributes (หัวข้อถัดไป)</p></div>
+                      <div class="compare-col"><h5>JavaScript</h5><p>เขียนโค้ดตรวจสอบเอง</p></div>
+                    </div>
+                  </section>
+
+                  <section class="topic" id="w2-attrs">
+                    <h4>HTML5 Form Attributes (Restriction attributes)</h4>
+                    <p>attribute กลุ่มนี้คือเงื่อนไขที่ใช้ในการ validate form</p>
+                    <div class="table-scroll">
+                      <table>
+                        <thead><tr><th>Attribute</th><th>คำอธิบาย</th></tr></thead>
+                        <tbody>
+                          <tr><td><code>min</code></td><td>กำหนด<strong>ค่าต่ำสุด</strong>ของ <code>&lt;input&gt;</code></td></tr>
+                          <tr><td><code>max</code></td><td>กำหนด<strong>ค่าสูงสุด</strong>ของ <code>&lt;input&gt;</code></td></tr>
+                          <tr><td><code>pattern</code></td><td>กำหนด regular expression ที่ค่าของ <code>&lt;input&gt;</code> ต้องตรงตาม</td></tr>
+                          <tr><td><code>title</code></td><td>อธิบาย pattern เพื่อช่วยผู้ใช้ (ใช้คู่กับ pattern)</td></tr>
+                          <tr><td><code>placeholder</code></td><td>ข้อความ hint ที่อธิบายค่าที่คาดหวังในช่องกรอก</td></tr>
+                          <tr><td><code>required</code></td><td><strong>บังคับ</strong>ให้ต้องกรอกช่องนี้ก่อนจึงจะ submit form ได้</td></tr>
+                        </tbody>
+                      </table>
+                    </div>
+                    <div class="callout callout--warn">
+                      <span class="callout-label">ข้อควรระวัง: placeholder ≠ required</span>
+                      <p><code>placeholder</code> เป็นแค่<strong>ข้อความ hint</strong> ในช่อง ไม่ได้บังคับให้กรอก · <code>required</code> คือตัวที่<strong>บังคับ</strong>ให้กรอกก่อน submit · <code>title</code> อธิบาย pattern ให้ผู้ใช้เข้าใจ</p>
+                    </div>
+                    <p>ตัวอย่างจากสไลด์ใช้ครบหลายตัว: ช่อง Mobile มี <code>pattern</code> และ <code>title</code> อธิบายรูปแบบ, ช่อง E-mail มี <code>placeholder</code>, <code>required</code> และ <code>title</code>, ช่อง Country code มี <code>pattern="[A-Z]{3}"</code> พร้อม <code>title</code></p>
+                    <pre class="code-block" data-lang="html"><code>&lt;form&gt;
+    First name:&lt;br&gt;&lt;input type="text" name="fname"&gt;&lt;br&gt;
+    Last name:&lt;br&gt;&lt;input type="text" name="lname"&gt;&lt;br&gt;
+    Mobile:&lt;br&gt;
+    &lt;input type="tel" pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}"
+           title="Mobile: XXX-XXX-XXXX"&gt;&lt;br&gt;
+    E-mail:&lt;br&gt;
+    &lt;input type="email" name="userid" placeholder="Your e-mail" required
+           title="Required e-mail"&gt;&lt;br&gt;
+    Country code:&lt;br&gt;
+    &lt;input type="text" pattern="[A-Z]{3}" title="A country code with three alphabet"&gt;&lt;br&gt;
+    &lt;p&gt;&lt;button type="submit"&gt;Submit&lt;/button&gt;&lt;/p&gt;
+&lt;/form&gt;</code></pre>
+                    <form class="demo-box" data-widget="validation-demo">
+                      <span class="demo-box-title">ลองเล่น: form ตัวอย่างข้างบนแบบกดส่งได้จริง (browser ตรวจ validation จริง แต่ไม่ส่งข้อมูลไปไหน)</span>
+                      <div class="demo-fields">
+                        <div class="demo-field">
+                          <label for="vd-mobile">Mobile</label>
+                          <input class="demo-input" id="vd-mobile" type="tel" name="mobile" pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}" title="Mobile: XXX-XXX-XXXX" />
+                          <p class="demo-hint">ลองพิมพ์ 0812345678 (ไม่มีขีด) แล้วกด Submit</p>
+                        </div>
+                        <div class="demo-field">
+                          <label for="vd-email">E-mail</label>
+                          <input class="demo-input" id="vd-email" type="email" name="userid" placeholder="Your e-mail" required title="Required e-mail" />
+                          <p class="demo-hint">ลองเว้นว่าง หรือพิมพ์คำที่ไม่มี @</p>
+                        </div>
+                        <div class="demo-field">
+                          <label for="vd-country">Country code</label>
+                          <input class="demo-input" id="vd-country" type="text" name="country" pattern="[A-Z]{3}" title="A country code with three alphabet" />
+                          <p class="demo-hint">ลองพิมพ์ tha (ตัวพิมพ์เล็ก)</p>
+                        </div>
+                      </div>
+                      <button class="btn btn--primary btn--sm" type="submit">Submit</button>
+                      <p class="demo-status" aria-live="polite"></p>
+                    </form>
+                  </section>
+
+                  <section class="topic" id="w2-submit">
+                    <h4>Form Submission</h4>
+                    <p>เมื่อผู้ใช้คลิกปุ่ม submit <strong>ข้อมูลทั้งหมดใน form จะถูกส่งออกไปยังหน้าปลายทางหรือ web server</strong> เพื่อประมวลผล การส่งถูกกำหนดด้วย attribute 2 ตัวของ <code>&lt;form&gt;</code></p>
+                    <dl class="defs defs--stack">
+                      <div><dt>action</dt><dd>กำหนดว่าจะ<strong>ส่ง form-data ไปที่ไหน</strong> เมื่อ submit</dd></div>
+                      <div><dt>method</dt><dd>กำหนด <strong>HTTP method (GET/POST)</strong> ที่ใช้ส่ง form-data</dd></div>
+                    </dl>
+                  </section>
+
+                  <section class="topic" id="w2-flow">
+                    <h4>Form ทำงานอย่างไร (How the Form works)</h4>
+                    <ol class="steps">
+                      <li>ผู้ใช้กรอกข้อมูลแล้วกดปุ่ม <strong>Submit</strong></li>
+                      <li>browser ทำ <strong>Form Validation</strong></li>
+                      <li><strong>ถ้า form ไม่ผ่าน (invalid)</strong> จะย้อนกลับไปที่ form ให้ผู้ใช้แก้ไข ข้อมูลยังไม่ถูกส่ง</li>
+                      <li><strong>ถ้าผ่าน validation</strong> จะไปยัง server หรือปลายทางที่กำหนดใน <code>action</code> ด้วย HTTP method GET หรือ POST</li>
+                    </ol>
+                    <figure class="diagram">
+                      <div class="diagram-scroll">
+                        <svg viewBox="0 0 760 400" role="img" aria-labelledby="dg-form-t dg-form-d">
+                          <title id="dg-form-t">ขั้นตอนการทำงานของ form</title>
+                          <desc id="dg-form-d">กด Submit แล้วเข้าสู่ Form Validation ถ้าไม่ผ่านย้อนกลับไปที่ form ถ้าผ่านไปยัง server หรือปลายทางใน action ด้วย GET ซึ่งส่งข้อมูลผ่าน URL หรือ POST ซึ่งส่งข้อมูลภายใน packet</desc>
+                          <!-- form mock -->
+                          <rect class="dg-box" x="20" y="20" width="300" height="160" rx="8" />
+                          <text class="dg-mono dg-mono--sm" x="40" y="46">&lt;fieldset&gt; Student Information</text>
+                          <text class="dg-text dg-text--sm" x="40" y="80">First name</text>
+                          <rect class="dg-box" x="130" y="64" width="170" height="26" rx="4" /><text class="dg-text" x="140" y="82">Harry</text>
+                          <text class="dg-text dg-text--sm" x="40" y="116">Last name</text>
+                          <rect class="dg-box" x="130" y="100" width="170" height="26" rx="4" /><text class="dg-text" x="140" y="118">Potter</text>
+                          <rect class="dg-box dg-box--accent" x="40" y="138" width="90" height="30" rx="6" /><text class="dg-text" x="85" y="158" text-anchor="middle">Submit</text>
+
+                          <path class="dg-line dg-line--accent" d="M85 168 V234" marker-end="url(#arr)" />
+                          <rect class="dg-box dg-box--warn" x="20" y="236" width="170" height="56" rx="8" />
+                          <text class="dg-text" x="105" y="270" text-anchor="middle">Form Validation</text>
+
+                          <path class="dg-line dg-line--bad" d="M190 264 H380 V100 H322" marker-end="url(#arr-bad)" />
+                          <text class="dg-text dg-text--bad" x="392" y="160">If the form is invalid</text>
+                          <text class="dg-text dg-text--sm" x="392" y="180">ย้อนกลับไปที่ form · ไม่ส่งข้อมูล</text>
+
+                          <path class="dg-line dg-line--ok" d="M105 292 V350 H250" marker-end="url(#arr-ok)" />
+                          <text class="dg-text dg-text--ok" x="120" y="316">Form passed validation</text>
+                          <text class="dg-mono dg-mono--sm" x="120" y="338">HTTP: GET/POST</text>
+
+                          <rect class="dg-box dg-box--accent" x="252" y="318" width="236" height="64" rx="8" />
+                          <text class="dg-text" x="370" y="345" text-anchor="middle">Go to Server or Destination</text>
+                          <text class="dg-mono" x="370" y="367" text-anchor="middle">defined in action</text>
+
+                          <path class="dg-line" d="M488 338 H520 V262 H548" marker-end="url(#arr-muted)" />
+                          <path class="dg-line" d="M488 362 H520 V356 H548" marker-end="url(#arr-muted)" />
+                          <rect class="dg-box" x="550" y="232" width="190" height="60" rx="8" />
+                          <text class="dg-mono" x="566" y="256">GET</text>
+                          <text class="dg-text dg-text--sm" x="566" y="278">ข้อมูลอยู่ใน URL เป็น name=value</text>
+                          <rect class="dg-box" x="550" y="326" width="190" height="60" rx="8" />
+                          <text class="dg-mono" x="566" y="350">POST</text>
+                          <text class="dg-text dg-text--sm" x="566" y="372">ข้อมูลอยู่ภายใน packet</text>
+                        </svg>
+                      </div>
+                      <figcaption>วาดใหม่จากสไลด์ 42 "How the Form works" รวมกับสไลด์ 41 เรื่อง GET/POST — รายละเอียดฝั่ง server จะได้เรียนตอนทำ form handling</figcaption>
+                    </figure>
+                  </section>
+
+                  <section class="topic" id="w2-getpost">
+                    <h4>GET vs POST</h4>
+                    <div class="compare">
+                      <div class="compare-col">
+                        <h5>GET</h5>
+                        <p>ส่งข้อมูลทั้งหมด<strong>ผ่าน URL</strong> — ข้อมูลที่ได้รับจะแสดงอยู่ใน url path เป็นคู่ของ <strong>name และ value</strong> ซึ่ง name ตรงกับชื่อ (attribute name) ของช่องใน form ที่ส่งมา</p>
+                      </div>
+                      <div class="compare-col">
+                        <h5>POST</h5>
+                        <p>ส่งข้อมูลทั้งหมด<strong>ภายใน packet</strong> — ข้อมูลที่ได้รับจะถูกบรรจุไว้ใน packet เพื่อนำไปใช้ ไม่ได้แสดงใน URL</p>
+                      </div>
+                    </div>
+                    <p>ตัวอย่างทั้งสองแบบส่งข้อมูลไปยัง <code>somewhere.html</code> เหมือนกัน ต่างกันแค่ค่า <code>method</code> (ชื่อช่อง <code>fistname</code> สะกดตามสไลด์)</p>
+                    <pre class="code-block" data-lang="html"><code>&lt;form action="somewhere.html" method="GET"&gt;
+    First name:&lt;input type="text" name="fistname"&gt;&lt;br&gt;
+    Last name:&lt;input type="text" name="lastname"&gt;&lt;br&gt;
+    &lt;button type="submit"&gt;Submit&lt;/button&gt;
+&lt;/form&gt;</code></pre>
+                    <pre class="code-block" data-lang="html"><code>&lt;form action="somewhere.html" method="POST"&gt;
+    First name:&lt;input type="text" name="fistname"&gt;&lt;br&gt;
+    Last name:&lt;input type="text" name="lastname"&gt;&lt;br&gt;
+    &lt;button type="submit"&gt;Submit&lt;/button&gt;
+&lt;/form&gt;</code></pre>
+                    <div class="callout callout--warn">
+                      <span class="callout-label">ข้อควรระวัง: action vs method</span>
+                      <p><code>action</code> = <strong>ส่งไปที่ไหน</strong> · <code>method</code> = <strong>ส่งด้วยวิธีไหน</strong> (GET/POST) — โจทย์มักถามสลับกัน</p>
+                    </div>
+                  </section>
+
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- ================= 04 Semantic ================= -->
+          <div class="acc-item">
+            <h3 class="acc-heading">
+              <button class="acc-trigger" type="button" aria-expanded="false" aria-controls="acc-semantic" id="acc-semantic-btn">
+                <span class="acc-index">04</span>
+                <span class="acc-title">
+                  <span class="acc-name">Semantic Elements และ Web Layouts</span>
+                  <span class="acc-file">69-1-ITDS241-Lecture02 · สไลด์ 46–62</span>
+                </span>
+                <svg class="acc-chevron" viewBox="0 0 20 20" aria-hidden="true"><path d="M5 7.5l5 5 5-5" /></svg>
+              </button>
+            </h3>
+            <div class="acc-panel" id="acc-semantic" role="region" aria-labelledby="acc-semantic-btn">
+              <div class="acc-panel-inner">
+                <div class="acc-body">
+
+                  <nav class="toc" aria-label="หัวข้อในการ์ด semantic elements">
+                    <a href="#w2-semantic">Semantic คืออะไร</a>
+                    <a href="#w2-before">ก่อนมี semantic</a>
+                    <a href="#w2-elements6">Semantic elements 6 ตัว</a>
+                    <a href="#w2-each">ตัวอย่างแต่ละตัว</a>
+                    <a href="#w2-article">article vs section</a>
+                    <a href="#w2-layouts">Web Layouts</a>
+                    <a href="#w2-layout-code">HTML Layout</a>
+                  </nav>
+
+                  <section class="topic" id="w2-semantic">
+                    <h4>Semantic Elements คืออะไร</h4>
+                    <p>คำว่า <strong>Semantic</strong> แปลว่า "มีความหมาย" (related to meaning in language or logic) <strong>semantic elements</strong> คือ tag ที่ใช้กำหนดส่วนต่างๆ ของหน้าเว็บ หรือใช้วาง<strong>โครงสร้างของหน้าเว็บ (layout)</strong> ซึ่งจะนำไปใช้ร่วมกับ CSS ต่อไป</p>
+                    <div class="callout callout--why">
+                      <span class="callout-label">ทำไมต้องใช้ semantic elements</span>
+                      <p>เมื่อหน้าเว็บมีข้อมูลเชิงความหมายมากขึ้น (more semantic information) <b>screen readers หรือ search engines จะระบุได้ว่าเนื้อหาแต่ละส่วนของหน้าเว็บคืออะไร</b></p>
+                    </div>
+                  </section>
+
+                  <section class="topic" id="w2-before">
+                    <h4>ก่อนมี "Semantic" Elements</h4>
+                    <p>ก่อนหน้านี้ นักพัฒนาใช้ tag ทั่วไปอย่าง <strong><code>&lt;div&gt;</code> ร่วมกับ attribute <code>class</code></strong> เพื่อแบ่งเนื้อหาออกเป็นส่วนๆ เช่น header, menubar, section, article และ footer ชื่อของส่วนเหล่านี้อยู่แค่ในค่าของ class ส่วนตัว tag ทุกตัวยังเป็น <code>&lt;div&gt;</code> เหมือนกันหมด</p>
+                    <pre class="code-block" data-lang="html"><code>&lt;body&gt;
+    &lt;div class="header"&gt;Header&lt;/div&gt;
+    &lt;div class="menubar"&gt;Menu Bar/Navigation Bar&lt;/div&gt;
+    &lt;div class="section"&gt;
+        &lt;div class="article"&gt;Content Article 1&lt;/div&gt;
+        &lt;div class="article"&gt;Content Article 2&lt;/div&gt;
+    &lt;/div&gt;
+    &lt;div class="footer"&gt;Document Footer&lt;/div&gt;
+&lt;/body&gt;</code></pre>
+                  </section>
+
+                  <section class="topic" id="w2-elements6">
+                    <h4>HTML5 Semantic Elements</h4>
+                    <div class="table-scroll">
+                      <table>
+                        <thead><tr><th>Tag</th><th>คำอธิบาย</th></tr></thead>
+                        <tbody>
+                          <tr><td><code>&lt;header&gt;</code></td><td>ส่วนหัวของเอกสาร หรือของ section</td></tr>
+                          <tr><td><code>&lt;nav&gt;</code></td><td>ลิงก์นำทาง (navigation links) หรือเมนูบาร์</td></tr>
+                          <tr><td><code>&lt;section&gt;</code></td><td>section หนึ่งในเอกสาร</td></tr>
+                          <tr><td><code>&lt;article&gt;</code></td><td>article หนึ่งในเอกสาร</td></tr>
+                          <tr><td><code>&lt;aside&gt;</code></td><td>เนื้อหาที่แยกออกมาจากเนื้อหาหลัก (aside from the content)</td></tr>
+                          <tr><td><code>&lt;footer&gt;</code></td><td>ส่วนท้ายของเอกสาร หรือของ section</td></tr>
+                        </tbody>
+                      </table>
+                    </div>
+                    <p>โครงหน้าเว็บตัวอย่างในสไลด์วาง element ทั้ง 6 ตัวเรียงกันใน <code>&lt;body&gt;</code> พร้อม comment บอกหน้าที่ของแต่ละส่วน แผนผังด้านล่างแสดงตำแหน่งที่มักพบในหน้าเว็บทั่วไป</p>
+                    <pre class="code-block" data-lang="html"><code>&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+&lt;head&gt;
+    &lt;title&gt;HTML5 Semantic Elements&lt;/title&gt;
+&lt;/head&gt;
+&lt;body&gt;
+    &lt;header&gt;&lt;!--Document Header--&gt;&lt;/header&gt;
+    &lt;nav&gt;&lt;!-- Navigation tabs / Menu bars --&gt;&lt;/nav&gt;
+    &lt;section&gt;&lt;!-- Doc. section 1 --&gt;&lt;/section&gt;
+    &lt;article&gt;&lt;!-- Doc. section 2 --&gt;&lt;/article&gt;
+    &lt;aside&gt;&lt;!-- Sidebar --&gt;&lt;/aside&gt;
+    &lt;footer&gt;&lt;!-- Footer--&gt;&lt;/footer&gt;
+&lt;/body&gt;
+&lt;/html&gt;</code></pre>
+                    <div class="semantic-map" role="img" aria-label="แผนผังตำแหน่ง: header บนสุด, nav ใต้ header, section และ article ตรงกลาง, aside ด้านข้าง, footer ล่างสุด">
+                      <div class="sm-header"><code>&lt;header&gt;</code>Document Header</div>
+                      <div class="sm-nav"><code>&lt;nav&gt;</code>Navigation tabs / Menu bars</div>
+                      <div class="sm-section"><code>&lt;section&gt;</code>Doc. section 1</div>
+                      <div class="sm-article"><code>&lt;article&gt;</code>Doc. section 2</div>
+                      <div class="sm-aside"><code>&lt;aside&gt;</code>Sidebar</div>
+                      <div class="sm-footer"><code>&lt;footer&gt;</code>Footer</div>
+                    </div>
+                  </section>
+
+                  <section class="topic" id="w2-each">
+                    <h4>ตัวอย่างการใช้ semantic element แต่ละตัว</h4>
+                    <p><strong><code>&lt;header&gt;</code></strong> — ในตัวอย่างใส่หัวข้อหลักของหน้าไว้ในส่วนหัว</p>
+                    <pre class="code-block" data-lang="html"><code>&lt;header&gt;&lt;!-- Document Header --&gt;
+    &lt;h1&gt;This is Header Part&lt;/h1&gt;
+&lt;/header&gt;</code></pre>
+                    <p><strong><code>&lt;footer&gt;</code></strong> — ในตัวอย่างใส่ข้อมูลผู้โพสต์และข้อมูลติดต่อไว้ในส่วนท้าย</p>
+                    <pre class="code-block" data-lang="html"><code>&lt;footer&gt;&lt;!-- Footer --&gt;
+    &lt;p&gt;Posted by: J.K.&lt;/p&gt;
+    &lt;p&gt;Contact information: jidapa.kra[AT]mahidol.edu&lt;/p&gt;
+&lt;/footer&gt;</code></pre>
+                    <p><strong><code>&lt;nav&gt;</code></strong> — รวมลิงก์นำทางไปยังหัวข้อต่างๆ ไว้ด้วยกัน</p>
+                    <pre class="code-block" data-lang="html" data-render="50"><code>&lt;nav&gt;&lt;!-- Navigation tabs/Menu bars --&gt;
+    &lt;a href="/html/"&gt;HTML&lt;/a&gt; |
+    &lt;a href="/html5/"&gt;HTML5&lt;/a&gt; |
+    &lt;a href="/css/"&gt;CSS&lt;/a&gt; |
+    &lt;a href="/js/"&gt;JavaScript&lt;/a&gt;
+&lt;/nav&gt;</code></pre>
+                    <p><strong><code>&lt;section&gt;</code></strong> — ในตัวอย่างเป็นส่วนเนื้อเพลงที่มีหัวข้อ <code>&lt;h2&gt;</code> และย่อหน้า</p>
+                    <pre class="code-block" data-lang="html"><code>&lt;section&gt;&lt;!-- Doc. section 1 --&gt;
+    &lt;h2&gt;Lyrics&lt;/h2&gt;
+    &lt;p&gt;Here's to the ones that we got&lt;br&gt;
+       Cheers to the wish you were here,...
+    &lt;/p&gt;
+&lt;/section&gt;</code></pre>
+                    <p><strong><code>&lt;article&gt;</code></strong> — ตัวอย่าง "Famous Cities" เป็น article ใหญ่ที่มี article เล็ก (One small article) ซ้อนอยู่ข้างใน 3 ชิ้น แต่ละชิ้นพูดถึงเมืองหนึ่งเมืองได้สมบูรณ์ในตัวเอง</p>
+                    <pre class="code-block" data-lang="html" data-render="430"><code>&lt;article&gt;
+    &lt;h2&gt;Famous Cities&lt;/h2&gt;
+    &lt;article&gt;
+        &lt;h2&gt;London&lt;/h2&gt;
+        &lt;p&gt;London is the capital city of England.&lt;/p&gt;
+    &lt;/article&gt;
+    &lt;article&gt;
+        &lt;h2&gt;Paris&lt;/h2&gt;
+        &lt;p&gt;Paris is the capital and most populous city of France.&lt;/p&gt;
+    &lt;/article&gt;
+    &lt;article&gt;
+        &lt;h2&gt;Tokyo&lt;/h2&gt;
+        &lt;p&gt;Tokyo is the capital of Japan.&lt;/p&gt;
+    &lt;/article&gt;
+&lt;/article&gt;</code></pre>
+                    <p><strong><code>&lt;aside&gt;</code></strong> — ข้อความในตัวอย่างสไลด์บอกหลักการไว้เองว่า "This content should be related to the surrounding content." คือเนื้อหาข้างเคียงควรเกี่ยวข้องกับเนื้อหารอบๆ แต่แยกออกมาเป็นส่วนเสริม เช่น sidebar</p>
+                    <pre class="code-block" data-lang="html"><code>&lt;aside&gt;&lt;!-- Sidebar --&gt;
+    &lt;h2&gt;
+        This content should be related&lt;br&gt;
+        to the surrounding content.
+    &lt;/h2&gt;
+&lt;/aside&gt;</code></pre>
+                  </section>
+
+                  <section class="topic" id="w2-article">
+                    <h4><code>&lt;article&gt;</code> หรือ <code>&lt;section&gt;</code>?</h4>
+                    <div class="compare">
+                      <div class="compare-col">
+                        <h5><code>&lt;article&gt;</code></h5>
+                        <p>เนื้อหาที่<strong>เป็นอิสระและสมบูรณ์ในตัวเอง</strong> (independent, self-contained) เช่น โพสต์ในฟอรัม บล็อกโพสต์ news feeds หรือคอมเมนต์</p>
+                      </div>
+                      <div class="compare-col">
+                        <h5><code>&lt;section&gt;</code></h5>
+                        <p>section <strong>ทั่วไป</strong>ของเอกสารหรือแอปพลิเคชัน (a generic document or application section)</p>
+                      </div>
+                    </div>
+                    <div class="callout callout--def">
+                      <span class="callout-label">Note ในสไลด์</span>
+                      <p><code>&lt;article&gt;</code> <b>อยู่ภายใน</b> <code>&lt;section&gt;</code> ได้ และ <code>&lt;section&gt;</code> ก็<b>มี</b> <code>&lt;article&gt;</code> <b>อยู่ข้างใน</b>ได้ — ซ้อนกันได้ทั้งสองทิศทาง</p>
+                    </div>
+                  </section>
+
+                  <section class="topic" id="w2-layouts">
+                    <h4>Web Layouts</h4>
+                    <p>รูปแบบการจัดวางหน้าเว็บมีอยู่มากมาย สไลด์ยกตัวอย่างโครงพื้นฐานอย่างง่ายไว้ ประกอบด้วย <strong>Header</strong> บนสุด ตามด้วย <strong>Navigation Bar</strong> จากนั้นเป็นส่วนเนื้อหาที่แบ่งเป็น <strong>Content</strong> (ซ้าย) · <strong>Main Content</strong> (กลาง) · <strong>Content</strong> (ขวา) และปิดท้ายด้วย <strong>Footer</strong></p>
+                    <p>นอกจากนี้ <strong>layout ของเนื้อหาควรเปลี่ยนไปตามอุปกรณ์</strong> (the Web Content Layout should vary by the devices) ลองกดสลับดูแต่ละแบบ</p>
+                    <div class="layout-demo" data-widget="layout-demo">
+                      <div class="seg" role="group" aria-label="เลือกอุปกรณ์">
+                        <button type="button" aria-pressed="false" data-cols="1" data-caption="Mobile Browser · 1-column — เนื้อหาเรียงต่อกันในแนวตั้งทั้งหมด">Mobile · 1-column</button>
+                        <button type="button" aria-pressed="false" data-cols="2" data-caption="Tablet/Laptop Browser · 2-column — Navigation Bar เต็มความกว้าง, Main Content คู่กับ Content ข้างเดียว">Tablet/Laptop · 2-column</button>
+                        <button type="button" aria-pressed="true" data-cols="3" data-caption="Desktop Browser · 3-column — Content ซ้าย, Main Content กลาง, Content ขวา">Desktop · 3-column</button>
+                      </div>
+                      <div class="layout-preview" data-cols="3" aria-live="polite">
+                        <div class="lp-nav">Navigation Bar</div>
+                        <div class="lp-left">Content</div>
+                        <div class="lp-main">Main Content</div>
+                        <div class="lp-right">Content</div>
+                        <div class="lp-footer">Footer</div>
+                      </div>
+                      <p class="layout-caption">Desktop Browser · 3-column — Content ซ้าย, Main Content กลาง, Content ขวา</p>
+                    </div>
+                  </section>
+
+                  <section class="topic" id="w2-layout-code">
+                    <h4>ตัวอย่าง HTML Layout</h4>
+                    <p>ตัวอย่างในสไลด์สร้าง layout 3 คอลัมน์ด้วย semantic elements: <code>&lt;header&gt;</code> · <code>&lt;nav&gt;</code> ที่มีลิงก์ 3 ลิงก์ · <code>&lt;article class="row"&gt;</code> ที่ครอบ <code>&lt;article class="column"&gt;</code> 3 ชิ้น (Column1–3) · และ <code>&lt;footer&gt;</code></p>
+                    <pre class="code-block" data-lang="html" data-render="320"><code>&lt;header&gt;
+    &lt;h1&gt;Header&lt;/h1&gt;
+&lt;/header&gt;
+&lt;nav&gt;
+    &lt;a href="#"&gt;Link1&lt;/a&gt;
+    &lt;a href="#"&gt;Link2&lt;/a&gt;
+    &lt;a href="#"&gt;Link3&lt;/a&gt;
+&lt;/nav&gt;
+&lt;article class="row"&gt;
+    &lt;article class="column"&gt;
+        &lt;h2&gt;Column1&lt;/h2&gt;
+        &lt;p&gt;Lorem ipsum dolor sit amet … &lt;/p&gt;
+    &lt;/article&gt;
+    &lt;article class="column"&gt;
+        &lt;h2&gt;Column2&lt;/h2&gt;
+        &lt;p&gt;Lorem ipsum dolor sit amet … &lt;/p&gt;
+    &lt;/article&gt;
+    &lt;article class="column"&gt;
+        &lt;h2&gt;Column3&lt;/h2&gt;
+        &lt;p&gt;Lorem ipsum dolor sit amet … &lt;/p&gt;
+    &lt;/article&gt;
+&lt;/article&gt;
+&lt;footer&gt;
+    &lt;h1&gt;Footer&lt;/h1&gt;
+&lt;/footer&gt;</code></pre>
+                    <div class="callout callout--warn">
+                      <span class="callout-label">ข้อควรระวัง: ไม่มี CSS = ไม่มีคอลัมน์</span>
+                      <p>สไลด์ "HTML Layout (No CSS)" แสดงว่าถ้า<strong>ยังไม่ใส่ CSS ทุกส่วนจะเรียงต่อกันในแนวตั้ง</strong> (Header → Navigation Bar → Column1 → Column2 → Column3 → Footer) ดังผลลัพธ์ด้านบน semantic elements บอกแค่ความหมายของแต่ละส่วน การจัดให้เป็นคอลัมน์ต้องใช้ CSS ซึ่งจะเรียนละเอียดในสัปดาห์ถัดไป</p>
+                    </div>
+                    <p>สไลด์ "HTML Layout (with CSS)" ยกตัวอย่างส่วนหนึ่งของไฟล์ CSS ที่ใช้ตกแต่ง header, footer และ nav</p>
+                    <pre class="code-block"><code>header, footer {
+    background-color: #f1f1f1;
+    padding: 3px;
+    text-align: center;
+}
+/* Navigation bar */
+nav {
+    overflow: hidden;
+    background-color: darkblue;
+}
+...</code></pre>
+                  </section>
+
+                </div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </section>
+
+      <!-- =============================================================
+           แท็บ 2: สรุป (cheat sheet)
+           ============================================================= -->
+      <section class="panel" id="summary" role="tabpanel" aria-labelledby="tab-summary" tabindex="-1">
+        <div class="panel-head">
+          <h2>Cheat sheet</h2>
+          <p class="panel-sub">media, input type, validation, GET/POST และ semantic elements ของบทที่ 2 รวมไว้ในหน้าเดียว</p>
+        </div>
+
+        <div class="sheet">
+
+          <article class="sheet-card sheet-card--wide">
+            <h3><span class="sheet-num">01</span> Audio · Video · YouTube</h3>
+            <div class="table-scroll">
+              <table>
+                <thead><tr><th></th><th>&lt;audio&gt;</th><th>&lt;video&gt;</th></tr></thead>
+                <tbody>
+                  <tr><td class="nowrap">รูปแบบไฟล์</td><td><strong>MP3, WAV, OGG</strong></td><td><strong>MP4, WebM, OGG</strong></td></tr>
+                  <tr><td class="nowrap">autoplay</td><td>เล่นอัตโนมัติ</td><td>เล่นอัตโนมัติ</td></tr>
+                  <tr><td class="nowrap">controls</td><td>ปุ่มควบคุมเสียง</td><td>ปุ่ม play, pause, volume</td></tr>
+                  <tr><td class="nowrap">ไฟล์</td><td>&lt;source src type="audio/mp3"&gt;</td><td>&lt;source&gt; ได้หลายไฟล์ · width/height</td></tr>
+                  <tr><td class="nowrap">อื่นๆ</td><td>ข้อความใน tag แสดงเมื่อไม่รองรับ</td><td>ก่อน HTML5 ต้องใช้ plug-in (Flash)</td></tr>
+                </tbody>
+              </table>
+            </div>
+            <p class="note">YouTube → <strong>&lt;iframe src="https://www.youtube.com/embed/VIDEO_ID"&gt;</strong></p>
+          </article>
+
+          <article class="sheet-card">
+            <h3><span class="sheet-num">02</span> GET vs POST</h3>
+            <dl class="defs defs--codes">
+              <div><dt>GET</dt><dd>ข้อมูล<strong>ใน URL</strong> เป็นคู่ name=value</dd></div>
+              <div><dt>POST</dt><dd>ข้อมูล<strong>ใน packet</strong> ไม่แสดงใน URL</dd></div>
+            </dl>
+            <dl class="defs defs--stack">
+              <div><dt>action</dt><dd>ส่งไป<strong>ที่ไหน</strong></dd></div>
+              <div><dt>method</dt><dd>ส่ง<strong>ด้วยวิธีไหน</strong> (GET/POST)</dd></div>
+            </dl>
+            <p class="note">Submit → Validation → ไม่ผ่าน: กลับไปแก้ · ผ่าน: ไปปลายทางใน action</p>
+          </article>
+
+          <article class="sheet-card sheet-card--wide">
+            <h3><span class="sheet-num">03</span> &lt;input type&gt; และ form elements</h3>
+            <div class="table-scroll">
+              <table>
+                <thead><tr><th>type / tag</th><th>ใช้ทำอะไร</th><th>จุดจำ</th></tr></thead>
+                <tbody>
+                  <tr><td class="nowrap">text</td><td>ข้อความบรรทัดเดียว</td><td>&lt;label for&gt; = id ของ input (screen reader)</td></tr>
+                  <tr><td class="nowrap">password</td><td>ข้อความปิดบัง (masked)</td><td>—</td></tr>
+                  <tr><td class="nowrap">radio</td><td>เลือกได้ <strong>1</strong> ตัวต่อกลุ่ม</td><td>name เดียวกัน = กลุ่มเดียวกัน · checked = ค่าเริ่มต้น</td></tr>
+                  <tr><td class="nowrap">checkbox</td><td>เลือกได้<strong>หลาย</strong>ตัว</td><td>name เดียวกัน · checked ได้หลายตัว</td></tr>
+                  <tr><td class="nowrap">tel</td><td>เบอร์โทร</td><td>ตรวจตาม pattern ตอน submit</td></tr>
+                  <tr><td class="nowrap">email</td><td>อีเมล</td><td>ตรวจรูปแบบอีเมลตอน submit</td></tr>
+                  <tr><td class="nowrap">date</td><td>date picker</td><td>min/max · week, month, time, datetime-local</td></tr>
+                  <tr><td class="nowrap">&lt;textarea&gt;</td><td>ข้อความหลายบรรทัด</td><td>rows, cols</td></tr>
+                  <tr><td class="nowrap">&lt;select&gt;</td><td>drop-down</td><td>&lt;option&gt; · selected = ค่าเริ่มต้น</td></tr>
+                  <tr><td class="nowrap">&lt;button&gt;</td><td>ปุ่ม</td><td>button · reset (คืนค่าเดิม) · submit (ส่ง)</td></tr>
+                  <tr><td class="nowrap">&lt;fieldset&gt;</td><td>กรอบจัดกลุ่ม</td><td>&lt;legend&gt; = หัวข้อกรอบ</td></tr>
+                </tbody>
+              </table>
+            </div>
+            <p class="note">form element ทุกตัวต้องอยู่ภายใน &lt;form&gt;</p>
+          </article>
+
+          <article class="sheet-card">
+            <h3><span class="sheet-num">04</span> Validation attributes</h3>
+            <dl class="defs defs--stack">
+              <div><dt>min / max</dt><dd>ค่าต่ำสุด / สูงสุด (max = ห้ามเกินหรือหลังค่านั้น)</dd></div>
+              <div><dt>pattern</dt><dd>regular expression ที่ค่าต้องตรง</dd></div>
+              <div><dt>title</dt><dd>อธิบาย pattern ให้ผู้ใช้</dd></div>
+              <div><dt>placeholder</dt><dd>ข้อความ hint (ไม่บังคับ)</dd></div>
+              <div><dt>required</dt><dd><strong>บังคับกรอก</strong>ก่อน submit</dd></div>
+            </dl>
+            <p class="note">validate ได้ 2 ทาง: HTML5 attributes หรือ JavaScript</p>
+          </article>
+
+          <article class="sheet-card sheet-card--wide">
+            <h3><span class="sheet-num">05</span> Semantic elements</h3>
+            <div class="table-scroll">
+              <table>
+                <thead><tr><th>Tag</th><th>ความหมาย</th><th>ตำแหน่งทั่วไป</th></tr></thead>
+                <tbody>
+                  <tr><td class="nowrap">&lt;header&gt;</td><td>ส่วนหัวของเอกสาร/section</td><td>บนสุด</td></tr>
+                  <tr><td class="nowrap">&lt;nav&gt;</td><td>ลิงก์นำทาง / เมนูบาร์</td><td>ใต้ header</td></tr>
+                  <tr><td class="nowrap">&lt;section&gt;</td><td>section ทั่วไปของเอกสาร</td><td>เนื้อหาหลัก</td></tr>
+                  <tr><td class="nowrap">&lt;article&gt;</td><td>เนื้อหาสมบูรณ์ในตัวเอง (โพสต์, ข่าว, คอมเมนต์)</td><td>เนื้อหาหลัก</td></tr>
+                  <tr><td class="nowrap">&lt;aside&gt;</td><td>เนื้อหาข้างเคียงที่เกี่ยวข้อง (sidebar)</td><td>ด้านข้าง</td></tr>
+                  <tr><td class="nowrap">&lt;footer&gt;</td><td>ส่วนท้ายของเอกสาร/section</td><td>ล่างสุด</td></tr>
+                </tbody>
+              </table>
+            </div>
+            <p class="note">ก่อน HTML5 ใช้ &lt;div class="..."&gt; · ประโยชน์: screen reader / search engine เข้าใจเนื้อหา · Mobile 1-column · Tablet/Laptop 2-column · Desktop 3-column</p>
+          </article>
+
+          <article class="sheet-card">
+            <h3><span class="sheet-num">06</span> article vs section</h3>
+            <dl class="defs defs--stack">
+              <div><dt>&lt;article&gt;</dt><dd>independent, self-contained — forum post, blog post, news feed, comment</dd></div>
+              <div><dt>&lt;section&gt;</dt><dd>generic section ของเอกสาร/แอป</dd></div>
+            </dl>
+            <p><strong>ซ้อนกันได้ทั้งสองทิศทาง:</strong> article ใน section และ section ใน article</p>
+          </article>
+
+        </div>
+      </section>
+
+      <!-- =============================================================
+           แท็บ 3: แบบฝึกหัด (20 ข้อ)
+           data-answer = ตัวเลือกที่ถูก (ก=a, ข=b, ค=c, ง=d ตามเฉลยที่ผู้ใช้กำหนด)
+           ============================================================= -->
+      <section class="panel" id="quiz" role="tabpanel" aria-labelledby="tab-quiz" tabindex="-1">
+        <div class="panel-head">
+          <h2>แบบฝึกหัด 20 ข้อ</h2>
+          <p class="panel-sub">เลือกคำตอบให้ครบแล้วกด "ตรวจคำตอบ" ด้านล่าง ระบบจะเฉลยพร้อมคำอธิบายทุกข้อ</p>
+        </div>
+
+        <form class="quiz" id="quiz-form" novalidate>
+
+          <fieldset class="q" data-answer="b">
+            <legend class="q-head"><span class="q-num">01</span><span class="q-text">HTML5 รองรับไฟล์เสียง (audio) รูปแบบใดบ้าง?</span></legend>
+            <div class="q-options">
+              <label class="opt"><input type="radio" name="q1" value="a" /><span class="opt-key">A</span><span class="opt-text">MP4, WebM, OGG</span></label>
+              <label class="opt"><input type="radio" name="q1" value="b" /><span class="opt-key">B</span><span class="opt-text">MP3, WAV, OGG</span></label>
+              <label class="opt"><input type="radio" name="q1" value="c" /><span class="opt-key">C</span><span class="opt-text">MP3, MP4, AVI</span></label>
+              <label class="opt"><input type="radio" name="q1" value="d" /><span class="opt-key">D</span><span class="opt-text">WAV, MP4, FLAC</span></label>
+            </div>
+            <div class="q-feedback"><div class="q-feedback-inner"><p class="q-verdict" aria-live="polite"></p><p class="q-explain">Audio รองรับ 3 รูปแบบ: MP3, WAV และ OGG · ข้อ A (MP4, WebM, OGG) คือรูปแบบของ video</p></div></div>
+          </fieldset>
+
+          <fieldset class="q" data-answer="b">
+            <legend class="q-head"><span class="q-num">02</span><span class="q-text">attribute ใดใช้เพิ่มปุ่มควบคุม play/pause/volume ให้ &lt;audio&gt;/&lt;video&gt;?</span></legend>
+            <div class="q-options">
+              <label class="opt"><input type="radio" name="q2" value="a" /><span class="opt-key">A</span><span class="opt-text">autoplay</span></label>
+              <label class="opt"><input type="radio" name="q2" value="b" /><span class="opt-key">B</span><span class="opt-text">controls</span></label>
+              <label class="opt"><input type="radio" name="q2" value="c" /><span class="opt-key">C</span><span class="opt-text">loop</span></label>
+              <label class="opt"><input type="radio" name="q2" value="d" /><span class="opt-key">D</span><span class="opt-text">muted</span></label>
+            </div>
+            <div class="q-feedback"><div class="q-feedback-inner"><p class="q-verdict" aria-live="polite"></p><p class="q-explain">controls เพิ่มปุ่มควบคุม เช่น play, pause และ volume · autoplay ทำให้เริ่มเล่นอัตโนมัติ</p></div></div>
+          </fieldset>
+
+          <fieldset class="q" data-answer="c">
+            <legend class="q-head"><span class="q-num">03</span><span class="q-text">การฝังวิดีโอ YouTube ในหน้า HTML ใช้ tag ใด?</span></legend>
+            <div class="q-options">
+              <label class="opt"><input type="radio" name="q3" value="a" /><span class="opt-key">A</span><span class="opt-text">&lt;video&gt;</span></label>
+              <label class="opt"><input type="radio" name="q3" value="b" /><span class="opt-key">B</span><span class="opt-text">&lt;embed&gt;</span></label>
+              <label class="opt"><input type="radio" name="q3" value="c" /><span class="opt-key">C</span><span class="opt-text">&lt;iframe&gt;</span></label>
+              <label class="opt"><input type="radio" name="q3" value="d" /><span class="opt-key">D</span><span class="opt-text">&lt;object&gt;</span></label>
+            </div>
+            <div class="q-feedback"><div class="q-feedback-inner"><p class="q-verdict" aria-live="polite"></p><p class="q-explain">ใช้ &lt;iframe&gt; ร่วมกับ YouTube Video Id เช่น src="https://www.youtube.com/embed/62bIsvRcPv0" · &lt;video&gt; ใช้กับไฟล์วิดีโอ MP4/WebM/OGG</p></div></div>
+          </fieldset>
+
+          <fieldset class="q" data-answer="b">
+            <legend class="q-head"><span class="q-num">04</span><span class="q-text">form element ทุกตัวต้องอยู่ภายใน tag ใด?</span></legend>
+            <div class="q-options">
+              <label class="opt"><input type="radio" name="q4" value="a" /><span class="opt-key">A</span><span class="opt-text">&lt;div&gt;</span></label>
+              <label class="opt"><input type="radio" name="q4" value="b" /><span class="opt-key">B</span><span class="opt-text">&lt;form&gt;</span></label>
+              <label class="opt"><input type="radio" name="q4" value="c" /><span class="opt-key">C</span><span class="opt-text">&lt;fieldset&gt;</span></label>
+              <label class="opt"><input type="radio" name="q4" value="d" /><span class="opt-key">D</span><span class="opt-text">&lt;section&gt;</span></label>
+            </div>
+            <div class="q-feedback"><div class="q-feedback-inner"><p class="q-verdict" aria-live="polite"></p><p class="q-explain">"All form elements must be within &lt;form&gt; tags" · &lt;fieldset&gt; เป็นแค่กรอบจัดกลุ่มที่อยู่ใน form อีกที</p></div></div>
+          </fieldset>
+
+          <fieldset class="q" data-answer="b">
+            <legend class="q-head"><span class="q-num">05</span><span class="q-text">&lt;input type="radio"&gt; กับ &lt;input type="checkbox"&gt; ต่างกันอย่างไร?</span></legend>
+            <div class="q-options">
+              <label class="opt"><input type="radio" name="q5" value="a" /><span class="opt-key">A</span><span class="opt-text">radio เลือกได้หลายตัวเลือก checkbox เลือกได้ตัวเดียว</span></label>
+              <label class="opt"><input type="radio" name="q5" value="b" /><span class="opt-key">B</span><span class="opt-text">radio เลือกได้ทีละ 1 ตัวเลือกในกลุ่มเดียวกัน checkbox เลือกได้หลายตัวเลือกพร้อมกัน</span></label>
+              <label class="opt"><input type="radio" name="q5" value="c" /><span class="opt-key">C</span><span class="opt-text">ทั้งสองแบบทำงานเหมือนกันทุกประการ</span></label>
+              <label class="opt"><input type="radio" name="q5" value="d" /><span class="opt-key">D</span><span class="opt-text">radio ใช้กับข้อความ checkbox ใช้กับตัวเลขเท่านั้น</span></label>
+            </div>
+            <div class="q-feedback"><div class="q-feedback-inner"><p class="q-verdict" aria-live="polite"></p><p class="q-explain">radio ใช้เมื่อเลือกได้เพียงตัวเลือกเดียว · checkbox ใช้เมื่อเลือกได้หลายตัวเลือก (multiple-choice) · ข้อ A สลับกัน</p></div></div>
+          </fieldset>
+
+          <fieldset class="q" data-answer="b">
+            <legend class="q-head"><span class="q-num">06</span><span class="q-text">ทำไม radio button หลายปุ่มในกลุ่มเดียวกันต้องใช้ attribute name ค่าเดียวกัน?</span></legend>
+            <div class="q-options">
+              <label class="opt"><input type="radio" name="q6" value="a" /><span class="opt-key">A</span><span class="opt-text">เพื่อความสวยงามเท่านั้น</span></label>
+              <label class="opt"><input type="radio" name="q6" value="b" /><span class="opt-key">B</span><span class="opt-text">เพื่อให้ browser รู้ว่าปุ่มเหล่านี้อยู่กลุ่มเดียวกัน เลือกได้แค่ตัวเดียว</span></label>
+              <label class="opt"><input type="radio" name="q6" value="c" /><span class="opt-key">C</span><span class="opt-text">เพราะ HTML บังคับให้ต้องใส่</span></label>
+              <label class="opt"><input type="radio" name="q6" value="d" /><span class="opt-key">D</span><span class="opt-text">เพื่อกำหนดสีของปุ่ม</span></label>
+            </div>
+            <div class="q-feedback"><div class="q-feedback-inner"><p class="q-verdict" aria-live="polite"></p><p class="q-explain">"The value of attribute name must be the same to group the radio buttons" — name เดียวกันคือการจัดกลุ่ม ทำให้เลือกได้ตัวเดียวในกลุ่ม</p></div></div>
+          </fieldset>
+
+          <fieldset class="q" data-answer="b">
+            <legend class="q-head"><span class="q-num">07</span><span class="q-text">attribute pattern ของ &lt;input&gt; ใช้ทำอะไร?</span></legend>
+            <div class="q-options">
+              <label class="opt"><input type="radio" name="q7" value="a" /><span class="opt-key">A</span><span class="opt-text">กำหนดสีพื้นหลังของช่อง input</span></label>
+              <label class="opt"><input type="radio" name="q7" value="b" /><span class="opt-key">B</span><span class="opt-text">กำหนด regular expression ที่ค่า input ต้องตรงตามตอน submit</span></label>
+              <label class="opt"><input type="radio" name="q7" value="c" /><span class="opt-key">C</span><span class="opt-text">กำหนดความกว้างของช่อง input</span></label>
+              <label class="opt"><input type="radio" name="q7" value="d" /><span class="opt-key">D</span><span class="opt-text">กำหนดฟอนต์ของข้อความ</span></label>
+            </div>
+            <div class="q-feedback"><div class="q-feedback-inner"><p class="q-verdict" aria-live="polite"></p><p class="q-explain">pattern กำหนด regular expression ที่ค่าของ &lt;input&gt; จะถูกตรวจสอบเมื่อ submit form เช่น [0-9]{3}-[0-9]{3}-[0-9]{4}</p></div></div>
+          </fieldset>
+
+          <fieldset class="q" data-answer="b">
+            <legend class="q-head"><span class="q-num">08</span><span class="q-text">&lt;input type="date" max="2010-01-01"&gt; มีผลอย่างไร?</span></legend>
+            <div class="q-options">
+              <label class="opt"><input type="radio" name="q8" value="a" /><span class="opt-key">A</span><span class="opt-text">บังคับให้เลือกวันที่ 2010-01-01 เท่านั้น</span></label>
+              <label class="opt"><input type="radio" name="q8" value="b" /><span class="opt-key">B</span><span class="opt-text">จำกัดไม่ให้เลือกวันที่หลังจาก 2010-01-01</span></label>
+              <label class="opt"><input type="radio" name="q8" value="c" /><span class="opt-key">C</span><span class="opt-text">จำกัดไม่ให้เลือกวันที่ก่อน 2010-01-01</span></label>
+              <label class="opt"><input type="radio" name="q8" value="d" /><span class="opt-key">D</span><span class="opt-text">ไม่มีผลใดๆ</span></label>
+            </div>
+            <div class="q-feedback"><div class="q-feedback-inner"><p class="q-verdict" aria-live="polite"></p><p class="q-explain">max กำหนดค่าสูงสุด จึงเลือกวันที่หลัง 2010-01-01 ไม่ได้ · ข้อ C คือผลของ min</p></div></div>
+          </fieldset>
+
+          <fieldset class="q" data-answer="c">
+            <legend class="q-head"><span class="q-num">09</span><span class="q-text">attribute ใดบังคับให้ผู้ใช้ต้องกรอกข้อมูลในช่องก่อน submit form ได้?</span></legend>
+            <div class="q-options">
+              <label class="opt"><input type="radio" name="q9" value="a" /><span class="opt-key">A</span><span class="opt-text">placeholder</span></label>
+              <label class="opt"><input type="radio" name="q9" value="b" /><span class="opt-key">B</span><span class="opt-text">title</span></label>
+              <label class="opt"><input type="radio" name="q9" value="c" /><span class="opt-key">C</span><span class="opt-text">required</span></label>
+              <label class="opt"><input type="radio" name="q9" value="d" /><span class="opt-key">D</span><span class="opt-text">pattern</span></label>
+            </div>
+            <div class="q-feedback"><div class="q-feedback-inner"><p class="q-verdict" aria-live="polite"></p><p class="q-explain">required บังคับให้กรอกช่องนั้นก่อน submit · placeholder เป็นแค่ hint · title อธิบาย pattern · pattern กำหนดรูปแบบของค่า</p></div></div>
+          </fieldset>
+
+          <fieldset class="q" data-answer="b">
+            <legend class="q-head"><span class="q-num">10</span><span class="q-text">attribute placeholder มีหน้าที่อะไร?</span></legend>
+            <div class="q-options">
+              <label class="opt"><input type="radio" name="q10" value="a" /><span class="opt-key">A</span><span class="opt-text">บังคับให้กรอกข้อมูล</span></label>
+              <label class="opt"><input type="radio" name="q10" value="b" /><span class="opt-key">B</span><span class="opt-text">แสดงข้อความ hint ในช่องก่อนผู้ใช้พิมพ์</span></label>
+              <label class="opt"><input type="radio" name="q10" value="c" /><span class="opt-key">C</span><span class="opt-text">กำหนดค่าเริ่มต้นที่ส่งจริงตอน submit</span></label>
+              <label class="opt"><input type="radio" name="q10" value="d" /><span class="opt-key">D</span><span class="opt-text">ตรวจสอบรูปแบบอีเมล</span></label>
+            </div>
+            <div class="q-feedback"><div class="q-feedback-inner"><p class="q-verdict" aria-live="polite"></p><p class="q-explain">placeholder "Provides a hint that describes the expected value of an input field" · การบังคับกรอกคือ required · การตรวจรูปแบบอีเมลมาจาก type="email"</p></div></div>
+          </fieldset>
+
+          <fieldset class="q" data-answer="b">
+            <legend class="q-head"><span class="q-num">11</span><span class="q-text">เมื่อ form ใช้ method="GET" ข้อมูลที่ส่งจะปรากฏที่ใด?</span></legend>
+            <div class="q-options">
+              <label class="opt"><input type="radio" name="q11" value="a" /><span class="opt-key">A</span><span class="opt-text">ซ่อนอยู่ใน packet มองไม่เห็น</span></label>
+              <label class="opt"><input type="radio" name="q11" value="b" /><span class="opt-key">B</span><span class="opt-text">ปรากฏใน URL path เป็นคู่ name=value</span></label>
+              <label class="opt"><input type="radio" name="q11" value="c" /><span class="opt-key">C</span><span class="opt-text">ถูกเข้ารหัสไว้ในฐานข้อมูล</span></label>
+              <label class="opt"><input type="radio" name="q11" value="d" /><span class="opt-key">D</span><span class="opt-text">แสดงเป็น popup แจ้งเตือน</span></label>
+            </div>
+            <div class="q-feedback"><div class="q-feedback-inner"><p class="q-verdict" aria-live="polite"></p><p class="q-explain">GET ส่งข้อมูลทั้งหมดผ่าน URL — ข้อมูลแสดงใน url path เป็นคู่ name และ value · ข้อ A คือ POST</p></div></div>
+          </fieldset>
+
+          <fieldset class="q" data-answer="b">
+            <legend class="q-head"><span class="q-num">12</span><span class="q-text">เมื่อ form ใช้ method="POST" ข้อมูลที่ส่งจะเป็นอย่างไร?</span></legend>
+            <div class="q-options">
+              <label class="opt"><input type="radio" name="q12" value="a" /><span class="opt-key">A</span><span class="opt-text">แสดงอยู่ใน URL เหมือน GET</span></label>
+              <label class="opt"><input type="radio" name="q12" value="b" /><span class="opt-key">B</span><span class="opt-text">ถูกส่งซ่อนอยู่ภายใน packet ไม่แสดงใน URL</span></label>
+              <label class="opt"><input type="radio" name="q12" value="c" /><span class="opt-key">C</span><span class="opt-text">ไม่ถูกส่งไปไหนเลย</span></label>
+              <label class="opt"><input type="radio" name="q12" value="d" /><span class="opt-key">D</span><span class="opt-text">ต้องใช้ JavaScript เท่านั้นถึงส่งได้</span></label>
+            </div>
+            <div class="q-feedback"><div class="q-feedback-inner"><p class="q-verdict" aria-live="polite"></p><p class="q-explain">POST ส่งข้อมูลทั้งหมดภายใน packet ("all data received will be packed in the packet") ไม่ได้แสดงใน URL</p></div></div>
+          </fieldset>
+
+          <fieldset class="q" data-answer="b">
+            <legend class="q-head"><span class="q-num">13</span><span class="q-text">attribute ใดใน &lt;form&gt; กำหนดว่าจะส่งข้อมูลไปที่หน้าใด?</span></legend>
+            <div class="q-options">
+              <label class="opt"><input type="radio" name="q13" value="a" /><span class="opt-key">A</span><span class="opt-text">method</span></label>
+              <label class="opt"><input type="radio" name="q13" value="b" /><span class="opt-key">B</span><span class="opt-text">action</span></label>
+              <label class="opt"><input type="radio" name="q13" value="c" /><span class="opt-key">C</span><span class="opt-text">target</span></label>
+              <label class="opt"><input type="radio" name="q13" value="d" /><span class="opt-key">D</span><span class="opt-text">name</span></label>
+            </div>
+            <div class="q-feedback"><div class="q-feedback-inner"><p class="q-verdict" aria-live="polite"></p><p class="q-explain">action กำหนดว่าจะส่ง form-data ไปที่ไหน (เช่น action="somewhere.html") · method กำหนด HTTP method (GET/POST)</p></div></div>
+          </fieldset>
+
+          <fieldset class="q" data-answer="b">
+            <legend class="q-head"><span class="q-num">14</span><span class="q-text">Semantic elements มีประโยชน์หลักคืออะไร?</span></legend>
+            <div class="q-options">
+              <label class="opt"><input type="radio" name="q14" value="a" /><span class="opt-key">A</span><span class="opt-text">ทำให้เว็บโหลดเร็วขึ้นเสมอ</span></label>
+              <label class="opt"><input type="radio" name="q14" value="b" /><span class="opt-key">B</span><span class="opt-text">ให้ข้อมูลเชิงความหมายที่ช่วยให้ screen reader/search engine เข้าใจเนื้อหาได้ดีขึ้น</span></label>
+              <label class="opt"><input type="radio" name="q14" value="c" /><span class="opt-key">C</span><span class="opt-text">ลดขนาดไฟล์ CSS</span></label>
+              <label class="opt"><input type="radio" name="q14" value="d" /><span class="opt-key">D</span><span class="opt-text">บังคับให้ใช้ JavaScript</span></label>
+            </div>
+            <div class="q-feedback"><div class="q-feedback-inner"><p class="q-verdict" aria-live="polite"></p><p class="q-explain">"With more semantic information, screen readers or search engines can identify the contents of the web pages"</p></div></div>
+          </fieldset>
+
+          <fieldset class="q" data-answer="b">
+            <legend class="q-head"><span class="q-num">15</span><span class="q-text">&lt;article&gt; เหมาะกับเนื้อหาประเภทใดมากที่สุด?</span></legend>
+            <div class="q-options">
+              <label class="opt"><input type="radio" name="q15" value="a" /><span class="opt-key">A</span><span class="opt-text">เมนูนำทางเว็บไซต์</span></label>
+              <label class="opt"><input type="radio" name="q15" value="b" /><span class="opt-key">B</span><span class="opt-text">เนื้อหาที่สมบูรณ์ในตัวเอง เช่น บล็อกโพสต์ ข่าว หรือคอมเมนต์</span></label>
+              <label class="opt"><input type="radio" name="q15" value="c" /><span class="opt-key">C</span><span class="opt-text">แถบด้านข้างที่ไม่เกี่ยวกับเนื้อหาหลัก</span></label>
+              <label class="opt"><input type="radio" name="q15" value="d" /><span class="opt-key">D</span><span class="opt-text">ส่วนท้ายของเอกสารเท่านั้น</span></label>
+            </div>
+            <div class="q-feedback"><div class="q-feedback-inner"><p class="q-verdict" aria-live="polite"></p><p class="q-explain">&lt;article&gt; = independent, self-contained content เช่น forum post, blog post, news feeds, comments · เมนูนำทางคือ &lt;nav&gt; · ส่วนท้ายคือ &lt;footer&gt;</p></div></div>
+          </fieldset>
+
+          <fieldset class="q" data-answer="b">
+            <legend class="q-head"><span class="q-num">16</span><span class="q-text">ก่อนมี semantic elements นักพัฒนามักใช้ tag ใดร่วมกับ attribute class เพื่อแบ่งส่วนเนื้อหา?</span></legend>
+            <div class="q-options">
+              <label class="opt"><input type="radio" name="q16" value="a" /><span class="opt-key">A</span><span class="opt-text">&lt;span&gt;</span></label>
+              <label class="opt"><input type="radio" name="q16" value="b" /><span class="opt-key">B</span><span class="opt-text">&lt;div&gt;</span></label>
+              <label class="opt"><input type="radio" name="q16" value="c" /><span class="opt-key">C</span><span class="opt-text">&lt;p&gt;</span></label>
+              <label class="opt"><input type="radio" name="q16" value="d" /><span class="opt-key">D</span><span class="opt-text">&lt;table&gt;</span></label>
+            </div>
+            <div class="q-feedback"><div class="q-feedback-inner"><p class="q-verdict" aria-live="polite"></p><p class="q-explain">"Use a general tag such &lt;div&gt; with the attribute class to partition the content" เช่น &lt;div class="header"&gt;</p></div></div>
+          </fieldset>
+
+          <fieldset class="q" data-answer="b">
+            <legend class="q-head"><span class="q-num">17</span><span class="q-text">&lt;aside&gt; ใช้สำหรับเนื้อหาประเภทใด?</span></legend>
+            <div class="q-options">
+              <label class="opt"><input type="radio" name="q17" value="a" /><span class="opt-key">A</span><span class="opt-text">เนื้อหาหลักของหน้าเว็บ</span></label>
+              <label class="opt"><input type="radio" name="q17" value="b" /><span class="opt-key">B</span><span class="opt-text">เนื้อหาข้างเคียง (sidebar) ที่เกี่ยวข้องกับเนื้อหาหลักแต่แยกออกมา</span></label>
+              <label class="opt"><input type="radio" name="q17" value="c" /><span class="opt-key">C</span><span class="opt-text">ส่วนหัวของเอกสาร</span></label>
+              <label class="opt"><input type="radio" name="q17" value="d" /><span class="opt-key">D</span><span class="opt-text">แบบฟอร์มรับข้อมูล</span></label>
+            </div>
+            <div class="q-feedback"><div class="q-feedback-inner"><p class="q-verdict" aria-live="polite"></p><p class="q-explain">&lt;aside&gt; คือ content aside from the content (Sidebar) และ "This content should be related to the surrounding content."</p></div></div>
+          </fieldset>
+
+          <fieldset class="q" data-answer="b">
+            <legend class="q-head"><span class="q-num">18</span><span class="q-text">Layout แบบ 1-column มักใช้กับอุปกรณ์ประเภทใด?</span></legend>
+            <div class="q-options">
+              <label class="opt"><input type="radio" name="q18" value="a" /><span class="opt-key">A</span><span class="opt-text">Desktop Browser</span></label>
+              <label class="opt"><input type="radio" name="q18" value="b" /><span class="opt-key">B</span><span class="opt-text">Mobile Browser</span></label>
+              <label class="opt"><input type="radio" name="q18" value="c" /><span class="opt-key">C</span><span class="opt-text">Tablet/Laptop Browser</span></label>
+              <label class="opt"><input type="radio" name="q18" value="d" /><span class="opt-key">D</span><span class="opt-text">ใช้กับทุกอุปกรณ์เหมือนกัน</span></label>
+            </div>
+            <div class="q-feedback"><div class="q-feedback-inner"><p class="q-verdict" aria-live="polite"></p><p class="q-explain">Mobile Browser = 1-column · Tablet/Laptop Browser = 2-column · Desktop Browser = 3-column</p></div></div>
+          </fieldset>
+
+          <fieldset class="q" data-answer="b">
+            <legend class="q-head"><span class="q-num">19</span><span class="q-text">&lt;article&gt; และ &lt;section&gt; สามารถซ้อนกันได้หรือไม่?</span></legend>
+            <div class="q-options">
+              <label class="opt"><input type="radio" name="q19" value="a" /><span class="opt-key">A</span><span class="opt-text">ซ้อนกันไม่ได้เลย</span></label>
+              <label class="opt"><input type="radio" name="q19" value="b" /><span class="opt-key">B</span><span class="opt-text">ซ้อนกันได้ทั้งสองทิศทาง (article ใน section และ section ใน article)</span></label>
+              <label class="opt"><input type="radio" name="q19" value="c" /><span class="opt-key">C</span><span class="opt-text">section ใส่ใน article ได้อย่างเดียว</span></label>
+              <label class="opt"><input type="radio" name="q19" value="d" /><span class="opt-key">D</span><span class="opt-text">article ใส่ใน section ได้อย่างเดียว</span></label>
+            </div>
+            <div class="q-feedback"><div class="q-feedback-inner"><p class="q-verdict" aria-live="polite"></p><p class="q-explain">"&lt;article&gt; can be inside &lt;section&gt; and &lt;section&gt; can also have &lt;article&gt; inside"</p></div></div>
+          </fieldset>
+
+          <fieldset class="q" data-answer="c">
+            <legend class="q-head"><span class="q-num">20</span><span class="q-text">tag ใดที่ควรอยู่ตำแหน่งบนสุดของโครงสร้างหน้าเว็บโดยทั่วไป?</span></legend>
+            <div class="q-options">
+              <label class="opt"><input type="radio" name="q20" value="a" /><span class="opt-key">A</span><span class="opt-text">&lt;footer&gt;</span></label>
+              <label class="opt"><input type="radio" name="q20" value="b" /><span class="opt-key">B</span><span class="opt-text">&lt;aside&gt;</span></label>
+              <label class="opt"><input type="radio" name="q20" value="c" /><span class="opt-key">C</span><span class="opt-text">&lt;header&gt;</span></label>
+              <label class="opt"><input type="radio" name="q20" value="d" /><span class="opt-key">D</span><span class="opt-text">&lt;nav&gt; เท่านั้น</span></label>
+            </div>
+            <div class="q-feedback"><div class="q-feedback-inner"><p class="q-verdict" aria-live="polite"></p><p class="q-explain">โครงพื้นฐาน: Header (บนสุด) → Navigation Bar → เนื้อหา → Footer (ล่างสุด) · &lt;header&gt; คือส่วนหัวของเอกสาร</p></div></div>
+          </fieldset>
+
+          <div class="quiz-result" id="quiz-result" hidden tabindex="-1">
+            <div class="score-ring" aria-hidden="true">
+              <svg viewBox="0 0 120 120">
+                <circle class="ring-track" cx="60" cy="60" r="52" />
+                <circle class="ring-fill" cx="60" cy="60" r="52" pathLength="100" />
+              </svg>
+              <span class="score-pct"><span id="score-pct">0</span>%</span>
+            </div>
+            <div class="score-body">
+              <p class="score-line" role="status">ได้ <strong id="score-num">0</strong> / 20 คะแนน</p>
+              <p class="score-msg" id="score-msg"></p>
+              <div class="score-actions">
+                <button class="btn btn--ghost btn--sm" type="button" id="toggle-wrong" aria-pressed="false">ดูเฉพาะข้อที่ผิด</button>
+              </div>
+            </div>
+          </div>
+
+          <div class="quiz-bar">
+            <div class="quiz-progress">
+              <span class="quiz-count"><span id="answered">0</span> / 20 ข้อ</span>
+              <span class="progress" aria-hidden="true"><span class="progress-fill" id="progress-fill"></span></span>
+              <span class="quiz-hint" id="quiz-hint" aria-live="polite"></span>
+            </div>
+            <div class="quiz-actions">
+              <button class="btn btn--ghost" type="reset" id="quiz-reset">ทำใหม่</button>
+              <button class="btn btn--primary" type="submit" id="quiz-submit">ตรวจคำตอบ</button>
+            </div>
+          </div>
+        </form>
+      </section>
+
+    </div>
+  </main>
+
+  <footer class="site-footer">
+    <div class="wrap">
+      <p>สรุปจากสไลด์ ITDS241 Web Technologies and Applications (Faculty of ICT, Mahidol University) เพื่อใช้ทบทวนส่วนตัว — ถ้าเนื้อหาขัดกับสไลด์ ให้ยึดสไลด์เป็นหลัก</p>
+    </div>
+  </footer>
+
+  <script src="assets/js/widgets.js" defer></script>
+  <script src="assets/js/network.js" defer></script>
+</body>
+</html>
