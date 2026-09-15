@@ -1193,6 +1193,34 @@ html:not(.js) .seg { display: none; }
 .key-list { display: flex; flex-wrap: wrap; gap: 6px 14px; margin: var(--space-3) 0 0; padding: 0 !important; list-style: none; font-size: var(--fs-xs); color: var(--text-muted); }
 .topic .key-list { margin-top: var(--space-4); }
 .long-division + .calc-steps { margin-top: var(--space-3); }
+/* ---- Interactive: binary exponential backoff ---- */
+.bo-actions { display: flex; flex-wrap: wrap; gap: var(--space-2); margin-top: var(--space-3); }
+.bo-track {
+  position: relative;
+  display: block;
+  height: 22px;
+  margin: 6px 0;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  background: var(--graphite-850);
+}
+.bo-track--cells { display: grid; grid-template-columns: repeat(var(--slots), minmax(22px, 1fr)); gap: 2px; height: auto; padding: 2px; min-width: max-content; }
+.bo-track--cells i {
+  display: grid;
+  place-items: center;
+  height: 22px;
+  border-radius: 3px;
+  background: var(--graphite-800);
+  font: 400 10px/1 var(--font-mono);
+  font-style: normal;
+  color: var(--text-faint);
+}
+.bo-track--cells i.is-pick { background: var(--iris-400); color: var(--text-on-accent); font-weight: 700; }
+.bo-pick { position: absolute; top: 2px; bottom: 2px; width: 4px; margin-left: -2px; border-radius: 2px; background: var(--iris-400); }
+.bo-scale { position: absolute; inset: 0 6px; display: flex; justify-content: space-between; align-items: center; font: 400 10px/1 var(--font-mono); color: var(--text-faint); pointer-events: none; }
+@media (max-width: 560px) {
+  .calc-expr { white-space: normal; overflow-wrap: anywhere; }
+}
 .key-list li { margin: 0; display: inline-flex; align-items: center; gap: 6px; }
 .key-list .arq-cell { width: 22px; height: 18px; margin: 0; font-size: 10px; }
 

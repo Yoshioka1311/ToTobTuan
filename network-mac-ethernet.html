@@ -22,6 +22,15 @@
 <body>
   <a class="skip-link" href="#tabs">ข้ามไปที่เนื้อหา</a>
 
+  <svg class="dg-defs" aria-hidden="true" focusable="false">
+    <defs>
+      <marker id="arr" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path class="dg-arrow" d="M0 0L10 5L0 10z" /></marker>
+      <marker id="arr-muted" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path class="dg-arrow--muted" d="M0 0L10 5L0 10z" /></marker>
+      <marker id="arr-ok" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path class="dg-arrow--ok" d="M0 0L10 5L0 10z" /></marker>
+      <marker id="arr-bad" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path class="dg-arrow--bad" d="M0 0L10 5L0 10z" /></marker>
+    </defs>
+  </svg>
+
   <header class="site-header">
     <div class="wrap">
       <a class="wordmark" href="index.html" aria-label="โต๊ะทบทวน หน้าแรก">
@@ -96,14 +105,14 @@
 
         <div class="acc">
 
-          <!-- ---------- ไฟล์ 1 ---------- -->
+          <!-- ================= 01 MAC ================= -->
           <div class="acc-item is-open">
             <h3 class="acc-heading">
               <button class="acc-trigger" type="button" aria-expanded="true" aria-controls="acc-mac" id="acc-mac-btn">
                 <span class="acc-index">01</span>
                 <span class="acc-title">
                   <span class="acc-name">โปรโตคอลควบคุมการเข้าถึงสื่อกลาง (Media Access Control)</span>
-                  <span class="acc-file">ITDS231-Lecture6.1-MAC-n-2026.pdf · Lecture 6.1</span>
+                  <span class="acc-file">ITDS231-Lecture6.1-MAC-n-2026.pdf · Lecture 6.1 · 63 หน้า</span>
                 </span>
                 <svg class="acc-chevron" viewBox="0 0 20 20" aria-hidden="true"><path d="M5 7.5l5 5 5-5" /></svg>
               </button>
@@ -112,26 +121,35 @@
               <div class="acc-panel-inner">
                 <div class="acc-body">
 
-                  <nav class="toc" aria-label="หัวข้อในโปรโตคอลควบคุมการเข้าถึงสื่อกลาง">
-                    <a href="#mac-modes">Transmission mode</a>
+                  <nav class="toc" aria-label="หัวข้อใน Media Access Control">
+                    <a href="#mac-modes">Topology &amp; transmission mode</a>
                     <a href="#mac-groups">Multiple Access 3 กลุ่ม</a>
+                    <a href="#mac-collision">Collision</a>
                     <a href="#mac-aloha">ALOHA</a>
                     <a href="#mac-csma">CSMA</a>
                     <a href="#mac-cd">CSMA/CD</a>
+                    <a href="#mac-backoff">Backoff (interactive)</a>
                     <a href="#mac-ca">CSMA/CA</a>
+                    <a href="#mac-wifi">RTS/CTS, NAV &amp; Wi-Fi</a>
                     <a href="#mac-controlled">Controlled access</a>
                     <a href="#mac-channel">Channelization</a>
+                    <a href="#mac-cdma">CDMA</a>
                   </nav>
 
                   <section class="topic" id="mac-modes">
-                    <h4>Transmission mode</h4>
+                    <h4>Physical/Logical topology และ Transmission mode</h4>
+                    <p><strong>topology</strong> ของเครือข่ายคือการจัดวางและความสัมพันธ์ของอุปกรณ์เครือข่ายกับการเชื่อมต่อระหว่างกัน มี 2 แบบที่ใช้อธิบายเครือข่าย</p>
+                    <div class="compare">
+                      <div class="compare-col"><h5>Physical topology</h5><p>แสดง<strong>การเชื่อมต่อทางกายภาพ</strong>และวิธีที่อุปกรณ์ต่อถึงกัน</p></div>
+                      <div class="compare-col"><h5>Logical topology</h5><p>ระบุ<strong>การเชื่อมต่อเสมือน</strong>ระหว่างอุปกรณ์ โดยใช้ device interfaces และรูปแบบ IP addressing</p></div>
+                    </div>
                     <div class="table-scroll">
                       <table>
                         <thead><tr><th>โหมด</th><th>ลักษณะ</th><th>ตัวอย่าง</th></tr></thead>
                         <tbody>
-                          <tr><td>Simplex</td><td>ทิศทางเดียว</td><td>รีโมท</td></tr>
-                          <tr><td>Half-duplex</td><td>ส่งหรือรับได้ทีละอย่างบนสื่อกลางร่วม</td><td>WLAN, hub Ethernet เก่า</td></tr>
-                          <tr><td>Full-duplex</td><td>ส่งและรับพร้อมกันได้</td><td>Ethernet switch สมัยใหม่</td></tr>
+                          <tr><td>Simplex</td><td>สื่อสารทางเดียว (unidirectional) — อุปกรณ์เป็นผู้รับอย่างเดียวหรือผู้ส่งอย่างเดียว</td><td>ผู้รับ: TV, radio, keyboard/mouse, speaker · ผู้ส่ง: remote control</td></tr>
+                          <tr><td>Half-duplex</td><td>ส่งหรือรับได้ทีละอย่างบนสื่อกลางร่วม</td><td>WLAN, bus topology แบบเดิมที่ใช้ Ethernet hub</td></tr>
+                          <tr><td>Full-duplex</td><td>ทั้งสองฝั่งส่งและรับพร้อมกันได้</td><td>Ethernet switch ทำงานแบบ full-duplex</td></tr>
                         </tbody>
                       </table>
                     </div>
@@ -139,114 +157,445 @@
 
                   <section class="topic" id="mac-groups">
                     <h4>Multiple Access Control 3 กลุ่ม</h4>
-                    <p>กฎที่กำหนดว่า<strong>อุปกรณ์ใดส่งข้อมูลบนสื่อกลางร่วมกันได้เมื่อใด</strong> เพื่อลด/หลีกเลี่ยงการชนกัน</p>
+                    <div class="callout callout--def">
+                      <span class="callout-label">นิยาม</span>
+                      <p><b>Multiple Access Control = rules for sharing a common medium</b> — กฎที่กำหนดว่าอุปกรณ์ส่งข้อมูลบนสื่อกลางร่วมได้เมื่อใด จำเป็นเมื่อหลายสถานีใช้ช่องสัญญาณหรือ broadcast medium เดียวกัน มีเป้าหมายเพื่อประสานการเข้าถึงสื่อกลางและ<b>ลด/หลีกเลี่ยงการชนกัน</b> โดยกำหนดว่าสถานีจะ<b>แข่งกัน แบ่งกัน หรือผลัดกัน</b>ใช้สื่อกลางอย่างไร</p>
+                    </div>
+                    <p>เป้าหมายคือป้องกันไม่ให้สัญญาณชนกัน จึงต้องมีกลไกตัดสินว่า <strong>ใครส่งได้ และส่งเมื่อไร</strong> ตัวย่อที่ใช้: <strong>MA</strong> = Multiple Access · <strong>CS</strong> = Carrier Sense ("Listening before Transmitting") · <strong>CD</strong> = Collision Detection · <strong>CA</strong> = Collision Avoidance</p>
+                    <div class="table-scroll">
+                      <table>
+                        <thead><tr><th>Method</th><th>How access is obtained</th><th>Key idea</th><th>Examples</th></tr></thead>
+                        <tbody>
+                          <tr><td>Contention-based <span class="chip">compete</span></td><td>อุปกรณ์แข่งกันใช้สื่อกลาง</td><td>ง่ายและยืดหยุ่น แต่ประสิทธิภาพลดลงเมื่อ traffic หนัก</td><td>ALOHA, CSMA, CSMA/CD, CSMA/CA</td></tr>
+                          <tr><td>Controlled access <span class="chip">take turns</span></td><td>อุปกรณ์ผลัดกันตามกฎ</td><td>คาดเดาได้มากกว่า ไม่แข่งกันโดยตรง</td><td>Reservation, Polling, Token passing</td></tr>
+                          <tr><td>Channelization <span class="chip">divide the medium</span></td><td>แบ่งสื่อกลางเป็นช่องสัญญาณแยกกัน</td><td>แบ่งใช้ตามความถี่ เวลา หรือรหัส</td><td>FDMA, TDMA, CDMA</td></tr>
+                        </tbody>
+                      </table>
+                    </div>
+                    <p class="note">ในสไลด์ Recap กลุ่มแรกเขียนว่า <strong>Random access</strong> ส่วนสไลด์ Multiple-Access Control Methods เรียกว่า <strong>Contention-based</strong> — หมายถึงกลุ่มเดียวกัน</p>
                     <div class="compare">
                       <div class="compare-col">
-                        <h5>Random access</h5>
-                        <p>ALOHA, CSMA, CSMA/CD, CSMA/CA</p>
+                        <h5>Traditional shared Ethernet <span class="chip">CSMA/CD</span></h5>
+                        <p>Ethernet ยุคแรกใช้สื่อกลางร่วม เช่น bus Ethernet บนสาย coaxial หรือ star topology ที่ใช้ hub → หลายสถานีอาจส่งพร้อมกันแล้ว<strong>ชนกัน</strong> จึงใช้ CSMA/CD ประสานการเข้าถึงและตรวจจับการชน</p>
                       </div>
                       <div class="compare-col">
-                        <h5>Controlled access</h5>
-                        <p>reservation, polling, token passing</p>
-                      </div>
-                      <div class="compare-col">
-                        <h5>Channelization</h5>
-                        <p>FDMA, TDMA, CDMA</p>
+                        <h5>Modern Ethernet <span class="chip">No collisions, no CSMA/CD</span></h5>
+                        <p>ใช้ switch และลิงก์ full-duplex แบบ point-to-point <strong>แต่ละพอร์ตของ switch เป็นลิงก์แยก</strong> จึงไม่เกิดการชน และไม่ใช้ CSMA/CD</p>
                       </div>
                     </div>
-                    <div class="callout">
-                      <strong>Ethernet เก่า vs ใหม่:</strong>
-                      แบบ <b>shared bus/hub</b> ใช้ CSMA/CD เพราะมีโอกาสชนกัน ·
-                      แบบ <b>switched full-duplex</b> แต่ละพอร์ตเป็น point-to-point link แยกกัน จึงไม่มีการชนกันและไม่ต้องใช้ CSMA/CD เลย
+                    <div class="table-scroll">
+                      <table>
+                        <thead><tr><th>Technology</th><th>Typical Medium</th><th>Access Method</th><th>Access Category</th><th>Collision?</th><th>Standard</th></tr></thead>
+                        <tbody>
+                          <tr><td>Legacy Ethernet</td><td>Shared coax / hub</td><td>CSMA/CD</td><td>Contention-based</td><td>Possible</td><td>IEEE 802.3</td></tr>
+                          <tr><td>Fast Ethernet</td><td>UTP / fiber</td><td>Switched full-duplex; CSMA/CD only in legacy half-duplex</td><td>Non-contention ใน full-duplex; contention-based ใน legacy half-duplex</td><td>No ใน full-duplex; possible ใน half-duplex</td><td>IEEE 802.3u</td></tr>
+                          <tr><td>Gigabit Ethernet</td><td>UTP / fiber</td><td>Switched full-duplex</td><td>Non-contention / point-to-point</td><td>No in normal modern use</td><td>IEEE 802.3z / 802.3ab</td></tr>
+                          <tr><td>Switched Ethernet</td><td>UTP / fiber</td><td>Full-duplex point-to-point switching</td><td>Non-contention / point-to-point</td><td>No</td><td>IEEE 802.3</td></tr>
+                          <tr><td>Wi-Fi (WLAN)</td><td>Wireless radio</td><td>CSMA/CA</td><td>Contention-based</td><td>ตรวจจับการชนโดยตรงไม่ได้ ใช้การหลีกเลี่ยงแทน</td><td>IEEE 802.11</td></tr>
+                          <tr><td>Token Ring (historical)</td><td>Shared ring</td><td>Token passing</td><td>Controlled access</td><td>หลีกเลี่ยงด้วย controlled access</td><td>IEEE 802.5</td></tr>
+                          <tr><td>FDDI (historical)</td><td>Dual fiber ring</td><td>Token passing</td><td>Controlled access</td><td>หลีกเลี่ยงด้วย controlled access</td><td>ANSI X3T9.5 / ISO 9314</td></tr>
+                        </tbody>
+                      </table>
                     </div>
                   </section>
 
+                  <section class="topic" id="mac-collision">
+                    <h4>Collision และ Collision domain</h4>
+                    <div class="callout callout--def">
+                      <span class="callout-label">นิยาม: Collision</span>
+                      <p><b>A collision occurs when two or more stations transmit at the same time on the same shared medium.</b> ใน Ethernet แบบ shared (bus หรือ hub) การส่งพร้อมกันจะรบกวนกันจนเฟรมเสียหาย (สัญญาณมีระดับที่ไม่นิยาม — undefined levels)</p>
+                    </div>
+                    <ul>
+                      <li>อุปกรณ์ทุกตัวที่ใช้สื่อกลางเดียวกันอยู่ใน <strong>collision domain เดียวกัน</strong></li>
+                      <li>ใน switched full-duplex Ethernet แต่ละพอร์ตเป็นลิงก์ point-to-point แยกกัน → <strong>ไม่เกิด collision</strong></li>
+                      <li><strong>กรณีไร้สาย:</strong> เครือข่ายไร้สายก็ใช้สื่อกลางร่วม แต่การรบกวนเกิดเมื่อสัญญาณวิทยุที่ซ้อนกันใช้ช่องเดียวกันหรือช่องใกล้กัน สำหรับ WLAN ปัญหานี้มักเรียกว่า <strong>contention/interference</strong> และ Wi-Fi ใช้ <strong>CSMA/CA ไม่ใช่ CSMA/CD</strong></li>
+                    </ul>
+                    <p><strong>Contention Based Access: Big Picture</strong> — หลายสถานีใช้สื่อกลางเดียวกันและแข่งกันส่งอย่างอิสระ · <strong>ไม่มี central controller</strong> กำหนดการส่งแต่ละครั้ง · เกิดการชนได้เมื่อส่งในเวลาที่ซ้อนกัน · โปรโตคอลแต่ละตัวลดหรือจัดการการชนต่างกัน (จาก Random Access ไปสู่ CSMA และรุ่นย่อย)</p>
+                  </section>
+
                   <section class="topic" id="mac-aloha">
-                    <h4>ALOHA</h4>
-                    <p>โปรโตคอล random-access ยุคแรก <strong>ไม่ sense สื่อกลางก่อนส่ง</strong> ส่งได้ทันทีที่มีข้อมูล ถ้าไม่ได้ ACK ภายใน timeout (2 เท่าของ propagation delay สูงสุด) จะรอ random backoff แล้วส่งใหม่</p>
+                    <h4>ALOHA — Random access ที่ง่ายที่สุด (ไม่มี carrier sense)</h4>
+                    <p>ALOHA เป็นหนึ่งใน random-access protocol ยุคแรก พัฒนาขึ้นสำหรับการสื่อสารไร้สายที่อัตรา <strong>9600 bps</strong></p>
+                    <ul>
+                      <li>สถานี<strong>ส่งทันทีที่มีเฟรม</strong> และ<strong>ไม่ sense สื่อกลางก่อนส่ง</strong> — เพราะหลายสถานีอาจส่งในเวลาที่ซ้อนกัน จึงชนกันได้</li>
+                      <li>หลังส่ง sender รอ ACK: ถ้าได้ ACK ถือว่าสำเร็จ</li>
+                      <li>ถ้าไม่ได้ ACK ก่อน timeout ซึ่งเท่ากับ <strong>2 เท่าของ maximum propagation delay</strong> sender ถือว่าการส่งล้มเหลว (เฟรมอาจหายหรือชน) → รอ <strong>random backoff time</strong> แล้วส่งใหม่</li>
+                    </ul>
+                    <div class="callout callout--why">
+                      <span class="callout-label">แนวคิดหลัก</span>
+                      <p><b>ALOHA = Send first, recover later if necessary</b></p>
+                    </div>
+                    <p><strong>Flowchart ของ Pure ALOHA (สไลด์)</strong></p>
+                    <ol class="steps">
+                      <li>สถานีมีเฟรมจะส่ง → ตั้ง <strong>K = 0</strong> (K = number of attempts)</li>
+                      <li>ส่งเฟรม แล้วรอ time-out time = <strong>2 × T<sub>p</sub></strong> (T<sub>p</sub> = maximum propagation time)</li>
+                      <li>ได้ ACK → <strong>Success</strong></li>
+                      <li>ไม่ได้ ACK → K = K + 1 · ถ้า <strong>K &gt; K<sub>max</sub></strong> (K<sub>max</sub> ปกติ = 15) → <strong>Abort</strong></li>
+                      <li>ถ้ายังไม่เกิน → สุ่ม R ระหว่าง 0 ถึง 2<sup>K</sup> − 1 → รอ <strong>T<sub>B</sub> = R × T<sub>p</sub> หรือ R × T<sub>fr</sub></strong> (T<sub>fr</sub> = average transmission time for a frame, T<sub>B</sub> = back-off time) → กลับไปส่งใหม่</li>
+                    </ol>
+                    <div class="callout callout--def">
+                      <span class="callout-label">นิยาม: Vulnerable time</span>
+                      <p><b>Vulnerable time is the period during which another transmission can cause a collision.</b></p>
+                    </div>
                     <div class="compare">
                       <div class="compare-col">
                         <h5>Pure ALOHA</h5>
-                        <p>ส่งได้ทุกเวลา</p>
-                        <code class="formula">vulnerable time = 2 × Tframe</code>
+                        <p>ส่งได้ทุกเวลา จึงชนได้เมื่อเฟรมซ้อนกัน — สำหรับเฟรม B เฟรมอื่นที่เริ่ม<strong>ภายใน 1 frame time ก่อน</strong> หรือ<strong>ภายใน 1 frame time หลัง</strong> B เริ่ม จะชนกับ B ได้</p>
+                        <code class="formula">vulnerable time = 2 × T<sub>frame</sub></code>
                       </div>
                       <div class="compare-col">
                         <h5>Slotted ALOHA</h5>
-                        <p>แบ่งเวลาเป็น slot ส่งได้เฉพาะต้น slot เท่านั้น (ชนกันได้น้อยกว่า)</p>
-                        <code class="formula">vulnerable time = Tframe</code>
+                        <p>แบ่งเวลาเป็น slot เท่า ๆ กัน ส่งได้<strong>เฉพาะต้น slot</strong> — ชนกันเฉพาะเมื่อสองสถานีขึ้นไปส่งใน slot เดียวกัน เพราะการส่งถูก synchronize ตามขอบ slot</p>
+                        <code class="formula">vulnerable time = T<sub>frame</sub></code>
                       </div>
+                    </div>
+                    <div class="table-scroll">
+                      <table>
+                        <thead><tr><th></th><th>Pure ALOHA</th><th>Slotted ALOHA</th></tr></thead>
+                        <tbody>
+                          <tr><td>ส่งได้เมื่อไร</td><td>Anytime</td><td>Only at slot boundaries</td></tr>
+                          <tr><td>ต้อง synchronize ไหม</td><td>No</td><td>Yes</td></tr>
+                          <tr><td>Vulnerable time</td><td>2T<sub>frame</sub></td><td>T<sub>frame</sub></td></tr>
+                          <tr><td>Collision probability</td><td>Higher</td><td>Lower</td></tr>
+                        </tbody>
+                      </table>
                     </div>
                   </section>
 
                   <section class="topic" id="mac-csma">
                     <h4>CSMA (Carrier Sense Multiple Access)</h4>
-                    <p><strong>sense สื่อกลางก่อนส่งเสมอ</strong> แต่ยังชนกันได้เพราะ <em>propagation delay</em> (สถานีไกลอาจยังไม่รู้ว่ามีสัญญาณอื่นเดินทางมา)</p>
+                    <p><strong>CSMA = Sense before transmit</strong> — ก่อนส่ง สถานีฟังสื่อกลางก่อน ถ้า idle ก็ส่งได้ ถ้า busy ก็รอตาม <strong>persistence strategy</strong></p>
+                    <div class="callout callout--warn">
+                      <span class="callout-label">ทำไมยังชนกันได้ (Space/Time Model)</span>
+                      <p>CSMA <b>ลดโอกาสชน แต่กำจัดการชนไม่ได้ทั้งหมด</b> สาเหตุหลักคือ <b>propagation delay</b> — carrier sensing บอกได้แค่สถานะของสื่อกลาง<b>ตรงตำแหน่งนั้น ณ ขณะนั้น</b></p>
+                      <p>ตัวอย่างสถานี A และ Z ที่อยู่ไกลกัน: A sense ว่า idle แล้วเริ่มส่ง → สัญญาณของ A ยังเดินทางไปไม่ถึง Z → Z ก็ sense ว่า idle แล้วส่งเช่นกัน → สัญญาณซ้อนกัน (collision)</p>
+                    </div>
+                    <p>คำถามต่อมาคือ ถ้าสื่อกลาง busy สถานีควร sense ต่อเนื่อง หรือรอก่อนแล้วค่อย sense ใหม่? — คำตอบคือ persistence strategy</p>
                     <div class="table-scroll">
                       <table>
                         <thead><tr><th>Persistence strategy</th><th>เมื่อ busy</th><th>เมื่อ idle</th></tr></thead>
                         <tbody>
-                          <tr><td>Nonpersistent</td><td>รอสุ่มแล้วค่อย sense ใหม่</td><td>—</td></tr>
-                          <tr><td>1-persistent</td><td>sense ต่อเนื่อง</td><td>ส่งทันทีที่ว่าง</td></tr>
-                          <tr><td>p-persistent</td><td>sense ต่อ</td><td>ส่งด้วยความน่าจะเป็น p หรือรอ slot ถัดไปด้วยความน่าจะเป็น 1 − p</td></tr>
+                          <tr><td>Nonpersistent</td><td>รอเวลาสุ่ม (random interval) แล้วค่อย sense ใหม่</td><td>ส่งทันที</td></tr>
+                          <tr><td>1-persistent</td><td>sense ต่อเนื่อง (ไม่รอ)</td><td>ส่งทันที — ส่งทันทีที่ช่องสัญญาณว่าง</td></tr>
+                          <tr><td>p-persistent <span class="chip">ใช้กับ slotted access</span></td><td>sense ต่อเนื่อง</td><td>ส่งทันทีด้วยความน่าจะเป็น p (สุ่ม R ถ้า R &lt; p ส่ง) · ด้วยความน่าจะเป็น 1 − p (R ≥ p) รอ 1 slot แล้ว sense ใหม่</td></tr>
+                        </tbody>
+                      </table>
+                    </div>
+                    <div class="table-scroll">
+                      <table>
+                        <thead><tr><th>แนวคิด</th><th>สุ่มอะไร</th><th>ตัวอย่าง</th></tr></thead>
+                        <tbody>
+                          <tr><td>p-persistent</td><td>ส่งหรือไม่ส่งใน slot นี้</td><td>p = 0.2 มีโอกาสส่ง &lt; 20%</td></tr>
+                          <tr><td>CW / random backoff</td><td>รอกี่ slots ก่อนส่ง</td><td>CW = 15 สุ่มได้ 7 → รอ 7 slots</td></tr>
                         </tbody>
                       </table>
                     </div>
                   </section>
 
                   <section class="topic" id="mac-cd">
-                    <h4>CSMA/CD (Collision Detection)</h4>
-                    <p>ใช้ใน Ethernet แบบ shared/half-duplex เดิม — ขณะส่งข้อมูลจะตรวจสอบสื่อกลางต่อเนื่อง ถ้าพบการชนกัน:</p>
+                    <h4>CSMA/CD (Carrier Sense Multiple Access with Collision Detection)</h4>
+                    <p>CSMA ลดการชนด้วยการ sense ก่อนส่ง แต่ยังชนได้เพราะ propagation delay — <strong>CSMA/CD เพิ่มกลไกตรวจจับและกู้คืนจากการชน</strong> ขณะส่ง สถานีจะตรวจสอบสื่อกลางต่อเนื่อง ถ้าพบการชน:</p>
                     <ol class="steps">
-                      <li>หยุดส่งทันที</li>
-                      <li>รอ <strong>binary exponential backoff</strong></li>
-                      <li>sense ใหม่และส่งซ้ำ</li>
+                      <li>หยุดการส่งปัจจุบันทันที (stop the current transmission)</li>
+                      <li>ทำให้แน่ใจว่าการชนถูกรับรู้ (ensure the collision is recognized — ในผังงานคือส่ง <strong>jamming signal</strong>)</li>
+                      <li>รอ random backoff interval แบบ <strong>binary exponential backoff</strong></li>
+                      <li>sense สื่อกลางใหม่และส่งซ้ำ</li>
                     </ol>
-                    <code class="formula">r ∈ {0, …, 2<sup>min(n,10)</sup> − 1} · รอ r × Tslot</code>
-                    <p class="note">ไม่ใช้ใน Ethernet switched full-duplex สมัยใหม่</p>
+                    <p class="note">CSMA/CD ใช้ใน Ethernet แบบ shared, half-duplex เดิม · <strong>ไม่ใช้ใน Ethernet switched full-duplex สมัยใหม่</strong></p>
+
+                    <figure class="diagram">
+                      <div class="diagram-scroll">
+                        <svg viewBox="0 0 760 460" role="img" aria-labelledby="dg-cd-t dg-cd-d">
+                          <title id="dg-cd-t">ผังงาน CSMA/CD ของ Traditional Ethernet</title>
+                          <desc id="dg-cd-d">เริ่มเมื่อสถานีมีเฟรมจะส่ง ตั้ง K เท่ากับ 0 ใช้ persistence method ส่งพร้อมรับจนส่งเสร็จหรือพบการชน ถ้าไม่ชนคือ Success ถ้าชนให้ส่ง jamming signal เพิ่ม K ทีละ 1 ถ้า K มากกว่า Kmax ให้ Abort ไม่อย่างนั้นสุ่ม R ระหว่าง 0 ถึง 2 ยกกำลัง K ลบ 1 รอ TB แล้วกลับไปใช้ persistence method</desc>
+                          <!-- main column -->
+                          <rect class="dg-box" x="530" y="14" width="140" height="38" rx="19" />
+                          <text class="dg-text" x="600" y="38" text-anchor="middle">Start</text>
+                          <text class="dg-text dg-text--sm" x="518" y="38" text-anchor="end">มีเฟรมจะส่ง</text>
+                          <path class="dg-line" d="M600 52 V70" marker-end="url(#arr-muted)" />
+                          <rect class="dg-box" x="540" y="72" width="120" height="36" rx="6" />
+                          <text class="dg-mono" x="600" y="95" text-anchor="middle">K = 0</text>
+                          <path class="dg-line" d="M600 108 V128" marker-end="url(#arr-muted)" />
+                          <rect class="dg-box dg-box--accent" x="480" y="130" width="240" height="56" rx="8" />
+                          <text class="dg-text" x="600" y="153" text-anchor="middle">ใช้ persistence method</text>
+                          <text class="dg-text dg-text--sm" x="600" y="174" text-anchor="middle">1-persistent · nonpersistent · p-persistent</text>
+                          <path class="dg-line" d="M600 186 V214" marker-end="url(#arr-muted)" />
+                          <rect class="dg-box" x="480" y="216" width="240" height="48" rx="8" />
+                          <text class="dg-text" x="600" y="237" text-anchor="middle">Transmit and receive</text>
+                          <text class="dg-text dg-text--sm" x="600" y="256" text-anchor="middle">ส่งพร้อมฟังสื่อกลางต่อเนื่อง</text>
+                          <path class="dg-line dg-line--dash" d="M720 250 H744 V228 H724" marker-end="url(#arr-muted)" />
+                          <text class="dg-text dg-text--sm" x="744" y="214" text-anchor="end">วนจนส่งเสร็จหรือชน</text>
+                          <path class="dg-line" d="M600 264 V288" marker-end="url(#arr-muted)" />
+                          <polygon class="dg-box dg-box--warn" points="600,290 700,332 600,374 500,332" />
+                          <text class="dg-text" x="600" y="328" text-anchor="middle">Collision</text>
+                          <text class="dg-text" x="600" y="348" text-anchor="middle">detected?</text>
+                          <path class="dg-line dg-line--ok" d="M600 374 V402" marker-end="url(#arr-ok)" />
+                          <text class="dg-text dg-text--sm dg-text--ok" x="612" y="394">No</text>
+                          <rect class="dg-box dg-box--ok" x="530" y="404" width="140" height="38" rx="19" />
+                          <text class="dg-text" x="600" y="428" text-anchor="middle">Success</text>
+                          <!-- collision branch -->
+                          <path class="dg-line dg-line--bad" d="M500 332 H462" marker-end="url(#arr-bad)" />
+                          <text class="dg-text dg-text--sm dg-text--bad" x="470" y="322">Yes</text>
+                          <rect class="dg-box dg-box--bad" x="330" y="310" width="130" height="44" rx="8" />
+                          <text class="dg-text" x="395" y="337" text-anchor="middle">ส่ง jamming signal</text>
+                          <path class="dg-line" d="M330 332 H298" marker-end="url(#arr-muted)" />
+                          <rect class="dg-box" x="186" y="314" width="110" height="36" rx="6" />
+                          <text class="dg-mono" x="241" y="337" text-anchor="middle">K = K + 1</text>
+                          <path class="dg-line" d="M241 314 V282" marker-end="url(#arr-muted)" />
+                          <polygon class="dg-box dg-box--warn" points="241,210 316,246 241,282 166,246" />
+                          <text class="dg-mono" x="241" y="251" text-anchor="middle">K &gt; Kmax?</text>
+                          <path class="dg-line dg-line--bad" d="M166 246 H118" marker-end="url(#arr-bad)" />
+                          <text class="dg-text dg-text--sm dg-text--bad" x="150" y="236" text-anchor="end">Yes</text>
+                          <rect class="dg-box dg-box--bad" x="20" y="227" width="96" height="38" rx="19" />
+                          <text class="dg-text" x="68" y="251" text-anchor="middle">Abort</text>
+                          <text class="dg-text dg-text--sm" x="68" y="290" text-anchor="middle">Kmax ปกติ = 15</text>
+                          <path class="dg-line" d="M241 210 V184" marker-end="url(#arr-muted)" />
+                          <text class="dg-text dg-text--sm" x="252" y="202">No</text>
+                          <rect class="dg-box" x="146" y="136" width="190" height="46" rx="8" />
+                          <text class="dg-text dg-text--sm" x="241" y="156" text-anchor="middle">สุ่ม R ระหว่าง</text>
+                          <text class="dg-mono dg-mono--sm" x="241" y="174" text-anchor="middle">0 ถึง 2^K − 1</text>
+                          <path class="dg-line" d="M241 136 V106" marker-end="url(#arr-muted)" />
+                          <rect class="dg-box dg-box--accent" x="146" y="58" width="190" height="46" rx="8" />
+                          <text class="dg-text dg-text--sm" x="241" y="78" text-anchor="middle">รอ T_B</text>
+                          <text class="dg-mono dg-mono--sm" x="241" y="96" text-anchor="middle">R × Tp หรือ R × Tfr</text>
+                          <path class="dg-line dg-line--accent" d="M336 81 H410 V158 H478" marker-end="url(#arr)" />
+                        </svg>
+                      </div>
+                      <figcaption>วาดใหม่จากสไลด์ "CSMA/CD Traditional Ethernet" — K = number of attempts · T<sub>p</sub> = maximum propagation time · T<sub>fr</sub> = average transmission time for a frame · T<sub>B</sub> = back-off time</figcaption>
+                    </figure>
+
+                    <p><strong>Collision and Energy Level in CSMA/CD (สไลด์)</strong></p>
+                    <ol class="steps">
+                      <li>สถานี A และ C เริ่มส่งเกือบพร้อมกัน</li>
+                      <li>สัญญาณเดินทางสวนทางกันและชนกันบนสื่อกลาง</li>
+                      <li>ทั้งสองสถานีตรวจจับการชน<strong>ขณะยังส่งอยู่</strong> (ภายในเวลาสั้น ๆ) และหยุดการส่ง</li>
+                      <li>ระหว่างการชน <strong>ระดับพลังงานบนสื่อกลางสูงกว่าปกติ</strong></li>
+                      <li>หลังการชน สื่อกลางกลับเป็น idle และสถานีรอ random backoff time ก่อนส่งใหม่</li>
+                    </ol>
+                  </section>
+
+                  <section class="topic" id="mac-backoff">
+                    <h4>Binary Exponential Backoff</h4>
+                    <div class="callout callout--def">
+                      <span class="callout-label">สูตร (หลัง collision ครั้งที่ n)</span>
+                      <p><code class="formula">k = min(n, 10) · r ∈ {0, 1, …, 2<sup>k</sup> − 1} · T<sub>backoff</sub> = r × T<sub>slot</sub> · T<sub>slot</sub> ≥ 2T<sub>prop,max</sub></code></p>
+                      <p>เช่น classic Ethernet ใช้ T<sub>slot</sub> = 512 bit-times สำหรับ 10 Mbps → T<sub>slot</sub> = 512 / (10 × 10<sup>6</sup>) = <b>51.2 µs</b></p>
+                    </div>
+                    <p><strong>Backoff Time Example (สไลด์) ทีละขั้น</strong></p>
+                    <ol class="steps">
+                      <li>สมมุติ maximum one-way propagation delay ของ Ethernet collision domain คือ T<sub>prop,max</sub> = <strong>25.6 µs</strong></li>
+                      <li>slot time ประมาณ T<sub>slot</sub> = 2T<sub>prop,max</sub> = 2(25.6) = <strong>51.2 µs</strong></li>
+                      <li>สมมุติเกิด collision เป็นครั้งที่ 3: n = 3 → ช่วงสุ่มคือ r ∈ {0, 1, …, 2<sup>3</sup> − 1} = {0, 1, 2, 3, 4, 5, 6, 7}</li>
+                      <li>สมมุติ station สุ่มได้ r = 5 → T<sub>backoff</sub> = 5 × 51.2 = <strong>256 µs</strong> (หรือเขียนผ่าน propagation delay โดยตรง: 5 × (2 × 25.6) = 256 µs)</li>
+                      <li>ดังนั้น station จะรอประมาณ 256 µs ก่อนกลับไป sense channel และพยายามส่งใหม่</li>
+                    </ol>
+                    <div class="demo-box" data-widget="backoff-sim">
+                      <span class="demo-box-title">ลองเล่น: จำลอง binary exponential backoff</span>
+                      <div class="demo-fields">
+                        <div class="demo-field"><label for="bo-tprop">T<sub>prop,max</sub> (µs) → T<sub>slot</sub> = 2 × T<sub>prop,max</sub></label><input class="demo-input" id="bo-tprop" data-input="tprop" type="number" min="0" step="0.1" value="25.6" inputmode="decimal" /></div>
+                      </div>
+                      <div class="bo-actions">
+                        <button class="btn btn--primary btn--sm" type="button" data-action="collide">เกิด collision ครั้งถัดไป</button>
+                        <button class="btn btn--ghost btn--sm" type="button" data-action="example">ตัวอย่างสไลด์ (ครั้งที่ 3, r = 5)</button>
+                        <button class="btn btn--ghost btn--sm" type="button" data-action="reset">เริ่มใหม่</button>
+                      </div>
+                      <p class="demo-status" aria-live="polite"></p>
+                      <ol class="calc-steps"></ol>
+                      <p class="demo-hint">ค่า r ของแต่ละครั้งสุ่มจริงด้วย JavaScript · ถ้ากดจนเกิน K<sub>max</sub> = 15 ครั้ง จะ Abort ตามผังงาน</p>
+                    </div>
                   </section>
 
                   <section class="topic" id="mac-ca">
-                    <h4>CSMA/CA (Collision Avoidance)</h4>
-                    <p>ใช้ใน <strong>Wi-Fi (802.11)</strong> เพราะสถานีไร้สายตรวจจับการชนกันขณะส่งเองไม่ได้ จึงเน้น "หลีกเลี่ยง" ก่อนส่งแทน</p>
-                    <ol class="steps">
-                      <li>sense สื่อกลาง</li>
-                      <li>รอ idle + <strong>IFS</strong> (Interframe Space)</li>
-                      <li>สุ่ม backoff จาก <strong>Contention Window (CW)</strong></li>
-                      <li>นับถอยหลัง (freeze ถ้า busy)</li>
-                      <li>ส่งเมื่อ counter = 0</li>
-                      <li>รอ ACK — ถ้าไม่ได้ ACK จะเพิ่ม CW แล้วลองใหม่</li>
-                    </ol>
-                    <code class="formula">CW<sub>new</sub> = 2 × CW<sub>old</sub> + 1</code>
-                    <div class="callout">
-                      <strong>RTS/CTS (Request / Clear to Send):</strong>
-                      กลไกเสริมเพื่อลดปัญหา <b>hidden-node</b> — สถานีอื่นที่ได้ยิน RTS/CTS จะอัปเดต <b>NAV</b> (Network Allocation Vector) และหลีกเลี่ยงการส่งช่วงนั้น (<b>virtual carrier sensing</b>)
+                    <h4>CSMA/CA (Collision Avoidance in Wireless LANs)</h4>
+                    <p>ใช้ใน <strong>IEEE 802.11 wireless LANs</strong> — ต่างจาก CSMA/CD ตรงที่<strong>สถานีไร้สายไม่ได้ตรวจจับการชนขณะส่ง</strong> แต่พยายาม<strong>ลดโอกาสชนก่อนส่ง</strong>แทน</p>
+                    <div class="callout callout--def">
+                      <span class="callout-label">สรุปสั้น</span>
+                      <p><b>CSMA/CA = sense + wait + random backoff + ACK</b></p>
                     </div>
+                    <ol class="steps">
+                      <li>Sense สื่อกลางไร้สาย</li>
+                      <li>ถ้า busy → รอต่อ (keep sensing)</li>
+                      <li>เมื่อสื่อกลาง idle → รอ <strong>IFS</strong> (Interframe Space) ที่กำหนด — ในผังงานคือ DIFS</li>
+                      <li>สุ่มค่า backoff จาก <strong>contention window (CW)</strong></li>
+                      <li>นับถอยหลังทีละ 1 ต่อ idle slot · ถ้าช่องสัญญาณกลับมา busy → <strong>freeze counter</strong> แล้ว resume เมื่อ idle และผ่าน IFS อีกครั้ง</li>
+                      <li>counter ถึง 0 → ส่งเฟรม</li>
+                      <li>รอ ACK</li>
+                      <li>ไม่ได้ ACK → เพิ่ม CW แล้วลองใหม่ · ถึง retry limit → Abort (drop the frame)</li>
+                    </ol>
+                    <dl class="defs defs--stack">
+                      <div><dt>IFS (Interframe Space)</dt><dd>ช่วงเวลาที่ต้องเว้นหลังจาก medium ว่าง ก่อนเริ่มขั้นตอน contention หรือส่ง frame ต่อไป</dd></div>
+                      <div><dt>Contention Window (CW)</dt><dd>ช่วงของค่าที่สถานี Wi-Fi ใช้สุ่มค่า backoff counter ก่อนส่งข้อมูล เพื่อลดโอกาสที่หลายสถานีจะส่งพร้อมกัน</dd></div>
+                    </dl>
+                    <p><strong>ตัวอย่างในสไลด์:</strong> CW = 15, R ∈ {1, 2, …, 15} ถ้าสุ่มได้ R = 7 สถานีจะรอและนับถอยหลังทีละ slot 7, 6, …, 0 ถ้า channel กลับมา busy ระหว่างนั้น backoff counter จะถูก freeze แล้ว resume เมื่อ channel idle อีกครั้ง</p>
+                    <code class="formula">ส่งไม่สำเร็จ (ไม่ได้ ACK): CW<sub>new</sub> = 2 × CW<sub>old</sub> + 1 · ในผังงาน CW = min(2 × CW + 1, CW<sub>max</sub>)</code>
+                  </section>
+
+                  <section class="topic" id="mac-wifi">
+                    <h4>RTS/CTS, DIFS/SIFS, NAV และ Wi-Fi generations</h4>
+                    <dl class="defs defs--stack">
+                      <div><dt>DCF</dt><dd>Distributed Coordination Function</dd></div>
+                      <div><dt>DIFS</dt><dd>DCF Interframe Spacing — ใช้กับการส่งข้อมูลปกติ</dd></div>
+                      <div><dt>SIFS</dt><dd>Short Interframe Space — ใช้กับ control frames เช่น ACK, CTS</dd></div>
+                      <div><dt>NAV</dt><dd>Network Allocation Vector</dd></div>
+                      <div><dt>RTS / CTS</dt><dd>Request to Send / Clear to Send</dd></div>
+                    </dl>
+                    <p><strong>RTS/CTS เป็นกลไกเสริม (optional)</strong> ที่ช่วยลดความเสี่ยงการชน โดยเฉพาะกรณี <strong>hidden-node</strong> หรือเฟรมขนาดใหญ่ ขั้นตอนตามสไลด์:</p>
+                    <ol class="steps">
+                      <li><strong>Contend for the channel:</strong> ต้นทาง sense สื่อกลาง ถ้า busy ก็ defer เมื่อ idle รอ DIFS แล้วสุ่ม backoff counter จาก contention window</li>
+                      <li><strong>Send RTS:</strong> เมื่อ backoff counter ถึง 0 ต้นทางส่ง RTS</li>
+                      <li><strong>Receive CTS:</strong> หลัง SIFS ปลายทางตอบด้วย CTS · สถานีอื่นที่ได้ยินข้อมูลการจองจะอัปเดต NAV และเลื่อนการส่ง</li>
+                      <li><strong>Send DATA:</strong> หลัง SIFS อีกครั้ง ต้นทางส่ง DATA frame</li>
+                      <li><strong>Receive ACK:</strong> หลัง SIFS ปลายทางส่ง ACK · ถ้าไม่ได้ ACK ก่อน timeout ต้นทางถือว่าล้มเหลวและลองใหม่ด้วย contention window ที่ใหญ่ขึ้น</li>
+                    </ol>
+                    <div class="table-scroll">
+                      <table>
+                        <thead><tr><th>หัวข้อ</th><th>DIFS (DCF Interframe Space)</th><th>SIFS (Short Interframe Space)</th></tr></thead>
+                        <tbody>
+                          <tr><td>ความหมาย</td><td>ช่วงเวลาที่สถานีต้องรอก่อนเริ่มแข่งขันส่งเฟรมใหม่</td><td>ช่วงเวลาสั้นที่สุดสำหรับการตอบสนองทันที</td></tr>
+                          <tr><td>ความยาวสัมพัทธ์</td><td>ยาวกว่า</td><td>สั้นกว่า</td></tr>
+                          <tr><td>ใช้เมื่อใด</td><td>ก่อนส่งข้อมูลใหม่ (Data/RTS) ตามด้วยการนับ backoff</td><td>ก่อนส่ง ACK, CTS หรือ fragment ถัดไป</td></tr>
+                          <tr><td>การแข่งช่องสัญญาณ</td><td>ต้องแข่งขัน (contention)</td><td>ไม่ต้องแข่งขันใหม่</td></tr>
+                          <tr><td>ลำดับความสำคัญ</td><td>ต่ำกว่า</td><td>สูงกว่า</td></tr>
+                        </tbody>
+                      </table>
+                    </div>
+                    <div class="callout callout--why">
+                      <span class="callout-label">ทำไม SIFS ต้องสั้นกว่า DIFS</span>
+                      <p>เพราะ SIFS สั้นกว่า DIFS <b>อุปกรณ์ที่ต้องส่ง ACK/CTS จะได้ส่งก่อน</b>สถานีที่ต้องการเริ่มส่งข้อมูลใหม่</p>
+                    </div>
+                    <p><strong>NAV: Virtual Carrier Sensing</strong> — สถานีอื่นรู้ได้อย่างไรว่าต้องเลื่อนการส่ง?</p>
+                    <ul>
+                      <li>เฟรม IEEE 802.11 เช่น RTS/CTS มีค่า <strong>Duration</strong> บอกว่าสื่อกลางจะถูกจองไว้นานเท่าไร</li>
+                      <li>สถานีที่ได้รับ duration นี้จะอัปเดต NAV timer · ขณะ <strong>NAV &gt; 0</strong> สถานีถือว่าสื่อกลาง busy (virtually) และไม่ส่ง · เมื่อ NAV = 0 จึงกลับไปแข่งขันเข้าใช้ช่องสัญญาณได้</li>
+                    </ul>
+                    <div class="compare">
+                      <div class="compare-col"><h5>Physical carrier sensing</h5><p>ตรวจว่ามีพลังงานวิทยุหรือการส่งอื่นอยู่บนสื่อกลางขณะนั้นหรือไม่</p></div>
+                      <div class="compare-col"><h5>Virtual carrier sensing</h5><p>ตรวจ NAV timer ว่าสื่อกลางถูกจองไว้หรือไม่</p></div>
+                    </div>
+                    <div class="callout callout--warn">
+                      <span class="callout-label">Key idea</span>
+                      <p>สื่อกลางถือว่า <b>busy ถ้า physical sensing หรือ NAV อย่างใดอย่างหนึ่งบอกว่า busy</b></p>
+                    </div>
+                    <p><strong>IEEE 802.11 vs Wi-Fi (Wireless Fidelity — trademark)</strong></p>
+                    <div class="table-scroll">
+                      <table>
+                        <thead><tr><th>Generation</th><th>Standard</th><th>Main MAC / Access Idea</th><th>Important Enhancement</th></tr></thead>
+                        <tbody>
+                          <tr><td>Wi-Fi 4</td><td>802.11n</td><td>CSMA/CA / EDCA</td><td>MIMO, channel bonding</td></tr>
+                          <tr><td>Wi-Fi 5</td><td>802.11ac</td><td>CSMA/CA / EDCA</td><td>Downlink MU-MIMO, wider channels</td></tr>
+                          <tr><td>Wi-Fi 6</td><td>802.11ax</td><td>CSMA/CA + scheduled multi-user access</td><td>OFDMA, UL/DL MU-MIMO, improved dense-network efficiency</td></tr>
+                        </tbody>
+                      </table>
+                    </div>
+                    <dl class="defs defs--stack">
+                      <div><dt>EDCA (Enhanced Distributed Channel Access)</dt><dd>ต่อยอดจาก CSMA/CA โดยให้ traffic ต่างประเภทมี priority ต่างกัน เช่น voice, video, best effort, background เพื่อให้ข้อมูลสำคัญได้สิทธิ์เข้าถึง channel เร็วกว่า</dd></div>
+                      <div><dt>MIMO (Multiple Input Multiple Output)</dt><dd>ใช้หลายเสาอากาศส่งและรับพร้อมกัน เพิ่ม throughput และความน่าเชื่อถือของสัญญาณ — หลาย spatial streams ในลิงก์เดียว</dd></div>
+                      <div><dt>MU-MIMO (Multi-User MIMO)</dt><dd>จากเดิมส่งหลาย stream ให้ผู้ใช้คนเดียว เปลี่ยนเป็น AP ส่งข้อมูลให้หลายอุปกรณ์พร้อมกันด้วย spatial streams แยกกัน · DL MU-MIMO: AP ส่งพร้อมกันไปหลาย clients · UL MU-MIMO: หลาย clients ส่งพร้อมกันไปยัง AP</dd></div>
+                      <div><dt>OFDMA (Orthogonal Frequency Division Multiple Access)</dt><dd>แบ่ง channel เป็น Resource Units (RUs) แล้วจัดสรรให้หลายอุปกรณ์ใช้พร้อมกัน ต่างจาก OFDM ปกติที่หนึ่ง channel มักถูกใช้โดยผู้ใช้รายเดียวในช่วงเวลานั้น · DL OFDMA: AP ส่งให้หลาย clients พร้อมกัน · UL OFDMA: AP จัดสรร RUs ให้ clients ส่งกลับพร้อมกันใน frequency portions ที่ต่างกัน</dd></div>
+                    </dl>
                   </section>
 
                   <section class="topic" id="mac-controlled">
                     <h4>Controlled access</h4>
-                    <p>สถานีต้อง<strong>ได้รับอนุญาตก่อนส่งเสมอ</strong></p>
-                    <ul>
-                      <li><strong>Reservation:</strong> จองคิวใน minislot ก่อนส่งข้อมูลจริง</li>
-                      <li><strong>Polling:</strong> อุปกรณ์หลัก (primary) ถามอุปกรณ์รอง (secondary) ทีละตัวว่ามีข้อมูลจะส่งไหม (select/poll)</li>
-                      <li><strong>Token Passing:</strong> สถานีเรียงเป็นวงแหวน ต้องได้รับ token พิเศษก่อนถึงจะส่งข้อมูลได้</li>
-                    </ul>
+                    <p>สถานี<strong>ปรึกษากัน</strong>เพื่อหาว่าสถานีใดมีสิทธิ์ส่ง — <strong>สถานีส่งไม่ได้ถ้ายังไม่ได้รับอนุญาต</strong>จากสถานีอื่น · สถานีได้ "turns" ในการส่งภายในระยะเวลาสูงสุดที่กำหนด</p>
+                    <div class="compare">
+                      <div class="compare-col">
+                        <h5>Reservation</h5>
+                        <p>ต้องจองก่อนส่ง · ในแต่ละช่วงเวลา <strong>reservation frame</strong> มาก่อน data frames · ถ้ามี N สถานี จะมี <strong>N reservation minislots</strong> · สถานีที่จะส่งจองใน minislot ของตัวเอง แล้วส่ง data frame ต่อจาก reservation frame</p>
+                      </div>
+                      <div class="compare-col">
+                        <h5>Polling <span class="chip">Round-Robin based</span></h5>
+                        <p>มี primary station (master) และ secondary stations (slaves) · <strong>การแลกเปลี่ยนข้อมูลทั้งหมดต้องผ่าน primary</strong> ซึ่งควบคุมลิงก์และกำหนดว่าอุปกรณ์ใดใช้ช่องสัญญาณได้ ณ เวลานั้น</p>
+                      </div>
+                    </div>
+                    <div class="compare">
+                      <div class="compare-col">
+                        <h5>Polling: Select</h5>
+                        <p>เมื่อ <strong>primary มีข้อมูลจะส่ง</strong> จะแจ้ง secondary ว่ากำลังจะส่ง และรอ ACK ยืนยันสถานะพร้อมจาก secondary</p>
+                      </div>
+                      <div class="compare-col">
+                        <h5>Polling: Poll</h5>
+                        <p>primary ใช้<strong>ขอให้ secondary ส่ง</strong> — เมื่อพร้อมรับ primary จะถามแต่ละอุปกรณ์ว่ามีอะไรจะส่งไหม ถ้าคำตอบเป็น NAK ก็ poll secondary ตัวถัดไป</p>
+                      </div>
+                    </div>
+                    <p><strong>Token Passing <span class="chip">Round-Robin based</span>:</strong> สถานีเรียงกันเป็นวง (ring) มี predecessor และ successor · สถานีมีสิทธิ์ส่งเมื่อได้รับ<strong>เฟรมพิเศษที่เรียกว่า token</strong> · สไลด์แสดงทั้ง physical ring และ logical ring topology</p>
                   </section>
 
                   <section class="topic" id="mac-channel">
                     <h4>Channelization</h4>
-                    <p>แบ่งแบนด์วิดท์ของลิงก์ให้แต่ละสถานีใช้พร้อมกันได้</p>
+                    <p>เป็นวิธี multiple access ที่<strong>แบ่ง bandwidth ที่มีอยู่ของลิงก์ให้สถานีต่าง ๆ</strong> ได้แก่ FDMA, TDMA, CDMA และ OFDMA</p>
                     <div class="table-scroll">
                       <table>
-                        <thead><tr><th>วิธี</th><th>แบ่งตาม</th><th>รายละเอียด</th></tr></thead>
+                        <thead><tr><th>วิธี</th><th>แบ่งตาม</th><th>รายละเอียดจากสไลด์</th></tr></thead>
                         <tbody>
-                          <tr><td>FDMA</td><td>ความถี่</td><td>ใช้ในมือถือ/ดาวเทียม</td></tr>
-                          <tr><td>TDMA</td><td>ช่วงเวลา</td><td>บนช่องสัญญาณเดียว</td></tr>
-                          <tr><td>CDMA</td><td>รหัส (code)</td><td>ทุกสถานีส่งพร้อมกันบนช่องเดียวกันทั้งหมด แยกกันด้วย orthogonal code (Walsh table) แทนเวลา/ความถี่</td></tr>
+                          <tr><td>FDMA</td><td>ความถี่</td><td>bandwidth ที่มีถูกแบ่งให้ทุกสถานี · เป็น data link layer protocol ที่ใช้ <strong>FDM</strong> ที่ physical layer · ใช้ใน cellular phone และ satellite networks</td></tr>
+                          <tr><td>TDMA</td><td>เวลา</td><td>bandwidth ทั้งหมดเป็นช่องสัญญาณเดียว สถานีแบ่งความจุกันตามเวลา · ใช้ <strong>TDM</strong> ที่ physical layer</td></tr>
+                          <tr><td>CDMA</td><td>รหัส (code)</td><td>ต่างจาก FDMA เพราะมีช่องเดียวใช้ bandwidth ทั้งหมดของลิงก์ · ต่างจาก TDMA เพราะทุกสถานีส่งพร้อมกันได้ ไม่มี timesharing · ใช้ในเครือข่ายโทรศัพท์เซลลูลาร์ อิง coding theory</td></tr>
                         </tbody>
                       </table>
                     </div>
-                    <p><strong>CDMA encoding:</strong> บิต 0 → <code>−1</code> · บิต 1 → <code>+1</code> · ไม่ส่ง → ไม่มีสัญญาณ (<code>0</code>) · ผู้รับถอดรหัสด้วย <em>inner product</em> ของสัญญาณรวมกับ code ของตนเอง</p>
+                    <p><strong>Channelization Comparison of 1G to 5G Technologies</strong></p>
+                    <div class="table-scroll">
+                      <table>
+                        <thead><tr><th>Generation</th><th>Era</th><th>Radio / Multiple Access</th><th>Typical / Peak Data Rate</th><th>Core / Switching</th><th>Main Services</th></tr></thead>
+                        <tbody>
+                          <tr><td>1G</td><td>1980s</td><td>Analog, FDMA</td><td>kbps-level voice signaling</td><td>Circuit-switched, PSTN</td><td>Analog voice</td></tr>
+                          <tr><td>2G / 2.5G</td><td>1990s</td><td>GSM: TDMA/FDMA; cdmaOne: CDMA</td><td>tens–hundreds of kbps</td><td>Mainly circuit-switched; packet data added with GPRS/EDGE</td><td>Digital voice, SMS, basic data</td></tr>
+                          <tr><td>3G</td><td>2000s</td><td>WCDMA / CDMA2000</td><td>hundreds of kbps to a few Mbps</td><td>Circuit + packet; later more IP-based</td><td>Mobile Internet, video call, multimedia</td></tr>
+                          <tr><td>4G LTE</td><td>2010s</td><td>OFDMA (DL), SC-FDMA (UL)</td><td>100 Mbps to &gt;1 Gbps</td><td>All-IP packet network</td><td>Broadband Internet, HD video, VoLTE</td></tr>
+                          <tr><td>5G NR</td><td>2019–present</td><td>OFDMA, massive MIMO, beamforming</td><td>Multi-Gbps peak</td><td>Cloud-native / service-based core, all-IP</td><td>eMBB, massive IoT, low-latency services</td></tr>
+                        </tbody>
+                      </table>
+                    </div>
+                  </section>
+
+                  <section class="topic" id="mac-cdma">
+                    <h4>CDMA (Code-Division Multiple Access)</h4>
+                    <p>CDMA อิง coding theory: <strong>ช่องสัญญาณเดียวขนทุกการส่งพร้อมกัน</strong> · สร้าง orthogonal sequences ด้วย <strong>Walsh table</strong> (ตาราง 2 มิติที่จำนวนแถวเท่าคอลัมน์) · แต่ละแถวคือ sequence of chips · แต่ละสถานีได้ code หนึ่งแถว · W<sub>n</sub> สำหรับ n-chip sequence มี n แถว n คอลัมน์</p>
+                    <div class="callout callout--def">
+                      <span class="callout-label">Sequence generation</span>
+                      <p>W<sub>1</sub> = [+1] · W<sub>2n</sub> = [W<sub>n</sub> W<sub>n</sub> ; W<sub>n</sub> W̄<sub>n</sub>] โดย W̄<sub>n</sub> (มีขีดด้านบน) คือ complement ของ W<sub>n</sub></p>
+                      <p>W<sub>2</sub> = [+1 +1 ; +1 −1] · W<sub>4</sub> = [+1 +1 +1 +1 ; +1 −1 +1 −1 ; +1 +1 −1 −1 ; +1 −1 −1 +1]</p>
+                    </div>
+                    <p><strong>กำหนด code ของ 4 สถานีจาก W<sub>4</sub>:</strong> C<sub>1</sub> = [+1 +1 +1 +1] · C<sub>2</sub> = [+1 −1 +1 −1] · C<sub>3</sub> = [+1 +1 −1 −1] · C<sub>4</sub> = [+1 −1 −1 +1] · แต่ละสถานีส่ง d<sub>i</sub> · c<sub>i</sub> ลงช่องสัญญาณร่วม ข้อมูลบนช่องคือ d<sub>1</sub>·c<sub>1</sub> + d<sub>2</sub>·c<sub>2</sub> + d<sub>3</sub>·c<sub>3</sub> + d<sub>4</sub>·c<sub>4</sub></p>
+                    <div class="callout callout--def">
+                      <span class="callout-label">Encoding rules</span>
+                      <p>ส่งบิต 0 → <b>−1</b> · ส่งบิต 1 → <b>+1</b> · สถานีว่าง (idle) → <b>ไม่ส่งสัญญาณ (0)</b></p>
+                    </div>
+                    <p><strong>ตัวอย่าง Encoding (สไลด์):</strong></p>
+                    <ol class="steps">
+                      <li>Station 1 ส่งบิต 0 → −1 × C<sub>1</sub> = [−1 −1 −1 −1]</li>
+                      <li>Station 2 ส่งบิต 0 → −1 × C<sub>2</sub> = [−1 +1 −1 +1]</li>
+                      <li>Station 3 silent → [0 0 0 0]</li>
+                      <li>Station 4 ส่งบิต 1 → +1 × C<sub>4</sub> = [+1 −1 −1 +1]</li>
+                      <li>รวมทีละ chip: (−1 −1 +0 +1), (−1 +1 +0 −1), (−1 −1 +0 −1), (−1 +1 +0 +1) → Data on the channel = <strong>[−1 −1 −3 +1]</strong></li>
+                    </ol>
+                    <p><strong>ตัวอย่าง Decoding ของ Station 2:</strong></p>
+                    <ol class="steps">
+                      <li>คูณสัญญาณรวมกับ code ของ Station 2 ทีละ chip: [−1 −1 −3 +1] · [+1 −1 +1 −1] → Inner product result = <strong>[−1 +1 −3 −1]</strong></li>
+                      <li>รวมค่า (summing the values): −1 + 1 − 3 − 1 = <strong>−4</strong></li>
+                      <li>หารด้วยจำนวน chip: −4 / 4 = −1 → <strong>Bit 0</strong></li>
+                    </ol>
+                    <p><strong>Properties of Orthogonal Sequences</strong> (A และ B เป็น chip sequences ความยาว N)</p>
+                    <div class="table-scroll">
+                      <table>
+                        <thead><tr><th>Property</th><th>สูตร</th><th>ความหมาย</th></tr></thead>
+                        <tbody>
+                          <tr><td>1. inner product ของ sequence กับตัวเอง</td><td class="nowrap">A · A = N</td><td>code เดียวกันมีความสัมพันธ์กันสูงสุด</td></tr>
+                          <tr><td>2. inner product ของ orthogonal sequences ที่ต่างกัน</td><td class="nowrap">A · B = 0 (A ≠ B)</td><td>code ต่างกันแยกออกจากกันได้</td></tr>
+                          <tr><td>3. inner product ของ sequence กับ complement ของตัวเอง</td><td class="nowrap">A · (−A) = −N</td><td>ใช้แยกความหมายของ bit 0 และ bit 1 ใน CDMA</td></tr>
+                        </tbody>
+                      </table>
+                    </div>
+                    <p><strong>Example 1:</strong> C · C = [+1, +1, −1, −1] · [+1, +1, −1, −1] = 1 + 1 + 1 + 1 = <strong>4</strong> · B · C = [+1, −1, +1, −1] · [+1, +1, −1, −1] = 1 − 1 − 1 + 1 = <strong>0</strong></p>
+                    <p><strong>Example 2:</strong> C · (−C) = [+1, +1, −1, −1] · [−1, −1, +1, +1] = −1 − 1 − 1 − 1 = <strong>−4</strong> · inner product ของ code กับ complement ของ code อื่นเป็น 0: B · (−C) = [+1, −1, +1, −1] · [−1, −1, +1, +1] = −1 + 1 + 1 − 1 = <strong>0</strong></p>
+                    <p><strong>Example 3 — Multiplexer/Demultiplexer:</strong> Station 1 ส่ง −A · Station 2 ส่ง −B · Station 3 silent · Station 4 ส่ง D → ผลรวม <strong>S = −A − B + D</strong></p>
+                    <ol class="steps">
+                      <li>Station 1: S · A = −A·A − B·A + D·A = −4 + 0 + 0 = −4 → หารด้วย 4 = −1 → <strong>bit 0</strong></li>
+                      <li>Station 2: S · B = −A·B − B·B + D·B = 0 − 4 + 0 = −4 → <strong>bit 0</strong></li>
+                      <li>Station 3: S · C = 0 → <strong>Silent</strong></li>
+                      <li>Station 4: S · D = 0 + 0 + 4 → <strong>bit 1</strong></li>
+                    </ol>
                   </section>
 
                 </div>
@@ -254,14 +603,14 @@
             </div>
           </div>
 
-          <!-- ---------- ไฟล์ 2 ---------- -->
+          <!-- ================= 02 Ethernet ================= -->
           <div class="acc-item">
             <h3 class="acc-heading">
               <button class="acc-trigger" type="button" aria-expanded="false" aria-controls="acc-eth" id="acc-eth-btn">
                 <span class="acc-index">02</span>
                 <span class="acc-title">
                   <span class="acc-name">Ethernet</span>
-                  <span class="acc-file">ITDS231-Lecture6.2-Ethernet-2026.pdf · Lecture 6.2</span>
+                  <span class="acc-file">ITDS231-Lecture6.2-Ethernet-2026.pdf · Lecture 6.2 · 39 หน้า</span>
                 </span>
                 <svg class="acc-chevron" viewBox="0 0 20 20" aria-hidden="true"><path d="M5 7.5l5 5 5-5" /></svg>
               </button>
@@ -271,46 +620,70 @@
                 <div class="acc-body">
 
                   <nav class="toc" aria-label="หัวข้อใน Ethernet">
-                    <a href="#eth-history">ประวัติ</a>
-                    <a href="#eth-evolution">วิวัฒนาการ</a>
+                    <a href="#eth-history">ที่มา &amp; ประวัติ</a>
+                    <a href="#eth-evolution">IEEE 802 &amp; วิวัฒนาการ</a>
                     <a href="#eth-service">บริการ &amp; error control</a>
                     <a href="#eth-frame">โครงสร้างเฟรม</a>
                     <a href="#eth-size">ความยาวเฟรม</a>
                     <a href="#eth-mac">MAC Address</a>
+                    <a href="#eth-access">Access method &amp; รุ่นความเร็ว</a>
                     <a href="#eth-switch">Ethernet Switch</a>
                     <a href="#eth-types">ประเภทสวิตช์ &amp; Auto-MDIX</a>
                   </nav>
 
                   <section class="topic" id="eth-history">
-                    <h4>ประวัติ Ethernet</h4>
+                    <h4>ที่มาและประวัติ Ethernet</h4>
+                    <p>data-link layer และ physical layer มีโปรโตคอลและเทคนิคจำนวนมาก (มักใช้ใน LAN) — โปรโตคอลที่มากเกินไปสร้างปัญหาและความสับสนให้ผู้ใช้ปลายทาง จึงมีการกำหนดมาตรฐานเฉพาะ (de facto standard) ที่ใช้ง่ายและรองรับอินเทอร์เน็ต เรียกว่า <strong>Ethernet</strong> ซึ่ง<strong>ครอบคลุมทั้ง data-link layer และ physical layer ไว้ในมาตรฐานเดียว</strong></p>
                     <ol class="timeline">
-                      <li><span class="tl-era">1973–74</span><span>พัฒนาที่ <strong>Xerox PARC</strong> โดย <strong>Robert Metcalfe</strong> ได้แรงบันดาลใจจาก ALOHAnet</span></li>
-                      <li><span class="tl-era">1983</span><span>กลายเป็นมาตรฐาน <strong>IEEE 802.3</strong></span></li>
+                      <li><span class="tl-era">1973–74</span><span>พัฒนาที่ <strong>Xerox PARC</strong> ได้แรงบันดาลใจจาก <strong>ALOHAnet</strong> ซึ่ง <strong>Robert Metcalfe</strong> (พนักงาน Xerox) ศึกษาในวิทยานิพนธ์ปริญญาเอก</span></li>
+                      <li><span class="tl-era">1978</span><span>Metcalfe ออกจาก Xerox ไปตั้ง <strong>3Com</strong> (ปัจจุบันถูก HP ซื้อไป) และโน้มน้าว Digital Equipment Corporation, Intel และ Xerox ให้ผลักดัน Ethernet เป็นมาตรฐาน</span></li>
+                      <li><span class="tl-era">1983</span><span>กลายเป็นมาตรฐาน <strong>IEEE 802.3</strong> สำหรับ LAN ที่คนหลายพันล้านคนใช้</span></li>
+                      <li><span class="tl-era">10BASE2</span><span>เปลี่ยนมาใช้ thin coaxial cable ราคาถูก</span></li>
+                      <li><span class="tl-era">1990</span><span>ใช้ twisted pair ด้วย <strong>10BASE-T (UTP)</strong> ซึ่ง "ฆ่า" Token Ring และโปรโตคอล proprietary อื่นในตลาด PC (ตั้งแต่ปี 1995 เป็นต้นมา)</span></li>
                     </ol>
-                    <p><strong>ชนะคู่แข่ง (Token Ring ฯลฯ) เพราะ:</strong> พัฒนาความเร็วได้ต่อเนื่อง · เปิดให้ทุกคนผลิตอุปกรณ์ตามสเปกได้ · ราคาถูกกว่า</p>
+                    <p>ช่วงแรก Ethernet แข่งกับ <strong>Token Ring ของ IBM ที่ราคาแพง</strong> และโปรโตคอล proprietary อื่น ๆ</p>
+                    <div class="callout callout--why">
+                      <span class="callout-label">ทำไม LAN อื่นหายไปจากตลาดเกือบหมด</span>
+                      <p>(1) Ethernet <b>พัฒนาต่อได้ตามความต้องการอัตราส่งที่สูงขึ้น</b> (2) <b>เปิดให้ทุกคน</b>ผลิตอุปกรณ์ได้ตราบที่ทำตามสเปก IEEE 802.3 (3) <b>ราคาถูกกว่า</b>เทคโนโลยีคู่แข่ง</p>
+                    </div>
                   </section>
 
                   <section class="topic" id="eth-evolution">
-                    <h4>วิวัฒนาการ</h4>
-                    <p>Ethernet รวม <strong>data-link layer และ physical layer</strong> ไว้ในมาตรฐานเดียว</p>
+                    <h4>IEEE Project 802 และวิวัฒนาการของ Ethernet</h4>
+                    <p><strong>Project 802</strong> เริ่มขึ้นเพื่อรวมฟังก์ชันและสเปกของ physical layer และ data-link layer ของโปรโตคอล LAN หลัก ๆ เพราะ (1) ขณะนั้นมีโปรโตคอลมากเกินไป (2) physical layer และ data-link layer ต้องทำงานใกล้ชิดกัน (3) มีเทคโนโลยีแข่งขันกันจำนวนมาก — สไลด์ระบุว่า <strong>LLC is not a part of Ethernet</strong></p>
+                    <p class="note">สไลด์ "Ethernet in OSI Model" (Ethernet == IEEE 802.3) อธิบายว่า LLC sublayer จัดการการสื่อสารระหว่างชั้นบนกับชั้นล่าง (ระหว่าง networking software กับ device hardware) รับข้อมูลโปรโตคอลเครือข่าย ซึ่งปกติเป็น IPv4 packet แล้วเพิ่ม control information เพื่อช่วยนำส่งแพ็กเก็ตไปยังโหนดปลายทาง</p>
+                    <p>Ethernet มี <strong>4 ประเภทหลัก</strong></p>
                     <div class="table-scroll">
                       <table>
                         <thead><tr><th>รุ่น</th><th>ความเร็ว</th><th>การเข้าถึงสื่อกลาง</th></tr></thead>
                         <tbody>
-                          <tr><td>Standard Ethernet</td><td>—</td><td>CSMA/CD บน bus/hub</td></tr>
-                          <tr><td>Fast Ethernet</td><td>100 Mbps</td><td>CSMA/CD เป็นทางเลือกถ้าใช้ hub</td></tr>
-                          <tr><td>Gigabit / 10G+ Ethernet</td><td>ปัจจุบันรองรับถึง 40–100 Gbps</td><td>ใช้ switch เท่านั้น ไม่มี CSMA/CD เลย</td></tr>
+                          <tr><td>Standard Ethernet</td><td>10 Mbps</td><td>ใช้ CSMA/CD (bus หรือ hub)</td></tr>
+                          <tr><td>Fast Ethernet</td><td>100 Mbps</td><td>CSMA/CD เป็นทางเลือก (เฉพาะเมื่อใช้ hub)</td></tr>
+                          <tr><td>Gigabit Ethernet</td><td>1 Gbps</td><td>ไม่มี CSMA/CD (ใช้ switch)</td></tr>
+                          <tr><td>10 Gigabit Ethernet</td><td>10 Gbps</td><td>ไม่มี CSMA/CD (ใช้ switch)</td></tr>
                         </tbody>
                       </table>
                     </div>
+                    <p class="note">ปัจจุบัน Ethernet รองรับได้ถึง 40 Gbps และ 100 Gbps</p>
                   </section>
 
                   <section class="topic" id="eth-service">
-                    <h4>บริการของ Ethernet และ error control</h4>
-                    <ul>
-                      <li>ให้บริการแบบ <strong>connectionless</strong> และ<strong>ไม่มี flow control</strong> ของตัวเอง (ไม่มี LLC) — ต้องพึ่งโปรโตคอลชั้นบน (เช่น TCP) จัดการเรื่อง reliable delivery แทน</li>
-                      <li>error control ใช้ <strong>CRC-32</strong> ตรวจสอบเฟรม ถ้าพบว่าเสียหายจะ <strong>"ทิ้งเฟรมเงียบๆ"</strong> โดยไม่แจ้งผู้ส่ง</li>
-                    </ul>
+                    <h4>บริการของ Ethernet: Flow control และ Error control</h4>
+                    <p><strong>Ethernet ให้บริการแบบ connectionless</strong> — แต่ละเฟรมเป็นอิสระจากเฟรมก่อนและหลัง ไม่มีขั้นตอนสร้างหรือยุติการเชื่อมต่อ</p>
+                    <div class="compare">
+                      <div class="compare-col">
+                        <h5>Flow control</h5>
+                        <p>เพราะ Ethernet <strong>ไม่มี LLC</strong> sender ส่งเฟรมทันทีที่มี receiver อาจยังไม่พร้อม sender อาจส่งเฟรมท่วมจน<strong>เฟรมถูกทิ้ง</strong> และ sender จะไม่รู้ — จึงพึ่งโปรโตคอลชั้นสูงอย่าง <strong>TCP</strong> จัดการ frame drop ด้วย flow control ใน transport layer · implementation จริงส่วนใหญ่ใช้ Ethernet โดยไม่มี flow control และปล่อยให้ transport layer ทำ<strong>เพื่อความเร็ว</strong> · Ethernet จึง <strong>unreliable เหมือน IP และ UDP</strong></p>
+                      </div>
+                      <div class="compare-col">
+                        <h5>Error control</h5>
+                        <p>Ethernet มี <strong>CRC-32</strong> ตรวจ error ของเฟรม · ถ้าผู้รับพบว่าเฟรมเสียหาย จะ<strong>ทิ้งเฟรมเงียบ ๆ (drops the frame silently)</strong> · เป็นหน้าที่ของโปรโตคอลชั้นสูงที่จะตรวจพบและแก้ไขด้วย transport layer protocols</p>
+                      </div>
+                    </div>
+                    <div class="callout callout--warn">
+                      <span class="callout-label">เฟรมหายแล้วใครกู้คืน</span>
+                      <p>IP (layer 3) ที่ใช้บริการ Ethernet ก็เป็น connectionless จึงไม่รู้ว่าเฟรมหาย · ถ้า transport layer เป็น <b>UDP</b> เฟรมก็หายไปเลย ความช่วยเหลืออาจมาจาก application layer เท่านั้น · ถ้าเป็น <b>TCP</b> ผู้ส่งจะไม่ได้รับ ACK ของ segment นั้นและส่งใหม่</p>
+                    </div>
                   </section>
 
                   <section class="topic" id="eth-frame">
@@ -321,25 +694,30 @@
                         <li><span class="frame-name">SFD</span><span class="frame-size">1 ไบต์</span></li>
                         <li><span class="frame-name">Destination</span><span class="frame-size">6 ไบต์</span></li>
                         <li><span class="frame-name">Source</span><span class="frame-size">6 ไบต์</span></li>
-                        <li><span class="frame-name">Type</span></li>
+                        <li><span class="frame-name">Type</span><span class="frame-size">2 ไบต์</span></li>
                         <li class="frame-data"><span class="frame-name">Data</span><span class="frame-size">46–1500 ไบต์</span></li>
-                        <li><span class="frame-name">CRC</span></li>
+                        <li><span class="frame-name">CRC</span><span class="frame-size">4 ไบต์</span></li>
                       </ol>
                     </div>
                     <div class="table-scroll">
                       <table>
                         <thead><tr><th>ฟิลด์</th><th>ขนาด</th><th>หน้าที่</th></tr></thead>
                         <tbody>
-                          <tr><td>Preamble</td><td>7 ไบต์</td><td>สลับ 0/1 ช่วยซิงโครไนซ์นาฬิกา</td></tr>
-                          <tr><td>SFD (Start Frame Delimiter)</td><td>1 ไบต์</td><td>บอกจุดเริ่มเฟรม</td></tr>
-                          <tr><td>Destination Address</td><td>6 ไบต์</td><td>ที่อยู่ผู้รับ</td></tr>
-                          <tr><td>Source Address</td><td>6 ไบต์</td><td>ที่อยู่ผู้ส่ง</td></tr>
-                          <tr><td>Type</td><td>—</td><td>บอกโปรโตคอลชั้นบน เช่น IP, ARP</td></tr>
-                          <tr><td>Data</td><td>46–1500 ไบต์</td><td>ต้อง padding ถ้าสั้นกว่าขั้นต่ำ</td></tr>
-                          <tr><td>CRC</td><td>—</td><td>ตรวจสอบ error คำนวณจาก address + type + data</td></tr>
+                          <tr><td>Preamble</td><td>7 ไบต์ (56 บิต)</td><td>บิต 0/1 สลับกัน แจ้งเตือนผู้รับว่าเฟรมกำลังมา และช่วยซิงโครไนซ์นาฬิกา · <strong>ถูกเพิ่มที่ physical layer</strong> ไม่ได้เป็นส่วนของเฟรมอย่างเป็นทางการ</td></tr>
+                          <tr><td>SFD (Start Frame Delimiter)</td><td>1 ไบต์ (<code>10101011</code>)</td><td>บอกจุดเริ่มเฟรม และเตือนว่าเป็น<strong>โอกาสสุดท้ายในการซิงโครไนซ์</strong> · ทำหน้าที่เป็น flag · เพิ่มที่ physical layer</td></tr>
+                          <tr><td>Destination Address (DA)</td><td>6 ไบต์ (48 บิต)</td><td>link-layer address ของสถานีปลายทาง</td></tr>
+                          <tr><td>Source Address (SA)</td><td>6 ไบต์</td><td>link-layer address ของผู้ส่ง</td></tr>
+                          <tr><td>Type</td><td>2 ไบต์ (length or type)</td><td>บอกโปรโตคอลชั้นบนที่ห่อมาในเฟรม เช่น IP, ARP, OSPF</td></tr>
+                          <tr><td>Data</td><td>46–1500 ไบต์</td><td>ข้อมูลจากชั้นบน · ต้องมีความยาวขั้นต่ำเพราะ CSMA/CD ต้องฟังเฟรมขาเข้า · ถ้าสั้นเกินต้องเติม 0 (0-padding)</td></tr>
+                          <tr><td>CRC</td><td>4 ไบต์</td><td>ข้อมูลตรวจจับ error แบบ <strong>CRC-32</strong> คำนวณจาก addresses, type และ data</td></tr>
                         </tbody>
                       </table>
                     </div>
+                    <div class="callout callout--def">
+                      <span class="callout-label">MAC Address vs IP Address</span>
+                      <p>ใช้ <b>MAC address</b> ในการส่งต่อ<b>เฟรม</b> · ใช้ <b>IP address</b> ในการ route และส่งต่อ<b>แพ็กเก็ต</b> · ระหว่างทาง <b>source/destination IP ใน header ไม่เปลี่ยน แต่ MAC address จะเปลี่ยน</b></p>
+                    </div>
+                    <p><strong>Communicating on a Remote Network (สไลด์):</strong> host A (192.168.1.110, MAC 00-0A) ส่งถึง file server 172.16.1.99 ผ่าน router R1 และ R2 — L2 Ethernet header ช่วงแรกมี Destination MAC = <code>00-0C</code> (NIC ของ R1) และ Source MAC = <code>00-0A</code> ส่วน L3 IP packet มี Source IP 192.168.1.110 และ Destination IP 172.16.1.99 ตลอดทาง</p>
                   </section>
 
                   <section class="topic" id="eth-size">
@@ -347,52 +725,204 @@
                     <div class="compare">
                       <div class="compare-col">
                         <h5>ขั้นต่ำ 64 ไบต์ <span class="chip">512 บิต</span></h5>
-                        <p>เพื่อให้ผู้ส่ง<strong>ยังคงส่งข้อมูลอยู่ขณะที่การชนกันอาจเกิดขึ้น</strong> (worst-case round trip บนสายยาวสุดที่มาตรฐานกำหนด) ทำให้ตรวจจับการชนได้ทันภายใต้ CSMA/CD</p>
+                        <p>เพื่อรองรับ CSMA/CD — header และ trailer รวม 18 ไบต์ (source 6 + destination 6 + length/type 2 + CRC 4) ดังนั้น data ขั้นต่ำ = 64 − 18 = <strong>46 ไบต์</strong></p>
                       </div>
                       <div class="compare-col">
                         <h5>สูงสุด 1518 ไบต์ <span class="chip">payload 1500</span></h5>
-                        <p>เพื่อประหยัดหน่วยความจำ (ยุคที่หน่วยความจำแพง) และป้องกันสถานีเดียวครองสื่อกลางนานเกินไป</p>
+                        <p>ไม่นับ preamble และ SFD · 1518 − 18 = <strong>1500 ไบต์</strong> เพราะ (1) ตอนออกแบบหน่วยความจำแพงมาก การจำกัดความยาวช่วยลดขนาด buffer (2) ป้องกันสถานีเดียวผูกขาดสื่อกลางร่วมจนสถานีอื่นส่งไม่ได้</p>
                       </div>
                     </div>
+                    <div class="callout callout--why">
+                      <span class="callout-label">Why minimum Ethernet frame size is 64 bytes?</span>
+                      <p><b>The sender must still be transmitting when a collision occurs so that it can detect the collision.</b> — ใน Ethernet แบบเดิม (shared medium, half-duplex) เกิด collision ได้ ผู้ส่งต้องตรวจจับ collision ขณะยังส่งเฟรมไม่จบ เฟรมจึงต้องยาวพอให้สัญญาณชนเดินทางกลับมาถึงผู้ส่งทัน</p>
+                      <p>สถานการณ์เลวร้ายที่สุด: A เริ่มส่ง → บิตแรกเดินทางไปเกือบถึง B → B เริ่มส่งก่อนจะเห็นสัญญาณของ A → เกิด collision → สัญญาณชนย้อนกลับมาถึง A · <b>A ต้องยังส่งเฟรมอยู่เมื่อสัญญาณ collision ย้อนกลับมาถึง</b></p>
+                    </div>
+                    <code class="formula">T<sub>frame</sub> ≥ 2 × T<sub>prop</sub> · Ethernet 10 Mbps: slot time = 512 bit-times → 512 bits = 64 bytes</code>
+                    <p class="note">เหตุผลนี้มาจาก Ethernet แบบ CSMA/CD ดั้งเดิม แม้ปัจจุบัน switched full-duplex จะไม่เกิด collision แล้ว แต่มาตรฐานยังคงใช้ค่าเดิม</p>
                   </section>
 
                   <section class="topic" id="eth-mac">
                     <h4>MAC Address</h4>
-                    <p>ขนาด <strong>48 บิต</strong> เขียนเป็น hex คั่นด้วย <code>:</code></p>
+                    <p>แต่ละสถานีบน Ethernet (PC, workstation, printer) มี <strong>network interface card (NIC)</strong> ของตัวเองซึ่งให้ link-layer address · Ethernet address ขนาด <strong>6 ไบต์ (48 บิต)</strong> ปกติเขียนเป็น hex คั่นแต่ละไบต์ด้วย <code>:</code> เช่น <code>4A:30:10:21:10:1A</code></p>
                     <div class="compare">
                       <div class="compare-col">
                         <h5>24 บิตแรก <span class="chip">OUI</span></h5>
-                        <p>กำหนดโดย IEEE ตามผู้ผลิต</p>
+                        <p>เฉพาะผู้ผลิต กำหนดโดย IEEE</p>
                       </div>
                       <div class="compare-col">
                         <h5>24 บิตหลัง</h5>
-                        <p>กำหนดโดยผู้ผลิตเอง</p>
+                        <p>กำหนดโดยผู้ผลิต (vendors) เอง</p>
                       </div>
                     </div>
+                    <p class="note">MAC address ซ้ำกันได้จากความผิดพลาดในการผลิต หรือจากบางวิธีของ virtual machine — ทั้งสองกรณีต้องแก้ MAC address ด้วย NIC ใหม่หรือด้วยซอฟต์แวร์</p>
+                    <div class="callout callout--def">
+                      <span class="callout-label">Using Addresses to Transmit Frames</span>
+                      <p>การส่ง address ออกสายต่างจากวิธีเขียน hex: ส่ง<b>จากซ้ายไปขวาทีละไบต์</b> แต่ในแต่ละไบต์<b>ส่ง least significant bit ก่อน</b> most significant bit ส่งทีหลัง → บิตที่บอกว่า address เป็น unicast หรือ multicast จึง<b>มาถึงผู้รับก่อน</b> ช่วยให้ผู้รับรู้ประเภททันที</p>
+                    </div>
+                    <p><strong>Example 13.2 — ระบุประเภทของ destination address</strong> (ดู<strong>เลข hex ตัวที่สองจากซ้าย</strong>: เลขคู่ = unicast, เลขคี่ = multicast, F ทั้งหมด = broadcast)</p>
+                    <ol class="steps">
+                      <li><code>4A:30:10:21:10:1A</code> → A = 1010 (<strong>even</strong>) → <strong>unicast</strong></li>
+                      <li><code>47:20:1B:2E:08:EE</code> → 7 = 0111 (<strong>odd</strong>) → <strong>multicast</strong></li>
+                      <li><code>FF:FF:FF:FF:FF:FF</code> → ทุกหลักเป็น F → <strong>broadcast</strong></li>
+                    </ol>
+                    <p>ใน Standard Ethernet แบบดั้งเดิม physical layer เป็นสื่อกลางร่วม <strong>ทุกการส่งถูก broadcast อยู่แล้ว</strong> ประเภท address จึงตัดสินว่าใครเก็บเฟรม</p>
                     <div class="table-scroll">
                       <table>
                         <thead><tr><th>ประเภทการส่ง</th><th>ใครเก็บเฟรม</th></tr></thead>
                         <tbody>
-                          <tr><td>Unicast</td><td>ผู้รับ 1 คนเก็บ ที่เหลือทิ้ง</td></tr>
-                          <tr><td>Multicast</td><td>สมาชิกกลุ่มเก็บ</td></tr>
+                          <tr><td>Unicast</td><td>ทุกสถานีได้รับ ผู้รับ 1 คนที่ตั้งใจเก็บ ที่เหลือทิ้ง</td></tr>
+                          <tr><td>Multicast</td><td>ทุกสถานีได้รับ สมาชิกกลุ่มเก็บ ที่เหลือทิ้ง</td></tr>
                           <tr><td>Broadcast</td><td>ทุกสถานียกเว้นผู้ส่งเก็บทั้งหมด — ใช้ใน DHCP, ARP</td></tr>
                         </tbody>
                       </table>
                     </div>
+                    <div class="compare">
+                      <div class="compare-col">
+                        <h5>Broadcast</h5>
+                        <p>มักใช้กับโปรโตคอลที่ต้อง broadcast เพื่อหาข้อมูลจากเครือข่าย เช่น <strong>DHCP</strong> และ <strong>ARP</strong></p>
+                      </div>
+                      <div class="compare-col">
+                        <h5>Multicast</h5>
+                        <p>IPv4 multicast: <code>224.0.0.0</code> – <code>239.255.255.255</code> · IPv6 multicast ขึ้นต้นด้วย <code>FF00::/8</code> · แทนกลุ่มของ address (host group) จึง<strong>ใช้เป็น destination ได้เท่านั้น source เป็น unicast เสมอ</strong> · host สมัครกลุ่มด้วย IGMP (ไม่อยู่ในวิชานี้)</p>
+                      </div>
+                    </div>
+                    <p>multicast ช่วยลดจำนวนเฟรมที่ sender ต้องส่ง โดย router/switch ช่วยทำสำเนาเฟรมส่งออกพอร์ต · ใช้ในเกมออนไลน์หลายผู้เล่นที่เล่นเกมเดียวกัน และการเรียนทางไกลผ่าน video conference · multicast IP address ต้องมี <strong>multicast MAC address</strong> ที่สอดคล้องกันจึงจะส่งเฟรมบนเครือข่ายท้องถิ่นได้จริง</p>
+                  </section>
+
+                  <section class="topic" id="eth-access">
+                    <h4>Access method และรุ่นความเร็วของ Ethernet</h4>
+                    <p><strong>Standard Ethernet (Access Method):</strong> มีเพียง Standard Ethernet ที่ต้องใช้ CSMA/CD โดยเลือกแบบ <strong>1-persistent</strong> และผู้ส่งฟังต่อเนื่องระหว่างส่ง · สถานีส่งเฟรมขั้นต่ำ 64 ไบต์ (512 บิต)</p>
+                    <ol class="steps">
+                      <li>อัตรา 10 Mbps → เวลาส่ง 512 บิต = 512 / (10 Mbps) = <strong>51.2 µs</strong></li>
+                      <li>ความเร็วการแพร่สัญญาณในสาย 2 × 10<sup>8</sup> m/s → ในเวลานั้นบิตแรกเดินทางได้ 10,240 m (ทางเดียว) หรือเพียง <strong>5120 m แบบไป-กลับ</strong> ที่ชนกับบิตจากสถานีสุดสายแล้วย้อนกลับมา</li>
+                      <li>ถ้าจะเกิด collision ต้องเกิดภายในเวลาที่ผู้ส่งส่ง 512 บิตออกไป (worst case) และบิตแรกเดินทางไป-กลับ 5120 m</li>
+                      <li>ในทางปฏิบัติ <strong>ความยาวสายสูงสุดคือ 2,500 m</strong> เพื่อชดเชย delay ในสื่อกลาง</li>
+                    </ol>
+                    <div class="callout callout--def">
+                      <span class="callout-label">Switched Ethernet</span>
+                      <p>Ethernet switch สร้าง <b>collision domain แยกให้แต่ละพอร์ต</b> · บนลิงก์ full-duplex point-to-point ทั้งสองฝั่งส่งพร้อมกันได้ ไม่เกิด collision และไม่ใช้ CSMA/CD · half-duplex shared Ethernet ยังชนได้ แต่ปัจจุบันเป็นเทคโนโลยี legacy เป็นส่วนใหญ่</p>
+                    </div>
+                    <div class="compare">
+                      <div class="compare-col">
+                        <h5>Fast Ethernet <span class="chip">100 Mbps</span></h5>
+                        <ul>
+                          <li><strong>Hub-based:</strong> เฟรมขั้นต่ำยังเป็น 64 ไบต์ แต่ส่งเร็วขึ้น 10 เท่า → ภายใต้ CSMA/CD ความยาวสายสูงสุดลดจาก 2,500 m เหลือ <strong>250 m</strong> (ปฏิบัติจริงใช้ 100 m)</li>
+                          <li><strong>Switched:</strong> ไม่ต้องใช้ CSMA/CD — switch เก็บเฟรมใน buffer (queue) ตรวจ destination แล้วส่งออก interface ที่ตรง · เพราะเชื่อมกับ switch แบบ full-duplex ปลายทางส่งเฟรมหาสถานีอื่นได้ขณะกำลังรับ · สื่อกลางร่วมกลายเป็น point-to-point หลายเส้น ไม่ต้อง contention</li>
+                          <li><strong>Backward compatibility:</strong> เมื่อต่อ LAN 10 Mbps กับ 100 Mbps มี <strong>autonegotiation</strong> ให้สองอุปกรณ์ตกลงความเร็ว (มักใช้ตัวที่ช้ากว่า)</li>
+                        </ul>
+                      </div>
+                      <div class="compare-col">
+                        <h5>Gigabit Ethernet <span class="chip">IEEE 802.3z</span></h5>
+                        <ul>
+                          <li>ออกแบบโปรโตคอลใหม่ทั้งหมด รองรับ 1 Gbps · เข้ากันได้กับ Standard/Fast Ethernet ด้วย autonegotiation · ใช้ framing spec เดิม</li>
+                          <li>เพิ่มเฟรมขั้นต่ำเป็น <strong>512 ไบต์ (4096 บิต)</strong> จาก 64 ไบต์ — เรียกว่า <strong>Carrier Extension</strong></li>
+                          <li>ไม่มี collision เพราะใช้ switch และ full-duplex · <strong>ไม่มี Gigabit Ethernet hub</strong></li>
+                          <li>ถ้าเฟรมไม่ถึง 512 ไบต์จะ padding แต่รวมหลายเฟรมเป็นเฟรมใหญ่ได้ — เรียกว่า <strong>Frame Bursting</strong></li>
+                        </ul>
+                      </div>
+                    </div>
                   </section>
 
                   <section class="topic" id="eth-switch">
-                    <h4>Ethernet Switch</h4>
-                    <p>เรียนรู้ MAC address จากเฟรมที่เข้ามา (<strong>source MAC + พอร์ตที่รับเข้า</strong>) สร้างตาราง <strong>MAC address table</strong> (เก็บ entry ไว้ประมาณ 5 นาที) เมื่อรับเฟรม:</p>
+                    <h4>Ethernet Switch: Learning และ Forwarding</h4>
+                    <p><strong>Learning MAC address:</strong> switch สร้าง <strong>MAC address table</strong> แบบ dynamic โดยดู <strong>source MAC</strong> ของเฟรมที่เข้ามาทางพอร์ต</p>
+                    <ul>
+                      <li>ถ้า source MAC ยังไม่มีในตาราง → เพิ่มลงตารางพร้อม<strong>หมายเลขพอร์ตขาเข้า</strong></li>
+                      <li>switch ส่วนใหญ่เก็บ entry ไว้ <strong>5 นาที</strong></li>
+                      <li>ถ้า source MAC มีอยู่แล้วแต่อยู่<strong>คนละพอร์ต</strong> → ถือเป็น entry ใหม่ แทนที่ด้วย MAC เดิมกับหมายเลขพอร์ตล่าสุด</li>
+                    </ul>
+                    <p><strong>Forwarding:</strong> ค้นหา destination MAC ของเฟรมในตาราง</p>
                     <div class="compare">
                       <div class="compare-col">
                         <h5>Frame filtering</h5>
-                        <p>destination MAC <strong>อยู่ในตาราง</strong> → ส่งออกเฉพาะพอร์ตนั้น</p>
+                        <p>destination MAC <strong>อยู่ในตาราง</strong> → ส่งออกเฉพาะพอร์ตที่ระบุ</p>
                       </div>
                       <div class="compare-col">
                         <h5>Flooding</h5>
                         <p>destination MAC <strong>ไม่อยู่ในตาราง</strong> (unknown unicast) หรือเป็น broadcast/multicast → ส่งออกทุกพอร์ตยกเว้นพอร์ตที่รับเข้ามา</p>
                       </div>
+                    </div>
+
+                    <figure class="diagram">
+                      <div class="diagram-scroll">
+                        <svg viewBox="0 0 760 420" role="img" aria-labelledby="dg-sw-t dg-sw-d">
+                          <title id="dg-sw-t">switch เรียนรู้ MAC address ทีละพอร์ต ตามรูป Connected Switches</title>
+                          <desc id="dg-sw-d">S1 มีพอร์ต 1 ถึง 4 A MAC 00-0A ต่อพอร์ต 1 B MAC 00-0B ต่อพอร์ต 3 พอร์ต 4 ต่อกับ S2 พอร์ต 1 C MAC 00-0C ต่อ S2 พอร์ต 2 router MAC 00-0D ต่อ S2 พอร์ต 4 เฟรมที่ 1 จาก A ถึง B S1 เรียนรู้ 00-0A ที่พอร์ต 1 ไม่รู้จัก 00-0B จึง flood ออกพอร์ต 2 3 4 S2 ได้รับทางพอร์ต 1 จึงเรียนรู้ 00-0A ที่พอร์ต 1 และ flood ต่อ เฟรมที่ 2 จาก B ตอบ A S1 เรียนรู้ 00-0B ที่พอร์ต 3 และรู้จัก 00-0A แล้วจึงส่งออกพอร์ต 1 อย่างเดียว</desc>
+                          <!-- S1 -->
+                          <rect class="dg-box dg-box--accent" x="40" y="150" width="250" height="44" rx="6" />
+                          <text class="dg-mono" x="54" y="177">S1</text>
+                          <g class="dg-mono dg-mono--sm">
+                            <rect class="dg-box" x="90" y="160" width="36" height="24" rx="3" /><text x="108" y="177" text-anchor="middle">1</text>
+                            <rect class="dg-box" x="140" y="160" width="36" height="24" rx="3" /><text x="158" y="177" text-anchor="middle">2</text>
+                            <rect class="dg-box" x="190" y="160" width="36" height="24" rx="3" /><text x="208" y="177" text-anchor="middle">3</text>
+                            <rect class="dg-box" x="240" y="160" width="36" height="24" rx="3" /><text x="258" y="177" text-anchor="middle">4</text>
+                          </g>
+                          <!-- S2 -->
+                          <rect class="dg-box dg-box--accent" x="400" y="150" width="250" height="44" rx="6" />
+                          <text class="dg-mono" x="414" y="177">S2</text>
+                          <g class="dg-mono dg-mono--sm">
+                            <rect class="dg-box" x="450" y="160" width="36" height="24" rx="3" /><text x="468" y="177" text-anchor="middle">1</text>
+                            <rect class="dg-box" x="500" y="160" width="36" height="24" rx="3" /><text x="518" y="177" text-anchor="middle">2</text>
+                            <rect class="dg-box" x="550" y="160" width="36" height="24" rx="3" /><text x="568" y="177" text-anchor="middle">3</text>
+                            <rect class="dg-box" x="600" y="160" width="36" height="24" rx="3" /><text x="618" y="177" text-anchor="middle">4</text>
+                          </g>
+                          <path class="dg-line" d="M290 172 H400" />
+                          <path class="dg-line" d="M636 172 H690" />
+                          <rect class="dg-box" x="690" y="152" width="60" height="40" rx="6" />
+                          <text class="dg-text dg-text--sm" x="720" y="170" text-anchor="middle">Router</text>
+                          <text class="dg-mono dg-mono--sm" x="720" y="186" text-anchor="middle">00-0D</text>
+                          <!-- hosts -->
+                          <path class="dg-line" d="M108 184 V222" /><path class="dg-line" d="M208 184 V222" /><path class="dg-line" d="M518 184 V222" />
+                          <rect class="dg-box" x="78" y="222" width="60" height="44" rx="6" /><text class="dg-text" x="108" y="241" text-anchor="middle">A</text><text class="dg-mono dg-mono--sm" x="108" y="258" text-anchor="middle">00-0A</text>
+                          <rect class="dg-box" x="178" y="222" width="60" height="44" rx="6" /><text class="dg-text" x="208" y="241" text-anchor="middle">B</text><text class="dg-mono dg-mono--sm" x="208" y="258" text-anchor="middle">00-0B</text>
+                          <rect class="dg-box" x="488" y="222" width="60" height="44" rx="6" /><text class="dg-text" x="518" y="241" text-anchor="middle">C</text><text class="dg-mono dg-mono--sm" x="518" y="258" text-anchor="middle">00-0C</text>
+
+                          <!-- frame 1 flood -->
+                          <text class="dg-mono" x="20" y="24">เฟรม 1: A → B (dst 00-0B, src 00-0A)</text>
+                          <path class="dg-line dg-line--accent" d="M98 222 V196" marker-end="url(#arr)" />
+                          <path class="dg-line dg-line--warn dg-line--dash" d="M158 150 V122" marker-end="url(#arr)" />
+                          <path class="dg-line dg-line--warn dg-line--dash" d="M218 150 V122" marker-end="url(#arr)" />
+                          <path class="dg-line dg-line--warn dg-line--dash" d="M268 150 V122" marker-end="url(#arr)" />
+                          <text class="dg-text dg-text--sm" x="150" y="110">S1 ไม่รู้จัก 00-0B → flood พอร์ต 2, 3, 4</text>
+                          <path class="dg-line dg-line--warn dg-line--dash" d="M518 150 V122" marker-end="url(#arr)" />
+                          <path class="dg-line dg-line--warn dg-line--dash" d="M568 150 V122" marker-end="url(#arr)" />
+                          <path class="dg-line dg-line--warn dg-line--dash" d="M618 150 V122" marker-end="url(#arr)" />
+                          <text class="dg-text dg-text--sm" x="440" y="110">S2 ก็ไม่รู้จัก → flood พอร์ต 2, 3, 4</text>
+                          <text class="dg-text dg-text--sm" x="20" y="54">ทั้งสอง switch เรียนรู้ source 00-0A จากพอร์ตขาเข้า</text>
+
+                          <!-- frame 2 filter -->
+                          <text class="dg-mono" x="20" y="306">เฟรม 2: B → A (dst 00-0A, src 00-0B)</text>
+                          <text class="dg-text dg-text--sm" x="20" y="330">S1 เรียนรู้ 00-0B ที่พอร์ต 3 · รู้จัก 00-0A แล้ว → filtering ส่งออกพอร์ต 1 อย่างเดียว</text>
+
+                          <!-- tables -->
+                          <rect class="dg-box" x="40" y="346" width="250" height="66" rx="6" />
+                          <text class="dg-mono dg-mono--sm" x="54" y="366">S1 MAC Address Table</text>
+                          <text class="dg-mono dg-mono--sm" x="54" y="386">Port 1 · 00-0A  (เฟรม 1)</text>
+                          <text class="dg-mono dg-mono--sm dg-mono--warn" x="54" y="404">Port 3 · 00-0B  (เฟรม 2)</text>
+                          <rect class="dg-box" x="400" y="346" width="250" height="66" rx="6" />
+                          <text class="dg-mono dg-mono--sm" x="414" y="366">S2 MAC Address Table</text>
+                          <text class="dg-mono dg-mono--sm" x="414" y="386">Port 1 · 00-0A  (เฟรม 1)</text>
+                          <text class="dg-text dg-text--sm" x="414" y="404">เฟรม 2 ไม่ผ่าน S2</text>
+                        </svg>
+                      </div>
+                      <figcaption>ใช้โทโพโลยีจากสไลด์ "Connected Switches" แล้วไล่กฎ learning/forwarding ของสไลด์ทีละเฟรม — ถ้า C หรือ router ส่งเฟรมเข้ามา S1 จะผูก MAC เหล่านั้นกับพอร์ต 4 ทั้งหมด จึงมีหลาย MAC ต่อพอร์ตเดียว</figcaption>
+                    </figure>
+
+                    <div class="callout callout--def">
+                      <span class="callout-label">Connected Switches</span>
+                      <p><b>A switch can have multiple MAC addresses associated with a single port.</b> พบบ่อยเมื่อ switch ต่อกับ switch อีกตัว โดยจะมี entry แยกสำหรับทุกเฟรมที่มี source MAC ต่างกัน</p>
+                    </div>
+                    <p><strong>Sending Frame outside LAN:</strong> ถ้าอุปกรณ์ปลายทางมี IP address อยู่บน remote network ส่ง Ethernet frame ตรงไปหาไม่ได้ ต้องส่งไปที่ <strong>MAC address ของ default gateway (router)</strong> แทน — สไลด์ระบุว่าอุปกรณ์รู้ MAC address ของ default gateway ผ่าน DHCP</p>
+                    <div class="table-scroll">
+                      <table>
+                        <thead><tr><th>What will a Switch do? (สไลด์)</th><th>สิ่งที่ switch ทำ</th></tr></thead>
+                        <tbody>
+                          <tr><td>รับเฟรมที่ source address ยังไม่มีใน MAC table</td><td>ใส่ source MAC ลงตารางพร้อมพอร์ตที่เกี่ยวข้อง</td></tr>
+                          <tr><td>รับเฟรมที่ destination address มีใน MAC table</td><td>ส่งต่อไปพอร์ตที่ผูกกับ destination address</td></tr>
+                          <tr><td>รับเฟรมที่ destination address ไม่มีใน MAC table</td><td>broadcast ออกทุกพอร์ตที่ up ยกเว้นพอร์ตขาเข้า</td></tr>
+                          <tr><td>รับเฟรมที่ destination เป็น broadcast address</td><td>broadcast ออกทุกพอร์ตที่ up ยกเว้นพอร์ตขาเข้า</td></tr>
+                        </tbody>
+                      </table>
                     </div>
                   </section>
 
@@ -401,22 +931,26 @@
                     <div class="compare">
                       <div class="compare-col">
                         <h5>Store-and-forward</h5>
-                        <p>รับเฟรมทั้งเฟรม ตรวจ CRC ก่อนส่งต่อ — รองรับ QoS</p>
+                        <p>รับเฟรมทั้งเฟรม <strong>ตรวจ error ด้วย CRC</strong> ดู destination address แล้วส่งต่อถ้า CRC ถูกต้อง · จำเป็นสำหรับกลไก <strong>QoS</strong> ที่ต้องรู้ประเภทเฟรมเพื่อให้บริการพิเศษ</p>
                       </div>
                       <div class="compare-col">
                         <h5>Cut-through</h5>
-                        <p>ส่งต่อทันทีที่รู้ destination address ยังไม่รอรับครบเฟรม — เร็วกว่าแต่ไม่ตรวจ error ก่อน · มีแบบย่อย <strong>fragment-free</strong> ที่เช็ค 64 ไบต์แรกก่อน</p>
+                        <p>ส่งต่อเฟรม<strong>ก่อนรับครบทั้งเฟรม</strong> โดยดู destination address ก่อน · เหมาะกับการส่งต่อเร็วที่ไม่ต้องการ QoS · มี 2 แบบ: <strong>fast forwarding</strong> (แบบพื้นฐาน) และ <strong>fragment-free</strong> (ตรวจ error 64 ไบต์แรก — นึกถึง CSMA/CD)</p>
                       </div>
                     </div>
                     <div class="compare">
                       <div class="compare-col">
                         <h5>Auto-MDIX</h5>
-                        <p>สวิตช์สมัยใหม่ตรวจจับชนิดสายที่เสียบเข้ามาอัตโนมัติ (ใช้สายตรงหรือไขว้ก็ได้)</p>
+                        <p>automatic medium-dependent interface crossover — เมื่อเปิดใช้ (ค่าเริ่มต้นบน switch ที่รัน Cisco IOS Release 12.2(18)SE ขึ้นไป) switch <strong>ตรวจจับชนิดสายที่เสียบอัตโนมัติ</strong>และตั้งค่า interface ให้ → ใช้สาย crossover หรือ straight-through กับพอร์ต copper 10/100/1000 ได้ ไม่ว่าอีกฝั่งเป็นอุปกรณ์อะไร</p>
                       </div>
                       <div class="compare-col">
                         <h5>Autonegotiation <span class="chip">คนละอย่างกัน</span></h5>
-                        <p>การเจรจาความเร็ว/duplex ระหว่างอุปกรณ์สองฝั่งอัตโนมัติ</p>
+                        <p>ฟังก์ชันเสริมบน Ethernet switch และ NIC ส่วนใหญ่ ให้สองอุปกรณ์<strong>ตกลงความเร็วและ duplex ที่ดีที่สุด</strong>โดยอัตโนมัติ</p>
                       </div>
+                    </div>
+                    <div class="callout callout--warn">
+                      <span class="callout-label">ข้อควรระวัง</span>
+                      <p><b>Auto MDIX is not Autonegotiation</b> — Auto-MDIX เรื่องชนิดสาย ส่วน autonegotiation เรื่องความเร็ว/duplex</p>
                     </div>
                   </section>
 

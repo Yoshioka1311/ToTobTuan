@@ -438,6 +438,85 @@
     render();
   });
 
+  /* --------------------------- Binary exponential backoff (บทที่ 4) */
+  // สูตรตามสไลด์: ชนครั้งที่ n → k = min(n, 10), r ∈ {0 … 2^k − 1}, T = r × Tslot, Tslot = 2 × Tprop,max
+  // Kmax ปกติ = 15 (flowchart ALOHA / Traditional Ethernet) → ชนครั้งที่ 16 ให้ abort
+  const K_MAX = 15;
+  document.querySelectorAll('[data-widget="backoff-sim"]').forEach((root) => {
+    const tpropIn = root.querySelector('[data-input="tprop"]');
+    const log = root.querySelector(".calc-steps");
+    const status = root.querySelector(".demo-status");
+    const collideBtn = root.querySelector('[data-action="collide"]');
+    let picks = []; // [{ r, fixed }]
+
+    function track(k, r) {
+      const slots = 2 ** k;
+      if (slots <= 16) {
+        const cellsHtml = range(0, slots).map((i) => `<i class="${i === r ? "is-pick" : ""}">${i}</i>`).join("");
+        return `<span class="bo-track bo-track--cells" style="--slots:${slots}" aria-hidden="true">${cellsHtml}</span>`;
+      }
+      const left = (r / slots) * 100;
+      return `<span class="bo-track" aria-hidden="true"><i class="bo-pick" style="left:${left}%"></i><span class="bo-scale"><span>0</span><span>${slots - 1}</span></span></span>`;
+    }
+
+    function render() {
+      const tprop = Math.max(0, num(tpropIn));
+      const slot = 2 * tprop;
+      log.innerHTML = "";
+      let total = 0;
+      picks.forEach((p, i) => {
+        const n = i + 1;
+        if (n > K_MAX) {
+          log.append(li(`collision ครั้งที่ ${n}: K = ${n} &gt; K<sub>max</sub> (ปกติ = ${K_MAX}) → <strong>Abort</strong> เลิกส่งเฟรมนี้`, "is-warn"));
+          return;
+        }
+        const k = Math.min(n, 10);
+        const t = p.r * slot;
+        total += t;
+        log.append(li(
+          `collision ครั้งที่ ${n}${p.fixed ? " (ค่า r ตามตัวอย่างในสไลด์)" : ""}` +
+          `<span class="calc-expr">k = min(${n}, 10) = ${k} → r ∈ {0, 1, …, 2<sup>${k}</sup> − 1} = {0 … ${2 ** k - 1}} → สุ่มได้ r = ${p.r}</span>` +
+          track(k, p.r) +
+          `<span class="calc-expr">T<sub>backoff</sub> = r × T<sub>slot</sub> = ${p.r} × ${fmt(slot, 2)} = <strong>${fmt(t, 2)} µs</strong></span>`,
+          p.fixed ? "is-result" : "",
+        ));
+      });
+      const n = picks.length;
+      const aborted = n > K_MAX;
+      collideBtn.disabled = aborted;
+      if (!n) {
+        status.textContent = `T_slot = 2 × T_prop,max = 2 × ${fmt(tprop, 2)} = ${fmt(slot, 2)} µs · กด "เกิด collision" เพื่อจำลอง`;
+      } else if (aborted) {
+        status.textContent = `ชนเกิน K_max = ${K_MAX} ครั้ง → Abort · เวลารอสะสมก่อน abort ${fmt(total, 2)} µs`;
+      } else {
+        const nextK = Math.min(n + 1, 10);
+        status.textContent = `เวลารอ backoff สะสม ${fmt(total, 2)} µs · ถ้าชนอีกครั้ง ช่วงสุ่มจะเป็น {0 … ${2 ** nextK - 1}}${n >= 10 ? " (k หยุดที่ 10 แล้ว)" : ""}`;
+      }
+    }
+
+    root.addEventListener("click", (e) => {
+      const btn = e.target.closest("[data-action]");
+      if (!btn) return;
+      const action = btn.dataset.action;
+      if (action === "collide" && picks.length <= K_MAX) {
+        const k = Math.min(picks.length + 1, 10);
+        picks.push({ r: Math.floor(Math.random() * 2 ** k), fixed: false });
+      } else if (action === "example") {
+        tpropIn.value = "25.6";
+        picks = [
+          { r: Math.floor(Math.random() * 2), fixed: false },
+          { r: Math.floor(Math.random() * 4), fixed: false },
+          { r: 5, fixed: true },
+        ];
+      } else if (action === "reset") {
+        picks = [];
+      }
+      render();
+    });
+    tpropIn.addEventListener("input", render);
+    render();
+  });
+
   /* -------------------------------------------- Form validation demo */
   document.querySelectorAll('form[data-widget="validation-demo"]').forEach((form) => {
     const status = form.querySelector(".demo-status");
