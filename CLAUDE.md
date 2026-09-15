@@ -141,10 +141,13 @@ README.md               คำอธิบายสั้น + วิธี depl
 - [x] chapter switcher (`.chapter-nav`) ต้นหน้าทั้ง 2 บท · ปรับการ์ด ITDS231 ใน index เป็น "2 บท" (ลิงก์ `network.html` มีอยู่แล้วตั้งแต่ session 1)
 - [x] เพิ่มหัวข้อ Safety Rules ใน CLAUDE.md · เพิ่ม pattern ไฟล์ความลับใน `.gitignore`
 - [x] ทดสอบ headless Edge: คะแนนเต็ม 20, ตอบผิด/ข้าม, reduced motion, ไม่มี horizontal scroll ที่ 390px ทั้ง 2 บท, เฉลยบทที่ 1 ไม่เปลี่ยน, ไม่มี JS error
-- remote `origin` = `https://github.com/Yoshioka1311/ToTobTuan.git` — ดูผลการ push/Pages ในสถานะด้านล่าง
+- [x] เพิ่ม remote `origin` = `https://github.com/Yoshioka1311/ToTobTuan.git` (repo public) และ `git push -u origin main` สำเร็จ — ผู้ใช้ยืนยันให้ push ด้วยอีเมล commit เดิม (violetar1311@gmail.com)
+- [ ] **GitHub Pages ยังไม่เปิด** — `gh` บนเครื่องนี้ token หมดอายุ (`gh auth login` ก่อนถ้าจะให้ Claude เปิดให้) ผู้ใช้ต้องไปเปิดเองที่ Settings → Pages · URL เมื่อเปิดแล้ว: https://yoshioka1311.github.io/ToTobTuan/
 
 ## สิ่งที่ยังไม่ได้ทำ / แผนต่อไป
 
+- เปิด GitHub Pages (Settings → Pages → Deploy from a branch → `main` / `(root)`) แล้วตรวจว่า https://yoshioka1311.github.io/ToTobTuan/ ขึ้น
+- (ถ้าผู้ใช้ต้องการ) สลับลำดับตัวเลือก quiz บทที่ 2 ให้เฉลยกระจาย A–D — ต้องได้รับอนุญาตก่อน เพราะเปลี่ยนตัวอักษรของเฉลย
 - ITDS231 บทที่ 2 ส่วนที่เหลือของสไลด์ (Email/SMTP/IMAP, DNS, video streaming/CDN, socket programming) ยังไม่มีในเว็บ — มีแค่ในหัวข้อภาพรวม
 - เพิ่มหน้าวิชาอื่น (เช่น วิชาฐานข้อมูลที่มีการ์ดรออยู่แล้ว — ใน Downloads มีสไลด์ชื่อ ITDS222 ERDiagram แต่ยังไม่ได้ยืนยันกับผู้ใช้ว่าเป็นวิชาเดียวกัน) — ดู "วิธีเพิ่มวิชาใหม่" ด้านล่าง
 - ITDS231 สัปดาห์ 2–8 (Data & Signals, Application layer/HTTP, Data Link, MAC/Ethernet/VLAN, STP) ยังไม่มีสไลด์ในเว็บ — เพิ่มเป็น accordion item ใหม่เมื่อผู้ใช้ให้ไฟล์
