@@ -1,0 +1,813 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>ITDS231 บทที่ 3: Data Link Layer · โต๊ะทบทวน</title>
+<meta name="description" content="สรุปเนื้อหา ITDS231 Computer Networks บทที่ 3 Data Link Layer: framing, error detection & correction, flow control, ARQ และ HDLC พร้อม cheat sheet และแบบฝึกหัด 20 ข้อ" />
+<meta name="theme-color" content="#17151a" />
+<link rel="icon" href="assets/favicon.svg" type="image/svg+xml" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link
+  href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500..700&family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans+Thai:wght@500;600&family=IBM+Plex+Sans+Thai+Looped:wght@400;500;600&display=swap"
+  rel="stylesheet"
+/>
+<link rel="stylesheet" href="assets/css/tokens.css" />
+<link rel="stylesheet" href="assets/css/base.css" />
+<link rel="stylesheet" href="assets/css/network.css" />
+<link rel="stylesheet" href="assets/css/motion.css" />
+<script>document.documentElement.classList.add("js");</script>
+</head>
+<body>
+  <a class="skip-link" href="#tabs">ข้ามไปที่เนื้อหา</a>
+
+  <header class="site-header">
+    <div class="wrap">
+      <a class="wordmark" href="index.html" aria-label="โต๊ะทบทวน หน้าแรก">
+        <img class="wordmark-mark" src="assets/favicon.svg" alt="" width="26" height="26" />
+        <span class="wordmark-text">โต๊ะ<span>ทบทวน</span></span>
+      </a>
+      <a class="crumb" href="index.html"><span class="arrow" aria-hidden="true">←</span> รายวิชาทั้งหมด</a>
+    </div>
+  </header>
+
+  <main>
+    <section class="course-hero wrap">
+      <nav class="chapter-nav" aria-label="บทของวิชา ITDS231">
+        <a class="chapter-link" href="network.html"><span class="chapter-num">บทที่ 1</span><span class="chapter-name">Intro &amp; Topology</span></a>
+        <a class="chapter-link" href="network-application-layer.html"><span class="chapter-num">บทที่ 2</span><span class="chapter-name">Application Layer</span></a>
+        <a class="chapter-link" href="network-data-link-layer.html" aria-current="page"><span class="chapter-num">บทที่ 3</span><span class="chapter-name">Data Link Layer</span></a>
+        <a class="chapter-link" href="network-mac-ethernet.html"><span class="chapter-num">บทที่ 4</span><span class="chapter-name">MAC + Ethernet</span></a>
+      </nav>
+      <span class="eyebrow">ITDS231 · บทที่ 3 · Lecture 5.0 – 5.2</span>
+      <h1>Data Link Layer</h1>
+      <p class="course-lede">ชั้นเชื่อมโยงข้อมูล — พื้นฐานและ framing, การตรวจจับ/แก้ไขข้อผิดพลาด (parity, checksum, CRC, Hamming) และ flow control กับ ARQ และ HDLC อ่านเนื้อหา ทบทวน cheat sheet แล้วลองทำแบบฝึกหัด 20 ข้อ</p>
+      <ul class="course-meta" aria-label="ข้อมูลบทเรียน">
+        <li class="chip chip--accent">สอบกลางภาค 28 ก.ย. – 2 ต.ค. 2569</li>
+        <li class="chip">3 ไฟล์สไลด์</li>
+        <li class="chip">แบบฝึกหัด 20 ข้อ</li>
+      </ul>
+    </section>
+
+    <div class="tabbar" id="tabs">
+      <div class="wrap">
+        <div class="tabs" role="tablist" aria-label="ส่วนของหน้า">
+          <button class="tab" role="tab" id="tab-content" aria-controls="content" aria-selected="true" type="button">
+            <svg class="tab-icon" viewBox="0 0 20 20" aria-hidden="true"><path d="M4 3.5h8.5L16 7v9.5H4z M12 3.5V7h4 M7 10h6 M7 13h4" /></svg>
+            เนื้อหา
+          </button>
+          <button class="tab" role="tab" id="tab-summary" aria-controls="summary" aria-selected="false" type="button">
+            <svg class="tab-icon" viewBox="0 0 20 20" aria-hidden="true"><path d="M3.5 4h13v12h-13z M3.5 8h13 M8.5 8v8" /></svg>
+            สรุป
+          </button>
+          <button class="tab" role="tab" id="tab-quiz" aria-controls="quiz" aria-selected="false" type="button">
+            <svg class="tab-icon" viewBox="0 0 20 20" aria-hidden="true"><path d="M10 17a7 7 0 1 0 0-14 7 7 0 0 0 0 14z M6.8 10.2l2.2 2.2 4.2-4.6" /></svg>
+            แบบฝึกหัด
+          </button>
+          <span class="tab-indicator" aria-hidden="true"></span>
+        </div>
+      </div>
+    </div>
+
+    <div class="wrap panels">
+
+      <!-- =============================================================
+           แท็บ 1: เนื้อหา
+           ============================================================= -->
+      <section class="panel" id="content" role="tabpanel" aria-labelledby="tab-content" tabindex="-1">
+        <div class="panel-head">
+          <h2>เนื้อหาแยกตามไฟล์สไลด์</h2>
+          <div class="panel-actions">
+            <button class="btn btn--ghost btn--sm" type="button" data-acc-all="open">เปิดทั้งหมด</button>
+            <button class="btn btn--ghost btn--sm" type="button" data-acc-all="close">ปิดทั้งหมด</button>
+          </div>
+        </div>
+
+        <div class="acc">
+
+          <!-- ---------- ไฟล์ 1 ---------- -->
+          <div class="acc-item is-open">
+            <h3 class="acc-heading">
+              <button class="acc-trigger" type="button" aria-expanded="true" aria-controls="acc-dlp" id="acc-dlp-btn">
+                <span class="acc-index">01</span>
+                <span class="acc-title">
+                  <span class="acc-name">พื้นฐานของ Data Link Layer</span>
+                  <span class="acc-file">ITDS231-Lecture5.0-DLP-Foundation-2026.pdf · Lecture 5.0</span>
+                </span>
+                <svg class="acc-chevron" viewBox="0 0 20 20" aria-hidden="true"><path d="M5 7.5l5 5 5-5" /></svg>
+              </button>
+            </h3>
+            <div class="acc-panel" id="acc-dlp" role="region" aria-labelledby="acc-dlp-btn">
+              <div class="acc-panel-inner">
+                <div class="acc-body">
+
+                  <nav class="toc" aria-label="หัวข้อในพื้นฐานของ Data Link Layer">
+                    <a href="#dl-hop">Hop-by-hop delivery</a>
+                    <a href="#dl-sublayers">LLC &amp; MAC</a>
+                    <a href="#dl-functions">หน้าที่หลัก</a>
+                    <a href="#dl-links">Link protocols &amp; ประเภทลิงก์</a>
+                    <a href="#dl-frame">โครงสร้างเฟรม</a>
+                    <a href="#dl-framing">Framing 3 แบบ</a>
+                  </nav>
+
+                  <section class="topic" id="dl-hop">
+                    <h4>Hop-by-hop delivery</h4>
+                    <p>Data Link Layer ทำหน้าที่ <strong>hop-by-hop delivery</strong> — แพ็กเก็ต IP เดียวกันถูก <em>"reframe"</em> (ถอดเฟรมเก่า สร้างเฟรมใหม่) <strong>ทุกครั้งที่ผ่าน router แต่ละ hop</strong> แม้ว่า application จะมองเห็นเป็นการสื่อสารแบบ end-to-end ก็ตาม</p>
+                  </section>
+
+                  <section class="topic" id="dl-sublayers">
+                    <h4>2 ซับเลเยอร์: LLC และ MAC</h4>
+                    <div class="compare">
+                      <div class="compare-col">
+                        <h5>LLC <span class="chip">Logical Link Control</span></h5>
+                        <p>เชื่อมกับ network-layer protocol ชั้นบน</p>
+                      </div>
+                      <div class="compare-col">
+                        <h5>MAC <span class="chip">Media Access Control</span></h5>
+                        <p>framing, link addressing, medium access</p>
+                      </div>
+                    </div>
+                  </section>
+
+                  <section class="topic" id="dl-functions">
+                    <h4>หน้าที่หลักของ Data Link Layer</h4>
+                    <div class="table-scroll">
+                      <table>
+                        <thead><tr><th>หน้าที่</th><th>ทำโดย / หมายเหตุ</th></tr></thead>
+                        <tbody>
+                          <tr><td>Network-layer interface</td><td>LLC</td></tr>
+                          <tr><td>Framing</td><td>—</td></tr>
+                          <tr><td>Link addressing</td><td>MAC</td></tr>
+                          <tr><td>Error detection</td><td>FCS / CRC</td></tr>
+                          <tr><td>Error recovery</td><td>ACK + retransmit <span class="chip">optional</span></td></tr>
+                          <tr><td>Flow control</td><td><span class="chip">optional</span></td></tr>
+                          <tr><td>Medium access</td><td>MAC</td></tr>
+                        </tbody>
+                      </table>
+                    </div>
+                  </section>
+
+                  <section class="topic" id="dl-links">
+                    <h4>ตัวอย่าง link protocol และประเภทลิงก์</h4>
+                    <p><strong>ตัวอย่าง link protocol:</strong> Ethernet 802.3 (LLC/SNAP + MAC) · Wi-Fi 802.11 · Token Ring 802.5 · PPP · HDLC · LAPB · LTE/5G — แต่ละแบบมี framing / addressing / access ต่างกัน</p>
+                    <div class="compare">
+                      <div class="compare-col">
+                        <h5>Dedicated links</h5>
+                        <p>full-duplex switch, star topology</p>
+                      </div>
+                      <div class="compare-col">
+                        <h5>Shared links</h5>
+                        <p>bus topology, wireless — เกิดปัญหา <strong>"multiple access"</strong> เมื่อหลายอุปกรณ์แย่งกันส่งพร้อมกัน</p>
+                      </div>
+                    </div>
+                  </section>
+
+                  <section class="topic" id="dl-frame">
+                    <h4>โครงสร้างเฟรมทั่วไป</h4>
+                    <div class="frame-scroll">
+                      <ol class="frame" aria-label="ลำดับฟิลด์ในเฟรมทั่วไป">
+                        <li><span class="frame-name">Flag</span></li>
+                        <li><span class="frame-name">Address</span></li>
+                        <li><span class="frame-name">Control</span></li>
+                        <li class="frame-data"><span class="frame-name">Data</span></li>
+                        <li><span class="frame-name">FCS</span></li>
+                        <li><span class="frame-name">Flag</span></li>
+                      </ol>
+                    </div>
+                    <div class="callout">
+                      <strong>เปรียบเหมือนซองจดหมาย:</strong>
+                      <b>header</b> บอกข้อมูลนำส่ง ·
+                      <b>FCS</b> ช่วยตรวจว่าเนื้อหาเสียหายระหว่างทางหรือไม่
+                    </div>
+                  </section>
+
+                  <section class="topic" id="dl-framing">
+                    <h4>Framing 3 แบบหลัก</h4>
+                    <div class="compare">
+                      <div class="compare-col">
+                        <h5>Byte / character-oriented</h5>
+                        <ul>
+                          <li>ข้อมูลเป็นตัวอักษร 8-bit (ASCII)</li>
+                          <li>ใช้ special delimiter byte เป็นขอบเขตเฟรม</li>
+                          <li>ถ้า pattern flag ไปปรากฏในข้อมูลต้องใช้ escape character แก้ปัญหา เรียกว่า <strong>byte stuffing</strong></li>
+                          <li><strong>ตัวอย่าง:</strong> BISYNC, PPP</li>
+                        </ul>
+                      </div>
+                      <div class="compare-col">
+                        <h5>Bit-oriented</h5>
+                        <ul>
+                          <li>ข้อมูลเป็นลำดับบิตล้วนๆ</li>
+                          <li>ใช้ flag bit pattern เป็นขอบเขต</li>
+                          <li>ป้องกัน pattern ปรากฏซ้ำด้วย <strong>bit stuffing</strong></li>
+                          <li><strong>ตัวอย่าง:</strong> HDLC, Frame Relay — HDLC ใช้ Flag = <code>0x7E</code> = <code>01111110</code></li>
+                        </ul>
+                      </div>
+                      <div class="compare-col">
+                        <h5>Length / Fixed-size</h5>
+                        <ul>
+                          <li>ใช้ length field หรือขนาดคงที่กำหนดขอบเขตแทน</li>
+                          <li><strong>ตัวอย่าง:</strong> Ethernet</li>
+                          <li>padding ของ Ethernet <strong>ไม่ใช่ stuffing</strong> เพราะแค่เติมให้ครบขนาดขั้นต่ำ ไม่ได้ป้องกัน pattern ชนกับ delimiter</li>
+                        </ul>
+                      </div>
+                    </div>
+                  </section>
+
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- ---------- ไฟล์ 2 ---------- -->
+          <div class="acc-item">
+            <h3 class="acc-heading">
+              <button class="acc-trigger" type="button" aria-expanded="false" aria-controls="acc-err" id="acc-err-btn">
+                <span class="acc-index">02</span>
+                <span class="acc-title">
+                  <span class="acc-name">การตรวจจับและแก้ไขข้อผิดพลาด (Error Detection &amp; Correction)</span>
+                  <span class="acc-file">ITDS231-Lecture5.1-Error-Detection-2026.pdf · Lecture 5.1</span>
+                </span>
+                <svg class="acc-chevron" viewBox="0 0 20 20" aria-hidden="true"><path d="M5 7.5l5 5 5-5" /></svg>
+              </button>
+            </h3>
+            <div class="acc-panel" id="acc-err" role="region" aria-labelledby="acc-err-btn">
+              <div class="acc-panel-inner">
+                <div class="acc-body">
+
+                  <nav class="toc" aria-label="หัวข้อในการตรวจจับและแก้ไขข้อผิดพลาด">
+                    <a href="#err-control">Bit error &amp; Error control</a>
+                    <a href="#err-block">Block coding</a>
+                    <a href="#err-parity">Parity check</a>
+                    <a href="#err-checksum">Checksum</a>
+                    <a href="#err-crc">CRC</a>
+                    <a href="#err-hamming">Hamming code</a>
+                    <a href="#err-interleave">Interleaving</a>
+                  </nav>
+
+                  <section class="topic" id="err-control">
+                    <h4>Bit error และแนวทาง Error control</h4>
+                    <p><strong>Bit error เกิดจาก:</strong> สัญญาณรบกวน · thermal noise · ฮาร์ดแวร์เสีย · ปรากฏการณ์ธรรมชาติ (ฟ้าผ่า) · หรือแม้แต่ EMP</p>
+                    <div class="compare">
+                      <div class="compare-col">
+                        <h5>ARQ <span class="chip">Automatic Repeat reQuest</span></h5>
+                        <p>ตรวจพบ error แล้วขอส่งซ้ำ</p>
+                      </div>
+                      <div class="compare-col">
+                        <h5>FEC <span class="chip">Forward Error Correction</span></h5>
+                        <p>เพิ่ม redundancy ให้ผู้รับแก้ไขเองได้</p>
+                      </div>
+                    </div>
+                    <p><strong>Redundancy</strong> = การเพิ่มบิตพิเศษเพื่อช่วยผู้รับตรวจสอบความถูกต้องของข้อมูล โดยบิตพิเศษเหล่านี้จะถูกทิ้งหลังตรวจสอบเสร็จ</p>
+                  </section>
+
+                  <section class="topic" id="err-block">
+                    <h4>Block coding</h4>
+                    <p>ข้อมูล <var>k</var> บิต + redundancy <var>r</var> บิต = codeword <var>n</var> บิต</p>
+                    <code class="formula">n = k + r</code>
+                    <p>ผลลัพธ์การตรวจสอบของผู้รับเรียกว่า <strong>"syndrome"</strong> — ถ้า syndrome = 0 แปลว่าไม่มี error</p>
+                  </section>
+
+                  <section class="topic" id="err-parity">
+                    <h4>Parity check และ Two-dimensional parity</h4>
+                    <ul>
+                      <li><strong>Parity check:</strong> เพิ่ม parity bit ให้จำนวนบิต 1 รวมเป็นเลขคู่ (<em>even parity</em>) หรือคี่ (<em>odd parity</em>)</li>
+                      <li>ตรวจจับ <strong>single-bit error ได้ทุกกรณี</strong> แต่ตรวจจับ <strong>burst error ไม่ได้ถ้าจำนวนบิตที่ผิดเป็นเลขคู่</strong></li>
+                    </ul>
+                    <div class="callout">
+                      <strong>Two-dimensional parity check:</strong>
+                      ตรวจสอบทั้ง<b>แถว</b>และ<b>คอลัมน์</b> ทำให้หาตำแหน่งบิตที่ผิดได้ (ถ้ามี error เดียว) และ<b>แก้ไขได้ทันที</b> ไม่ใช่แค่ตรวจจับ
+                    </div>
+                  </section>
+
+                  <section class="topic" id="err-checksum">
+                    <h4>Checksum</h4>
+                    <ol class="steps">
+                      <li>แบ่งข้อความเป็นหน่วย m-bit</li>
+                      <li>บวกกันด้วย <strong>one's-complement arithmetic</strong> สร้างค่า checksum ส่งไปพร้อมข้อมูล</li>
+                      <li>ผู้รับบวกทุกส่วนรวม checksum — ถ้าได้ <strong>all-1s</strong> (complement = all-0s) แปลว่าไม่มี error</li>
+                    </ol>
+                    <p><strong>ใช้ใน:</strong> IPv4 header checksum, TCP/UDP checksum</p>
+                  </section>
+
+                  <section class="topic" id="err-crc">
+                    <h4>CRC (Cyclic Redundancy Check)</h4>
+                    <ul>
+                      <li><strong>ทรงพลังที่สุด</strong>ในบรรดาวิธี redundancy checking</li>
+                      <li>ใช้การหารเลขฐานสอง (<em>modulo-2 division</em>, เหมือน XOR) ด้วย divisor ที่ตกลงกันไว้ล่วงหน้า</li>
+                      <li>CRC (remainder) ต้องมีขนาด<strong>น้อยกว่า divisor อยู่ 1 บิตเสมอ</strong></li>
+                      <li>ต่อท้าย dataword แล้วหารด้วย divisor ต้องลงตัวพอดี</li>
+                      <li>ใช้กันแพร่หลายในเทคโนโลยีลิงก์เพราะตรวจจับ <strong>burst error</strong> ได้ดี</li>
+                    </ul>
+                    <code class="formula">จำนวนบิต CRC = จำนวนบิต divisor − 1</code>
+                  </section>
+
+                  <section class="topic" id="err-hamming">
+                    <h4>Hamming code</h4>
+                    <ul>
+                      <li><strong>แก้ไข single-bit error ได้</strong> โดยระบุตำแหน่งบิตที่ผิด</li>
+                      <li>วาง redundant bit ไว้ที่ตำแหน่ง 2<sup>k</sup> (1, 2, 4, 8, ...) ของ codeword</li>
+                      <li>แต่ละ redundant bit ตรวจสอบ parity ของกลุ่มบิตที่กำหนดไว้</li>
+                    </ul>
+                    <code class="formula">ตำแหน่งบิตผิด = (r8 r4 r2 r1)₂ → แปลงเป็นเลขฐานสิบ</code>
+                  </section>
+
+                  <section class="topic" id="err-interleave">
+                    <h4>Interleaving</h4>
+                    <p>แก้ปัญหา <strong>burst error</strong> ที่ทำให้ codeword เดิมเสียทั้งก้อน โดยสลับ (shuffle) บิตจากหลาย codeword ทำให้ burst error กลายเป็น single-bit error กระจายในแต่ละ codeword ซึ่งแก้ด้วย Hamming code ได้</p>
+                    <div class="callout">
+                      <strong>เทคนิค:</strong> ให้ burst error โดนแค่ <b>1 บิตต่อ 1 หน่วย</b>
+                    </div>
+                  </section>
+
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- ---------- ไฟล์ 3 ---------- -->
+          <div class="acc-item">
+            <h3 class="acc-heading">
+              <button class="acc-trigger" type="button" aria-expanded="false" aria-controls="acc-flow" id="acc-flow-btn">
+                <span class="acc-index">03</span>
+                <span class="acc-title">
+                  <span class="acc-name">การควบคุมการไหลของข้อมูล, ARQ และ HDLC</span>
+                  <span class="acc-file">ITDS231-Lecture5.2-Flow-Control-2026.pdf · Lecture 5.2</span>
+                </span>
+                <svg class="acc-chevron" viewBox="0 0 20 20" aria-hidden="true"><path d="M5 7.5l5 5 5-5" /></svg>
+              </button>
+            </h3>
+            <div class="acc-panel" id="acc-flow" role="region" aria-labelledby="acc-flow-btn">
+              <div class="acc-panel-inner">
+                <div class="acc-body">
+
+                  <nav class="toc" aria-label="หัวข้อในการควบคุมการไหลของข้อมูล">
+                    <a href="#fc-flow">Flow control</a>
+                    <a href="#fc-simple">Simple &amp; Stop-and-Wait</a>
+                    <a href="#fc-sliding">Go-Back-N vs Selective Repeat</a>
+                    <a href="#fc-piggyback">Piggybacking</a>
+                    <a href="#fc-hdlc">HDLC</a>
+                    <a href="#fc-bdp">Bandwidth-delay product</a>
+                  </nav>
+
+                  <section class="topic" id="fc-flow">
+                    <h4>Flow control</h4>
+                    <p>ควบคุมอัตราการส่งของ sender ให้สมดุลกับความสามารถประมวลผลของ receiver</p>
+                    <div class="compare">
+                      <div class="compare-col">
+                        <h5>ส่งเร็วเกินไป</h5>
+                        <p>receiver อาจ buffer overflow / frame loss</p>
+                      </div>
+                      <div class="compare-col">
+                        <h5>ส่งช้าเกินไป</h5>
+                        <p>เสียประสิทธิภาพ</p>
+                      </div>
+                    </div>
+                    <ul>
+                      <li>ทั้งสองฝั่งใช้ <strong>buffer</strong> ช่วยพักข้อมูลระหว่างทาง</li>
+                      <li>feedback ที่ receiver ส่งกลับ: <strong>ACK</strong> (ยืนยันรับสำเร็จ) และ <strong>NAK / retransmission request</strong> (ขอส่งซ้ำ)</li>
+                    </ul>
+                  </section>
+
+                  <section class="topic" id="fc-simple">
+                    <h4>Simple Protocol, Stop-and-Wait และ Pipelining</h4>
+                    <ul>
+                      <li><strong>Simple Protocol:</strong> ไม่มี flow/error control เลย (baseline เปรียบเทียบ)</li>
+                      <li><strong>Stop-and-Wait ARQ:</strong> sender ส่งทีละ 1 เฟรม รอ ACK ก่อนส่งเฟรมถัดไป ใช้ sequence number แค่ <strong>2 ค่า (0, 1)</strong> สลับกันไป ป้องกันเฟรมซ้ำ — เชื่อถือได้ แต่เสียเวลารอมากบนลิงก์ที่มี bandwidth สูง/delay นาน (ไม่มี pipelining)</li>
+                      <li><strong>Pipelining:</strong> การส่งหลายเฟรมพร้อมกันโดยไม่ต้องรอ ACK ทีละเฟรม ใช้ใน Go-Back-N และ Selective Repeat (ไม่มีใน Stop-and-Wait)</li>
+                    </ul>
+                  </section>
+
+                  <section class="topic" id="fc-sliding">
+                    <h4>Go-Back-N ARQ vs Selective Repeat ARQ</h4>
+                    <div class="compare">
+                      <div class="compare-col">
+                        <h5>Go-Back-N</h5>
+                        <ul>
+                          <li>sender window มากกว่า 1 (สูงสุด 2<sup>m</sup> − 1)</li>
+                          <li>receiver window <strong>= 1 เสมอ</strong> — รับเฉพาะเฟรมที่คาดไว้ลำดับถัดไป เฟรมที่มาไม่เรียงลำดับจะถูกทิ้ง</li>
+                          <li>ใช้ <strong>cumulative ACK</strong> (ACK n = ยืนยันทุกเฟรมก่อนหน้า n แล้ว)</li>
+                          <li>timeout → retransmit เฟรมเก่าสุดที่ยังไม่ ACK <strong>พร้อมเฟรมทั้งหมดหลังจากนั้น</strong></li>
+                          <li>receiver ง่าย แต่สิ้นเปลือง bandwidth เมื่อเกิด error บ่อย</li>
+                        </ul>
+                      </div>
+                      <div class="compare-col">
+                        <h5>Selective Repeat</h5>
+                        <ul>
+                          <li>sender และ receiver window มีขนาดมากกว่า 1 <strong>เท่ากัน</strong> (ต้อง ≤ 2<sup>m−1</sup> เพื่อไม่ให้ sequence number กำกวม)</li>
+                          <li>receiver รับและ <strong>buffer</strong> เฟรมที่มาไม่เรียงลำดับได้ (ต่างจาก GBN)</li>
+                          <li>เฟรมหาย → retransmit <strong>เฉพาะเฟรมนั้น</strong> ไม่ใช่ทั้งหมด</li>
+                          <li>ประหยัด bandwidth กว่า GBN แต่ receiver ซับซ้อนกว่า</li>
+                        </ul>
+                      </div>
+                    </div>
+                  </section>
+
+                  <section class="topic" id="fc-piggyback">
+                    <h4>Piggybacking</h4>
+                    <p>การส่ง <strong>ACK แนบไปกับ data frame</strong> ที่เดินทางในทิศตรงข้าม เพื่อเพิ่มประสิทธิภาพในการสื่อสารสองทิศทาง</p>
+                  </section>
+
+                  <section class="topic" id="fc-hdlc">
+                    <h4>HDLC (High-Level Data Link Control)</h4>
+                    <p>โปรโตคอลมาตรฐานแบบ <strong>bit-oriented</strong> สำหรับลิงก์ point-to-point / multipoint ใช้ flag-based framing + bit stuffing รองรับทั้งโหมด connectionless และ connection-oriented (NRM, ABM)</p>
+                    <div class="table-scroll">
+                      <table>
+                        <thead><tr><th>ประเภทเฟรม</th><th>หน้าที่</th><th>ตัวอย่างรหัส</th></tr></thead>
+                        <tbody>
+                          <tr><td>I-frame</td><td>ขนส่ง user data + piggybacked control info</td><td>—</td></tr>
+                          <tr><td>S-frame</td><td>ควบคุม flow/error อย่างเดียว เมื่อ piggyback ไม่เหมาะ</td><td>RR, RNR, REJ, SREJ</td></tr>
+                          <tr><td>U-frame</td><td>จัดการ session</td><td>SABM, DISC, FRMR</td></tr>
+                        </tbody>
+                      </table>
+                    </div>
+                  </section>
+
+                  <section class="topic" id="fc-bdp">
+                    <h4>Bandwidth-delay product</h4>
+                    <p>วัดจำนวนบิตที่ระบบส่งออกไปได้ระหว่างรอ ACK กลับมา</p>
+                    <code class="formula">bandwidth-delay product = bandwidth (bps) × round-trip delay (วินาที)</code>
+                    <p>ถ้าค่านี้สูง (ลิงก์ bandwidth สูงหรือ delay นาน) Stop-and-Wait จะใช้ประโยชน์จากลิงก์ได้ต่ำมาก</p>
+                    <div class="callout">
+                      <strong>ตัวอย่างในสไลด์ (ลิงก์เดียวกัน):</strong>
+                      link utilization <b>Stop-and-Wait เพียง 5%</b> ·
+                      <b>Go-Back-N ที่ window 15 เฟรม 75%</b>
+                    </div>
+                  </section>
+
+                </div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </section>
+
+      <!-- =============================================================
+           แท็บ 2: สรุป (cheat sheet)
+           ============================================================= -->
+      <section class="panel" id="summary" role="tabpanel" aria-labelledby="tab-summary" tabindex="-1">
+        <div class="panel-head">
+          <h2>Cheat sheet</h2>
+          <p class="panel-sub">ตาราง สูตร และคำที่มักออกสอบของบทที่ 3 รวมไว้ในหน้าเดียว</p>
+        </div>
+
+        <div class="sheet">
+
+          <article class="sheet-card sheet-card--wide">
+            <h3><span class="sheet-num">01</span> Framing 3 แบบ</h3>
+            <div class="table-scroll">
+              <table>
+                <thead><tr><th></th><th>Byte-oriented</th><th>Bit-oriented</th><th>Length-based</th></tr></thead>
+                <tbody>
+                  <tr><td class="nowrap">ข้อมูล</td><td>ตัวอักษร 8-bit (ASCII)</td><td>ลำดับบิตล้วน</td><td>—</td></tr>
+                  <tr><td class="nowrap">ขอบเขตเฟรม</td><td>delimiter byte</td><td>flag bit pattern</td><td>length field / ขนาดคงที่</td></tr>
+                  <tr><td class="nowrap">กัน pattern ชน</td><td>byte stuffing (escape char)</td><td>bit stuffing</td><td>ไม่ต้อง (padding ≠ stuffing)</td></tr>
+                  <tr><td class="nowrap">ตัวอย่าง</td><td>BISYNC, PPP</td><td>HDLC (0x7E), Frame Relay</td><td>Ethernet</td></tr>
+                </tbody>
+              </table>
+            </div>
+          </article>
+
+          <article class="sheet-card">
+            <h3><span class="sheet-num">02</span> HDLC 3 ประเภทเฟรม</h3>
+            <dl class="defs defs--codes">
+              <div><dt>I</dt><dd>user data + piggybacked control</dd></div>
+              <div><dt>S</dt><dd>flow/error control อย่างเดียว · RR, RNR, REJ, SREJ</dd></div>
+              <div><dt>U</dt><dd>จัดการ session · SABM, DISC, FRMR</dd></div>
+            </dl>
+            <p class="note">bit-oriented · Flag 0x7E = 01111110 · โหมด NRM, ABM</p>
+          </article>
+
+          <article class="sheet-card sheet-card--wide">
+            <h3><span class="sheet-num">03</span> Parity · Checksum · CRC · Hamming</h3>
+            <div class="table-scroll">
+              <table>
+                <thead><tr><th>วิธี</th><th>หลักการ</th><th>ตรวจจับ / แก้ไข</th><th>ใช้ที่ / จุดจำ</th></tr></thead>
+                <tbody>
+                  <tr><td class="nowrap">Parity</td><td>parity bit ให้จำนวนบิต 1 เป็นคู่/คี่</td><td>ตรวจจับ</td><td>single-bit ได้ทุกกรณี · burst ผิดเลขคู่ตรวจไม่ได้</td></tr>
+                  <tr><td class="nowrap">2D parity</td><td>ตรวจทั้งแถวและคอลัมน์</td><td>ตรวจจับ + <strong>แก้ไข</strong> (error เดียว)</td><td>หาตำแหน่งบิตที่ผิดได้</td></tr>
+                  <tr><td class="nowrap">Checksum</td><td>บวก m-bit ด้วย one's complement</td><td>ตรวจจับ</td><td>ผลรวมได้ all-1s = ไม่มี error · IPv4, TCP/UDP</td></tr>
+                  <tr><td class="nowrap">CRC</td><td>modulo-2 division ด้วย divisor</td><td>ตรวจจับ</td><td>ทรงพลังสุด · burst error ดี · ใช้ในลิงก์</td></tr>
+                  <tr><td class="nowrap">Hamming</td><td>redundant bit ที่ตำแหน่ง 2<sup>k</sup></td><td><strong>แก้ไข</strong> single-bit</td><td>คู่กับ interleaving แก้ burst error</td></tr>
+                </tbody>
+              </table>
+            </div>
+          </article>
+
+          <article class="sheet-card">
+            <h3><span class="sheet-num">04</span> สูตร error control</h3>
+            <code class="formula formula--wrap">n = k + r</code>
+            <code class="formula formula--wrap">CRC bits = divisor bits − 1</code>
+            <code class="formula formula--wrap">ตำแหน่งบิตผิด = (r8 r4 r2 r1)₂</code>
+            <ul class="tight">
+              <li>syndrome = 0 → ไม่มี error</li>
+              <li>checksum ผู้รับได้ all-1s → ไม่มี error</li>
+            </ul>
+          </article>
+
+          <article class="sheet-card sheet-card--wide">
+            <h3><span class="sheet-num">05</span> Stop-and-Wait vs Go-Back-N vs Selective Repeat</h3>
+            <div class="table-scroll">
+              <table>
+                <thead><tr><th></th><th>Stop-and-Wait</th><th>Go-Back-N</th><th>Selective Repeat</th></tr></thead>
+                <tbody>
+                  <tr><td class="nowrap">Sender window</td><td>1 เฟรม</td><td>&gt; 1 (สูงสุด 2<sup>m</sup> − 1)</td><td>&gt; 1 (≤ 2<sup>m−1</sup>)</td></tr>
+                  <tr><td class="nowrap">Receiver window</td><td>—</td><td><strong>1 เสมอ</strong></td><td>&gt; 1 เท่ากับ sender</td></tr>
+                  <tr><td class="nowrap">Out-of-order frame</td><td>—</td><td>ทิ้ง</td><td>buffer ไว้</td></tr>
+                  <tr><td class="nowrap">Retransmit</td><td>เฟรมที่รอ ACK</td><td>เฟรมเก่าสุดที่ยังไม่ ACK + ทุกเฟรมหลังจากนั้น</td><td>เฉพาะเฟรมที่หาย</td></tr>
+                  <tr><td class="nowrap">จุดจำ</td><td>seq 0, 1 · ไม่มี pipelining</td><td>cumulative ACK · receiver ง่าย</td><td>ประหยัด bandwidth · receiver ซับซ้อน</td></tr>
+                </tbody>
+              </table>
+            </div>
+          </article>
+
+          <article class="sheet-card">
+            <h3><span class="sheet-num">06</span> Bandwidth-delay product</h3>
+            <code class="formula formula--wrap">bandwidth (bps) × round-trip delay (s)</code>
+            <p>= จำนวนบิตที่ส่งออกไปได้ระหว่างรอ ACK · ค่าสูง → Stop-and-Wait ใช้ลิงก์ได้ต่ำ</p>
+            <ul class="tight">
+              <li>Stop-and-Wait → <strong>5%</strong></li>
+              <li>Go-Back-N window 15 → <strong>75%</strong></li>
+            </ul>
+            <p class="note">Piggybacking = แนบ ACK ไปกับ data frame ทิศตรงข้าม</p>
+          </article>
+
+        </div>
+      </section>
+
+      <!-- =============================================================
+           แท็บ 3: แบบฝึกหัด (20 ข้อ)
+           data-answer = ตัวเลือกที่ถูก (ก=a, ข=b, ค=c, ง=d ตามเฉลยที่ผู้ใช้กำหนด)
+           ============================================================= -->
+      <section class="panel" id="quiz" role="tabpanel" aria-labelledby="tab-quiz" tabindex="-1">
+        <div class="panel-head">
+          <h2>แบบฝึกหัด 20 ข้อ</h2>
+          <p class="panel-sub">เลือกคำตอบให้ครบแล้วกด "ตรวจคำตอบ" ด้านล่าง ระบบจะเฉลยพร้อมคำอธิบายทุกข้อ</p>
+        </div>
+
+        <form class="quiz" id="quiz-form" novalidate>
+
+          <fieldset class="q" data-answer="b">
+            <legend class="q-head"><span class="q-num">01</span><span class="q-text">การจัดกรอบข้อมูล (framing) ใหม่เกิดขึ้นที่ใดในการส่งข้อมูลแบบ hop-by-hop?</span></legend>
+            <div class="q-options">
+              <label class="opt"><input type="radio" name="q1" value="a" /><span class="opt-key">A</span><span class="opt-text">เฉพาะปลายทางสุดท้าย</span></label>
+              <label class="opt"><input type="radio" name="q1" value="b" /><span class="opt-key">B</span><span class="opt-text">ทุกครั้งที่ผ่าน router แต่ละ hop</span></label>
+              <label class="opt"><input type="radio" name="q1" value="c" /><span class="opt-key">C</span><span class="opt-text">เฉพาะต้นทาง</span></label>
+              <label class="opt"><input type="radio" name="q1" value="d" /><span class="opt-key">D</span><span class="opt-text">ไม่มีการ reframe เลย</span></label>
+            </div>
+            <div class="q-feedback"><div class="q-feedback-inner"><p class="q-verdict" aria-live="polite"></p><p class="q-explain">Data Link Layer ทำงานแบบ hop-by-hop: แพ็กเก็ต IP เดียวกันถูก reframe (ถอดเฟรมเก่า สร้างเฟรมใหม่) ทุกครั้งที่ผ่าน router แต่ละ hop แม้ application จะมองเห็นเป็นการสื่อสารแบบ end-to-end</p></div></div>
+          </fieldset>
+
+          <fieldset class="q" data-answer="b">
+            <legend class="q-head"><span class="q-num">02</span><span class="q-text">ซับเลเยอร์ใดของ Data Link Layer ทำหน้าที่ระบุอุปกรณ์บน link ท้องถิ่น (link addressing)?</span></legend>
+            <div class="q-options">
+              <label class="opt"><input type="radio" name="q2" value="a" /><span class="opt-key">A</span><span class="opt-text">LLC</span></label>
+              <label class="opt"><input type="radio" name="q2" value="b" /><span class="opt-key">B</span><span class="opt-text">MAC</span></label>
+              <label class="opt"><input type="radio" name="q2" value="c" /><span class="opt-key">C</span><span class="opt-text">Network Layer</span></label>
+              <label class="opt"><input type="radio" name="q2" value="d" /><span class="opt-key">D</span><span class="opt-text">Physical Layer</span></label>
+            </div>
+            <div class="q-feedback"><div class="q-feedback-inner"><p class="q-verdict" aria-live="polite"></p><p class="q-explain">MAC (Media Access Control) ดูแล framing, link addressing และ medium access · LLC (Logical Link Control) เชื่อมกับ network-layer protocol ชั้นบน</p></div></div>
+          </fieldset>
+
+          <fieldset class="q" data-answer="b">
+            <legend class="q-head"><span class="q-num">03</span><span class="q-text">Framing คืออะไร?</span></legend>
+            <div class="q-options">
+              <label class="opt"><input type="radio" name="q3" value="a" /><span class="opt-key">A</span><span class="opt-text">การเข้ารหัสข้อมูลเพื่อความปลอดภัย</span></label>
+              <label class="opt"><input type="radio" name="q3" value="b" /><span class="opt-key">B</span><span class="opt-text">การจัดกลุ่มบิตสตรีมให้เป็นหน่วยที่ระบุขอบเขตได้</span></label>
+              <label class="opt"><input type="radio" name="q3" value="c" /><span class="opt-key">C</span><span class="opt-text">การกำหนดเส้นทางแพ็กเก็ต</span></label>
+              <label class="opt"><input type="radio" name="q3" value="d" /><span class="opt-key">D</span><span class="opt-text">การบีบอัดข้อมูลก่อนส่ง</span></label>
+            </div>
+            <div class="q-feedback"><div class="q-feedback-inner"><p class="q-verdict" aria-live="polite"></p><p class="q-explain">Framing กำหนดขอบเขตของเฟรม ทำได้ 3 แบบหลัก: byte/character-oriented (delimiter byte), bit-oriented (flag bit pattern) และ length/fixed-size (length field หรือขนาดคงที่)</p></div></div>
+          </fieldset>
+
+          <fieldset class="q" data-answer="b">
+            <legend class="q-head"><span class="q-num">04</span><span class="q-text">การป้องกันไม่ให้ pattern ของ flag ปรากฏในข้อมูลจริงของ byte-oriented framing เรียกว่าอะไร?</span></legend>
+            <div class="q-options">
+              <label class="opt"><input type="radio" name="q4" value="a" /><span class="opt-key">A</span><span class="opt-text">Bit stuffing</span></label>
+              <label class="opt"><input type="radio" name="q4" value="b" /><span class="opt-key">B</span><span class="opt-text">Byte stuffing</span></label>
+              <label class="opt"><input type="radio" name="q4" value="c" /><span class="opt-key">C</span><span class="opt-text">Padding</span></label>
+              <label class="opt"><input type="radio" name="q4" value="d" /><span class="opt-key">D</span><span class="opt-text">Checksum</span></label>
+            </div>
+            <div class="q-feedback"><div class="q-feedback-inner"><p class="q-verdict" aria-live="polite"></p><p class="q-explain">Byte-oriented framing ใช้ escape character เมื่อ pattern flag ไปปรากฏในข้อมูล เรียกว่า byte stuffing (เช่น BISYNC, PPP) · bit stuffing ใช้กับ bit-oriented · padding ของ Ethernet แค่เติมให้ครบขนาดขั้นต่ำ ไม่ใช่ stuffing</p></div></div>
+          </fieldset>
+
+          <fieldset class="q" data-answer="b">
+            <legend class="q-head"><span class="q-num">05</span><span class="q-text">HDLC ใช้ bit stuffing เพื่ออะไร?</span></legend>
+            <div class="q-options">
+              <label class="opt"><input type="radio" name="q5" value="a" /><span class="opt-key">A</span><span class="opt-text">เพิ่มความเร็วในการส่งข้อมูล</span></label>
+              <label class="opt"><input type="radio" name="q5" value="b" /><span class="opt-key">B</span><span class="opt-text">ป้องกันไม่ให้ pattern ของ flag (0x7E) ปรากฏในข้อมูลโดยไม่ตั้งใจ</span></label>
+              <label class="opt"><input type="radio" name="q5" value="c" /><span class="opt-key">C</span><span class="opt-text">เข้ารหัสข้อมูลลับ</span></label>
+              <label class="opt"><input type="radio" name="q5" value="d" /><span class="opt-key">D</span><span class="opt-text">ระบุตำแหน่ง error</span></label>
+            </div>
+            <div class="q-feedback"><div class="q-feedback-inner"><p class="q-verdict" aria-live="polite"></p><p class="q-explain">HDLC เป็น bit-oriented ใช้ Flag = 0x7E = 01111110 เป็นขอบเขตเฟรม และใช้ bit stuffing ป้องกันไม่ให้ pattern นี้ปรากฏซ้ำในข้อมูล</p></div></div>
+          </fieldset>
+
+          <fieldset class="q" data-answer="b">
+            <legend class="q-head"><span class="q-num">06</span><span class="q-text">Parity check (even parity) แบบพื้นฐานตรวจจับ error ประเภทใดไม่ได้?</span></legend>
+            <div class="q-options">
+              <label class="opt"><input type="radio" name="q6" value="a" /><span class="opt-key">A</span><span class="opt-text">Single-bit error</span></label>
+              <label class="opt"><input type="radio" name="q6" value="b" /><span class="opt-key">B</span><span class="opt-text">Burst error ที่มีจำนวน error bit เป็นเลขคู่</span></label>
+              <label class="opt"><input type="radio" name="q6" value="c" /><span class="opt-key">C</span><span class="opt-text">Burst error ที่มีจำนวน error bit เป็นเลขคี่</span></label>
+              <label class="opt"><input type="radio" name="q6" value="d" /><span class="opt-key">D</span><span class="opt-text">ตรวจจับได้ทุกกรณี</span></label>
+            </div>
+            <div class="q-feedback"><div class="q-feedback-inner"><p class="q-verdict" aria-live="polite"></p><p class="q-explain">Parity check ตรวจจับ single-bit error ได้ทุกกรณี แต่ตรวจจับ burst error ไม่ได้ถ้าจำนวนบิตที่ผิดเป็นเลขคู่</p></div></div>
+          </fieldset>
+
+          <fieldset class="q" data-answer="b">
+            <legend class="q-head"><span class="q-num">07</span><span class="q-text">Two-dimensional parity checking มีข้อดีเหนือ parity check ธรรมดาอย่างไร?</span></legend>
+            <div class="q-options">
+              <label class="opt"><input type="radio" name="q7" value="a" /><span class="opt-key">A</span><span class="opt-text">เร็วกว่ามาก</span></label>
+              <label class="opt"><input type="radio" name="q7" value="b" /><span class="opt-key">B</span><span class="opt-text">ระบุตำแหน่งบิตที่ผิดและแก้ไขได้ในกรณี single error</span></label>
+              <label class="opt"><input type="radio" name="q7" value="c" /><span class="opt-key">C</span><span class="opt-text">ไม่ต้องใช้ redundancy bit เลย</span></label>
+              <label class="opt"><input type="radio" name="q7" value="d" /><span class="opt-key">D</span><span class="opt-text">ใช้ได้กับข้อมูลไม่จำกัดขนาด</span></label>
+            </div>
+            <div class="q-feedback"><div class="q-feedback-inner"><p class="q-verdict" aria-live="polite"></p><p class="q-explain">Two-dimensional parity ตรวจสอบทั้งแถวและคอลัมน์ จึงหาตำแหน่งบิตที่ผิดได้ (ถ้ามี error เดียว) และแก้ไขได้ทันที ไม่ใช่แค่ตรวจจับ</p></div></div>
+          </fieldset>
+
+          <fieldset class="q" data-answer="b">
+            <legend class="q-head"><span class="q-num">08</span><span class="q-text">Checksum ใช้เลขคณิตแบบใดในการคำนวณ?</span></legend>
+            <div class="q-options">
+              <label class="opt"><input type="radio" name="q8" value="a" /><span class="opt-key">A</span><span class="opt-text">Two's complement</span></label>
+              <label class="opt"><input type="radio" name="q8" value="b" /><span class="opt-key">B</span><span class="opt-text">One's complement</span></label>
+              <label class="opt"><input type="radio" name="q8" value="c" /><span class="opt-key">C</span><span class="opt-text">Binary XOR division</span></label>
+              <label class="opt"><input type="radio" name="q8" value="d" /><span class="opt-key">D</span><span class="opt-text">Hamming distance</span></label>
+            </div>
+            <div class="q-feedback"><div class="q-feedback-inner"><p class="q-verdict" aria-live="polite"></p><p class="q-explain">Checksum แบ่งข้อความเป็นหน่วย m-bit แล้วบวกกันด้วย one's-complement arithmetic · ผู้รับบวกทุกส่วนรวม checksum ถ้าได้ all-1s (complement = all-0s) แปลว่าไม่มี error</p></div></div>
+          </fieldset>
+
+          <fieldset class="q" data-answer="b">
+            <legend class="q-head"><span class="q-num">09</span><span class="q-text">CRC ใช้หลักการใดในการสร้าง redundancy bits?</span></legend>
+            <div class="q-options">
+              <label class="opt"><input type="radio" name="q9" value="a" /><span class="opt-key">A</span><span class="opt-text">การบวกเลขแบบ one's complement</span></label>
+              <label class="opt"><input type="radio" name="q9" value="b" /><span class="opt-key">B</span><span class="opt-text">การหารเลขฐานสอง (modulo-2 division) ด้วย divisor ที่ตกลงกันไว้ล่วงหน้า</span></label>
+              <label class="opt"><input type="radio" name="q9" value="c" /><span class="opt-key">C</span><span class="opt-text">การสุ่มบิตแบบ Hamming</span></label>
+              <label class="opt"><input type="radio" name="q9" value="d" /><span class="opt-key">D</span><span class="opt-text">การเข้ารหัส AES</span></label>
+            </div>
+            <div class="q-feedback"><div class="q-feedback-inner"><p class="q-verdict" aria-live="polite"></p><p class="q-explain">CRC ใช้การหารเลขฐานสอง (modulo-2 division เหมือน XOR) ด้วย divisor ที่ตกลงกันไว้ล่วงหน้า · การบวกแบบ one's complement คือวิธีของ checksum</p></div></div>
+          </fieldset>
+
+          <fieldset class="q" data-answer="b">
+            <legend class="q-head"><span class="q-num">10</span><span class="q-text">ขนาดของ CRC (redundancy bits) สัมพันธ์กับ divisor อย่างไร?</span></legend>
+            <div class="q-options">
+              <label class="opt"><input type="radio" name="q10" value="a" /><span class="opt-key">A</span><span class="opt-text">เท่ากับ divisor พอดี</span></label>
+              <label class="opt"><input type="radio" name="q10" value="b" /><span class="opt-key">B</span><span class="opt-text">น้อยกว่า divisor อยู่ 1 บิตเสมอ</span></label>
+              <label class="opt"><input type="radio" name="q10" value="c" /><span class="opt-key">C</span><span class="opt-text">มากกว่า divisor อยู่ 1 บิต</span></label>
+              <label class="opt"><input type="radio" name="q10" value="d" /><span class="opt-key">D</span><span class="opt-text">ไม่เกี่ยวข้องกัน</span></label>
+            </div>
+            <div class="q-feedback"><div class="q-feedback-inner"><p class="q-verdict" aria-live="polite"></p><p class="q-explain">CRC (remainder) มีขนาดน้อยกว่า divisor อยู่ 1 บิตเสมอ ต่อท้าย dataword แล้วหารด้วย divisor ต้องลงตัวพอดี</p></div></div>
+          </fieldset>
+
+          <fieldset class="q" data-answer="b">
+            <legend class="q-head"><span class="q-num">11</span><span class="q-text">Hamming code วาง redundant bit ไว้ที่ตำแหน่งใดของ codeword?</span></legend>
+            <div class="q-options">
+              <label class="opt"><input type="radio" name="q11" value="a" /><span class="opt-key">A</span><span class="opt-text">ตำแหน่งสุดท้ายเท่านั้น</span></label>
+              <label class="opt"><input type="radio" name="q11" value="b" /><span class="opt-key">B</span><span class="opt-text">ทุกตำแหน่งที่เป็นเลขยกกำลังของ 2 (1,2,4,8,...)</span></label>
+              <label class="opt"><input type="radio" name="q11" value="c" /><span class="opt-key">C</span><span class="opt-text">ตำแหน่งแรกเท่านั้น</span></label>
+              <label class="opt"><input type="radio" name="q11" value="d" /><span class="opt-key">D</span><span class="opt-text">ตำแหน่งคู่ทั้งหมด</span></label>
+            </div>
+            <div class="q-feedback"><div class="q-feedback-inner"><p class="q-verdict" aria-live="polite"></p><p class="q-explain">Hamming code วาง redundant bit ที่ตำแหน่ง 2<sup>k</sup> (1, 2, 4, 8, ...) แต่ละบิตตรวจ parity ของกลุ่มบิตที่กำหนด ตำแหน่งบิตผิดคำนวณจาก (r8 r4 r2 r1) แปลงเป็นเลขฐานสิบ</p></div></div>
+          </fieldset>
+
+          <fieldset class="q" data-answer="b">
+            <legend class="q-head"><span class="q-num">12</span><span class="q-text">Interleaving ช่วยแก้ปัญหา burst error ได้อย่างไร?</span></legend>
+            <div class="q-options">
+              <label class="opt"><input type="radio" name="q12" value="a" /><span class="opt-key">A</span><span class="opt-text">เพิ่มความเร็วในการส่งข้อมูล</span></label>
+              <label class="opt"><input type="radio" name="q12" value="b" /><span class="opt-key">B</span><span class="opt-text">สลับลำดับบิตจากหลาย codeword ทำให้ burst error กลายเป็น single-bit error กระจายในหลาย codeword ซึ่งแก้ด้วย Hamming code ได้</span></label>
+              <label class="opt"><input type="radio" name="q12" value="c" /><span class="opt-key">C</span><span class="opt-text">ลดจำนวน redundancy bit ที่ต้องใช้</span></label>
+              <label class="opt"><input type="radio" name="q12" value="d" /><span class="opt-key">D</span><span class="opt-text">เปลี่ยน CRC divisor โดยอัตโนมัติ</span></label>
+            </div>
+            <div class="q-feedback"><div class="q-feedback-inner"><p class="q-verdict" aria-live="polite"></p><p class="q-explain">Interleaving สลับบิตจากหลาย codeword ให้ burst error โดนแค่ 1 บิตต่อ 1 หน่วย กลายเป็น single-bit error ที่แก้ด้วย Hamming code ได้</p></div></div>
+          </fieldset>
+
+          <fieldset class="q" data-answer="b">
+            <legend class="q-head"><span class="q-num">13</span><span class="q-text">วัตถุประสงค์หลักของ Flow Control คืออะไร?</span></legend>
+            <div class="q-options">
+              <label class="opt"><input type="radio" name="q13" value="a" /><span class="opt-key">A</span><span class="opt-text">เข้ารหัสข้อมูลระหว่างทาง</span></label>
+              <label class="opt"><input type="radio" name="q13" value="b" /><span class="opt-key">B</span><span class="opt-text">ควบคุมอัตราการส่งของ sender ไม่ให้ receiver รับข้อมูลไม่ทัน จนเกิด buffer overflow</span></label>
+              <label class="opt"><input type="radio" name="q13" value="c" /><span class="opt-key">C</span><span class="opt-text">กำหนดเส้นทางที่ดีที่สุด</span></label>
+              <label class="opt"><input type="radio" name="q13" value="d" /><span class="opt-key">D</span><span class="opt-text">ตรวจจับ error ในข้อมูล</span></label>
+            </div>
+            <div class="q-feedback"><div class="q-feedback-inner"><p class="q-verdict" aria-live="polite"></p><p class="q-explain">Flow control ควบคุมอัตราการส่งของ sender ให้สมดุลกับความสามารถของ receiver — ส่งเร็วเกินไป receiver อาจ buffer overflow/frame loss ส่งช้าเกินไปก็เสียประสิทธิภาพ</p></div></div>
+          </fieldset>
+
+          <fieldset class="q" data-answer="b">
+            <legend class="q-head"><span class="q-num">14</span><span class="q-text">ใน Stop-and-Wait ARQ sequence number ที่ใช้มีกี่ค่า?</span></legend>
+            <div class="q-options">
+              <label class="opt"><input type="radio" name="q14" value="a" /><span class="opt-key">A</span><span class="opt-text">1 ค่า</span></label>
+              <label class="opt"><input type="radio" name="q14" value="b" /><span class="opt-key">B</span><span class="opt-text">2 ค่า (0 และ 1)</span></label>
+              <label class="opt"><input type="radio" name="q14" value="c" /><span class="opt-key">C</span><span class="opt-text">4 ค่า</span></label>
+              <label class="opt"><input type="radio" name="q14" value="d" /><span class="opt-key">D</span><span class="opt-text">ไม่จำกัด</span></label>
+            </div>
+            <div class="q-feedback"><div class="q-feedback-inner"><p class="q-verdict" aria-live="polite"></p><p class="q-explain">Stop-and-Wait ส่งทีละ 1 เฟรม รอ ACK ก่อนส่งเฟรมถัดไป ใช้ sequence number แค่ 2 ค่า (0, 1) สลับกันเพื่อป้องกันเฟรมซ้ำ</p></div></div>
+          </fieldset>
+
+          <fieldset class="q" data-answer="a">
+            <legend class="q-head"><span class="q-num">15</span><span class="q-text">Pipelining ในบริบทของ ARQ หมายถึงอะไร?</span></legend>
+            <div class="q-options">
+              <label class="opt"><input type="radio" name="q15" value="a" /><span class="opt-key">A</span><span class="opt-text">การส่งหลาย frame พร้อมกันโดยไม่ต้องรอ ACK ของแต่ละ frame ก่อน</span></label>
+              <label class="opt"><input type="radio" name="q15" value="b" /><span class="opt-key">B</span><span class="opt-text">การบีบอัดข้อมูลก่อนส่ง</span></label>
+              <label class="opt"><input type="radio" name="q15" value="c" /><span class="opt-key">C</span><span class="opt-text">การเข้ารหัสหลายชั้น</span></label>
+              <label class="opt"><input type="radio" name="q15" value="d" /><span class="opt-key">D</span><span class="opt-text">การใช้ CRC ซ้อนกันหลายรอบ</span></label>
+            </div>
+            <div class="q-feedback"><div class="q-feedback-inner"><p class="q-verdict" aria-live="polite"></p><p class="q-explain">Pipelining = ส่งหลายเฟรมพร้อมกันโดยไม่ต้องรอ ACK ทีละเฟรม ใช้ใน Go-Back-N และ Selective Repeat (ไม่มีใน Stop-and-Wait)</p></div></div>
+          </fieldset>
+
+          <fieldset class="q" data-answer="b">
+            <legend class="q-head"><span class="q-num">16</span><span class="q-text">ใน Go-Back-N ARQ ขนาด receiver window เท่ากับเท่าใดเสมอ?</span></legend>
+            <div class="q-options">
+              <label class="opt"><input type="radio" name="q16" value="a" /><span class="opt-key">A</span><span class="opt-text">เท่ากับ sender window</span></label>
+              <label class="opt"><input type="radio" name="q16" value="b" /><span class="opt-key">B</span><span class="opt-text">1</span></label>
+              <label class="opt"><input type="radio" name="q16" value="c" /><span class="opt-key">C</span><span class="opt-text">2^m - 1</span></label>
+              <label class="opt"><input type="radio" name="q16" value="d" /><span class="opt-key">D</span><span class="opt-text">ไม่จำกัด</span></label>
+            </div>
+            <div class="q-feedback"><div class="q-feedback-inner"><p class="q-verdict" aria-live="polite"></p><p class="q-explain">Go-Back-N: sender window มากกว่า 1 (สูงสุด 2<sup>m</sup> − 1) แต่ receiver window = 1 เสมอ รับเฉพาะเฟรมที่คาดไว้ลำดับถัดไป เฟรมที่มาไม่เรียงลำดับถูกทิ้ง · window ขนาดเท่ากันทั้งสองฝั่งคือ Selective Repeat</p></div></div>
+          </fieldset>
+
+          <fieldset class="q" data-answer="b">
+            <legend class="q-head"><span class="q-num">17</span><span class="q-text">ข้อแตกต่างหลักระหว่าง Go-Back-N และ Selective Repeat คือข้อใด?</span></legend>
+            <div class="q-options">
+              <label class="opt"><input type="radio" name="q17" value="a" /><span class="opt-key">A</span><span class="opt-text">GBN เร็วกว่า SR เสมอ</span></label>
+              <label class="opt"><input type="radio" name="q17" value="b" /><span class="opt-key">B</span><span class="opt-text">SR รับและ buffer frame ที่มาไม่เรียงลำดับได้ retransmit เฉพาะ frame ที่หาย ส่วน GBN ต้อง retransmit ทุก frame ตั้งแต่ frame ที่หายเป็นต้นไป</span></label>
+              <label class="opt"><input type="radio" name="q17" value="c" /><span class="opt-key">C</span><span class="opt-text">GBN ไม่ใช้ sequence number</span></label>
+              <label class="opt"><input type="radio" name="q17" value="d" /><span class="opt-key">D</span><span class="opt-text">SR ไม่มี sliding window</span></label>
+            </div>
+            <div class="q-feedback"><div class="q-feedback-inner"><p class="q-verdict" aria-live="polite"></p><p class="q-explain">SR: receiver buffer เฟรมที่มาไม่เรียงลำดับได้ และ retransmit เฉพาะเฟรมที่หาย · GBN: ทิ้งเฟรมที่ไม่เรียงลำดับ เมื่อ timeout ส่งเฟรมเก่าสุดที่ยังไม่ ACK พร้อมทุกเฟรมหลังจากนั้น</p></div></div>
+          </fieldset>
+
+          <fieldset class="q" data-answer="a">
+            <legend class="q-head"><span class="q-num">18</span><span class="q-text">Piggybacking คืออะไร?</span></legend>
+            <div class="q-options">
+              <label class="opt"><input type="radio" name="q18" value="a" /><span class="opt-key">A</span><span class="opt-text">การส่ง ACK และ data ไปพร้อมกันในเฟรมเดียวกันสำหรับการสื่อสารสองทิศทาง</span></label>
+              <label class="opt"><input type="radio" name="q18" value="b" /><span class="opt-key">B</span><span class="opt-text">การส่งข้อมูลซ้ำหลายครั้งเพื่อความชัวร์</span></label>
+              <label class="opt"><input type="radio" name="q18" value="c" /><span class="opt-key">C</span><span class="opt-text">การเข้ารหัสข้อมูลด้วยกุญแจสาธารณะ</span></label>
+              <label class="opt"><input type="radio" name="q18" value="d" /><span class="opt-key">D</span><span class="opt-text">การบีบอัด header ให้เล็กลง</span></label>
+            </div>
+            <div class="q-feedback"><div class="q-feedback-inner"><p class="q-verdict" aria-live="polite"></p><p class="q-explain">Piggybacking = ส่ง ACK แนบไปกับ data frame ที่เดินทางในทิศตรงข้าม เพื่อเพิ่มประสิทธิภาพในการสื่อสารสองทิศทาง</p></div></div>
+          </fieldset>
+
+          <fieldset class="q" data-answer="b">
+            <legend class="q-head"><span class="q-num">19</span><span class="q-text">HDLC I-frame ใช้สำหรับอะไร?</span></legend>
+            <div class="q-options">
+              <label class="opt"><input type="radio" name="q19" value="a" /><span class="opt-key">A</span><span class="opt-text">จัดการ session เท่านั้น ไม่มีข้อมูลผู้ใช้</span></label>
+              <label class="opt"><input type="radio" name="q19" value="b" /><span class="opt-key">B</span><span class="opt-text">ขนส่งข้อมูลผู้ใช้พร้อมข้อมูลควบคุมแบบ piggybacking</span></label>
+              <label class="opt"><input type="radio" name="q19" value="c" /><span class="opt-key">C</span><span class="opt-text">ใช้สำหรับ flow control อย่างเดียว</span></label>
+              <label class="opt"><input type="radio" name="q19" value="d" /><span class="opt-key">D</span><span class="opt-text">สงวนไว้สำหรับจัดการระบบเท่านั้น</span></label>
+            </div>
+            <div class="q-feedback"><div class="q-feedback-inner"><p class="q-verdict" aria-live="polite"></p><p class="q-explain">I-frame ขนส่ง user data + piggybacked control info · S-frame ควบคุม flow/error อย่างเดียว (RR/RNR/REJ/SREJ) · U-frame จัดการ session (SABM, DISC, FRMR)</p></div></div>
+          </fieldset>
+
+          <fieldset class="q" data-answer="b">
+            <legend class="q-head"><span class="q-num">20</span><span class="q-text">Bandwidth-delay product ใช้วัดอะไร?</span></legend>
+            <div class="q-options">
+              <label class="opt"><input type="radio" name="q20" value="a" /><span class="opt-key">A</span><span class="opt-text">ความเร็วสูงสุดของสาย</span></label>
+              <label class="opt"><input type="radio" name="q20" value="b" /><span class="opt-key">B</span><span class="opt-text">จำนวนบิตที่สามารถส่งออกไปในระบบได้ระหว่างรอ ACK กลับมา</span></label>
+              <label class="opt"><input type="radio" name="q20" value="c" /><span class="opt-key">C</span><span class="opt-text">จำนวน error ที่เกิดขึ้นต่อวินาที</span></label>
+              <label class="opt"><input type="radio" name="q20" value="d" /><span class="opt-key">D</span><span class="opt-text">ขนาดของ CRC divisor</span></label>
+            </div>
+            <div class="q-feedback"><div class="q-feedback-inner"><p class="q-verdict" aria-live="polite"></p><p class="q-explain">Bandwidth-delay product = bandwidth (bps) × round-trip delay (วินาที) คือจำนวนบิตที่ส่งออกไปได้ระหว่างรอ ACK — ค่าสูงทำให้ Stop-and-Wait ใช้ประโยชน์จากลิงก์ได้ต่ำมาก</p></div></div>
+          </fieldset>
+
+          <div class="quiz-result" id="quiz-result" hidden tabindex="-1">
+            <div class="score-ring" aria-hidden="true">
+              <svg viewBox="0 0 120 120">
+                <circle class="ring-track" cx="60" cy="60" r="52" />
+                <circle class="ring-fill" cx="60" cy="60" r="52" pathLength="100" />
+              </svg>
+              <span class="score-pct"><span id="score-pct">0</span>%</span>
+            </div>
+            <div class="score-body">
+              <p class="score-line" role="status">ได้ <strong id="score-num">0</strong> / 20 คะแนน</p>
+              <p class="score-msg" id="score-msg"></p>
+              <div class="score-actions">
+                <button class="btn btn--ghost btn--sm" type="button" id="toggle-wrong" aria-pressed="false">ดูเฉพาะข้อที่ผิด</button>
+              </div>
+            </div>
+          </div>
+
+          <div class="quiz-bar">
+            <div class="quiz-progress">
+              <span class="quiz-count"><span id="answered">0</span> / 20 ข้อ</span>
+              <span class="progress" aria-hidden="true"><span class="progress-fill" id="progress-fill"></span></span>
+              <span class="quiz-hint" id="quiz-hint" aria-live="polite"></span>
+            </div>
+            <div class="quiz-actions">
+              <button class="btn btn--ghost" type="reset" id="quiz-reset">ทำใหม่</button>
+              <button class="btn btn--primary" type="submit" id="quiz-submit">ตรวจคำตอบ</button>
+            </div>
+          </div>
+        </form>
+      </section>
+
+    </div>
+  </main>
+
+  <footer class="site-footer">
+    <div class="wrap">
+      <p>สรุปจากสไลด์ ITDS231 Computer Networks (Faculty of ICT, Mahidol University) เพื่อใช้ทบทวนส่วนตัว — ถ้าเนื้อหาขัดกับสไลด์ ให้ยึดสไลด์เป็นหลัก</p>
+    </div>
+  </footer>
+
+  <script src="assets/js/network.js" defer></script>
+</body>
+</html>
