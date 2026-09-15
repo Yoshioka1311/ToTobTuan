@@ -1,0 +1,1445 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>ITDS241 บทที่ 1: Internet &amp; HTML Basics · โต๊ะทบทวน</title>
+<meta name="description" content="ITDS241 Web Technologies and Applications บทที่ 1: อินเทอร์เน็ต, TCP/IP, DNS, WWW, URL และ HTML พื้นฐาน (heading, paragraph, link, list, image, character entity, table) พร้อม cheat sheet และแบบฝึกหัด 20 ข้อ" />
+<meta name="theme-color" content="#17151a" />
+<link rel="icon" href="assets/favicon.svg" type="image/svg+xml" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link
+  href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500..700&family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans+Thai:wght@500;600&family=IBM+Plex+Sans+Thai+Looped:wght@400;500;600&display=swap"
+  rel="stylesheet"
+/>
+<link rel="stylesheet" href="assets/css/tokens.css" />
+<link rel="stylesheet" href="assets/css/base.css" />
+<link rel="stylesheet" href="assets/css/network.css" />
+<link rel="stylesheet" href="assets/css/motion.css" />
+<script>document.documentElement.classList.add("js");</script>
+</head>
+<body>
+  <a class="skip-link" href="#tabs">ข้ามไปที่เนื้อหา</a>
+
+  <!-- marker หัวลูกศรที่ diagram ทุกอันในหน้านี้ใช้ร่วมกัน -->
+  <svg class="dg-defs" aria-hidden="true" focusable="false">
+    <defs>
+      <marker id="arr" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path class="dg-arrow" d="M0 0L10 5L0 10z" /></marker>
+      <marker id="arr-muted" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path class="dg-arrow--muted" d="M0 0L10 5L0 10z" /></marker>
+    </defs>
+  </svg>
+
+  <header class="site-header">
+    <div class="wrap">
+      <a class="wordmark" href="index.html" aria-label="โต๊ะทบทวน หน้าแรก">
+        <img class="wordmark-mark" src="assets/favicon.svg" alt="" width="26" height="26" />
+        <span class="wordmark-text">โต๊ะ<span>ทบทวน</span></span>
+      </a>
+      <a class="crumb" href="index.html"><span class="arrow" aria-hidden="true">←</span> รายวิชาทั้งหมด</a>
+    </div>
+  </header>
+
+  <main>
+    <section class="course-hero wrap">
+      <nav class="course-nav" aria-label="เลือกวิชาและบท">
+        <div class="subject-switch">
+          <button class="subject-btn" type="button" data-subject="network" aria-pressed="false"><span class="subject-code">ITDS231</span> Network</button>
+          <button class="subject-btn" type="button" data-subject="web" aria-pressed="true"><span class="subject-code">ITDS241</span> Web</button>
+        </div>
+        <div class="chapter-nav" data-subject="network" data-label="ITDS231 Computer Networks" role="group" aria-label="บทของวิชา ITDS231 Computer Networks">
+          <a class="chapter-link" href="network.html"><span class="chapter-num">บทที่ 1</span><span class="chapter-name">Intro &amp; Topology</span></a>
+          <a class="chapter-link" href="network-application-layer.html"><span class="chapter-num">บทที่ 2</span><span class="chapter-name">Application Layer</span></a>
+          <a class="chapter-link" href="network-data-link-layer.html"><span class="chapter-num">บทที่ 3</span><span class="chapter-name">Data Link Layer</span></a>
+          <a class="chapter-link" href="network-mac-ethernet.html"><span class="chapter-num">บทที่ 4</span><span class="chapter-name">MAC + Ethernet</span></a>
+        </div>
+        <div class="chapter-nav" data-subject="web" data-label="ITDS241 Web Technologies and Applications" role="group" aria-label="บทของวิชา ITDS241 Web Technologies and Applications">
+          <a class="chapter-link" href="web-intro-html-basics.html" aria-current="page"><span class="chapter-num">บทที่ 1</span><span class="chapter-name">Internet &amp; HTML Basics</span></a>
+          <a class="chapter-link" href="web-media-forms-semantic.html"><span class="chapter-num">บทที่ 2</span><span class="chapter-name">Media, Forms &amp; Semantic</span></a>
+        </div>
+      </nav>
+      <span class="eyebrow">ITDS241 · บทที่ 1 · Lecture 01</span>
+      <h1>Internet &amp; HTML Basics</h1>
+      <p class="course-lede">อินเทอร์เน็ตทำงานอย่างไร ตั้งแต่ TCP/IP, IP address, port, DNS ไปจนถึง WWW และ URL แล้วต่อด้วยภาษา HTML ตั้งแต่โครงสร้างเอกสาร กฎของ tag ไปจนถึง heading, link, list, รูปภาพ, character entity และตาราง</p>
+      <ul class="course-meta" aria-label="ข้อมูลบทเรียน">
+        <li class="chip chip--accent">ITDS241 Web Technologies and Applications</li>
+        <li class="chip">1 ไฟล์สไลด์ · 67 หน้า</li>
+        <li class="chip">แบบฝึกหัด 20 ข้อ</li>
+      </ul>
+    </section>
+
+    <div class="tabbar" id="tabs">
+      <div class="wrap">
+        <div class="tabs" role="tablist" aria-label="ส่วนของหน้า">
+          <button class="tab" role="tab" id="tab-content" aria-controls="content" aria-selected="true" type="button">
+            <svg class="tab-icon" viewBox="0 0 20 20" aria-hidden="true"><path d="M4 3.5h8.5L16 7v9.5H4z M12 3.5V7h4 M7 10h6 M7 13h4" /></svg>
+            เนื้อหา
+          </button>
+          <button class="tab" role="tab" id="tab-summary" aria-controls="summary" aria-selected="false" type="button">
+            <svg class="tab-icon" viewBox="0 0 20 20" aria-hidden="true"><path d="M3.5 4h13v12h-13z M3.5 8h13 M8.5 8v8" /></svg>
+            สรุป
+          </button>
+          <button class="tab" role="tab" id="tab-quiz" aria-controls="quiz" aria-selected="false" type="button">
+            <svg class="tab-icon" viewBox="0 0 20 20" aria-hidden="true"><path d="M10 17a7 7 0 1 0 0-14 7 7 0 0 0 0 14z M6.8 10.2l2.2 2.2 4.2-4.6" /></svg>
+            แบบฝึกหัด
+          </button>
+          <span class="tab-indicator" aria-hidden="true"></span>
+        </div>
+      </div>
+    </div>
+
+    <div class="wrap panels">
+
+      <!-- =============================================================
+           แท็บ 1: เนื้อหา
+           ============================================================= -->
+      <section class="panel" id="content" role="tabpanel" aria-labelledby="tab-content" tabindex="-1">
+        <div class="panel-head">
+          <h2>เนื้อหาแยกตามหัวข้อในสไลด์</h2>
+          <div class="panel-actions">
+            <button class="btn btn--ghost btn--sm" type="button" data-acc-all="open">เปิดทั้งหมด</button>
+            <button class="btn btn--ghost btn--sm" type="button" data-acc-all="close">ปิดทั้งหมด</button>
+          </div>
+        </div>
+
+        <div class="acc">
+
+          <!-- ================= 01 อินเทอร์เน็ต ================= -->
+          <div class="acc-item is-open">
+            <h3 class="acc-heading">
+              <button class="acc-trigger" type="button" aria-expanded="true" aria-controls="acc-internet" id="acc-internet-btn">
+                <span class="acc-index">01</span>
+                <span class="acc-title">
+                  <span class="acc-name">อินเทอร์เน็ตทำงานอย่างไร: TCP/IP, IP Address, Port และ DNS</span>
+                  <span class="acc-file">69-1-ITDS241-Lecture01 · สไลด์ 5–12</span>
+                </span>
+                <svg class="acc-chevron" viewBox="0 0 20 20" aria-hidden="true"><path d="M5 7.5l5 5 5-5" /></svg>
+              </button>
+            </h3>
+            <div class="acc-panel" id="acc-internet" role="region" aria-labelledby="acc-internet-btn">
+              <div class="acc-panel-inner">
+                <div class="acc-body">
+
+                  <nav class="toc" aria-label="หัวข้อในการ์ดอินเทอร์เน็ต">
+                    <a href="#w1-what">อินเทอร์เน็ตคืออะไร</a>
+                    <a href="#w1-how">อินเทอร์เน็ตทำงานอย่างไร</a>
+                    <a href="#w1-tcpip">TCP/IP</a>
+                    <a href="#w1-ip">IP Addressing</a>
+                    <a href="#w1-ports">Services &amp; Ports</a>
+                    <a href="#w1-dns">Domain Name &amp; DNS</a>
+                  </nav>
+
+                  <section class="topic" id="w1-what">
+                    <h4>อินเทอร์เน็ตคืออะไร</h4>
+                    <p>อินเทอร์เน็ต (Internet) คือระบบเครือข่ายคอมพิวเตอร์ที่ใหญ่ที่สุดในโลก คอมพิวเตอร์จำนวนมหาศาลที่ต่ออยู่ในระบบนี้สามารถคุยกันรู้เรื่องได้ เพราะทุกเครื่องใช้<strong>มาตรฐานและกฎเกณฑ์ในการสื่อสารชุดเดียวกัน</strong> ซึ่งก็คือ <strong>TCP/IP</strong> อินเทอร์เน็ตไม่ได้เกิดขึ้นมาในทันที แต่กำเนิดขึ้นจากงานวิจัยด้านการทหารและวิชาการของสหรัฐอเมริกา (the American research and defense work) ในช่วงทศวรรษ 1970 และ 1980</p>
+                    <div class="callout callout--def">
+                      <span class="callout-label">นิยาม</span>
+                      <p><strong>Internet</strong> = ระบบเครือข่ายที่ใหญ่ที่สุดในโลก ซึ่งทุกเครื่องใช้มาตรฐานการสื่อสารเดียวกันคือ <b>TCP/IP</b></p>
+                    </div>
+                    <p>เส้นเวลาด้านล่างสรุปเหตุการณ์สำคัญตามสไลด์ สังเกตว่าหลายสิ่งที่เราจะเรียนต่อในบทนี้ ทั้ง TCP, DNS และ World Wide Web ล้วนเกิดขึ้นในช่วงเวลานี้</p>
+                    <ol class="tl-track" aria-label="เส้นเวลาประวัติอินเทอร์เน็ต">
+                      <li><span class="tl-year">1966</span><span class="tl-text">เริ่มโครงการ ARPA (Advanced Research Project Agency)</span></li>
+                      <li><span class="tl-year">1969</span><span class="tl-text">ติดตั้ง ARPANET node แรกที่ UCLA Network Measurement Center</span></li>
+                      <li><span class="tl-year">1973</span><span class="tl-text">ARPANET เชื่อมต่อระหว่างประเทศไปยังมหาวิทยาลัยอื่นๆ</span></li>
+                      <li><span class="tl-year">1974</span><span class="tl-text">เผยแพร่รายละเอียดการออกแบบ TCP (Transmission Control Protocol)</span></li>
+                      <li><span class="tl-year">1983</span><span class="tl-text">ออกแบบ DNS (Domain Name Server)</span></li>
+                      <li class="is-key"><span class="tl-year">1990</span><span class="tl-text">ARPANET สิ้นสุดลง และ World Wide Web (WWW) ถือกำเนิดขึ้น</span></li>
+                    </ol>
+                    <p>ในชีวิตจริง สไลด์แบ่งตัวอย่างการใช้งานอินเทอร์เน็ตออกเป็น 3 กลุ่มใหญ่ ได้แก่</p>
+                    <div class="compare">
+                      <div class="compare-col"><h5>Communication and Social Network</h5><p>การสื่อสารและเครือข่ายสังคม</p></div>
+                      <div class="compare-col"><h5>Knowledge Resources</h5><p>แหล่งความรู้</p></div>
+                      <div class="compare-col"><h5>Business and Services</h5><p>ธุรกิจและบริการ</p></div>
+                    </div>
+                  </section>
+
+                  <section class="topic" id="w1-how">
+                    <h4>อินเทอร์เน็ตทำงานอย่างไร (How the Internet works)</h4>
+                    <p>เมื่อเราเปิดเว็บไซต์ ข้อมูลที่รับส่งกันไม่ได้เดินทางเป็นก้อนใหญ่ก้อนเดียว แต่ถูกแบ่งออกเป็นชิ้นเล็กๆ ที่เรียกว่า <strong>packet</strong> แล้วเดินทางผ่าน <strong>network หลายวงที่เชื่อมต่อกัน</strong> จนไปถึงเครื่องปลายทาง ทุกจุดที่ packet ผ่านคุยกันด้วย TCP/IP เหมือนกันหมด เครื่องปลายทางแต่ละเครื่องมี IP address ของตัวเอง เช่น 216.33.156.119 หรือ 74.125.71.102 ซึ่งกระจายอยู่ตาม network ต่างๆ</p>
+                    <p>ภาพในสไลด์แสดงลำดับเหตุการณ์ว่า ผู้ใช้พิมพ์ชื่อ <code>google.com</code> แล้วได้หมายเลข IP <code>74.125.71.102</code> กลับมา จากนั้นข้อมูลจึงถูกส่งออกไปเป็น packet ผ่าน network หลายวงจนถึงเครื่องที่มี IP นั้นซึ่งเก็บข้อมูล (Data) ไว้</p>
+                    <figure class="diagram">
+                      <div class="diagram-scroll">
+                        <svg viewBox="0 0 760 310" role="img" aria-labelledby="dg-how-t dg-how-d">
+                          <title id="dg-how-t">การเดินทางของ packet ผ่านหลาย network</title>
+                          <desc id="dg-how-d">Client พิมพ์ google.com ได้ IP 74.125.71.102 แล้วส่ง packet ผ่าน Network หลายวงที่ใช้ TCP/IP ไปยังเครื่องปลายทาง 74.125.71.102 ที่เก็บ Data</desc>
+                          <rect class="dg-box dg-box--warn" x="180" y="22" width="220" height="58" rx="8" />
+                          <text class="dg-mono dg-mono--warn" x="290" y="46" text-anchor="middle">google.com</text>
+                          <text class="dg-mono" x="290" y="68" text-anchor="middle">→ 74.125.71.102</text>
+                          <path class="dg-line dg-line--dash" d="M80 168 V51 H180" marker-end="url(#arr-muted)" />
+
+                          <rect class="dg-box" x="20" y="168" width="120" height="68" rx="8" />
+                          <text class="dg-text" x="80" y="198" text-anchor="middle">Client</text>
+                          <text class="dg-mono dg-mono--sm" x="80" y="220" text-anchor="middle">TCP/IP</text>
+
+                          <rect class="dg-box" x="210" y="160" width="150" height="84" rx="32" />
+                          <text class="dg-text" x="285" y="198" text-anchor="middle">Network</text>
+                          <text class="dg-mono dg-mono--sm" x="285" y="220" text-anchor="middle">TCP/IP</text>
+                          <text class="dg-mono dg-mono--sm" x="285" y="266" text-anchor="middle">64.236.16.116</text>
+
+                          <rect class="dg-box" x="430" y="40" width="150" height="70" rx="30" />
+                          <text class="dg-text" x="505" y="80" text-anchor="middle">Network</text>
+                          <text class="dg-mono dg-mono--sm" x="595" y="62">216.33.156.119</text>
+                          <text class="dg-mono dg-mono--sm" x="595" y="80">216.239.61.104</text>
+
+                          <rect class="dg-box" x="430" y="200" width="150" height="70" rx="30" />
+                          <text class="dg-text" x="505" y="240" text-anchor="middle">Network</text>
+                          <text class="dg-mono dg-mono--sm" x="505" y="292" text-anchor="middle">64.58.76.179</text>
+
+                          <path class="dg-line" d="M360 180 L430 95" />
+                          <path class="dg-line" d="M505 110 V200" />
+                          <path class="dg-line dg-line--accent" d="M140 202 H210" marker-end="url(#arr)" />
+                          <path class="dg-line dg-line--accent" d="M360 222 L430 234" marker-end="url(#arr)" />
+                          <path class="dg-line dg-line--accent" d="M580 235 H622" marker-end="url(#arr)" />
+                          <text class="dg-mono dg-mono--sm" x="175" y="192" text-anchor="middle">packet</text>
+                          <text class="dg-mono dg-mono--sm" x="395" y="214" text-anchor="middle">packet</text>
+
+                          <rect class="dg-box dg-box--accent" x="625" y="190" width="120" height="90" rx="8" />
+                          <text class="dg-text" x="685" y="218" text-anchor="middle">ปลายทาง</text>
+                          <text class="dg-mono" x="685" y="240" text-anchor="middle">74.125.71.102</text>
+                          <text class="dg-text dg-text--sm" x="685" y="264" text-anchor="middle">Data</text>
+                        </svg>
+                      </div>
+                      <figcaption>วาดใหม่จากสไลด์ 7 "How the Internet works" — ข้อมูลถูกแบ่งเป็น packet และเดินทางผ่านหลาย network ที่ใช้ TCP/IP ร่วมกัน</figcaption>
+                    </figure>
+                    <p><strong>องค์ประกอบหลักของอินเทอร์เน็ต (Internet Components)</strong> แบ่งได้เป็น 3 ส่วน โดยส่วน Network ยังมีอุปกรณ์สำคัญอยู่ภายในอีก 2 ชนิด</p>
+                    <dl class="defs defs--stack">
+                      <div><dt>Client</dt><dd>ฝั่งผู้ใช้หรือคอมพิวเตอร์ที่<strong>ขอใช้บริการ</strong> โดยส่งคำขอ (Request) ออกไป</dd></div>
+                      <div><dt>Server</dt><dd>ฝั่งผู้ให้บริการหรือคอมพิวเตอร์ที่<strong>ให้บริการ</strong> ตอบกลับ (Response) ด้านข้อมูลหรือการทำงานต่างๆ เช่น web server, mail server</dd></div>
+                      <div><dt>Network</dt><dd>ระบบเครือข่าย หรือการเชื่อมโยงการทำงานของคอมพิวเตอร์หลายเครื่องเพื่อให้สื่อสารกันได้</dd></div>
+                      <div><dt>Router / Gateway</dt><dd>อุปกรณ์ที่<strong>เชื่อมโยง network 2 เครือข่ายเข้าด้วยกัน</strong></dd></div>
+                      <div><dt>Firewall</dt><dd>อุปกรณ์ที่<strong>ดูแลความปลอดภัยของข้อมูล</strong>ที่เดินทางเข้า-ออกระบบเครือข่าย</dd></div>
+                    </dl>
+                    <figure class="diagram">
+                      <div class="diagram-scroll">
+                        <svg viewBox="0 0 760 210" role="img" aria-labelledby="dg-comp-t dg-comp-d">
+                          <title id="dg-comp-t">องค์ประกอบของอินเทอร์เน็ต</title>
+                          <desc id="dg-comp-d">Client ส่ง Request ผ่าน Router/Gateway และ Firewall เข้าสู่ Network ไปยัง Server แล้ว Server ส่ง Response กลับทางเดิม</desc>
+                          <text class="dg-text dg-text--sm" x="380" y="22" text-anchor="middle">Request →</text>
+                          <text class="dg-text dg-text--sm" x="380" y="200" text-anchor="middle">← Response</text>
+
+                          <rect class="dg-box" x="20" y="62" width="130" height="80" rx="8" />
+                          <text class="dg-text" x="85" y="98" text-anchor="middle">Client</text>
+                          <text class="dg-text dg-text--sm" x="85" y="120" text-anchor="middle">ผู้ขอใช้บริการ</text>
+
+                          <rect class="dg-box" x="200" y="40" width="170" height="54" rx="8" />
+                          <text class="dg-text" x="285" y="63" text-anchor="middle">Router / Gateway</text>
+                          <text class="dg-text dg-text--sm" x="285" y="83" text-anchor="middle">เชื่อม 2 network</text>
+                          <rect class="dg-box dg-box--warn" x="200" y="110" width="170" height="54" rx="8" />
+                          <text class="dg-text" x="285" y="133" text-anchor="middle">Firewall</text>
+                          <text class="dg-text dg-text--sm" x="285" y="153" text-anchor="middle">ดูแลความปลอดภัย</text>
+
+                          <rect class="dg-box" x="420" y="55" width="130" height="94" rx="34" />
+                          <text class="dg-text" x="485" y="107" text-anchor="middle">Network</text>
+
+                          <rect class="dg-box dg-box--accent" x="600" y="62" width="145" height="80" rx="8" />
+                          <text class="dg-text" x="672" y="94" text-anchor="middle">Server</text>
+                          <text class="dg-text dg-text--sm" x="672" y="116" text-anchor="middle">web / mail server</text>
+
+                          <path class="dg-line dg-line--accent" d="M150 92 H200" marker-end="url(#arr)" />
+                          <path class="dg-line" d="M200 118 H150" marker-end="url(#arr-muted)" />
+                          <path class="dg-line dg-line--accent" d="M370 92 H420" marker-end="url(#arr)" />
+                          <path class="dg-line" d="M420 118 H370" marker-end="url(#arr-muted)" />
+                          <path class="dg-line dg-line--accent" d="M550 92 H600" marker-end="url(#arr)" />
+                          <path class="dg-line" d="M600 118 H550" marker-end="url(#arr-muted)" />
+                        </svg>
+                      </div>
+                      <figcaption>Client ↔ Router/Gateway และ Firewall ↔ Network ↔ Server (สไลด์ไม่ได้กำหนดลำดับระหว่าง Router กับ Firewall จึงวาดไว้คู่กัน)</figcaption>
+                    </figure>
+                  </section>
+
+                  <section class="topic" id="w1-tcpip">
+                    <h4>TCP/IP Protocols</h4>
+                    <p><strong>TCP/IP protocol</strong> คือมาตรฐานและกฎเกณฑ์ในการสื่อสารของระบบอินเทอร์เน็ต ชื่อของมันมาจากโปรโตคอล 2 ตัวที่แบ่งหน้าที่กันชัดเจน ตัวหนึ่งดูแลเรื่อง "หั่นและประกอบข้อมูล" อีกตัวดูแลเรื่อง "ส่งข้อมูลให้ถึงที่หมาย"</p>
+                    <div class="compare">
+                      <div class="compare-col">
+                        <h5>TCP <span class="chip">Transmission Control Protocol</span></h5>
+                        <ul>
+                          <li>แบ่งข้อมูลออกเป็นส่วนๆ เรียกว่า <strong>packet</strong></li>
+                          <li>ต่อประกอบ (reassemble) packet เหล่านั้นให้กลับมาเหมือนเดิมที่ปลายทาง</li>
+                        </ul>
+                      </div>
+                      <div class="compare-col">
+                        <h5>IP <span class="chip">Internet Protocol</span></h5>
+                        <ul>
+                          <li>ส่ง packet หรือทำการ <strong>routing</strong> ให้ถึงจุดหมายปลายทาง</li>
+                        </ul>
+                      </div>
+                    </div>
+                    <ol class="steps">
+                      <li>ฝั่งต้นทาง <strong>TCP</strong> แบ่งข้อมูลออกเป็น packet</li>
+                      <li><strong>IP</strong> ส่ง (route) packet แต่ละชิ้นผ่าน network ต่างๆ ไปยังจุดหมาย</li>
+                      <li>ฝั่งปลายทาง <strong>TCP</strong> ต่อประกอบ packet ทั้งหมดให้กลับเป็นข้อมูลเหมือนเดิม</li>
+                    </ol>
+                    <div class="callout callout--warn">
+                      <span class="callout-label">ข้อควรระวัง</span>
+                      <p>อย่าสลับหน้าที่กัน — <strong>TCP แบ่งและประกอบ packet</strong> ส่วน <strong>IP ส่ง/routing packet</strong> (ทั้งสองข้อเป็นคำถามคนละข้อในแบบฝึกหัด)</p>
+                    </div>
+                  </section>
+
+                  <section class="topic" id="w1-ip">
+                    <h4>IP Addressing</h4>
+                    <p><strong>IP Address</strong> คือชุดตัวเลขที่ทำหน้าที่ระบุที่อยู่ของอุปกรณ์ใน network ปัจจุบันมี 2 เวอร์ชันคือ <strong>IPv4</strong> และ <strong>IPv6</strong> โดย IPv4 เป็นแบบที่ใช้งานเป็นหลัก</p>
+                    <p>IPv4 กำหนดให้ที่อยู่บนอินเทอร์เน็ตอยู่ในรูป <code>###.###.###.###</code> คือตัวเลข 4 ชุดคั่นด้วยจุด และแต่ละชุด (###) มีค่าได้ตั้งแต่ <strong>0 ถึง 255</strong> ตัวเลขนี้มาจาก 2<sup>8</sup> ตามที่สไลด์ระบุ กล่าวคือแต่ละชุดมีค่าที่เป็นไปได้ทั้งหมด 2<sup>8</sup> = 256 ค่า เมื่อเริ่มนับจาก 0 ค่าสูงสุดจึงเป็น 255</p>
+                    <code class="formula">IPv4 = ###.###.###.### · แต่ละ ### มีได้ 2⁸ = 256 ค่า → 0 ถึง 255</code>
+                    <div class="table-scroll">
+                      <table>
+                        <thead><tr><th>IP address (ตัวอย่างในสไลด์)</th><th>เว็บไซต์</th></tr></thead>
+                        <tbody>
+                          <tr><td><code>64.236.16.116</code></td><td>cnn</td></tr>
+                          <tr><td><code>64.58.76.179</code></td><td>yahoo</td></tr>
+                          <tr><td><code>216.33.156.119</code></td><td>ebay</td></tr>
+                        </tbody>
+                      </table>
+                    </div>
+                    <div class="callout callout--warn">
+                      <span class="callout-label">ข้อควรระวัง</span>
+                      <p>ช่วงค่าคือ <strong>0–255</strong> ไม่ใช่ 1–256 หรือ 0–999 — ถ้าเจอชุดตัวเลขที่เกิน 255 แสดงว่าไม่ใช่ IPv4 ที่ถูกต้องตามรูปแบบนี้</p>
+                    </div>
+                  </section>
+
+                  <section class="topic" id="w1-ports">
+                    <h4>Services and Ports</h4>
+                    <p>คอมพิวเตอร์เครื่องเดียวอาจให้บริการได้หลายอย่าง IP address อย่างเดียวจึงยังไม่พอจะบอกว่าผู้ใช้ต้องการบริการไหน TCP/IP จึงมีการระบุ <strong>port</strong> เพื่อบอกถึง service ที่ผู้ใช้ต้องการ</p>
+                    <div class="callout callout--why">
+                      <span class="callout-label">เปรียบเทียบ</span>
+                      <p>ถ้าเทียบ <b>IP Address</b> เป็นที่อยู่ที่ทำให้เราไปถึง<b>ตึก</b>หลังนั้นได้ <b>port</b> ก็ทำหน้าที่เหมือน<b>หมายเลขห้อง</b> ที่พาเราไปสู่จุดหมายบริการที่ต้องการภายในตึก</p>
+                    </div>
+                    <p>บริการทุกอย่างบนอินเทอร์เน็ต (All Internet services) ทำงานอยู่บน TCP/IP protocol และแต่ละบริการมี <strong>port number และ protocol เฉพาะของตัวเอง</strong> ตัวอย่างในสไลด์ ได้แก่</p>
+                    <div class="table-scroll">
+                      <table>
+                        <thead><tr><th>Service / Protocol</th><th>Port</th></tr></thead>
+                        <tbody>
+                          <tr><td>HTTP</td><td><strong>80</strong></td></tr>
+                          <tr><td>FTP</td><td><strong>21</strong></td></tr>
+                          <tr><td>Telnet</td><td><strong>23</strong></td></tr>
+                          <tr><td>SMTP</td><td><strong>25</strong></td></tr>
+                        </tbody>
+                      </table>
+                    </div>
+                  </section>
+
+                  <section class="topic" id="w1-dns">
+                    <h4>Domain Name &amp; DNS</h4>
+                    <p>ตัวเลข IP อย่าง 74.125.71.102 จำยากสำหรับมนุษย์ <strong>Domain name (ชื่อโดเมน)</strong> จึงทำหน้าที่เหมือน IP Address แต่อยู่ในรูปแบบของ<strong>ชื่อหรือข้อความ</strong> ที่อ่านและจำได้ง่ายกว่า</p>
+                    <p>Domain name มีโครงสร้างแบบ<strong>ลำดับชั้น (Hierarchy)</strong> เริ่มจากจุดบนสุดคือ root (<code>.</code>) แล้วแตกออกเป็นโดเมนระดับบน ซึ่งสไลด์ยกตัวอย่างความหมายไว้ดังนี้ <code>.com</code> (commercial), <code>.edu</code> (education), <code>.gov</code> (government), <code>.org</code> (organization), <code>.th</code> (Thailand) นอกจากนี้ยังมี <code>.uk</code> และ <code>.jp</code> ในแผนภาพ จากนั้นแต่ละโดเมนแตกย่อยลงไปเรื่อยๆ เช่น <code>.th</code> → <code>.ac</code> → <code>.mahidol</code> → <code>www</code> หรือ <code>student</code></p>
+                    <figure class="diagram">
+                      <div class="diagram-scroll">
+                        <svg viewBox="0 0 760 420" role="img" aria-labelledby="dg-dns-t dg-dns-d">
+                          <title id="dg-dns-t">โครงสร้างลำดับชั้นของ Domain name และการทำงานของ DNS</title>
+                          <desc id="dg-dns-d">root แตกเป็น .org .com .edu .th .uk .jp; .com แตกเป็น .cnn และ .google; .cnn มี www; .google มี www และ news; .th แตกเป็น .ac แล้ว .mahidol ซึ่งมี www และ student; ด้านล่าง DNS Server แปลง www.google.com เป็น 66.249.89.104</desc>
+                          <!-- root -->
+                          <rect class="dg-box dg-box--accent" x="325" y="14" width="110" height="34" rx="8" />
+                          <text class="dg-mono" x="380" y="36" text-anchor="middle">. (root)</text>
+                          <path class="dg-line" d="M380 48 V72 M60 72 H700 M60 72 V88 M180 72 V88 M300 72 V88 M460 72 V88 M580 72 V88 M700 72 V88" />
+                          <!-- level 1 -->
+                          <g>
+                            <rect class="dg-box" x="25" y="88" width="70" height="32" rx="6" /><text class="dg-mono" x="60" y="109" text-anchor="middle">.org</text>
+                            <rect class="dg-box dg-box--accent" x="145" y="88" width="70" height="32" rx="6" /><text class="dg-mono" x="180" y="109" text-anchor="middle">.com</text>
+                            <rect class="dg-box" x="265" y="88" width="70" height="32" rx="6" /><text class="dg-mono" x="300" y="109" text-anchor="middle">.edu</text>
+                            <rect class="dg-box" x="425" y="88" width="70" height="32" rx="6" /><text class="dg-mono" x="460" y="109" text-anchor="middle">.th</text>
+                            <rect class="dg-box" x="545" y="88" width="70" height="32" rx="6" /><text class="dg-mono" x="580" y="109" text-anchor="middle">.uk</text>
+                            <rect class="dg-box" x="665" y="88" width="70" height="32" rx="6" /><text class="dg-mono" x="700" y="109" text-anchor="middle">.jp</text>
+                          </g>
+                          <!-- .com children -->
+                          <path class="dg-line dg-line--accent" d="M180 120 V142 M120 142 H250 M120 142 V156 M250 142 V156" />
+                          <rect class="dg-box" x="85" y="156" width="70" height="32" rx="6" /><text class="dg-mono" x="120" y="177" text-anchor="middle">.cnn</text>
+                          <rect class="dg-box dg-box--accent" x="205" y="156" width="90" height="32" rx="6" /><text class="dg-mono" x="250" y="177" text-anchor="middle">.google</text>
+                          <path class="dg-line" d="M120 188 V222" />
+                          <path class="dg-line dg-line--accent" d="M250 188 V206 M215 206 H300 M215 206 V222 M300 206 V222" />
+                          <rect class="dg-box" x="90" y="222" width="60" height="30" rx="6" /><text class="dg-mono" x="120" y="242" text-anchor="middle">www</text>
+                          <rect class="dg-box dg-box--accent" x="185" y="222" width="60" height="30" rx="6" /><text class="dg-mono" x="215" y="242" text-anchor="middle">www</text>
+                          <rect class="dg-box" x="268" y="222" width="64" height="30" rx="6" /><text class="dg-mono" x="300" y="242" text-anchor="middle">news</text>
+                          <text class="dg-mono dg-mono--warn" x="215" y="276" text-anchor="middle">www.google.com</text>
+                          <!-- .th children -->
+                          <path class="dg-line" d="M460 120 V156" />
+                          <rect class="dg-box" x="425" y="156" width="70" height="32" rx="6" /><text class="dg-mono" x="460" y="177" text-anchor="middle">.ac</text>
+                          <path class="dg-line" d="M460 188 V206" />
+                          <rect class="dg-box" x="410" y="206" width="100" height="32" rx="6" /><text class="dg-mono" x="460" y="227" text-anchor="middle">.mahidol</text>
+                          <path class="dg-line" d="M460 238 V252 M415 252 H515 M415 252 V264 M515 252 V264" />
+                          <rect class="dg-box" x="385" y="264" width="60" height="30" rx="6" /><text class="dg-mono" x="415" y="284" text-anchor="middle">www</text>
+                          <rect class="dg-box" x="475" y="264" width="80" height="30" rx="6" /><text class="dg-mono" x="515" y="284" text-anchor="middle">student</text>
+                          <!-- DNS mapping -->
+                          <path class="dg-line dg-line--dash" d="M20 320 H740" />
+                          <rect class="dg-box" x="40" y="344" width="200" height="54" rx="8" />
+                          <text class="dg-mono" x="140" y="368" text-anchor="middle">www.google.com</text>
+                          <text class="dg-text dg-text--sm" x="140" y="388" text-anchor="middle">Domain Name</text>
+                          <rect class="dg-box dg-box--accent" x="300" y="344" width="160" height="54" rx="8" />
+                          <text class="dg-text" x="380" y="376" text-anchor="middle">DNS Server</text>
+                          <rect class="dg-box" x="520" y="344" width="200" height="54" rx="8" />
+                          <text class="dg-mono" x="620" y="368" text-anchor="middle">66.249.89.104</text>
+                          <text class="dg-text dg-text--sm" x="620" y="388" text-anchor="middle">IP address</text>
+                          <path class="dg-line dg-line--accent" d="M240 371 H300" marker-end="url(#arr)" />
+                          <path class="dg-line dg-line--accent" d="M460 371 H520" marker-end="url(#arr)" />
+                        </svg>
+                      </div>
+                      <figcaption>วาดใหม่จากสไลด์ 12 — ครึ่งบนคือลำดับชั้นของ domain name (ไฮไลต์เส้นทาง www.google.com) ครึ่งล่างคือ DNS ที่จับคู่ชื่อกับ IP</figcaption>
+                    </figure>
+                    <div class="callout callout--def">
+                      <span class="callout-label">นิยาม</span>
+                      <p><strong>Domain Name Server (DNS)</strong> ทำหน้าที่<b>จับคู่ระหว่าง IP Address กับ Domain name</b> เช่น <code>www.google.com.</code> = <code>66.249.89.104</code></p>
+                    </div>
+                    <p>สรุปความสัมพันธ์ของ 3 หัวข้อนี้ได้ว่า ผู้ใช้จำ<strong>ชื่อโดเมน</strong> → DNS แปลงเป็น <strong>IP address</strong> เพื่อหาเครื่อง → <strong>port</strong> บอกว่าต้องการบริการไหนบนเครื่องนั้น</p>
+                  </section>
+
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- ================= 02 WWW ================= -->
+          <div class="acc-item">
+            <h3 class="acc-heading">
+              <button class="acc-trigger" type="button" aria-expanded="false" aria-controls="acc-www" id="acc-www-btn">
+                <span class="acc-index">02</span>
+                <span class="acc-title">
+                  <span class="acc-name">World Wide Web, URL และการพัฒนาเว็บ</span>
+                  <span class="acc-file">69-1-ITDS241-Lecture01 · สไลด์ 14–19</span>
+                </span>
+                <svg class="acc-chevron" viewBox="0 0 20 20" aria-hidden="true"><path d="M5 7.5l5 5 5-5" /></svg>
+              </button>
+            </h3>
+            <div class="acc-panel" id="acc-www" role="region" aria-labelledby="acc-www-btn">
+              <div class="acc-panel-inner">
+                <div class="acc-body">
+
+                  <nav class="toc" aria-label="หัวข้อในการ์ด World Wide Web">
+                    <a href="#w1-www">WWW คืออะไร</a>
+                    <a href="#w1-www-how">WWW ทำงานอย่างไร</a>
+                    <a href="#w1-url">URL Anatomy</a>
+                    <a href="#w1-display">Browser แสดงผลอย่างไร</a>
+                    <a href="#w1-dev">การพัฒนาเว็บเพจ</a>
+                  </nav>
+
+                  <section class="topic" id="w1-www">
+                    <h4>World Wide Web (WWW) คืออะไร</h4>
+                    <p><strong>WWW</strong> ย่อมาจาก <strong>World Wide Web</strong> หรือเรียกสั้นๆ ว่า "the Web" เปิดตัวในปี <strong>1992</strong> โดย <strong>Tim Berners-Lee</strong> WWW เป็น<strong>บริการข้อมูลรูปแบบหนึ่งบนอินเทอร์เน็ต</strong> (ไม่ใช่ตัวอินเทอร์เน็ตเอง) ที่ผู้ใช้สามารถเลือกอ่านข้อมูลซึ่งประกอบด้วยข้อความ รูปภาพ และสื่ออื่นๆ รวมถึงเชื่อมโยงไปยังข้อมูลอื่น (navigation) ได้ด้วย <strong>hyperlinks</strong> และ WWW ใช้ <strong>HTTP protocol</strong> ในการสื่อสารและแลกเปลี่ยนข้อมูล</p>
+                    <div class="callout callout--warn">
+                      <span class="callout-label">ข้อควรระวัง: ปีของ WWW</span>
+                      <p>สไลด์มีปีของ WWW 2 จุด — เส้นเวลาประวัติอินเทอร์เน็ตเขียนว่าปี <b>1990</b> "World Wide Web (WWW) has been created" ส่วนสไลด์ "What is the WWW?" เขียนว่า <b>Introduced in 1992 by Tim Berners-Lee</b> ถ้าโจทย์ถามว่า <strong>เปิดตัว (introduced) ปีใดและโดยใคร</strong> คำตอบคือ <strong>1992 โดย Tim Berners-Lee</strong></p>
+                    </div>
+                  </section>
+
+                  <section class="topic" id="w1-www-how">
+                    <h4>WWW ทำงานอย่างไร</h4>
+                    <p>การทำงานของเว็บคือการคุยกันระหว่าง 2 ฝั่งผ่านอินเทอร์เน็ต สไลด์นิยามคำศัพท์ที่เกี่ยวข้องไว้ 4 คำ</p>
+                    <dl class="defs defs--stack">
+                      <div><dt>Web Server</dt><dd>ฝั่งผู้ให้บริการเรื่องเว็บ ที่ให้บริการข้อมูลหรือหน้าเว็บ</dd></div>
+                      <div><dt>Web pages</dt><dd>หน้าเว็บที่ประกอบด้วยชุดคำสั่งพื้นฐาน เช่น HTML</dd></div>
+                      <div><dt>Web Client</dt><dd>ฝั่งผู้ใช้บริการเรื่องเว็บ เช่น อ่าน หรือ request ข้อมูล</dd></div>
+                      <div><dt>Web browser</dt><dd>โปรแกรมที่ใช้ในการอ่านข้อมูลเว็บหรือหน้าเว็บ (ทำงานอยู่ฝั่ง Web Client)</dd></div>
+                    </dl>
+                    <figure class="diagram">
+                      <div class="diagram-scroll">
+                        <svg viewBox="0 0 760 230" role="img" aria-labelledby="dg-www-t dg-www-d">
+                          <title id="dg-www-t">WWW ทำงานอย่างไร</title>
+                          <desc id="dg-www-d">Web Browser ฝั่ง Web Client ส่ง HTTP Request ผ่าน Internet ไปยัง Web Server ซึ่งเก็บ Web Pages ที่เป็น html แล้ว Web Server ส่ง Response ที่เป็น html กลับมา</desc>
+                          <rect class="dg-box" x="20" y="40" width="200" height="150" rx="10" />
+                          <text class="dg-text" x="120" y="70" text-anchor="middle">Web Client</text>
+                          <rect class="dg-box dg-box--accent" x="45" y="95" width="150" height="60" rx="8" />
+                          <text class="dg-text" x="120" y="131" text-anchor="middle">Web Browser</text>
+
+                          <rect class="dg-box" x="300" y="72" width="160" height="86" rx="38" />
+                          <text class="dg-text" x="380" y="120" text-anchor="middle">Internet</text>
+
+                          <rect class="dg-box" x="540" y="30" width="200" height="170" rx="10" />
+                          <text class="dg-text" x="640" y="58" text-anchor="middle">Web Server</text>
+                          <rect class="dg-box" x="575" y="78" width="62" height="42" rx="4" /><text class="dg-mono dg-mono--sm" x="606" y="103" text-anchor="middle">html</text>
+                          <rect class="dg-box" x="645" y="78" width="62" height="42" rx="4" /><text class="dg-mono dg-mono--sm" x="676" y="103" text-anchor="middle">html</text>
+                          <rect class="dg-box" x="575" y="128" width="62" height="42" rx="4" /><text class="dg-mono dg-mono--sm" x="606" y="153" text-anchor="middle">html</text>
+                          <rect class="dg-box" x="645" y="128" width="62" height="42" rx="4" /><text class="dg-mono dg-mono--sm" x="676" y="153" text-anchor="middle">html</text>
+                          <text class="dg-text dg-text--sm" x="640" y="190" text-anchor="middle">Web Pages</text>
+
+                          <path class="dg-line dg-line--accent" d="M220 105 H300" marker-end="url(#arr)" />
+                          <path class="dg-line dg-line--accent" d="M460 105 H540" marker-end="url(#arr)" />
+                          <path class="dg-line" d="M540 130 H460" marker-end="url(#arr-muted)" />
+                          <path class="dg-line" d="M300 130 H220" marker-end="url(#arr-muted)" />
+                          <text class="dg-mono" x="380" y="44" text-anchor="middle">HTTP Request →</text>
+                          <text class="dg-mono dg-mono--sm" x="380" y="196" text-anchor="middle">← Response (html)</text>
+                        </svg>
+                      </div>
+                      <figcaption>วาดใหม่จากสไลด์ 15 — browser ขอหน้าเว็บด้วย HTTP Request และได้ html กลับมาเป็น Response</figcaption>
+                    </figure>
+                  </section>
+
+                  <section class="topic" id="w1-url">
+                    <h4>Browser ได้หน้าเว็บมาอย่างไร: URL</h4>
+                    <p>เมื่อผู้ใช้ต้องการเปิดหน้าเว็บ <strong>browser จะส่ง HTTP request ไปยัง Web Server</strong> ภายใน HTTP request นั้นจะมี <strong>URL (Uniform Resource Locator)</strong> ซึ่งเป็นตัวระบุ resource หรือ service ที่ต้องการ URL แบบเต็มประกอบด้วยหลายส่วนที่นำความรู้จากหัวข้อก่อนหน้ามาใช้ทั้งหมด ลองคลิกแต่ละส่วนของ URL ตัวอย่างจากสไลด์ด้านล่างเพื่อดูคำอธิบาย</p>
+                    <div class="url-anatomy" data-widget="url-anatomy">
+                      <p class="url-line" aria-label="URL ตัวอย่าง http://john:secret@www.example.com:8080/demo/index.html"><button class="url-part" type="button" data-part="protocol">http</button><span class="url-sep">://</span><button class="url-part" type="button" data-part="userinfo">john:secret</button><span class="url-sep">@</span><button class="url-part" type="button" data-part="domain">www.example.com</button><span class="url-sep">:</span><button class="url-part" type="button" data-part="port">8080</button><button class="url-part" type="button" data-part="path">/demo/index.html</button></p>
+                      <dl class="url-legend">
+                        <div data-part="protocol"><dt>protocol · <code>http</code></dt><dd>โปรโตคอลที่ใช้สื่อสาร — เว็บ (WWW) ใช้ HTTP ในการแลกเปลี่ยนข้อมูล</dd></div>
+                        <div data-part="userinfo"><dt>username:password · <code>john:secret</code></dt><dd>ชื่อผู้ใช้และรหัสผ่าน เป็นส่วนที่มีหรือไม่มีก็ได้ (ถ้ามี จะอยู่ก่อนเครื่องหมาย @)</dd></div>
+                        <div data-part="domain"><dt>domain name · <code>www.example.com</code></dt><dd>ชื่อของเครื่องปลายทางในรูปแบบข้อความ ซึ่ง DNS จะจับคู่กับ IP address ให้</dd></div>
+                        <div data-part="port"><dt>port · <code>8080</code></dt><dd>หมายเลข port ที่บอกว่าต้องการ service ใดบนเครื่องนั้น (เหมือนหมายเลขห้องในตึก) เขียนต่อจากโดเมนหลังเครื่องหมาย :</dd></div>
+                        <div data-part="path"><dt>path · <code>/demo/index.html</code></dt><dd>ตำแหน่งของ resource ที่ต้องการบน server — ในตัวอย่างนี้คือไฟล์ index.html ภายใน /demo/</dd></div>
+                      </dl>
+                    </div>
+                  </section>
+
+                  <section class="topic" id="w1-display">
+                    <h4>Browser แสดงผลหน้าเว็บอย่างไร</h4>
+                    <p>เมื่อได้หน้าเว็บกลับมาแล้ว <strong>browser มีหน้าที่แปลชุดคำสั่งในหน้า Web page</strong> เพราะแต่ละหน้าไม่ได้มีแค่เนื้อหา แต่ประกอบด้วยชุดคำสั่งที่บอกลักษณะการแสดงผล (how content to be displayed) เช่น การทำย่อหน้า หรือการจัด layout ของหน้าเว็บ ชุดคำสั่งหลักที่ใช้คือ<strong>ภาษา HTML</strong> และอาจเพิ่มความสวยงามด้วย <strong>CSS</strong></p>
+                  </section>
+
+                  <section class="topic" id="w1-dev">
+                    <h4>การพัฒนาเว็บเพจ (Develop a Web Page)</h4>
+                    <p>งานพัฒนาเว็บแบ่งได้ตามส่วนของระบบที่ลงมือทำ สไลด์อ้างอิงแผนผังจาก roadmap.sh ดังนี้</p>
+                    <div class="compare">
+                      <div class="compare-col"><h5>Front-end</h5><p>HTML, CSS, JavaScript — ส่วนที่ผู้ใช้เห็นและโต้ตอบด้วยโดยตรง</p></div>
+                      <div class="compare-col"><h5>Back-end</h5><p>Database, API, Framework — ส่วนที่ทำงานอยู่เบื้องหลัง</p></div>
+                      <div class="compare-col"><h5>Full-stack</h5><p>ทำได้ทั้ง Front-end และ Back-end</p></div>
+                    </div>
+                    <p><strong>หัวข้อในวิชานี้ (course roadmap)</strong> — Front-end: HTML, CSS, JavaScript (Core) · Back-end: Node.JS, Web Service (API), Connection to DB · Other trends + framework: React</p>
+                    <ol class="steps">
+                      <li>Introduction to Internet, Overview, and Basic HTML and HTML5 Part 1 <span class="chip chip--accent">บทนี้</span></li>
+                      <li>Basic HTML and HTML5 Part 2</li>
+                      <li>Cascading Style Sheet Part 1</li>
+                      <li>Cascading Style Sheet Part 2</li>
+                      <li>JavaScript Part 1</li>
+                      <li>JavaScript Part 2</li>
+                      <li>JavaScript Part 3</li>
+                      <li>Web Service</li>
+                      <li>Introduction to Node.js Part 1</li>
+                      <li>Introduction to Node.js Part 2</li>
+                      <li>Introduction to Node.js Part 3</li>
+                      <li>Web Service with Node.js</li>
+                      <li>Trends in Web Application Framework</li>
+                    </ol>
+                  </section>
+
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- ================= 03 HTML เบื้องต้น ================= -->
+          <div class="acc-item">
+            <h3 class="acc-heading">
+              <button class="acc-trigger" type="button" aria-expanded="false" aria-controls="acc-html" id="acc-html-btn">
+                <span class="acc-index">03</span>
+                <span class="acc-title">
+                  <span class="acc-name">HTML เบื้องต้น: โครงสร้างเอกสารและกฎของ Tag</span>
+                  <span class="acc-file">69-1-ITDS241-Lecture01 · สไลด์ 21–37</span>
+                </span>
+                <svg class="acc-chevron" viewBox="0 0 20 20" aria-hidden="true"><path d="M5 7.5l5 5 5-5" /></svg>
+              </button>
+            </h3>
+            <div class="acc-panel" id="acc-html" role="region" aria-labelledby="acc-html-btn">
+              <div class="acc-panel-inner">
+                <div class="acc-body">
+
+                  <nav class="toc" aria-label="หัวข้อในการ์ด HTML เบื้องต้น">
+                    <a href="#w1-html">HTML คืออะไร</a>
+                    <a href="#w1-tags">โครงสร้าง Tag</a>
+                    <a href="#w1-nesting">กฎการ nesting</a>
+                    <a href="#w1-closing">Closing tag &amp; unknown tags</a>
+                    <a href="#w1-attr">Attributes &amp; quotes</a>
+                    <a href="#w1-global">Global Structure</a>
+                    <a href="#w1-comment">Comments</a>
+                    <a href="#w1-validate">Validation</a>
+                  </nav>
+
+                  <section class="topic" id="w1-html">
+                    <h4>HTML คืออะไร</h4>
+                    <p><strong>HTML</strong> ย่อมาจาก <strong>HyperText Markup Language</strong> เป็นภาษาหลักในการเขียนเว็บแอปพลิเคชัน HTML ประกอบด้วย <strong>markup tags</strong> ซึ่งเป็นตัวบอก browser ว่าให้แสดงผลเนื้อหาอย่างไร ไฟล์ HTML 1 ไฟล์เรียกว่า <strong>HTML Document</strong> และใช้นามสกุล <code>.html</code> หรือ <code>.htm</code></p>
+                    <p>ตัวอย่างเอกสาร HTML จากสไลด์ ในที่นี้ <code>&lt;p&gt;</code> ทำให้เนื้อหาแสดงผลเป็นย่อหน้า (paragraph)</p>
+                    <pre class="code-block" data-lang="html" data-render="140"><code>&lt;!DOCTYPE html&gt;
+&lt;html lang="en"&gt;
+&lt;body&gt;
+    &lt;section&gt;
+        &lt;p&gt;This is an example of
+            Markup language.&lt;/p&gt;
+        &lt;p&gt;Tags tell browsers how
+            to show the contents&lt;/p&gt;
+    &lt;/section&gt;
+&lt;/body&gt;
+&lt;/html&gt;</code></pre>
+                    <p>สไลด์บอกว่า HTML <strong>เรียนรู้ได้ง่าย</strong> สิ่งที่ต้องรู้คือวิธีใช้ tag ต่างๆ และต้องมี text editor ธรรมดาสำหรับเขียนเอกสาร เช่น <strong>Visual Studio Code, Notepad, Notepad++</strong> เมื่อเขียนเสร็จก็เปิดไฟล์ด้วย browser ได้ทันที (Easy to code, Run on Browsers)</p>
+                    <div class="callout callout--why">
+                      <span class="callout-label">คำแนะนำจากสไลด์</span>
+                      <p>ถ้าอยากเป็น web developer ที่เก่ง ควรใช้ <b>plain text editor</b> ในการฝึกเขียน HTML</p>
+                    </div>
+                    <p><strong>ประวัติของ HTML</strong></p>
+                    <ol class="tl-track" aria-label="เส้นเวลาประวัติ HTML">
+                      <li class="is-key"><span class="tl-year">1991</span><span class="tl-text">Tim Berners-Lee สร้าง HTML</span></li>
+                      <li><span class="tl-year">1995</span><span class="tl-text">HTML2</span></li>
+                      <li><span class="tl-year">1997</span><span class="tl-text">HTML3</span></li>
+                      <li><span class="tl-year">1999</span><span class="tl-text">HTML4</span></li>
+                      <li><span class="tl-year">2000</span><span class="tl-text">XHTML</span></li>
+                      <li><span class="tl-year">2014</span><span class="tl-text">HTML5</span></li>
+                      <li><span class="tl-year">2017</span><span class="tl-text">HTML5.2</span></li>
+                    </ol>
+                  </section>
+
+                  <section class="topic" id="w1-tags">
+                    <h4>โครงสร้าง Tag พื้นฐาน</h4>
+                    <p>เอกสาร HTML ประกอบด้วย 2 สิ่ง คือ <strong>Content</strong> ซึ่งเป็นเนื้อหาของหน้านั้นๆ เช่น ข้อความ และ <strong>Tag (Element)</strong> ซึ่งเป็นชุดคำสั่งที่บอกลักษณะการแสดงผลของเนื้อหา รูปแบบทั่วไปคือมี <strong>tag เปิด (opening tag)</strong> อยู่หน้าเนื้อหา และ <strong>tag ปิด (closing tag)</strong> ที่มีเครื่องหมาย <code>/</code> อยู่หลังเนื้อหา</p>
+                    <pre class="code-block" data-lang="html"><code>&lt;tag-name&gt;Content to be displayed&lt;/tag-name&gt;
+&lt;!-- ↑ Opening tag                  ↑ Closing tag --&gt;</code></pre>
+                    <div class="callout callout--def">
+                      <span class="callout-label">กฎ: case insensitive</span>
+                      <p>HTML tags เป็น <strong>case insensitive</strong> คือจะเขียนชื่อ tag ด้วยตัวอักษรภาษาอังกฤษพิมพ์ใหญ่หรือพิมพ์เล็กก็ได้ (<code>&lt;P&gt;</code> กับ <code>&lt;p&gt;</code> ให้ผลเหมือนกัน) แต่<b>นิยมใช้ตัวพิมพ์เล็ก</b></p>
+                    </div>
+                  </section>
+
+                  <section class="topic" id="w1-nesting">
+                    <h4>กฎการซ้อน Tag (Nesting Tags Rules)</h4>
+                    <p>tag เปิดและ tag ปิดกำหนด<strong>ขอบเขต (region)</strong> ที่ tag นั้นมีผล ขอบเขตเหล่านี้<strong>ซ้อนกันได้ (nested) แต่ห้ามเหลื่อมกัน (not overlap)</strong> กล่าวคือถ้าเปิด tag1 แล้วเปิด tag2 ข้างใน ต้องปิด tag2 ให้เรียบร้อยก่อนจึงจะปิด tag1 ได้ เหมือนกล่องเล็กต้องอยู่ในกล่องใหญ่ทั้งใบ จะโผล่ครึ่งหนึ่งออกนอกกล่องใหญ่ไม่ได้</p>
+                    <figure class="diagram">
+                      <div class="diagram-scroll">
+                        <svg viewBox="0 0 760 250" role="img" aria-labelledby="dg-nest-t dg-nest-d">
+                          <title id="dg-nest-t">การซ้อน tag ที่ถูกต้องเทียบกับการเหลื่อมที่ผิด</title>
+                          <desc id="dg-nest-d">แถวบน: tag1 ครอบ tag2 ทั้งหมด ปิด tag2 ก่อนปิด tag1 ถูกต้อง แถวล่าง: ปิด tag1 ก่อน tag2 ทำให้ขอบเขตเหลื่อมกัน ผิด</desc>
+                          <path class="dg-line dg-line--accent" d="M68 76 V54 H546 V76" marker-end="url(#arr)" />
+                          <path class="dg-line dg-line--warn" d="M228 100 V120 H384 V100" marker-end="url(#arr)" />
+                          <text class="dg-mono" x="40" y="93">&lt;tag1&gt;</text>
+                          <text class="dg-text dg-text--sm" x="104" y="93">Some text</text>
+                          <text class="dg-mono dg-mono--warn" x="200" y="93">&lt;tag2&gt;</text>
+                          <text class="dg-text dg-text--sm" x="262" y="93">more text</text>
+                          <text class="dg-mono dg-mono--warn" x="352" y="93">&lt;/tag2&gt;</text>
+                          <text class="dg-text dg-text--sm" x="428" y="93">and more.</text>
+                          <text class="dg-mono" x="515" y="93">&lt;/tag1&gt;</text>
+                          <text class="dg-text dg-text--ok" x="620" y="93">✓ ซ้อนกัน (nested)</text>
+
+                          <path class="dg-line dg-line--accent" d="M68 190 V168 H384 V190" marker-end="url(#arr)" />
+                          <path class="dg-line dg-line--warn" d="M228 214 V234 H546 V214" marker-end="url(#arr)" />
+                          <text class="dg-mono" x="40" y="207">&lt;tag1&gt;</text>
+                          <text class="dg-text dg-text--sm" x="104" y="207">Some text</text>
+                          <text class="dg-mono dg-mono--warn" x="200" y="207">&lt;tag2&gt;</text>
+                          <text class="dg-text dg-text--sm" x="262" y="207">more text</text>
+                          <text class="dg-mono" x="352" y="207">&lt;/tag1&gt;</text>
+                          <text class="dg-text dg-text--sm" x="428" y="207">and more.</text>
+                          <text class="dg-mono dg-mono--warn" x="515" y="207">&lt;/tag2&gt;</text>
+                          <text class="dg-text dg-text--bad" x="620" y="207">✗ เหลื่อม (overlap)</text>
+                        </svg>
+                      </div>
+                      <figcaption>วาดใหม่จากสไลด์ 27 — เส้นเชื่อม tag เปิดกับ tag ปิดของตัวเดียวกัน แถวล่างเส้นของ tag1 กับ tag2 ตัดกัน = overlap</figcaption>
+                    </figure>
+                    <div class="callout callout--warn">
+                      <span class="callout-label">ข้อควรระวัง</span>
+                      <p>ลำดับการปิดต้อง<strong>ย้อนกลับ</strong>จากลำดับการเปิด: เปิด <code>tag1 → tag2</code> ต้องปิด <code>tag2 → tag1</code> เสมอ</p>
+                    </div>
+                  </section>
+
+                  <section class="topic" id="w1-closing">
+                    <h4>Closing Tags และ Unknown Tags</h4>
+                    <p>tag <strong>ไม่จำเป็นต้องมี tag ปิดเสมอไป</strong> ตัวอย่างเช่น <code>&lt;br&gt;</code> (line break) ซึ่งเป็นเพียงการบอกตำแหน่งให้ขึ้นบรรทัดใหม่ ไม่ได้ครอบเนื้อหาใดๆ จึงไม่มี tag ปิด</p>
+                    <p>อีกกฎที่สำคัญคือ <strong>Unknown tags are ignored</strong> — ถ้าเขียนชื่อ tag ผิด หรือสร้าง tag ขึ้นมาเอง browser ก็ยังทำงานต่อได้<strong>โดยไม่แสดง error</strong> แต่จะข้ามการแปลความหมายของ tag ที่ไม่ได้บัญญัติไว้ไป</p>
+                    <div class="callout callout--why">
+                      <span class="callout-label">ทำไมถึงออกแบบแบบนี้</span>
+                      <p>สไลด์ให้เหตุผลว่า เพื่อให้<b>สะดวกต่อการเพิ่ม tag ใหม่ๆ ในอนาคต</b></p>
+                    </div>
+                    <div class="callout callout--warn">
+                      <span class="callout-label">ข้อควรระวัง</span>
+                      <p>พิมพ์ชื่อ tag ผิด browser ก็<strong>ไม่แสดง error</strong> ให้เห็น — อย่าคิดว่าไม่มี error แปลว่าเขียนถูก</p>
+                    </div>
+                  </section>
+
+                  <section class="topic" id="w1-attr">
+                    <h4>Tag Attributes และ Quote Styles</h4>
+                    <p>ภายใน <strong>opening tag</strong> อาจมี <strong>attributes</strong> ซึ่งเป็นส่วนเก็บข้อมูลหรือ option เพิ่มเติมของ tag นั้นๆ เช่น attribute <code>lang</code> ใน <code>&lt;html&gt;</code> ใช้ระบุภาษาของหน้าเพจ attributes เขียนในรูปแบบ <code>name="value"</code> (สามารถค้น "HTML reference" ออนไลน์ได้ที่ W3Schools)</p>
+                    <pre class="code-block" data-lang="html"><code>&lt;html lang="en"&gt;</code></pre>
+                    <p><strong>เรื่องเครื่องหมายคำพูด (Quote styles):</strong> ค่าของ attribute ควรอยู่ในเครื่องหมายคำพูดเสมอ แบบ double quote (<code>"</code>) เป็นแบบที่ใช้บ่อยที่สุด แต่ single quote (<code>'</code>) ก็ใช้ได้เช่นกัน</p>
+                    <div class="callout callout--warn">
+                      <span class="callout-label">กรณีพิเศษ</span>
+                      <p>ถ้าค่าของ attribute <strong>มีเครื่องหมาย double quote อยู่ในตัวเอง</strong> ต้องใช้ single quote ครอบแทน เพื่อไม่ให้ quote ข้างในไปปิดค่า attribute ก่อนเวลา</p>
+                      <p><code>value='John "ShotGun" Nelson'</code> → ค่าที่ได้คือ <b>John "ShotGun" Nelson</b></p>
+                    </div>
+                  </section>
+
+                  <section class="topic" id="w1-global">
+                    <h4>โครงสร้างหลักของเอกสาร HTML (Global Structure)</h4>
+                    <div class="table-scroll">
+                      <table>
+                        <thead><tr><th>Tag</th><th>คำอธิบาย</th></tr></thead>
+                        <tbody>
+                          <tr><td class="nowrap"><code>&lt;!DOCTYPE html&gt;</code></td><td>การประกาศชนิดเอกสาร HTML <strong>ต้องอยู่เป็นสิ่งแรกสุดของเอกสาร ก่อน tag <code>&lt;html&gt;</code></strong></td></tr>
+                          <tr><td class="nowrap"><code>&lt;html&gt;</code></td><td>กำหนดเอกสาร HTML เป็น container ที่ครอบ element อื่นทั้งหมด (ยกเว้น <code>&lt;!DOCTYPE&gt;</code>)</td></tr>
+                          <tr><td class="nowrap"><code>&lt;head&gt;</code></td><td>ส่วนหัวของเอกสาร ใส่ title ของเอกสาร, scripts, styles, meta information และอื่นๆ</td></tr>
+                          <tr><td class="nowrap"><code>&lt;body&gt;</code></td><td>ส่วนเนื้อหาของเอกสาร เช่น ข้อความ, hyperlinks, รูปภาพ, ตาราง, ลิสต์</td></tr>
+                          <tr><td class="nowrap"><code>&lt;title&gt;</code></td><td>ชื่อเรื่องของเอกสาร ที่แสดงบน browser toolbar</td></tr>
+                        </tbody>
+                      </table>
+                    </div>
+                    <p>เมื่อนำ tag ทั้ง 5 ตัวมารวมกัน จะได้เอกสาร HTML ที่สมบูรณ์ตามตัวอย่างในสไลด์ ข้อความ "I Love HTML" จะไปแสดงบนแถบของ browser ไม่ได้อยู่ในตัวหน้าเว็บ ส่วนสิ่งที่อยู่ใน <code>&lt;body&gt;</code> คือทุกอย่างที่แสดงบนหน้า</p>
+                    <pre class="code-block" data-lang="html" data-render="70"><code>&lt;!DOCTYPE html&gt;
+&lt;html lang="en"&gt;
+    &lt;head&gt;
+        &lt;title&gt;I Love HTML&lt;/title&gt;
+    &lt;/head&gt;
+    &lt;body&gt;
+        Everything displayed on your page
+        will be in here.
+    &lt;/body&gt;
+&lt;/html&gt;</code></pre>
+                    <div class="callout callout--why">
+                      <span class="callout-label">Tips จากสไลด์</span>
+                      <p><b>เริ่มทุกไฟล์ด้วย tag พื้นฐานเหล่านี้เสมอ:</b> <code>&lt;!DOCTYPE&gt;</code>, <code>&lt;html&gt;</code>, <code>&lt;head&gt;</code>, <code>&lt;title&gt;</code>, <code>&lt;body&gt;</code></p>
+                      <p><b>เยื้อง (indent) element ที่ซ้อนกัน</b> เพื่อให้อ่านโค้ดง่ายขึ้น — สไลด์ 32 กับ 33 แสดงโค้ดชุดเดียวกันที่เยื้องไม่สม่ำเสมอกับที่เยื้องเป็นระเบียบ ซึ่งแบบหลังเห็นได้ทันทีว่า tag ไหนอยู่ข้างในอะไร</p>
+                    </div>
+                  </section>
+
+                  <section class="topic" id="w1-comment">
+                    <h4>Comments</h4>
+                    <p>ถ้าต้องการเขียนหมายเหตุไว้ในซอร์สโค้ด HTML ให้ใช้รูปแบบด้านล่าง <strong>browser จะไม่แสดงผล comment</strong> ออกมาบนหน้าเว็บ</p>
+                    <pre class="code-block" data-lang="html"><code>&lt;!-- This is a comment --&gt;</code></pre>
+                    <div class="callout callout--warn">
+                      <span class="callout-label">ข้อควรระวัง</span>
+                      <p>ต้องมีเครื่องหมายตกใจ (<code>!</code>) <strong>หลังวงเล็บเปิดเท่านั้น</strong> (<code>&lt;!--</code>) แต่<strong>ไม่ต้องมีก่อนวงเล็บปิด</strong> (<code>--&gt;</code>)</p>
+                    </div>
+                  </section>
+
+                  <section class="topic" id="w1-validate">
+                    <h4>HTML Markup Validation</h4>
+                    <p>สไลด์ยกคำกล่าวจาก validator.w3.org ว่า "เช่นเดียวกับทุกภาษา ภาษาเหล่านี้มีไวยากรณ์ คำศัพท์ และ syntax ของตัวเอง และเอกสารทุกฉบับที่เขียนด้วยภาษาคอมพิวเตอร์เหล่านี้ควรทำตามกฎนั้น" สำหรับการเขียน HTML ให้ถูกหลักการ โดยเฉพาะมือใหม่ ควรนำโค้ดไปตรวจสอบกับเครื่องมืออย่าง <strong>https://validator.w3.org/</strong> สไลด์แสดงภาพเปรียบเทียบผลตรวจของ Valid HTML กับ HTML with some errors</p>
+                  </section>
+
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- ================= 04 Basic tags ================= -->
+          <div class="acc-item">
+            <h3 class="acc-heading">
+              <button class="acc-trigger" type="button" aria-expanded="false" aria-controls="acc-basic" id="acc-basic-btn">
+                <span class="acc-index">04</span>
+                <span class="acc-title">
+                  <span class="acc-name">Tag พื้นฐาน: Heading, Paragraph, Line Break, Hyperlink, List</span>
+                  <span class="acc-file">69-1-ITDS241-Lecture01 · สไลด์ 38–51</span>
+                </span>
+                <svg class="acc-chevron" viewBox="0 0 20 20" aria-hidden="true"><path d="M5 7.5l5 5 5-5" /></svg>
+              </button>
+            </h3>
+            <div class="acc-panel" id="acc-basic" role="region" aria-labelledby="acc-basic-btn">
+              <div class="acc-panel-inner">
+                <div class="acc-body">
+
+                  <nav class="toc" aria-label="หัวข้อในการ์ด tag พื้นฐาน">
+                    <a href="#w1-heading">Heading</a>
+                    <a href="#w1-paragraph">Paragraph</a>
+                    <a href="#w1-br">Line Break</a>
+                    <a href="#w1-links">Hyperlinks</a>
+                    <a href="#w1-paths">Absolute / Relative / Email</a>
+                    <a href="#w1-lists">Lists</a>
+                  </nav>
+
+                  <section class="topic" id="w1-heading">
+                    <h4>Heading Tags <code>&lt;h1&gt;</code> ถึง <code>&lt;h6&gt;</code></h4>
+                    <p>หัวข้อ (headings) ใช้ tag <code>&lt;h1&gt;</code> ถึง <code>&lt;h6&gt;</code> โดย <strong><code>&lt;h1&gt;</code> สร้างหัวข้อขนาดใหญ่ที่สุด</strong> และ <strong><code>&lt;h6&gt;</code> สร้างหัวข้อขนาดเล็กที่สุด</strong> เมื่อใช้ tag กลุ่มนี้ browser จะ<strong>เพิ่มบรรทัดว่างทั้งก่อนและหลังข้อความให้อัตโนมัติ</strong> ไม่ต้องใส่เอง</p>
+                    <pre class="code-block" data-lang="html" data-render="330"><code>&lt;h1&gt;This is a heading h1&lt;/h1&gt;
+&lt;h2&gt;This is a heading h2&lt;/h2&gt;
+&lt;h3&gt;This is a heading h3&lt;/h3&gt;
+&lt;h4&gt;This is a heading h4&lt;/h4&gt;
+&lt;h5&gt;This is a heading h5&lt;/h5&gt;
+&lt;h6&gt;This is a heading h6&lt;/h6&gt;</code></pre>
+                  </section>
+
+                  <section class="topic" id="w1-paragraph">
+                    <h4>Paragraph Tag <code>&lt;p&gt;</code></h4>
+                    <p><code>&lt;p&gt;</code> ใช้สร้าง paragraph หรือย่อหน้า browser จะจัดย่อหน้าให้โดยอัตโนมัติ มีพฤติกรรมสำคัญ 2 อย่างที่ต้องจำ</p>
+                    <ul>
+                      <li><strong>ยุบช่องว่าง:</strong> ถ้าในโค้ดมีการเว้นวรรคหลายครั้งติดกันภายในย่อหน้า browser จะลดเหลือแค่วรรคเดียว</li>
+                      <li><strong>ขึ้นบรรทัดใหม่หลังย่อหน้า:</strong> ทุกครั้งที่ใช้ <code>&lt;p&gt;</code> จะมีการเพิ่มบรรทัดใหม่หลังย่อหน้าให้อัตโนมัติ</li>
+                    </ul>
+                    <p>ในตัวอย่างจากสไลด์ ย่อหน้าที่สองมีช่องว่างหลายช่องและขึ้นบรรทัดใหม่ในโค้ด แต่ผลลัพธ์ใน browser ยังเป็นบรรทัดเดียวที่มีเว้นวรรคปกติ</p>
+                    <pre class="code-block" data-lang="html" data-render="110"><code>&lt;p&gt;This is a paragraph&lt;/p&gt;
+&lt;p&gt;This is another
+        paragraph&lt;/p&gt;</code></pre>
+                  </section>
+
+                  <section class="topic" id="w1-br">
+                    <h4>Line Break Tag <code>&lt;br&gt;</code></h4>
+                    <p>ถ้าข้อความยาวเกินความกว้างของหน้าต่าง browser จะปรับให้ขึ้นบรรทัดใหม่เองอัตโนมัติ แต่ในทางกลับกัน <strong>ถึงแม้ในชุดคำสั่งจะกด Enter ขึ้นบรรทัดใหม่หลายครั้ง browser ก็ไม่ได้ขึ้นบรรทัดใหม่ตาม</strong> ดังผลลัพธ์ของตัวอย่างจากสไลด์ด้านล่างที่ข้อความต่อกันเป็นบรรทัดเดียว</p>
+                    <pre class="code-block" data-lang="html" data-render="70"><code>&lt;p&gt; Hello,
+
+    I want
+
+    a new line.&lt;/p&gt;</code></pre>
+                    <p>ถ้าต้องการขึ้นบรรทัดใหม่ ณ ตำแหน่งที่ต้องการจริงๆ ต้องใช้ <code>&lt;br&gt;</code> ซึ่ง<strong>ไม่ต้องมี closing tag</strong></p>
+                    <pre class="code-block" data-lang="html" data-render="100"><code>&lt;p&gt;This &lt;br&gt; is a para &lt;br&gt; graph with line breaks&lt;/p&gt;</code></pre>
+                    <div class="callout callout--warn">
+                      <span class="callout-label">ข้อควรระวัง</span>
+                      <p>การกด Enter ในซอร์สโค้ด<strong>ไม่มีผล</strong>ต่อการแสดงผล — ต้องใช้ <code>&lt;br&gt;</code> เท่านั้นจึงจะขึ้นบรรทัดใหม่บนหน้าเว็บ ถ้าเขียนแยกบรรทัดในโค้ดโดยไม่มี <code>&lt;br&gt;</code> ข้อความจะต่อกันเป็นบรรทัดเดียว</p>
+                    </div>
+                  </section>
+
+                  <section class="topic" id="w1-links">
+                    <h4>Hypertext Links <code>&lt;a&gt;</code></h4>
+                    <p><strong>Hyperlinks</strong> หรือ tag <code>&lt;a&gt;</code> (Anchor) ใช้เชื่อมโยงจากส่วนหนึ่งในหน้าเว็บ หรือเชื่อมระหว่างหน้าเว็บ ปลายทางของลิงก์ระบุด้วย <strong>attribute <code>href</code></strong> ส่วนข้อความที่อยู่ระหว่าง tag เปิดและปิดจะกลายเป็นสิ่งที่ผู้ใช้คลิกได้</p>
+                    <pre class="code-block" data-lang="html"><code>&lt;a&gt;[text here will be a link]&lt;/a&gt;</code></pre>
+                    <p>ตัวอย่างลิงก์ไปยัง MyCourses ในสไลด์ แสดงว่าสิ่งที่อยู่ใน <code>&lt;a&gt;</code> ไม่จำเป็นต้องเป็นข้อความธรรมดา สามารถเป็น tag อื่นอย่าง heading ได้</p>
+                    <pre class="code-block" data-lang="html"><code>&lt;a href="https://mycourses.ict.mahidol.ac.th/"&gt;&lt;h1&gt;MyCourses&lt;/h1&gt;&lt;/a&gt;</code></pre>
+                    <p><code>href</code> ยังใช้เชื่อมหน้าเว็บที่อยู่ใน directory เดียวกันได้ด้วย relative path ในตัวอย่างนี้ หน้าปัจจุบันชื่อ <code>4_hyperlink.html</code> ลิงก์ไปยัง <code>1_headings.html</code> ซึ่งอยู่ในโฟลเดอร์เดียวกัน (สังเกตการใช้ comment อธิบายโค้ดด้วย)</p>
+                    <pre class="code-block" data-lang="html"><code>&lt;!DOCTYPE html&gt;
+&lt;html lang="en"&gt;
+    &lt;head&gt;
+        &lt;title&gt;HyperLink&lt;/title&gt;
+    &lt;/head&gt;
+    &lt;body&gt;
+        &lt;!-- This link goes to another HTML using relative path --&gt;
+        &lt;a href="1_headings.html"&gt;Link to Heading&lt;/a&gt;
+    &lt;/body&gt;
+&lt;/html&gt;</code></pre>
+                  </section>
+
+                  <section class="topic" id="w1-paths">
+                    <h4>Absolute Path, Relative Path และ Email Link</h4>
+                    <div class="compare">
+                      <div class="compare-col">
+                        <h5>Absolute path</h5>
+                        <p>URL แบบเต็ม ใช้เมื่อต้องการอ้างอิงที่อยู่ของ resource ที่<strong>เข้าถึงได้ผ่านอินเทอร์เน็ต</strong></p>
+                        <pre class="code-block" data-lang="html"><code>&lt;a href="http://www.google.com"&gt;Google&lt;/a&gt;</code></pre>
+                      </div>
+                      <div class="compare-col">
+                        <h5>Relative path</h5>
+                        <p>การอ้างอิงที่อยู่ของ resource ที่<strong>เข้าถึงได้จาก document ปัจจุบัน</strong> เช่น อยู่ใน directory เดียวกัน</p>
+                        <pre class="code-block" data-lang="html"><code>&lt;a href="filename.html"&gt;click here&lt;/a&gt;</code></pre>
+                      </div>
+                    </div>
+                    <p><strong>Email link:</strong> ใช้ <code>&lt;a&gt;</code> ระบุที่อยู่ email ได้ โดยใส่คำว่า <code>mailto:</code> ตามด้วย email ใน attribute <code>href</code></p>
+                    <pre class="code-block" data-lang="html"><code>&lt;a href="mailto:abc@example.com"&gt;Send Email&lt;/a&gt;</code></pre>
+                  </section>
+
+                  <section class="topic" id="w1-lists">
+                    <h4>Lists</h4>
+                    <p><strong>Ordered list</strong> (ลิสต์แบบมีลำดับ) เริ่มต้นด้วย <code>&lt;ol&gt;</code> และแต่ละรายการเริ่มด้วย <code>&lt;li&gt;</code> browser จะใส่<strong>ตัวเลขลำดับ</strong>ให้อัตโนมัติ</p>
+                    <pre class="code-block" data-lang="html" data-render="150"><code>&lt;ol&gt;
+   &lt;li&gt;Google&lt;/li&gt;
+   &lt;li&gt;Bing&lt;/li&gt;
+   &lt;li&gt;Baidu&lt;/li&gt;
+   &lt;li&gt;Yahoo!&lt;/li&gt;
+   &lt;li&gt;Yandex&lt;/li&gt;
+&lt;/ol&gt;</code></pre>
+                    <p><strong>Unordered list</strong> (ลิสต์แบบไม่มีลำดับ) เริ่มต้นด้วย <code>&lt;ul&gt;</code> และแต่ละรายการเริ่มด้วย <code>&lt;li&gt;</code> เช่นกัน แต่จะแสดงเป็น<strong>จุด (bullet point)</strong> แทนตัวเลข</p>
+                    <pre class="code-block" data-lang="html" data-render="150"><code>&lt;ul&gt;
+   &lt;li&gt;Cooking&lt;/li&gt;
+   &lt;li&gt;Cross stitching&lt;/li&gt;
+   &lt;li&gt;Gaming&lt;/li&gt;
+   &lt;li&gt;Gardening&lt;/li&gt;
+   &lt;li&gt;Shooting&lt;/li&gt;
+&lt;/ul&gt;</code></pre>
+                    <p><strong>Nested list</strong> คือการใส่ลิสต์ซ้อนลงไป<strong>ภายใน <code>&lt;li&gt;</code></strong> ของลิสต์แม่ สังเกตว่า <code>&lt;ul&gt;</code> ตัวในอยู่ก่อน <code>&lt;/li&gt;</code> ของรายการนั้น ซึ่งเป็นไปตามกฎการ nesting</p>
+                    <pre class="code-block" data-lang="html" data-render="190"><code>&lt;ul&gt;
+    &lt;li&gt; A few New England states:
+        &lt;ul&gt;
+            &lt;li&gt;Vermont&lt;/li&gt;
+            &lt;li&gt;New Hampshire&lt;/li&gt;
+            &lt;li&gt;Maine&lt;/li&gt;
+        &lt;/ul&gt;
+    &lt;/li&gt;
+    &lt;li&gt; Two Midwestern states:
+        &lt;ul&gt;
+            &lt;li&gt;Michigan&lt;/li&gt;
+            &lt;li&gt;Indiana&lt;/li&gt;
+        &lt;/ul&gt;
+    &lt;/li&gt;
+&lt;/ul&gt;</code></pre>
+                    <p><strong>Definition list</strong> เริ่มต้นด้วย <code>&lt;dl&gt;</code> แต่ละรายการประกอบด้วยคู่ของ <code>&lt;dt&gt;</code> (คำ) ตามด้วย <code>&lt;dd&gt;</code> (คำอธิบาย/คำนิยาม)</p>
+                    <pre class="code-block" data-lang="html" data-render="130"><code>&lt;dl&gt;
+   &lt;dt&gt;HTML&lt;/dt&gt;
+   &lt;dd&gt;Hypertext Markup Language&lt;/dd&gt;
+   &lt;dt&gt;CSS&lt;/dt&gt;
+   &lt;dd&gt;Cascading Style Sheets&lt;/dd&gt;
+&lt;/dl&gt;</code></pre>
+                    <p>ภายใน <code>&lt;dt&gt;</code> สามารถใส่ <code>&lt;a&gt;</code> เพื่อทำเป็น list with link ได้</p>
+                    <pre class="code-block" data-lang="html"><code>&lt;dl&gt;
+   &lt;dt&gt;&lt;a href="https://www.w3schools.com/html/"&gt;HTML&lt;/a&gt;&lt;/dt&gt;
+   &lt;dd&gt;Hypertext Markup Language&lt;/dd&gt;
+   &lt;dt&gt;&lt;a href="https://www.w3schools.com/css/"&gt;CSS&lt;/a&gt;&lt;/dt&gt;
+   &lt;dd&gt;Cascading Style Sheets&lt;/dd&gt;
+&lt;/dl&gt;</code></pre>
+                    <div class="callout callout--def">
+                      <span class="callout-label">หมายเหตุจากสไลด์</span>
+                      <p>tag ส่วนใหญ่ใน HTML <strong>สามารถซ้อน (nest) กันเพื่อสร้างเนื้อหาใหม่ได้</strong> — เช่น ลิสต์ในลิสต์ หรือลิงก์ใน definition list</p>
+                    </div>
+                  </section>
+
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- ================= 05 Images, entities, table ================= -->
+          <div class="acc-item">
+            <h3 class="acc-heading">
+              <button class="acc-trigger" type="button" aria-expanded="false" aria-controls="acc-media" id="acc-media-btn">
+                <span class="acc-index">05</span>
+                <span class="acc-title">
+                  <span class="acc-name">Images, Character Entities, Table และ HTML Style Guide</span>
+                  <span class="acc-file">69-1-ITDS241-Lecture01 · สไลด์ 53–66</span>
+                </span>
+                <svg class="acc-chevron" viewBox="0 0 20 20" aria-hidden="true"><path d="M5 7.5l5 5 5-5" /></svg>
+              </button>
+            </h3>
+            <div class="acc-panel" id="acc-media" role="region" aria-labelledby="acc-media-btn">
+              <div class="acc-panel-inner">
+                <div class="acc-body">
+
+                  <nav class="toc" aria-label="หัวข้อในการ์ด images และ table">
+                    <a href="#w1-img">Images</a>
+                    <a href="#w1-img-link">Clickable images</a>
+                    <a href="#w1-entities">Character Entities</a>
+                    <a href="#w1-table">Table</a>
+                    <a href="#w1-span">Empty &amp; Spanning cells</a>
+                    <a href="#w1-style">HTML Style Guide</a>
+                  </nav>
+
+                  <section class="topic" id="w1-img">
+                    <h4>Images <code>&lt;img&gt;</code></h4>
+                    <p>การใส่รูปภาพในเอกสาร HTML ทำได้โดยใช้ <code>&lt;img src="URL"&gt;</code> ซึ่ง attribute <strong><code>src</code> ระบุ URL หรือ path ไปยังไฟล์รูปภาพ</strong> และ <code>&lt;img&gt;</code> <strong>ไม่มี closing tag</strong> รูปแบบไฟล์รูปภาพที่นิยมใช้บนเว็บมากที่สุด ได้แก่</p>
+                    <div class="table-scroll">
+                      <table>
+                        <thead><tr><th>รูปแบบ</th><th>ชื่อเต็ม</th></tr></thead>
+                        <tbody>
+                          <tr><td>GIF</td><td>Graphic Interchange Format</td></tr>
+                          <tr><td>JPEG</td><td>Joint Photographic Experts Group</td></tr>
+                          <tr><td>PNG</td><td>Portable Network Graphics</td></tr>
+                          <tr><td>SVG</td><td>Scalable Vector Graphics</td></tr>
+                        </tbody>
+                      </table>
+                    </div>
+                    <p>เพื่อให้เว็บ<strong>เข้าถึงได้ (accessible)</strong> กับกลุ่มผู้ใช้มากขึ้น เช่น ผู้ใช้ที่มีปัญหาในการเข้าถึงรูปภาพ หรือผู้ใช้ที่พิการทางสายตาและต้องใช้ screen reader เราสามารถใช้ <strong>attribute <code>alt</code></strong> เพิ่มคำอธิบายของรูปภาพ</p>
+                    <pre class="code-block" data-lang="html"><code>&lt;!-- Use URL or path to give the src of an image --&gt;
+&lt;img src="Images/Usagi_Clap.gif" alt="A Rabbit is clapping"&gt;</code></pre>
+                    <div class="callout callout--why">
+                      <span class="callout-label">ทำไมต้องมี alt</span>
+                      <p>ผู้ใช้ที่มองไม่เห็นรูปจะรับรู้เนื้อหาของรูปผ่าน<b>ข้อความใน alt</b> — ไม่มี alt ก็เท่ากับไม่มีข้อมูลว่ารูปนั้นคืออะไร</p>
+                    </div>
+                  </section>
+
+                  <section class="topic" id="w1-img-link">
+                    <h4>Clickable Images</h4>
+                    <p>เนื่องจาก tag ซ้อนกันได้ ถ้านำ <code>&lt;img&gt;</code> ไปไว้ภายใน <code>&lt;a href="..."&gt;</code> รูปภาพนั้นจะกลายเป็นลิงก์ที่คลิกได้ (Graphic Elements: Clickable Images)</p>
+                    <pre class="code-block" data-lang="html"><code>&lt;a href="http://www.kanahei.com/"&gt;
+    &lt;img src="Images/Usagi_Clap.gif" alt="Rabbit with Penguin"&gt;
+&lt;/a&gt;</code></pre>
+                  </section>
+
+                  <section class="topic" id="w1-entities">
+                    <h4>Character Entities</h4>
+                    <p>ตัวอักษรพิเศษบางตัวเป็นสัญลักษณ์ที่ต้องใช้ชุดคำสั่งพิเศษเรียกว่า <strong>character entities</strong> ตัวอย่างที่ชัดที่สุดคือเครื่องหมาย <code>&lt;</code> ถ้าพิมพ์ลงไปตรงๆ browser อาจเข้าใจว่าเป็นจุดเริ่มต้นของ tag character entity ประกอบด้วย 3 ส่วนเรียงกัน</p>
+                    <ol class="steps">
+                      <li>เครื่องหมาย ampersand <code>&amp;</code></li>
+                      <li><strong>entity name</strong> หรือ <code>#</code> ตามด้วย <strong>entity number</strong></li>
+                      <li>เครื่องหมาย semicolon <code>;</code></li>
+                    </ol>
+                    <p>ตัวอย่างเช่น ถ้าต้องการแสดงเครื่องหมายน้อยกว่า (&lt;) บน browser ใช้ได้ทั้ง <code>&amp;lt;</code> (ชื่อ) หรือ <code>&amp;#60;</code> (หมายเลข)</p>
+                    <pre class="code-block" data-lang="html" data-render="90"><code>&lt;p&gt;5 &amp;lt; 10 และ 10 &amp;#62; 5&lt;/p&gt;
+&lt;p&gt;&amp;copy; Tom &amp;amp; Jerry&lt;/p&gt;</code></pre>
+                    <div class="callout callout--warn">
+                      <span class="callout-label">ข้อควรระวัง</span>
+                      <p>character entities เป็น <strong>case sensitive</strong> — ต่างจากชื่อ tag ที่เป็น case insensitive (เช่น ต้องเขียน <code>&amp;lt;</code> ตามตาราง)</p>
+                    </div>
+                    <div class="table-scroll">
+                      <table>
+                        <thead><tr><th>ผลลัพธ์</th><th>คำอธิบาย</th><th>Entity</th><th>Entity Number</th></tr></thead>
+                        <tbody>
+                          <tr><td>(เว้นวรรค)</td><td>non-breaking space</td><td><code>&amp;nbsp;</code></td><td><code>&amp;#160;</code></td></tr>
+                          <tr><td>&lt;</td><td>less than</td><td><code>&amp;lt;</code></td><td><code>&amp;#60;</code></td></tr>
+                          <tr><td>&gt;</td><td>greater than</td><td><code>&amp;gt;</code></td><td><code>&amp;#62;</code></td></tr>
+                          <tr><td>&amp;</td><td>ampersand</td><td><code>&amp;amp;</code></td><td><code>&amp;#38;</code></td></tr>
+                          <tr><td>"</td><td>quotation mark</td><td><code>&amp;quot;</code></td><td><code>&amp;#34;</code></td></tr>
+                          <tr><td>'</td><td>apostrophe</td><td><code>&amp;apos;</code></td><td><code>&amp;#39;</code></td></tr>
+                          <tr><td>¢</td><td>cent</td><td><code>&amp;cent;</code></td><td><code>&amp;#162;</code></td></tr>
+                          <tr><td>£</td><td>pound</td><td><code>&amp;pound;</code></td><td><code>&amp;#163;</code></td></tr>
+                          <tr><td>¥</td><td>yen</td><td><code>&amp;yen;</code></td><td><code>&amp;#165;</code></td></tr>
+                          <tr><td>§</td><td>section</td><td><code>&amp;sect;</code></td><td><code>&amp;#167;</code></td></tr>
+                          <tr><td>©</td><td>copyright</td><td><code>&amp;copy;</code></td><td><code>&amp;#169;</code></td></tr>
+                          <tr><td>®</td><td>trademark</td><td><code>&amp;reg;</code></td><td><code>&amp;#174;</code></td></tr>
+                          <tr><td>×</td><td>multiplication</td><td><code>&amp;times;</code></td><td><code>&amp;#215;</code></td></tr>
+                          <tr><td>÷</td><td>division</td><td><code>&amp;divide;</code></td><td><code>&amp;#247;</code></td></tr>
+                        </tbody>
+                      </table>
+                    </div>
+                  </section>
+
+                  <section class="topic" id="w1-table">
+                    <h4>HTML Table</h4>
+                    <p>การใส่ข้อมูลในรูปแบบตารางใช้ <code>&lt;table&gt; … &lt;/table&gt;</code> ภายในตารางประกอบด้วย<strong>แถว (row) <code>&lt;tr&gt;…&lt;/tr&gt;</code></strong> และในแต่ละแถวมี<strong>หลัก (column) <code>&lt;td&gt;…&lt;/td&gt;</code></strong> ข้อมูลในเซลล์จะเป็นข้อความ รูปภาพ หรือ tag อื่นๆ ก็ได้ แต่<strong>ต้องอยู่ระหว่าง <code>&lt;td&gt;</code> กับ <code>&lt;/td&gt;</code> เท่านั้น</strong></p>
+                    <div class="callout callout--warn">
+                      <span class="callout-label">ข้อควรระวัง</span>
+                      <p>โดยค่าเริ่มต้น (by default) <strong>ตารางจะไม่มีเส้นขอบ</strong> ต้องกำหนด border เองจึงจะเห็นเส้น — สไลด์ใช้ style ด้านล่างใน <code>&lt;head&gt;</code> ซึ่งรายละเอียดของ CSS จะได้เรียนในอีก 2 สัปดาห์</p>
+                    </div>
+                    <pre class="code-block" data-lang="html" data-render="150"><code>&lt;head&gt;
+    &lt;style&gt;
+        table, tr, th, td {
+            border: 1px solid black;
+        }
+    &lt;/style&gt;
+&lt;/head&gt;
+&lt;body&gt;
+    &lt;table&gt;
+        &lt;tr&gt;
+            &lt;th&gt;States&lt;/th&gt;
+            &lt;th&gt;Abbr.&lt;/th&gt;
+            &lt;th&gt;Capital&lt;/th&gt;
+        &lt;/tr&gt;
+        &lt;tr&gt;
+            &lt;td&gt;Pennsylvania&lt;/td&gt;
+            &lt;td&gt;PA&lt;/td&gt;
+            &lt;td&gt;Harrisburg&lt;/td&gt;
+        &lt;/tr&gt;
+        &lt;tr&gt;
+            &lt;td&gt;New York&lt;/td&gt;
+            &lt;td&gt;NY&lt;/td&gt;
+            &lt;td&gt;Albany&lt;/td&gt;
+        &lt;/tr&gt;
+    &lt;/table&gt;
+&lt;/body&gt;</code></pre>
+                    <p><strong>Heading cells:</strong> เซลล์หัวตารางกำหนดด้วย <code>&lt;th&gt;&lt;/th&gt;</code> แทน <code>&lt;td&gt;</code> ข้อความใน <code>&lt;th&gt;</code> จะถูกตั้งเป็น<strong>ตัวหนาและจัดกึ่งกลางอัตโนมัติ</strong> ส่วนข้อความใน <code>&lt;td&gt;</code> เป็นตัวปกติและชิดซ้าย (เห็นความต่างได้ในผลลัพธ์ด้านบน)</p>
+                  </section>
+
+                  <section class="topic" id="w1-span">
+                    <h4>Empty Cells และ Spanning Cells</h4>
+                    <p><strong>Empty cell (เซลล์ว่าง):</strong> ใช้ <code>&amp;nbsp;</code> ใส่ไว้ในเซลล์</p>
+                    <pre class="code-block" data-lang="html"><code>&lt;td&gt;&amp;nbsp;&lt;/td&gt;</code></pre>
+                    <p><strong>Spanning cells:</strong> เซลล์หนึ่งสามารถขยาย (span) ให้ครอบคลุมหลายแถวหรือหลายหลักได้ด้วย attribute 2 ตัว</p>
+                    <div class="compare">
+                      <div class="compare-col">
+                        <h5><code>colspan</code></h5>
+                        <p>ขยายเซลล์ให้ครอบคลุม<strong>หลายหลัก</strong> — <code>&lt;td colspan="3"&gt;</code> ขยายกว้างไปทางขวา 3 หลักนับจากเซลล์ปัจจุบัน</p>
+                      </div>
+                      <div class="compare-col">
+                        <h5><code>rowspan</code></h5>
+                        <p>ขยายเซลล์ให้ครอบคลุม<strong>หลายแถว</strong> — <code>&lt;td rowspan="2"&gt;</code> ขยายลงไปด้านล่าง 2 แถวนับจากเซลล์ปัจจุบัน</p>
+                      </div>
+                    </div>
+                    <p>ตัวอย่างในสไลด์ใช้ทั้งสองแบบพร้อมกัน: เซลล์รูปภาพใช้ <code>rowspan="3"</code> ให้สูงเท่า 3 แถว และเซลล์หัวข้อ "Character: Usagi" ใช้ <code>colspan="3"</code> ให้กว้างเท่า 3 หลัก ภายในเซลล์ยังใส่ <code>&lt;img&gt;</code>, <code>&lt;h1&gt;</code> และ <code>&lt;p&gt;</code> ได้ เพราะเนื้อหาอยู่ระหว่าง tag ของเซลล์</p>
+                    <pre class="code-block" data-lang="html"><code>&lt;table&gt;
+    &lt;tr&gt;
+       &lt;td rowspan = "3"&gt;
+          &lt;img src="Usagi_Tired.gif" alt = "Picture of a Usagi" /&gt;
+       &lt;/td&gt;
+       &lt;th colspan = "3"&gt;
+          &lt;h1&gt;Character: Usagi&lt;/h1&gt;
+          &lt;p&gt;Illustrator: Kanahei (カナヘイ) &lt;/p&gt;
+       &lt;/th&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+       &lt;th&gt;Color&lt;/th&gt;
+       &lt;th&gt;Type&lt;/th&gt;
+       &lt;th&gt;Best friends&lt;/th&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+       &lt;td&gt;Light Pink&lt;/td&gt;
+       &lt;td&gt;Rabbit&lt;/td&gt;
+       &lt;td&gt;Piske&lt;/td&gt;
+    &lt;/tr&gt;
+&lt;/table&gt;</code></pre>
+                    <div class="callout callout--warn">
+                      <span class="callout-label">ข้อควรระวัง</span>
+                      <p>จำคู่ให้แม่น: <strong>col</strong>span = <strong>column</strong> = กว้างขึ้นทางแนวนอน · <strong>row</strong>span = <strong>row</strong> = สูงขึ้นทางแนวตั้ง แถวที่ 2 และ 3 ของตัวอย่างนี้จึงมีแค่ 3 เซลล์ เพราะหลักแรกถูกเซลล์รูปภาพจองไว้แล้ว</p>
+                    </div>
+                  </section>
+
+                  <section class="topic" id="w1-style">
+                    <h4>HTML Style Guide</h4>
+                    <p>นอกจากเขียนให้ browser แสดงผลได้แล้ว ควรเขียนให้เป็นระเบียบตามแนวทางต่อไปนี้ (อ้างอิง W3Schools HTML5 syntax)</p>
+                    <ul class="checklist">
+                      <li>ใช้ document type ที่ถูกต้อง คือ <code>&lt;!DOCTYPE html&gt;</code></li>
+                      <li>ปิด HTML element ทุกตัวที่มี tag ปิด</li>
+                      <li>ใช้ตัวพิมพ์เล็กสำหรับชื่อ element และชื่อ attribute</li>
+                      <li>ใช้ double quote สำหรับค่าของ attribute เสมอ</li>
+                      <li>เว้นบรรทัดว่างและเยื้อง (indentation) ให้เหมาะสม</li>
+                      <li>ใส่ช่องว่างรอบเครื่องหมาย <code>=</code> ให้เหมาะสม (ปกติไม่เว้น)</li>
+                    </ul>
+                    <pre class="code-block" data-lang="html"><code>&lt;a href="https://www.google.com/"&gt;Google&lt;/a&gt;</code></pre>
+                  </section>
+
+                </div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </section>
+
+      <!-- =============================================================
+           แท็บ 2: สรุป (cheat sheet)
+           ============================================================= -->
+      <section class="panel" id="summary" role="tabpanel" aria-labelledby="tab-summary" tabindex="-1">
+        <div class="panel-head">
+          <h2>Cheat sheet</h2>
+          <p class="panel-sub">ปี port URL tag หลัก entity และกฎที่มักออกสอบของบทที่ 1 รวมไว้ในหน้าเดียว</p>
+        </div>
+
+        <div class="sheet">
+
+          <article class="sheet-card sheet-card--wide">
+            <h3><span class="sheet-num">01</span> Timeline: Internet &amp; HTML</h3>
+            <div class="compare">
+              <div class="compare-col">
+                <h5>Internet</h5>
+                <dl class="defs defs--years">
+                  <div><dt>1966</dt><dd>ARPA project</dd></div>
+                  <div><dt>1969</dt><dd>ARPANET node แรก @ UCLA</dd></div>
+                  <div><dt>1973</dt><dd>ARPANET เชื่อมต่อต่างประเทศ</dd></div>
+                  <div><dt>1974</dt><dd>เผยแพร่การออกแบบ TCP</dd></div>
+                  <div><dt>1983</dt><dd>ออกแบบ DNS</dd></div>
+                  <div><dt>1990</dt><dd>ARPANET จบ · WWW created</dd></div>
+                  <div><dt>1992</dt><dd><strong>WWW introduced โดย Tim Berners-Lee</strong></dd></div>
+                </dl>
+              </div>
+              <div class="compare-col">
+                <h5>HTML</h5>
+                <dl class="defs defs--years">
+                  <div><dt>1991</dt><dd>Tim Berners-Lee สร้าง HTML</dd></div>
+                  <div><dt>1995</dt><dd>HTML2</dd></div>
+                  <div><dt>1997</dt><dd>HTML3</dd></div>
+                  <div><dt>1999</dt><dd>HTML4</dd></div>
+                  <div><dt>2000</dt><dd>XHTML</dd></div>
+                  <div><dt>2014</dt><dd>HTML5</dd></div>
+                  <div><dt>2017</dt><dd>HTML5.2</dd></div>
+                </dl>
+              </div>
+            </div>
+          </article>
+
+          <article class="sheet-card">
+            <h3><span class="sheet-num">02</span> Services &amp; Ports</h3>
+            <dl class="defs defs--codes">
+              <div><dt>HTTP</dt><dd><strong>80</strong></dd></div>
+              <div><dt>FTP</dt><dd><strong>21</strong></dd></div>
+              <div><dt>Telnet</dt><dd><strong>23</strong></dd></div>
+              <div><dt>SMTP</dt><dd><strong>25</strong></dd></div>
+            </dl>
+            <p class="note">IP = ที่อยู่ตึก · port = หมายเลขห้อง · TCP แบ่ง/ประกอบ packet · IP ส่ง/routing · IPv4 แต่ละชุด 0–255 · DNS จับคู่ชื่อโดเมน ↔ IP</p>
+          </article>
+
+          <article class="sheet-card sheet-card--wide">
+            <h3><span class="sheet-num">03</span> URL anatomy</h3>
+            <p class="url-line"><span class="url-part" data-part="protocol">http</span><span class="url-sep">://</span><span class="url-part" data-part="userinfo">john:secret</span><span class="url-sep">@</span><span class="url-part" data-part="domain">www.example.com</span><span class="url-sep">:</span><span class="url-part" data-part="port">8080</span><span class="url-part" data-part="path">/demo/index.html</span></p>
+            <dl class="defs">
+              <div><dt>protocol</dt><dd>http</dd></div>
+              <div><dt>user:pass</dt><dd>john:secret (ถ้ามี · อยู่ก่อน @)</dd></div>
+              <div><dt>domain</dt><dd>www.example.com</dd></div>
+              <div><dt>port</dt><dd>8080 (หลัง :)</dd></div>
+              <div><dt>path</dt><dd>/demo/index.html</dd></div>
+            </dl>
+          </article>
+
+          <article class="sheet-card">
+            <h3><span class="sheet-num">04</span> Global Structure</h3>
+            <dl class="defs defs--stack">
+              <div><dt>&lt;!DOCTYPE html&gt;</dt><dd>บรรทัดแรกสุด ก่อน &lt;html&gt;</dd></div>
+              <div><dt>&lt;html&gt;</dt><dd>container ของทุก element (ยกเว้น DOCTYPE)</dd></div>
+              <div><dt>&lt;head&gt;</dt><dd>title, scripts, styles, meta</dd></div>
+              <div><dt>&lt;title&gt;</dt><dd>ชื่อบน browser toolbar</dd></div>
+              <div><dt>&lt;body&gt;</dt><dd>เนื้อหาที่แสดงบนหน้า</dd></div>
+            </dl>
+          </article>
+
+          <article class="sheet-card sheet-card--wide">
+            <h3><span class="sheet-num">05</span> Character entities</h3>
+            <div class="table-scroll">
+              <table>
+                <thead><tr><th>ผลลัพธ์</th><th>Entity</th><th>Number</th><th>ผลลัพธ์</th><th>Entity</th><th>Number</th></tr></thead>
+                <tbody>
+                  <tr><td>space</td><td>&amp;nbsp;</td><td>&amp;#160;</td><td>¢</td><td>&amp;cent;</td><td>&amp;#162;</td></tr>
+                  <tr><td>&lt;</td><td>&amp;lt;</td><td>&amp;#60;</td><td>£</td><td>&amp;pound;</td><td>&amp;#163;</td></tr>
+                  <tr><td>&gt;</td><td>&amp;gt;</td><td>&amp;#62;</td><td>¥</td><td>&amp;yen;</td><td>&amp;#165;</td></tr>
+                  <tr><td>&amp;</td><td>&amp;amp;</td><td>&amp;#38;</td><td>§</td><td>&amp;sect;</td><td>&amp;#167;</td></tr>
+                  <tr><td>"</td><td>&amp;quot;</td><td>&amp;#34;</td><td>©</td><td>&amp;copy;</td><td>&amp;#169;</td></tr>
+                  <tr><td>'</td><td>&amp;apos;</td><td>&amp;#39;</td><td>®</td><td>&amp;reg;</td><td>&amp;#174;</td></tr>
+                  <tr><td>×</td><td>&amp;times;</td><td>&amp;#215;</td><td>÷</td><td>&amp;divide;</td><td>&amp;#247;</td></tr>
+                </tbody>
+              </table>
+            </div>
+            <p class="note">รูปแบบ: &amp; + ชื่อ (หรือ # + หมายเลข) + ; · entity เป็น case sensitive</p>
+          </article>
+
+          <article class="sheet-card">
+            <h3><span class="sheet-num">06</span> กฎที่ต้องจำ</h3>
+            <ul class="tight">
+              <li><strong>Nesting:</strong> ซ้อนได้ ห้าม overlap — ปิดย้อนลำดับการเปิด</li>
+              <li><strong>Tag:</strong> case insensitive (นิยมพิมพ์เล็ก)</li>
+              <li><strong>Entity:</strong> case sensitive</li>
+              <li><strong>Attribute:</strong> <code>name="value"</code> ใน opening tag · ค่ามี " อยู่ข้างใน → ครอบด้วย '</li>
+              <li><strong>ไม่มี closing tag:</strong> &lt;br&gt;, &lt;img&gt;</li>
+              <li><strong>Unknown tag:</strong> ถูกข้าม ไม่ error</li>
+              <li><strong>Enter ในโค้ด</strong> ไม่ขึ้นบรรทัด → ใช้ &lt;br&gt;</li>
+              <li><strong>Comment:</strong> &lt;!-- ... --&gt; (! หลังวงเล็บเปิดเท่านั้น)</li>
+              <li><strong>th</strong> ตัวหนา+กึ่งกลาง · table ไม่มีเส้นขอบโดย default</li>
+            </ul>
+          </article>
+
+        </div>
+      </section>
+
+      <!-- =============================================================
+           แท็บ 3: แบบฝึกหัด (20 ข้อ)
+           data-answer = ตัวเลือกที่ถูก (ก=a, ข=b, ค=c, ง=d ตามเฉลยที่ผู้ใช้กำหนด)
+           ============================================================= -->
+      <section class="panel" id="quiz" role="tabpanel" aria-labelledby="tab-quiz" tabindex="-1">
+        <div class="panel-head">
+          <h2>แบบฝึกหัด 20 ข้อ</h2>
+          <p class="panel-sub">เลือกคำตอบให้ครบแล้วกด "ตรวจคำตอบ" ด้านล่าง ระบบจะเฉลยพร้อมคำอธิบายทุกข้อ</p>
+        </div>
+
+        <form class="quiz" id="quiz-form" novalidate>
+
+          <fieldset class="q" data-answer="b">
+            <legend class="q-head"><span class="q-num">01</span><span class="q-text">TCP (Transmission Control Protocol) ทำหน้าที่หลักคืออะไร?</span></legend>
+            <div class="q-options">
+              <label class="opt"><input type="radio" name="q1" value="a" /><span class="opt-key">A</span><span class="opt-text">ส่ง packet ไปยังปลายทางโดยตรง (routing)</span></label>
+              <label class="opt"><input type="radio" name="q1" value="b" /><span class="opt-key">B</span><span class="opt-text">แบ่งข้อมูลเป็น packet และต่อประกอบกลับให้เหมือนเดิม</span></label>
+              <label class="opt"><input type="radio" name="q1" value="c" /><span class="opt-key">C</span><span class="opt-text">แปลงชื่อโดเมนเป็น IP address</span></label>
+              <label class="opt"><input type="radio" name="q1" value="d" /><span class="opt-key">D</span><span class="opt-text">เข้ารหัสข้อมูลก่อนส่ง</span></label>
+            </div>
+            <div class="q-feedback"><div class="q-feedback-inner"><p class="q-verdict" aria-live="polite"></p><p class="q-explain">TCP แบ่งข้อมูลออกเป็นส่วนๆ เรียกว่า packet และต่อประกอบ packet ให้กลับมาเหมือนเดิม · การส่ง/routing packet เป็นหน้าที่ของ IP · การแปลงชื่อโดเมนเป็น IP เป็นหน้าที่ของ DNS</p></div></div>
+          </fieldset>
+
+          <fieldset class="q" data-answer="b">
+            <legend class="q-head"><span class="q-num">02</span><span class="q-text">IP (Internet Protocol) ทำหน้าที่หลักคืออะไร?</span></legend>
+            <div class="q-options">
+              <label class="opt"><input type="radio" name="q2" value="a" /><span class="opt-key">A</span><span class="opt-text">แบ่งข้อมูลออกเป็นส่วนๆ</span></label>
+              <label class="opt"><input type="radio" name="q2" value="b" /><span class="opt-key">B</span><span class="opt-text">ส่ง packet หรือทำการ routing ให้ถึงจุดหมายปลายทาง</span></label>
+              <label class="opt"><input type="radio" name="q2" value="c" /><span class="opt-key">C</span><span class="opt-text">แสดงผลหน้าเว็บ</span></label>
+              <label class="opt"><input type="radio" name="q2" value="d" /><span class="opt-key">D</span><span class="opt-text">ตรวจสอบไวยากรณ์ HTML</span></label>
+            </div>
+            <div class="q-feedback"><div class="q-feedback-inner"><p class="q-verdict" aria-live="polite"></p><p class="q-explain">IP ทำหน้าที่ส่ง packet หรือทำการ routing ให้ถึงจุดหมายปลายทาง · การแบ่งข้อมูลเป็นส่วนๆ คือหน้าที่ของ TCP · การแปลชุดคำสั่งเพื่อแสดงผลเป็นหน้าที่ของ browser</p></div></div>
+          </fieldset>
+
+          <fieldset class="q" data-answer="b">
+            <legend class="q-head"><span class="q-num">03</span><span class="q-text">รูปแบบ IPv4 แต่ละส่วน (###) มีค่าได้ในช่วงใด?</span></legend>
+            <div class="q-options">
+              <label class="opt"><input type="radio" name="q3" value="a" /><span class="opt-key">A</span><span class="opt-text">0-99</span></label>
+              <label class="opt"><input type="radio" name="q3" value="b" /><span class="opt-key">B</span><span class="opt-text">0-255</span></label>
+              <label class="opt"><input type="radio" name="q3" value="c" /><span class="opt-key">C</span><span class="opt-text">1-256</span></label>
+              <label class="opt"><input type="radio" name="q3" value="d" /><span class="opt-key">D</span><span class="opt-text">0-999</span></label>
+            </div>
+            <div class="q-feedback"><div class="q-feedback-inner"><p class="q-verdict" aria-live="polite"></p><p class="q-explain">IPv4 อยู่ในรูป ###.###.###.### แต่ละ ### มีค่าได้ 2<sup>8</sup> = 256 ค่า เริ่มนับจาก 0 จึงเป็น 0 ถึง 255 (เช่น 64.236.16.116)</p></div></div>
+          </fieldset>
+
+          <fieldset class="q" data-answer="c">
+            <legend class="q-head"><span class="q-num">04</span><span class="q-text">Port หมายเลข 80 ใช้กับ service ใด?</span></legend>
+            <div class="q-options">
+              <label class="opt"><input type="radio" name="q4" value="a" /><span class="opt-key">A</span><span class="opt-text">FTP</span></label>
+              <label class="opt"><input type="radio" name="q4" value="b" /><span class="opt-key">B</span><span class="opt-text">Telnet</span></label>
+              <label class="opt"><input type="radio" name="q4" value="c" /><span class="opt-key">C</span><span class="opt-text">HTTP</span></label>
+              <label class="opt"><input type="radio" name="q4" value="d" /><span class="opt-key">D</span><span class="opt-text">SMTP</span></label>
+            </div>
+            <div class="q-feedback"><div class="q-feedback-inner"><p class="q-verdict" aria-live="polite"></p><p class="q-explain">HTTP = 80 · FTP = 21 · Telnet = 23 · SMTP = 25</p></div></div>
+          </fieldset>
+
+          <fieldset class="q" data-answer="b">
+            <legend class="q-head"><span class="q-num">05</span><span class="q-text">Domain Name Server (DNS) มีหน้าที่อะไร?</span></legend>
+            <div class="q-options">
+              <label class="opt"><input type="radio" name="q5" value="a" /><span class="opt-key">A</span><span class="opt-text">เก็บไฟล์เว็บเพจ</span></label>
+              <label class="opt"><input type="radio" name="q5" value="b" /><span class="opt-key">B</span><span class="opt-text">จับคู่ระหว่าง IP Address กับ Domain name</span></label>
+              <label class="opt"><input type="radio" name="q5" value="c" /><span class="opt-key">C</span><span class="opt-text">เข้ารหัสข้อมูลการสื่อสาร</span></label>
+              <label class="opt"><input type="radio" name="q5" value="d" /><span class="opt-key">D</span><span class="opt-text">แบ่งข้อมูลเป็น packet</span></label>
+            </div>
+            <div class="q-feedback"><div class="q-feedback-inner"><p class="q-verdict" aria-live="polite"></p><p class="q-explain">DNS จับคู่ระหว่าง IP Address กับ Domain name เช่น www.google.com. = 66.249.89.104 · การเก็บหน้าเว็บเป็นหน้าที่ของ Web Server · การแบ่ง packet เป็นหน้าที่ของ TCP</p></div></div>
+          </fieldset>
+
+          <fieldset class="q" data-answer="b">
+            <legend class="q-head"><span class="q-num">06</span><span class="q-text">WWW (World Wide Web) เปิดตัวขึ้นในปีใด และโดยใคร?</span></legend>
+            <div class="q-options">
+              <label class="opt"><input type="radio" name="q6" value="a" /><span class="opt-key">A</span><span class="opt-text">1969 โดย ARPA</span></label>
+              <label class="opt"><input type="radio" name="q6" value="b" /><span class="opt-key">B</span><span class="opt-text">1992 โดย Tim Berners-Lee</span></label>
+              <label class="opt"><input type="radio" name="q6" value="c" /><span class="opt-key">C</span><span class="opt-text">1974 โดยทีม TCP</span></label>
+              <label class="opt"><input type="radio" name="q6" value="d" /><span class="opt-key">D</span><span class="opt-text">1983 โดยทีม DNS</span></label>
+            </div>
+            <div class="q-feedback"><div class="q-feedback-inner"><p class="q-verdict" aria-live="polite"></p><p class="q-explain">"Introduced in 1992 by Tim Berners-Lee" · 1969 คือปีที่ติดตั้ง ARPANET node แรก · 1974 เผยแพร่การออกแบบ TCP · 1983 ออกแบบ DNS</p></div></div>
+          </fieldset>
+
+          <fieldset class="q" data-answer="c">
+            <legend class="q-head"><span class="q-num">07</span><span class="q-text">WWW ใช้ protocol ใดในการสื่อสารและแลกเปลี่ยนข้อมูล?</span></legend>
+            <div class="q-options">
+              <label class="opt"><input type="radio" name="q7" value="a" /><span class="opt-key">A</span><span class="opt-text">FTP</span></label>
+              <label class="opt"><input type="radio" name="q7" value="b" /><span class="opt-key">B</span><span class="opt-text">SMTP</span></label>
+              <label class="opt"><input type="radio" name="q7" value="c" /><span class="opt-key">C</span><span class="opt-text">HTTP</span></label>
+              <label class="opt"><input type="radio" name="q7" value="d" /><span class="opt-key">D</span><span class="opt-text">DNS</span></label>
+            </div>
+            <div class="q-feedback"><div class="q-feedback-inner"><p class="q-verdict" aria-live="polite"></p><p class="q-explain">WWW ใช้ HTTP protocol ในการสื่อสารและแลกเปลี่ยนข้อมูล — browser ส่ง HTTP request ไปยัง Web Server แล้วได้ response กลับมา</p></div></div>
+          </fieldset>
+
+          <fieldset class="q" data-answer="c">
+            <legend class="q-head"><span class="q-num">08</span><span class="q-text">ในโครงสร้าง URL http://user:pass@www.example.com:8080/demo/index.html ส่วน "8080" คืออะไร?</span></legend>
+            <div class="q-options">
+              <label class="opt"><input type="radio" name="q8" value="a" /><span class="opt-key">A</span><span class="opt-text">protocol</span></label>
+              <label class="opt"><input type="radio" name="q8" value="b" /><span class="opt-key">B</span><span class="opt-text">domain name</span></label>
+              <label class="opt"><input type="radio" name="q8" value="c" /><span class="opt-key">C</span><span class="opt-text">port</span></label>
+              <label class="opt"><input type="radio" name="q8" value="d" /><span class="opt-key">D</span><span class="opt-text">path</span></label>
+            </div>
+            <div class="q-feedback"><div class="q-feedback-inner"><p class="q-verdict" aria-live="polite"></p><p class="q-explain">http = protocol · user:pass = username:password · www.example.com = domain name · 8080 (หลังเครื่องหมาย :) = port · /demo/index.html = path</p></div></div>
+          </fieldset>
+
+          <fieldset class="q" data-answer="b">
+            <legend class="q-head"><span class="q-num">09</span><span class="q-text">Router/Gateway ทำหน้าที่อะไรในองค์ประกอบของอินเทอร์เน็ต?</span></legend>
+            <div class="q-options">
+              <label class="opt"><input type="radio" name="q9" value="a" /><span class="opt-key">A</span><span class="opt-text">ดูแลความปลอดภัยของข้อมูลเข้า-ออก</span></label>
+              <label class="opt"><input type="radio" name="q9" value="b" /><span class="opt-key">B</span><span class="opt-text">เชื่อมโยง network 2 เครือข่ายเข้าด้วยกัน</span></label>
+              <label class="opt"><input type="radio" name="q9" value="c" /><span class="opt-key">C</span><span class="opt-text">แปลงชื่อโดเมนเป็น IP</span></label>
+              <label class="opt"><input type="radio" name="q9" value="d" /><span class="opt-key">D</span><span class="opt-text">แสดงผลหน้าเว็บ</span></label>
+            </div>
+            <div class="q-feedback"><div class="q-feedback-inner"><p class="q-verdict" aria-live="polite"></p><p class="q-explain">Router or gateway เป็นอุปกรณ์ที่เชื่อมโยง network 2 เครือข่ายเข้าด้วยกัน · การดูแลความปลอดภัยของข้อมูลเข้า-ออกเป็นหน้าที่ของ Firewall</p></div></div>
+          </fieldset>
+
+          <fieldset class="q" data-answer="b">
+            <legend class="q-head"><span class="q-num">10</span><span class="q-text">HTML tag เป็น case sensitive หรือไม่?</span></legend>
+            <div class="q-options">
+              <label class="opt"><input type="radio" name="q10" value="a" /><span class="opt-key">A</span><span class="opt-text">เป็น case sensitive เสมอ</span></label>
+              <label class="opt"><input type="radio" name="q10" value="b" /><span class="opt-key">B</span><span class="opt-text">เป็น case insensitive แต่นิยมใช้ตัวพิมพ์เล็ก</span></label>
+              <label class="opt"><input type="radio" name="q10" value="c" /><span class="opt-key">C</span><span class="opt-text">ขึ้นกับ browser</span></label>
+              <label class="opt"><input type="radio" name="q10" value="d" /><span class="opt-key">D</span><span class="opt-text">ขึ้นกับ DOCTYPE ที่ใช้</span></label>
+            </div>
+            <div class="q-feedback"><div class="q-feedback-inner"><p class="q-verdict" aria-live="polite"></p><p class="q-explain">HTML tags เป็น case insensitive ใช้ตัวพิมพ์ใหญ่หรือเล็กก็ได้ แต่นิยมใช้ตัวพิมพ์เล็ก · สิ่งที่เป็น case sensitive คือ character entities</p></div></div>
+          </fieldset>
+
+          <fieldset class="q" data-answer="b">
+            <legend class="q-head"><span class="q-num">11</span><span class="q-text">กฎการ nesting tag ที่ถูกต้องคือข้อใด?</span></legend>
+            <div class="q-options">
+              <label class="opt"><input type="radio" name="q11" value="a" /><span class="opt-key">A</span><span class="opt-text">tag ที่ซ้อนกันสามารถ overlap กันได้</span></label>
+              <label class="opt"><input type="radio" name="q11" value="b" /><span class="opt-key">B</span><span class="opt-text">tag ที่ซ้อนกันต้องปิดตามลำดับย้อนกลับ ห้าม overlap</span></label>
+              <label class="opt"><input type="radio" name="q11" value="c" /><span class="opt-key">C</span><span class="opt-text">ห้ามซ้อน tag เด็ดขาด</span></label>
+              <label class="opt"><input type="radio" name="q11" value="d" /><span class="opt-key">D</span><span class="opt-text">ต้องซ้อนได้สูงสุด 3 ชั้นเท่านั้น</span></label>
+            </div>
+            <div class="q-feedback"><div class="q-feedback-inner"><p class="q-verdict" aria-live="polite"></p><p class="q-explain">"These regions can be nested, but not overlap." — เปิด tag1 แล้วเปิด tag2 ต้องปิด tag2 ก่อนปิด tag1 เสมอ</p></div></div>
+          </fieldset>
+
+          <fieldset class="q" data-answer="c">
+            <legend class="q-head"><span class="q-num">12</span><span class="q-text">tag ใดต่อไปนี้ไม่จำเป็นต้องมี closing tag?</span></legend>
+            <div class="q-options">
+              <label class="opt"><input type="radio" name="q12" value="a" /><span class="opt-key">A</span><span class="opt-text">&lt;p&gt;</span></label>
+              <label class="opt"><input type="radio" name="q12" value="b" /><span class="opt-key">B</span><span class="opt-text">&lt;div&gt;</span></label>
+              <label class="opt"><input type="radio" name="q12" value="c" /><span class="opt-key">C</span><span class="opt-text">&lt;br&gt;</span></label>
+              <label class="opt"><input type="radio" name="q12" value="d" /><span class="opt-key">D</span><span class="opt-text">&lt;section&gt;</span></label>
+            </div>
+            <div class="q-feedback"><div class="q-feedback-inner"><p class="q-verdict" aria-live="polite"></p><p class="q-explain">&lt;br&gt; (line break) เป็นแค่การบอกตำแหน่งให้ขึ้นบรรทัดใหม่ ไม่ต้องใส่ closing tag</p></div></div>
+          </fieldset>
+
+          <fieldset class="q" data-answer="b">
+            <legend class="q-head"><span class="q-num">13</span><span class="q-text">&lt;!DOCTYPE html&gt; ต้องอยู่ตำแหน่งใดของเอกสาร?</span></legend>
+            <div class="q-options">
+              <label class="opt"><input type="radio" name="q13" value="a" /><span class="opt-key">A</span><span class="opt-text">ในส่วน &lt;head&gt;</span></label>
+              <label class="opt"><input type="radio" name="q13" value="b" /><span class="opt-key">B</span><span class="opt-text">บรรทัดแรกสุด ก่อน &lt;html&gt;</span></label>
+              <label class="opt"><input type="radio" name="q13" value="c" /><span class="opt-key">C</span><span class="opt-text">ในส่วน &lt;body&gt;</span></label>
+              <label class="opt"><input type="radio" name="q13" value="d" /><span class="opt-key">D</span><span class="opt-text">บรรทัดสุดท้ายของไฟล์</span></label>
+            </div>
+            <div class="q-feedback"><div class="q-feedback-inner"><p class="q-verdict" aria-live="polite"></p><p class="q-explain">"The HTML document declaration must be the very first thing in your HTML document, before the &lt;html&gt; tag." และ &lt;html&gt; ครอบทุก element ยกเว้น &lt;!DOCTYPE&gt;</p></div></div>
+          </fieldset>
+
+          <fieldset class="q" data-answer="b">
+            <legend class="q-head"><span class="q-num">14</span><span class="q-text">เมื่อ browser พบ HTML tag ที่ไม่รู้จัก (unknown tag) จะทำอย่างไร?</span></legend>
+            <div class="q-options">
+              <label class="opt"><input type="radio" name="q14" value="a" /><span class="opt-key">A</span><span class="opt-text">แสดง error ทันที</span></label>
+              <label class="opt"><input type="radio" name="q14" value="b" /><span class="opt-key">B</span><span class="opt-text">ข้ามการแปล tag นั้นไปโดยไม่แสดง error</span></label>
+              <label class="opt"><input type="radio" name="q14" value="c" /><span class="opt-key">C</span><span class="opt-text">ปฏิเสธการแสดงผลทั้งหน้า</span></label>
+              <label class="opt"><input type="radio" name="q14" value="d" /><span class="opt-key">D</span><span class="opt-text">แปลง tag นั้นเป็น &lt;div&gt; อัตโนมัติ</span></label>
+            </div>
+            <div class="q-feedback"><div class="q-feedback-inner"><p class="q-verdict" aria-live="polite"></p><p class="q-explain">"Unknown tags are ignored." browser ยังทำงานได้โดยไม่บอก error และข้ามการแปลของ tag ที่ไม่ได้บัญญัติไว้ เพื่อให้สะดวกต่อการเพิ่ม tag ใหม่ๆ ในอนาคต</p></div></div>
+          </fieldset>
+
+          <fieldset class="q" data-answer="b">
+            <legend class="q-head"><span class="q-num">15</span><span class="q-text">attribute href ใช้กับ tag ใด?</span></legend>
+            <div class="q-options">
+              <label class="opt"><input type="radio" name="q15" value="a" /><span class="opt-key">A</span><span class="opt-text">&lt;img&gt;</span></label>
+              <label class="opt"><input type="radio" name="q15" value="b" /><span class="opt-key">B</span><span class="opt-text">&lt;a&gt;</span></label>
+              <label class="opt"><input type="radio" name="q15" value="c" /><span class="opt-key">C</span><span class="opt-text">&lt;table&gt;</span></label>
+              <label class="opt"><input type="radio" name="q15" value="d" /><span class="opt-key">D</span><span class="opt-text">&lt;li&gt;</span></label>
+            </div>
+            <div class="q-feedback"><div class="q-feedback-inner"><p class="q-verdict" aria-live="polite"></p><p class="q-explain">&lt;a&gt; (Anchor) ระบุปลายทางของลิงก์ด้วย attribute href · &lt;img&gt; ใช้ src และ alt</p></div></div>
+          </fieldset>
+
+          <fieldset class="q" data-answer="b">
+            <legend class="q-head"><span class="q-num">16</span><span class="q-text">Relative path ต่างจาก Absolute path อย่างไร?</span></legend>
+            <div class="q-options">
+              <label class="opt"><input type="radio" name="q16" value="a" /><span class="opt-key">A</span><span class="opt-text">Relative path คือ URL เต็มผ่านอินเทอร์เน็ต</span></label>
+              <label class="opt"><input type="radio" name="q16" value="b" /><span class="opt-key">B</span><span class="opt-text">Relative path อ้างอิงจาก document ปัจจุบัน เช่น ไฟล์ใน directory เดียวกัน</span></label>
+              <label class="opt"><input type="radio" name="q16" value="c" /><span class="opt-key">C</span><span class="opt-text">ทั้งสองแบบเหมือนกันทุกประการ</span></label>
+              <label class="opt"><input type="radio" name="q16" value="d" /><span class="opt-key">D</span><span class="opt-text">Absolute path ใช้ได้เฉพาะรูปภาพ</span></label>
+            </div>
+            <div class="q-feedback"><div class="q-feedback-inner"><p class="q-verdict" aria-live="polite"></p><p class="q-explain">Relative path อ้างอิง resource ที่เข้าถึงได้จาก document ปัจจุบัน เช่น &lt;a href="filename.html"&gt; · URL แบบเต็มที่เข้าถึงผ่านอินเทอร์เน็ตคือ Absolute path เช่น http://www.google.com</p></div></div>
+          </fieldset>
+
+          <fieldset class="q" data-answer="a">
+            <legend class="q-head"><span class="q-num">17</span><span class="q-text">&lt;ol&gt; กับ &lt;ul&gt; ต่างกันอย่างไร?</span></legend>
+            <div class="q-options">
+              <label class="opt"><input type="radio" name="q17" value="a" /><span class="opt-key">A</span><span class="opt-text">&lt;ol&gt; แสดงตัวเลขลำดับ, &lt;ul&gt; แสดง bullet point</span></label>
+              <label class="opt"><input type="radio" name="q17" value="b" /><span class="opt-key">B</span><span class="opt-text">&lt;ol&gt; ใช้กับรูปภาพเท่านั้น</span></label>
+              <label class="opt"><input type="radio" name="q17" value="c" /><span class="opt-key">C</span><span class="opt-text">&lt;ul&gt; ต้องอยู่ใน &lt;table&gt; เท่านั้น</span></label>
+              <label class="opt"><input type="radio" name="q17" value="d" /><span class="opt-key">D</span><span class="opt-text">ไม่มีความแตกต่างกัน</span></label>
+            </div>
+            <div class="q-feedback"><div class="q-feedback-inner"><p class="q-verdict" aria-live="polite"></p><p class="q-explain">&lt;ol&gt; = ordered list (ตัวเลขลำดับ) · &lt;ul&gt; = unordered list (bullet point) · ทั้งคู่ใช้ &lt;li&gt; สำหรับแต่ละรายการ</p></div></div>
+          </fieldset>
+
+          <fieldset class="q" data-answer="b">
+            <legend class="q-head"><span class="q-num">18</span><span class="q-text">attribute ใดของ &lt;img&gt; ใช้เพิ่มคำอธิบายรูปภาพเพื่อ accessibility?</span></legend>
+            <div class="q-options">
+              <label class="opt"><input type="radio" name="q18" value="a" /><span class="opt-key">A</span><span class="opt-text">src</span></label>
+              <label class="opt"><input type="radio" name="q18" value="b" /><span class="opt-key">B</span><span class="opt-text">alt</span></label>
+              <label class="opt"><input type="radio" name="q18" value="c" /><span class="opt-key">C</span><span class="opt-text">href</span></label>
+              <label class="opt"><input type="radio" name="q18" value="d" /><span class="opt-key">D</span><span class="opt-text">title เท่านั้น</span></label>
+            </div>
+            <div class="q-feedback"><div class="q-feedback-inner"><p class="q-verdict" aria-live="polite"></p><p class="q-explain">alt เพิ่มรายละเอียดของรูปภาพสำหรับผู้ใช้ที่เข้าถึงรูปไม่ได้ หรือผู้พิการทางสายตาที่ใช้ screen reader · src ระบุ URL/path ของไฟล์รูป</p></div></div>
+          </fieldset>
+
+          <fieldset class="q" data-answer="b">
+            <legend class="q-head"><span class="q-num">19</span><span class="q-text">&amp;lt; เป็น character entity ที่แสดงผลเป็นสัญลักษณ์ใด?</span></legend>
+            <div class="q-options">
+              <label class="opt"><input type="radio" name="q19" value="a" /><span class="opt-key">A</span><span class="opt-text">&gt;</span></label>
+              <label class="opt"><input type="radio" name="q19" value="b" /><span class="opt-key">B</span><span class="opt-text">&lt;</span></label>
+              <label class="opt"><input type="radio" name="q19" value="c" /><span class="opt-key">C</span><span class="opt-text">&amp;</span></label>
+              <label class="opt"><input type="radio" name="q19" value="d" /><span class="opt-key">D</span><span class="opt-text">"</span></label>
+            </div>
+            <div class="q-feedback"><div class="q-feedback-inner"><p class="q-verdict" aria-live="polite"></p><p class="q-explain">&amp;lt; (หรือ &amp;#60;) = less than (&lt;) · &amp;gt; = &gt; · &amp;amp; = &amp; · &amp;quot; = "</p></div></div>
+          </fieldset>
+
+          <fieldset class="q" data-answer="b">
+            <legend class="q-head"><span class="q-num">20</span><span class="q-text">attribute ใดใช้ขยายเซลล์ตารางให้ครอบคลุมหลายหลัก (column)?</span></legend>
+            <div class="q-options">
+              <label class="opt"><input type="radio" name="q20" value="a" /><span class="opt-key">A</span><span class="opt-text">rowspan</span></label>
+              <label class="opt"><input type="radio" name="q20" value="b" /><span class="opt-key">B</span><span class="opt-text">colspan</span></label>
+              <label class="opt"><input type="radio" name="q20" value="c" /><span class="opt-key">C</span><span class="opt-text">cellpadding</span></label>
+              <label class="opt"><input type="radio" name="q20" value="d" /><span class="opt-key">D</span><span class="opt-text">width</span></label>
+            </div>
+            <div class="q-feedback"><div class="q-feedback-inner"><p class="q-verdict" aria-live="polite"></p><p class="q-explain">colspan ขยายเซลล์ให้ครอบคลุมหลายหลัก (&lt;td colspan="3"&gt; กว้างไปทางขวา 3 หลัก) · rowspan ขยายให้ครอบคลุมหลายแถว</p></div></div>
+          </fieldset>
+
+          <div class="quiz-result" id="quiz-result" hidden tabindex="-1">
+            <div class="score-ring" aria-hidden="true">
+              <svg viewBox="0 0 120 120">
+                <circle class="ring-track" cx="60" cy="60" r="52" />
+                <circle class="ring-fill" cx="60" cy="60" r="52" pathLength="100" />
+              </svg>
+              <span class="score-pct"><span id="score-pct">0</span>%</span>
+            </div>
+            <div class="score-body">
+              <p class="score-line" role="status">ได้ <strong id="score-num">0</strong> / 20 คะแนน</p>
+              <p class="score-msg" id="score-msg"></p>
+              <div class="score-actions">
+                <button class="btn btn--ghost btn--sm" type="button" id="toggle-wrong" aria-pressed="false">ดูเฉพาะข้อที่ผิด</button>
+              </div>
+            </div>
+          </div>
+
+          <div class="quiz-bar">
+            <div class="quiz-progress">
+              <span class="quiz-count"><span id="answered">0</span> / 20 ข้อ</span>
+              <span class="progress" aria-hidden="true"><span class="progress-fill" id="progress-fill"></span></span>
+              <span class="quiz-hint" id="quiz-hint" aria-live="polite"></span>
+            </div>
+            <div class="quiz-actions">
+              <button class="btn btn--ghost" type="reset" id="quiz-reset">ทำใหม่</button>
+              <button class="btn btn--primary" type="submit" id="quiz-submit">ตรวจคำตอบ</button>
+            </div>
+          </div>
+        </form>
+      </section>
+
+    </div>
+  </main>
+
+  <footer class="site-footer">
+    <div class="wrap">
+      <p>สรุปจากสไลด์ ITDS241 Web Technologies and Applications (Faculty of ICT, Mahidol University) เพื่อใช้ทบทวนส่วนตัว — ถ้าเนื้อหาขัดกับสไลด์ ให้ยึดสไลด์เป็นหลัก</p>
+    </div>
+  </footer>
+
+  <script src="assets/js/widgets.js" defer></script>
+  <script src="assets/js/network.js" defer></script>
+</body>
+</html>

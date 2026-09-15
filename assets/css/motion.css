@@ -53,6 +53,13 @@
 /* hover เปลี่ยนสีเท่านั้น (เป็นลิงก์ไปหน้าอื่น ไม่ต้องยก) */
 .chapter-link { transition: color var(--dur) var(--ease-out), border-color var(--dur) var(--ease-out), background-color var(--dur) var(--ease-out); }
 
+/* ----------------------------------------- Subject switch & widgets (สถานะเปลี่ยน = สีเปลี่ยน) */
+.subject-btn,
+.seg button { transition: color var(--dur) var(--ease-out), border-color var(--dur) var(--ease-out), background-color var(--dur) var(--ease-out); }
+.url-part { transition: background-color var(--dur) var(--ease-out), opacity var(--dur) var(--ease-out); }
+.url-legend > div { transition: opacity var(--dur) var(--ease-out); }
+.demo-status { transition: color var(--dur) var(--ease-out); }
+
 /* ---------------------------------------------------------------- Tabs */
 /* pill เลื่อนตามแท็บ บอกทิศทางว่ามาจากไหนไปไหน (.is-ready กันไม่ให้ animate ตอนโหลดหน้า) */
 .tabs.is-ready .tab-indicator {

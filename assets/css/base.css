@@ -32,6 +32,9 @@ body {
 
 img, svg { max-width: 100%; }
 
+/* attribute hidden ต้องชนะ display ของ component เสมอ (เช่น .quiz-result ที่เป็น grid) */
+[hidden] { display: none !important; }
+
 a { color: var(--iris-300); text-underline-offset: 3px; }
 a:hover { color: var(--iris-200); }
 

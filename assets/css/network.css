@@ -264,7 +264,8 @@ html:not(.js) .panel-actions { display: none; }
   color: var(--iris-200);
   margin-bottom: var(--space-3);
 }
-.topic h5 {
+.topic h5,
+.sheet h5 {
   font-family: var(--font-display);
   font-size: var(--fs-md);
   margin: 0 0 var(--space-2);
@@ -290,7 +291,7 @@ html:not(.js) .panel-actions { display: none; }
   border-radius: 4px;
 }
 .topic var { font-family: var(--font-mono); font-style: normal; color: var(--iris-300); }
-.topic code:not(.formula) {
+.topic :not(pre) > code:not(.formula) {
   background: var(--graphite-800);
   border: 1px solid var(--border-subtle);
   padding: 1px 6px;
@@ -423,7 +424,7 @@ ol.frame {
   border: 1px solid;
 }
 .tag--ded { color: var(--iris-200); border-color: var(--iris-800); background: var(--iris-900); }
-.tag--shr { color: var(--warn); border-color: #5a4a2c; background: #28221a; }
+.tag--shr { color: var(--warn); border-color: var(--warn-border); background: var(--warn-bg); }
 
 /* ---- Cheat sheet ---- */
 .sheet {
@@ -739,8 +740,385 @@ ol.frame {
 .quiz-hint:empty { display: none; }
 .quiz-actions { display: flex; gap: var(--space-2); }
 
+/* ==========================================================================
+   Course nav: เลือกวิชา (Network / Web) ก่อน แล้วค่อยเลือกบทของวิชานั้น
+   ไม่มี JS → ซ่อนปุ่มวิชาและแสดงบททุกวิชาพร้อมป้ายชื่อวิชา
+   ========================================================================== */
+.course-nav { margin-bottom: var(--space-6); }
+.course-nav .chapter-nav { margin-bottom: 0; }
+.subject-switch {
+  display: inline-flex;
+  flex-wrap: wrap;
+  gap: 4px;
+  padding: 4px;
+  margin-bottom: var(--space-3);
+  border-radius: var(--radius-pill);
+  background: var(--graphite-950);
+  border: 1px solid var(--border);
+}
+.subject-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  min-height: 44px;
+  padding: 6px 18px;
+  border: 1px solid transparent;
+  border-radius: var(--radius-pill);
+  background: transparent;
+  color: var(--text-muted);
+  font-weight: 600;
+  font-size: var(--fs-sm);
+  cursor: pointer;
+}
+.subject-btn:hover { color: var(--text); }
+.subject-btn[aria-pressed="true"] {
+  background: var(--iris-900);
+  border-color: var(--iris-500);
+  color: var(--iris-200);
+}
+.subject-code { font-family: var(--font-mono); font-size: var(--fs-xs); font-weight: 500; color: var(--text-faint); }
+.subject-btn[aria-pressed="true"] .subject-code { color: var(--iris-300); }
+html:not(.js) .subject-switch { display: none; }
+html:not(.js) .course-nav .chapter-nav + .chapter-nav { margin-top: var(--space-4); }
+html:not(.js) .course-nav .chapter-nav::before {
+  content: attr(data-label);
+  flex-basis: 100%;
+  grid-column: 1 / -1;
+  font-family: var(--font-mono);
+  font-size: var(--fs-xs);
+  color: var(--text-faint);
+}
+
+/* ==========================================================================
+   เนื้อหาแบบละเอียด: code block, callout แยกประเภท, diagram, timeline
+   ========================================================================== */
+.code-block {
+  margin: var(--space-3) 0 var(--space-4);
+  padding: 12px 16px;
+  overflow-x: auto;
+  background: var(--graphite-950);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  font-family: var(--font-mono);
+  font-size: 0.86rem;
+  line-height: 1.65;
+  color: var(--text);
+  tab-size: 2;
+}
+.code-block > code { font-size: inherit; }
+.tok-tag { color: var(--iris-300); }
+.tok-attr { color: var(--warn); }
+.tok-val { color: var(--success); }
+.tok-entity { color: var(--danger); }
+.tok-doctype { color: var(--text-muted); }
+.tok-comment { color: var(--text-faint); font-style: italic; }
+
+/* ผลลัพธ์จริงของโค้ดตัวอย่าง (JS สร้าง iframe sandbox ต่อท้าย pre[data-render]) */
+.render-preview { margin: calc(-1 * var(--space-2)) 0 var(--space-4); }
+.render-preview figcaption {
+  margin-bottom: 4px;
+  font-family: var(--font-mono);
+  font-size: var(--fs-xs);
+  color: var(--text-faint);
+}
+.render-preview iframe {
+  display: block;
+  width: 100%;
+  border: 1px solid var(--border-strong);
+  border-radius: var(--radius);
+  background: var(--text);
+}
+
+.callout p { margin: 0 0 6px; }
+.callout p:last-child { margin-bottom: 0; }
+.callout-label {
+  display: block;
+  margin-bottom: 4px;
+  font-family: var(--font-mono);
+  font-size: var(--fs-xs);
+  letter-spacing: 0.04em;
+  color: var(--iris-300);
+}
+.callout--def { border-left: 3px solid var(--iris-400); }
+.callout--warn { border-color: var(--warn-border); background: var(--warn-bg); }
+.callout--warn .callout-label,
+.callout--warn strong { color: var(--warn); }
+.callout--why { border-color: var(--border); border-left: 3px solid var(--iris-500); background: var(--graphite-800); }
+
+/* diagram: SVG สไตล์ technical drawing บนพื้นตาราง dot (เลื่อนแนวนอนเองบนจอแคบ) */
+.diagram { margin: var(--space-4) 0 var(--space-5); }
+.diagram-scroll {
+  overflow-x: auto;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  background-color: var(--graphite-950);
+  background-image: radial-gradient(circle at 1px 1px, rgba(198, 179, 239, 0.09) 1px, transparent 0);
+  background-size: 18px 18px;
+}
+.diagram svg { display: block; width: 100%; height: auto; min-width: 600px; max-width: none; }
+.diagram figcaption { margin-top: var(--space-2); font-size: var(--fs-xs); color: var(--text-faint); }
+.dg-defs { position: absolute; width: 0; height: 0; overflow: hidden; }
+.dg-box { fill: var(--graphite-850); stroke: var(--border-strong); stroke-width: 1.2; }
+.dg-box--accent { fill: var(--iris-900); stroke: var(--iris-500); }
+.dg-box--ok { fill: var(--success-bg); stroke: var(--success-border); }
+.dg-box--bad { fill: var(--danger-bg); stroke: var(--danger-border); }
+.dg-box--warn { fill: var(--warn-bg); stroke: var(--warn-border); }
+.dg-line { fill: none; stroke: var(--text-faint); stroke-width: 1.5; }
+.dg-line--accent { stroke: var(--iris-400); }
+.dg-line--ok { stroke: var(--success); }
+.dg-line--bad { stroke: var(--danger); }
+.dg-line--warn { stroke: var(--warn); }
+.dg-line--dash { stroke-dasharray: 5 4; }
+.dg-arrow { fill: var(--iris-400); }
+.dg-arrow--muted { fill: var(--text-faint); }
+.dg-arrow--ok { fill: var(--success); }
+.dg-arrow--bad { fill: var(--danger); }
+.dg-text { fill: var(--text); font-family: var(--font-body); font-size: 14px; }
+.dg-text--sm { fill: var(--text-muted); font-size: 12px; }
+.dg-text--ok { fill: var(--success); }
+.dg-text--bad { fill: var(--danger); }
+.dg-mono { fill: var(--iris-200); font-family: var(--font-mono); font-size: 13px; }
+.dg-mono--sm { fill: var(--iris-300); font-size: 11px; }
+.dg-mono--warn { fill: var(--warn); }
+
+/* timeline แนวนอน (จอแคบ → แนวตั้ง) */
+ol.tl-track {
+  position: relative;
+  list-style: none;
+  display: grid;
+  grid-auto-flow: column;
+  grid-auto-columns: minmax(0, 1fr);
+  gap: var(--space-3);
+  margin: var(--space-4) 0 var(--space-5);
+  padding: 0;
+}
+ol.tl-track::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 7px;
+  height: 2px;
+  background: var(--border-strong);
+}
+.tl-track li {
+  position: relative;
+  margin: 0;
+  padding-top: 26px;
+  font-size: var(--fs-sm);
+  line-height: 1.55;
+}
+.tl-track li::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background: var(--graphite-900);
+  border: 2px solid var(--iris-500);
+}
+.tl-track li.is-key::before { background: var(--iris-400); border-color: var(--iris-300); }
+.tl-year { display: block; font-family: var(--font-mono); font-size: var(--fs-sm); font-weight: 500; color: var(--iris-300); }
+.tl-text { display: block; color: var(--text-muted); }
+
+/* ---- Interactive: URL anatomy ---- */
+.url-anatomy {
+  margin: var(--space-3) 0 var(--space-4);
+  padding: var(--space-4);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  background: var(--graphite-950);
+}
+.url-line {
+  margin: 0 0 var(--space-3);
+  max-width: none !important;
+  font-family: var(--font-mono);
+  font-size: clamp(0.8rem, 2.3vw, 1.05rem);
+  line-height: 2.3;
+  overflow-wrap: anywhere;
+}
+.url-part {
+  font: inherit;
+  color: var(--text);
+  background: transparent;
+  border: 0;
+  border-bottom: 3px solid var(--part);
+  border-radius: 4px 4px 0 0;
+  padding: 2px 3px;
+  cursor: pointer;
+}
+.url-part:hover,
+.url-part[aria-pressed="true"] { background: var(--graphite-800); }
+.url-sep { color: var(--text-faint); }
+[data-part="protocol"] { --part: var(--iris-300); }
+[data-part="userinfo"] { --part: var(--danger); }
+[data-part="domain"] { --part: var(--success); }
+[data-part="port"] { --part: var(--warn); }
+[data-part="path"] { --part: var(--iris-500); }
+.url-legend { margin: 0; display: grid; gap: 6px; }
+.url-legend > div {
+  display: grid;
+  grid-template-columns: minmax(150px, auto) 1fr;
+  gap: var(--space-3);
+  padding: 8px 12px;
+  border-left: 3px solid var(--part);
+  border-radius: var(--radius-sm);
+  background: var(--graphite-850);
+  font-size: var(--fs-sm);
+}
+.url-legend dt { font-family: var(--font-mono); color: var(--text); }
+.url-legend dd { margin: 0; color: var(--text-muted); }
+.url-anatomy.has-selection .url-legend > div:not(.is-active) { opacity: 0.4; }
+.url-anatomy.has-selection .url-part:not([aria-pressed="true"]) { opacity: 0.55; }
+
+/* ---- Interactive: segmented buttons (ใช้ร่วมกันหลาย widget) ---- */
+.seg {
+  display: inline-flex;
+  flex-wrap: wrap;
+  gap: 4px;
+  padding: 4px;
+  margin-bottom: var(--space-3);
+  border-radius: var(--radius);
+  background: var(--graphite-950);
+  border: 1px solid var(--border);
+}
+.seg button {
+  min-height: 40px;
+  padding: 6px 14px;
+  border: 1px solid transparent;
+  border-radius: var(--radius-sm);
+  background: transparent;
+  color: var(--text-muted);
+  font-size: var(--fs-sm);
+  cursor: pointer;
+}
+.seg button:hover { color: var(--text); }
+.seg button[aria-pressed="true"] { background: var(--iris-900); border-color: var(--iris-500); color: var(--iris-200); }
+html:not(.js) .seg { display: none; }
+
+/* ---- Interactive: web layout preview (1 / 2 / 3 column) ---- */
+.layout-preview {
+  display: grid;
+  gap: 6px;
+  margin-inline: auto;
+  padding: var(--space-3);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  background: var(--graphite-950);
+}
+.layout-preview > * {
+  display: grid;
+  place-items: center;
+  min-height: 44px;
+  padding: 8px;
+  border: 1px dashed var(--border-strong);
+  border-radius: var(--radius-sm);
+  background: var(--graphite-800);
+  font-family: var(--font-mono);
+  font-size: var(--fs-xs);
+  color: var(--text-muted);
+  text-align: center;
+}
+.layout-preview .lp-main { min-height: 110px; background: var(--iris-900); border-color: var(--iris-600); color: var(--iris-200); }
+.layout-preview[data-cols="1"] { max-width: 240px; grid-template-columns: 1fr; grid-template-areas: "nav" "left" "main" "right" "footer"; }
+.layout-preview[data-cols="2"] { max-width: 440px; grid-template-columns: 1fr 1fr; grid-template-areas: "nav nav" "main right" "footer footer"; }
+.layout-preview[data-cols="2"] .lp-left { display: none; }
+.layout-preview[data-cols="3"] { max-width: 640px; grid-template-columns: 1fr 1.6fr 1fr; grid-template-areas: "nav nav nav" "left main right" "footer footer footer"; }
+.lp-nav { grid-area: nav; }
+.lp-left { grid-area: left; }
+.lp-main { grid-area: main; }
+.lp-right { grid-area: right; }
+.lp-footer { grid-area: footer; }
+.layout-caption { margin: var(--space-2) 0 0; text-align: center; font-size: var(--fs-xs); color: var(--text-faint); }
+
+/* ---- แผนผังตำแหน่ง semantic elements ---- */
+.semantic-map {
+  display: grid;
+  grid-template-columns: 1.4fr 1.4fr 1fr;
+  grid-template-areas: "header header header" "nav nav nav" "section article aside" "footer footer footer";
+  gap: 6px;
+  margin: var(--space-3) 0 var(--space-4);
+  padding: var(--space-3);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  background: var(--graphite-950);
+}
+.semantic-map > div {
+  padding: 10px 12px;
+  border: 1px solid var(--border-strong);
+  border-radius: var(--radius-sm);
+  background: var(--graphite-800);
+  font-size: var(--fs-xs);
+  color: var(--text-muted);
+}
+.topic .semantic-map > div > code {
+  display: block;
+  margin-bottom: 2px;
+  padding: 0;
+  border: 0;
+  background: none;
+  font-size: var(--fs-sm);
+  color: var(--iris-200);
+}
+.sm-header { grid-area: header; }
+.sm-nav { grid-area: nav; }
+.sm-section { grid-area: section; min-height: 96px; }
+.sm-article { grid-area: article; min-height: 96px; background: var(--iris-900) !important; border-color: var(--iris-600) !important; }
+.sm-aside { grid-area: aside; }
+.sm-footer { grid-area: footer; }
+
+/* ---- Interactive: demo box (pattern tester, validation demo, calculators) ---- */
+.demo-box {
+  margin: var(--space-3) 0 var(--space-4);
+  padding: var(--space-4);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  background: var(--graphite-800);
+  font-size: var(--fs-sm);
+}
+.demo-box-title {
+  display: block;
+  margin-bottom: var(--space-3);
+  font-family: var(--font-mono);
+  font-size: var(--fs-xs);
+  letter-spacing: 0.04em;
+  color: var(--iris-300);
+}
+.demo-fields { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 220px), 1fr)); gap: var(--space-3); }
+.demo-field { display: grid; gap: 4px; align-content: start; margin-bottom: var(--space-3); }
+.demo-field label { font-weight: 600; color: var(--text); }
+.demo-input {
+  width: 100%;
+  min-height: 44px;
+  padding: 8px 12px;
+  border: 1px solid var(--border-strong);
+  border-radius: var(--radius-sm);
+  background: var(--graphite-950);
+  color: var(--text);
+  font: inherit;
+}
+.demo-input:focus-visible { outline: 2px solid var(--iris-400); outline-offset: 2px; }
+.demo-hint { margin: 0; font-size: var(--fs-xs); color: var(--text-faint); }
+.demo-status { margin: var(--space-2) 0 0; min-height: 1.6em; font-weight: 600; color: var(--text-muted); }
+.demo-status.is-ok { color: var(--success); }
+.demo-status.is-bad { color: var(--danger); }
+
 /* ---- Responsive ---- */
+@media (max-width: 860px) {
+  ol.tl-track { grid-auto-flow: row; grid-auto-columns: auto; gap: var(--space-3); padding-left: 28px; }
+  ol.tl-track::before { left: 7px; right: auto; top: 4px; bottom: 4px; width: 2px; height: auto; }
+  .tl-track li { padding-top: 0; }
+  .tl-track li::before { left: -28px; top: 4px; }
+  .tl-year { display: inline; margin-right: 8px; }
+  .tl-text { display: inline; }
+}
 @media (max-width: 760px) {
+  .course-nav { margin-bottom: var(--space-5); }
+  .url-legend > div { grid-template-columns: 1fr; gap: 2px; }
+  .semantic-map { grid-template-columns: 1fr; grid-template-areas: "header" "nav" "section" "article" "aside" "footer"; }
+  .tabs--4 .tab { padding-inline: 4px; font-size: var(--fs-sm); }
   .course-hero { padding-block: var(--space-5) var(--space-5); }
   .chapter-nav { display: grid; grid-template-columns: 1fr 1fr; margin-bottom: var(--space-5); }
   .chapter-link { flex-direction: column; align-items: flex-start; gap: 0; padding: 8px 12px; }
