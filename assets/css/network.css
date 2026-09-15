@@ -3,8 +3,38 @@
    Animation ทั้งหมดอยู่ใน motion.css — ไฟล์นี้เป็นสถานะคงที่เท่านั้น
    ========================================================================== */
 
+/* ---- Chapter switcher (วิชาเดียวหลายบท: 1 ไฟล์ .html ต่อ 1 บท) ---- */
+.chapter-nav {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+  margin-bottom: var(--space-6);
+}
+.chapter-link {
+  display: inline-flex;
+  align-items: baseline;
+  gap: var(--space-2);
+  min-height: 44px;
+  padding: 10px 16px;
+  border-radius: var(--radius);
+  border: 1px solid var(--border);
+  background: var(--graphite-850);
+  color: var(--text-muted);
+  font-size: var(--fs-sm);
+  text-decoration: none;
+}
+.chapter-link:hover { color: var(--text); border-color: var(--iris-600); background: var(--iris-900); }
+.chapter-num { font-family: var(--font-mono); font-size: var(--fs-xs); color: var(--text-faint); }
+.chapter-name { font-weight: 600; }
+.chapter-link[aria-current="page"] {
+  border-color: var(--iris-500);
+  background: var(--iris-900);
+  color: var(--iris-200);
+}
+.chapter-link[aria-current="page"] .chapter-num { color: var(--iris-300); }
+
 /* ---- Course hero ---- */
-.course-hero { padding-block: var(--space-7) var(--space-6); }
+.course-hero { padding-block: var(--space-6) var(--space-6); }
 .course-hero h1 {
   font-size: var(--fs-hero);
   margin: var(--space-3) 0 var(--space-4);
@@ -403,6 +433,7 @@ html:not(.js) .panel-actions { display: none; }
 .sheet-card .table-scroll table { min-width: 0; }
 .sheet-card--wide .table-scroll table { min-width: 520px; }
 .sheet-card p { margin-bottom: var(--space-2); }
+.sheet-card .formula--wrap { white-space: normal; } /* สูตรในการ์ดแคบ: ตัดบรรทัดแทนการเลื่อน */
 .tight { margin: 0 0 var(--space-2); padding-left: 1.2em; }
 .tight li { margin-bottom: 4px; }
 .tight li::marker { color: var(--iris-500); }
@@ -419,7 +450,14 @@ html:not(.js) .panel-actions { display: none; }
 .defs div:last-child { border-bottom: 0; padding-bottom: 0; }
 .defs dt { font-family: var(--font-mono); color: var(--iris-300); font-size: 0.85rem; }
 .defs dd { margin: 0; color: var(--text-muted); }
-.defs--years div { grid-template-columns: 52px 1fr; }
+.defs--years div,
+.defs--codes div { grid-template-columns: 52px 1fr; }
+.defs--stack div { grid-template-columns: 1fr; gap: 0; } /* dt ยาว: วาง dd ใต้ dt แทนสองคอลัมน์ */
+.table-scroll td.nowrap { white-space: nowrap; }
+
+/* ตารางเทียบคุณสมบัติ: ใช้ทั้งสัญลักษณ์และข้อความ ไม่พึ่งสีอย่างเดียว */
+.table-scroll td.yes { color: var(--success); }
+.table-scroll td.no { color: var(--text-faint); }
 
 /* ---- Quiz ---- */
 .quiz { display: grid; gap: var(--space-4); }
@@ -674,6 +712,8 @@ html:not(.js) .panel-actions { display: none; }
 /* ---- Responsive ---- */
 @media (max-width: 760px) {
   .course-hero { padding-block: var(--space-5) var(--space-5); }
+  .chapter-nav { margin-bottom: var(--space-5); }
+  .chapter-link { flex: 1 1 0; flex-direction: column; align-items: flex-start; gap: 0; padding: 8px 12px; }
   .course-lede { font-size: var(--fs-md); }
   .tabs { display: flex; width: 100%; }
   .tab { flex: 1 1 0; justify-content: center; padding-inline: 10px; }
@@ -696,7 +736,7 @@ html:not(.js) .panel-actions { display: none; }
 
 /* ---- Print: พิมพ์ทุกแท็บ เปิด accordion ทั้งหมด พื้นขาว ---- */
 @media print {
-  .tabbar, .panel-actions, .quiz-bar, .toc { display: none !important; }
+  .tabbar, .panel-actions, .quiz-bar, .toc, .chapter-nav { display: none !important; }
   .panel { display: block !important; }
   .acc-panel { grid-template-rows: 1fr !important; visibility: visible !important; }
   .acc-item, .sheet-card, .q, .compare-col, .worked, .table-scroll th { background: #fff !important; box-shadow: none !important; }

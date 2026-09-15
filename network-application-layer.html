@@ -1,0 +1,762 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>ITDS231 บทที่ 2: Application Layer · โต๊ะทบทวน</title>
+<meta name="description" content="สรุปเนื้อหา ITDS231 Computer Networks บทที่ 2 Application Layer: หลักการของแอปพลิเคชันเครือข่าย, เว็บและ HTTP พร้อม cheat sheet และแบบฝึกหัด 20 ข้อ" />
+<meta name="theme-color" content="#17151a" />
+<link rel="icon" href="assets/favicon.svg" type="image/svg+xml" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link
+  href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500..700&family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans+Thai:wght@500;600&family=IBM+Plex+Sans+Thai+Looped:wght@400;500;600&display=swap"
+  rel="stylesheet"
+/>
+<link rel="stylesheet" href="assets/css/tokens.css" />
+<link rel="stylesheet" href="assets/css/base.css" />
+<link rel="stylesheet" href="assets/css/network.css" />
+<link rel="stylesheet" href="assets/css/motion.css" />
+<script>document.documentElement.classList.add("js");</script>
+</head>
+<body>
+  <a class="skip-link" href="#tabs">ข้ามไปที่เนื้อหา</a>
+
+  <header class="site-header">
+    <div class="wrap">
+      <a class="wordmark" href="index.html" aria-label="โต๊ะทบทวน หน้าแรก">
+        <img class="wordmark-mark" src="assets/favicon.svg" alt="" width="26" height="26" />
+        <span class="wordmark-text">โต๊ะ<span>ทบทวน</span></span>
+      </a>
+      <a class="crumb" href="index.html"><span class="arrow" aria-hidden="true">←</span> รายวิชาทั้งหมด</a>
+    </div>
+  </header>
+
+  <main>
+    <section class="course-hero wrap">
+      <nav class="chapter-nav" aria-label="บทของวิชา ITDS231">
+        <a class="chapter-link" href="network.html"><span class="chapter-num">บทที่ 1</span><span class="chapter-name">Intro &amp; Topology</span></a>
+        <a class="chapter-link" href="network-application-layer.html" aria-current="page"><span class="chapter-num">บทที่ 2</span><span class="chapter-name">Application Layer</span></a>
+      </nav>
+      <span class="eyebrow">ITDS231 · บทที่ 2 · Lecture 3 &amp; 4</span>
+      <h1>Application Layer</h1>
+      <p class="course-lede">ชั้นแอปพลิเคชัน ต่อจากบทที่ 1 — หลักการของแอปพลิเคชันเครือข่าย (Client-Server, P2P, process, socket, TCP/UDP, TLS) และเว็บกับ HTTP อ่านเนื้อหา ทบทวน cheat sheet แล้วลองทำแบบฝึกหัด 20 ข้อ</p>
+      <ul class="course-meta" aria-label="ข้อมูลบทเรียน">
+        <li class="chip chip--accent">สอบกลางภาค 28 ก.ย. – 2 ต.ค. 2569</li>
+        <li class="chip">2 ไฟล์สไลด์</li>
+        <li class="chip">แบบฝึกหัด 20 ข้อ</li>
+      </ul>
+    </section>
+
+    <div class="tabbar" id="tabs">
+      <div class="wrap">
+        <div class="tabs" role="tablist" aria-label="ส่วนของหน้า">
+          <button class="tab" role="tab" id="tab-content" aria-controls="content" aria-selected="true" type="button">
+            <svg class="tab-icon" viewBox="0 0 20 20" aria-hidden="true"><path d="M4 3.5h8.5L16 7v9.5H4z M12 3.5V7h4 M7 10h6 M7 13h4" /></svg>
+            เนื้อหา
+          </button>
+          <button class="tab" role="tab" id="tab-summary" aria-controls="summary" aria-selected="false" type="button">
+            <svg class="tab-icon" viewBox="0 0 20 20" aria-hidden="true"><path d="M3.5 4h13v12h-13z M3.5 8h13 M8.5 8v8" /></svg>
+            สรุป
+          </button>
+          <button class="tab" role="tab" id="tab-quiz" aria-controls="quiz" aria-selected="false" type="button">
+            <svg class="tab-icon" viewBox="0 0 20 20" aria-hidden="true"><path d="M10 17a7 7 0 1 0 0-14 7 7 0 0 0 0 14z M6.8 10.2l2.2 2.2 4.2-4.6" /></svg>
+            แบบฝึกหัด
+          </button>
+          <span class="tab-indicator" aria-hidden="true"></span>
+        </div>
+      </div>
+    </div>
+
+    <div class="wrap panels">
+
+      <!-- =============================================================
+           แท็บ 1: เนื้อหา
+           ============================================================= -->
+      <section class="panel" id="content" role="tabpanel" aria-labelledby="tab-content" tabindex="-1">
+        <div class="panel-head">
+          <h2>เนื้อหาแยกตามไฟล์สไลด์</h2>
+          <div class="panel-actions">
+            <button class="btn btn--ghost btn--sm" type="button" data-acc-all="open">เปิดทั้งหมด</button>
+            <button class="btn btn--ghost btn--sm" type="button" data-acc-all="close">ปิดทั้งหมด</button>
+          </div>
+        </div>
+
+        <div class="acc">
+
+          <!-- ---------- ไฟล์ 1 ---------- -->
+          <div class="acc-item is-open">
+            <h3 class="acc-heading">
+              <button class="acc-trigger" type="button" aria-expanded="true" aria-controls="acc-principles" id="acc-principles-btn">
+                <span class="acc-index">01</span>
+                <span class="acc-title">
+                  <span class="acc-name">หลักการของแอปพลิเคชันเครือข่าย</span>
+                  <span class="acc-file">chapter2_application layer_1-1.pdf · Lecture 3</span>
+                </span>
+                <svg class="acc-chevron" viewBox="0 0 20 20" aria-hidden="true"><path d="M5 7.5l5 5 5-5" /></svg>
+              </button>
+            </h3>
+            <div class="acc-panel" id="acc-principles" role="region" aria-labelledby="acc-principles-btn">
+              <div class="acc-panel-inner">
+                <div class="acc-body">
+
+                  <nav class="toc" aria-label="หัวข้อในหลักการของแอปพลิเคชันเครือข่าย">
+                    <a href="#app-overview">ภาพรวม</a>
+                    <a href="#app-arch">Client-Server vs P2P</a>
+                    <a href="#app-process">Process</a>
+                    <a href="#app-addressing">Addressing processes</a>
+                    <a href="#app-socket">Socket</a>
+                    <a href="#app-transport">App ↔ Transport</a>
+                    <a href="#app-tcp-udp">TCP vs UDP</a>
+                    <a href="#app-tls">TLS</a>
+                  </nav>
+
+                  <section class="topic" id="app-overview">
+                    <h4>ภาพรวมบท Application Layer</h4>
+                    <ul>
+                      <li>network app principles</li>
+                      <li>Web / HTTP</li>
+                      <li>Email / SMTP / IMAP</li>
+                      <li>DNS</li>
+                      <li>video streaming / CDN</li>
+                      <li>socket programming (UDP / TCP)</li>
+                    </ul>
+                    <p><strong>ตัวอย่างแอปในชีวิตประจำวัน:</strong> social media · web · messaging · email · เกมออนไลน์ · streaming (YouTube/Netflix) · P2P file sharing · VoIP · video conferencing · internet search · remote login</p>
+                  </section>
+
+                  <section class="topic" id="app-arch">
+                    <h4>สถาปัตยกรรม: Client-Server vs P2P</h4>
+                    <div class="compare">
+                      <div class="compare-col">
+                        <h5>Client-Server</h5>
+                        <ul>
+                          <li><strong>เซิร์ฟเวอร์:</strong> เป็น <em>always-on host</em> มี <em>permanent IP address</em> มักอยู่ใน data center เพื่อรองรับการขยายตัว</li>
+                          <li><strong>ไคลเอนต์:</strong> เชื่อมต่อเป็นครั้งคราว อาจมี dynamic IP ไม่คุยกันเองโดยตรง</li>
+                          <li><strong>ตัวอย่าง:</strong> HTTP, IMAP, FTP</li>
+                        </ul>
+                      </div>
+                      <div class="compare-col">
+                        <h5>P2P (Peer-to-Peer)</h5>
+                        <ul>
+                          <li>ไม่มีเซิร์ฟเวอร์ส่วนกลางที่เปิดตลอดเวลา</li>
+                          <li>อุปกรณ์ปลายทางคุยกันเองโดยตรง</li>
+                          <li><strong>self-scalability:</strong> peer ใหม่เพิ่มทั้งความสามารถให้บริการและความต้องการใช้บริการ</li>
+                          <li>จัดการซับซ้อนกว่า เพราะ IP เปลี่ยนได้ตลอด</li>
+                          <li><strong>ตัวอย่าง:</strong> BitTorrent, blockchain</li>
+                        </ul>
+                      </div>
+                    </div>
+                  </section>
+
+                  <section class="topic" id="app-process">
+                    <h4>Process และการสื่อสารระหว่างโปรเซส</h4>
+                    <p><strong>Process</strong> คือโปรแกรมที่รันอยู่บนโฮสต์</p>
+                    <ul>
+                      <li><strong>ในเครื่องเดียวกัน:</strong> คุยกันผ่าน <em>Inter-Process Communication (IPC)</em> ซึ่งควบคุมโดย OS</li>
+                      <li><strong>ต่างเครื่อง:</strong> คุยกันด้วยการแลกเปลี่ยนข้อความ (<em>messages</em>)</li>
+                    </ul>
+                    <div class="compare">
+                      <div class="compare-col">
+                        <h5>Client process</h5>
+                        <p>ฝ่ายเริ่มการสื่อสาร</p>
+                      </div>
+                      <div class="compare-col">
+                        <h5>Server process</h5>
+                        <p>ฝ่ายรอรับการติดต่อ</p>
+                      </div>
+                    </div>
+                  </section>
+
+                  <section class="topic" id="app-addressing">
+                    <h4>Addressing processes</h4>
+                    <p>IP address ระบุได้แค่ระดับเครื่อง/โฮสต์เท่านั้น (Network Layer) แต่หนึ่งเครื่องรันได้หลายโปรเซสพร้อมกัน จึงต้องใช้คู่ <strong>"IP address + Port Number"</strong> ในการระบุตัวตนที่แน่นอนของโปรเซสผ่านเครือข่าย</p>
+                    <code class="formula">ตัวตนของ process บนเครือข่าย = IP address + Port number</code>
+                    <div class="callout">
+                      <strong>เปรียบเทียบ:</strong>
+                      <b>IP</b> = บ้านเลขที่ ·
+                      <b>Port</b> = หมายเลขห้อง ·
+                      ส่วนภายในเครื่องเองใช้ <b>Process ID (PID)</b>
+                    </div>
+                  </section>
+
+                  <section class="topic" id="app-socket">
+                    <h4>Socket</h4>
+                    <p><strong>Socket</strong> คือจุดที่ process ส่ง/รับข้อความ เปรียบเหมือน<em>ประตู</em></p>
+                    <div class="compare">
+                      <div class="compare-col">
+                        <h5>เหนือ socket <span class="chip">แอปพลิเคชันควบคุม</span></h5>
+                        <p>ส่วนของแอปพลิเคชัน (process)</p>
+                      </div>
+                      <div class="compare-col">
+                        <h5>ใต้ socket <span class="chip">OS ควบคุม</span></h5>
+                        <p>transport, network, link, physical</p>
+                      </div>
+                    </div>
+                  </section>
+
+                  <section class="topic" id="app-transport">
+                    <h4>แอปพลิเคชันกับ Transport protocol</h4>
+                    <div class="table-scroll">
+                      <table>
+                        <thead><tr><th>แอปพลิเคชัน</th><th>Application-layer protocol</th><th>Transport protocol</th></tr></thead>
+                        <tbody>
+                          <tr><td>file transfer</td><td>FTP</td><td>TCP</td></tr>
+                          <tr><td>email</td><td>SMTP</td><td>TCP</td></tr>
+                          <tr><td>web</td><td>HTTP</td><td>TCP</td></tr>
+                          <tr><td>internet telephony</td><td>SIP / RTP</td><td>TCP หรือ UDP</td></tr>
+                          <tr><td>streaming audio/video</td><td>HTTP / DASH</td><td>TCP</td></tr>
+                          <tr><td>interactive games</td><td>—</td><td>UDP หรือ TCP</td></tr>
+                        </tbody>
+                      </table>
+                    </div>
+                  </section>
+
+                  <section class="topic" id="app-tcp-udp">
+                    <h4>บริการของ TCP และ UDP</h4>
+                    <div class="compare">
+                      <div class="compare-col">
+                        <h5>TCP service</h5>
+                        <ul>
+                          <li>reliable transport</li>
+                          <li>flow control</li>
+                          <li>congestion control</li>
+                          <li>connection-oriented</li>
+                        </ul>
+                        <p><strong>ไม่รับประกัน:</strong> timing, throughput ขั้นต่ำ, security</p>
+                      </div>
+                      <div class="compare-col">
+                        <h5>UDP service</h5>
+                        <p><strong>unreliable data transfer</strong></p>
+                        <p><strong>ไม่มี:</strong> reliability, flow control, congestion control, timing, throughput guarantee, security หรือ connection setup ใดๆ</p>
+                      </div>
+                    </div>
+                  </section>
+
+                  <section class="topic" id="app-tls">
+                    <h4>Securing TCP ด้วย TLS</h4>
+                    <ul>
+                      <li><strong>TLS (Transport Layer Security)</strong> เข้ารหัสการเชื่อมต่อ TCP ให้ <em>data integrity</em> และ <em>endpoint authentication</em></li>
+                      <li>TLS ทำงานอยู่ที่ <strong>application layer</strong> — แอปเรียกใช้ TLS library ซึ่งใช้ TCP อีกที</li>
+                      <li>cleartext ที่ส่งเข้า socket จะถูกเข้ารหัสก่อนวิ่งออกอินเทอร์เน็ต</li>
+                    </ul>
+                  </section>
+
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- ---------- ไฟล์ 2 ---------- -->
+          <div class="acc-item">
+            <h3 class="acc-heading">
+              <button class="acc-trigger" type="button" aria-expanded="false" aria-controls="acc-http" id="acc-http-btn">
+                <span class="acc-index">02</span>
+                <span class="acc-title">
+                  <span class="acc-name">เว็บและ HTTP</span>
+                  <span class="acc-file">chapter2_Lecture4_application layer_rev2-1.pdf · Lecture 4</span>
+                </span>
+                <svg class="acc-chevron" viewBox="0 0 20 20" aria-hidden="true"><path d="M5 7.5l5 5 5-5" /></svg>
+              </button>
+            </h3>
+            <div class="acc-panel" id="acc-http" role="region" aria-labelledby="acc-http-btn">
+              <div class="acc-panel-inner">
+                <div class="acc-body">
+
+                  <nav class="toc" aria-label="หัวข้อในเว็บและ HTTP">
+                    <a href="#http-objects">เว็บเพจและ objects</a>
+                    <a href="#http-overview">HTTP คืออะไร</a>
+                    <a href="#http-persistent">Non-persistent vs Persistent</a>
+                    <a href="#http-request">Request message</a>
+                    <a href="#http-response">Response &amp; Status code</a>
+                  </nav>
+
+                  <section class="topic" id="http-objects">
+                    <h4>เว็บเพจประกอบด้วย objects</h4>
+                    <ul>
+                      <li>เว็บเพจประกอบด้วย <strong>objects</strong> หลายชิ้น — HTML file, รูปภาพ, CSS/JS, สื่ออื่นๆ</li>
+                      <li>แต่ละชิ้นระบุด้วย <strong>URL</strong> และอาจเก็บอยู่คนละเว็บเซิร์ฟเวอร์กันได้</li>
+                    </ul>
+                    <div class="callout">
+                      <strong>ตัวอย่าง:</strong>
+                      <b>base HTML</b> จาก server ตรง ·
+                      <b>รูป</b> จาก CDN ·
+                      <b>ฟอนต์</b> จาก Google
+                    </div>
+                  </section>
+
+                  <section class="topic" id="http-overview">
+                    <h4>HTTP คืออะไร</h4>
+                    <p><strong>HTTP = HyperText Transfer Protocol</strong> เป็น application-layer protocol ของเว็บ ทำงานแบบ client/server</p>
+                    <div class="compare">
+                      <div class="compare-col">
+                        <h5>Client <span class="chip">browser</span></h5>
+                        <p>ร้องขอ รับ และแสดงผล objects</p>
+                      </div>
+                      <div class="compare-col">
+                        <h5>Server <span class="chip">web server</span></h5>
+                        <p>ส่ง object กลับมาตอบคำขอ</p>
+                      </div>
+                    </div>
+                    <p><strong>HTTP ใช้ TCP:</strong></p>
+                    <ol class="steps">
+                      <li>client เปิด TCP connection ไปยัง server ที่ <strong>port 80</strong></li>
+                      <li>แลกเปลี่ยน HTTP message กัน</li>
+                      <li>ปิดการเชื่อมต่อ</li>
+                    </ol>
+                    <div class="callout">
+                      <strong>HTTP เป็น "stateless":</strong>
+                      เซิร์ฟเวอร์ไม่เก็บข้อมูลหรือจดจำประวัติคำขอในอดีตของ client เลย ·
+                      <b>ข้อดี:</b> ระบบง่าย ไม่ซับซ้อน ·
+                      แต่ต้องพึ่งกลไกอื่น เช่น <b>cookie</b> ถ้าต้องการจดจำสถานะ
+                    </div>
+                  </section>
+
+                  <section class="topic" id="http-persistent">
+                    <h4>Non-persistent vs Persistent HTTP</h4>
+                    <div class="compare">
+                      <div class="compare-col">
+                        <h5>Non-persistent HTTP</h5>
+                        <ul>
+                          <li>เปิด TCP connection → ส่งได้<strong>อย่างมาก 1 object</strong> → ปิด connection</li>
+                          <li>ถ้ามีหลาย object ต้องเปิด-ปิดใหม่ทุกครั้ง</li>
+                        </ul>
+                      </div>
+                      <div class="compare-col">
+                        <h5>Persistent HTTP <span class="chip">HTTP/1.1</span></h5>
+                        <ul>
+                          <li>เปิด TCP connection ค้างไว้ ส่งได้<strong>หลาย object</strong> ผ่าน connection เดียวกัน</li>
+                          <li>client ส่งคำขอทันทีที่เจอ object ที่อ้างอิง</li>
+                          <li>เหลือเพียงประมาณ <strong>1 RTT</strong> สำหรับทุก object รวมกัน (เร็วกว่า non-persistent มาก)</li>
+                        </ul>
+                      </div>
+                    </div>
+                    <p><strong>เวลาตอบสนองของ Non-persistent HTTP</strong></p>
+                    <code class="formula">response time = 2RTT + file transmission time</code>
+                    <ul>
+                      <li>1 RTT สำหรับเปิด TCP connection</li>
+                      <li>1 RTT สำหรับส่งคำขอ + รับ byte แรก</li>
+                    </ul>
+                  </section>
+
+                  <section class="topic" id="http-request">
+                    <h4>HTTP Request message</h4>
+                    <p>เป็น <strong>ASCII</strong> อ่านได้ ประกอบด้วย</p>
+                    <code class="formula">request line (method, URL, version) + header lines + entity body</code>
+                    <div class="table-scroll">
+                      <table>
+                        <thead><tr><th>Method</th><th>หน้าที่</th></tr></thead>
+                        <tbody>
+                          <tr><td><code>GET</code></td><td>ร้องขอข้อมูล ส่ง user data แนบไปกับ URL ได้ (หลัง <code>?</code>)</td></tr>
+                          <tr><td><code>POST</code></td><td>ส่งข้อมูลจากฟอร์มของผู้ใช้ไปเก็บใน entity body</td></tr>
+                          <tr><td><code>HEAD</code></td><td>ขอแค่ header กลับมา โดยไม่โหลดไฟล์เนื้อหาจริง</td></tr>
+                          <tr><td><code>PUT</code></td><td>อัปโหลด/แทนที่ไฟล์บนเซิร์ฟเวอร์ทั้งหมดด้วยเนื้อหาใหม่</td></tr>
+                        </tbody>
+                      </table>
+                    </div>
+                  </section>
+
+                  <section class="topic" id="http-response">
+                    <h4>HTTP Response message และ Status code</h4>
+                    <p>ประกอบด้วย</p>
+                    <code class="formula">status line (protocol, status code, status phrase) + header lines + entity body</code>
+                    <p>entity body คือข้อมูลจริง เช่น ไฟล์ HTML</p>
+                    <div class="table-scroll">
+                      <table>
+                        <thead><tr><th>Status code</th><th>ความหมาย</th></tr></thead>
+                        <tbody>
+                          <tr><td><code>200 OK</code></td><td>สำเร็จ</td></tr>
+                          <tr><td><code>301 Moved Permanently</code></td><td>ย้ายถาวร มี URL ใหม่ใน header</td></tr>
+                          <tr><td><code>400 Bad Request</code></td><td>เซิร์ฟเวอร์ไม่เข้าใจคำขอ</td></tr>
+                          <tr><td><code>404 Not Found</code></td><td>ไม่พบไฟล์</td></tr>
+                          <tr><td><code>505 HTTP Version Not Supported</code></td><td>เซิร์ฟเวอร์ไม่รองรับเวอร์ชันที่ client ร้องขอ</td></tr>
+                        </tbody>
+                      </table>
+                    </div>
+                  </section>
+
+                </div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </section>
+
+      <!-- =============================================================
+           แท็บ 2: สรุป (cheat sheet)
+           ============================================================= -->
+      <section class="panel" id="summary" role="tabpanel" aria-labelledby="tab-summary" tabindex="-1">
+        <div class="panel-head">
+          <h2>Cheat sheet</h2>
+          <p class="panel-sub">ตาราง สูตร และคำที่มักออกสอบของบทที่ 2 รวมไว้ในหน้าเดียว</p>
+        </div>
+
+        <div class="sheet">
+
+          <article class="sheet-card sheet-card--wide">
+            <h3><span class="sheet-num">01</span> Client-Server vs P2P</h3>
+            <div class="table-scroll">
+              <table>
+                <thead><tr><th></th><th>Client-Server</th><th>P2P</th></tr></thead>
+                <tbody>
+                  <tr><td class="nowrap">เซิร์ฟเวอร์</td><td>always-on host · permanent IP · มักอยู่ใน data center</td><td>ไม่มีเซิร์ฟเวอร์ส่วนกลางที่เปิดตลอดเวลา</td></tr>
+                  <tr><td class="nowrap">การสื่อสาร</td><td>client ไม่คุยกันเองโดยตรง</td><td>อุปกรณ์ปลายทางคุยกันเองโดยตรง</td></tr>
+                  <tr><td class="nowrap">IP</td><td>client อาจมี dynamic IP</td><td>IP เปลี่ยนได้ตลอด → จัดการซับซ้อนกว่า</td></tr>
+                  <tr><td class="nowrap">การขยาย</td><td>รองรับการขยายตัวด้วย data center</td><td>self-scalability</td></tr>
+                  <tr><td class="nowrap">ตัวอย่าง</td><td>HTTP, IMAP, FTP</td><td>BitTorrent, blockchain</td></tr>
+                </tbody>
+              </table>
+            </div>
+          </article>
+
+          <article class="sheet-card">
+            <h3><span class="sheet-num">02</span> ระบุตัวตน process</h3>
+            <code class="formula">IP address + Port number</code>
+            <dl class="defs">
+              <div><dt>IP</dt><dd>ระบุระดับเครื่อง/โฮสต์ (Network Layer) = บ้านเลขที่</dd></div>
+              <div><dt>Port</dt><dd>ระบุโปรเซสในเครื่อง = หมายเลขห้อง</dd></div>
+              <div><dt>PID</dt><dd>ใช้ภายในเครื่องเอง</dd></div>
+            </dl>
+          </article>
+
+          <article class="sheet-card sheet-card--wide">
+            <h3><span class="sheet-num">03</span> TCP vs UDP</h3>
+            <div class="table-scroll">
+              <table>
+                <thead><tr><th>คุณสมบัติ</th><th>TCP</th><th>UDP</th></tr></thead>
+                <tbody>
+                  <tr><td>Reliable transport</td><td class="yes">✓ มี</td><td class="no">✗ ไม่มี</td></tr>
+                  <tr><td>Flow control</td><td class="yes">✓ มี</td><td class="no">✗ ไม่มี</td></tr>
+                  <tr><td>Congestion control</td><td class="yes">✓ มี</td><td class="no">✗ ไม่มี</td></tr>
+                  <tr><td>Connection setup</td><td class="yes">✓ connection-oriented</td><td class="no">✗ ไม่มี</td></tr>
+                  <tr><td>Timing</td><td class="no">✗ ไม่รับประกัน</td><td class="no">✗ ไม่มี</td></tr>
+                  <tr><td>Throughput ขั้นต่ำ</td><td class="no">✗ ไม่รับประกัน</td><td class="no">✗ ไม่มี</td></tr>
+                  <tr><td>Security</td><td class="no">✗ ไม่รับประกัน</td><td class="no">✗ ไม่มี</td></tr>
+                </tbody>
+              </table>
+            </div>
+            <p class="note">ต้องการความปลอดภัยบน TCP → ใช้ TLS (data integrity + endpoint authentication)</p>
+          </article>
+
+          <article class="sheet-card">
+            <h3><span class="sheet-num">04</span> App ↔ Transport</h3>
+            <dl class="defs defs--stack">
+              <div><dt>file transfer</dt><dd>FTP → <strong>TCP</strong></dd></div>
+              <div><dt>email</dt><dd>SMTP → <strong>TCP</strong></dd></div>
+              <div><dt>web</dt><dd>HTTP → <strong>TCP</strong></dd></div>
+              <div><dt>internet telephony</dt><dd>SIP/RTP → <strong>TCP หรือ UDP</strong></dd></div>
+              <div><dt>streaming audio/video</dt><dd>HTTP/DASH → <strong>TCP</strong></dd></div>
+              <div><dt>interactive games</dt><dd><strong>UDP หรือ TCP</strong></dd></div>
+            </dl>
+          </article>
+
+          <article class="sheet-card">
+            <h3><span class="sheet-num">05</span> Non-persistent HTTP</h3>
+            <code class="formula formula--wrap">2RTT + file transmission time</code>
+            <ul class="tight">
+              <li>1 RTT เปิด TCP connection</li>
+              <li>1 RTT ส่งคำขอ + รับ byte แรก</li>
+              <li>อย่างมาก <strong>1 object</strong> ต่อ 1 TCP connection</li>
+            </ul>
+            <p class="note">Persistent (HTTP/1.1): connection เดียวส่งหลาย object ≈ 1 RTT รวม</p>
+          </article>
+
+          <article class="sheet-card">
+            <h3><span class="sheet-num">06</span> HTTP methods</h3>
+            <dl class="defs">
+              <div><dt>GET</dt><dd>ร้องขอข้อมูล · user data แนบกับ URL (หลัง ?)</dd></div>
+              <div><dt>POST</dt><dd>ส่งข้อมูลฟอร์มไปใน entity body</dd></div>
+              <div><dt>HEAD</dt><dd>ขอแค่ header ไม่โหลดเนื้อหาจริง</dd></div>
+              <div><dt>PUT</dt><dd>อัปโหลด/แทนที่ไฟล์บนเซิร์ฟเวอร์ทั้งหมด</dd></div>
+            </dl>
+          </article>
+
+          <article class="sheet-card">
+            <h3><span class="sheet-num">07</span> Status code ที่พบบ่อย</h3>
+            <dl class="defs defs--codes">
+              <div><dt>200</dt><dd><strong>OK</strong> · สำเร็จ</dd></div>
+              <div><dt>301</dt><dd><strong>Moved Permanently</strong> · URL ใหม่ใน header</dd></div>
+              <div><dt>400</dt><dd><strong>Bad Request</strong> · เซิร์ฟเวอร์ไม่เข้าใจคำขอ</dd></div>
+              <div><dt>404</dt><dd><strong>Not Found</strong> · ไม่พบไฟล์</dd></div>
+              <div><dt>505</dt><dd><strong>HTTP Version Not Supported</strong></dd></div>
+            </dl>
+          </article>
+
+        </div>
+      </section>
+
+      <!-- =============================================================
+           แท็บ 3: แบบฝึกหัด (20 ข้อ)
+           data-answer = ตัวเลือกที่ถูก (ก=a, ข=b, ค=c, ง=d ตามเฉลยที่ผู้ใช้กำหนด)
+           ============================================================= -->
+      <section class="panel" id="quiz" role="tabpanel" aria-labelledby="tab-quiz" tabindex="-1">
+        <div class="panel-head">
+          <h2>แบบฝึกหัด 20 ข้อ</h2>
+          <p class="panel-sub">เลือกคำตอบให้ครบแล้วกด "ตรวจคำตอบ" ด้านล่าง ระบบจะเฉลยพร้อมคำอธิบายทุกข้อ</p>
+        </div>
+
+        <form class="quiz" id="quiz-form" novalidate>
+
+          <fieldset class="q" data-answer="b">
+            <legend class="q-head"><span class="q-num">01</span><span class="q-text">สถาปัตยกรรมใดมีเซิร์ฟเวอร์เป็น always-on host และ permanent IP?</span></legend>
+            <div class="q-options">
+              <label class="opt"><input type="radio" name="q1" value="a" /><span class="opt-key">A</span><span class="opt-text">P2P</span></label>
+              <label class="opt"><input type="radio" name="q1" value="b" /><span class="opt-key">B</span><span class="opt-text">Client-Server</span></label>
+              <label class="opt"><input type="radio" name="q1" value="c" /><span class="opt-key">C</span><span class="opt-text">Hybrid</span></label>
+              <label class="opt"><input type="radio" name="q1" value="d" /><span class="opt-key">D</span><span class="opt-text">Mesh</span></label>
+            </div>
+            <div class="q-feedback"><div class="q-feedback-inner"><p class="q-verdict" aria-live="polite"></p><p class="q-explain">Client-Server: เซิร์ฟเวอร์เป็น always-on host มี permanent IP address มักอยู่ใน data center · ส่วน P2P ไม่มีเซิร์ฟเวอร์ส่วนกลางที่เปิดตลอดเวลา</p></div></div>
+          </fieldset>
+
+          <fieldset class="q" data-answer="b">
+            <legend class="q-head"><span class="q-num">02</span><span class="q-text">คุณสมบัติเด่นของ P2P คือข้อใด?</span></legend>
+            <div class="q-options">
+              <label class="opt"><input type="radio" name="q2" value="a" /><span class="opt-key">A</span><span class="opt-text">ต้องมีเซิร์ฟเวอร์ศูนย์กลางเปิดตลอดเวลา</span></label>
+              <label class="opt"><input type="radio" name="q2" value="b" /><span class="opt-key">B</span><span class="opt-text">self-scalability peer ใหม่เพิ่มทั้งความสามารถให้บริการและความต้องการ</span></label>
+              <label class="opt"><input type="radio" name="q2" value="c" /><span class="opt-key">C</span><span class="opt-text">ไม่มี client/server process เลย</span></label>
+              <label class="opt"><input type="radio" name="q2" value="d" /><span class="opt-key">D</span><span class="opt-text">IP คงที่เสมอ</span></label>
+            </div>
+            <div class="q-feedback"><div class="q-feedback-inner"><p class="q-verdict" aria-live="polite"></p><p class="q-explain">P2P มี self-scalability — peer ใหม่เพิ่มทั้งความสามารถให้บริการและความต้องการใช้บริการ · ไม่มีเซิร์ฟเวอร์ส่วนกลางที่เปิดตลอดเวลา และ IP เปลี่ยนได้ตลอดจึงจัดการซับซ้อนกว่า</p></div></div>
+          </fieldset>
+
+          <fieldset class="q" data-answer="b">
+            <legend class="q-head"><span class="q-num">03</span><span class="q-text">"Process" หมายถึงอะไร?</span></legend>
+            <div class="q-options">
+              <label class="opt"><input type="radio" name="q3" value="a" /><span class="opt-key">A</span><span class="opt-text">สายเคเบิล</span></label>
+              <label class="opt"><input type="radio" name="q3" value="b" /><span class="opt-key">B</span><span class="opt-text">โปรแกรมที่กำลังทำงานบนโฮสต์</span></label>
+              <label class="opt"><input type="radio" name="q3" value="c" /><span class="opt-key">C</span><span class="opt-text">หมายเลข IP</span></label>
+              <label class="opt"><input type="radio" name="q3" value="d" /><span class="opt-key">D</span><span class="opt-text">โปรโตคอลชั้น Transport</span></label>
+            </div>
+            <div class="q-feedback"><div class="q-feedback-inner"><p class="q-verdict" aria-live="polite"></p><p class="q-explain">Process คือโปรแกรมที่รันอยู่บนโฮสต์</p></div></div>
+          </fieldset>
+
+          <fieldset class="q" data-answer="b">
+            <legend class="q-head"><span class="q-num">04</span><span class="q-text">โปรเซสในเครื่องเดียวกันสื่อสารกันด้วยกลไกใด?</span></legend>
+            <div class="q-options">
+              <label class="opt"><input type="radio" name="q4" value="a" /><span class="opt-key">A</span><span class="opt-text">Message passing ข้ามเครือข่าย</span></label>
+              <label class="opt"><input type="radio" name="q4" value="b" /><span class="opt-key">B</span><span class="opt-text">IPC ที่ควบคุมโดย OS</span></label>
+              <label class="opt"><input type="radio" name="q4" value="c" /><span class="opt-key">C</span><span class="opt-text">Socket ของ TCP เท่านั้น</span></label>
+              <label class="opt"><input type="radio" name="q4" value="d" /><span class="opt-key">D</span><span class="opt-text">DNS lookup</span></label>
+            </div>
+            <div class="q-feedback"><div class="q-feedback-inner"><p class="q-verdict" aria-live="polite"></p><p class="q-explain">โปรเซสในเครื่องเดียวกันคุยกันผ่าน Inter-Process Communication (IPC) ที่ OS ควบคุม · ส่วนโปรเซสต่างเครื่องคุยกันด้วยการแลกเปลี่ยนข้อความ (messages)</p></div></div>
+          </fieldset>
+
+          <fieldset class="q" data-answer="b">
+            <legend class="q-head"><span class="q-num">05</span><span class="q-text">เหตุใด IP address อย่างเดียวไม่พอระบุตัวตน process?</span></legend>
+            <div class="q-options">
+              <label class="opt"><input type="radio" name="q5" value="a" /><span class="opt-key">A</span><span class="opt-text">IP เปลี่ยนตลอดเวลา</span></label>
+              <label class="opt"><input type="radio" name="q5" value="b" /><span class="opt-key">B</span><span class="opt-text">เครื่องเดียวรันหลายโปรเซสได้ ต้องใช้คู่กับ port number</span></label>
+              <label class="opt"><input type="radio" name="q5" value="c" /><span class="opt-key">C</span><span class="opt-text">IP ใช้ได้กับ UDP เท่านั้น</span></label>
+              <label class="opt"><input type="radio" name="q5" value="d" /><span class="opt-key">D</span><span class="opt-text">Process ไม่เชื่อมเครือข่าย</span></label>
+            </div>
+            <div class="q-feedback"><div class="q-feedback-inner"><p class="q-verdict" aria-live="polite"></p><p class="q-explain">IP address ระบุได้แค่ระดับเครื่อง/โฮสต์ แต่เครื่องเดียวรันได้หลายโปรเซสพร้อมกัน จึงต้องใช้คู่ IP address + Port number (IP = บ้านเลขที่, Port = หมายเลขห้อง)</p></div></div>
+          </fieldset>
+
+          <fieldset class="q" data-answer="b">
+            <legend class="q-head"><span class="q-num">06</span><span class="q-text">Socket เปรียบเสมือนอะไร?</span></legend>
+            <div class="q-options">
+              <label class="opt"><input type="radio" name="q6" value="a" /><span class="opt-key">A</span><span class="opt-text">ท่อความเร็วสูง</span></label>
+              <label class="opt"><input type="radio" name="q6" value="b" /><span class="opt-key">B</span><span class="opt-text">ประตูที่ process ส่ง/รับข้อความผ่าน</span></label>
+              <label class="opt"><input type="radio" name="q6" value="c" /><span class="opt-key">C</span><span class="opt-text">เราเตอร์บ้าน</span></label>
+              <label class="opt"><input type="radio" name="q6" value="d" /><span class="opt-key">D</span><span class="opt-text">ที่อยู่ไปรษณีย์</span></label>
+            </div>
+            <div class="q-feedback"><div class="q-feedback-inner"><p class="q-verdict" aria-live="polite"></p><p class="q-explain">Socket คือจุดที่ process ส่ง/รับข้อความ เปรียบเหมือนประตู · แอปควบคุมสิ่งที่อยู่เหนือ socket ส่วน OS ควบคุม transport, network, link, physical ที่อยู่ใต้ลงไป</p></div></div>
+          </fieldset>
+
+          <fieldset class="q" data-answer="d">
+            <legend class="q-head"><span class="q-num">07</span><span class="q-text">ข้อใด "ไม่ใช่" สิ่งที่ TCP รับประกัน?</span></legend>
+            <div class="q-options">
+              <label class="opt"><input type="radio" name="q7" value="a" /><span class="opt-key">A</span><span class="opt-text">Reliable transport</span></label>
+              <label class="opt"><input type="radio" name="q7" value="b" /><span class="opt-key">B</span><span class="opt-text">Flow control</span></label>
+              <label class="opt"><input type="radio" name="q7" value="c" /><span class="opt-key">C</span><span class="opt-text">Congestion control</span></label>
+              <label class="opt"><input type="radio" name="q7" value="d" /><span class="opt-key">D</span><span class="opt-text">Security</span></label>
+            </div>
+            <div class="q-feedback"><div class="q-feedback-inner"><p class="q-verdict" aria-live="polite"></p><p class="q-explain">TCP ให้ reliable transport, flow control, congestion control และเป็น connection-oriented แต่ไม่รับประกัน timing, throughput ขั้นต่ำ และ security</p></div></div>
+          </fieldset>
+
+          <fieldset class="q" data-answer="b">
+            <legend class="q-head"><span class="q-num">08</span><span class="q-text">UDP ต่างจาก TCP อย่างไร?</span></legend>
+            <div class="q-options">
+              <label class="opt"><input type="radio" name="q8" value="a" /><span class="opt-key">A</span><span class="opt-text">เชื่อถือได้มากกว่าเพราะมี error correction</span></label>
+              <label class="opt"><input type="radio" name="q8" value="b" /><span class="opt-key">B</span><span class="opt-text">ไม่รับประกันความน่าเชื่อถือ ไม่มี flow/congestion control ไม่ต้อง setup connection</span></label>
+              <label class="opt"><input type="radio" name="q8" value="c" /><span class="opt-key">C</span><span class="opt-text">ต้อง setup connection ก่อนเสมอ</span></label>
+              <label class="opt"><input type="radio" name="q8" value="d" /><span class="opt-key">D</span><span class="opt-text">ใช้กับเว็บเบราว์เซอร์เท่านั้น</span></label>
+            </div>
+            <div class="q-feedback"><div class="q-feedback-inner"><p class="q-verdict" aria-live="polite"></p><p class="q-explain">UDP เป็น unreliable data transfer — ไม่มี reliability, flow control, congestion control, timing, throughput guarantee, security หรือ connection setup ใดๆ</p></div></div>
+          </fieldset>
+
+          <fieldset class="q" data-answer="b">
+            <legend class="q-head"><span class="q-num">09</span><span class="q-text">Web documents (HTTP) ใช้ transport protocol ใด?</span></legend>
+            <div class="q-options">
+              <label class="opt"><input type="radio" name="q9" value="a" /><span class="opt-key">A</span><span class="opt-text">UDP เท่านั้น</span></label>
+              <label class="opt"><input type="radio" name="q9" value="b" /><span class="opt-key">B</span><span class="opt-text">TCP</span></label>
+              <label class="opt"><input type="radio" name="q9" value="c" /><span class="opt-key">C</span><span class="opt-text">ICMP</span></label>
+              <label class="opt"><input type="radio" name="q9" value="d" /><span class="opt-key">D</span><span class="opt-text">TCP หรือ UDP เท่าๆ กัน</span></label>
+            </div>
+            <div class="q-feedback"><div class="q-feedback-inner"><p class="q-verdict" aria-live="polite"></p><p class="q-explain">web → HTTP → TCP · client เปิด TCP connection ไปยัง server ที่ port 80</p></div></div>
+          </fieldset>
+
+          <fieldset class="q" data-answer="b">
+            <legend class="q-head"><span class="q-num">10</span><span class="q-text">เกม interactive มักใช้ transport protocol ใด?</span></legend>
+            <div class="q-options">
+              <label class="opt"><input type="radio" name="q10" value="a" /><span class="opt-key">A</span><span class="opt-text">TCP เท่านั้น</span></label>
+              <label class="opt"><input type="radio" name="q10" value="b" /><span class="opt-key">B</span><span class="opt-text">UDP หรือ TCP</span></label>
+              <label class="opt"><input type="radio" name="q10" value="c" /><span class="opt-key">C</span><span class="opt-text">SMTP</span></label>
+              <label class="opt"><input type="radio" name="q10" value="d" /><span class="opt-key">D</span><span class="opt-text">FTP เท่านั้น</span></label>
+            </div>
+            <div class="q-feedback"><div class="q-feedback-inner"><p class="q-verdict" aria-live="polite"></p><p class="q-explain">ตาราง app ↔ transport: interactive games → UDP หรือ TCP · SMTP และ FTP เป็น application-layer protocol ไม่ใช่ transport protocol</p></div></div>
+          </fieldset>
+
+          <fieldset class="q" data-answer="b">
+            <legend class="q-head"><span class="q-num">11</span><span class="q-text">TLS ทำหน้าที่อะไร?</span></legend>
+            <div class="q-options">
+              <label class="opt"><input type="radio" name="q11" value="a" /><span class="opt-key">A</span><span class="opt-text">แทนที่ TCP ทั้งหมด</span></label>
+              <label class="opt"><input type="radio" name="q11" value="b" /><span class="opt-key">B</span><span class="opt-text">เข้ารหัสการเชื่อมต่อ TCP พร้อม data integrity และ endpoint authentication</span></label>
+              <label class="opt"><input type="radio" name="q11" value="c" /><span class="opt-key">C</span><span class="opt-text">เพิ่มความเร็ว UDP</span></label>
+              <label class="opt"><input type="radio" name="q11" value="d" /><span class="opt-key">D</span><span class="opt-text">ทำงานใน Network Layer</span></label>
+            </div>
+            <div class="q-feedback"><div class="q-feedback-inner"><p class="q-verdict" aria-live="polite"></p><p class="q-explain">TLS เข้ารหัสการเชื่อมต่อ TCP ให้ data integrity และ endpoint authentication · ทำงานที่ application layer (แอปเรียกใช้ TLS library ซึ่งใช้ TCP อีกที) จึงไม่ได้แทนที่ TCP</p></div></div>
+          </fieldset>
+
+          <fieldset class="q" data-answer="b">
+            <legend class="q-head"><span class="q-num">12</span><span class="q-text">HTTP ย่อมาจากอะไร อยู่ชั้นใด?</span></legend>
+            <div class="q-options">
+              <label class="opt"><input type="radio" name="q12" value="a" /><span class="opt-key">A</span><span class="opt-text">Hyper Transfer Text Protocol, Transport</span></label>
+              <label class="opt"><input type="radio" name="q12" value="b" /><span class="opt-key">B</span><span class="opt-text">Hypertext Transfer Protocol, Application</span></label>
+              <label class="opt"><input type="radio" name="q12" value="c" /><span class="opt-key">C</span><span class="opt-text">High Traffic Transport Protocol, Network</span></label>
+              <label class="opt"><input type="radio" name="q12" value="d" /><span class="opt-key">D</span><span class="opt-text">Host Transfer Text Protocol, Link</span></label>
+            </div>
+            <div class="q-feedback"><div class="q-feedback-inner"><p class="q-verdict" aria-live="polite"></p><p class="q-explain">HTTP = HyperText Transfer Protocol เป็น application-layer protocol ของเว็บ</p></div></div>
+          </fieldset>
+
+          <fieldset class="q" data-answer="b">
+            <legend class="q-head"><span class="q-num">13</span><span class="q-text">"HTTP is stateless" หมายความว่าอย่างไร?</span></legend>
+            <div class="q-options">
+              <label class="opt"><input type="radio" name="q13" value="a" /><span class="opt-key">A</span><span class="opt-text">เข้ารหัสทุกคำขอ</span></label>
+              <label class="opt"><input type="radio" name="q13" value="b" /><span class="opt-key">B</span><span class="opt-text">เซิร์ฟเวอร์ไม่เก็บ/จดจำประวัติคำขอในอดีตของ client</span></label>
+              <label class="opt"><input type="radio" name="q13" value="c" /><span class="opt-key">C</span><span class="opt-text">ปิดการเชื่อมต่อทันทีที่มี error</span></label>
+              <label class="opt"><input type="radio" name="q13" value="d" /><span class="opt-key">D</span><span class="opt-text">ต้องส่ง password ทุกครั้ง</span></label>
+            </div>
+            <div class="q-feedback"><div class="q-feedback-inner"><p class="q-verdict" aria-live="polite"></p><p class="q-explain">Stateless: เซิร์ฟเวอร์ไม่เก็บข้อมูลหรือจดจำประวัติคำขอในอดีตของ client เลย — ระบบง่าย แต่ถ้าต้องการจดจำสถานะต้องพึ่งกลไกอื่น เช่น cookie</p></div></div>
+          </fieldset>
+
+          <fieldset class="q" data-answer="b">
+            <legend class="q-head"><span class="q-num">14</span><span class="q-text">Non-persistent HTTP คือข้อใด?</span></legend>
+            <div class="q-options">
+              <label class="opt"><input type="radio" name="q14" value="a" /><span class="opt-key">A</span><span class="opt-text">ส่งหลาย object ผ่าน TCP connection เดียว</span></label>
+              <label class="opt"><input type="radio" name="q14" value="b" /><span class="opt-key">B</span><span class="opt-text">ส่งได้อย่างมาก 1 object ต่อ 1 TCP connection ก่อนปิด</span></label>
+              <label class="opt"><input type="radio" name="q14" value="c" /><span class="opt-key">C</span><span class="opt-text">ไม่ต้องเปิด TCP connection</span></label>
+              <label class="opt"><input type="radio" name="q14" value="d" /><span class="opt-key">D</span><span class="opt-text">ใช้ UDP แทน TCP เสมอ</span></label>
+            </div>
+            <div class="q-feedback"><div class="q-feedback-inner"><p class="q-verdict" aria-live="polite"></p><p class="q-explain">Non-persistent: เปิด TCP connection → ส่งได้อย่างมาก 1 object → ปิด ถ้ามีหลาย object ต้องเปิด-ปิดใหม่ทุกครั้ง · ข้อ A คือ Persistent HTTP</p></div></div>
+          </fieldset>
+
+          <fieldset class="q" data-answer="b">
+            <legend class="q-head"><span class="q-num">15</span><span class="q-text">สูตรเวลาตอบสนองของ Non-persistent HTTP?</span></legend>
+            <div class="q-options">
+              <label class="opt"><input type="radio" name="q15" value="a" /><span class="opt-key">A</span><span class="opt-text">1RTT + file transmission time</span></label>
+              <label class="opt"><input type="radio" name="q15" value="b" /><span class="opt-key">B</span><span class="opt-text">2RTT + file transmission time</span></label>
+              <label class="opt"><input type="radio" name="q15" value="c" /><span class="opt-key">C</span><span class="opt-text">3RTT - file transmission time</span></label>
+              <label class="opt"><input type="radio" name="q15" value="d" /><span class="opt-key">D</span><span class="opt-text">RTT อย่างเดียว</span></label>
+            </div>
+            <div class="q-feedback"><div class="q-feedback-inner"><p class="q-verdict" aria-live="polite"></p><p class="q-explain">1 RTT สำหรับเปิด TCP connection + 1 RTT สำหรับส่งคำขอและรับ byte แรก + เวลาส่งไฟล์ = 2RTT + file transmission time</p></div></div>
+          </fieldset>
+
+          <fieldset class="q" data-answer="b">
+            <legend class="q-head"><span class="q-num">16</span><span class="q-text">Persistent HTTP (1.1) ดีกว่า Non-persistent อย่างไร?</span></legend>
+            <div class="q-options">
+              <label class="opt"><input type="radio" name="q16" value="a" /><span class="opt-key">A</span><span class="opt-text">ใช้ UDP แทน TCP</span></label>
+              <label class="opt"><input type="radio" name="q16" value="b" /><span class="opt-key">B</span><span class="opt-text">เปิด TCP ค้างไว้ส่งหลาย object ได้ ลด RTT รวมเหลือใกล้ 1</span></label>
+              <label class="opt"><input type="radio" name="q16" value="c" /><span class="opt-key">C</span><span class="opt-text">ไม่ต้องมี header lines</span></label>
+              <label class="opt"><input type="radio" name="q16" value="d" /><span class="opt-key">D</span><span class="opt-text">เซิร์ฟเวอร์จดจำ state ของ client ได้</span></label>
+            </div>
+            <div class="q-feedback"><div class="q-feedback-inner"><p class="q-verdict" aria-live="polite"></p><p class="q-explain">Persistent HTTP (HTTP/1.1) เปิด TCP connection ค้างไว้ ส่งหลาย object ผ่าน connection เดียว client ส่งคำขอทันทีที่เจอ object ที่อ้างอิง เหลือประมาณ 1 RTT สำหรับทุก object รวมกัน</p></div></div>
+          </fieldset>
+
+          <fieldset class="q" data-answer="b">
+            <legend class="q-head"><span class="q-num">17</span><span class="q-text">Method ใดส่งข้อมูลฟอร์มไปเก็บใน entity body?</span></legend>
+            <div class="q-options">
+              <label class="opt"><input type="radio" name="q17" value="a" /><span class="opt-key">A</span><span class="opt-text">GET</span></label>
+              <label class="opt"><input type="radio" name="q17" value="b" /><span class="opt-key">B</span><span class="opt-text">POST</span></label>
+              <label class="opt"><input type="radio" name="q17" value="c" /><span class="opt-key">C</span><span class="opt-text">HEAD</span></label>
+              <label class="opt"><input type="radio" name="q17" value="d" /><span class="opt-key">D</span><span class="opt-text">PUT</span></label>
+            </div>
+            <div class="q-feedback"><div class="q-feedback-inner"><p class="q-verdict" aria-live="polite"></p><p class="q-explain">POST ส่งข้อมูลจากฟอร์มของผู้ใช้ไปเก็บใน entity body · GET แนบ user data ไปกับ URL (หลัง '?')</p></div></div>
+          </fieldset>
+
+          <fieldset class="q" data-answer="a">
+            <legend class="q-head"><span class="q-num">18</span><span class="q-text">Method ใดขอแค่ header โดยไม่โหลดไฟล์จริง?</span></legend>
+            <div class="q-options">
+              <label class="opt"><input type="radio" name="q18" value="a" /><span class="opt-key">A</span><span class="opt-text">HEAD</span></label>
+              <label class="opt"><input type="radio" name="q18" value="b" /><span class="opt-key">B</span><span class="opt-text">POST</span></label>
+              <label class="opt"><input type="radio" name="q18" value="c" /><span class="opt-key">C</span><span class="opt-text">PUT</span></label>
+              <label class="opt"><input type="radio" name="q18" value="d" /><span class="opt-key">D</span><span class="opt-text">GET</span></label>
+            </div>
+            <div class="q-feedback"><div class="q-feedback-inner"><p class="q-verdict" aria-live="polite"></p><p class="q-explain">HEAD ขอแค่ header กลับมา โดยไม่โหลดไฟล์เนื้อหาจริง · PUT อัปโหลด/แทนที่ไฟล์บนเซิร์ฟเวอร์ด้วยเนื้อหาใหม่</p></div></div>
+          </fieldset>
+
+          <fieldset class="q" data-answer="c">
+            <legend class="q-head"><span class="q-num">19</span><span class="q-text">รหัสสถานะใดหมายถึง "ค้นหาไม่พบ"?</span></legend>
+            <div class="q-options">
+              <label class="opt"><input type="radio" name="q19" value="a" /><span class="opt-key">A</span><span class="opt-text">200 OK</span></label>
+              <label class="opt"><input type="radio" name="q19" value="b" /><span class="opt-key">B</span><span class="opt-text">301 Moved Permanently</span></label>
+              <label class="opt"><input type="radio" name="q19" value="c" /><span class="opt-key">C</span><span class="opt-text">404 Not Found</span></label>
+              <label class="opt"><input type="radio" name="q19" value="d" /><span class="opt-key">D</span><span class="opt-text">505 HTTP Version Not Supported</span></label>
+            </div>
+            <div class="q-feedback"><div class="q-feedback-inner"><p class="q-verdict" aria-live="polite"></p><p class="q-explain">404 Not Found = ไม่พบไฟล์ · 200 สำเร็จ · 301 ย้ายถาวร (มี URL ใหม่ใน header) · 505 เซิร์ฟเวอร์ไม่รองรับเวอร์ชันที่ client ร้องขอ</p></div></div>
+          </fieldset>
+
+          <fieldset class="q" data-answer="b">
+            <legend class="q-head"><span class="q-num">20</span><span class="q-text">เว็บเพจประกอบด้วยอะไร วัตถุแต่ละชิ้นระบุที่อยู่ด้วยอะไร?</span></legend>
+            <div class="q-options">
+              <label class="opt"><input type="radio" name="q20" value="a" /><span class="opt-key">A</span><span class="opt-text">ไฟล์เดียว ระบุด้วย IP address</span></label>
+              <label class="opt"><input type="radio" name="q20" value="b" /><span class="opt-key">B</span><span class="opt-text">Base HTML file ที่อ้างอิง object อื่น (รูป/CSS/JS) แต่ละชิ้นระบุด้วย URL อาจเก็บคนละเซิร์ฟเวอร์กันได้</span></label>
+              <label class="opt"><input type="radio" name="q20" value="c" /><span class="opt-key">C</span><span class="opt-text">ข้อความอย่างเดียว ไม่มีรูปภาพ</span></label>
+              <label class="opt"><input type="radio" name="q20" value="d" /><span class="opt-key">D</span><span class="opt-text">Port number ของเซิร์ฟเวอร์</span></label>
+            </div>
+            <div class="q-feedback"><div class="q-feedback-inner"><p class="q-verdict" aria-live="polite"></p><p class="q-explain">เว็บเพจประกอบด้วย objects หลายชิ้น (HTML file, รูปภาพ, CSS/JS, สื่ออื่นๆ) แต่ละชิ้นระบุด้วย URL และอาจอยู่คนละเซิร์ฟเวอร์ เช่น base HTML จาก server ตรง รูปจาก CDN ฟอนต์จาก Google</p></div></div>
+          </fieldset>
+
+          <div class="quiz-result" id="quiz-result" hidden tabindex="-1">
+            <div class="score-ring" aria-hidden="true">
+              <svg viewBox="0 0 120 120">
+                <circle class="ring-track" cx="60" cy="60" r="52" />
+                <circle class="ring-fill" cx="60" cy="60" r="52" pathLength="100" />
+              </svg>
+              <span class="score-pct"><span id="score-pct">0</span>%</span>
+            </div>
+            <div class="score-body">
+              <p class="score-line" role="status">ได้ <strong id="score-num">0</strong> / 20 คะแนน</p>
+              <p class="score-msg" id="score-msg"></p>
+              <div class="score-actions">
+                <button class="btn btn--ghost btn--sm" type="button" id="toggle-wrong" aria-pressed="false">ดูเฉพาะข้อที่ผิด</button>
+              </div>
+            </div>
+          </div>
+
+          <div class="quiz-bar">
+            <div class="quiz-progress">
+              <span class="quiz-count"><span id="answered">0</span> / 20 ข้อ</span>
+              <span class="progress" aria-hidden="true"><span class="progress-fill" id="progress-fill"></span></span>
+              <span class="quiz-hint" id="quiz-hint" aria-live="polite"></span>
+            </div>
+            <div class="quiz-actions">
+              <button class="btn btn--ghost" type="reset" id="quiz-reset">ทำใหม่</button>
+              <button class="btn btn--primary" type="submit" id="quiz-submit">ตรวจคำตอบ</button>
+            </div>
+          </div>
+        </form>
+      </section>
+
+    </div>
+  </main>
+
+  <footer class="site-footer">
+    <div class="wrap">
+      <p>สรุปจากสไลด์ ITDS231 Computer Networks (Faculty of ICT, Mahidol University) เพื่อใช้ทบทวนส่วนตัว — ถ้าเนื้อหาขัดกับสไลด์ ให้ยึดสไลด์เป็นหลัก</p>
+    </div>
+  </footer>
+
+  <script src="assets/js/network.js" defer></script>
+</body>
+</html>
