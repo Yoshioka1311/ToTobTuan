@@ -22,6 +22,15 @@
 <body>
   <a class="skip-link" href="#tabs">ข้ามไปที่เนื้อหา</a>
 
+  <svg class="dg-defs" aria-hidden="true" focusable="false">
+    <defs>
+      <marker id="arr" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path class="dg-arrow" d="M0 0L10 5L0 10z" /></marker>
+      <marker id="arr-muted" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path class="dg-arrow--muted" d="M0 0L10 5L0 10z" /></marker>
+      <marker id="arr-ok" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path class="dg-arrow--ok" d="M0 0L10 5L0 10z" /></marker>
+      <marker id="arr-bad" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path class="dg-arrow--bad" d="M0 0L10 5L0 10z" /></marker>
+    </defs>
+  </svg>
+
   <header class="site-header">
     <div class="wrap">
       <a class="wordmark" href="index.html" aria-label="โต๊ะทบทวน หน้าแรก">
@@ -230,10 +239,11 @@
                       <li><strong>FDM</strong> (Frequency Division Multiplexing): แบ่งความถี่เป็นแถบแคบ แต่ละ call ได้แถบของตัวเอง ส่งได้เต็มอัตราของแถบแคบนั้น</li>
                       <li><strong>TDM</strong> (Time Division Multiplexing): แบ่งเวลาเป็น slots แต่ละ call ได้ slot เป็นรอบ ส่งได้เต็มอัตราของแถบความถี่ (กว้าง) เฉพาะช่วง slot ของตัวเอง</li>
                     </ul>
-                    <div class="callout">
-                      <strong>ตัวอย่าง:</strong> ลิงก์ 1 Gb/s ผู้ใช้แต่ละคนใช้ 100 Mb/s เมื่อ "active" และ active 10% ของเวลา
-                      → <b>circuit-switching: 10 users</b> ·
-                      <b>packet switching:</b> ที่ 35 users ความน่าจะเป็นที่ &gt; 10 คน active พร้อมกันน้อยกว่า .0004
+                    <div class="callout callout--def">
+                      <span class="callout-label">ตัวอย่างในสไลด์</span>
+                      <p>ลิงก์ 1 Gb/s ผู้ใช้แต่ละคนใช้ 100 Mb/s เมื่อ "active" และ active 10% ของเวลา — Q: how many users can use this network under circuit-switching and packet switching?</p>
+                      <p><b>circuit-switching:</b> ต้องจอง 100 Mb/s ให้ทุกคนตลอดเวลา → 1 Gb/s ÷ 100 Mb/s = 1000 ÷ 100 = <b>10 users</b></p>
+                      <p><b>packet switching:</b> ที่ 35 users ความน่าจะเป็นที่ &gt; 10 คน active พร้อมกันน้อยกว่า .0004</p>
                     </div>
                     <p><strong>Packet switching</strong> เหมาะกับข้อมูลแบบ "bursty" (บางช่วงมีข้อมูล บางช่วงไม่มี) — แชร์ทรัพยากร, ง่ายกว่า ไม่ต้อง call setup · แต่อาจเกิด congestion มากเกินไป: packet delay และ loss จาก buffer overflow → ต้องมีโปรโตคอลสำหรับ reliable data transfer และ congestion control</p>
                     <p>สไลด์ภาษาไทยเปรียบ: <em>การสลับสาย</em> (โทรศัพท์เดิม) = จองโต๊ะไว้ล่วงหน้า (Reserved) ไม่ส่งข้อมูลก็เสียเปล่า · <em>การสลับแพ็กเก็ต</em> (อินเทอร์เน็ต) = ทางด่วนที่แชร์กัน (Shared Highway) ข้อมูลถูกแบ่งเป็นชิ้นเล็กแทรกตัวไป ใช้ทรัพยากรได้เต็มประสิทธิภาพ แต่อาจ "รถติด" (Queuing Delay) ถ้าข้อมูลมาพร้อมกันมากเกินไป</p>
@@ -249,6 +259,67 @@
                       <li>เกิด <strong>regional networks</strong> เชื่อม access nets เข้ากับ ISPs</li>
                       <li><strong>content provider networks</strong> (Google, Microsoft, Akamai) สร้างเครือข่ายของตัวเอง เพื่อนำบริการและเนื้อหาไปใกล้ผู้ใช้</li>
                     </ol>
+                    <div class="callout callout--warn">
+                      <span class="callout-label">ทำไมไม่เชื่อมทุก access ISP เข้าหากันตรง ๆ</span>
+                      <p>สไลด์ตั้งคำถามว่า "given millions of access ISPs, how to connect them together?" — การเชื่อมทุกคู่โดยตรง <b>doesn't scale: O(N<sup>2</sup>) connections</b> โครงสร้างจึงค่อย ๆ กลายเป็นลำดับชั้นของ ISP ที่มีข้อตกลงทางเศรษฐกิจระหว่าง customer กับ provider</p>
+                    </div>
+                    <figure class="diagram">
+                      <div class="diagram-scroll">
+                        <svg viewBox="0 0 760 360" role="img" aria-labelledby="dg-isp-t dg-isp-d">
+                          <title id="dg-isp-t">โครงสร้างอินเทอร์เน็ต: Tier 1 ISP, Google, IXP, Regional ISP และ access ISP</title>
+                          <desc id="dg-isp-d">แถวบนมี Tier 1 ISP สองรายที่เชื่อมกันโดยตรง และ Google content provider network ที่เชื่อมกับ Tier 1 ทั้งสอง แถวถัดมามี IXP สามจุดที่ Tier 1 และ Google มาเชื่อม แถวที่สามมี Regional ISP สองราย แถวล่างมี access ISP แปดราย บางรายต่อ Tier 1 หรือ IXP โดยตรง บางรายต่อผ่าน Regional ISP และ Google ต่อ access ISP ได้โดยตรง</desc>
+                          <path class="dg-line" d="M180 60 C260 20 560 20 640 60" />
+                          <path class="dg-line" d="M260 71 H330" />
+                          <path class="dg-line" d="M490 71 H560" />
+                          <path class="dg-line" d="M160 98 L230 150" />
+                          <path class="dg-line" d="M130 98 L70 290" />
+                          <path class="dg-line" d="M150 98 L160 290" />
+                          <path class="dg-line" d="M220 98 L520 212" />
+                          <path class="dg-line" d="M430 98 L440 150" />
+                          <path class="dg-line" d="M390 98 L340 212" />
+                          <path class="dg-line" d="M470 98 L660 155" />
+                          <path class="dg-line--ok" d="M590 90 L270 158" />
+                          <path class="dg-line--ok" d="M610 98 L460 152" />
+                          <path class="dg-line--ok" d="M660 98 L670 152" />
+                          <path class="dg-line--ok" d="M630 98 L610 290" />
+                          <path class="dg-line" d="M240 184 L300 212" />
+                          <path class="dg-line" d="M220 184 L160 290" />
+                          <path class="dg-line" d="M425 180 L370 214" />
+                          <path class="dg-line" d="M455 180 L510 214" />
+                          <path class="dg-line" d="M645 184 L580 216" />
+                          <path class="dg-line" d="M650 186 L520 290" />
+                          <path class="dg-line" d="M675 188 L700 290" />
+                          <path class="dg-line" d="M300 248 L250 290" />
+                          <path class="dg-line" d="M330 250 L340 290" />
+                          <path class="dg-line" d="M520 250 L430 290" />
+                          <path class="dg-line" d="M545 250 L520 290" />
+                          <path class="dg-line" d="M570 248 L610 290" />
+                          <rect class="dg-box dg-box--accent" x="100" y="44" width="160" height="54" rx="27" />
+                          <text class="dg-text" x="180" y="77" text-anchor="middle">Tier 1 ISP</text>
+                          <rect class="dg-box dg-box--accent" x="330" y="44" width="160" height="54" rx="27" />
+                          <text class="dg-text" x="410" y="77" text-anchor="middle">Tier 1 ISP</text>
+                          <rect class="dg-box dg-box--ok" x="560" y="44" width="160" height="54" rx="27" />
+                          <text class="dg-text" x="640" y="70" text-anchor="middle">Google</text>
+                          <text class="dg-text dg-text--sm" x="640" y="89" text-anchor="middle">content provider</text>
+                          <rect class="dg-box dg-box--warn" x="190" y="148" width="80" height="38" rx="19" /><text class="dg-mono" x="230" y="172" text-anchor="middle">IXP</text>
+                          <rect class="dg-box dg-box--warn" x="400" y="146" width="80" height="38" rx="19" /><text class="dg-mono" x="440" y="170" text-anchor="middle">IXP</text>
+                          <rect class="dg-box dg-box--warn" x="620" y="151" width="80" height="38" rx="19" /><text class="dg-mono" x="660" y="175" text-anchor="middle">IXP</text>
+                          <rect class="dg-box" x="255" y="210" width="150" height="42" rx="21" /><text class="dg-text" x="330" y="236" text-anchor="middle">Regional ISP</text>
+                          <rect class="dg-box" x="465" y="210" width="150" height="42" rx="21" /><text class="dg-text" x="540" y="236" text-anchor="middle">Regional ISP</text>
+                          <rect class="dg-box" x="32" y="290" width="76" height="40" rx="20" /><text class="dg-text dg-text--sm" x="70" y="315" text-anchor="middle">access ISP</text>
+                          <rect class="dg-box" x="122" y="290" width="76" height="40" rx="20" /><text class="dg-text dg-text--sm" x="160" y="315" text-anchor="middle">access ISP</text>
+                          <rect class="dg-box" x="212" y="290" width="76" height="40" rx="20" /><text class="dg-text dg-text--sm" x="250" y="315" text-anchor="middle">access ISP</text>
+                          <rect class="dg-box" x="302" y="290" width="76" height="40" rx="20" /><text class="dg-text dg-text--sm" x="340" y="315" text-anchor="middle">access ISP</text>
+                          <rect class="dg-box" x="392" y="290" width="76" height="40" rx="20" /><text class="dg-text dg-text--sm" x="430" y="315" text-anchor="middle">access ISP</text>
+                          <rect class="dg-box" x="482" y="290" width="76" height="40" rx="20" /><text class="dg-text dg-text--sm" x="520" y="315" text-anchor="middle">access ISP</text>
+                          <rect class="dg-box" x="572" y="290" width="76" height="40" rx="20" /><text class="dg-text dg-text--sm" x="610" y="315" text-anchor="middle">access ISP</text>
+                          <rect class="dg-box" x="662" y="290" width="76" height="40" rx="20" /><text class="dg-text dg-text--sm" x="700" y="315" text-anchor="middle">access ISP</text>
+                          <text class="dg-text dg-text--sm" x="20" y="24">เส้นเขียว = Google เชื่อม IXP และ access ISP โดยตรง (bypass tier-1, regional ISPs)</text>
+                          <text class="dg-text dg-text--sm" x="380" y="352" text-anchor="middle">hosts เชื่อมต่ออินเทอร์เน็ตผ่าน access ISPs</text>
+                        </svg>
+                      </div>
+                      <figcaption>วาดใหม่จากสไลด์ 1-57 "Internet structure: a network of networks" — Tier 1 ISP, Regional ISP, Access ISP, IXP และ Google ในฐานะ content provider network ที่มักข้าม tier-1 และ regional ISPs</figcaption>
+                    </figure>
                     <p>ที่ "ศูนย์กลาง": เครือข่ายใหญ่จำนวนน้อยที่เชื่อมต่อกันดี — <strong>"tier-1" commercial ISPs</strong> (เช่น Level 3, Sprint, AT&amp;T, NTT) ครอบคลุมระดับประเทศและนานาชาติ · <strong>content provider networks</strong> (เช่น Google, Facebook) เครือข่ายส่วนตัวที่เชื่อม data centers เข้ากับอินเทอร์เน็ต มักข้าม (bypass) tier-1 และ regional ISPs</p>
                     <div class="table-scroll">
                       <table>
@@ -260,9 +331,12 @@
                         </tbody>
                       </table>
                     </div>
+                    <div class="callout callout--def">
+                      <span class="callout-label">นิยาม: POP และ IXP</span>
+                      <p><b>POP (Point of Presence):</b> จุดที่ลูกค้าหรือ ISP ย่อยนำเราเตอร์มาเชื่อมกับเครือข่ายของ ISP รายใหญ่</p>
+                      <p><b>IXP (Internet Exchange Point):</b> อาคารศูนย์กลางที่ผู้ให้บริการหลายรายมาเชื่อมต่อกัน — Peering ผ่าน IXP ทำให้แลกเปลี่ยนข้อมูลกันโดยตรง ลดความหน่วง (Latency) และหลีกเลี่ยงการจ่ายเงินให้ Tier-1 ISP</p>
+                    </div>
                     <ul>
-                      <li><strong>POP (Point of Presence):</strong> จุดที่ลูกค้าหรือ ISP ย่อยนำเราเตอร์มาเชื่อมกับเครือข่ายของ ISP รายใหญ่</li>
-                      <li><strong>IXP (Internet Exchange Point):</strong> อาคารศูนย์กลางที่ผู้ให้บริการหลายรายมาเชื่อมต่อกัน — Peering ผ่าน IXP ทำให้แลกเปลี่ยนข้อมูลกันโดยตรง ลดความหน่วง (Latency) และหลีกเลี่ยงการจ่ายเงินให้ Tier-1 ISP</li>
                       <li><strong>Content Provider Network:</strong> บริษัทยักษ์ใหญ่ (Google, Microsoft) สร้างเครือข่ายส่วนตัวครอบคลุมทั่วโลก ข้ามลำดับชั้น (Bypass) นำเซิร์ฟเวอร์ไปใกล้ผู้ใช้ผ่าน IXP หรือ Access ISP โดยตรง → ควบคุมคุณภาพได้ ลดต้นทุนส่งผ่านข้อมูล ให้บริการเนื้อหา (YouTube, Search) ได้รวดเร็ว</li>
                     </ul>
                     <p><strong>ติดตามการเดินทางของ 1 แพ็กเก็ต:</strong> (1) Edge — แอปบนสมาร์ทโฟนสร้างคำขอ HTTP และถูก Encapsulate ผ่าน TCP/IP → (2) Access — วิ่งผ่าน 5G หรือ WiFi เข้าเครือข่ายผู้ให้บริการ → (3) Core — เราเตอร์อ่าน IP ปลายทางและ Forwarding ตามสายไฟเบอร์ → (4) Peering — อาจผ่าน IXP ตัดตรงเข้าเครือข่ายผู้ให้บริการเนื้อหา → (5) Edge ปลายทาง — Data Center แกะข้อมูล (Decapsulation) และประมวลผล</p>
@@ -284,14 +358,53 @@
                         </tbody>
                       </table>
                     </div>
-                    <p><strong>Caravan analogy</strong> (car ~ bit, caravan ~ packet, toll service ~ link transmission): toll booth ใช้ 12 วินาทีต่อคัน, รถ "propagate" 100 km/hr, ระยะ 100 km, ขบวน 10 คัน → ดันทั้งขบวนผ่านด่าน = 12×10 = 120 sec = 2 นาที, คันสุดท้ายเดินทางถึงด่านที่ 2 = 100km/(100km/hr) = 1 ชม. → <strong>คำตอบ 62 นาที</strong> · ถ้ารถวิ่ง 1000 km/hr และด่านใช้ 1 นาทีต่อคัน: รถจะถึงด่านที่ 2 ก่อนที่ด่านแรกบริการครบทุกคัน — หลัง 7 นาทีคันแรกถึงด่านที่ 2 ขณะที่ยังเหลือ 3 คันที่ด่านแรก</p>
+                    <div class="callout callout--warn">
+                      <span class="callout-label">ข้อควรระวัง: d<sub>trans</sub> กับ d<sub>prop</sub> ต่างกันมาก</span>
+                      <p>สไลด์เน้นว่า <b>d<sub>trans</sub> and d<sub>prop</sub> very different</b> — d<sub>trans</sub> = L/R คือเวลาดันบิตทั้งหมดของ packet ลงสาย ขึ้นกับความยาว packet และอัตราส่ง ส่วน d<sub>prop</sub> = d/s คือเวลาที่บิตเดินทางตามลิงก์ ขึ้นกับระยะทางและความเร็วสัญญาณ</p>
+                    </div>
+                    <p><strong>Caravan analogy</strong> (car ~ bit, caravan ~ packet, toll service ~ link transmission) — toll booth ใช้ 12 วินาทีต่อคัน (bit transmission time), รถ "propagate" ที่ 100 km/hr, ระยะระหว่างด่าน 100 km, ขบวน 10 คัน (ten-car caravan ~ 10-bit packet) · <strong>ถาม:</strong> นานเท่าไรกว่าทั้งขบวนจะมาเรียงหน้าด่านที่ 2?</p>
+                    <ol class="steps">
+                      <li>เวลา "push" ทั้งขบวนผ่านด่านลงถนน (เทียบ d<sub>trans</sub>) = 12 × 10 = 120 sec = <strong>2 นาที</strong></li>
+                      <li>เวลาที่คันสุดท้ายเดินทางจากด่าน 1 ถึงด่าน 2 (เทียบ d<sub>prop</sub>) = 100 km / (100 km/hr) = <strong>1 ชม.</strong></li>
+                      <li>รวม 2 นาที + 60 นาที → <strong>คำตอบ 62 นาที</strong></li>
+                    </ol>
+                    <p><strong>กรณีที่ 2:</strong> ถ้ารถวิ่ง 1000 km/hr และด่านใช้ 1 นาทีต่อคัน รถจะถึงด่านที่ 2 ก่อนที่ด่านแรกบริการครบทุกคันหรือไม่?</p>
+                    <ol class="steps">
+                      <li>คันแรกใช้ 1 นาทีผ่านด่านแรก แล้ววิ่ง 100 km ที่ 1000 km/hr = 0.1 ชม. = 6 นาที</li>
+                      <li>คันแรกจึงถึงด่านที่ 2 ที่นาทีที่ 1 + 6 = <strong>7</strong> — ตอนนั้นด่านแรกบริการไปแล้ว 7 คัน</li>
+                      <li><strong>คำตอบ: ใช่</strong> — หลัง 7 นาทีคันแรกถึงด่านที่ 2 ขณะที่ยังเหลือ 3 คันที่ด่านแรก (บิตแรกของ packet ถึงเราเตอร์ถัดไปก่อนที่ packet จะถูกส่งออกครบ)</li>
+                    </ol>
+                    <div class="demo-box" data-widget="delay-calc">
+                      <span class="demo-box-title">ลองเล่น: คำนวณ Transmission delay และ Propagation delay</span>
+                      <div class="bo-actions" role="group" aria-label="ใส่ค่าตามโจทย์">
+                        <button class="btn btn--ghost btn--sm" type="button" data-preset="q1">โจทย์ 1 (4,000 bits · 2 Mbps)</button>
+                        <button class="btn btn--ghost btn--sm" type="button" data-preset="q2">โจทย์ 2 (5 MB · 10 Mbps)</button>
+                        <button class="btn btn--ghost btn--sm" type="button" data-preset="q3">โจทย์ 3 (1,000 Bytes · 2,000 km)</button>
+                      </div>
+                      <div class="demo-fields">
+                        <div class="demo-field"><label for="dc-l">ขนาดข้อมูล L</label><input class="demo-input" id="dc-l" data-input="l" type="number" min="0" value="1000" inputmode="decimal" /></div>
+                        <div class="demo-field"><label for="dc-lu">หน่วยของ L</label><select class="demo-input" id="dc-lu" data-input="lu"><option value="bits">bits</option><option value="Bytes" selected>Bytes (× 8)</option><option value="MB">MB (× 10⁶ × 8)</option></select></div>
+                        <div class="demo-field"><label for="dc-r">อัตราส่ง R (Mbps)</label><input class="demo-input" id="dc-r" data-input="r" type="number" min="0" value="10" inputmode="decimal" /></div>
+                        <div class="demo-field"><label for="dc-d">ระยะทาง d (km)</label><input class="demo-input" id="dc-d" data-input="d" type="number" min="0" value="2000" inputmode="decimal" /></div>
+                        <div class="demo-field"><label for="dc-s">ความเร็วสัญญาณ s</label><select class="demo-input" id="dc-s" data-input="s"><option value="2e8" selected>2 × 10⁸ m/s (Chapter 1 และโจทย์)</option><option value="2.5e8">2.5 × 10⁸ m/s (สไลด์ Architecture)</option></select></div>
+                        <div class="demo-field"><label for="dc-proc">d<sub>proc</sub> (ms)</label><input class="demo-input" id="dc-proc" data-input="proc" type="number" min="0" step="0.001" value="0" inputmode="decimal" /></div>
+                        <div class="demo-field"><label for="dc-queue">d<sub>queue</sub> (ms)</label><input class="demo-input" id="dc-queue" data-input="queue" type="number" min="0" step="0.1" value="0" inputmode="decimal" /></div>
+                      </div>
+                      <p class="demo-status" aria-live="polite"></p>
+                      <ol class="calc-steps"></ol>
+                      <p class="demo-hint">d<sub>proc</sub> ปกติ &lt; microsecs และ d<sub>queue</sub> ขึ้นกับ congestion จึงให้ใส่เองได้ (ค่าเริ่มต้น 0)</p>
+                    </div>
                     <p><strong>Traffic intensity</strong> (a: average packet arrival rate, L: packet length, R: link bandwidth)</p>
                     <code class="formula">traffic intensity = La / R</code>
+                    <p>La คือ arrival rate of bits ส่วน R คือ service rate of bits</p>
                     <ul>
                       <li>La/R ~ 0: queueing delay เฉลี่ยน้อย</li>
                       <li>La/R → 1: queueing delay เฉลี่ยมาก</li>
-                      <li>La/R &gt; 1: "งาน" เข้ามามากกว่าที่ให้บริการได้ — delay เฉลี่ย <strong>infinite!</strong></li>
                     </ul>
+                    <div class="callout callout--warn">
+                      <span class="callout-label">La/R &gt; 1</span>
+                      <p>"งาน" ที่เข้ามามากกว่าที่ให้บริการได้ — average delay <b>infinite!</b></p>
+                    </div>
                     <p><strong>traceroute:</strong> วัด delay จากต้นทางไปยังเราเตอร์ตามเส้นทางสู่ปลายทาง — สำหรับทุก i ส่ง 3 packets ไปถึงเราเตอร์ตัวที่ i (ค่า time-to-live = i) เราเตอร์ส่งกลับ ผู้ส่งวัดช่วงเวลา · <code>* * *</code> หมายถึงไม่มีการตอบ (probe lost หรือเราเตอร์ไม่ตอบ) · ในตัวอย่าง gaia.cs.umass.edu → www.eurecom.fr delay กระโดดจาก ~22 ms เป็น ~104 ms ที่ trans-oceanic link</p>
                     <p><strong>Packet loss:</strong> คิว (buffer) หน้าลิงก์มีความจุจำกัด · packet ที่มาถึงตอนคิวเต็มจะถูก drop (lost) · packet ที่หายอาจถูกส่งซ้ำโดย node ก่อนหน้า, โดย source end system หรือไม่ส่งซ้ำเลย</p>
                     <p><strong>Throughput:</strong> อัตรา (bits/time unit) ที่ bits ถูกส่งจาก sender ถึง receiver — <em>instantaneous</em> (ณ ขณะหนึ่ง) และ <em>average</em> (ช่วงเวลายาว) · ลิงก์ที่จำกัด throughput end-end เรียกว่า <strong>bottleneck link</strong></p>
@@ -509,8 +622,11 @@
                       <div class="compare-col">
                         <h5>Propagation Delay = d / s</h5>
                         <p>d = ระยะทาง (Meters), s = ความเร็วสัญญาณ (~2.5 x 10^8 m/s)</p>
-                        <p><strong>กฎเหล็ก:</strong> d_prop ไม่ขึ้นอยู่กับขนาดแพ็กเก็ต (L) หรือความเร็วอินเทอร์เน็ต (R) แต่ขึ้นกับระยะทางฟิสิกส์ล้วนๆ</p>
                       </div>
+                    </div>
+                    <div class="callout callout--warn">
+                      <span class="callout-label">กฎเหล็ก</span>
+                      <p>d_prop <b>ไม่ขึ้นอยู่กับขนาดแพ็กเก็ต (L) หรือความเร็วอินเทอร์เน็ต (R)</b> แต่ขึ้นกับระยะทางฟิสิกส์ล้วนๆ</p>
                     </div>
                     <p class="note">หมายเหตุ: สไลด์ Chapter 1 ใช้ s ≈ 2x10<sup>8</sup> m/sec และโจทย์ในไฟล์นี้ก็ใช้ 2 × 10^8 m/s ในการคำนวณ</p>
                     <p><strong>Physical Properties (Fluid Flow Analogy):</strong> เทน้ำลงกรวย = Transmission Delay · น้ำไหลไปตามท่อ = Propagation Delay · ลิงก์ 10 Mbps ส่งข้อความเดียวกันใช้ช่วงเวลาสั้นกว่าลิงก์ 1 Mbps 10 เท่า (1 bit = 1 μs เทียบกับ 100 ns)</p>
@@ -589,6 +705,12 @@
                         <p>Small Packet (10^4 bits) ส่งต่อกันเป็นสายพาน → ใช้เวลาเพียง <strong>0.204 วินาที</strong></p>
                       </div>
                     </div>
+                    <ol class="steps">
+                      <li><strong>ไม่แบ่ง:</strong> d<sub>trans</sub> ต่อลิงก์ = 10<sup>6</sup> / (5 × 10<sup>6</sup>) = 0.2 s · store-and-forward ต้องรับครบก่อนส่งต่อ 3 ลิงก์ → 0.2 × 3 = <strong>0.6 s</strong></li>
+                      <li><strong>แบ่ง 100 แพ็กเก็ต:</strong> แพ็กเก็ตละ 10<sup>6</sup> / 100 = 10<sup>4</sup> bits → d<sub>trans</sub> ต่อลิงก์ = 10<sup>4</sup> / (5 × 10<sup>6</sup>) = 0.002 s</li>
+                      <li>แพ็กเก็ตแรกถึงปลายทางหลัง 3 × 0.002 = 0.006 s และแพ็กเก็ตถัดไปตามมาทีละ 0.002 s เพราะส่งต่อกันเป็นสายพาน</li>
+                      <li>แพ็กเก็ตที่ 100 ถึงหลัง 0.006 + 99 × 0.002 = <strong>0.204 s</strong></li>
+                    </ol>
                   </section>
 
                   <section class="topic">

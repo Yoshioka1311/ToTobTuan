@@ -164,6 +164,62 @@
     return node;
   };
 
+  /* ------------------------ Transmission / propagation delay (บทที่ 1) */
+  // d_trans = L/R, d_prop = d/s, d_nodal = d_proc + d_queue + d_trans + d_prop
+  const fmtTime = (sec) => {
+    if (!Number.isFinite(sec)) return "∞";
+    if (sec === 0) return "0 s";
+    if (sec >= 1) return `${fmt(sec, 3)} วินาที`;
+    if (sec >= 1e-4) return `${fmt(sec * 1e3, 3)} ms`;
+    return `${fmt(sec * 1e6, 3)} µs`;
+  };
+  const PRESETS = {
+    q1: { l: 4000, lu: "bits", r: 2, d: 0, s: "2e8" },
+    q2: { l: 5, lu: "MB", r: 10, d: 0, s: "2e8" },
+    q3: { l: 1000, lu: "Bytes", r: 10, d: 2000, s: "2e8" },
+  };
+  document.querySelectorAll('[data-widget="delay-calc"]').forEach((root) => {
+    const $ = (name) => root.querySelector(`[data-input="${name}"]`);
+    const steps = root.querySelector(".calc-steps");
+    const status = root.querySelector(".demo-status");
+    function build() {
+      const lVal = Math.max(0, num($("l")));
+      const unit = $("lu").value;
+      const bits = unit === "bits" ? lVal : unit === "Bytes" ? lVal * 8 : lVal * 1e6 * 8;
+      const rMbps = Math.max(0, num($("r")));
+      const bps = rMbps * 1e6;
+      const km = Math.max(0, num($("d")));
+      const m = km * 1e3;
+      const s = Number($("s").value);
+      const procMs = Math.max(0, num($("proc")));
+      const queueMs = Math.max(0, num($("queue")));
+      const trans = bps ? bits / bps : Infinity;
+      const prop = m / s;
+      const nodal = procMs / 1e3 + queueMs / 1e3 + trans + prop;
+      steps.innerHTML = "";
+      const convL = unit === "bits" ? `L = ${fmt(bits, 0)} bits` : unit === "Bytes" ? `L = ${fmt(lVal)} Bytes × 8 = ${fmt(bits, 0)} bits` : `L = ${fmt(lVal)} × 10<sup>6</sup> × 8 = ${fmt(bits, 0)} bits`;
+      steps.append(
+        li(`แปลงหน่วยให้เป็น bits, bps และเมตร<span class="calc-expr">${convL} · R = ${fmt(rMbps)} Mbps = ${fmt(bps, 0)} bps · d = ${fmt(km)} km = ${fmt(m, 0)} m</span>`),
+        li(`Transmission delay: d<sub>trans</sub> = L / R<span class="calc-expr">${fmt(bits, 0)} / ${fmt(bps, 0)} = <strong>${fmtTime(trans)}</strong></span>`),
+        li(`Propagation delay: d<sub>prop</sub> = d / s<span class="calc-expr">${fmt(m, 0)} m / ${s === 2e8 ? "2×10<sup>8</sup>" : "2.5×10<sup>8</sup>"} m/s = <strong>${fmtTime(prop)}</strong></span>`),
+        li(`d<sub>nodal</sub> = d<sub>proc</sub> + d<sub>queue</sub> + d<sub>trans</sub> + d<sub>prop</sub><span class="calc-expr">${fmt(procMs)} ms + ${fmt(queueMs)} ms + ${fmtTime(trans)} + ${fmtTime(prop)} = <strong>${fmtTime(nodal)}</strong></span>`, "is-result"),
+      );
+      if (!bps) status.textContent = "R = 0 ส่งไม่ได้ (d_trans เป็นอนันต์)";
+      else if (!m) status.textContent = "d = 0 จึงไม่มี propagation delay — เหลือแค่เวลาดันบิตลงสาย";
+      else status.textContent = trans > prop ? `d_trans มากกว่า d_prop ประมาณ ${fmt(trans / prop, 1)} เท่า` : `d_prop มากกว่า d_trans ประมาณ ${fmt(prop / trans, 1)} เท่า`;
+    }
+    root.addEventListener("click", (e) => {
+      const btn = e.target.closest("[data-preset]");
+      if (!btn) return;
+      const p = PRESETS[btn.dataset.preset];
+      $("l").value = p.l; $("lu").value = p.lu; $("r").value = p.r; $("d").value = p.d; $("s").value = p.s;
+      $("proc").value = 0; $("queue").value = 0;
+      build();
+    });
+    root.querySelectorAll("input, select").forEach((i) => i.addEventListener("input", build));
+    build();
+  });
+
   /* ------------------------------------- HTTP RTT timeline (บทที่ 2) */
   document.querySelectorAll('[data-widget="http-timeline"]').forEach((root) => {
     const nInput = root.querySelector("[data-input=objects]");
