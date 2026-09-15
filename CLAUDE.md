@@ -36,12 +36,20 @@ HTML/CSS/JS ไม่มี framework ไม่มี build tool — ห้า�
 | `index.html` | หน้าแรก: hero, ticker คำศัพท์, grid การ์ดรายวิชา (ลิงก์ไปหน้าวิชา), ช่อง placeholder "เพิ่มวิชาใหม่" |
 | `network.html` | ITDS231 **บทที่ 1: Intro & Topology** — 3 แท็บ: **เนื้อหา** (accordion 1 อันต่อ 1 ไฟล์สไลด์) · **สรุป** (cheat sheet 13 การ์ด) · **แบบฝึกหัด** (quiz 20 ข้อ) |
 | `network-application-layer.html` | ITDS231 **บทที่ 2: Application Layer** (Lecture 3 & 4) — โครง 3 แท็บเดียวกัน: accordion 2 การ์ด · cheat sheet 7 การ์ด · quiz 20 ข้อ |
+| `network-data-link-layer.html` | ITDS231 **บทที่ 3: Data Link Layer** (Lecture 5.0–5.2) — accordion 3 การ์ด · cheat sheet 6 การ์ด · quiz 20 ข้อ |
+| `network-mac-ethernet.html` | ITDS231 **บทที่ 4: MAC + Ethernet** (Lecture 6.1–6.2) — accordion 2 การ์ด · cheat sheet 8 การ์ด · quiz 20 ข้อ |
 
 การ์ด "การออกแบบฐานข้อมูล (7-Eleven Schema)" ใน index เป็นเนื้อหาเดิมของผู้ใช้ ยังไม่มีหน้าของตัวเอง
 การ์ด ITDS231 ใน index ลิงก์ไป `network.html` (บทที่ 1) ที่เดียว แล้วสลับบทด้วย chapter switcher ต้นหน้า
 
 ### ⚠️ กฎเรื่องเนื้อหา (สำคัญ) — content lock
-- เนื้อหาวิชา, คำถาม quiz 20 ข้อ, ตัวเลือก, คำตอบ (`data-answer`) และคำอธิบายใน **`network.html` และ `network-application-layer.html`** **ห้ามแก้/ลบ** เมื่อทำงานด้าน UI — ปรับได้แค่ markup/class/ดีไซน์/interaction
+- เนื้อหาวิชา, คำถาม quiz 20 ข้อ, ตัวเลือก, คำตอบ (`data-answer`) และคำอธิบายใน **ทุกหน้าบท: `network.html`, `network-application-layer.html`, `network-data-link-layer.html`, `network-mac-ethernet.html`** **ห้ามแก้/ลบ** เมื่อทำงานด้าน UI — ปรับได้แค่ markup/class/ดีไซน์/interaction (เช่น chapter switcher)
+- **บทที่ 3 และ 4 (lock แล้ว)**: เนื้อหามาจากสรุปที่ผู้ใช้พิมพ์ให้ในแชท (สกัดจาก `ITDS231-Lecture5.0-DLP-Foundation-2026.pdf`, `ITDS231-Lecture5.1-Error-Detection-2026.pdf`, `ITDS231-Lecture5.2-Flow-Control-2026.pdf`, `ITDS231-Lecture6.1-MAC-n-2026.pdf`, `ITDS231-Lecture6.2-Ethernet-2026.pdf` ใน Downloads — ไม่ได้อ่าน PDF เอง) คำถาม/ตัวเลือก/เฉลยตรงตัวตามผู้ใช้
+  - เฉลยบทที่ 3 = `bbbbbbbbbbbbbbabbabb` (ข้อ 15=A, 18=A, ที่เหลือ B)
+  - เฉลยบทที่ 4 = `cbbbbbbbbbbbcbbbbbba` (ข้อ 1=C, 13=C, 20=A, ที่เหลือ B)
+  - `.q-explain` ของบทที่ 3–4 เขียนโดย Claude อ้างจากเนื้อหาที่ผู้ใช้ให้เท่านั้น
+  - cheat sheet บทที่ 4 การ์ด 06: ขนาด Type (2 ไบต์) และ CRC (4 ไบต์) **ไม่อยู่ในสรุปของผู้ใช้** — Claude คำนวณจาก CRC-32 และ 1518 − 6 − 6 − 1500 − 4 และติดเครื่องหมาย * พร้อมหมายเหตุไว้ ส่วนหน้าเนื้อหาแสดง "—"
+  - ข้อสังเกตจากต้นฉบับ (คงไว้ตามที่ผู้ใช้ให้): บทที่ 3 ระบุ Ethernet 802.3 เป็น "LLC/SNAP+MAC" แต่บทที่ 4 ระบุว่า Ethernet "ไม่มี LLC"
 - **บทที่ 2 (lock แล้ว)**: เนื้อหามาจากสรุปที่ผู้ใช้พิมพ์ให้ในแชท (สกัดจาก `chapter2_application layer_1-1.pdf` และ `chapter2_Lecture4_application layer_rev2-1.pdf` ใน Downloads — ไม่ได้อ่าน PDF เอง) คำถาม/ตัวเลือก/เฉลยใช้ตามที่ผู้ใช้กำหนดตรงตัว
   - เฉลยบทที่ 2 = `b b b b b b d b b b b b b b b b b a c b` (ข้อ 7=D, 18=A, 19=C, ที่เหลือ B) — **ไม่ได้กระจาย A–D** เพราะผู้ใช้สั่งห้ามเปลี่ยนเฉลย ห้ามสลับลำดับตัวเลือกเองถ้าผู้ใช้ไม่ขอ
   - ข้อความใน `.q-explain` ของบทที่ 2 เขียนโดย Claude โดยอ้างจากเนื้อหาที่ผู้ใช้ให้เท่านั้น (ผู้ใช้ไม่ได้ให้คำอธิบายมา)
@@ -55,14 +63,16 @@ HTML/CSS/JS ไม่มี framework ไม่มี build tool — ห้า�
 ```
 index.html                       หน้าแรก
 network.html                     ITDS231 บทที่ 1 (เนื้อหาทั้งหมดอยู่ใน HTML ไฟล์นี้)
-network-application-layer.html   ITDS231 บทที่ 2 (ใช้ network.css / network.js ร่วมกัน)
+network-application-layer.html   ITDS231 บทที่ 2 (ใช้ network.css / network.js ร่วมกันทุกบท)
+network-data-link-layer.html     ITDS231 บทที่ 3
+network-mac-ethernet.html        ITDS231 บทที่ 4
 assets/
   favicon.svg           โลโก้ (3 โหนดเชื่อมกัน) ใช้เป็น favicon + wordmark
   css/
     tokens.css          design tokens (สี ฟอนต์ ระยะ radius เงา motion) — แก้สีที่นี่ที่เดียว
     base.css            reset, typography, header, .btn, .chip, .card, .table-scroll, .formula, footer
     home.css            เฉพาะ index.html (hero, ticker, subject cards)
-    network.css         หน้าวิชา: chapter switcher, tabs, accordion, topic content, cheat sheet, quiz (สถานะคงที่เท่านั้น)
+    network.css         หน้าวิชา: chapter switcher, tabs, accordion, topic content (รวม .frame แผนภาพฟิลด์เฟรม), cheat sheet, quiz (สถานะคงที่เท่านั้น)
     motion.css          keyframes + transition ของ component ทั้งหมด + prefers-reduced-motion (โหลดเป็นไฟล์สุดท้าย)
   js/
     network.js          tabs (ARIA, arrow keys, #hash), accordion, quiz (ตรวจ/คะแนน/รีเซ็ต/กรองข้อผิด)
@@ -144,14 +154,23 @@ README.md               คำอธิบายสั้น + วิธี depl
 - [x] เพิ่ม remote `origin` = `https://github.com/Yoshioka1311/ToTobTuan.git` (repo public) และ `git push -u origin main` สำเร็จ — ผู้ใช้ยืนยันให้ push ด้วยอีเมล commit เดิม (violetar1311@gmail.com)
 - [ ] **GitHub Pages ยังไม่เปิด** — `gh` บนเครื่องนี้ token หมดอายุ (`gh auth login` ก่อนถ้าจะให้ Claude เปิดให้) ผู้ใช้ต้องไปเปิดเองที่ Settings → Pages · URL เมื่อเปิดแล้ว: https://yoshioka1311.github.io/ToTobTuan/
 
+**Session 3 (2026-09-15)**
+- [x] สร้าง `network-data-link-layer.html` (บทที่ 3) และ `network-mac-ethernet.html` (บทที่ 4) จากสรุปที่ผู้ใช้ให้ — เฉลยตรงตามผู้ใช้ (ดู content lock)
+- [x] component ใหม่ `.frame` / `.frame-scroll` (แผนภาพลำดับฟิลด์ในเฟรม) ใน network.css
+- [x] chapter switcher ครบ 4 บทในทุกหน้า · มือถือแสดงเป็น grid 2×2 · การ์ด ITDS231 ใน index เป็น "4 บท"
+- [x] ทดสอบ headless Edge ทั้ง 4 บท: เฉลยตรงกับที่กำหนด, คะแนนเต็ม 20, ไม่มี id ซ้ำ, ลิงก์ toc ไม่เสีย, aria-current ถูกหน้า, ไม่มี horizontal scroll ที่ 390px ทุกแท็บ, reduced motion, ไม่มี JS error
+- [x] commit แยกต่อบท แล้ว push `origin/main`
+
 ## สิ่งที่ยังไม่ได้ทำ / แผนต่อไป
 
 - เปิด GitHub Pages (Settings → Pages → Deploy from a branch → `main` / `(root)`) แล้วตรวจว่า https://yoshioka1311.github.io/ToTobTuan/ ขึ้น
 - (ถ้าผู้ใช้ต้องการ) สลับลำดับตัวเลือก quiz บทที่ 2 ให้เฉลยกระจาย A–D — ต้องได้รับอนุญาตก่อน เพราะเปลี่ยนตัวอักษรของเฉลย
 - ITDS231 บทที่ 2 ส่วนที่เหลือของสไลด์ (Email/SMTP/IMAP, DNS, video streaming/CDN, socket programming) ยังไม่มีในเว็บ — มีแค่ในหัวข้อภาพรวม
 - เพิ่มหน้าวิชาอื่น (เช่น วิชาฐานข้อมูลที่มีการ์ดรออยู่แล้ว — ใน Downloads มีสไลด์ชื่อ ITDS222 ERDiagram แต่ยังไม่ได้ยืนยันกับผู้ใช้ว่าเป็นวิชาเดียวกัน) — ดู "วิธีเพิ่มวิชาใหม่" ด้านล่าง
-- ITDS231 สัปดาห์ 2–8 (Data & Signals, Application layer/HTTP, Data Link, MAC/Ethernet/VLAN, STP) ยังไม่มีสไลด์ในเว็บ — เพิ่มเป็น accordion item ใหม่เมื่อผู้ใช้ให้ไฟล์
-- ไอเดีย (ยังไม่ได้ขอ): จำคำตอบ quiz ด้วย localStorage, ธีมสว่าง, สุ่มลำดับคำถาม, แยก JS ส่วน tabs/accordion เป็นไฟล์กลางเมื่อมีหน้าวิชาที่ 2
+- ITDS231 หัวข้อที่ยังไม่มีในเว็บ: Data & Signals, VLAN, STP — เพิ่มเป็นหน้าบทใหม่ตาม pattern หลายบทเมื่อผู้ใช้ให้เนื้อหา
+- (ถ้าผู้ใช้ต้องการ) สลับลำดับตัวเลือก quiz บทที่ 3–4 ให้เฉลยกระจาย A–D (ตอนนี้ส่วนใหญ่เป็น B) — ต้องขออนุญาตก่อน
+- chapter switcher: ถ้ามีเกิน ~6 บท ควรเปลี่ยนเป็น dropdown/scroll แนวนอน (ตอนนี้ 4 บท desktop แถวเดียว, มือถือ 2×2)
+- ไอเดีย (ยังไม่ได้ขอ): จำคำตอบ quiz ด้วย localStorage, ธีมสว่าง, สุ่มลำดับคำถาม
 
 ## วิธีเพิ่มบทใหม่ในวิชาเดิม (pattern หลายบท)
 
@@ -159,7 +178,8 @@ README.md               คำอธิบายสั้น + วิธี depl
 1. ตั้งชื่อ `<subject>-<topic>.html` (lowercase, คั่นด้วย `-`) เช่น `network-transport-layer.html` · บทที่ 1 คงชื่อ `network.html` ไว้เพราะมีลิงก์จาก index และ deep link เดิม
 2. คัดลอกโครงจากหน้าบทล่าสุด: header, `.course-hero`, tabbar, 3 panel (`#content` / `#summary` / `#quiz`), `quiz-result`, `quiz-bar` — id เหล่านี้ JS ใช้ ห้ามเปลี่ยนชื่อ
 3. **chapter switcher**: เพิ่ม `<a class="chapter-link">` ของบทใหม่ใน `.chapter-nav` ของ**ทุกหน้าบท** (ลำดับเดียวกันทุกหน้า) และใส่ `aria-current="page"` เฉพาะลิงก์ของหน้าตัวเอง
-4. id ของหัวข้อย่อยใช้ prefix ต่อบท (บทที่ 2 ใช้ `app-*`, `http-*`) เพื่อไม่ชนกันเวลาลิงก์ข้ามหน้า
+4. id ของหัวข้อย่อยใช้ prefix ต่อบท (บทที่ 2 `app-*` `http-*` · บทที่ 3 `dl-*` `err-*` `fc-*` · บทที่ 4 `mac-*` `eth-*`) เพื่อไม่ชนกันเวลาลิงก์ข้ามหน้า
+   - cheat sheet grid 3 คอลัมน์: จัดให้ (จำนวนการ์ดกว้าง × 2 + การ์ดปกติ) หาร 3 ลงตัว จะไม่มีช่องว่างท้าย
 5. การ์ดใน index ยังชี้ `network.html` — อัปเดตแค่ chip จำนวนบทและ `card-sub`
 6. เพิ่มแถวในตารางหน้าใน CLAUDE.md + README และบันทึกว่าเนื้อหาบทใหม่ถูก lock
 

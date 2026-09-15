@@ -10,6 +10,8 @@
 | หน้าแรก | `index.html` | รายการวิชา + คำศัพท์ที่กำลังทบทวน |
 | ITDS231 บทที่ 1: Intro & Topology | `network.html` | 3 แท็บ: **เนื้อหา** (accordion สรุปแต่ละไฟล์สไลด์) · **สรุป** (cheat sheet) · **แบบฝึกหัด** (quiz 20 ข้อ ตรวจให้คะแนนพร้อมเฉลย) |
 | ITDS231 บทที่ 2: Application Layer | `network-application-layer.html` | โครง 3 แท็บเดียวกัน · สลับบทได้ที่ต้นหน้า |
+| ITDS231 บทที่ 3: Data Link Layer | `network-data-link-layer.html` | framing, error detection, flow control / ARQ, HDLC |
+| ITDS231 บทที่ 4: MAC + Ethernet | `network-mac-ethernet.html` | ALOHA, CSMA/CD, CSMA/CA, channelization, เฟรม Ethernet, switch |
 
 ลิงก์ตรงไปแต่ละแท็บได้ด้วย `network.html#content`, `#summary`, `#quiz` (ใช้กับทุกหน้าบท)
 
@@ -32,6 +34,8 @@ npx serve .
 index.html
 network.html                     ITDS231 บทที่ 1
 network-application-layer.html   ITDS231 บทที่ 2
+network-data-link-layer.html     ITDS231 บทที่ 3
+network-mac-ethernet.html        ITDS231 บทที่ 4
 assets/
   css/  tokens.css · base.css · home.css · network.css · motion.css
   js/   network.js
