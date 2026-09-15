@@ -257,6 +257,187 @@
     build();
   });
 
+  /* ------------------------- ARQ sliding window: GBN vs SR (บทที่ 3) */
+  // สถานการณ์เดียวกับสไลด์: m = 3, ส่ง Frame 0–3 แล้ว Frame 1 หาย
+  const range = (a, b) => Array.from({ length: b - a }, (_, i) => a + i);
+  const cells = (list) => Object.fromEntries(list);
+  const ARQ = {
+    gbn: {
+      name: "Go-Back-N",
+      steps: [
+        { c: "เริ่มต้น (m = 3 → sequence number 0–7): sender window ขนาดได้สูงสุด 2<sup>m</sup> − 1 = 7 · receiver window = 1 เสมอ (รอเฉพาะ Rn = 0)", s: [0, 7, {}], r: [0, 1, {}] },
+        { c: "sender ส่ง Frame 0, 1, 2, 3 ต่อเนื่องโดยไม่รอ ACK ทีละเฟรม (pipelining) และเริ่ม timer ของ outstanding frame ที่เก่าที่สุด — <strong>Frame 1 หายระหว่างทาง</strong>", s: [0, 7, cells([[0, "out"], [1, "lost"], [2, "out"], [3, "out"]])], r: [0, 1, {}] },
+        { c: "receiver ได้ Frame 0 ตรงกับ Rn → รับ เลื่อน Rn = 1 และส่ง ACK 1 · Frame 2 และ 3 มาไม่เรียงลำดับ (Rn ยังรอ Frame 1) → <strong>ทิ้ง ไม่เก็บ buffer</strong>", s: [0, 7, cells([[0, "out"], [1, "lost"], [2, "out"], [3, "out"]])], r: [1, 1, cells([[0, "ok"], [2, "drop"], [3, "drop"]])] },
+        { c: "ACK 1 มาถึง sender → Frame 0 ได้รับการยืนยัน เลื่อน send window ให้ Sf = 1", s: [1, 7, cells([[0, "acked"], [1, "lost"], [2, "out"], [3, "out"]])], r: [1, 1, cells([[0, "ok"]])] },
+        { c: "timer ของ outstanding frame ที่เก่าที่สุดหมดเวลา → <strong>go back:</strong> ส่ง Frame 1 และทุกเฟรมหลังจากนั้น (2, 3) ใหม่ทั้งหมด แม้ 2 กับ 3 จะเคยไปถึงแล้ว", s: [1, 7, cells([[0, "acked"], [1, "resend"], [2, "resend"], [3, "resend"]])], r: [1, 1, cells([[0, "ok"]])] },
+        { c: "receiver รับ Frame 1, 2, 3 ตามลำดับ → Rn = 4 ส่ง cumulative ACK 4 (ยืนยันทุกเฟรมก่อนหน้า 4) → sender เลื่อน window ไปที่ Sf = 4", s: [4, 7, cells(range(0, 4).map((i) => [i, "acked"]))], r: [4, 1, cells(range(0, 4).map((i) => [i, "ok"]))] },
+      ],
+    },
+    sr: {
+      name: "Selective Repeat",
+      steps: [
+        { c: "เริ่มต้น (m = 3): sender และ receiver window ขนาดเท่ากัน ไม่เกิน 2<sup>m−1</sup> = 4 — receiver รับได้ทั้งช่วง 0–3", s: [0, 4, {}], r: [0, 4, {}] },
+        { c: "sender ส่ง Frame 0, 1, 2, 3 (แต่ละเฟรมมี timer ของตัวเอง) — <strong>Frame 1 หายระหว่างทาง</strong>", s: [0, 4, cells([[0, "out"], [1, "lost"], [2, "out"], [3, "out"]])], r: [0, 4, {}] },
+        { c: "receiver ได้ Frame 0 → ส่งขึ้นชั้นบน เลื่อน window (Rn = 1) ส่ง ACK 1 · Frame 2 และ 3 อยู่ใน receive window → <strong>เก็บใน buffer</strong> และส่ง NAK 1 ขอ Frame 1", s: [0, 4, cells([[0, "out"], [1, "lost"], [2, "out"], [3, "out"]])], r: [1, 4, cells([[0, "ok"], [2, "buf"], [3, "buf"]])] },
+        { c: "ACK 1 มาถึง → Sf = 1 · NAK 1 มาถึง → <strong>ส่งใหม่เฉพาะ Frame 1</strong> (Frame 2, 3 ไม่ต้องส่งซ้ำ)", s: [1, 4, cells([[0, "acked"], [1, "resend"], [2, "out"], [3, "out"]])], r: [1, 4, cells([[0, "ok"], [2, "buf"], [3, "buf"]])] },
+        { c: "receiver ได้ Frame 1 → ส่ง Frame 1, 2, 3 ขึ้นชั้นบนพร้อมกัน Rn = 4 ส่ง ACK 4 → sender เลื่อน window ไปที่ Sf = 4", s: [4, 4, cells(range(0, 4).map((i) => [i, "acked"]))], r: [4, 4, cells(range(0, 4).map((i) => [i, "ok"]))] },
+      ],
+    },
+  };
+  document.querySelectorAll('[data-widget="arq-window"]').forEach((root) => {
+    const strips = { s: root.querySelector('[data-strip="s"]'), r: root.querySelector('[data-strip="r"]') };
+    const caption = root.querySelector(".arq-caption");
+    const stepLabel = root.querySelector(".arq-step");
+    const prev = root.querySelector('[data-step="prev"]');
+    const next = root.querySelector('[data-step="next"]');
+    const buttons = Array.from(root.querySelectorAll("button[data-proto]"));
+    let proto = "gbn";
+    let step = 0;
+    const paint = (strip, [start, size, states]) => {
+      strip.innerHTML = "";
+      for (let i = 0; i < 12; i++) {
+        const cell = document.createElement("span");
+        cell.className = "arq-cell";
+        cell.textContent = i % 8;
+        const inWin = i >= start && i < start + size;
+        if (inWin) cell.classList.add("in-win");
+        if (i === start) cell.classList.add("win-start");
+        if (i === start + size - 1) cell.classList.add("win-end");
+        if (states[i]) cell.dataset.state = states[i];
+        strip.append(cell);
+      }
+    };
+    function render() {
+      const data = ARQ[proto];
+      const st = data.steps[step];
+      paint(strips.s, st.s);
+      paint(strips.r, st.r);
+      caption.innerHTML = st.c;
+      stepLabel.textContent = `${data.name} · ขั้นที่ ${step + 1} / ${data.steps.length}`;
+      prev.disabled = step === 0;
+      next.disabled = step === data.steps.length - 1;
+    }
+    prev.addEventListener("click", () => { step = Math.max(0, step - 1); render(); });
+    next.addEventListener("click", () => { step = Math.min(ARQ[proto].steps.length - 1, step + 1); render(); });
+    buttons.forEach((b) => b.addEventListener("click", () => {
+      proto = b.dataset.proto;
+      step = 0;
+      buttons.forEach((x) => x.setAttribute("aria-pressed", String(x === b)));
+      render();
+    }));
+    render();
+  });
+
+  /* --------------------------------------------- Hamming code (บทที่ 3) */
+  document.querySelectorAll('[data-widget="hamming"]').forEach((root) => {
+    const input = root.querySelector("input");
+    const row = root.querySelector(".bit-row");
+    const out = root.querySelector(".calc-steps");
+    const status = root.querySelector(".demo-status");
+    const DATA_POS = [3, 5, 6, 7, 9, 10, 11]; // d1..d7
+    const GROUP = { 1: [1, 3, 5, 7, 9, 11], 2: [2, 3, 6, 7, 10, 11], 4: [4, 5, 6, 7], 8: [8, 9, 10, 11] };
+    const NAMES = {};
+    DATA_POS.forEach((p, i) => { NAMES[p] = `d${i + 1}`; });
+    [1, 2, 4, 8].forEach((p) => { NAMES[p] = `r${p}`; });
+    let flipped = null;
+
+    function encode(bits7) {
+      // input เขียนแบบ d7 d6 … d1 (ซ้าย → ขวา) ตามสไลด์
+      const code = {};
+      bits7.split("").reverse().forEach((b, i) => { code[DATA_POS[i]] = Number(b); });
+      [1, 2, 4, 8].forEach((r) => {
+        code[r] = GROUP[r].filter((p) => p !== r).reduce((x, p) => x ^ code[p], 0);
+      });
+      return code;
+    }
+    function render() {
+      const raw = input.value.replace(/[^01]/g, "").slice(0, 7);
+      if (raw.length !== 7) {
+        status.textContent = "ใส่ dataword ให้ครบ 7 บิต (0 หรือ 1)";
+        status.className = "demo-status is-bad";
+        row.innerHTML = "";
+        out.innerHTML = "";
+        return;
+      }
+      const sent = encode(raw);
+      const recv = { ...sent };
+      if (flipped) recv[flipped] ^= 1;
+      const str = (c) => range(0, 11).map((i) => c[11 - i]).join("");
+      const checks = [1, 2, 4, 8].map((r) => ({ r, bits: GROUP[r].map((p) => recv[p]), v: GROUP[r].reduce((x, p) => x ^ recv[p], 0) }));
+      const location = checks.reduce((s, c) => s + c.v * c.r, 0);
+
+      row.innerHTML = "";
+      for (let p = 11; p >= 1; p--) {
+        const b = document.createElement("button");
+        b.type = "button";
+        b.className = "bit-cell";
+        if ([1, 2, 4, 8].includes(p)) b.classList.add("is-parity");
+        if (flipped === p) b.classList.add("is-flipped");
+        if (flipped && location === p) b.classList.add("is-found");
+        b.setAttribute("aria-label", `ตำแหน่ง ${p} (${NAMES[p]}) ค่า ${recv[p]} — คลิกเพื่อจำลองบิตผิด`);
+        b.innerHTML = `<span class="bit-pos">${p}</span><span class="bit-val">${recv[p]}</span><span class="bit-name">${NAMES[p]}</span>`;
+        b.addEventListener("click", () => { flipped = flipped === p ? null : p; render(); });
+        row.append(b);
+      }
+      out.innerHTML = "";
+      out.append(li(`codeword ที่ส่ง (ตำแหน่ง 11 → 1)<span class="calc-expr">${str(sent)}</span>`));
+      out.append(li(`codeword ที่รับ${flipped ? ` (จำลองบิตตำแหน่ง ${flipped} ผิด)` : ""}<span class="calc-expr">${str(recv)}</span>`));
+      checks.forEach((c) => out.append(li(`Check r${c.r} = XOR ของบิตตำแหน่ง {${GROUP[c.r].join(",")}}<span class="calc-expr">${c.bits.join(" ⊕ ")} = <strong>${c.v}</strong></span>`)));
+      out.append(li(`ตำแหน่งบิตผิด = (r8 r4 r2 r1)<sub>2</sub><span class="calc-expr">(${checks[3].v}${checks[2].v}${checks[1].v}${checks[0].v})<sub>2</sub> = <strong>${location}</strong></span>`, location ? "is-warn" : "is-result"));
+      status.className = `demo-status ${location ? "is-bad" : "is-ok"}`;
+      status.textContent = location ? `พบบิตผิดที่ตำแหน่ง ${location} → กลับค่าบิตนั้นเพื่อแก้ไข` : "ผลตรวจทุก check = 0 → ไม่พบบิตผิด";
+    }
+    input.addEventListener("input", () => { flipped = null; render(); });
+    render();
+  });
+
+  /* ------------------------------------ CRC modulo-2 division (บทที่ 3) */
+  document.querySelectorAll('[data-widget="crc-calc"]').forEach((root) => {
+    const dataIn = root.querySelector('[data-input="data"]');
+    const divIn = root.querySelector('[data-input="divisor"]');
+    const pre = root.querySelector(".long-division");
+    const out = root.querySelector(".calc-steps");
+    const bits = (el) => el.value.replace(/[^01]/g, "");
+    function render() {
+      const data = bits(dataIn);
+      const div = bits(divIn).replace(/^0+/, "");
+      out.innerHTML = "";
+      if (!data || div.length < 2) {
+        pre.textContent = "ใส่ dataword และ divisor (ขึ้นต้นด้วย 1 อย่างน้อย 2 บิต) เป็นเลข 0/1";
+        return;
+      }
+      const n = div.length - 1;
+      const dividend = data + "0".repeat(n);
+      const arr = dividend.split("").map(Number);
+      const lines = [];
+      const pad = (s, at) => " ".repeat(at) + s;
+      const col0 = div.length + 3; // ความกว้างของ "divisor ) "
+      let quotient = "";
+      for (let i = 0; i + div.length <= arr.length; i++) {
+        if (i > 0) lines.push(pad(arr.slice(i, i + div.length).join(""), col0 + i));
+        const lead = arr[i];
+        const sub = lead ? div : "0".repeat(div.length);
+        quotient += lead;
+        lines.push(`<span class="ld-sub">${pad(sub, col0 + i)}</span>${lead ? "" : "   ← บิตซ้ายสุดเป็น 0 ใช้ 0…0 แทน divisor"}`);
+        for (let j = 0; j < div.length; j++) arr[i + j] ^= Number(sub[j]);
+        lines.push(pad("-".repeat(div.length), col0 + i));
+      }
+      const rem = arr.slice(arr.length - n).join("");
+      lines.push(`<span class="ld-rem">${pad(rem, col0 + arr.length - n)}</span>   ← remainder = CRC`);
+      pre.innerHTML = [
+        pad(quotient, col0 + div.length - 1) + "   ← quotient",
+        `${div} ) ${dividend}   ← dataword + ${n} zeros`,
+        ...lines,
+      ].join("\n");
+      out.append(
+        li(`CRC มีขนาดน้อยกว่า divisor 1 บิต: divisor ${div.length} บิต → CRC ${n} บิต<span class="calc-expr">quotient = ${quotient}</span>`),
+        li(`นำ CRC ต่อท้าย dataword ได้ codeword ที่ส่ง<span class="calc-expr">${data} + ${rem} = <strong>${data}${rem}</strong></span>`, "is-result"),
+      );
+    }
+    [dataIn, divIn].forEach((i) => i.addEventListener("input", render));
+    render();
+  });
+
   /* -------------------------------------------- Form validation demo */
   document.querySelectorAll('form[data-widget="validation-demo"]').forEach((form) => {
     const status = form.querySelector(".demo-status");

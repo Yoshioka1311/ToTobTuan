@@ -22,6 +22,15 @@
 <body>
   <a class="skip-link" href="#tabs">ข้ามไปที่เนื้อหา</a>
 
+  <svg class="dg-defs" aria-hidden="true" focusable="false">
+    <defs>
+      <marker id="arr" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path class="dg-arrow" d="M0 0L10 5L0 10z" /></marker>
+      <marker id="arr-muted" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path class="dg-arrow--muted" d="M0 0L10 5L0 10z" /></marker>
+      <marker id="arr-ok" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path class="dg-arrow--ok" d="M0 0L10 5L0 10z" /></marker>
+      <marker id="arr-bad" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path class="dg-arrow--bad" d="M0 0L10 5L0 10z" /></marker>
+    </defs>
+  </svg>
+
   <header class="site-header">
     <div class="wrap">
       <a class="wordmark" href="index.html" aria-label="โต๊ะทบทวน หน้าแรก">
@@ -96,14 +105,14 @@
 
         <div class="acc">
 
-          <!-- ---------- ไฟล์ 1 ---------- -->
+          <!-- ================= 01 Foundation ================= -->
           <div class="acc-item is-open">
             <h3 class="acc-heading">
               <button class="acc-trigger" type="button" aria-expanded="true" aria-controls="acc-dlp" id="acc-dlp-btn">
                 <span class="acc-index">01</span>
                 <span class="acc-title">
-                  <span class="acc-name">พื้นฐานของ Data Link Layer</span>
-                  <span class="acc-file">ITDS231-Lecture5.0-DLP-Foundation-2026.pdf · Lecture 5.0</span>
+                  <span class="acc-name">พื้นฐานของ Data Link Layer และ Framing</span>
+                  <span class="acc-file">ITDS231-Lecture5.0-DLP-Foundation-2026.pdf · Lecture 5.0 · 19 หน้า</span>
                 </span>
                 <svg class="acc-chevron" viewBox="0 0 20 20" aria-hidden="true"><path d="M5 7.5l5 5 5-5" /></svg>
               </button>
@@ -113,114 +122,221 @@
                 <div class="acc-body">
 
                   <nav class="toc" aria-label="หัวข้อในพื้นฐานของ Data Link Layer">
-                    <a href="#dl-hop">Hop-by-hop delivery</a>
-                    <a href="#dl-sublayers">LLC &amp; MAC</a>
-                    <a href="#dl-functions">หน้าที่หลัก</a>
-                    <a href="#dl-links">Link protocols &amp; ประเภทลิงก์</a>
-                    <a href="#dl-frame">โครงสร้างเฟรม</a>
-                    <a href="#dl-framing">Framing 3 แบบ</a>
+                    <a href="#dl-outline">ภาพรวมบทเรียน</a>
+                    <a href="#dl-hop">Hop-by-hop &amp; reframing</a>
+                    <a href="#dl-functions">Core services &amp; sublayers</a>
+                    <a href="#dl-links">Data link protocols</a>
+                    <a href="#dl-shared">Dedicated vs shared</a>
+                    <a href="#dl-frame">Framing คืออะไร</a>
+                    <a href="#dl-framing">Byte stuffing &amp; bit stuffing</a>
+                    <a href="#dl-compare">เปรียบเทียบ framing 3 แบบ</a>
                   </nav>
 
-                  <section class="topic" id="dl-hop">
-                    <h4>Hop-by-hop delivery</h4>
-                    <p>Data Link Layer ทำหน้าที่ <strong>hop-by-hop delivery</strong> — แพ็กเก็ต IP เดียวกันถูก <em>"reframe"</em> (ถอดเฟรมเก่า สร้างเฟรมใหม่) <strong>ทุกครั้งที่ผ่าน router แต่ละ hop</strong> แม้ว่า application จะมองเห็นเป็นการสื่อสารแบบ end-to-end ก็ตาม</p>
-                  </section>
-
-                  <section class="topic" id="dl-sublayers">
-                    <h4>2 ซับเลเยอร์: LLC และ MAC</h4>
-                    <div class="compare">
-                      <div class="compare-col">
-                        <h5>LLC <span class="chip">Logical Link Control</span></h5>
-                        <p>เชื่อมกับ network-layer protocol ชั้นบน</p>
-                      </div>
-                      <div class="compare-col">
-                        <h5>MAC <span class="chip">Media Access Control</span></h5>
-                        <p>framing, link addressing, medium access</p>
-                      </div>
-                    </div>
-                  </section>
-
-                  <section class="topic" id="dl-functions">
-                    <h4>หน้าที่หลักของ Data Link Layer</h4>
+                  <section class="topic" id="dl-outline">
+                    <h4>ภาพรวมบทเรียน Data Link Layer</h4>
+                    <p>Lecture 5.0 เป็นสะพานแนวคิด (conceptual bridge) ไปสู่ Lecture 5.1 และ 5.2 สไลด์วางลำดับบทเรียน Data Link Layer ไว้เป็นคำถามทีละขั้น</p>
                     <div class="table-scroll">
                       <table>
-                        <thead><tr><th>หน้าที่</th><th>ทำโดย / หมายเหตุ</th></tr></thead>
+                        <thead><tr><th>Lecture</th><th>คำถามหลัก</th><th>หัวข้อ</th></tr></thead>
                         <tbody>
-                          <tr><td>Network-layer interface</td><td>LLC</td></tr>
-                          <tr><td>Framing</td><td>—</td></tr>
-                          <tr><td>Link addressing</td><td>MAC</td></tr>
-                          <tr><td>Error detection</td><td>FCS / CRC</td></tr>
-                          <tr><td>Error recovery</td><td>ACK + retransmit <span class="chip">optional</span></td></tr>
-                          <tr><td>Flow control</td><td><span class="chip">optional</span></td></tr>
-                          <tr><td>Medium access</td><td>MAC</td></tr>
+                          <tr><td>5.0 Foundation</td><td>—</td><td>TCP/IP Communication Model · hop-by-hop delivery · LLC and MAC roles · framing</td></tr>
+                          <tr><td>5.1 Data Integrity</td><td>ผู้รับเชื่อบิตที่ได้รับได้ไหม? (Can the receiver trust the bits?)</td><td>Parity · checksum · CRC · Hamming code · interleaving</td></tr>
+                          <tr><td>5.2 Delivery Control</td><td>ผู้ส่งกับผู้รับประสานงานกันได้ไหม? (Can sender and receiver coordinate?)</td><td>Flow control · ARQ · HDLC · Stop-and-Wait · GBN · SR</td></tr>
+                          <tr><td>6.1 Medium Access</td><td>ใครส่งบนสื่อกลางร่วมได้บ้าง? (Who may transmit on shared media?)</td><td>ALOHA · CSMA/CD · CSMA/CA · controlled access · channelization</td></tr>
+                          <tr><td>6.2 Ethernet</td><td>Ethernet รวมแนวคิดทั้งหมดเข้าด้วยกัน</td><td>Frames and FCS · MAC addresses · switched forwarding · IEEE 802.3</td></tr>
+                          <tr><td>7 VLAN</td><td>VLAN ขยาย switched LAN</td><td>Logical segmentation · access ports · trunks · IEEE 802.1Q</td></tr>
                         </tbody>
                       </table>
                     </div>
                   </section>
 
-                  <section class="topic" id="dl-links">
-                    <h4>ตัวอย่าง link protocol และประเภทลิงก์</h4>
-                    <p><strong>ตัวอย่าง link protocol:</strong> Ethernet 802.3 (LLC/SNAP + MAC) · Wi-Fi 802.11 · Token Ring 802.5 · PPP · HDLC · LAPB · LTE/5G — แต่ละแบบมี framing / addressing / access ต่างกัน</p>
+                  <section class="topic" id="dl-hop">
+                    <h4>Data Link Layer คือการสื่อสารแบบ Hop by Hop</h4>
+                    <p>application มองเห็นการสื่อสารเป็นแบบ <strong>end-to-end</strong> (จากเครื่องต้นทางถึงปลายทาง) แต่การส่งจริงเกิดขึ้นทีละลิงก์ เรียกว่า <strong>hop-by-hop delivery</strong> ซึ่งลิงก์แต่ละช่วงเป็นผู้ทำ</p>
+                    <p><strong>A Packet Is Reframed at Every Hop</strong> — แพ็กเก็ต IP เดียวกันจะถูกใส่เฟรมใหม่ทุก hop ตามลำดับนี้</p>
+                    <ol class="steps">
+                      <li>Network layer ส่ง IP packet ลงมาให้ data link layer</li>
+                      <li>ผู้ส่ง<strong>ห่อ (encapsulate) packet ไว้ในเฟรมที่เหมาะกับลิงก์ปัจจุบัน</strong></li>
+                      <li>ที่ router ถัดไป <strong>เฟรมนั้นถูกถอดออก และสร้างเฟรมใหม่สำหรับลิงก์ถัดไป</strong></li>
+                      <li>Physical layer ส่งเฟรมเป็นสัญญาณผ่านสื่อกลาง</li>
+                    </ol>
+                    <div class="callout callout--def">
+                      <span class="callout-label">Frame Study with Wireshark (ข้อสังเกตจากสไลด์)</span>
+                      <p>(1) framing ห่อ network-layer packet เพื่อส่งผ่านลิงก์ท้องถิ่น<b>หนึ่งลิงก์</b> (2) frame header มักมี source และ destination link-layer addresses (3) trailer มักมี frame check sequence (FCS) สำหรับตรวจจับ error (4) ที่ router ทุกตัว เฟรมขาเข้าถูกถอดออกและสร้างเฟรมใหม่สำหรับลิงก์ถัดไป</p>
+                      <p>หมายเหตุ: ปกติ Wireshark <b>ไม่แสดง</b> Ethernet preamble, Start Frame Delimiter (SFD) และ Frame Check Sequence (FCS)</p>
+                    </div>
+                  </section>
+
+                  <section class="topic" id="dl-functions">
+                    <h4>Core services และ sublayers ของ Data Link Layer</h4>
+                    <p>physical layer ขนส่ง<strong>บิต</strong> ส่วน data link layer <strong>จัดระเบียบการส่งข้ามลิงก์ท้องถิ่นหนึ่งลิงก์</strong> (organizes delivery across one local link) บริการหลักมีดังนี้</p>
+                    <div class="table-scroll">
+                      <table>
+                        <thead><tr><th>บริการ</th><th>ทำอะไร / อยู่ที่ไหน</th></tr></thead>
+                        <tbody>
+                          <tr><td>Network-layer interface <span class="chip">LLC</span></td><td>ทำ multiplexing ให้โปรโตคอลชั้นบนหลายตัว</td></tr>
+                          <tr><td>Framing</td><td>ทำใน MAC ของ IEEE 802 · PPP/HDLC ทำ framing เองโดยตรง</td></tr>
+                          <tr><td>Link addressing <span class="chip">MAC</span></td><td>ระบุอุปกรณ์บนลิงก์ท้องถิ่น</td></tr>
+                          <tr><td>Error detection</td><td>FCS/CRC ใน MAC หรือใน link protocol</td></tr>
+                          <tr><td>Error recovery <span class="chip">optional</span></td><td>ACKs และ retransmission</td></tr>
+                          <tr><td>Flow control <span class="chip">optional</span></td><td>ควบคุมอัตราการส่งของผู้ส่ง</td></tr>
+                          <tr><td>Medium access <span class="chip">MAC</span></td><td>ประสานงานสถานีที่ใช้สื่อกลางร่วมกัน</td></tr>
+                        </tbody>
+                      </table>
+                    </div>
                     <div class="compare">
                       <div class="compare-col">
-                        <h5>Dedicated links</h5>
-                        <p>full-duplex switch, star topology</p>
+                        <h5>LLC <span class="chip">Logical (Data) Link Control</span></h5>
+                        <p>สถานีควบคุมการไหลของข้อมูลกับคู่สื่อสารอย่างไร (how stations control data flow) · เป็น network-layer interface</p>
                       </div>
                       <div class="compare-col">
-                        <h5>Shared links</h5>
-                        <p>bus topology, wireless — เกิดปัญหา <strong>"multiple access"</strong> เมื่อหลายอุปกรณ์แย่งกันส่งพร้อมกัน</p>
+                        <h5>MAC <span class="chip">Media Access Control</span></h5>
+                        <p>หลายสถานีเข้าถึง/แชร์สื่อกลางอย่างไร (how multiple stations access/share medium) · ทำ framing, addressing, FCS และ medium access</p>
+                      </div>
+                    </div>
+                    <p class="note">สไลด์ recap ใน Lecture 5.1 สรุปงานของ data link layer เป็น 4 อย่าง: error control · flow control · framing · media access control</p>
+                  </section>
+
+                  <section class="topic" id="dl-links">
+                    <h4>Data Link Protocols</h4>
+                    <div class="table-scroll">
+                      <table>
+                        <thead><tr><th>Link type</th><th>Example</th><th>Architecture</th><th>Key link function</th></tr></thead>
+                        <tbody>
+                          <tr><td>Shared LAN</td><td>Ethernet 802.3</td><td>LLC/SNAP + MAC</td><td>Framing, addressing, FCS</td></tr>
+                          <tr><td>Wireless LAN</td><td>Wi-Fi 802.11</td><td>LLC/SNAP + MAC</td><td>Access, ACK, retransmission</td></tr>
+                          <tr><td>Token LAN</td><td>Token Ring 802.5</td><td>LLC + MAC</td><td>Token access (legacy)</td></tr>
+                          <tr><td>Low-power WPAN</td><td>IEEE 802.15.4</td><td>Adaptation + MAC</td><td>Low-power framing/access</td></tr>
+                          <tr><td>Point-to-point</td><td>PPP</td><td>Single data-link protocol</td><td>Framing, LCP/NCP, FCS</td></tr>
+                          <tr><td>Point-to-point</td><td>HDLC</td><td>Single data-link protocol</td><td>Framing and link control</td></tr>
+                          <tr><td>X.25 WAN</td><td>LAPB</td><td>Single data-link protocol</td><td>Reliable HDLC-derived link</td></tr>
+                          <tr><td>Cellular radio</td><td>LTE / 5G</td><td>System-specific stack</td><td>PDCP, RLC, and MAC</td></tr>
+                        </tbody>
+                      </table>
+                    </div>
+                    <div class="compare">
+                      <div class="compare-col">
+                        <h5>IEEE 802 LAN/WLAN</h5>
+                        <ul>
+                          <li><strong>LLC/SNAP:</strong> network-layer interface และ multiplexing</li>
+                          <li><strong>MAC:</strong> framing, addressing, FCS และ medium access</li>
+                        </ul>
+                      </div>
+                      <div class="compare-col">
+                        <h5>PPP และ HDLC</h5>
+                        <ul>
+                          <li>เป็น point-to-point data-link protocols ที่<strong>ครบในตัว</strong></li>
+                          <li>ทำ framing เองโดยตรง — <strong>ไม่แยกเป็น LLC/MAC แบบ IEEE 802</strong></li>
+                        </ul>
                       </div>
                     </div>
                   </section>
 
+                  <section class="topic" id="dl-shared">
+                    <h4>Dedicated vs Shared Links และปัญหา Multiple Access</h4>
+                    <div class="compare">
+                      <div class="compare-col">
+                        <h5>Dedicated Links</h5>
+                        <p>full-duplex switch แบบ star topology · ใน recap ของสไลด์ LLC ดูแล "link in dedicated medium" เช่น Point-to-Point (PPP), HDLC, Frame-Relay (WAN)</p>
+                      </div>
+                      <div class="compare-col">
+                        <h5>Shared Links</h5>
+                        <p>bus topology และ wireless · MAC ดูแล "link in shared medium" เช่น Ethernet และ 802.11 Wireless (LAN)</p>
+                      </div>
+                    </div>
+                    <div class="callout callout--warn">
+                      <span class="callout-label">A Shared Medium Creates a Coordination Problem</span>
+                      <p>เมื่อหลายอุปกรณ์ใช้ช่องสัญญาณเดียวกัน อาจมีมากกว่าหนึ่งสถานีพยายามส่งพร้อมกัน → การส่งพร้อมกัน<b>ชนกันได้ (collide)</b> คำถามของ <b>Multiple Access</b> คือ สถานีจะแชร์สื่อกลางอย่างยุติธรรม มีประสิทธิภาพ และชนกันน้อยลงได้อย่างไร?</p>
+                    </div>
+                    <p>สถานีที่ใช้สื่อกลางร่วมกันจึงต้องมี<strong>กฎตัดสินว่าแต่ละสถานีส่งได้เมื่อไร</strong> — media access control ประสานการเข้าถึงนี้ ซึ่งเรียนละเอียดใน Lecture 6.1 (contention, controlled access และ channelization)</p>
+                  </section>
+
                   <section class="topic" id="dl-frame">
-                    <h4>โครงสร้างเฟรมทั่วไป</h4>
+                    <h4>Framing: เปลี่ยน bit stream ให้เป็นเฟรม</h4>
+                    <ul>
+                      <li>physical layer ขนส่งบิตในรูปสัญญาณผ่านสื่อกลาง</li>
+                      <li>data-link layer <strong>จัดกลุ่ม bit stream ให้เป็นหน่วยที่ระบุได้เรียกว่า frames</strong></li>
+                      <li>แต่ละเฟรม<strong>มีขอบเขตกำกับ</strong> เพื่อให้ผู้รับแยกเฟรมหนึ่งออกจากเฟรมถัดไปได้</li>
+                      <li>โดยทั่วไปเฟรมมี header, payload และ trailer — ฟิลด์จริงขึ้นกับโปรโตคอล</li>
+                      <li>trailer มักมี <strong>FCS</strong> สำหรับตรวจจับ transmission errors</li>
+                    </ul>
                     <div class="frame-scroll">
                       <ol class="frame" aria-label="ลำดับฟิลด์ในเฟรมทั่วไป">
                         <li><span class="frame-name">Flag</span></li>
                         <li><span class="frame-name">Address</span></li>
                         <li><span class="frame-name">Control</span></li>
-                        <li class="frame-data"><span class="frame-name">Data</span></li>
+                        <li class="frame-data"><span class="frame-name">Data (information)</span></li>
                         <li><span class="frame-name">FCS</span></li>
                         <li><span class="frame-name">Flag</span></li>
                       </ol>
                     </div>
-                    <div class="callout">
-                      <strong>เปรียบเหมือนซองจดหมาย:</strong>
-                      <b>header</b> บอกข้อมูลนำส่ง ·
-                      <b>FCS</b> ช่วยตรวจว่าเนื้อหาเสียหายระหว่างทางหรือไม่
+                    <div class="callout callout--why">
+                      <span class="callout-label">เปรียบเทียบ: เฟรมคือซองจดหมาย</span>
+                      <p>ซองจดหมาย<b>แยกข้อความหนึ่งออกจากอีกข้อความ</b> · header ให้<b>ข้อมูลการนำส่ง</b> · FCS ทำหน้าที่เหมือน<b>ตัวตรวจ</b>ว่าเนื้อหาเสียหายระหว่างการส่งหรือไม่</p>
+                    </div>
+                    <p><strong>Framing มี 2 ประเภท</strong></p>
+                    <div class="compare">
+                      <div class="compare-col">
+                        <h5>Character-oriented (byte-oriented)</h5>
+                        <p>ข้อมูลเป็นตัวอักษร 8-bit จากระบบรหัสอย่าง ASCII · ตัวอย่าง serial communication protocols: UART, PPP, Modbus, Bisync</p>
+                      </div>
+                      <div class="compare-col">
+                        <h5>Bit-oriented</h5>
+                        <p>ส่วนข้อมูลของเฟรมเป็นลำดับบิตที่ชั้นบนนำไปตีความเป็นข้อความ ภาพ เสียง วิดีโอ ฯลฯ · ตัวอย่าง: HDLC, SDLC, CAN (Controller Area Network), Frame Relay, ATM, X25</p>
+                      </div>
                     </div>
                   </section>
 
                   <section class="topic" id="dl-framing">
-                    <h4>Framing 3 แบบหลัก</h4>
-                    <div class="compare">
-                      <div class="compare-col">
-                        <h5>Byte / character-oriented</h5>
-                        <ul>
-                          <li>ข้อมูลเป็นตัวอักษร 8-bit (ASCII)</li>
-                          <li>ใช้ special delimiter byte เป็นขอบเขตเฟรม</li>
-                          <li>ถ้า pattern flag ไปปรากฏในข้อมูลต้องใช้ escape character แก้ปัญหา เรียกว่า <strong>byte stuffing</strong></li>
-                          <li><strong>ตัวอย่าง:</strong> BISYNC, PPP</li>
-                        </ul>
-                      </div>
-                      <div class="compare-col">
-                        <h5>Bit-oriented</h5>
-                        <ul>
-                          <li>ข้อมูลเป็นลำดับบิตล้วนๆ</li>
-                          <li>ใช้ flag bit pattern เป็นขอบเขต</li>
-                          <li>ป้องกัน pattern ปรากฏซ้ำด้วย <strong>bit stuffing</strong></li>
-                          <li><strong>ตัวอย่าง:</strong> HDLC, Frame Relay — HDLC ใช้ Flag = <code>0x7E</code> = <code>01111110</code></li>
-                        </ul>
-                      </div>
-                      <div class="compare-col">
-                        <h5>Length / Fixed-size</h5>
-                        <ul>
-                          <li>ใช้ length field หรือขนาดคงที่กำหนดขอบเขตแทน</li>
-                          <li><strong>ตัวอย่าง:</strong> Ethernet</li>
-                          <li>padding ของ Ethernet <strong>ไม่ใช่ stuffing</strong> เพราะแค่เติมให้ครบขนาดขั้นต่ำ ไม่ได้ป้องกัน pattern ชนกับ delimiter</li>
-                        </ul>
-                      </div>
+                    <h4>Byte-oriented framing: byte stuffing · Bit-oriented framing: bit stuffing</h4>
+                    <p><strong>Byte (character)-oriented framing</strong> ใช้เมื่อ data-link layers แลกเปลี่ยนกัน<strong>แค่ข้อความ</strong> มีข้อจำกัด 3 ข้อ</p>
+                    <ol>
+                      <li>ถ้าใช้ตัวอักษร การส่งข้อมูลรูปแบบอื่น (graphics, audio, video) จะมีปัญหา</li>
+                      <li>ถ้า flag เป็น pattern ของตัวอักษรชุดหนึ่ง แล้ว pattern เดียวกันไปปรากฏในข้อมูล ต้องใช้ <strong>escape character (ESC)</strong> เพื่อบอกว่า pattern ในข้อมูลนั้นไม่ใช่ flag — เรียกว่า <strong>byte stuffing</strong></li>
+                      <li>ระบบรหัสสากลปัจจุบันอย่าง Unicode มีตัวอักษร 16-bit และ 32-bit ซึ่งขัดกับตัวอักษร 8-bit</li>
+                    </ol>
+                    <div class="callout callout--def">
+                      <span class="callout-label">นิยาม: Byte stuffing (ตัวอย่าง PPP)</span>
+                      <p><b>Byte stuffing is the process of adding one extra byte whenever there is a flag or escape character in the text.</b> — ในภาพของสไลด์ ข้อมูลจากชั้นบนมี byte ที่เหมือน Flag และ ESC อยู่ ผู้ส่งจึงเติม ESC หน้าแต่ละตัว (เกิด extra byte 2 ตัว) ผู้รับถอด ESC ที่เติมออก (unstuffed) ได้ข้อมูลเดิมส่งให้ชั้นบน</p>
+                    </div>
+                    <p class="note">ปัจจุบันยังพบ PPP ใน: PPPoE สำหรับเชื่อมต่อสมาชิกของผู้ให้บริการอินเทอร์เน็ต (โดยเฉพาะ broadband/DSL และบางเครือข่าย fiber access) · router และเครือข่าย WAN บางระบบ · ระบบเฉพาะทางหรือระบบเดิมที่ยังใช้ point-to-point serial links</p>
+                    <div class="callout callout--def">
+                      <span class="callout-label">นิยาม: Bit stuffing (ตัวอย่าง HDLC — Flag = 0x7E = 01111110)</span>
+                      <p><b>Bit stuffing is the process of adding one extra 0 whenever five consecutive 1s follow a 0 in the data, so that the receiver does not mistake the pattern 0111110 for a flag.</b></p>
+                    </div>
+                    <p><strong>ตัวอย่างในสไลด์ ทีละขั้น</strong></p>
+                    <ol class="steps">
+                      <li>ข้อมูลจากชั้นบน: <code>0001111111001111101000</code></li>
+                      <li>ไล่หา 1 ติดกัน 5 ตัว: <code>000 11111 1100 11111 01000</code> — พบ 2 จุด</li>
+                      <li>เติม 0 หลัง 1 ตัวที่ห้าของแต่ละจุด (two extra bits): <code>000111110110011111001000</code> แล้วส่งระหว่าง Flag ของเฟรม</li>
+                      <li>ผู้รับเจอ 0 ที่ตามหลัง 1 ห้าตัวก็ลบทิ้ง (unstuffed) ได้ <code>0001111111001111101000</code> คืน</li>
+                    </ol>
+                    <div class="callout callout--why">
+                      <span class="callout-label">ทำไมต้อง stuffing</span>
+                      <p>ทั้งสองแบบใช้เพื่อ <b>make sure that the flag pattern found in the data is not read as control flag</b> — ถ้าไม่ stuffing ผู้รับจะเข้าใจผิดว่าเฟรมจบกลางข้อมูล</p>
+                    </div>
+                    <p class="note">HDLC ยังพบใน: WAN link แบบ synchronous serial เช่น T1/E1, T3/E3 และ SONET/SDH · ระบบโทรคมนาคมและโครงข่ายผู้ให้บริการบางประเภท · อุปกรณ์อุตสาหกรรมหรือระบบเดิม · Cisco HDLC บน serial interfaces ของ Cisco และอุปกรณ์ที่รองรับ</p>
+                  </section>
+
+                  <section class="topic" id="dl-compare">
+                    <h4>Comparison of Data-Link Framing Approaches</h4>
+                    <div class="table-scroll">
+                      <table>
+                        <thead><tr><th>Feature</th><th>Byte-Oriented</th><th>Bit-Oriented</th><th>Length/Fixed-Size (Frame-Oriented)</th></tr></thead>
+                        <tbody>
+                          <tr><td class="nowrap">Frame Boundary</td><td>Special delimiter bytes</td><td>Special flag bit pattern</td><td>Length field, fixed size หรือ PHY synchronization</td></tr>
+                          <tr><td class="nowrap">Data Transparency</td><td>Byte/octet stuffing</td><td>Bit stuffing</td><td>ปกติไม่มี delimiter stuffing</td></tr>
+                          <tr><td class="nowrap">Example Protocols</td><td>BISYNC, SLIP, asynchronous PPP</td><td>HDLC, synchronous PPP, Frame Relay, CAN</td><td>Ethernet, IEEE 802.11, ATM cells</td></tr>
+                          <tr><td class="nowrap">Stuffing Rule</td><td>Escape special bytes ใน payload</td><td>เติม 0 หลัง 1 ที่ติดกันตามจำนวนที่กำหนด</td><td>ไม่ stuffing เพื่อกำหนดขอบเขต อาจต้องมี padding</td></tr>
+                          <tr><td class="nowrap">Overhead</td><td>escape bytes ขึ้นกับข้อมูล</td><td>stuffed bits ขึ้นกับข้อมูล</td><td>overhead ของ header/trailer คาดเดาได้เป็นส่วนใหญ่</td></tr>
+                          <tr><td class="nowrap">Key Advantage</td><td>ประมวลผลง่ายบนลิงก์ byte-oriented</td><td>ไม่ขึ้นกับ character encoding</td><td>มีประสิทธิภาพ เหมาะกับ LAN ความเร็วสูง</td></tr>
+                        </tbody>
+                      </table>
+                    </div>
+                    <div class="callout callout--warn">
+                      <span class="callout-label">ข้อควรระวัง</span>
+                      <p><strong>Ethernet padding ไม่ใช่ stuffing</strong> เพราะ padding ใช้ให้เฟรมมีขนาดขั้นต่ำ ไม่ได้ใช้ป้องกัน payload ถูกเข้าใจว่าเป็น delimiter</p>
+                      <p>หมายเหตุอื่นในสไลด์: UART ใช้ start/stop bits · I²C ใช้ START/STOP conditions · SPI ไม่ได้กำหนดรูปแบบ frame มาตรฐานเดียว</p>
                     </div>
                   </section>
 
@@ -229,14 +345,14 @@
             </div>
           </div>
 
-          <!-- ---------- ไฟล์ 2 ---------- -->
+          <!-- ================= 02 Error detection & correction ================= -->
           <div class="acc-item">
             <h3 class="acc-heading">
               <button class="acc-trigger" type="button" aria-expanded="false" aria-controls="acc-err" id="acc-err-btn">
                 <span class="acc-index">02</span>
                 <span class="acc-title">
                   <span class="acc-name">การตรวจจับและแก้ไขข้อผิดพลาด (Error Detection &amp; Correction)</span>
-                  <span class="acc-file">ITDS231-Lecture5.1-Error-Detection-2026.pdf · Lecture 5.1</span>
+                  <span class="acc-file">ITDS231-Lecture5.1-Error-Detection-2026.pdf · Lecture 5.1 · 47 หน้า</span>
                 </span>
                 <svg class="acc-chevron" viewBox="0 0 20 20" aria-hidden="true"><path d="M5 7.5l5 5 5-5" /></svg>
               </button>
@@ -246,9 +362,10 @@
                 <div class="acc-body">
 
                   <nav class="toc" aria-label="หัวข้อในการตรวจจับและแก้ไขข้อผิดพลาด">
-                    <a href="#err-control">Bit error &amp; Error control</a>
-                    <a href="#err-block">Block coding</a>
-                    <a href="#err-parity">Parity check</a>
+                    <a href="#err-control">Bit error &amp; error control</a>
+                    <a href="#err-block">Redundancy &amp; block coding</a>
+                    <a href="#err-parity">Parity &amp; syndrome</a>
+                    <a href="#err-2d">Two-dimensional parity</a>
                     <a href="#err-checksum">Checksum</a>
                     <a href="#err-crc">CRC</a>
                     <a href="#err-hamming">Hamming code</a>
@@ -256,78 +373,238 @@
                   </nav>
 
                   <section class="topic" id="err-control">
-                    <h4>Bit error และแนวทาง Error control</h4>
-                    <p><strong>Bit error เกิดจาก:</strong> สัญญาณรบกวน · thermal noise · ฮาร์ดแวร์เสีย · ปรากฏการณ์ธรรมชาติ (ฟ้าผ่า) · หรือแม้แต่ EMP</p>
-                    <div class="compare">
-                      <div class="compare-col">
-                        <h5>ARQ <span class="chip">Automatic Repeat reQuest</span></h5>
-                        <p>ตรวจพบ error แล้วขอส่งซ้ำ</p>
-                      </div>
-                      <div class="compare-col">
-                        <h5>FEC <span class="chip">Forward Error Correction</span></h5>
-                        <p>เพิ่ม redundancy ให้ผู้รับแก้ไขเองได้</p>
-                      </div>
+                    <h4>Bit error และ Error control</h4>
+                    <p>bit error ระหว่างการส่ง<strong>ส่วนใหญ่เกิดจาก noise</strong> ได้แก่ signal interference · thermal noise · hardware malfunction (ปัญหาอุปกรณ์และสายเคเบิล) · ปรากฏการณ์ธรรมชาติ (เช่น ฟ้าผ่า ฟ้าร้อง) · สงคราม (เช่น คลื่นกระแทก EMP — Electromagnetic Pulse) สไลด์ยกภาพตัวอย่าง 8-bit burst error ประกอบ</p>
+                    <p><strong>Basic Human Error Control:</strong> มนุษย์ตรวจ error ด้วยการถามผู้ส่งซ้ำเพื่อยืนยันข้อมูล — ถ้าได้ยินถูก (XYZ → "YES") ก็ไม่ต้องทำอะไร ถ้าได้ยินผิด (XYY? → "NO") ก็มีทางเลือก 3 อย่าง: (1) ไม่ทำอะไร (2) ขอให้ส่งซ้ำ (3) พยายามแก้ไข error เอง</p>
+                    <div class="callout callout--def">
+                      <span class="callout-label">นิยาม: Error control</span>
+                      <p>error control = <b>error detection + recovery strategy</b> มี 2 แนวทางหลัก</p>
                     </div>
-                    <p><strong>Redundancy</strong> = การเพิ่มบิตพิเศษเพื่อช่วยผู้รับตรวจสอบความถูกต้องของข้อมูล โดยบิตพิเศษเหล่านี้จะถูกทิ้งหลังตรวจสอบเสร็จ</p>
+                    <div class="compare">
+                      <div class="compare-col"><h5>ARQ <span class="chip">Automatic Repeat reQuest</span></h5><p>ตรวจพบ error แล้ว<strong>ขอส่งซ้ำ</strong> (request retransmission)</p></div>
+                      <div class="compare-col"><h5>FEC <span class="chip">Forward error correction</span></h5><p><strong>เพิ่ม redundancy มากพอ</strong>ให้ผู้รับแก้ error บางแบบได้เอง</p></div>
+                    </div>
                   </section>
 
                   <section class="topic" id="err-block">
-                    <h4>Block coding</h4>
-                    <p>ข้อมูล <var>k</var> บิต + redundancy <var>r</var> บิต = codeword <var>n</var> บิต</p>
-                    <code class="formula">n = k + r</code>
-                    <p>ผลลัพธ์การตรวจสอบของผู้รับเรียกว่า <strong>"syndrome"</strong> — ถ้า syndrome = 0 แปลว่าไม่มี error</p>
+                    <h4>Redundancy และ Block coding</h4>
+                    <div class="callout callout--why">
+                      <span class="callout-label">ทำไมต้องมี redundancy</span>
+                      <p>ในการสื่อสารข้อมูลคอมพิวเตอร์ จะ<b>มีประสิทธิภาพกว่า</b>ถ้าผู้รับรู้ได้เองว่าข้อมูลผิดหรือไม่ <b>โดยไม่ต้องถามผู้ส่งทุกครั้ง</b> ผู้ส่งจึงต้องให้ "คำใบ้" ช่วยผู้รับตรวจความถูกต้อง (integrity) — error detection ใช้แนวคิด <b>redundancy</b> คือเติมบิตพิเศษเพื่อตรวจ error ที่ปลายทาง และ<b>บิตพิเศษจะถูกทิ้งทันทีที่ตรวจความถูกต้องเสร็จ</b></p>
+                    </div>
+                    <p><strong>Block coding:</strong> redundancy ต้องสัมพันธ์กับข้อมูลจึงจะใช้ตรวจความถูกต้องได้ และการสร้าง redundancy หลังส่งข้อมูลทั้งหมดไปแล้วไม่สมเหตุสมผล จึง<strong>แบ่งข้อมูลเป็น block</strong> ส่งทีละ block พร้อม redundancy เพื่อตรวจ error เป็นระยะ</p>
+                    <ul>
+                      <li>block ละ <var>k</var> บิต → dataword ที่เป็นไปได้ <strong>2<sup>k</sup></strong> แบบ</li>
+                      <li>redundancy block มี <var>r</var> บิต และ <strong><var>r</var> ควรน้อยกว่า <var>k</var></strong> (ไม่อย่างนั้นไม่สมเหตุสมผล)</li>
+                      <li>codeword ขนาด <var>n</var> = <var>k</var> + <var>r</var> บิต → รูปแบบที่เป็นไปได้ 2<sup>n</sup> แบบ แต่<strong>ใช้งานจริงน้อยกว่า 2<sup>n</sup></strong> เพราะไม่ได้ใช้ค่า redundancy ทุกค่า (มี 2<sup>k</sup> datawords)</li>
+                    </ul>
+                    <code class="formula">Codeword (n) = dataword (k) + redundancy (r)</code>
+                    <p>ฝั่ง sender: <strong>Encoder</strong> นำ dataword (k bits) เข้า Generator ได้ codeword (n bits) → ส่งผ่าน unreliable transmission → ฝั่ง receiver: <strong>Decoder</strong> ให้ Checker ตรวจ codeword ถ้าผ่านก็ extract dataword (k bits) ถ้าไม่ผ่านก็ discard</p>
+                    <div class="compare">
+                      <div class="compare-col"><h5>Single bit error</h5><p>บิตผิดเพียงบิตเดียวในหน่วยข้อมูล</p></div>
+                      <div class="compare-col"><h5>Burst error</h5><p>บิตผิดหลายบิตติดกันเป็นช่วง</p></div>
+                    </div>
+                    <p><strong>Error detection ง่ายกว่า error correction</strong> และเป็นขั้นแรกของกระบวนการแก้ไข error</p>
                   </section>
 
                   <section class="topic" id="err-parity">
-                    <h4>Parity check และ Two-dimensional parity</h4>
-                    <ul>
-                      <li><strong>Parity check:</strong> เพิ่ม parity bit ให้จำนวนบิต 1 รวมเป็นเลขคู่ (<em>even parity</em>) หรือคี่ (<em>odd parity</em>)</li>
-                      <li>ตรวจจับ <strong>single-bit error ได้ทุกกรณี</strong> แต่ตรวจจับ <strong>burst error ไม่ได้ถ้าจำนวนบิตที่ผิดเป็นเลขคู่</strong></li>
-                    </ul>
-                    <div class="callout">
-                      <strong>Two-dimensional parity check:</strong>
-                      ตรวจสอบทั้ง<b>แถว</b>และ<b>คอลัมน์</b> ทำให้หาตำแหน่งบิตที่ผิดได้ (ถ้ามี error เดียว) และ<b>แก้ไขได้ทันที</b> ไม่ใช่แค่ตรวจจับ
+                    <h4>Parity check และ Syndrome</h4>
+                    <div class="compare">
+                      <div class="compare-col"><h5>Even parity</h5><p>เติม redundancy bit ให้จำนวน 1 ทั้งหมดใน codeword เป็น<strong>เลขคู่</strong></p></div>
+                      <div class="compare-col"><h5>Odd parity</h5><p>เติม redundancy bit ให้จำนวน 1 ทั้งหมดใน codeword เป็น<strong>เลขคี่</strong></p></div>
+                    </div>
+                    <div class="callout callout--def">
+                      <span class="callout-label">นิยาม: Syndrome</span>
+                      <p>เมื่อผู้รับทำฟังก์ชันเดียวกับผู้ส่ง ผลลัพธ์ที่ได้เรียกว่า <b>syndrome</b> — ผลที่ผู้รับคำนวณจาก codeword ที่ได้รับ เพื่อตรวจว่าเกิดข้อผิดพลาดระหว่างส่งหรือไม่ · <b>syndrome = 0 → สมมุติว่าไม่มี error</b> · ไม่เป็น 0 → มี error · (กรณี Hamming code syndrome คือตำแหน่งของบิตที่ผิด)</p>
+                    </div>
+                    <p><strong>ตัวอย่าง syndrome (even parity, + คือ XOR):</strong> รับ <code>010010011</code> → 0+1+0+0+1+0+0+1+1 = <strong>0</strong> ไม่มี error · รับ <code>010010111</code> → 0+1+0+0+1+0+1+1+1 = <strong>1</strong> มี error</p>
+                    <p><strong>Parity bit generator และ checker มักใช้กลไก (engine) เดียวกัน</strong> — generator ให้ parity bit เป็น output ส่วน output ของ checker คือ syndrome</p>
+                    <p><strong>ตัวอย่าง: ส่งคำว่า world ด้วย even parity</strong> (ASCII 7 บิต)</p>
+                    <ol class="steps">
+                      <li>ASCII ของ 5 ตัวอักษร: <code>1110111 1101111 1110010 1101100 1100100</code></li>
+                      <li>เติม parity bit ท้ายแต่ละตัวให้จำนวน 1 เป็นคู่ (w มี 1 หกตัว → เติม 0 · o มี 1 หกตัว → 0 · r มี 1 สี่ตัว → 0 · l มี 1 สี่ตัว → 0 · d มี 1 สามตัว → 1) บิตที่ส่งจริงคือ <code>11101110 11011110 11100100 11011000 11001001</code></li>
+                      <li>ถ้าระหว่างทางเสียหายเป็น <code>11111110 11011110 11101100 11011000 11001001</code> — byte แรกและ byte ที่สามมีจำนวน 1 เป็นคี่ (syndrome = 1) <strong>ผู้รับจึงรู้ว่ามี error</strong></li>
+                    </ol>
+                    <div class="callout callout--warn">
+                      <span class="callout-label">ข้อจำกัดของ parity check</span>
+                      <p>simple parity check <strong>ตรวจจับ single-bit error ได้ทุกกรณี</strong> แต่ตรวจจับ burst error ได้<strong>เฉพาะเมื่อจำนวนบิตผิดในแต่ละหน่วยข้อมูลเป็นเลขคี่</strong> — ตัวอย่างในสไลด์ ส่ง <code>11011011 10010011 01101100</code> แต่รับได้ <code>11011011 11011011 01101100</code> byte ที่สองผิด 2 บิต จำนวน 1 ยังเป็นคู่ ผู้รับจึง<b>ตรวจไม่พบ</b> (Parity ไม่สามารถตรวจสอบกรณีที่จำนวน error bits เป็นเลขคู่)</p>
+                    </div>
+                  </section>
+
+                  <section class="topic" id="err-2d">
+                    <h4>Two-Dimensional Parity Bit Checking</h4>
+                    <p>ทำ parity check <strong>ทั้งแถวและคอลัมน์</strong> เพื่อเพิ่มมิติในการตรวจ burst error หรือ error จำนวนคู่ และมี<strong>ความสามารถในการแก้ไข (error correction)</strong> — ระบุตำแหน่งที่ผิดแล้วแก้ได้ ตัวอย่าง (9,16) ในสไลด์: data 9 bits จัดเป็น 3×3 เติม parity แถวและคอลัมน์ได้ codeword 16 bits</p>
+                    <p><strong>Example 1 — ส่งทีละแถวพร้อม redundancy bits (even parity)</strong></p>
+                    <ol class="steps">
+                      <li>Original data 4 แถว แถวละ 7 บิต: <code>1100111</code> <code>1011101</code> <code>0111001</code> <code>0101001</code></li>
+                      <li>row parity ของแต่ละแถว (ให้จำนวน 1 เป็นคู่): 1, 1, 0, 1</li>
+                      <li>column parities (รวม parity ของ row parity): <code>0101010</code> และ <code>1</code></li>
+                      <li>Data and parity bits ที่ส่ง: <code>11001111 10111011 01110010 01010011 01010101</code></li>
+                    </ol>
+                    <div class="callout callout--why">
+                      <span class="callout-label">ผู้รับหาตำแหน่งบิตผิดได้อย่างไร</span>
+                      <p>ถ้ามี error 1 บิต จะมี<b>แถวหนึ่ง</b>และ<b>คอลัมน์หนึ่ง</b>ที่ parity ไม่เป็นคู่ (not even) บิตที่อยู่ตรงจุดตัดคือบิตที่ผิด แถวและคอลัมน์อื่นยัง "Even and checked" → กรณี 1 bit error (single error) จึงใช้ 2-dimensional parity เป็น <b>error correction</b> ได้</p>
                     </div>
                   </section>
 
                   <section class="topic" id="err-checksum">
                     <h4>Checksum</h4>
+                    <ul>
+                      <li>checksum คือค่าตรวจจับ error ที่คำนวณจากข้อความ<strong>ความยาวเท่าใดก็ได้</strong></li>
+                      <li>ผู้ส่งคำนวณผลรวม ผู้รับคำนวณซ้ำแล้วเทียบ — <strong>Internet checksums ใช้ one's-complement arithmetic</strong></li>
+                      <li>ตัวอย่าง: <strong>IPv4 header checksum</strong> ป้องกันเฉพาะ IPv4 header · <strong>TCP/UDP checksum</strong> ป้องกัน transport headers และ data</li>
+                    </ul>
+                    <div class="callout callout--warn">
+                      <span class="callout-label">ข้อควรระวัง</span>
+                      <p>link technologies มักใช้ <strong>CRC/FCS</strong> แทน checksum เพราะ <b>CRC ตรวจจับ burst errors ได้ดีเป็นพิเศษ</b></p>
+                    </div>
+                    <p><strong>Checksum operation:</strong> ที่ต้นทาง แบ่งข้อความเป็นหน่วย m-bit → generator สร้างหน่วย m-bit เพิ่มอีกหน่วยเรียกว่า checksum ส่งไปพร้อมข้อความ → ที่ปลายทาง checker สร้าง checksum ใหม่จากข้อความรวมกับ checksum ที่ได้รับ → <strong>ถ้า checksum ใหม่เป็น 0 ทั้งหมด ยอมรับข้อความ</strong> ไม่อย่างนั้นทิ้ง</p>
+                    <p><strong>Example 1 — Generator</strong> (ข้อมูล 16 บิต checksum 8 บิต)</p>
+                    <pre class="code-block"><code>  10101001
++ 00111001
+----------
+  11100010   Sum (one's complement; 1+1 = 10, 10+1 = 11)
+  00011101   Checksum = complement ของ sum
+
+Pattern ที่ส่ง: 10101001 00111001 00011101</code></pre>
+                    <div class="compare">
+                      <div class="compare-col">
+                        <h5>Checker — ไม่มี error</h5>
+                        <p>10101001 + 00111001 + 00011101 = <code>11111111</code> (all 1s) → complement = <code>00000000</code> → <strong>pattern OK</strong></p>
+                      </div>
+                      <div class="compare-col">
+                        <h5>Checker — burst error ยาว 5 ที่กระทบ 4 บิต</h5>
+                        <p>รับ <code>10101111 11111001 00011101</code> → partial sum = <code>1 11000101</code> → นำ carry 1 วนมาบวก (wrap) → sum = <code>11000110</code> → complement = <code>00111001</code> ≠ 0 → <strong>corrupted (syndrome ≠ 0)</strong></p>
+                      </div>
+                    </div>
+                    <p><strong>Example 2 — Generator และ Checker (หน่วย 4 บิต)</strong></p>
                     <ol class="steps">
-                      <li>แบ่งข้อความเป็นหน่วย m-bit</li>
-                      <li>บวกกันด้วย <strong>one's-complement arithmetic</strong> สร้างค่า checksum ส่งไปพร้อมข้อมูล</li>
-                      <li>ผู้รับบวกทุกส่วนรวม checksum — ถ้าได้ <strong>all-1s</strong> (complement = all-0s) แปลว่าไม่มี error</li>
+                      <li>ผู้ส่งมีข้อมูล 7, 11, 12, 0, 6 (0111, 1011, 1100, 0000, 0110) และ initial checksum = 0</li>
+                      <li>รวมกัน = 36 = <code>0010 0100</code> → wrap บิตที่เกินขึ้นมาบวก: 0100 + 0010 = <code>0110</code> (wrapped sum = 6)</li>
+                      <li>checksum = one's complement ของ wrapped sum = <code>1001</code> = <strong>9</strong> → packet ที่ส่ง: 7, 11, 12, 0, 6, 9</li>
+                      <li>ผู้รับรวม 7 + 11 + 12 + 0 + 6 + 9 = 45 = <code>0010 1101</code> → wrap: 1101 + 0010 = <code>1111</code> (one's complement sum = 15)</li>
+                      <li>calculated checksum = complement ของ 1111 = <code>0000</code> = <strong>0</strong> → ไม่มี error</li>
                     </ol>
-                    <p><strong>ใช้ใน:</strong> IPv4 header checksum, TCP/UDP checksum</p>
                   </section>
 
                   <section class="topic" id="err-crc">
-                    <h4>CRC (Cyclic Redundancy Check)</h4>
+                    <h4>Cyclic Redundancy Check (CRC)</h4>
                     <ul>
-                      <li><strong>ทรงพลังที่สุด</strong>ในบรรดาวิธี redundancy checking</li>
-                      <li>ใช้การหารเลขฐานสอง (<em>modulo-2 division</em>, เหมือน XOR) ด้วย divisor ที่ตกลงกันไว้ล่วงหน้า</li>
-                      <li>CRC (remainder) ต้องมีขนาด<strong>น้อยกว่า divisor อยู่ 1 บิตเสมอ</strong></li>
-                      <li>ต่อท้าย dataword แล้วหารด้วย divisor ต้องลงตัวพอดี</li>
-                      <li>ใช้กันแพร่หลายในเทคโนโลยีลิงก์เพราะตรวจจับ <strong>burst error</strong> ได้ดี</li>
+                      <li><strong>ทรงพลังที่สุด</strong>ในบรรดาเทคนิค redundancy checking</li>
+                      <li>ต่างจาก parity check ที่อิงการบวก — CRC <strong>อิงการหารเลขฐานสองด้วย divisor (key) ที่ตกลงกันไว้ล่วงหน้า</strong></li>
+                      <li>ลำดับ redundant bits ที่เรียกว่า CRC หรือ CRC remainder ถูกต่อท้าย data unit ให้ผลลัพธ์<strong>หารด้วย binary number ที่กำหนดไว้ลงตัวพอดี</strong></li>
                     </ul>
-                    <code class="formula">จำนวนบิต CRC = จำนวนบิต divisor − 1</code>
+                    <div class="callout callout--def">
+                      <span class="callout-label">กฎของ CRC (redundancy bits)</span>
+                      <p>(1) ต้องมี<b>จำนวนบิตน้อยกว่า divisor อยู่ 1 บิตพอดี</b> (2) เมื่อต่อท้าย dataword แล้ว ลำดับบิตที่ได้ต้อง<b>หารด้วย divisor ลงตัว</b> (วิธีตรวจสอบ)</p>
+                    </div>
+                    <p><strong>CRC generator และ checker:</strong> sender ต่อ 0 จำนวน <var>n</var> บิตท้าย data → หารด้วย divisor (<var>n</var>+1 บิต) → remainder คือ CRC (<var>n</var> บิต) → ส่ง Data + CRC · receiver หาร Data + CRC ด้วย divisor เดิม → remainder เป็น <strong>0 ยอมรับ</strong>, ไม่เป็น 0 ปฏิเสธ</p>
+                    <div class="callout callout--warn">
+                      <span class="callout-label">modulo-2 division</span>
+                      <p>การหารใช้ modulo-2 ซึ่ง −1 ถือเป็น 0 และ<b>เหมือน XOR</b> · <b>เมื่อบิตซ้ายสุดของเศษเป็น 0 ต้องใช้ 0000 แทน divisor เดิม</b></p>
+                    </div>
+                    <p><strong>ตัวอย่าง Generator (Encoder):</strong> dataword <code>100100</code> divisor <code>1101</code> (4 บิต → CRC 3 บิต)</p>
+                    <ol class="steps">
+                      <li>ต่อ 0 สามตัว: <code>100100000</code></li>
+                      <li>หาร modulo-2: 1001 ⊕ 1101 = 100 → ดึงบิตถัดไป 1000 ⊕ 1101 = 101 → 1010 ⊕ 1101 = 111 → 1110 ⊕ 1101 = 011 → 0110 บิตซ้ายเป็น 0 จึง ⊕ 0000 = 110 → 1100 ⊕ 1101 = <strong>001</strong></li>
+                      <li>quotient = <code>111101</code> · remainder = CRC = <code>001</code> → codeword ที่ส่ง = <code>100100001</code></li>
+                      <li><strong>Checker (Decoder):</strong> หาร <code>100100001</code> ด้วย 1101 แบบเดียวกัน → remainder (syndrome) = <code>000</code> → ข้อมูลถูกต้อง</li>
+                    </ol>
+                    <div class="demo-box" data-widget="crc-calc">
+                      <span class="demo-box-title">ลองเล่น: หาร modulo-2 หา CRC (ค่าเริ่มต้นตามตัวอย่างในสไลด์)</span>
+                      <div class="demo-fields">
+                        <div class="demo-field"><label for="crc-data">dataword</label><input class="demo-input" id="crc-data" data-input="data" type="text" value="100100" inputmode="numeric" autocomplete="off" spellcheck="false" /></div>
+                        <div class="demo-field"><label for="crc-div">divisor</label><input class="demo-input" id="crc-div" data-input="divisor" type="text" value="1101" inputmode="numeric" autocomplete="off" spellcheck="false" /></div>
+                      </div>
+                      <pre class="long-division" aria-live="polite"></pre>
+                      <ol class="calc-steps"></ol>
+                      <p class="demo-hint">ลองเปลี่ยนเป็น dataword 0010 และ divisor 1011 จะได้ CRC = 110 ตามตาราง CRC(7,4) ด้านล่าง</p>
+                    </div>
+                    <p><strong>ตัวอย่าง Checker ในสไลด์ (divisor 1011):</strong></p>
+                    <div class="compare">
+                      <div class="compare-col">
+                        <h5>Uncorrupted</h5>
+                        <p>codeword <code>1001 110</code> ÷ 1011 → syndrome <code>000</code> (Zero) → <strong>dataword 1001 accepted</strong></p>
+                      </div>
+                      <div class="compare-col">
+                        <h5>Corrupted</h5>
+                        <p>codeword <code>1000 110</code> (บิตที่ 4 เปลี่ยน) ÷ 1011 → syndrome <code>011</code> (Non-Zero) → <strong>dataword discarded</strong></p>
+                      </div>
+                    </div>
+                    <p><strong>CRC(7,4) codeword กับ divisor 4 บิต (1011):</strong> dataword 4 บิต + CRC 3 บิต = codeword 7 บิต เช่น dataword 0010 → ตัวตั้ง (generator) 0010000 ÷ 1011 → remainder = CRC = 110 → codeword 0010110 · ใน encoder/decoder divisor (d3 d2 d1 d0) เป็นค่าที่<strong>แชร์กัน</strong>ระหว่าง sender และ receiver ส่วน checker ให้ syndrome (s2 s1 s0) ไปเข้า decision logic เพื่อ accept หรือ discard</p>
+                    <div class="table-scroll">
+                      <table>
+                        <thead><tr><th>Dataword</th><th>Codeword</th><th>Dataword</th><th>Codeword</th></tr></thead>
+                        <tbody>
+                          <tr><td>0000</td><td>0000 <strong>000</strong></td><td>1000</td><td>1000 <strong>101</strong></td></tr>
+                          <tr><td>0001</td><td>0001 <strong>011</strong></td><td>1001</td><td>1001 <strong>110</strong></td></tr>
+                          <tr><td>0010</td><td>0010 <strong>110</strong></td><td>1010</td><td>1010 <strong>011</strong></td></tr>
+                          <tr><td>0011</td><td>0011 <strong>101</strong></td><td>1011</td><td>1011 <strong>000</strong></td></tr>
+                          <tr><td>0100</td><td>0100 <strong>111</strong></td><td>1100</td><td>1100 <strong>010</strong></td></tr>
+                          <tr><td>0101</td><td>0101 <strong>100</strong></td><td>1101</td><td>1101 <strong>001</strong></td></tr>
+                          <tr><td>0110</td><td>0110 <strong>001</strong></td><td>1110</td><td>1110 <strong>100</strong></td></tr>
+                          <tr><td>0111</td><td>0111 <strong>010</strong></td><td>1111</td><td>1111 <strong>111</strong></td></tr>
+                        </tbody>
+                      </table>
+                    </div>
                   </section>
 
                   <section class="topic" id="err-hamming">
-                    <h4>Hamming code</h4>
-                    <ul>
-                      <li><strong>แก้ไข single-bit error ได้</strong> โดยระบุตำแหน่งบิตที่ผิด</li>
-                      <li>วาง redundant bit ไว้ที่ตำแหน่ง 2<sup>k</sup> (1, 2, 4, 8, ...) ของ codeword</li>
-                      <li>แต่ละ redundant bit ตรวจสอบ parity ของกลุ่มบิตที่กำหนดไว้</li>
-                    </ul>
-                    <code class="formula">ตำแหน่งบิตผิด = (r8 r4 r2 r1)₂ → แปลงเป็นเลขฐานสิบ</code>
+                    <h4>Error Correction และ Hamming code</h4>
+                    <p>ปกติเมื่อตรวจพบ error ผู้รับต้องขอให้ผู้ส่งส่งซ้ำ (เฉพาะ reliable transmission mode) แต่มีกรณีที่<strong>ผู้รับแก้ error เองได้</strong>ด้วย redundancy ที่ผู้ส่งแนบมา วิธีที่นิยมคือ <strong>Hamming code</strong> และ <strong>Interleaving</strong></p>
+                    <p><strong>Hamming code</strong> แก้ single bit error ได้โดย<strong>ระบุตำแหน่งของบิตที่ผิด</strong> ใช้ simple parity check วาง redundant bits ไว้ที่ตำแหน่ง <strong>2<sup>k</sup></strong> ของ codeword (ตำแหน่ง 1, 2, 4, 8, …) และ redundant bit แต่ละตัวรับผิดชอบตรวจบิตในตำแหน่งที่กำหนด</p>
+                    <div class="table-scroll">
+                      <table>
+                        <thead><tr><th>ตำแหน่ง</th><th>11</th><th>10</th><th>9</th><th>8</th><th>7</th><th>6</th><th>5</th><th>4</th><th>3</th><th>2</th><th>1</th></tr></thead>
+                        <tbody>
+                          <tr><td>บิต</td><td>d7</td><td>d6</td><td>d5</td><td><strong>r8</strong></td><td>d4</td><td>d3</td><td>d2</td><td><strong>r4</strong></td><td>d1</td><td><strong>r2</strong></td><td><strong>r1</strong></td></tr>
+                        </tbody>
+                      </table>
+                    </div>
+                    <dl class="defs defs--stack">
+                      <div><dt>r1</dt><dd>even redundancy bit ของตำแหน่ง {1, 3, 5, 7, 9, 11, …}</dd></div>
+                      <div><dt>r2</dt><dd>even redundancy bit ของตำแหน่ง {2, 3, 6, 7, 10, 11, …}</dd></div>
+                      <div><dt>r4</dt><dd>even redundancy bit ของตำแหน่ง {4, 5, 6, 7, 12, 13, 14, 15, …}</dd></div>
+                      <div><dt>r8</dt><dd>even redundancy bit ของตำแหน่ง {8, 9, 10, 11, 12, 13, 14, 15, …}</dd></div>
+                    </dl>
+                    <code class="formula">p(k) = even parity ของ {d(k : 2k−1), d(3k : 4k−1), d(5k : 6k−1), d(7k : 8k−1), …}</code>
+                    <p><strong>ตัวอย่าง: dataword 1001101</strong> (d7 d6 d5 d4 d3 d2 d1 = 1 0 0 1 1 0 1)</p>
+                    <ol class="steps">
+                      <li>วาง data: ตำแหน่ง 11 = 1, 10 = 0, 9 = 0, 7 = 1, 6 = 1, 5 = 0, 3 = 1</li>
+                      <li><strong>r1</strong> ดูตำแหน่ง 3, 5, 7, 9, 11 = 1, 0, 1, 0, 1 → มี 1 สามตัว → r1 = <strong>1</strong></li>
+                      <li><strong>r2</strong> ดูตำแหน่ง 3, 6, 7, 10, 11 = 1, 1, 1, 0, 1 → มี 1 สี่ตัว → r2 = <strong>0</strong></li>
+                      <li><strong>r4</strong> ดูตำแหน่ง 5, 6, 7 = 0, 1, 1 → สองตัว → r4 = <strong>0</strong></li>
+                      <li><strong>r8</strong> ดูตำแหน่ง 9, 10, 11 = 0, 0, 1 → หนึ่งตัว → r8 = <strong>1</strong></li>
+                      <li>codeword (ตำแหน่ง 11 → 1) = <code>10011100101</code></li>
+                    </ol>
+                    <p><strong>ตัวอย่าง: One Bit Error</strong> — ส่ง <code>10011100101</code> แต่รับได้ <code>10010100101</code></p>
+                    <ol class="steps">
+                      <li>Check r1 = XOR(d7, d5, d4, d2, d1, r1) = XOR(1, 0, 0, 0, 1, 1) = <strong>1</strong></li>
+                      <li>Check r2 = XOR(d7, d6, d4, d3, d1, r2) = XOR(1, 0, 0, 1, 1, 0) = <strong>1</strong></li>
+                      <li>Check r4 = XOR(d4, d3, d2, r4) = XOR(0, 1, 0, 0) = <strong>1</strong></li>
+                      <li>Check r8 = XOR(d7, d6, d5, r8) = XOR(1, 0, 0, 1) = <strong>0</strong></li>
+                      <li>Location of error = (r8 r4 r2 r1)<sub>2</sub> = (0111)<sub>2</sub> = <strong>7</strong> → กลับบิตตำแหน่ง 7 ได้ codeword ที่ถูกต้องคืน</li>
+                    </ol>
+                    <div class="demo-box" data-widget="hamming">
+                      <span class="demo-box-title">ลองเล่น: Hamming code — คลิกบิตใดก็ได้เพื่อจำลองบิตผิด</span>
+                      <div class="demo-field">
+                        <label for="ham-data">dataword 7 บิต (d7 → d1)</label>
+                        <input class="demo-input" id="ham-data" type="text" value="1001101" maxlength="7" inputmode="numeric" autocomplete="off" spellcheck="false" />
+                      </div>
+                      <div class="arq-scroll"><div class="bit-row" style="--bits: 11"></div></div>
+                      <p class="demo-status" aria-live="polite"></p>
+                      <ol class="calc-steps"></ol>
+                    </div>
                   </section>
 
                   <section class="topic" id="err-interleave">
                     <h4>Interleaving</h4>
-                    <p>แก้ปัญหา <strong>burst error</strong> ที่ทำให้ codeword เดิมเสียทั้งก้อน โดยสลับ (shuffle) บิตจากหลาย codeword ทำให้ burst error กลายเป็น single-bit error กระจายในแต่ละ codeword ซึ่งแก้ด้วย Hamming code ได้</p>
-                    <div class="callout">
-                      <strong>เทคนิค:</strong> ให้ burst error โดนแค่ <b>1 บิตต่อ 1 หน่วย</b>
+                    <p>ปกติเมื่อพบว่า codeword ผิด <strong>ทั้ง codeword จะถูกทิ้ง</strong> แต่ถ้า<strong>สลับ (shuffle / interleave)</strong> บิตก่อนส่ง การสูญหายของข้อมูลช่วงหนึ่งจะกลายเป็น <strong>single bit error ของหลาย codeword</strong> ซึ่งแต่ละ codeword แก้ได้ด้วย Hamming code</p>
+                    <div class="callout callout--why">
+                      <span class="callout-label">เทคนิคสำคัญ</span>
+                      <p><b>The trick is to let the burst error corrupt only 1 bit of each unit</b></p>
                     </div>
+                    <p><strong>ตัวอย่างในสไลด์:</strong> data ก่อนส่ง 6 codewords ยาว 11 บิต (<code>11111000011</code>, <code>10101011111</code>, <code>11111001100</code>, <code>01101011001</code>, <code>01101010110</code>, <code>01111001111</code>) ถูกส่งแบบ<strong>ทีละคอลัมน์</strong> เมื่อเกิด burst error ในช่วงการส่งหนึ่งช่วง บิตที่เสียหาย 5 บิตกระจายไปอยู่คนละ codeword — received data จึงเป็น <code>1111?000011</code>, <code>1010?011111</code>, <code>11111001100</code> (ไม่ผิด), <code>011?1011001</code>, <code>011?1010110</code>, <code>011?1001111</code> แต่ละแถวผิดเพียงบิตเดียว จึงแก้ได้ครบ</p>
                   </section>
 
                 </div>
@@ -335,14 +612,14 @@
             </div>
           </div>
 
-          <!-- ---------- ไฟล์ 3 ---------- -->
+          <!-- ================= 03 Flow control, ARQ, HDLC ================= -->
           <div class="acc-item">
             <h3 class="acc-heading">
               <button class="acc-trigger" type="button" aria-expanded="false" aria-controls="acc-flow" id="acc-flow-btn">
                 <span class="acc-index">03</span>
                 <span class="acc-title">
                   <span class="acc-name">การควบคุมการไหลของข้อมูล, ARQ และ HDLC</span>
-                  <span class="acc-file">ITDS231-Lecture5.2-Flow-Control-2026.pdf · Lecture 5.2</span>
+                  <span class="acc-file">ITDS231-Lecture5.2-Flow-Control-2026.pdf · Lecture 5.2 · 52 หน้า</span>
                 </span>
                 <svg class="acc-chevron" viewBox="0 0 20 20" aria-hidden="true"><path d="M5 7.5l5 5 5-5" /></svg>
               </button>
@@ -352,96 +629,356 @@
                 <div class="acc-body">
 
                   <nav class="toc" aria-label="หัวข้อในการควบคุมการไหลของข้อมูล">
-                    <a href="#fc-flow">Flow control</a>
+                    <a href="#fc-flow">Flow control &amp; buffering</a>
                     <a href="#fc-simple">Simple &amp; Stop-and-Wait</a>
-                    <a href="#fc-sliding">Go-Back-N vs Selective Repeat</a>
+                    <a href="#fc-pipelining">Pipelining</a>
+                    <a href="#fc-gbn">Go-Back-N</a>
+                    <a href="#fc-sr">Selective Repeat</a>
+                    <a href="#fc-sliding">Sliding window (interactive)</a>
                     <a href="#fc-piggyback">Piggybacking</a>
                     <a href="#fc-hdlc">HDLC</a>
-                    <a href="#fc-bdp">Bandwidth-delay product</a>
+                    <a href="#fc-bdp">Performance &amp; BDP</a>
                   </nav>
 
                   <section class="topic" id="fc-flow">
-                    <h4>Flow control</h4>
-                    <p>ควบคุมอัตราการส่งของ sender ให้สมดุลกับความสามารถประมวลผลของ receiver</p>
+                    <h4>Flow control: Balancing Sender and Receiver Rates</h4>
+                    <p>เมื่อใดที่มีฝ่ายหนึ่งผลิตข้อมูล (sender) และอีกฝ่ายใช้ข้อมูล (receiver) <strong>อัตราการส่งควรถูกควบคุมให้ผู้รับประมวลผลได้อย่างมีประสิทธิภาพ</strong></p>
                     <div class="compare">
-                      <div class="compare-col">
-                        <h5>ส่งเร็วเกินไป</h5>
-                        <p>receiver อาจ buffer overflow / frame loss</p>
-                      </div>
-                      <div class="compare-col">
-                        <h5>ส่งช้าเกินไป</h5>
-                        <p>เสียประสิทธิภาพ</p>
-                      </div>
+                      <div class="compare-col"><h5>ส่งเร็วกว่าที่ผู้รับประมวลผลทัน</h5><p>ผู้รับอาจรับภาระเกิน (overloaded) → <strong>buffer overflow หรือ frame loss</strong></p></div>
+                      <div class="compare-col"><h5>ส่งช้าเกินไป</h5><p>ผู้รับเสียเวลารอ → <strong>ประสิทธิภาพการสื่อสารโดยรวมลดลง</strong></p></div>
                     </div>
+                    <p><strong>Flow Control and Buffering:</strong> เพื่อลดความเสี่ยง buffer overflow ทั้งสองฝั่งใช้ buffer เป็นที่พักข้อมูลชั่วคราว</p>
                     <ul>
-                      <li>ทั้งสองฝั่งใช้ <strong>buffer</strong> ช่วยพักข้อมูลระหว่างทาง</li>
-                      <li>feedback ที่ receiver ส่งกลับ: <strong>ACK</strong> (ยืนยันรับสำเร็จ) และ <strong>NAK / retransmission request</strong> (ขอส่งซ้ำ)</li>
+                      <li><strong>sender buffer</strong> เก็บเฟรมที่รอส่งหรือรอส่งซ้ำ</li>
+                      <li><strong>receiver buffer</strong> เก็บเฟรมที่ได้รับจนกว่าชั้นบนพร้อมประมวลผล</li>
+                      <li>flow control ควบคุมอัตราการส่งของ sender ไม่ให้ receiver รับไม่ไหว · <strong>feedback ใช้ทั้งกับ flow control และ error recovery</strong></li>
                     </ul>
+                    <dl class="defs defs--stack">
+                      <div><dt>Acknowledgement (ACK)</dt><dd>ยืนยันว่ารับเฟรมสำเร็จแล้ว</dd></div>
+                      <div><dt>Retransmission request / NAK</dt><dd>แจ้งว่าควรส่งเฟรมนั้นใหม่</dd></div>
+                    </dl>
+                    <p><strong>Flow control protocols</strong> ที่เรียนในบทนี้: Simple Protocol · Stop-and-Wait ARQ · Go-Back-N ARQ · Selective Repeat ARQ</p>
                   </section>
 
                   <section class="topic" id="fc-simple">
-                    <h4>Simple Protocol, Stop-and-Wait และ Pipelining</h4>
+                    <h4>Simple Protocol และ Stop-and-Wait ARQ</h4>
+                    <p><strong>Simple protocol</strong> ไม่มีทั้ง flow control และ error control (ใช้เป็น baseline เปรียบเทียบ ด้วย time-sequence flow diagram)</p>
+                    <p><strong>Stop-and-Wait ARQ</strong> คือกลไก flow และ error control ที่ง่ายที่สุด</p>
                     <ul>
-                      <li><strong>Simple Protocol:</strong> ไม่มี flow/error control เลย (baseline เปรียบเทียบ)</li>
-                      <li><strong>Stop-and-Wait ARQ:</strong> sender ส่งทีละ 1 เฟรม รอ ACK ก่อนส่งเฟรมถัดไป ใช้ sequence number แค่ <strong>2 ค่า (0, 1)</strong> สลับกันไป ป้องกันเฟรมซ้ำ — เชื่อถือได้ แต่เสียเวลารอมากบนลิงก์ที่มี bandwidth สูง/delay นาน (ไม่มี pipelining)</li>
-                      <li><strong>Pipelining:</strong> การส่งหลายเฟรมพร้อมกันโดยไม่ต้องรอ ACK ทีละเฟรม ใช้ใน Go-Back-N และ Selective Repeat (ไม่มีใน Stop-and-Wait)</li>
+                      <li>sender ส่ง<strong>ทีละ 1 เฟรม</strong> แล้วรอ ACK จาก receiver (ซึ่งตรวจ error ของเฟรม มักใช้ CRC) ก่อนส่งเฟรมถัดไป</li>
+                      <li>sender <strong>เก็บสำเนาของเฟรมล่าสุด</strong>ไว้จนกว่าจะได้ ACK ของเฟรมนั้น</li>
+                      <li>ถ้าเฟรมที่ได้รับถูกต้อง receiver ส่ง ACK</li>
+                      <li>ถ้าเฟรมมี error receiver <strong>ไม่ส่ง ACK</strong> ทิ้งเฟรม แล้ว <strong>timer ของ sender จะหมดเวลา</strong> ทำให้เกิดการส่งซ้ำ</li>
                     </ul>
+                    <p><strong>Sequence และ Acknowledgement Numbers</strong></p>
+                    <ul>
+                      <li>ต้องมี sequence number เพื่อ<strong>แยกเฟรมใหม่ออกจากเฟรมซ้ำที่ถูกส่งซ้ำ</strong></li>
+                      <li>Stop-and-Wait ใช้ sequence number แค่ <strong>2 ค่า คือ 0 และ 1</strong> สลับกัน: 0, 1, 0, 1, …</li>
+                      <li>sender มีตัวแปร <strong>S</strong> = sequence number ของเฟรมที่กำลังส่ง · receiver มีตัวแปร <strong>R</strong> = sequence number ของเฟรมถัดไปที่คาดหวัง</li>
+                      <li>receiver ส่งเฉพาะ <strong>positive ACK</strong> สำหรับเฟรมที่มาถึงครบถ้วน และ <strong>ACK number บอกเฟรมถัดไปที่รอรับ</strong> — ACK 1 = ได้ Frame 0 แล้ว รอ Frame 1</li>
+                    </ul>
+                    <div class="table-scroll">
+                      <table>
+                        <thead><tr><th>สถานการณ์ (สไลด์)</th><th>ลำดับเหตุการณ์</th></tr></thead>
+                        <tbody>
+                          <tr><td>Normal Operation</td><td>S=0 ส่ง Frame 0 → R=0 รับ ส่ง ACK 1 → S=1 ส่ง Frame 1 → R=1 รับ ส่ง ACK 0 → S=0 …</td></tr>
+                          <tr><td>Lost Frame</td><td>Frame 0 / ACK 1 ปกติ → S=1 ส่ง Frame 1 แต่หาย (R ยังเป็น 1) → sender time-out ส่ง Frame 1 ใหม่ → receiver รับ ส่ง ACK 0 → S=0</td></tr>
+                          <tr><td>Lost ACK Frame</td><td>Frame 1 ไปถึงแล้ว (R เปลี่ยนเป็น 0) แต่ ACK 0 หาย → sender time-out ส่ง Frame 1 ซ้ำ → receiver กำลังรอ Frame 0 จึงรู้ว่าเป็นเฟรมซ้ำ <strong>ทิ้ง Frame 1</strong> แล้วส่ง ACK 0 อีกครั้ง</td></tr>
+                          <tr><td>Delayed ACK</td><td>ACK มาช้าจน sender time-out และส่งเฟรมเดิมซ้ำ → receiver เห็นจาก sequence number ว่าเป็นเฟรมซ้ำ ทิ้ง และส่ง ACK ที่เหมาะสมอีกครั้ง · <strong>sequence number ใช้ตรวจเฟรมซ้ำ ส่วน ACK number ใช้ตรวจ ACK เก่า/ล่าช้า</strong></td></tr>
+                        </tbody>
+                      </table>
+                    </div>
+                    <div class="callout callout--warn">
+                      <span class="callout-label">ข้อจำกัดของ Stop-and-Wait</span>
+                      <p>ให้การส่งที่เชื่อถือได้ด้วย outstanding frame ตัวเดียวและ timer แต่<strong>ไม่มีประสิทธิภาพบนลิงก์ bandwidth สูงหรือ delay นาน</strong> เพราะเสียเวลาว่างรอ (idle waiting time) — ดูตัวอย่างตัวเลขในหัวข้อ Bandwidth-delay product</p>
+                    </div>
+                  </section>
+
+                  <section class="topic" id="fc-pipelining">
+                    <h4>Pipelining</h4>
+                    <div class="callout callout--def">
+                      <span class="callout-label">นิยาม</span>
+                      <p><b>Pipelining = Multiple outstanding frames before ACKs arrive</b> — sender ส่งหลายเฟรมก่อนรอ ACK ทำให้หลายเฟรมเดินทางพร้อมกัน เพิ่ม link utilization และประสิทธิภาพการส่ง</p>
+                    </div>
+                    <p>ARQ ที่ใช้ pipelining ได้แก่ <strong>Go-Back-N ARQ</strong> และ <strong>Selective Repeat ARQ</strong> · <strong>ไม่มี pipelining ใน Stop-and-Wait ARQ</strong></p>
+                  </section>
+
+                  <section class="topic" id="fc-gbn">
+                    <h4>Go-Back-N ARQ</h4>
+                    <p><strong>Sequence numbers:</strong> เฟรมถูกนับเรียงลำดับ และต้องกำหนดขนาดฟิลด์ใน header — ถ้าใช้ <var>m</var> บิต จะมี 2<sup>m</sup> ค่า (0 ถึง 2<sup>m</sup> − 1) เช่น m = 3: 0, 1, 2, 3, 4, 5, 6, 7, 0, 1, 2, …</p>
+                    <div class="compare">
+                      <div class="compare-col">
+                        <h5>Send window (sliding)</h5>
+                        <ul>
+                          <li>sender ส่งได้สูงสุด W เฟรมโดยไม่ต้องรอ ACK ทีละเฟรม</li>
+                          <li>เฟรมที่ส่งแล้วแต่ยังไม่ได้ ACK เรียกว่า <strong>outstanding frames</strong> ซึ่งอยู่ใน window และ sender เก็บสำเนาไว้จนกว่าจะได้ ACK</li>
+                          <li><strong>W ≤ 2<sup>m</sup> − 1</strong></li>
+                          <li><strong>S<sub>f</sub></strong> = first outstanding frame · <strong>S<sub>n</sub></strong> = next frame to be sent</li>
+                        </ul>
+                      </div>
+                      <div class="compare-col">
+                        <h5>Receive window</h5>
+                        <ul>
+                          <li><strong>ขนาดเป็น 1 เสมอ</strong></li>
+                          <li>รับเฉพาะเฟรมถัดไปที่คาดหวัง ระบุด้วย <strong>R<sub>n</sub></strong></li>
+                          <li>ถ้าเฟรมที่คาดหวังมาถึงถูกต้อง: รับ → เลื่อน R<sub>n</sub> → ส่ง cumulative ACK</li>
+                          <li><strong>เฟรมที่มาไม่เรียงลำดับถูกทิ้ง</strong></li>
+                        </ul>
+                      </div>
+                    </div>
+                    <div class="compare">
+                      <div class="compare-col">
+                        <h5>Timers</h5>
+                        <p>sender มี timer สำหรับ <strong>outstanding frame ที่เก่าที่สุด</strong> · receiver ไม่มี retransmission timer · ถ้า timer หมดเวลา sender <strong>ส่งเฟรมเก่าสุดที่ยังไม่ได้ ACK และทุก outstanding frame หลังจากนั้นใหม่</strong></p>
+                      </div>
+                      <div class="compare-col">
+                        <h5>Acknowledgement</h5>
+                        <p>ส่ง positive ACK เฉพาะเฟรมที่ได้รับถูกต้องและตามลำดับ · ใช้ <strong>cumulative ACK: ACK n = ทุกเฟรมก่อน n ได้รับแล้ว และรอ frame n</strong></p>
+                      </div>
+                    </div>
+                    <p class="note">สไลด์ "Timers, ACK, Resending Frame" แสดง event 3 แบบ: Req (network layer มี packet ใหม่ส่งลงมา) · fArr (data frame มาถึง receiver) · aArr (ACK มาถึง sender) และการจัดการ timer: start (เมื่อมี outstanding frame ตัวแรก) · restart (ACK มาถึงแต่ยังมี outstanding frame) · stop (ไม่มี outstanding frame เหลือ)</p>
+                    <div class="callout callout--why">
+                      <span class="callout-label">ทำไม send window ต้องน้อยกว่า 2<sup>m</sup></span>
+                      <p>ตัวอย่าง m = 2 (sequence 0–3): <b>window size 3 (&lt; 2<sup>m</sup>)</b> — ถ้า ACK หายแล้ว timeout sender ส่ง Frame 0 เก่าซ้ำ receiver ที่รอ Frame 3 ยังแยกได้ว่าเป็นเฟรมซ้ำ → <b>correctly discarded</b></p>
+                      <p><b>window size 4 (= 2<sup>m</sup>)</b> — ถ้า ACK ของชุดแรกหายและ timeout sender อาจส่ง Frame 0 เก่าซ้ำ ในขณะที่ receiver กำลังรอ Frame 0 ใหม่ของรอบถัดไปพอดี → receiver แยกไม่ได้ว่าเป็นเฟรมเก่าหรือใหม่ → <b>erroneously accepted</b></p>
+                    </div>
+                    <p><strong>Lost Frame (สไลด์):</strong> ส่ง Frame 0, 1 → ได้ ACK 2 · Frame 2 หาย · Frame 3 มาถึงแต่ไม่อยู่ใน window → <strong>discarded</strong> · sender time-out → <strong>resent Frame 2 และ Frame 3</strong> → ได้ ACK 3 และ ACK ถัดไป</p>
+                    <p><strong>Damaged, Lost, or Delayed ACK:</strong> เพราะใช้ cumulative ACK ถ้า ACK หายไป ACK ที่มาทีหลังอาจยืนยันเฟรมเดียวกันได้ เช่น receiver ส่ง ACK1, ACK2, ACK3, ACK4 ถ้า ACK2 หายแต่ ACK3 มาถึงก่อน timeout <strong>ไม่ต้องส่งซ้ำ</strong> เพราะ "ACK3 cumulatively acknowledges frame 0, 1, and 2" — ถ้าไม่มี ACK ที่เหมาะสมมาก่อน timer หมด sender จึงส่งเฟรมเก่าสุดที่ยังไม่ได้ ACK และทุกเฟรมหลังจากนั้นใหม่ ("timeout go back and retransmit") · ACK ที่ล่าช้าไม่ได้ทำให้ต้องส่งซ้ำเสมอไป</p>
+                    <div class="callout callout--def">
+                      <span class="callout-label">Go-Back-N vs Stop-and-Wait</span>
+                      <p>Stop-and-Wait ARQ มองได้ว่าเป็น<b>กรณีพิเศษของ Go-Back-N</b> ที่ใช้ sequence number แค่ 2 ค่า (0 และ 1) และ sender window ขนาด 1</p>
+                    </div>
+                    <div class="callout callout--warn">
+                      <span class="callout-label">ข้อจำกัดของ Go-Back-N</span>
+                      <p>ข้อดีคือ <b>receiver ทำงานง่าย</b> (window = 1 รับเฉพาะเฟรมถัดไป ไม่ต้อง buffer) แต่<b>ไม่มีประสิทธิภาพเมื่อเฟรมหายหรือเสียหายบ่อย</b> — หายหนึ่งเฟรมต้องส่งเฟรมหลังจากนั้นทั้งหมดใหม่ ซึ่งบางเฟรมอาจไปถึงถูกต้องแล้วแต่ถูกทิ้งเพราะมาไม่เรียงลำดับ การส่งซ้ำจำนวนมาก<b>เปลือง bandwidth เพิ่ม delay และอาจทำให้ congestion แย่ลง</b>เมื่อเครือข่ายรับภาระหนักอยู่แล้ว</p>
+                    </div>
+                  </section>
+
+                  <section class="topic" id="fc-sr">
+                    <h4>Selective Repeat ARQ</h4>
+                    <ul>
+                      <li>เป็น sliding-window protocol สำหรับการส่งเฟรมอย่างเชื่อถือได้ และรองรับ pipelined transmission</li>
+                      <li>ต่างจาก Go-Back-N: <strong>receiver รับและ buffer เฟรมที่มาไม่เรียงลำดับแต่ถูกต้องได้</strong></li>
+                      <li>ถ้าเฟรมหายหรือเสียหาย sender <strong>ส่งซ้ำเฉพาะเฟรมนั้น</strong> ไม่ใช่ทุก outstanding frame ที่ตามมา</li>
+                    </ul>
+                    <p><strong>Sender and Receiver Windows:</strong> ถ้าฟิลด์ sequence number มี m บิต จะมี 2<sup>m</sup> ค่า — เพื่อไม่ให้กำกวมตอน sequence number วนกลับ ขนาด window ต้อง<strong>ไม่เกินครึ่งหนึ่งของ sequence-number space</strong></p>
+                    <code class="formula">W<sub>S</sub> ≤ 2<sup>m−1</sup> · W<sub>R</sub> ≤ 2<sup>m−1</sup> (ปกติ sender และ receiver window ขนาดสูงสุดเท่ากัน)</code>
+                    <div class="callout callout--def">
+                      <span class="callout-label">ตัวอย่างในสไลด์</span>
+                      <p>sequence number 3 บิต (0–7) และ receive window size = 4 · ขณะนี้ receiver รอช่วง 0, 1, 2, 3 ถ้าได้รับ Frame 0, Frame 2, Frame 3 — แม้ Frame 1 ยังไม่มา receiver ก็<b>รับ 0, 2, 3 และเก็บใน buffer</b> แล้วรอ Frame 1 · ถ้าเป็น GBN จะรับได้เฉพาะ "next expected frame"</p>
+                    </div>
+                    <p>receiver อาจใช้ <strong>NAK (negative acknowledgement) / selective reject</strong> ระบุเฟรมที่หายหรือเสียหายและขอให้ส่งซ้ำก่อน timeout</p>
+                    <div class="callout callout--why">
+                      <span class="callout-label">ทำไม window ต้องไม่เกินครึ่งหนึ่งของ 2<sup>m</sup></span>
+                      <p>m = 2 → ครึ่งหนึ่ง = 2<sup>2</sup> / 2 = 2 (2<sup>m</sup>/2 = 2<sup>m−1</sup>) · <b>window size 2</b>: ACK หาย sender timeout ส่ง Frame 0 ซ้ำ ซึ่งไม่อยู่ใน receive window (ที่เลื่อนไปรอ 2, 3) → <b>correctly discarded</b> · <b>window size 3</b>: receive window เลื่อนไปครอบ 3, 0, 1 → Frame 0 เก่าที่ส่งซ้ำตกอยู่ใน window → <b>erroneously accepted</b></p>
+                    </div>
+                    <div class="compare">
+                      <div class="compare-col">
+                        <h5>Timer</h5>
+                        <p>แต่ละ outstanding frame ถูกจัดการ<strong>อิสระ</strong> — sender อาจมี <strong>timer แยกต่อเฟรม</strong> ถ้า timer ของเฟรมใดหมด ส่งซ้ำเฉพาะเฟรมนั้น (Timeout of Frame n → Retransmit Frame n)</p>
+                      </div>
+                      <div class="compare-col">
+                        <h5>Acknowledgments</h5>
+                        <p>ใช้ <strong>individual ACK</strong> สำหรับเฟรมที่รับถูกต้อง · ACK เฟรมที่มาไม่เรียงลำดับได้ถ้าอยู่ใน receive window · เฟรมที่มาก่อนถูก buffer จนเฟรมที่หายมาถึง</p>
+                      </div>
+                    </div>
+                    <p><strong>GBN: frames treated as a group · SR: frames treated individually</strong></p>
+                    <p><strong>Time Sequence Flow Diagram (สไลด์):</strong> ส่ง Frame 0 → ได้ ACK 1 และ Frame 0 delivered · Frame 1 หาย · Frame 2 และ 3 มาถึง receiver <strong>buffer ไว้</strong> และส่ง NAK 1 · sender ส่ง Frame 1 ใหม่ (resend) เฉพาะเฟรมเดียว · receiver ได้ Frame 1 → Frames 1, 2, 3 delivered และส่ง ACK 4</p>
                   </section>
 
                   <section class="topic" id="fc-sliding">
-                    <h4>Go-Back-N ARQ vs Selective Repeat ARQ</h4>
+                    <h4>Sliding window: Go-Back-N เทียบกับ Selective Repeat</h4>
                     <div class="compare">
                       <div class="compare-col">
                         <h5>Go-Back-N</h5>
                         <ul>
                           <li>sender window มากกว่า 1 (สูงสุด 2<sup>m</sup> − 1)</li>
-                          <li>receiver window <strong>= 1 เสมอ</strong> — รับเฉพาะเฟรมที่คาดไว้ลำดับถัดไป เฟรมที่มาไม่เรียงลำดับจะถูกทิ้ง</li>
-                          <li>ใช้ <strong>cumulative ACK</strong> (ACK n = ยืนยันทุกเฟรมก่อนหน้า n แล้ว)</li>
-                          <li>timeout → retransmit เฟรมเก่าสุดที่ยังไม่ ACK <strong>พร้อมเฟรมทั้งหมดหลังจากนั้น</strong></li>
+                          <li>receiver window = 1 เสมอ — รับเฉพาะเฟรมที่คาดไว้ลำดับถัดไป เฟรมที่มาไม่เรียงลำดับจะถูกทิ้ง</li>
+                          <li>ใช้ cumulative ACK (ACK n = ยืนยันทุกเฟรมก่อนหน้า n แล้ว)</li>
+                          <li>timeout → retransmit เฟรมเก่าสุดที่ยังไม่ ACK พร้อมเฟรมทั้งหมดหลังจากนั้น</li>
                           <li>receiver ง่าย แต่สิ้นเปลือง bandwidth เมื่อเกิด error บ่อย</li>
                         </ul>
                       </div>
                       <div class="compare-col">
                         <h5>Selective Repeat</h5>
                         <ul>
-                          <li>sender และ receiver window มีขนาดมากกว่า 1 <strong>เท่ากัน</strong> (ต้อง ≤ 2<sup>m−1</sup> เพื่อไม่ให้ sequence number กำกวม)</li>
-                          <li>receiver รับและ <strong>buffer</strong> เฟรมที่มาไม่เรียงลำดับได้ (ต่างจาก GBN)</li>
-                          <li>เฟรมหาย → retransmit <strong>เฉพาะเฟรมนั้น</strong> ไม่ใช่ทั้งหมด</li>
+                          <li>sender และ receiver window มีขนาดมากกว่า 1 เท่ากัน (ต้อง ≤ 2<sup>m−1</sup> เพื่อไม่ให้ sequence number กำกวม)</li>
+                          <li>receiver รับและ buffer เฟรมที่มาไม่เรียงลำดับได้ (ต่างจาก GBN)</li>
+                          <li>เฟรมหาย → retransmit เฉพาะเฟรมนั้น ไม่ใช่ทั้งหมด</li>
                           <li>ประหยัด bandwidth กว่า GBN แต่ receiver ซับซ้อนกว่า</li>
                         </ul>
                       </div>
                     </div>
+                    <p>กดดูทีละขั้นว่า window ของ sender (กรอบม่วงแถวบน) และ receiver (แถวล่าง) เลื่อนไปอย่างไรเมื่อ Frame 1 หาย ตัวเลขในช่องคือ sequence number (m = 3 วน 0–7)</p>
+                    <div class="demo-box" data-widget="arq-window">
+                      <span class="demo-box-title">ลองเล่น: sliding window stepper</span>
+                      <div class="seg" role="group" aria-label="เลือกโปรโตคอล">
+                        <button type="button" data-proto="gbn" aria-pressed="true">Go-Back-N</button>
+                        <button type="button" data-proto="sr" aria-pressed="false">Selective Repeat</button>
+                      </div>
+                      <div class="arq-scroll">
+                        <div class="arq-grid">
+                          <div class="arq-row"><span class="arq-who">Sender</span><div class="arq-strip" data-strip="s" aria-hidden="true"></div></div>
+                          <div class="arq-row"><span class="arq-who">Receiver</span><div class="arq-strip" data-strip="r" aria-hidden="true"></div></div>
+                        </div>
+                      </div>
+                      <p class="arq-caption" aria-live="polite"></p>
+                      <div class="arq-controls">
+                        <button class="btn btn--ghost btn--sm" type="button" data-step="prev">← ขั้นก่อนหน้า</button>
+                        <button class="btn btn--primary btn--sm" type="button" data-step="next">ขั้นถัดไป →</button>
+                        <span class="arq-step"></span>
+                      </div>
+                      <ul class="key-list" aria-label="คำอธิบายสี">
+                        <li><span class="arq-cell in-win win-start win-end">0</span>กรอบ window</li>
+                        <li><span class="arq-cell" data-state="out">0</span>ส่งแล้ว รอ ACK</li>
+                        <li><span class="arq-cell" data-state="lost">1</span>หาย</li>
+                        <li><span class="arq-cell" data-state="resend">1</span>ส่งซ้ำ</li>
+                        <li><span class="arq-cell" data-state="acked">0</span>ยืนยัน/รับแล้ว</li>
+                        <li><span class="arq-cell" data-state="buf">2</span>เก็บใน buffer</li>
+                        <li><span class="arq-cell" data-state="drop">2</span>ถูกทิ้ง</li>
+                      </ul>
+                    </div>
                   </section>
 
                   <section class="topic" id="fc-piggyback">
-                    <h4>Piggybacking</h4>
-                    <p>การส่ง <strong>ACK แนบไปกับ data frame</strong> ที่เดินทางในทิศตรงข้าม เพื่อเพิ่มประสิทธิภาพในการสื่อสารสองทิศทาง</p>
+                    <h4>Bidirectional Communication และ Piggybacking</h4>
+                    <p>ทั้ง Stop-and-Wait ARQ และ Go-Back-N ARQ ทำงานได้<strong>สองทิศทาง</strong> — แต่ละทิศทางมี sender state / sender window และ receiver state / receiver window ของตัวเอง</p>
+                    <div class="callout callout--def">
+                      <span class="callout-label">นิยาม: Piggybacking</span>
+                      <p>เพื่อเพิ่มประสิทธิภาพ <b>ACK สามารถแนบไปใน data frame ที่เดินทางในทิศตรงข้าม</b> — Data + ACK in the same frame</p>
+                    </div>
                   </section>
 
                   <section class="topic" id="fc-hdlc">
                     <h4>HDLC (High-Level Data Link Control)</h4>
-                    <p>โปรโตคอลมาตรฐานแบบ <strong>bit-oriented</strong> สำหรับลิงก์ point-to-point / multipoint ใช้ flag-based framing + bit stuffing รองรับทั้งโหมด connectionless และ connection-oriented (NRM, ABM)</p>
+                    <p>HDLC คือ<strong>โปรโตคอล data-link แบบ bit-oriented ที่เป็นมาตรฐาน</strong> สำหรับ serial links แบบ point-to-point และ multipoint</p>
+                    <ul>
+                      <li><strong>Core concepts:</strong> flag-based framing และ bit stuffing · flow และ error control ด้วย sequence numbers, acknowledgments และ ARQ · ทำงานได้ทั้ง half-duplex และ full-duplex</li>
+                      <li><strong>Operating modes:</strong> Unacknowledged Connectionless Mode · Connection Oriented Mode ได้แก่ <strong>NRM</strong> (Normal Response Mode) และ <strong>ABM</strong> (Asynchronous Balanced Mode)</li>
+                    </ul>
+                    <div class="compare">
+                      <div class="compare-col">
+                        <h5>Connectionless link service</h5>
+                        <p>แต่ละเฟรมจัดการอิสระ · ไม่สร้าง link-level session ก่อนส่ง · เฟรมอาจหาย ซ้ำ หรือมาไม่เรียงลำดับ เว้นแต่ชั้นอื่น (เช่น transport) จะกู้คืนให้</p>
+                      </div>
+                      <div class="compare-col">
+                        <h5>Connection-oriented link service</h5>
+                        <p>สร้าง logical link ก่อนส่งและปลดหลังส่ง · อาจเก็บ sequence numbers, ACKs และ flow-control state · <strong>ใช้ใน data-link protocols บางตัว ไม่ใช่เฉพาะ transport</strong> — HDLC กำหนดไว้ทั้งสองแบบ</p>
+                      </div>
+                    </div>
+                    <p><strong>Frame format</strong></p>
+                    <div class="frame-scroll">
+                      <ol class="frame" aria-label="ฟิลด์ของเฟรม HDLC">
+                        <li><span class="frame-name">Flag</span><span class="frame-size">0x7E</span></li>
+                        <li><span class="frame-name">Address</span></li>
+                        <li><span class="frame-name">Control</span><span class="frame-size">1–2 byte</span></li>
+                        <li class="frame-data"><span class="frame-name">Information</span></li>
+                        <li><span class="frame-name">FCS</span><span class="frame-size">2 หรือ 4 byte</span></li>
+                        <li><span class="frame-name">Flag</span><span class="frame-size">0x7E</span></li>
+                      </ol>
+                    </div>
+                    <dl class="defs defs--stack">
+                      <div><dt>Control field</dt><dd>ส่วนขนาด 1 หรือ 2 byte ของเฟรม ใช้สำหรับ flow และ error control</dd></div>
+                      <div><dt>Information field</dt><dd>ข้อมูลของผู้ใช้จาก network layer หรือข้อมูลจัดการเครือข่าย · ความยาวคงที่เสมอภายในแต่ละเครือข่าย</dd></div>
+                      <div><dt>FCS (Frame Check Sequence)</dt><dd>การตรวจจับ error ของ HDLC · เป็น ITU-T <strong>CRC</strong> ขนาด 2 หรือ 4 byte</dd></div>
+                    </dl>
                     <div class="table-scroll">
                       <table>
-                        <thead><tr><th>ประเภทเฟรม</th><th>หน้าที่</th><th>ตัวอย่างรหัส</th></tr></thead>
+                        <thead><tr><th>Frame format</th><th>โครงสร้าง</th><th>Key differences</th></tr></thead>
                         <tbody>
-                          <tr><td>I-frame</td><td>ขนส่ง user data + piggybacked control info</td><td>—</td></tr>
-                          <tr><td>S-frame</td><td>ควบคุม flow/error อย่างเดียว เมื่อ piggyback ไม่เหมาะ</td><td>RR, RNR, REJ, SREJ</td></tr>
-                          <tr><td>U-frame</td><td>จัดการ session</td><td>SABM, DISC, FRMR</td></tr>
+                          <tr><td>HDLC</td><td>Flag · Address · Control · Information · FCS · Flag</td><td>generic bit-oriented data-link frame</td></tr>
+                          <tr><td>PPP</td><td>Flag · Address · Control · <strong>Protocol</strong> · Information · FCS · Flag (Address = 0xFF, Control = 0x03 ใน standard PPP)</td><td>เพิ่มฟิลด์ Protocol ระบุโปรโตคอลชั้นบน · open standard</td></tr>
+                          <tr><td>Cisco HDLC</td><td>Flag · Address · Control · <strong>Type (Protocol)</strong> · Data · FCS · Flag</td><td>proprietary Cisco variation ใช้ฟิลด์ Type/Protocol</td></tr>
                         </tbody>
                       </table>
                     </div>
+                    <p class="note">จุดร่วม: flag delimiter ทั้งสองปลาย · คงฟิลด์ Address และ Control ของ HDLC-style framing · ใช้ FCS ตรวจ error — PPP และ Cisco HDLC แก้เฉพาะส่วนระบุ payload แต่รักษาโครงสร้าง HDLC-like ไว้</p>
+                    <div class="table-scroll">
+                      <table>
+                        <thead><tr><th>Frame type</th><th>ใช้ทำอะไร</th><th>Control field</th></tr></thead>
+                        <tbody>
+                          <tr><td>I-frame (Information)</td><td>ขนส่ง user data และ control info ที่เกี่ยวกับ user data (piggybacking)</td><td>บิตแรก = <strong>0</strong> · N(S) = sequence number ของเฟรม · N(R) = ค่า ACK เมื่อใช้ piggybacking · P/F = Poll and Final</td></tr>
+                          <tr><td>S-frame (Supervisory)</td><td>ขนส่งเฉพาะ control info — ใช้กับ <strong>flow and error control</strong> เมื่อ piggybacking ทำไม่ได้หรือไม่เหมาะ</td><td>2 บิตแรก = <strong>10</strong> · N(R) = ACK หรือ NAK · code 2 บิต</td></tr>
+                          <tr><td>U-frame (Unnumbered)</td><td>สงวนไว้สำหรับ system management — แลกเปลี่ยน session management และ control information</td><td>มี info field สำหรับ system management · code แบ่งเป็น 2-bit prefix ก่อน P/F และ 3-bit suffix หลัง P/F</td></tr>
+                        </tbody>
+                      </table>
+                    </div>
+                    <p class="note">P/F ในสไลด์: 0 คือ Poll เมื่อ primary ส่งถึง secondary · 1 คือ Final เมื่อ secondary ส่งถึง primary</p>
+                    <div class="table-scroll">
+                      <table>
+                        <thead><tr><th>S-frame code</th><th>ชื่อ</th><th>ความหมาย</th></tr></thead>
+                        <tbody>
+                          <tr><td>00</td><td>Receiver ready (RR)</td><td>ACK — ได้รับครบถ้วน</td></tr>
+                          <tr><td>01</td><td>Receiver not ready (RNR)</td><td>ACK แต่ receiver ไม่ว่าง รับเฟรมเพิ่มไม่ได้ (ช่วยส่งช้าลง)</td></tr>
+                          <tr><td>10</td><td>Reject (REJ)</td><td>NAK ที่ใช้ใน Go-Back-N — เฟรมล่าสุดหายหรือเสียหาย</td></tr>
+                          <tr><td>11</td><td>Selective reject (SREJ)</td><td>NAK ที่ใช้ใน Selective Repeat ARQ</td></tr>
+                        </tbody>
+                      </table>
+                    </div>
+                    <div class="table-scroll">
+                      <table>
+                        <thead><tr><th>U-frame command/response</th><th>Meaning</th></tr></thead>
+                        <tbody>
+                          <tr><td>SNRM / SNRME</td><td>Set normal response mode / (extended)</td></tr>
+                          <tr><td>SABM / SABME</td><td>Set asynchronous balanced mode / (extended)</td></tr>
+                          <tr><td>UP</td><td>Unnumbered poll</td></tr>
+                          <tr><td>UI</td><td>Unnumbered information</td></tr>
+                          <tr><td>UA</td><td>Unnumbered acknowledgment</td></tr>
+                          <tr><td>RD</td><td>Request disconnect</td></tr>
+                          <tr><td>DISC</td><td>Disconnect</td></tr>
+                          <tr><td>DM</td><td>Disconnect mode</td></tr>
+                          <tr><td>RIM</td><td>Request information mode</td></tr>
+                          <tr><td>SIM</td><td>Set initialization mode</td></tr>
+                          <tr><td>RSET</td><td>Reset</td></tr>
+                          <tr><td>XID</td><td>Exchange ID</td></tr>
+                          <tr><td>FRMR</td><td>Frame reject</td></tr>
+                        </tbody>
+                      </table>
+                    </div>
+                    <p><strong>Connection Establishment / Release:</strong> Node A ส่ง U-frame <strong>SABM</strong> → Node B ตอบ U-frame <strong>UA</strong> → Data transfer → Node A ส่ง U-frame <strong>DISC</strong> → Node B ตอบ <strong>UA</strong></p>
+                    <p><strong>HDLC: Go-Back-N — Piggybacking without Error:</strong> Station A ส่ง I-frame ลำดับ 0 และ 1 ไปหา B · Station B มีข้อมูลจะส่งกลับจึงส่ง I-frame ของตัวเองลำดับ 0, 1, 2 โดยทุกเฟรมแนบ N(R) = 2 ("Send my 0, wants your 2!" → "Send my 1, wants your 2!" → "Send my 2, wants your 2!") · A ไม่มีข้อมูลจะส่งต่อ จึงตอบด้วย S-frame <strong>RR</strong> N(R) = 3 ("Wants your 3, Receiver Ready")</p>
                   </section>
 
                   <section class="topic" id="fc-bdp">
-                    <h4>Bandwidth-delay product</h4>
-                    <p>วัดจำนวนบิตที่ระบบส่งออกไปได้ระหว่างรอ ACK กลับมา</p>
-                    <code class="formula">bandwidth-delay product = bandwidth (bps) × round-trip delay (วินาที)</code>
-                    <p>ถ้าค่านี้สูง (ลิงก์ bandwidth สูงหรือ delay นาน) Stop-and-Wait จะใช้ประโยชน์จากลิงก์ได้ต่ำมาก</p>
-                    <div class="callout">
-                      <strong>ตัวอย่างในสไลด์ (ลิงก์เดียวกัน):</strong>
-                      link utilization <b>Stop-and-Wait เพียง 5%</b> ·
-                      <b>Go-Back-N ที่ window 15 เฟรม 75%</b>
+                    <h4>Performance และ Bandwidth-Delay Product</h4>
+                    <p><strong>ตัวอย่าง Performance: Stop-and-Wait ARQ</strong> — ระยะทาง 1000 m ความเร็วการแพร่สัญญาณ 500 m/sec ไม่คิด transmission delay เฟรมละ 100 bits ต้องการส่งข้อมูลรวม 1000 bits จะใช้เวลาเท่าไร?</p>
+                    <ol class="steps">
+                      <li>เวลาไป-กลับ 1 รอบ (round trip) = 2 × 1000 / 500 = <strong>4 วินาที</strong></li>
+                      <li>จำนวนเฟรม = 1000 / 100 = <strong>10 frames</strong></li>
+                      <li>Stop-and-Wait ส่งทีละเฟรมและรอ ACK ทุกครั้ง → 10 × 4 = <strong>40 วินาที</strong></li>
+                    </ol>
+                    <p><strong>ตัวอย่าง Performance: Go-Back-N ARQ</strong> — เงื่อนไขเดิม แต่ส่งได้พร้อมกันครั้งละ 2 เฟรม (N = 2)</p>
+                    <ol class="steps">
+                      <li>round trip ยังคง = <strong>4 วินาที</strong> และมี 10 frames</li>
+                      <li>ส่งครั้งละ 2 เฟรม → 10 / 2 = 5 รอบ</li>
+                      <li>เวลารวม = 5 × 4 = <strong>20 วินาที</strong></li>
+                    </ol>
+                    <div class="callout callout--def">
+                      <span class="callout-label">นิยาม: Bandwidth-Delay Product</span>
+                      <p>มาตรวัดประสิทธิภาพของระบบ ARQ คือผลคูณของ <b>bandwidth (bps)</b> กับ <b>round-trip delay (วินาที)</b> — เป็นจำนวนบิตที่ระบบส่งออกไปได้ระหว่างรอ ACK จากผู้รับ</p>
+                    </div>
+                    <code class="formula">bandwidth-delay product = bandwidth (bps) × round-trip delay (s)</code>
+                    <div class="callout callout--why">
+                      <span class="callout-label">ทำไมค่านี้สำคัญ</span>
+                      <p>ถ้า delay นาน sender ก็อาจ<b>ใช้ window หมด (exhaust its window) ระหว่างรอ</b> — ยิ่งค่านี้สูง การรอ ACK ยิ่งทำให้ลิงก์ว่างโดยเปล่าประโยชน์</p>
+                    </div>
+                    <p><strong>Example (Stop-and-Wait ARQ):</strong> bandwidth ของสาย 1 Mbps และ 1 บิตใช้เวลาไป-กลับ 20 ms เฟรมข้อมูลยาว 1000 bits</p>
+                    <ol class="steps">
+                      <li>bandwidth-delay product = 1 × 10<sup>6</sup> bits/s × 20 × 10<sup>−3</sup> s = <strong>20,000 bits</strong></li>
+                      <li>ระบบส่งได้ 20,000 บิตในช่วงที่ข้อมูลเดินทางไป-กลับ แต่ Stop-and-Wait ส่งจริงแค่ 1 เฟรม = 1000 บิต</li>
+                      <li>link utilization = 1000 / 20,000 = <strong>5%</strong></li>
+                    </ol>
+                    <p><strong>Example (Go-Back-N ARQ) ลิงก์เดิมแต่ใช้ 15-frame sequence:</strong> bandwidth-delay product ยังเป็น 20,000 · ระบบส่งได้สูงสุด 15 เฟรม = 15,000 บิตในหนึ่ง round trip → utilization = 15,000 / 20,000 = <strong>75%</strong></p>
+                    <div class="callout callout--warn">
+                      <span class="callout-label">ข้อควรระวัง</span>
+                      <p>ถ้ามีเฟรมเสียหาย utilization จริง<strong>จะต่ำกว่านี้มาก</strong>เพราะต้องส่งเฟรมซ้ำ · สไลด์สรุปว่าบนลิงก์ bandwidth สูงหรือ delay นาน การใช้ Stop-and-Wait ARQ <strong>ทำให้เสียความจุของลิงก์</strong></p>
+                    </div>
+                    <div class="callout callout--def">
+                      <span class="callout-label">Summary slide: ตัวอย่าง m = 4 บิต</span>
+                      <p>sequence number ทั้งหมด 2<sup>4</sup> = 16 ค่า (0 ถึง 15)</p>
+                      <p><b>Selective Repeat:</b> window = 2<sup>4</sup> / 2 = <b>8</b> ทั้ง sender และ receiver (เป็นเลขคู่เสมอ)</p>
+                      <p><b>Go-Back-N:</b> receiver window = <b>1</b> · sender window = 2<sup>m</sup> − 1 = 16 − 1 = <b>15</b> (เป็นเลขคี่เสมอ)</p>
+                      <p>ทั้งสองแบบ ถ้าส่ง 20 packets โดยไม่หาย sequence number จะเป็น 0, 1, 2, …, 15, 0, 1, 2, 3</p>
                     </div>
                   </section>
 
