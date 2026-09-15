@@ -1,0 +1,995 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>ITDS241 บทที่ 4: CSS Layout &amp; Responsive Design · โต๊ะทบทวน</title>
+<meta name="description" content="ITDS241 Web Technologies and Applications บทที่ 4: เทคนิคจัด layout 5 วิธี, float layout, flexbox, responsive web design, media query, viewport meta tag และ Bootstrap grid พร้อม cheat sheet แบบฝึกหัด 20 ข้อ และโจทย์เขียนโค้ด" />
+<meta name="theme-color" content="#17151a" />
+<link rel="icon" href="assets/favicon.svg" type="image/svg+xml" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link
+  href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500..700&family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans+Thai:wght@500;600&family=IBM+Plex+Sans+Thai+Looped:wght@400;500;600&display=swap"
+  rel="stylesheet"
+/>
+<link rel="stylesheet" href="assets/css/tokens.css" />
+<link rel="stylesheet" href="assets/css/base.css" />
+<link rel="stylesheet" href="assets/css/network.css" />
+<link rel="stylesheet" href="assets/css/exercise.css" />
+<link rel="stylesheet" href="assets/css/motion.css" />
+<script>document.documentElement.classList.add("js");</script>
+</head>
+<body>
+  <a class="skip-link" href="#tabs">ข้ามไปที่เนื้อหา</a>
+
+  <svg class="dg-defs" aria-hidden="true" focusable="false">
+    <defs>
+      <marker id="arr" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path class="dg-arrow" d="M0 0L10 5L0 10z" /></marker>
+      <marker id="arr-muted" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path class="dg-arrow--muted" d="M0 0L10 5L0 10z" /></marker>
+      <marker id="arr-ok" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path class="dg-arrow--ok" d="M0 0L10 5L0 10z" /></marker>
+      <marker id="arr-bad" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path class="dg-arrow--bad" d="M0 0L10 5L0 10z" /></marker>
+    </defs>
+  </svg>
+
+  <header class="site-header">
+    <div class="wrap">
+      <a class="wordmark" href="index.html" aria-label="โต๊ะทบทวน หน้าแรก">
+        <img class="wordmark-mark" src="assets/favicon.svg" alt="" width="26" height="26" />
+        <span class="wordmark-text">โต๊ะ<span>ทบทวน</span></span>
+      </a>
+      <a class="crumb" href="index.html"><span class="arrow" aria-hidden="true">←</span> รายวิชาทั้งหมด</a>
+    </div>
+  </header>
+
+  <main>
+    <section class="course-hero wrap">
+      <nav class="course-nav" aria-label="เลือกวิชาและบท">
+        <div class="subject-switch">
+          <button class="subject-btn" type="button" data-subject="network" aria-pressed="false"><span class="subject-code">ITDS231</span> Network</button>
+          <button class="subject-btn" type="button" data-subject="web" aria-pressed="true"><span class="subject-code">ITDS241</span> Web</button>
+        </div>
+        <div class="chapter-nav" data-subject="network" data-label="ITDS231 Computer Networks" role="group" aria-label="บทของวิชา ITDS231 Computer Networks">
+          <a class="chapter-link" href="network.html"><span class="chapter-num">บทที่ 1</span><span class="chapter-name">Intro &amp; Topology</span></a>
+          <a class="chapter-link" href="network-application-layer.html"><span class="chapter-num">บทที่ 2</span><span class="chapter-name">Application Layer</span></a>
+          <a class="chapter-link" href="network-data-link-layer.html"><span class="chapter-num">บทที่ 3</span><span class="chapter-name">Data Link Layer</span></a>
+          <a class="chapter-link" href="network-mac-ethernet.html"><span class="chapter-num">บทที่ 4</span><span class="chapter-name">MAC + Ethernet</span></a>
+        </div>
+        <div class="chapter-nav" data-subject="web" data-label="ITDS241 Web Technologies and Applications" role="group" aria-label="บทของวิชา ITDS241 Web Technologies and Applications">
+          <a class="chapter-link" href="web-intro-html-basics.html"><span class="chapter-num">บทที่ 1</span><span class="chapter-name">Internet &amp; HTML Basics</span></a>
+          <a class="chapter-link" href="web-media-forms-semantic.html"><span class="chapter-num">บทที่ 2</span><span class="chapter-name">Media, Forms &amp; Semantic</span></a>
+          <a class="chapter-link" href="web-css-fundamentals.html"><span class="chapter-num">บทที่ 3</span><span class="chapter-name">CSS Fundamentals</span></a>
+          <a class="chapter-link" href="web-css-layout-responsive.html" aria-current="page"><span class="chapter-num">บทที่ 4</span><span class="chapter-name">CSS Layout &amp; Responsive</span></a>
+          <a class="chapter-link" href="web-js-fundamentals.html"><span class="chapter-num">บทที่ 5</span><span class="chapter-name">JavaScript Fundamentals</span></a>
+          <a class="chapter-link" href="web-js-functions-oop-dom.html"><span class="chapter-num">บทที่ 6</span><span class="chapter-name">Functions, OOP &amp; DOM</span></a>
+          <a class="chapter-link" href="web-ecmascript-features.html"><span class="chapter-num">บทที่ 7</span><span class="chapter-name">ECMAScript Features</span></a>
+        </div>
+      </nav>
+      <span class="eyebrow">ITDS241 · บทที่ 4 · Lecture 04</span>
+      <h1>CSS Layout &amp; Responsive Design</h1>
+      <p class="course-lede">CSS ส่วนที่ 2 — เลือกเทคนิคจัด layout, สร้าง 3-column ด้วย float และ flexbox, ทำหน้าเว็บให้ responsive ด้วย media query และ viewport meta tag แล้วเร่งงานด้วยระบบ grid 12 คอลัมน์ของ Bootstrap</p>
+      <ul class="course-meta" aria-label="ข้อมูลบทเรียน">
+        <li class="chip chip--accent">ITDS241 Web Technologies and Applications</li>
+        <li class="chip">1 ไฟล์สไลด์ · Lecture04 CSS Part 2</li>
+        <li class="chip">แบบฝึกหัด 20 ข้อ</li>
+        <li class="chip">โจทย์เขียนโค้ด 6 ข้อ</li>
+      </ul>
+    </section>
+
+    <div class="tabbar" id="tabs">
+      <div class="wrap">
+        <div class="tabs tabs--4" role="tablist" aria-label="ส่วนของหน้า">
+          <button class="tab" role="tab" id="tab-content" aria-controls="content" aria-selected="true" type="button">
+            <svg class="tab-icon" viewBox="0 0 20 20" aria-hidden="true"><path d="M4 3.5h8.5L16 7v9.5H4z M12 3.5V7h4 M7 10h6 M7 13h4" /></svg>
+            เนื้อหา
+          </button>
+          <button class="tab" role="tab" id="tab-summary" aria-controls="summary" aria-selected="false" type="button">
+            <svg class="tab-icon" viewBox="0 0 20 20" aria-hidden="true"><path d="M3.5 4h13v12h-13z M3.5 8h13 M8.5 8v8" /></svg>
+            สรุป
+          </button>
+          <button class="tab" role="tab" id="tab-quiz" aria-controls="quiz" aria-selected="false" type="button">
+            <svg class="tab-icon" viewBox="0 0 20 20" aria-hidden="true"><path d="M10 17a7 7 0 1 0 0-14 7 7 0 0 0 0 14z M6.8 10.2l2.2 2.2 4.2-4.6" /></svg>
+            แบบฝึกหัด
+          </button>
+          <button class="tab" role="tab" id="tab-code" aria-controls="code" aria-selected="false" type="button">
+            <svg class="tab-icon" viewBox="0 0 20 20" aria-hidden="true"><path d="M7 6l-4 4 4 4 M13 6l4 4-4 4 M11.2 4.5l-2.4 11" /></svg>
+            เขียนโค้ด
+          </button>
+          <span class="tab-indicator" aria-hidden="true"></span>
+        </div>
+      </div>
+    </div>
+
+    <div class="wrap panels">
+
+      <!-- =============================================================
+           แท็บ 1: เนื้อหา
+           ============================================================= -->
+      <section class="panel" id="content" role="tabpanel" aria-labelledby="tab-content" tabindex="-1">
+        <div class="panel-head">
+          <h2>เนื้อหาแยกตามหัวข้อในสไลด์</h2>
+          <div class="panel-actions">
+            <button class="btn btn--ghost btn--sm" type="button" data-acc-all="open">เปิดทั้งหมด</button>
+            <button class="btn btn--ghost btn--sm" type="button" data-acc-all="close">ปิดทั้งหมด</button>
+          </div>
+        </div>
+
+        <div class="acc">
+
+<!-- ================= 01 Layout techniques & float ================= -->
+          <div class="acc-item is-open">
+            <h3 class="acc-heading">
+              <button class="acc-trigger" type="button" aria-expanded="true" aria-controls="acc-c4-layout" id="acc-c4-layout-btn">
+                <span class="acc-index">01</span>
+                <span class="acc-title">
+                  <span class="acc-name">เทคนิคจัด Layout หน้าเว็บ และ Layout ด้วย CSS Float</span>
+                  <span class="acc-file">69-1-ITDS241-Lecture04-CSS-Part2 · ส่วน A–B</span>
+                </span>
+                <svg class="acc-chevron" viewBox="0 0 20 20" aria-hidden="true"><path d="M5 7.5l5 5 5-5" /></svg>
+              </button>
+            </h3>
+            <div class="acc-panel" id="acc-c4-layout" role="region" aria-labelledby="acc-c4-layout-btn">
+              <div class="acc-panel-inner">
+                <div class="acc-body">
+
+                  <nav class="toc" aria-label="หัวข้อในการ์ดเทคนิค layout">
+                    <a href="#c4-techniques">5 เทคนิคจัด layout</a>
+                    <a href="#c4-float">Float layout</a>
+                    <a href="#c4-after">::after clear float</a>
+                  </nav>
+
+                  <section class="topic" id="c4-techniques">
+                    <h4>เทคนิคจัด Layout หน้าเว็บ 5 วิธี</h4>
+                    <div class="table-scroll">
+                      <table>
+                        <thead><tr><th>#</th><th>เทคนิค</th><th>ลักษณะ</th></tr></thead>
+                        <tbody>
+                          <tr><td>1</td><td class="nowrap">HTML tables</td><td><strong>ไม่แนะนำ</strong>ให้ใช้จัด layout เพราะ <code>&lt;table&gt;</code> ถูกออกแบบมาสำหรับ<strong>แสดงข้อมูลตาราง</strong></td></tr>
+                          <tr><td>2</td><td class="nowrap">CSS float property</td><td>จัด layout ด้วย <code>float</code> และ <code>clear</code></td></tr>
+                          <tr><td>3</td><td class="nowrap">CSS flexbox</td><td>โครงสร้าง layout แบบยืดหยุ่น <strong>responsive ได้ดีบนอุปกรณ์หลายขนาด</strong></td></tr>
+                          <tr><td>4</td><td class="nowrap">CSS framework</td><td>วิธีที่<strong>เร็ว</strong>ในการสร้าง layout เช่น Bootstrap</td></tr>
+                          <tr><td>5</td><td class="nowrap">CSS grid</td><td>ระบบ layout แบบตาราง ใช้ <strong>row และ column พร้อมกัน</strong></td></tr>
+                        </tbody>
+                      </table>
+                    </div>
+                    <div class="callout callout--def">
+                      <span class="callout-label">CSS Grid เทียบ Flexbox</span>
+                      <p><b>CSS Grid</b> ใช้ระบบ row และ column <b>พร้อมกัน (สองมิติ)</b> ส่วน <b>Flexbox</b> เน้นจัดเรียงใน<b>มิติเดียว</b> (แถวหรือคอลัมน์ตาม flex-direction)</p>
+                    </div>
+                  </section>
+
+                  <section class="topic" id="c4-float">
+                    <h4>Layout ด้วย CSS Float</h4>
+                    <p>จัด layout โดยใช้ <strong>tag แบบ container</strong> เช่น <code>header</code>, <code>nav</code>, <code>footer</code>, <code>article</code>, <code>section</code>, <code>div</code> ร่วมกับ <code>float</code> property ตัวอย่างโครงสร้าง CSS สมบูรณ์จากสไลด์สำหรับ <strong>3-column layout</strong> (layout 3 คอลัมน์มักใช้กับ Desktop Browser):</p>
+                    <pre class="code-block" data-lang="css"><code>* { font-family: sans-serif; }
+header, footer { background-color: #f1f1f1; padding: 3px; text-align: center; }
+nav { background-color: darkblue; }
+nav a { float: right; display: block; color: #f2f2f2;
+        text-align: center; padding: 14px 16px; text-decoration: none; }
+.container { background-color: gainsboro; }
+.column { float: left; width: 33.33%; background-color: lightskyblue; }
+.row::after { content: ""; display: table; clear: both; }</code></pre>
+                    <div class="table-scroll">
+                      <table>
+                        <thead><tr><th>กฎ</th><th>ทำหน้าที่อะไรใน layout</th></tr></thead>
+                        <tbody>
+                          <tr><td><code>header, footer</code></td><td>grouping selector — พื้นสีเทาอ่อน padding 3px จัดข้อความกึ่งกลาง</td></tr>
+                          <tr><td><code>nav a</code></td><td>ลิงก์ในเมนู <code>float: right</code> เรียงชิดขวา · <code>display: block</code> · <code>text-decoration: none</code> ลบเส้นใต้</td></tr>
+                          <tr><td><code>.column</code></td><td><code>float: left</code> + <code>width: 33.33%</code> → 3 คอลัมน์เรียงกันพอดีหนึ่งแถว</td></tr>
+                          <tr><td><code>.row::after</code></td><td>clear float หลังแถวของคอลัมน์ (อธิบายด้านล่าง)</td></tr>
+                        </tbody>
+                      </table>
+                    </div>
+                    <pre class="code-block" data-lang="html" data-render="220"><code>&lt;style&gt;
+  * { font-family: sans-serif; }
+  header, footer { background-color: #f1f1f1; padding: 3px; text-align: center; }
+  nav { background-color: darkblue; }
+  nav a { float: right; display: block; color: #f2f2f2;
+          text-align: center; padding: 14px 16px; text-decoration: none; }
+  .container { background-color: gainsboro; }
+  .column { float: left; width: 33.33%; background-color: lightskyblue; }
+  .row::after { content: ""; display: table; clear: both; }
+&lt;/style&gt;
+&lt;header&gt;&lt;h2&gt;Header&lt;/h2&gt;&lt;/header&gt;
+&lt;nav&gt;&lt;a href="#"&gt;Contact&lt;/a&gt;&lt;a href="#"&gt;News&lt;/a&gt;&lt;a href="#"&gt;Home&lt;/a&gt;&lt;/nav&gt;
+&lt;div class="nav-clear" style="clear: both"&gt;&lt;/div&gt;
+&lt;div class="container"&gt;
+  &lt;div class="row"&gt;
+    &lt;div class="column"&gt;&lt;p&gt;Column 1&lt;/p&gt;&lt;/div&gt;
+    &lt;div class="column"&gt;&lt;p&gt;Column 2&lt;/p&gt;&lt;/div&gt;
+    &lt;div class="column"&gt;&lt;p&gt;Column 3&lt;/p&gt;&lt;/div&gt;
+  &lt;/div&gt;
+&lt;/div&gt;
+&lt;footer&gt;&lt;p&gt;Footer&lt;/p&gt;&lt;/footer&gt;</code></pre>
+                    <p class="note">ในตัวอย่างที่ลองได้ มี <code>&lt;div style="clear: both"&gt;</code> คั่นหลัง nav เพื่อให้ลิงก์ที่ float อยู่ไม่ไหลทับส่วนถัดไปเช่นกัน</p>
+                  </section>
+
+                  <section class="topic" id="c4-after">
+                    <h4>Pseudo-element <code>::after</code> กับการ clear float</h4>
+                    <div class="callout callout--def">
+                      <span class="callout-label">นิยาม</span>
+                      <p><code>::after</code> เป็น <b>pseudo-element</b> ตัวหนึ่งที่ใช้จัดสไตล์เฉพาะบางส่วนของ element — ในตัวอย่างนี้ใช้เพื่อ <b>"clear float" หลัง container</b> เพื่อไม่ให้ element ที่ตามมาไหลผิดตำแหน่ง</p>
+                    </div>
+                    <p>ลองดูผลเมื่อ<strong>ไม่มี</strong> <code>.row::after</code>: คอลัมน์ที่ float อยู่ไม่ถูก clear ทำให้ footer ไหลขึ้นไปอยู่ข้างคอลัมน์และพื้นหลังของ container หายไป</p>
+                    <pre class="code-block" data-lang="html" data-render="150"><code>&lt;style&gt;
+  * { font-family: sans-serif; }
+  .container { background-color: gainsboro; }
+  .column { float: left; width: 33.33%; background-color: lightskyblue; }
+  footer { background-color: #f1f1f1; text-align: center; }
+  /* ไม่มี .row::after */
+&lt;/style&gt;
+&lt;div class="container"&gt;
+  &lt;div class="row"&gt;
+    &lt;div class="column"&gt;&lt;p&gt;Column 1&lt;/p&gt;&lt;/div&gt;
+    &lt;div class="column"&gt;&lt;p&gt;Column 2 ยาวกว่า&lt;br&gt;สองบรรทัด&lt;/p&gt;&lt;/div&gt;
+  &lt;/div&gt;
+&lt;/div&gt;
+&lt;footer&gt;&lt;p&gt;Footer ไหลผิดตำแหน่ง&lt;/p&gt;&lt;/footer&gt;</code></pre>
+                    <div class="callout callout--warn">
+                      <span class="callout-label">จุดที่ข้อสอบชอบถาม</span>
+                      <p>เทคนิคที่ต้องใช้ <code>::after</code> เพื่อ clear float คือ <b>CSS Float layout</b> — Flexbox <b>ไม่ต้อง</b>ใช้ ::after อีกต่อไป (การ์ด 02)</p>
+                    </div>
+                  </section>
+
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- ================= 02 Flexbox ================= -->
+          <div class="acc-item">
+            <h3 class="acc-heading">
+              <button class="acc-trigger" type="button" aria-expanded="false" aria-controls="acc-c4-flex" id="acc-c4-flex-btn">
+                <span class="acc-index">02</span>
+                <span class="acc-title">
+                  <span class="acc-name">Layout ด้วย CSS Flexbox</span>
+                  <span class="acc-file">69-1-ITDS241-Lecture04-CSS-Part2 · ส่วน C</span>
+                </span>
+                <svg class="acc-chevron" viewBox="0 0 20 20" aria-hidden="true"><path d="M5 7.5l5 5 5-5" /></svg>
+              </button>
+            </h3>
+            <div class="acc-panel" id="acc-c4-flex" role="region" aria-labelledby="acc-c4-flex-btn">
+              <div class="acc-panel-inner">
+                <div class="acc-body">
+
+                  <nav class="toc" aria-label="หัวข้อในการ์ด flexbox">
+                    <a href="#c4-flex-what">Flexbox คืออะไร</a>
+                    <a href="#c4-flex-props">Container properties</a>
+                    <a href="#c4-flex-lab">ลองเล่น flexbox</a>
+                    <a href="#c4-flex-vs">Flexbox vs Float</a>
+                  </nav>
+
+                  <section class="topic" id="c4-flex-what">
+                    <h4>Flexbox (Flexible Box) คืออะไร</h4>
+                    <p><strong>Flexbox module</strong> ช่วย<strong>จัดวาง จัดตำแหน่ง และกระจายพื้นที่</strong>ระหว่าง item ใน container ที่<strong>มีขนาดไม่แน่นอน</strong>ได้อย่างมีประสิทธิภาพ และออกแบบ layout แบบ responsive ได้<strong>โดยไม่ต้องพึ่ง float หรือ positioning</strong></p>
+                    <figure class="diagram">
+                      <div class="diagram-scroll">
+                        <svg viewBox="0 0 760 190" role="img" aria-labelledby="dg-flex-t dg-flex-d">
+                          <title id="dg-flex-t">flex container กับ flex items</title>
+                          <desc id="dg-flex-d">element แม่ที่กำหนด display flex คือ flex container ภายในมีลูกโดยตรง 3 ตัวคือ flex item 1 2 3 เรียงตามแนวหลักจากซ้ายไปขวาเมื่อ flex-direction เป็น row</desc>
+                          <rect class="dg-box dg-box--accent" x="20" y="30" width="600" height="120" rx="10" />
+                          <text class="dg-mono dg-mono--sm" x="36" y="52">.container { display: flex; }  ← flex container (parent)</text>
+                          <rect class="dg-box" x="40" y="70" width="150" height="60" rx="6" /><text class="dg-text" x="115" y="106" text-anchor="middle">flex item 1</text>
+                          <rect class="dg-box" x="210" y="70" width="150" height="60" rx="6" /><text class="dg-text" x="285" y="106" text-anchor="middle">flex item 2</text>
+                          <rect class="dg-box" x="380" y="70" width="150" height="60" rx="6" /><text class="dg-text" x="455" y="106" text-anchor="middle">flex item 3</text>
+                          <path class="dg-line dg-line--accent" d="M40 170 H600" marker-end="url(#arr)" />
+                          <text class="dg-text dg-text--sm" x="320" y="186" text-anchor="middle">แนวหลักเมื่อ flex-direction: row</text>
+                          <text class="dg-text dg-text--sm" x="640" y="96">ลูกโดยตรง</text>
+                          <text class="dg-text dg-text--sm" x="640" y="116">= flex items</text>
+                        </svg>
+                      </div>
+                      <figcaption>container (parent) ที่กำหนด <code>display: flex;</code> จะเปิดใช้งาน flex layout context กับ<strong>element ลูกโดยตรงทั้งหมด</strong> ซึ่งเรียกว่า flex items</figcaption>
+                    </figure>
+                    <div class="callout callout--warn">
+                      <span class="callout-label">ข้อควรจำ</span>
+                      <p><code>display: flex;</code> กำหนดที่ <b>element แม่ (flex container)</b> ไม่ใช่ที่ element ลูก</p>
+                    </div>
+                  </section>
+
+                  <section class="topic" id="c4-flex-props">
+                    <h4>Property หลักของ flex container</h4>
+                    <div class="table-scroll">
+                      <table>
+                        <thead><tr><th>Property</th><th>ทำอะไร</th><th>ค่าที่เป็นไปได้</th></tr></thead>
+                        <tbody>
+                          <tr><td><code>display</code></td><td>เปิดใช้งาน flex layout</td><td><code>flex</code></td></tr>
+                          <tr><td><code>flex-direction</code></td><td>ทิศทางการเรียง item</td><td><code>row</code> | <code>row-reverse</code> | <code>column</code> | <code>column-reverse</code></td></tr>
+                          <tr><td><code>flex-wrap</code></td><td>ให้ item ตัดขึ้นบรรทัดใหม่เมื่อพื้นที่ไม่พอ</td><td><code>nowrap</code> | <code>wrap</code> | <code>wrap-reverse</code></td></tr>
+                          <tr><td><code>justify-content</code></td><td>กระจายพื้นที่ว่างระหว่าง item <strong>ตามแนวหลัก</strong></td><td><code>flex-start</code> | <code>flex-end</code> | <code>center</code> | <code>space-between</code> | <code>space-around</code> | <code>space-evenly</code></td></tr>
+                          <tr><td><code>align-items</code></td><td>จัดตำแหน่ง item</td><td><code>flex-start</code> | <code>flex-end</code> | <code>center</code></td></tr>
+                        </tbody>
+                      </table>
+                    </div>
+                    <p>ตัวอย่างที่ใช้ property ครบชุดตามสไลด์:</p>
+                    <pre class="code-block" data-lang="html" data-render="170"><code>&lt;style&gt;
+  .container {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-evenly;
+    background-color: gainsboro;
+  }
+  .container div { width: 120px; margin: 8px; padding: 16px 0;
+                   text-align: center; background-color: lightskyblue; }
+&lt;/style&gt;
+&lt;div class="container"&gt;
+  &lt;div&gt;1&lt;/div&gt;&lt;div&gt;2&lt;/div&gt;&lt;div&gt;3&lt;/div&gt;&lt;div&gt;4&lt;/div&gt;&lt;div&gt;5&lt;/div&gt;
+&lt;/div&gt;</code></pre>
+                  </section>
+
+                  <section class="topic" id="c4-flex-lab">
+                    <h4>ลองเล่น: flex container properties</h4>
+                    <div class="demo-box" data-widget="flex-lab">
+                      <span class="demo-box-title">เลือกค่าแต่ละ property แล้วดูว่า item ทั้ง 5 ตัวจัดเรียงอย่างไร</span>
+                      <div class="flex-controls">
+                        <div class="flex-control"><span class="flex-control-label">flex-direction</span>
+                          <div class="seg" role="group" aria-label="flex-direction">
+                            <button type="button" data-prop="flex-direction" data-value="row" aria-pressed="true">row</button>
+                            <button type="button" data-prop="flex-direction" data-value="row-reverse" aria-pressed="false">row-reverse</button>
+                            <button type="button" data-prop="flex-direction" data-value="column" aria-pressed="false">column</button>
+                            <button type="button" data-prop="flex-direction" data-value="column-reverse" aria-pressed="false">column-reverse</button>
+                          </div>
+                        </div>
+                        <div class="flex-control"><span class="flex-control-label">flex-wrap</span>
+                          <div class="seg" role="group" aria-label="flex-wrap">
+                            <button type="button" data-prop="flex-wrap" data-value="nowrap" aria-pressed="true">nowrap</button>
+                            <button type="button" data-prop="flex-wrap" data-value="wrap" aria-pressed="false">wrap</button>
+                            <button type="button" data-prop="flex-wrap" data-value="wrap-reverse" aria-pressed="false">wrap-reverse</button>
+                          </div>
+                        </div>
+                        <div class="flex-control"><span class="flex-control-label">justify-content</span>
+                          <div class="seg" role="group" aria-label="justify-content">
+                            <button type="button" data-prop="justify-content" data-value="flex-start" aria-pressed="true">flex-start</button>
+                            <button type="button" data-prop="justify-content" data-value="flex-end" aria-pressed="false">flex-end</button>
+                            <button type="button" data-prop="justify-content" data-value="center" aria-pressed="false">center</button>
+                            <button type="button" data-prop="justify-content" data-value="space-between" aria-pressed="false">space-between</button>
+                            <button type="button" data-prop="justify-content" data-value="space-around" aria-pressed="false">space-around</button>
+                            <button type="button" data-prop="justify-content" data-value="space-evenly" aria-pressed="false">space-evenly</button>
+                          </div>
+                        </div>
+                        <div class="flex-control"><span class="flex-control-label">align-items</span>
+                          <div class="seg" role="group" aria-label="align-items">
+                            <button type="button" data-prop="align-items" data-value="flex-start" aria-pressed="true">flex-start</button>
+                            <button type="button" data-prop="align-items" data-value="flex-end" aria-pressed="false">flex-end</button>
+                            <button type="button" data-prop="align-items" data-value="center" aria-pressed="false">center</button>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="flex-stage" aria-hidden="true">
+                        <span class="flex-item">1</span><span class="flex-item flex-item--tall">2</span><span class="flex-item">3</span><span class="flex-item flex-item--wide">4</span><span class="flex-item">5</span>
+                      </div>
+                      <pre class="code-block flex-code" data-lang="css"><code>.container {
+    display: flex;
+}</code></pre>
+                    </div>
+                  </section>
+
+                  <section class="topic" id="c4-flex-vs">
+                    <h4>Flexbox เทียบกับ Float layout</h4>
+                    <div class="compare">
+                      <div class="compare-col">
+                        <h5>Float layout</h5>
+                        <p>ต้องใช้ <code>float</code> + <code>width</code> ของแต่ละคอลัมน์ และ<strong>ต้องมี <code>.row::after</code></strong> เพื่อ clear float หลัง container</p>
+                      </div>
+                      <div class="compare-col">
+                        <h5>Flexbox</h5>
+                        <p>ใส่ <code>display: flex</code> ที่ container แล้วคุมทิศทาง/การกระจายพื้นที่ด้วย property ของ container — <strong>ไม่ต้องใช้ ::after เพื่อ clear float อีกต่อไป</strong> โค้ดสะอาดและยืดหยุ่นกว่า</p>
+                      </div>
+                    </div>
+                    <p>3-column layout เดียวกับการ์ด 01 แต่เขียนด้วย flexbox:</p>
+                    <pre class="code-block" data-lang="html" data-render="110"><code>&lt;style&gt;
+  * { font-family: sans-serif; }
+  .row { display: flex; background-color: gainsboro; }
+  .column { width: 33.33%; background-color: lightskyblue; }
+&lt;/style&gt;
+&lt;div class="row"&gt;
+  &lt;div class="column"&gt;&lt;p&gt;Column 1&lt;/p&gt;&lt;/div&gt;
+  &lt;div class="column"&gt;&lt;p&gt;Column 2&lt;/p&gt;&lt;/div&gt;
+  &lt;div class="column"&gt;&lt;p&gt;Column 3&lt;/p&gt;&lt;/div&gt;
+&lt;/div&gt;</code></pre>
+                  </section>
+
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- ================= 03 RWD, media query, viewport ================= -->
+          <div class="acc-item">
+            <h3 class="acc-heading">
+              <button class="acc-trigger" type="button" aria-expanded="false" aria-controls="acc-c4-rwd" id="acc-c4-rwd-btn">
+                <span class="acc-index">03</span>
+                <span class="acc-title">
+                  <span class="acc-name">Responsive Web Design, Media Query และ Viewport</span>
+                  <span class="acc-file">69-1-ITDS241-Lecture04-CSS-Part2 · ส่วน D–F</span>
+                </span>
+                <svg class="acc-chevron" viewBox="0 0 20 20" aria-hidden="true"><path d="M5 7.5l5 5 5-5" /></svg>
+              </button>
+            </h3>
+            <div class="acc-panel" id="acc-c4-rwd" role="region" aria-labelledby="acc-c4-rwd-btn">
+              <div class="acc-panel-inner">
+                <div class="acc-body">
+
+                  <nav class="toc" aria-label="หัวข้อในการ์ด responsive">
+                    <a href="#c4-rwd">RWD &amp; Mobile First</a>
+                    <a href="#c4-mq">Media Query</a>
+                    <a href="#c4-mq-lab">ลองเล่น media query</a>
+                    <a href="#c4-viewport">Viewport meta tag</a>
+                  </nav>
+
+                  <section class="topic" id="c4-rwd">
+                    <h4>Responsive Web Design (RWD)</h4>
+                    <div class="callout callout--def">
+                      <span class="callout-label">นิยาม (จาก Wikipedia)</span>
+                      <p>แนวทางการออกแบบเว็บที่ทำให้<b>หน้าเว็บแสดงผลได้ดีบนอุปกรณ์และขนาดหน้าจอที่หลากหลาย</b></p>
+                    </div>
+                    <p>RWD ใช้<strong>เพียง HTML และ CSS</strong> (โดยเฉพาะ <strong>Media Query</strong>) ในการปรับเนื้อหาตามขนาดหน้าจอหรืออุปกรณ์</p>
+                    <div class="compare">
+                      <div class="compare-col">
+                        <h5>Mobile First</h5>
+                        <p>ออกแบบ<strong>สำหรับมือถือก่อน</strong> แล้วค่อยขยายไปรองรับหน้าจอที่ใหญ่ขึ้น</p>
+                      </div>
+                      <div class="compare-col">
+                        <h5>แนวทางดั้งเดิม</h5>
+                        <p>เริ่มออกแบบจาก <strong>desktop</strong> ก่อน (ตรงข้ามกับ Mobile First)</p>
+                      </div>
+                    </div>
+                    <div class="callout callout--why">
+                      <span class="callout-label">ทดสอบก่อนเผยแพร่</span>
+                      <p>ควรทดสอบเว็บด้วย <b>Developer Tools ของ Browser ในโหมด responsive</b> เพื่อตรวจสอบว่า layout ปรับตัวถูกต้องตามขนาดหน้าจอ/อุปกรณ์ต่างๆ ก่อนเผยแพร่จริง</p>
+                    </div>
+                  </section>
+
+                  <section class="topic" id="c4-mq">
+                    <h4>CSS Media Query</h4>
+                    <p>media query ใช้<strong>ตรวจสอบเงื่อนไข</strong>ต่างๆ แล้วใช้ CSS ชุดนั้นเฉพาะเมื่อเงื่อนไขเป็นจริง เช่น</p>
+                    <ul>
+                      <li>ความกว้าง/สูงของ <strong>viewport</strong></li>
+                      <li>ความกว้าง/สูงของ<strong>อุปกรณ์</strong></li>
+                      <li><strong>orientation</strong> (แนวนอน/แนวตั้ง)</li>
+                      <li><strong>ความละเอียด</strong>หน้าจอ</li>
+                    </ul>
+                    <code class="formula">@media mediatype and (expressions) { CSS Block; }</code>
+                    <p>ตัวอย่างจากสไลด์:</p>
+                    <pre class="code-block" data-lang="css"><code>body { background-color: black; } /* ค่าเริ่มต้น */
+
+@media screen and (max-width: 768px) {
+    body { background-color: lightgreen; } /* จอเล็กกว่า 768px */
+}
+
+@media screen and (min-width: 1000px) {
+    body { background-color: red; } /* จอใหญ่กว่า 1000px */
+}</code></pre>
+                    <div class="table-scroll">
+                      <table>
+                        <thead><tr><th>ความกว้างหน้าจอ</th><th>เงื่อนไขที่เป็นจริง</th><th>สีพื้นหลัง</th></tr></thead>
+                        <tbody>
+                          <tr><td>≤ 768px</td><td><code>max-width: 768px</code></td><td>lightgreen</td></tr>
+                          <tr><td>769px – 999px</td><td>ไม่มี media query ใดเป็นจริง → ใช้ค่าเริ่มต้น</td><td>black</td></tr>
+                          <tr><td>≥ 1000px</td><td><code>min-width: 1000px</code></td><td>red</td></tr>
+                        </tbody>
+                      </table>
+                    </div>
+                    <div class="callout callout--warn">
+                      <span class="callout-label">อ่าน max / min ให้ถูก</span>
+                      <p><code>max-width: 768px</code> = ใช้เมื่อหน้าจอกว้าง<b>น้อยกว่าหรือเท่ากับ</b> 768px · <code>min-width: 1000px</code> = ใช้เมื่อหน้าจอกว้าง<b>มากกว่าหรือเท่ากับ</b> 1000px</p>
+                    </div>
+                  </section>
+
+                  <section class="topic" id="c4-mq-lab">
+                    <h4>ลองเล่น: ปรับความกว้าง viewport แล้วดู media query ทำงาน</h4>
+                    <div class="demo-box" data-widget="mq-lab">
+                      <span class="demo-box-title">iframe ด้านล่างใช้ CSS ตัวอย่างข้างบนจริง — เลื่อนแถบเพื่อเปลี่ยนความกว้างของ viewport</span>
+                      <div class="range-field">
+                        <label for="mq-width" class="visually-hidden">ความกว้าง viewport (px)</label>
+                        <input type="range" id="mq-width" min="320" max="1200" step="1" value="700" />
+                        <output for="mq-width">700px</output>
+                      </div>
+                      <div class="mq-stage">
+                        <iframe class="mq-frame" sandbox="" title="ตัวอย่าง media query" width="700" height="140"></iframe>
+                      </div>
+                      <p class="demo-status" aria-live="polite"></p>
+                    </div>
+                  </section>
+
+                  <section class="topic" id="c4-viewport">
+                    <h4>Viewport และ <code>&lt;meta&gt;</code> tag</h4>
+                    <p>HTML5 เปิดให้นักออกแบบควบคุม <strong>viewport</strong> (พื้นที่ที่ผู้ใช้มองเห็นได้ของหน้าเว็บ) ผ่าน <code>&lt;meta&gt;</code> tag — สำหรับ RWD <strong>ต้องใส่คำสั่งนี้ใน <code>&lt;head&gt;</code> เสมอ</strong></p>
+                    <pre class="code-block" data-lang="html"><code>&lt;meta name="viewport" content="width=device-width, initial-scale=1.0" /&gt;</code></pre>
+                    <dl class="defs defs--stack">
+                      <div><dt>width=device-width</dt><dd>ทำให้หน้าเว็บมี<strong>ความกว้างตามอุปกรณ์จริงเสมอ</strong></dd></div>
+                      <div><dt>initial-scale=1.0</dt><dd>กำหนด<strong>ระดับการซูมเริ่มต้น</strong>ตอนโหลดหน้า</dd></div>
+                    </dl>
+                  </section>
+
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- ================= 04 Bootstrap ================= -->
+          <div class="acc-item">
+            <h3 class="acc-heading">
+              <button class="acc-trigger" type="button" aria-expanded="false" aria-controls="acc-c4-bs" id="acc-c4-bs-btn">
+                <span class="acc-index">04</span>
+                <span class="acc-title">
+                  <span class="acc-name">CSS Framework — Bootstrap</span>
+                  <span class="acc-file">69-1-ITDS241-Lecture04-CSS-Part2 · ส่วน G</span>
+                </span>
+                <svg class="acc-chevron" viewBox="0 0 20 20" aria-hidden="true"><path d="M5 7.5l5 5 5-5" /></svg>
+              </button>
+            </h3>
+            <div class="acc-panel" id="acc-c4-bs" role="region" aria-labelledby="acc-c4-bs-btn">
+              <div class="acc-panel-inner">
+                <div class="acc-body">
+
+                  <nav class="toc" aria-label="หัวข้อในการ์ด Bootstrap">
+                    <a href="#c4-framework">CSS Framework</a>
+                    <a href="#c4-bs-steps">ขั้นตอนสร้างหน้าเว็บ</a>
+                    <a href="#c4-bs-container">.container vs .container-fluid</a>
+                    <a href="#c4-bs-grid">Grid 12 คอลัมน์</a>
+                  </nav>
+
+                  <section class="topic" id="c4-framework">
+                    <h4>CSS Framework และ Bootstrap</h4>
+                    <p><strong>CSS Framework</strong> ช่วยให้นักพัฒนาเว็บ<strong>เริ่มต้นออกแบบเว็บไซต์ได้เร็วขึ้น</strong>ด้วยโครงสร้างพื้นฐานสำเร็จรูป ข้อดีคือ เร็วกว่า · มี UI component สำเร็จรูป · ประสิทธิภาพดี ตัวอย่าง framework อื่นๆ: <strong>Tailwind CSS, Bulma, UIkit</strong></p>
+                    <div class="callout callout--def">
+                      <span class="callout-label">Bootstrap</span>
+                      <p><b>front-end framework ฟรี</b>สำหรับพัฒนาเว็บได้เร็วและง่ายขึ้น รองรับ <b>responsive design</b> และมีแนวคิด <b>mobile-first เป็นแกนหลัก</b>ของ framework</p>
+                    </div>
+                  </section>
+
+                  <section class="topic" id="c4-bs-steps">
+                    <h4>ขั้นตอนสร้างหน้าเว็บด้วย Bootstrap</h4>
+                    <ol class="steps">
+                      <li>สร้าง <strong>HTML5 document template</strong> พร้อม <code>&lt;meta viewport&gt;</code> สำหรับ mobile-first</li>
+                      <li>เชื่อมไฟล์ <strong>Bootstrap CSS และ JS</strong> ใน <code>&lt;head&gt;</code> ผ่าน <strong>CDN</strong> (ลิงก์จาก jsdelivr.net)</li>
+                      <li>จัด layout ด้วย<strong>ระบบ Grid</strong>: ใช้ <code>.container</code> หรือ <code>.container-fluid</code> ครอบเนื้อหาเสมอ แล้วแบ่งเป็น <strong>row → column → content</strong> ตามลำดับชั้น</li>
+                      <li>เพิ่ม class/component ต่างๆ เช่น <strong>Typography, Card, Navbar, Form, Modal</strong> และ utility class เช่น <strong>Text, Spacing, Color</strong></li>
+                    </ol>
+                    <pre class="code-block" data-lang="html"><code>&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+&lt;head&gt;
+  &lt;meta name="viewport" content="width=device-width, initial-scale=1.0" /&gt;
+  &lt;!-- 2. เชื่อม Bootstrap CSS และ JS ผ่าน CDN (jsdelivr.net) --&gt;
+  &lt;link rel="stylesheet" href="(ลิงก์ Bootstrap CSS จาก jsdelivr.net)" /&gt;
+  &lt;script src="(ลิงก์ Bootstrap JS จาก jsdelivr.net)"&gt;&lt;/script&gt;
+&lt;/head&gt;
+&lt;body&gt;
+  &lt;!-- 3. container → row → column → content --&gt;
+  &lt;div class="container"&gt;
+    &lt;div class="row"&gt;
+      &lt;div class="col-sm-6"&gt;ครึ่งซ้าย&lt;/div&gt;
+      &lt;div class="col-sm-6"&gt;ครึ่งขวา&lt;/div&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+&lt;/body&gt;
+&lt;/html&gt;</code></pre>
+                    <p class="note">ค่า href / src ในตัวอย่างเป็นตำแหน่งที่ต้องใส่ลิงก์ CDN จริงจากสไลด์</p>
+                  </section>
+
+                  <section class="topic" id="c4-bs-container">
+                    <h4><code>.container</code> เทียบ <code>.container-fluid</code></h4>
+                    <div class="compare">
+                      <div class="compare-col">
+                        <h5><code>.container</code></h5>
+                        <p>กำหนด <strong>max-width ที่แต่ละ breakpoint</strong></p>
+                      </div>
+                      <div class="compare-col">
+                        <h5><code>.container-fluid</code></h5>
+                        <p><strong>กว้าง 100% เสมอ</strong>ทุก breakpoint</p>
+                      </div>
+                    </div>
+                    <div class="callout callout--warn">
+                      <span class="callout-label">ข้อบังคับ</span>
+                      <p>เนื้อหาใน Bootstrap ต้องมี containing element <b>.container หรือ .container-fluid ครอบเสมอ</b></p>
+                    </div>
+                  </section>
+
+                  <section class="topic" id="c4-bs-grid">
+                    <h4>ระบบ Grid ของ Bootstrap</h4>
+                    <p>Grid ของ Bootstrap <strong>สร้างด้วย flexbox</strong> และรองรับได้<strong>สูงสุด 12 คอลัมน์ต่อแถว</strong> — ผลรวมของ col ในแต่ละแถว<strong>ควรรวมกันได้ไม่เกิน 12</strong></p>
+                    <div class="callout callout--def">
+                      <span class="callout-label">อ่าน class <code>col-sm-6</code></span>
+                      <p><b>col</b> = คอลัมน์ · <b>sm</b> = breakpoint sm (หน้าจอตั้งแต่ <b>576px</b> ขึ้นไป) · <b>6</b> = กินพื้นที่ <b>6 จาก 12</b> หน่วยของแถว (ครึ่งแถว)</p>
+                    </div>
+                    <div class="bs-grid" role="img" aria-label="แผนภาพแถวละ 12 หน่วย: col-sm-6 สองคอลัมน์, col-sm-4 สามคอลัมน์ และ col-sm-8 กับ col-sm-4">
+                      <div class="bs-units" aria-hidden="true"><span>1</span><span>2</span><span>3</span><span>4</span><span>5</span><span>6</span><span>7</span><span>8</span><span>9</span><span>10</span><span>11</span><span>12</span></div>
+                      <div class="bs-row"><span class="bs-col" style="--span: 6">col-sm-6</span><span class="bs-col" style="--span: 6">col-sm-6</span><span class="bs-sum">6 + 6 = 12</span></div>
+                      <div class="bs-row"><span class="bs-col" style="--span: 4">col-sm-4</span><span class="bs-col" style="--span: 4">col-sm-4</span><span class="bs-col" style="--span: 4">col-sm-4</span><span class="bs-sum">4 + 4 + 4 = 12</span></div>
+                      <div class="bs-row"><span class="bs-col" style="--span: 8">col-sm-8</span><span class="bs-col" style="--span: 4">col-sm-4</span><span class="bs-sum">8 + 4 = 12</span></div>
+                    </div>
+                    <p class="note">แผนภาพนี้วาดด้วย CSS ของหน้านี้เอง (ไม่ได้โหลด Bootstrap) เพื่อแสดงสัดส่วน 12 หน่วยต่อแถว</p>
+                  </section>
+
+                </div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </section>
+
+      <!-- =============================================================
+           แท็บ 2: สรุป (cheat sheet)
+           ============================================================= -->
+      <section class="panel" id="summary" role="tabpanel" aria-labelledby="tab-summary" tabindex="-1">
+        <div class="panel-head">
+          <h2>Cheat sheet</h2>
+          <p class="panel-sub">เทคนิค layout, flexbox, media query, viewport และ Bootstrap grid ของบทที่ 4 รวมไว้ในหน้าเดียว</p>
+        </div>
+
+        <div class="sheet">
+
+<article class="sheet-card sheet-card--wide">
+            <h3><span class="sheet-num">01</span> 5 เทคนิคจัด Layout</h3>
+            <div class="table-scroll">
+              <table>
+                <thead><tr><th>เทคนิค</th><th>จุดเด่น / ข้อควรจำ</th></tr></thead>
+                <tbody>
+                  <tr><td class="nowrap">HTML tables</td><td><strong>ไม่แนะนำ</strong> — &lt;table&gt; มีไว้แสดงข้อมูลตาราง</td></tr>
+                  <tr><td class="nowrap">CSS float</td><td>float + clear · ต้องใช้ <code>.row::after { content: ""; display: table; clear: both; }</code></td></tr>
+                  <tr><td class="nowrap">CSS flexbox</td><td>ยืดหยุ่น responsive · ไม่ต้องใช้ ::after · เรียง<strong>มิติเดียว</strong></td></tr>
+                  <tr><td class="nowrap">CSS framework</td><td>วิธีที่เร็ว เช่น Bootstrap (อื่นๆ: Tailwind CSS, Bulma, UIkit)</td></tr>
+                  <tr><td class="nowrap">CSS grid</td><td>row + column พร้อมกัน (<strong>สองมิติ</strong>)</td></tr>
+                </tbody>
+              </table>
+            </div>
+            <p class="note">3-column layout มักใช้กับ Desktop Browser · ::after = pseudo-element</p>
+          </article>
+
+          <article class="sheet-card">
+            <h3><span class="sheet-num">02</span> Media Query</h3>
+            <code class="formula">@media mediatype and (expressions) { CSS Block; }</code>
+            <dl class="defs defs--stack">
+              <div><dt>max-width: 768px</dt><dd>จอกว้าง <strong>≤ 768px</strong></dd></div>
+              <div><dt>min-width: 1000px</dt><dd>จอกว้าง <strong>≥ 1000px</strong></dd></div>
+              <div><dt>ตรวจได้</dt><dd>กว้าง/สูง viewport · กว้าง/สูงอุปกรณ์ · orientation · ความละเอียด</dd></div>
+            </dl>
+          </article>
+
+          <article class="sheet-card sheet-card--wide">
+            <h3><span class="sheet-num">03</span> Flex container properties</h3>
+            <div class="table-scroll">
+              <table>
+                <thead><tr><th>Property</th><th>ค่า</th><th>ทำอะไร</th></tr></thead>
+                <tbody>
+                  <tr><td class="nowrap"><code>display</code></td><td><code>flex</code></td><td>ใส่ที่ <strong>element แม่</strong> → ลูกโดยตรง = flex items</td></tr>
+                  <tr><td class="nowrap"><code>flex-direction</code></td><td>row · row-reverse · column · column-reverse</td><td>ทิศทางการเรียง (column = บนลงล่าง)</td></tr>
+                  <tr><td class="nowrap"><code>flex-wrap</code></td><td>nowrap · wrap · wrap-reverse</td><td>ตัดขึ้นบรรทัดใหม่เมื่อพื้นที่ไม่พอ</td></tr>
+                  <tr><td class="nowrap"><code>justify-content</code></td><td>flex-start · flex-end · center · space-between · space-around · space-evenly</td><td>กระจายพื้นที่ว่างตามแนวหลัก</td></tr>
+                  <tr><td class="nowrap"><code>align-items</code></td><td>flex-start · flex-end · center</td><td>จัดตำแหน่ง item</td></tr>
+                </tbody>
+              </table>
+            </div>
+          </article>
+
+          <article class="sheet-card">
+            <h3><span class="sheet-num">04</span> RWD + Viewport</h3>
+            <p><strong>RWD</strong> = แสดงผลดีบนหลายอุปกรณ์/ขนาดจอ ด้วย HTML + CSS (Media Query) · <strong>Mobile First</strong> = มือถือก่อนแล้วขยาย</p>
+            <code class="formula">&lt;meta name="viewport" content="width=device-width, initial-scale=1.0" /&gt;</code>
+            <dl class="defs defs--stack">
+              <div><dt>width=device-width</dt><dd>กว้างตามอุปกรณ์จริง</dd></div>
+              <div><dt>initial-scale=1.0</dt><dd>ระดับซูมเริ่มต้น</dd></div>
+            </dl>
+            <p class="note">ทดสอบด้วย DevTools โหมด responsive ก่อนเผยแพร่</p>
+          </article>
+
+          <article class="sheet-card sheet-card--wide">
+            <h3><span class="sheet-num">05</span> Bootstrap: container + grid</h3>
+            <div class="table-scroll">
+              <table>
+                <thead><tr><th></th><th>.container</th><th>.container-fluid</th></tr></thead>
+                <tbody>
+                  <tr><td class="nowrap">ความกว้าง</td><td><strong>max-width</strong> ที่แต่ละ breakpoint</td><td><strong>100%</strong> เสมอทุก breakpoint</td></tr>
+                  <tr><td class="nowrap">บังคับ</td><td colspan="2">ต้องมีอย่างใดอย่างหนึ่งครอบเนื้อหาเสมอ</td></tr>
+                </tbody>
+              </table>
+            </div>
+            <p><strong>ลำดับชั้น:</strong> container → row → column → content · Grid สร้างด้วย <strong>flexbox</strong> สูงสุด <strong>12 คอลัมน์</strong>/แถว</p>
+            <p class="note">ขั้นตอน: HTML5 template + meta viewport → Bootstrap CSS/JS ผ่าน CDN (jsdelivr) → grid → component (Typography, Card, Navbar, Form, Modal) + utility (Text, Spacing, Color)</p>
+          </article>
+
+          <article class="sheet-card">
+            <h3><span class="sheet-num">06</span> col-sm-N</h3>
+            <code class="formula">col-sm-6 = 6 จาก 12 หน่วย เมื่อจอ ≥ sm (576px)</code>
+            <dl class="defs defs--stack">
+              <div><dt>col-sm-6 + col-sm-6</dt><dd>2 คอลัมน์ครึ่งแถว (6 + 6 = 12)</dd></div>
+              <div><dt>col-sm-4 × 3</dt><dd>3 คอลัมน์เท่ากัน (4 + 4 + 4 = 12)</dd></div>
+            </dl>
+            <p class="note">ผลรวม col ในแถวเดียวไม่ควรเกิน 12</p>
+          </article>
+
+        </div>
+      </section>
+
+      <!-- =============================================================
+           แท็บ 3: แบบฝึกหัด (20 ข้อ)
+           data-answer = ตัวเลือกที่ถูก (ก=a, ข=b, ค=c, ง=d ตามเฉลยที่ผู้ใช้กำหนด)
+           ============================================================= -->
+      <section class="panel" id="quiz" role="tabpanel" aria-labelledby="tab-quiz" tabindex="-1">
+        <div class="panel-head">
+          <h2>แบบฝึกหัด 20 ข้อ</h2>
+          <p class="panel-sub">เลือกคำตอบให้ครบแล้วกด "ตรวจคำตอบ" ด้านล่าง ระบบจะเฉลยพร้อมคำอธิบายทุกข้อ</p>
+        </div>
+
+        <form class="quiz" id="quiz-form" novalidate>
+
+          <fieldset class="q" data-answer="b">
+            <legend class="q-head"><span class="q-num">01</span><span class="q-text">เทคนิคการจัด Layout หน้าเว็บด้วย CSS มีกี่วิธีหลักตามที่เรียน?</span></legend>
+            <div class="q-options">
+              <label class="opt"><input type="radio" name="q1" value="a" /><span class="opt-key">A</span><span class="opt-text">3 วิธี</span></label>
+              <label class="opt"><input type="radio" name="q1" value="b" /><span class="opt-key">B</span><span class="opt-text">5 วิธี</span></label>
+              <label class="opt"><input type="radio" name="q1" value="c" /><span class="opt-key">C</span><span class="opt-text">7 วิธี</span></label>
+              <label class="opt"><input type="radio" name="q1" value="d" /><span class="opt-key">D</span><span class="opt-text">2 วิธี</span></label>
+            </div>
+            <div class="q-feedback"><div class="q-feedback-inner"><p class="q-verdict" aria-live="polite"></p><p class="q-explain">5 วิธี: HTML tables, CSS float, CSS flexbox, CSS framework และ CSS grid</p></div></div>
+          </fieldset>
+
+          <fieldset class="q" data-answer="b">
+            <legend class="q-head"><span class="q-num">02</span><span class="q-text">การใช้ &lt;table&gt; จัด layout หน้าเว็บถือเป็นแนวทางที่แนะนำหรือไม่?</span></legend>
+            <div class="q-options">
+              <label class="opt"><input type="radio" name="q2" value="a" /><span class="opt-key">A</span><span class="opt-text">แนะนำมากที่สุด</span></label>
+              <label class="opt"><input type="radio" name="q2" value="b" /><span class="opt-key">B</span><span class="opt-text">ไม่แนะนำ เพราะ &lt;table&gt; ควรใช้แสดงข้อมูลตาราง ไม่ใช่จัด layout</span></label>
+              <label class="opt"><input type="radio" name="q2" value="c" /><span class="opt-key">C</span><span class="opt-text">แนะนำเฉพาะเว็บขนาดเล็ก</span></label>
+              <label class="opt"><input type="radio" name="q2" value="d" /><span class="opt-key">D</span><span class="opt-text">เป็นวิธีมาตรฐานเดียวที่ใช้ได้</span></label>
+            </div>
+            <div class="q-feedback"><div class="q-feedback-inner"><p class="q-verdict" aria-live="polite"></p><p class="q-explain">HTML tables ไม่แนะนำให้ใช้จัด layout เพราะ &lt;table&gt; ถูกออกแบบมาสำหรับแสดงข้อมูลตาราง</p></div></div>
+          </fieldset>
+
+          <fieldset class="q" data-answer="b">
+            <legend class="q-head"><span class="q-num">03</span><span class="q-text">Flexbox ช่วยแก้ปัญหาอะไรเมื่อเทียบกับการใช้ float จัด layout?</span></legend>
+            <div class="q-options">
+              <label class="opt"><input type="radio" name="q3" value="a" /><span class="opt-key">A</span><span class="opt-text">ทำให้เว็บโหลดเร็วขึ้นเท่านั้น</span></label>
+              <label class="opt"><input type="radio" name="q3" value="b" /><span class="opt-key">B</span><span class="opt-text">จัดวาง จัดตำแหน่ง และกระจายพื้นที่ใน container ได้ยืดหยุ่นกว่า โดยไม่ต้องพึ่ง float/positioning</span></label>
+              <label class="opt"><input type="radio" name="q3" value="c" /><span class="opt-key">C</span><span class="opt-text">ใช้แทน HTML ทั้งหมดได้</span></label>
+              <label class="opt"><input type="radio" name="q3" value="d" /><span class="opt-key">D</span><span class="opt-text">ไม่มีความแตกต่างกัน</span></label>
+            </div>
+            <div class="q-feedback"><div class="q-feedback-inner"><p class="q-verdict" aria-live="polite"></p><p class="q-explain">Flexbox จัดวาง จัดตำแหน่ง และกระจายพื้นที่ระหว่าง item ใน container ที่ขนาดไม่แน่นอนได้ โดยไม่ต้องพึ่ง float หรือ positioning</p></div></div>
+          </fieldset>
+
+          <fieldset class="q" data-answer="b">
+            <legend class="q-head"><span class="q-num">04</span><span class="q-text">property display: flex; ต้องกำหนดที่ element ใด?</span></legend>
+            <div class="q-options">
+              <label class="opt"><input type="radio" name="q4" value="a" /><span class="opt-key">A</span><span class="opt-text">element ลูก (flex item) เท่านั้น</span></label>
+              <label class="opt"><input type="radio" name="q4" value="b" /><span class="opt-key">B</span><span class="opt-text">element แม่ (flex container)</span></label>
+              <label class="opt"><input type="radio" name="q4" value="c" /><span class="opt-key">C</span><span class="opt-text">เฉพาะ &lt;body&gt;</span></label>
+              <label class="opt"><input type="radio" name="q4" value="d" /><span class="opt-key">D</span><span class="opt-text">ทุก element ในหน้า</span></label>
+            </div>
+            <div class="q-feedback"><div class="q-feedback-inner"><p class="q-verdict" aria-live="polite"></p><p class="q-explain">กำหนดที่ container (parent) แล้ว element ลูกโดยตรงทั้งหมดจะกลายเป็น flex items</p></div></div>
+          </fieldset>
+
+          <fieldset class="q" data-answer="b">
+            <legend class="q-head"><span class="q-num">05</span><span class="q-text">property flex-direction: column; มีผลอย่างไร?</span></legend>
+            <div class="q-options">
+              <label class="opt"><input type="radio" name="q5" value="a" /><span class="opt-key">A</span><span class="opt-text">จัดเรียง flex item ตามแนวนอนจากซ้ายไปขวา</span></label>
+              <label class="opt"><input type="radio" name="q5" value="b" /><span class="opt-key">B</span><span class="opt-text">จัดเรียง flex item ตามแนวตั้งจากบนลงล่าง</span></label>
+              <label class="opt"><input type="radio" name="q5" value="c" /><span class="opt-key">C</span><span class="opt-text">ซ่อน flex item ทั้งหมด</span></label>
+              <label class="opt"><input type="radio" name="q5" value="d" /><span class="opt-key">D</span><span class="opt-text">สลับลำดับ flex item แบบสุ่ม</span></label>
+            </div>
+            <div class="q-feedback"><div class="q-feedback-inner"><p class="q-verdict" aria-live="polite"></p><p class="q-explain">flex-direction กำหนดทิศทางการเรียง item · column = เรียงแนวตั้งบนลงล่าง ส่วน row = แนวนอน</p></div></div>
+          </fieldset>
+
+          <fieldset class="q" data-answer="b">
+            <legend class="q-head"><span class="q-num">06</span><span class="q-text">Responsive Web Design (RWD) ใช้เทคโนโลยีหลักใดในการปรับเนื้อหาตามขนาดหน้าจอ?</span></legend>
+            <div class="q-options">
+              <label class="opt"><input type="radio" name="q6" value="a" /><span class="opt-key">A</span><span class="opt-text">เฉพาะ JavaScript</span></label>
+              <label class="opt"><input type="radio" name="q6" value="b" /><span class="opt-key">B</span><span class="opt-text">HTML และ CSS (โดยเฉพาะ Media Query)</span></label>
+              <label class="opt"><input type="radio" name="q6" value="c" /><span class="opt-key">C</span><span class="opt-text">เฉพาะ Bootstrap เท่านั้น</span></label>
+              <label class="opt"><input type="radio" name="q6" value="d" /><span class="opt-key">D</span><span class="opt-text">เฉพาะฐานข้อมูล</span></label>
+            </div>
+            <div class="q-feedback"><div class="q-feedback-inner"><p class="q-verdict" aria-live="polite"></p><p class="q-explain">RWD ใช้เพียง HTML และ CSS (โดยเฉพาะ Media Query) ปรับเนื้อหาตามขนาดหน้าจอหรืออุปกรณ์</p></div></div>
+          </fieldset>
+
+          <fieldset class="q" data-answer="b">
+            <legend class="q-head"><span class="q-num">07</span><span class="q-text">แนวคิด &quot;Mobile First&quot; หมายถึงอะไร?</span></legend>
+            <div class="q-options">
+              <label class="opt"><input type="radio" name="q7" value="a" /><span class="opt-key">A</span><span class="opt-text">ออกแบบสำหรับ Desktop ก่อนแล้วค่อยปรับลดสำหรับมือถือ</span></label>
+              <label class="opt"><input type="radio" name="q7" value="b" /><span class="opt-key">B</span><span class="opt-text">ออกแบบสำหรับมือถือก่อน แล้วค่อยขยายไปสำหรับหน้าจอที่ใหญ่ขึ้น</span></label>
+              <label class="opt"><input type="radio" name="q7" value="c" /><span class="opt-key">C</span><span class="opt-text">ใช้ได้กับมือถือเท่านั้น</span></label>
+              <label class="opt"><input type="radio" name="q7" value="d" /><span class="opt-key">D</span><span class="opt-text">เป็นชื่อของ CSS Framework</span></label>
+            </div>
+            <div class="q-feedback"><div class="q-feedback-inner"><p class="q-verdict" aria-live="polite"></p><p class="q-explain">Mobile First = ออกแบบสำหรับมือถือก่อนแล้วค่อยขยาย (ตรงข้ามกับแนวทางดั้งเดิมที่เริ่มจาก desktop)</p></div></div>
+          </fieldset>
+
+          <fieldset class="q" data-answer="b">
+            <legend class="q-head"><span class="q-num">08</span><span class="q-text">@media screen and (max-width: 768px) { ... } มีความหมายว่าอย่างไร?</span></legend>
+            <div class="q-options">
+              <label class="opt"><input type="radio" name="q8" value="a" /><span class="opt-key">A</span><span class="opt-text">CSS นี้จะใช้เมื่อหน้าจอกว้างมากกว่า 768px</span></label>
+              <label class="opt"><input type="radio" name="q8" value="b" /><span class="opt-key">B</span><span class="opt-text">CSS นี้จะใช้เมื่อหน้าจอกว้างน้อยกว่าหรือเท่ากับ 768px</span></label>
+              <label class="opt"><input type="radio" name="q8" value="c" /><span class="opt-key">C</span><span class="opt-text">CSS นี้ใช้กับเครื่องพิมพ์เท่านั้น</span></label>
+              <label class="opt"><input type="radio" name="q8" value="d" /><span class="opt-key">D</span><span class="opt-text">CSS นี้ไม่มีผลใดๆ</span></label>
+            </div>
+            <div class="q-feedback"><div class="q-feedback-inner"><p class="q-verdict" aria-live="polite"></p><p class="q-explain">max-width: 768px = ความกว้างสูงสุด 768px → ใช้เมื่อหน้าจอกว้างไม่เกิน 768px (ตัวอย่างในสไลด์เปลี่ยนพื้นหลังเป็น lightgreen)</p></div></div>
+          </fieldset>
+
+          <fieldset class="q" data-answer="b">
+            <legend class="q-head"><span class="q-num">09</span><span class="q-text">&lt;meta name=&quot;viewport&quot; content=&quot;width=device-width, initial-scale=1.0&quot; /&gt; มีความสำคัญอย่างไรต่อ RWD?</span></legend>
+            <div class="q-options">
+              <label class="opt"><input type="radio" name="q9" value="a" /><span class="opt-key">A</span><span class="opt-text">ไม่มีความสำคัญ เป็นแค่ metadata ทั่วไป</span></label>
+              <label class="opt"><input type="radio" name="q9" value="b" /><span class="opt-key">B</span><span class="opt-text">ควบคุมขนาดและการซูมเริ่มต้นของหน้าเว็บให้เท่ากับความกว้างอุปกรณ์จริง</span></label>
+              <label class="opt"><input type="radio" name="q9" value="c" /><span class="opt-key">C</span><span class="opt-text">ใช้กำหนดสีพื้นหลังของหน้าเว็บ</span></label>
+              <label class="opt"><input type="radio" name="q9" value="d" /><span class="opt-key">D</span><span class="opt-text">ใช้เชื่อมไฟล์ CSS ภายนอก</span></label>
+            </div>
+            <div class="q-feedback"><div class="q-feedback-inner"><p class="q-verdict" aria-live="polite"></p><p class="q-explain">width=device-width → กว้างตามอุปกรณ์จริง · initial-scale=1.0 → ระดับซูมเริ่มต้นตอนโหลดหน้า</p></div></div>
+          </fieldset>
+
+          <fieldset class="q" data-answer="b">
+            <legend class="q-head"><span class="q-num">10</span><span class="q-text">Bootstrap คืออะไร?</span></legend>
+            <div class="q-options">
+              <label class="opt"><input type="radio" name="q10" value="a" /><span class="opt-key">A</span><span class="opt-text">ภาษาโปรแกรมมิ่งใหม่</span></label>
+              <label class="opt"><input type="radio" name="q10" value="b" /><span class="opt-key">B</span><span class="opt-text">Front-end framework ฟรีที่ช่วยพัฒนาเว็บได้เร็วและง่ายขึ้น พร้อมดีไซน์ responsive</span></label>
+              <label class="opt"><input type="radio" name="q10" value="c" /><span class="opt-key">C</span><span class="opt-text">ฐานข้อมูลสำเร็จรูป</span></label>
+              <label class="opt"><input type="radio" name="q10" value="d" /><span class="opt-key">D</span><span class="opt-text">เครื่องมือตรวจสอบ HTML</span></label>
+            </div>
+            <div class="q-feedback"><div class="q-feedback-inner"><p class="q-verdict" aria-live="polite"></p><p class="q-explain">Bootstrap เป็น front-end framework ฟรี รองรับ responsive design และมี mobile-first เป็นแกนหลัก</p></div></div>
+          </fieldset>
+
+          <fieldset class="q" data-answer="b">
+            <legend class="q-head"><span class="q-num">11</span><span class="q-text">Bootstrap กำหนดให้หน้าเว็บต้องมี containing element ประเภทใด?</span></legend>
+            <div class="q-options">
+              <label class="opt"><input type="radio" name="q11" value="a" /><span class="opt-key">A</span><span class="opt-text">&lt;div class=&quot;wrapper&quot;&gt; เท่านั้น</span></label>
+              <label class="opt"><input type="radio" name="q11" value="b" /><span class="opt-key">B</span><span class="opt-text">.container หรือ .container-fluid</span></label>
+              <label class="opt"><input type="radio" name="q11" value="c" /><span class="opt-key">C</span><span class="opt-text">&lt;table&gt; เท่านั้น</span></label>
+              <label class="opt"><input type="radio" name="q11" value="d" /><span class="opt-key">D</span><span class="opt-text">ไม่จำเป็นต้องมี container</span></label>
+            </div>
+            <div class="q-feedback"><div class="q-feedback-inner"><p class="q-verdict" aria-live="polite"></p><p class="q-explain">ใช้ .container หรือ .container-fluid ครอบเนื้อหาเสมอ</p></div></div>
+          </fieldset>
+
+          <fieldset class="q" data-answer="c">
+            <legend class="q-head"><span class="q-num">12</span><span class="q-text">ระบบ Grid ของ Bootstrap แบ่งความกว้างหน้าจอออกเป็นกี่คอลัมน์สูงสุดต่อแถว?</span></legend>
+            <div class="q-options">
+              <label class="opt"><input type="radio" name="q12" value="a" /><span class="opt-key">A</span><span class="opt-text">6 คอลัมน์</span></label>
+              <label class="opt"><input type="radio" name="q12" value="b" /><span class="opt-key">B</span><span class="opt-text">10 คอลัมน์</span></label>
+              <label class="opt"><input type="radio" name="q12" value="c" /><span class="opt-key">C</span><span class="opt-text">12 คอลัมน์</span></label>
+              <label class="opt"><input type="radio" name="q12" value="d" /><span class="opt-key">D</span><span class="opt-text">24 คอลัมน์</span></label>
+            </div>
+            <div class="q-feedback"><div class="q-feedback-inner"><p class="q-verdict" aria-live="polite"></p><p class="q-explain">Grid ของ Bootstrap (สร้างด้วย flexbox) รองรับได้สูงสุด 12 คอลัมน์ต่อแถว</p></div></div>
+          </fieldset>
+
+          <fieldset class="q" data-answer="b">
+            <legend class="q-head"><span class="q-num">13</span><span class="q-text">ในระบบ Grid ของ Bootstrap โครงสร้างลำดับชั้นที่ถูกต้องคือข้อใด?</span></legend>
+            <div class="q-options">
+              <label class="opt"><input type="radio" name="q13" value="a" /><span class="opt-key">A</span><span class="opt-text">column → row → container</span></label>
+              <label class="opt"><input type="radio" name="q13" value="b" /><span class="opt-key">B</span><span class="opt-text">container → row → column</span></label>
+              <label class="opt"><input type="radio" name="q13" value="c" /><span class="opt-key">C</span><span class="opt-text">row → container → column</span></label>
+              <label class="opt"><input type="radio" name="q13" value="d" /><span class="opt-key">D</span><span class="opt-text">ไม่มีลำดับชั้นตายตัว</span></label>
+            </div>
+            <div class="q-feedback"><div class="q-feedback-inner"><p class="q-verdict" aria-live="polite"></p><p class="q-explain">container ครอบ row และ row แบ่งเป็น column แล้วจึงใส่ content</p></div></div>
+          </fieldset>
+
+          <fieldset class="q" data-answer="a">
+            <legend class="q-head"><span class="q-num">14</span><span class="q-text">.container ต่างจาก .container-fluid อย่างไร?</span></legend>
+            <div class="q-options">
+              <label class="opt"><input type="radio" name="q14" value="a" /><span class="opt-key">A</span><span class="opt-text">.container กำหนด max-width ที่ breakpoint ต่างๆ ส่วน .container-fluid กว้าง 100% เสมอ</span></label>
+              <label class="opt"><input type="radio" name="q14" value="b" /><span class="opt-key">B</span><span class="opt-text">.container-fluid ใช้ได้กับมือถือเท่านั้น</span></label>
+              <label class="opt"><input type="radio" name="q14" value="c" /><span class="opt-key">C</span><span class="opt-text">ทั้งสองแบบทำงานเหมือนกันทุกประการ</span></label>
+              <label class="opt"><input type="radio" name="q14" value="d" /><span class="opt-key">D</span><span class="opt-text">.container ไม่รองรับ responsive</span></label>
+            </div>
+            <div class="q-feedback"><div class="q-feedback-inner"><p class="q-verdict" aria-live="polite"></p><p class="q-explain">.container มี max-width ที่แต่ละ breakpoint · .container-fluid กว้าง 100% ทุก breakpoint</p></div></div>
+          </fieldset>
+
+          <fieldset class="q" data-answer="b">
+            <legend class="q-head"><span class="q-num">15</span><span class="q-text">class=&quot;col-sm-6&quot; ใน Bootstrap หมายถึงอะไร?</span></legend>
+            <div class="q-options">
+              <label class="opt"><input type="radio" name="q15" value="a" /><span class="opt-key">A</span><span class="opt-text">คอลัมน์นี้จะกว้างคงที่ 6px เสมอ</span></label>
+              <label class="opt"><input type="radio" name="q15" value="b" /><span class="opt-key">B</span><span class="opt-text">คอลัมน์นี้จะกินพื้นที่ 6 จาก 12 หน่วยของแถว เมื่อหน้าจอมีขนาดตั้งแต่ sm ขึ้นไป</span></label>
+              <label class="opt"><input type="radio" name="q15" value="c" /><span class="opt-key">C</span><span class="opt-text">คอลัมน์นี้จะซ่อนเมื่อหน้าจอเล็กกว่า sm</span></label>
+              <label class="opt"><input type="radio" name="q15" value="d" /><span class="opt-key">D</span><span class="opt-text">คอลัมน์นี้ใช้ได้กับ Desktop เท่านั้น</span></label>
+            </div>
+            <div class="q-feedback"><div class="q-feedback-inner"><p class="q-verdict" aria-live="polite"></p><p class="q-explain">col-sm-6 = 6 จาก 12 หน่วยของแถว เมื่อหน้าจอตั้งแต่ breakpoint sm (576px) ขึ้นไป</p></div></div>
+          </fieldset>
+
+          <fieldset class="q" data-answer="c">
+            <legend class="q-head"><span class="q-num">16</span><span class="q-text">เทคนิคจัด layout แบบใดที่ต้องใช้ pseudo-element ::after เพื่อ &quot;clear float&quot; หลัง container?</span></legend>
+            <div class="q-options">
+              <label class="opt"><input type="radio" name="q16" value="a" /><span class="opt-key">A</span><span class="opt-text">CSS Grid</span></label>
+              <label class="opt"><input type="radio" name="q16" value="b" /><span class="opt-key">B</span><span class="opt-text">Flexbox</span></label>
+              <label class="opt"><input type="radio" name="q16" value="c" /><span class="opt-key">C</span><span class="opt-text">CSS Float</span></label>
+              <label class="opt"><input type="radio" name="q16" value="d" /><span class="opt-key">D</span><span class="opt-text">Bootstrap</span></label>
+            </div>
+            <div class="q-feedback"><div class="q-feedback-inner"><p class="q-verdict" aria-live="polite"></p><p class="q-explain">Float layout ใช้ .row::after { content: &quot;&quot;; display: table; clear: both; } เพื่อ clear float</p></div></div>
+          </fieldset>
+
+          <fieldset class="q" data-answer="a">
+            <legend class="q-head"><span class="q-num">17</span><span class="q-text">ข้อดีของ Flexbox เมื่อเทียบกับ Float ในการจัด layout คือข้อใด?</span></legend>
+            <div class="q-options">
+              <label class="opt"><input type="radio" name="q17" value="a" /><span class="opt-key">A</span><span class="opt-text">Flexbox ไม่ต้องใช้ pseudo-element ::after เพื่อ clear float เหมือน Float layout</span></label>
+              <label class="opt"><input type="radio" name="q17" value="b" /><span class="opt-key">B</span><span class="opt-text">Flexbox ใช้ได้กับเบราว์เซอร์รุ่นเก่าเท่านั้น</span></label>
+              <label class="opt"><input type="radio" name="q17" value="c" /><span class="opt-key">C</span><span class="opt-text">Flexbox ไม่รองรับ responsive design</span></label>
+              <label class="opt"><input type="radio" name="q17" value="d" /><span class="opt-key">D</span><span class="opt-text">Float เร็วกว่า Flexbox เสมอในทุกกรณี</span></label>
+            </div>
+            <div class="q-feedback"><div class="q-feedback-inner"><p class="q-verdict" aria-live="polite"></p><p class="q-explain">ข้อดีสำคัญของ flexbox คือไม่ต้องใช้ ::after เพื่อ clear float อีกต่อไป โค้ดสะอาดและยืดหยุ่นกว่า</p></div></div>
+          </fieldset>
+
+          <fieldset class="q" data-answer="b">
+            <legend class="q-head"><span class="q-num">18</span><span class="q-text">Layout แบบ 3-column มักใช้กับอุปกรณ์ประเภทใดตามที่เรียน?</span></legend>
+            <div class="q-options">
+              <label class="opt"><input type="radio" name="q18" value="a" /><span class="opt-key">A</span><span class="opt-text">Mobile Browser</span></label>
+              <label class="opt"><input type="radio" name="q18" value="b" /><span class="opt-key">B</span><span class="opt-text">Desktop Browser</span></label>
+              <label class="opt"><input type="radio" name="q18" value="c" /><span class="opt-key">C</span><span class="opt-text">ใช้กับทุกอุปกรณ์เหมือนกันหมด</span></label>
+              <label class="opt"><input type="radio" name="q18" value="d" /><span class="opt-key">D</span><span class="opt-text">เฉพาะเครื่องพิมพ์เท่านั้น</span></label>
+            </div>
+            <div class="q-feedback"><div class="q-feedback-inner"><p class="q-verdict" aria-live="polite"></p><p class="q-explain">3-column layout มักใช้กับ Desktop Browser ที่มีพื้นที่หน้าจอกว้าง</p></div></div>
+          </fieldset>
+
+          <fieldset class="q" data-answer="a">
+            <legend class="q-head"><span class="q-num">19</span><span class="q-text">เหตุใดจึงควรทดสอบเว็บด้วย Developer Tools ของ Browser ในโหมด responsive?</span></legend>
+            <div class="q-options">
+              <label class="opt"><input type="radio" name="q19" value="a" /><span class="opt-key">A</span><span class="opt-text">เพื่อตรวจสอบว่า layout ปรับตัวถูกต้องตามขนาดหน้าจอ/อุปกรณ์ต่างๆ ก่อนเผยแพร่จริง</span></label>
+              <label class="opt"><input type="radio" name="q19" value="b" /><span class="opt-key">B</span><span class="opt-text">เพื่อเปลี่ยนภาษาของเว็บไซต์</span></label>
+              <label class="opt"><input type="radio" name="q19" value="c" /><span class="opt-key">C</span><span class="opt-text">เพื่อเข้ารหัสเว็บไซต์</span></label>
+              <label class="opt"><input type="radio" name="q19" value="d" /><span class="opt-key">D</span><span class="opt-text">เพื่อเพิ่มความเร็วของเซิร์ฟเวอร์</span></label>
+            </div>
+            <div class="q-feedback"><div class="q-feedback-inner"><p class="q-verdict" aria-live="polite"></p><p class="q-explain">โหมด responsive ของ DevTools ใช้ตรวจว่า layout ปรับตามขนาดหน้าจอ/อุปกรณ์ได้ถูกต้องก่อนเผยแพร่</p></div></div>
+          </fieldset>
+
+          <fieldset class="q" data-answer="a">
+            <legend class="q-head"><span class="q-num">20</span><span class="q-text">CSS Grid ต่างจาก Flexbox โดยพื้นฐานอย่างไร?</span></legend>
+            <div class="q-options">
+              <label class="opt"><input type="radio" name="q20" value="a" /><span class="opt-key">A</span><span class="opt-text">CSS Grid ใช้ระบบ row และ column พร้อมกัน (สองมิติ) ส่วน Flexbox เน้นจัดเรียงในมิติเดียว</span></label>
+              <label class="opt"><input type="radio" name="q20" value="b" /><span class="opt-key">B</span><span class="opt-text">CSS Grid ใช้กับ &lt;table&gt; เท่านั้น</span></label>
+              <label class="opt"><input type="radio" name="q20" value="c" /><span class="opt-key">C</span><span class="opt-text">Flexbox รองรับ 2 มิติเหมือน Grid ทุกประการ</span></label>
+              <label class="opt"><input type="radio" name="q20" value="d" /><span class="opt-key">D</span><span class="opt-text">ทั้งสองแบบเหมือนกันทุกประการ</span></label>
+            </div>
+            <div class="q-feedback"><div class="q-feedback-inner"><p class="q-verdict" aria-live="polite"></p><p class="q-explain">CSS grid = ระบบ layout แบบตาราง row และ column พร้อมกัน (สองมิติ) · Flexbox เรียงในมิติเดียว</p></div></div>
+          </fieldset>
+
+          <div class="quiz-result" id="quiz-result" hidden tabindex="-1">
+            <div class="score-ring" aria-hidden="true">
+              <svg viewBox="0 0 120 120">
+                <circle class="ring-track" cx="60" cy="60" r="52" />
+                <circle class="ring-fill" cx="60" cy="60" r="52" pathLength="100" />
+              </svg>
+              <span class="score-pct"><span id="score-pct">0</span>%</span>
+            </div>
+            <div class="score-body">
+              <p class="score-line" role="status">ได้ <strong id="score-num">0</strong> / 20 คะแนน</p>
+              <p class="score-msg" id="score-msg"></p>
+              <div class="score-actions">
+                <button class="btn btn--ghost btn--sm" type="button" id="toggle-wrong" aria-pressed="false">ดูเฉพาะข้อที่ผิด</button>
+              </div>
+            </div>
+          </div>
+
+          <div class="quiz-bar">
+            <div class="quiz-progress">
+              <span class="quiz-count"><span id="answered">0</span> / 20 ข้อ</span>
+              <span class="progress" aria-hidden="true"><span class="progress-fill" id="progress-fill"></span></span>
+              <span class="quiz-hint" id="quiz-hint" aria-live="polite"></span>
+            </div>
+            <div class="quiz-actions">
+              <button class="btn btn--ghost" type="reset" id="quiz-reset">ทำใหม่</button>
+              <button class="btn btn--primary" type="submit" id="quiz-submit">ตรวจคำตอบ</button>
+            </div>
+          </div>
+        </form>
+      </section>
+
+      <!-- =============================================================
+           แท็บ 4: เขียนโค้ด (code exercise) — โจทย์อยู่ใน assets/js/exercises-web-4.js
+           ============================================================= -->
+      <section class="panel" id="code" role="tabpanel" aria-labelledby="tab-code" tabindex="-1">
+        <div class="panel-head">
+          <h2>แบบฝึกหัดเขียนโค้ด</h2>
+          <p class="panel-sub">เขียน HTML + <code>&lt;style&gt;</code> ในช่องแก้ไข ดูผลลัพธ์ใน browser ทันที แล้วกด "ตรวจคำตอบ" ระบบจะอ่านกฎ CSS (รวมถึง @media) ของคุณแล้วตรวจให้อัตโนมัติ (Ctrl + Enter ก็ตรวจได้) · โค้ดและความคืบหน้าบันทึกไว้ใน browser นี้</p>
+        </div>
+        <div class="cx" id="code-exercise">
+          <p class="cx-nojs">แบบฝึกหัดเขียนโค้ดต้องเปิด JavaScript ใน browser</p>
+        </div>
+      </section>
+
+    </div>
+  </main>
+  <footer class="site-footer">
+    <div class="wrap">
+      <p>สรุปจากสไลด์ ITDS241 Web Technologies and Applications (Faculty of ICT, Mahidol University) เพื่อใช้ทบทวนส่วนตัว — ถ้าเนื้อหาขัดกับสไลด์ ให้ยึดสไลด์เป็นหลัก</p>
+    </div>
+  </footer>
+
+  <script src="assets/js/widgets.js" defer></script>
+  <script src="assets/js/network.js" defer></script>
+  <script src="assets/js/exercises-web-4.js" defer></script>
+  <script src="assets/js/code-exercise.js" defer></script>
+</body>
+</html>

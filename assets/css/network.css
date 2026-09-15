@@ -1065,6 +1065,65 @@ html:not(.js) .seg { display: none; }
 .sel-node:not(.is-match) > code { opacity: 0.8; }
 html:not(.js) .sel-tree { display: none; }
 
+/* ---- Flexbox lab / media query lab / Bootstrap grid (Web บทที่ 4) ---- */
+.flex-controls { display: grid; gap: var(--space-2); }
+.flex-control { display: grid; gap: 4px; }
+.flex-control .seg { margin-bottom: 0; }
+.flex-control-label { font-family: var(--font-mono); font-size: var(--fs-xs); color: var(--iris-300); }
+.flex-stage {
+  display: flex;
+  gap: 8px;
+  height: 230px;
+  margin-top: var(--space-4);
+  padding: 10px;
+  overflow: auto;
+  border: 1px dashed var(--iris-600);
+  border-radius: var(--radius);
+  background: var(--graphite-950);
+}
+.flex-item {
+  display: grid;
+  place-items: center;
+  flex: 0 0 auto;
+  min-width: 56px;
+  min-height: 40px;
+  padding: 4px 10px;
+  border-radius: var(--radius-sm);
+  background: var(--iris-900);
+  border: 1px solid var(--iris-500);
+  color: var(--iris-200);
+  font-family: var(--font-mono);
+  font-weight: 600;
+}
+.flex-item--tall { min-height: 72px; }
+.flex-item--wide { min-width: 110px; }
+.flex-code { margin: var(--space-3) 0 0; }
+html:not(.js) [data-widget="flex-lab"] .flex-controls { display: none; }
+
+.mq-stage {
+  margin-top: var(--space-3);
+  overflow-x: auto;
+  padding-bottom: 6px;
+  border-radius: var(--radius);
+}
+.mq-frame { display: block; max-width: none; height: 140px; border: 1px solid var(--border-strong); border-radius: var(--radius-sm); background: var(--text); }
+
+.bs-grid { display: grid; gap: 6px; margin: var(--space-3) 0; overflow-x: auto; }
+.bs-units, .bs-row { display: grid; grid-template-columns: repeat(12, minmax(34px, 1fr)) 120px; gap: 4px; min-width: 600px; }
+.bs-units span { text-align: center; font-family: var(--font-mono); font-size: var(--fs-xs); color: var(--text-faint); border-bottom: 1px dashed var(--border); }
+.bs-col {
+  grid-column: span var(--span);
+  padding: 8px 4px;
+  border-radius: var(--radius-sm);
+  background: var(--iris-900);
+  border: 1px solid var(--iris-500);
+  color: var(--iris-200);
+  font-family: var(--font-mono);
+  font-size: var(--fs-xs);
+  text-align: center;
+}
+.bs-sum { grid-column: 13; align-self: center; padding-left: 8px; font-family: var(--font-mono); font-size: var(--fs-xs); color: var(--success); white-space: nowrap; }
+
 /* ---- Box model (Web บทที่ 3) ---- */
 .box-model { margin: var(--space-3) 0 var(--space-4); font-size: var(--fs-sm); }
 .bm-layer { padding: 10px 14px 14px; border-radius: var(--radius-sm); }

@@ -542,6 +542,50 @@ ${fixture || ""}
     apply(start.dataset.selector);
   });
 
+  /* --------------------------------------------- Flexbox lab (Web บทที่ 4) */
+  document.querySelectorAll('[data-widget="flex-lab"]').forEach((root) => {
+    const stage = root.querySelector(".flex-stage");
+    const code = root.querySelector(".flex-code code");
+    const buttons = Array.from(root.querySelectorAll("button[data-prop]"));
+    const DEFAULTS = { "flex-direction": "row", "flex-wrap": "nowrap", "justify-content": "flex-start", "align-items": "flex-start" };
+    const values = { ...DEFAULTS };
+    const render = () => {
+      Object.entries(values).forEach(([prop, value]) => stage.style.setProperty(prop, value));
+      const lines = ["    display: flex;"].concat(Object.entries(values).map(([p, v]) => `    ${p}: ${v};`));
+      code.innerHTML = highlightCss(`.container {\n${lines.join("\n")}\n}`);
+    };
+    buttons.forEach((b) => b.addEventListener("click", () => {
+      values[b.dataset.prop] = b.dataset.value;
+      buttons.filter((x) => x.dataset.prop === b.dataset.prop).forEach((x) => x.setAttribute("aria-pressed", String(x === b)));
+      render();
+    }));
+    render();
+  });
+
+  /* ---------------------------------------- Media query lab (Web บทที่ 4) */
+  // ใช้ CSS ตัวอย่างในสไลด์จริงใน iframe แล้วเปลี่ยนความกว้างของ iframe = เปลี่ยนความกว้าง viewport ของเอกสารข้างใน
+  document.querySelectorAll('[data-widget="mq-lab"]').forEach((root) => {
+    const range = root.querySelector('input[type="range"]');
+    const out = root.querySelector("output");
+    const frame = root.querySelector(".mq-frame");
+    const status = root.querySelector(".demo-status");
+    frame.srcdoc = `<meta name="color-scheme" content="light"><style>
+body { background-color: black; margin: 0; font: 600 18px/140px system-ui, sans-serif; text-align: center; color: white; }
+@media screen and (max-width: 768px) { body { background-color: lightgreen; color: black; } }
+@media screen and (min-width: 1000px) { body { background-color: red; } }
+</style><body>viewport กว้างเท่ากับกรอบนี้</body>`;
+    const update = () => {
+      const w = Number(range.value);
+      frame.style.width = `${w}px`;
+      out.textContent = `${w}px`;
+      if (w <= 768) status.textContent = `${w}px ≤ 768px → @media screen and (max-width: 768px) เป็นจริง → body สี lightgreen`;
+      else if (w >= 1000) status.textContent = `${w}px ≥ 1000px → @media screen and (min-width: 1000px) เป็นจริง → body สี red`;
+      else status.textContent = `${w}px อยู่ระหว่าง 769–999px → ไม่มี media query ใดเป็นจริง → ใช้ค่าเริ่มต้น body สี black`;
+    };
+    range.addEventListener("input", update);
+    update();
+  });
+
   /* ------------------------------------------------ Number helpers */
   const num = (input) => {
     const v = parseFloat(String(input.value).replace(",", "."));
