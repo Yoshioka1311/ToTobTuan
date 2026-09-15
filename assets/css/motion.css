@@ -60,6 +60,12 @@
 .url-legend > div { transition: opacity var(--dur) var(--ease-out); }
 .demo-status { transition: color var(--dur) var(--ease-out); }
 
+/* ---------------------------------------------------------- Code exercise */
+.cx-task { transition: background-color var(--dur) var(--ease-out), border-color var(--dur) var(--ease-out), color var(--dur) var(--ease-out); }
+.cx-dot { transition: background-color var(--dur) var(--ease-out), border-color var(--dur) var(--ease-out); }
+/* ผลตรวจใหม่เลื่อนขึ้นมา = "มีผลลัพธ์ใหม่" */
+.cx-feedback.is-entering { animation: panel-in var(--dur-slow) var(--ease-out) both; }
+
 /* ---------------------------------------------------------------- Tabs */
 /* pill เลื่อนตามแท็บ บอกทิศทางว่ามาจากไหนไปไหน (.is-ready กันไม่ให้ animate ตอนโหลดหน้า) */
 .tabs.is-ready .tab-indicator {

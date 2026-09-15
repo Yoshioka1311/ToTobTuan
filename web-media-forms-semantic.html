@@ -16,6 +16,7 @@
 <link rel="stylesheet" href="assets/css/tokens.css" />
 <link rel="stylesheet" href="assets/css/base.css" />
 <link rel="stylesheet" href="assets/css/network.css" />
+<link rel="stylesheet" href="assets/css/exercise.css" />
 <link rel="stylesheet" href="assets/css/motion.css" />
 <script>document.documentElement.classList.add("js");</script>
 </head>
@@ -66,12 +67,13 @@
         <li class="chip chip--accent">ITDS241 Web Technologies and Applications</li>
         <li class="chip">1 ไฟล์สไลด์ · 63 หน้า</li>
         <li class="chip">แบบฝึกหัด 20 ข้อ</li>
+        <li class="chip">โจทย์เขียนโค้ด 12 ข้อ</li>
       </ul>
     </section>
 
     <div class="tabbar" id="tabs">
       <div class="wrap">
-        <div class="tabs" role="tablist" aria-label="ส่วนของหน้า">
+        <div class="tabs tabs--4" role="tablist" aria-label="ส่วนของหน้า">
           <button class="tab" role="tab" id="tab-content" aria-controls="content" aria-selected="true" type="button">
             <svg class="tab-icon" viewBox="0 0 20 20" aria-hidden="true"><path d="M4 3.5h8.5L16 7v9.5H4z M12 3.5V7h4 M7 10h6 M7 13h4" /></svg>
             เนื้อหา
@@ -84,8 +86,11 @@
             <svg class="tab-icon" viewBox="0 0 20 20" aria-hidden="true"><path d="M10 17a7 7 0 1 0 0-14 7 7 0 0 0 0 14z M6.8 10.2l2.2 2.2 4.2-4.6" /></svg>
             แบบฝึกหัด
           </button>
-          <span class="tab-indicator" aria-hidden="true"></span>
-        </div>
+          <button class="tab" role="tab" id="tab-code" aria-controls="code" aria-selected="false" type="button">
+            <svg class="tab-icon" viewBox="0 0 20 20" aria-hidden="true"><path d="M7 6l-4 4 4 4 M13 6l4 4-4 4 M11.2 4.5l-2.4 11" /></svg>
+            เขียนโค้ด
+          </button>
+          <span class="tab-indicator" aria-hidden="true"></span>        </div>
       </div>
     </div>
 
@@ -1171,9 +1176,21 @@ nav {
         </form>
       </section>
 
+      <!-- =============================================================
+           แท็บ 4: เขียนโค้ด (code exercise) — โจทย์อยู่ใน assets/js/exercises-web-2.js
+           ============================================================= -->
+      <section class="panel" id="code" role="tabpanel" aria-labelledby="tab-code" tabindex="-1">
+        <div class="panel-head">
+          <h2>แบบฝึกหัดเขียนโค้ด</h2>
+          <p class="panel-sub">เขียน HTML จริงในช่องแก้ไข ดูผลลัพธ์ใน browser ทันที แล้วกด "ตรวจคำตอบ" ให้ระบบตรวจโครงสร้างให้อัตโนมัติ (Ctrl + Enter ก็ตรวจได้) · โค้ดและความคืบหน้าบันทึกไว้ใน browser นี้</p>
+        </div>
+        <div class="cx" id="code-exercise">
+          <p class="cx-nojs">แบบฝึกหัดเขียนโค้ดต้องเปิด JavaScript ใน browser</p>
+        </div>
+      </section>
+
     </div>
   </main>
-
   <footer class="site-footer">
     <div class="wrap">
       <p>สรุปจากสไลด์ ITDS241 Web Technologies and Applications (Faculty of ICT, Mahidol University) เพื่อใช้ทบทวนส่วนตัว — ถ้าเนื้อหาขัดกับสไลด์ ให้ยึดสไลด์เป็นหลัก</p>
@@ -1182,5 +1199,7 @@ nav {
 
   <script src="assets/js/widgets.js" defer></script>
   <script src="assets/js/network.js" defer></script>
+  <script src="assets/js/exercises-web-2.js" defer></script>
+  <script src="assets/js/code-exercise.js" defer></script>
 </body>
 </html>
