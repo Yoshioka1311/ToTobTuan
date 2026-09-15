@@ -1,0 +1,807 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>ITDS231 บทที่ 4: MAC + Ethernet · โต๊ะทบทวน</title>
+<meta name="description" content="สรุปเนื้อหา ITDS231 Computer Networks บทที่ 4 MAC + Ethernet: ALOHA, CSMA/CD, CSMA/CA, controlled access, channelization, เฟรม Ethernet และสวิตช์ พร้อม cheat sheet และแบบฝึกหัด 20 ข้อ" />
+<meta name="theme-color" content="#17151a" />
+<link rel="icon" href="assets/favicon.svg" type="image/svg+xml" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link
+  href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500..700&family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans+Thai:wght@500;600&family=IBM+Plex+Sans+Thai+Looped:wght@400;500;600&display=swap"
+  rel="stylesheet"
+/>
+<link rel="stylesheet" href="assets/css/tokens.css" />
+<link rel="stylesheet" href="assets/css/base.css" />
+<link rel="stylesheet" href="assets/css/network.css" />
+<link rel="stylesheet" href="assets/css/motion.css" />
+<script>document.documentElement.classList.add("js");</script>
+</head>
+<body>
+  <a class="skip-link" href="#tabs">ข้ามไปที่เนื้อหา</a>
+
+  <header class="site-header">
+    <div class="wrap">
+      <a class="wordmark" href="index.html" aria-label="โต๊ะทบทวน หน้าแรก">
+        <img class="wordmark-mark" src="assets/favicon.svg" alt="" width="26" height="26" />
+        <span class="wordmark-text">โต๊ะ<span>ทบทวน</span></span>
+      </a>
+      <a class="crumb" href="index.html"><span class="arrow" aria-hidden="true">←</span> รายวิชาทั้งหมด</a>
+    </div>
+  </header>
+
+  <main>
+    <section class="course-hero wrap">
+      <nav class="chapter-nav" aria-label="บทของวิชา ITDS231">
+        <a class="chapter-link" href="network.html"><span class="chapter-num">บทที่ 1</span><span class="chapter-name">Intro &amp; Topology</span></a>
+        <a class="chapter-link" href="network-application-layer.html"><span class="chapter-num">บทที่ 2</span><span class="chapter-name">Application Layer</span></a>
+        <a class="chapter-link" href="network-data-link-layer.html"><span class="chapter-num">บทที่ 3</span><span class="chapter-name">Data Link Layer</span></a>
+        <a class="chapter-link" href="network-mac-ethernet.html" aria-current="page"><span class="chapter-num">บทที่ 4</span><span class="chapter-name">MAC + Ethernet</span></a>
+      </nav>
+      <span class="eyebrow">ITDS231 · บทที่ 4 · Lecture 6.1 – 6.2</span>
+      <h1>MAC + Ethernet</h1>
+      <p class="course-lede">การควบคุมการเข้าถึงสื่อกลาง (ALOHA, CSMA/CD, CSMA/CA, controlled access, channelization) และ Ethernet ตั้งแต่โครงสร้างเฟรม MAC address จนถึงการทำงานของสวิตช์ อ่านเนื้อหา ทบทวน cheat sheet แล้วลองทำแบบฝึกหัด 20 ข้อ</p>
+      <ul class="course-meta" aria-label="ข้อมูลบทเรียน">
+        <li class="chip chip--accent">สอบกลางภาค 28 ก.ย. – 2 ต.ค. 2569</li>
+        <li class="chip">2 ไฟล์สไลด์</li>
+        <li class="chip">แบบฝึกหัด 20 ข้อ</li>
+      </ul>
+    </section>
+
+    <div class="tabbar" id="tabs">
+      <div class="wrap">
+        <div class="tabs" role="tablist" aria-label="ส่วนของหน้า">
+          <button class="tab" role="tab" id="tab-content" aria-controls="content" aria-selected="true" type="button">
+            <svg class="tab-icon" viewBox="0 0 20 20" aria-hidden="true"><path d="M4 3.5h8.5L16 7v9.5H4z M12 3.5V7h4 M7 10h6 M7 13h4" /></svg>
+            เนื้อหา
+          </button>
+          <button class="tab" role="tab" id="tab-summary" aria-controls="summary" aria-selected="false" type="button">
+            <svg class="tab-icon" viewBox="0 0 20 20" aria-hidden="true"><path d="M3.5 4h13v12h-13z M3.5 8h13 M8.5 8v8" /></svg>
+            สรุป
+          </button>
+          <button class="tab" role="tab" id="tab-quiz" aria-controls="quiz" aria-selected="false" type="button">
+            <svg class="tab-icon" viewBox="0 0 20 20" aria-hidden="true"><path d="M10 17a7 7 0 1 0 0-14 7 7 0 0 0 0 14z M6.8 10.2l2.2 2.2 4.2-4.6" /></svg>
+            แบบฝึกหัด
+          </button>
+          <span class="tab-indicator" aria-hidden="true"></span>
+        </div>
+      </div>
+    </div>
+
+    <div class="wrap panels">
+
+      <!-- =============================================================
+           แท็บ 1: เนื้อหา
+           ============================================================= -->
+      <section class="panel" id="content" role="tabpanel" aria-labelledby="tab-content" tabindex="-1">
+        <div class="panel-head">
+          <h2>เนื้อหาแยกตามไฟล์สไลด์</h2>
+          <div class="panel-actions">
+            <button class="btn btn--ghost btn--sm" type="button" data-acc-all="open">เปิดทั้งหมด</button>
+            <button class="btn btn--ghost btn--sm" type="button" data-acc-all="close">ปิดทั้งหมด</button>
+          </div>
+        </div>
+
+        <div class="acc">
+
+          <!-- ---------- ไฟล์ 1 ---------- -->
+          <div class="acc-item is-open">
+            <h3 class="acc-heading">
+              <button class="acc-trigger" type="button" aria-expanded="true" aria-controls="acc-mac" id="acc-mac-btn">
+                <span class="acc-index">01</span>
+                <span class="acc-title">
+                  <span class="acc-name">โปรโตคอลควบคุมการเข้าถึงสื่อกลาง (Media Access Control)</span>
+                  <span class="acc-file">ITDS231-Lecture6.1-MAC-n-2026.pdf · Lecture 6.1</span>
+                </span>
+                <svg class="acc-chevron" viewBox="0 0 20 20" aria-hidden="true"><path d="M5 7.5l5 5 5-5" /></svg>
+              </button>
+            </h3>
+            <div class="acc-panel" id="acc-mac" role="region" aria-labelledby="acc-mac-btn">
+              <div class="acc-panel-inner">
+                <div class="acc-body">
+
+                  <nav class="toc" aria-label="หัวข้อในโปรโตคอลควบคุมการเข้าถึงสื่อกลาง">
+                    <a href="#mac-modes">Transmission mode</a>
+                    <a href="#mac-groups">Multiple Access 3 กลุ่ม</a>
+                    <a href="#mac-aloha">ALOHA</a>
+                    <a href="#mac-csma">CSMA</a>
+                    <a href="#mac-cd">CSMA/CD</a>
+                    <a href="#mac-ca">CSMA/CA</a>
+                    <a href="#mac-controlled">Controlled access</a>
+                    <a href="#mac-channel">Channelization</a>
+                  </nav>
+
+                  <section class="topic" id="mac-modes">
+                    <h4>Transmission mode</h4>
+                    <div class="table-scroll">
+                      <table>
+                        <thead><tr><th>โหมด</th><th>ลักษณะ</th><th>ตัวอย่าง</th></tr></thead>
+                        <tbody>
+                          <tr><td>Simplex</td><td>ทิศทางเดียว</td><td>รีโมท</td></tr>
+                          <tr><td>Half-duplex</td><td>ส่งหรือรับได้ทีละอย่างบนสื่อกลางร่วม</td><td>WLAN, hub Ethernet เก่า</td></tr>
+                          <tr><td>Full-duplex</td><td>ส่งและรับพร้อมกันได้</td><td>Ethernet switch สมัยใหม่</td></tr>
+                        </tbody>
+                      </table>
+                    </div>
+                  </section>
+
+                  <section class="topic" id="mac-groups">
+                    <h4>Multiple Access Control 3 กลุ่ม</h4>
+                    <p>กฎที่กำหนดว่า<strong>อุปกรณ์ใดส่งข้อมูลบนสื่อกลางร่วมกันได้เมื่อใด</strong> เพื่อลด/หลีกเลี่ยงการชนกัน</p>
+                    <div class="compare">
+                      <div class="compare-col">
+                        <h5>Random access</h5>
+                        <p>ALOHA, CSMA, CSMA/CD, CSMA/CA</p>
+                      </div>
+                      <div class="compare-col">
+                        <h5>Controlled access</h5>
+                        <p>reservation, polling, token passing</p>
+                      </div>
+                      <div class="compare-col">
+                        <h5>Channelization</h5>
+                        <p>FDMA, TDMA, CDMA</p>
+                      </div>
+                    </div>
+                    <div class="callout">
+                      <strong>Ethernet เก่า vs ใหม่:</strong>
+                      แบบ <b>shared bus/hub</b> ใช้ CSMA/CD เพราะมีโอกาสชนกัน ·
+                      แบบ <b>switched full-duplex</b> แต่ละพอร์ตเป็น point-to-point link แยกกัน จึงไม่มีการชนกันและไม่ต้องใช้ CSMA/CD เลย
+                    </div>
+                  </section>
+
+                  <section class="topic" id="mac-aloha">
+                    <h4>ALOHA</h4>
+                    <p>โปรโตคอล random-access ยุคแรก <strong>ไม่ sense สื่อกลางก่อนส่ง</strong> ส่งได้ทันทีที่มีข้อมูล ถ้าไม่ได้ ACK ภายใน timeout (2 เท่าของ propagation delay สูงสุด) จะรอ random backoff แล้วส่งใหม่</p>
+                    <div class="compare">
+                      <div class="compare-col">
+                        <h5>Pure ALOHA</h5>
+                        <p>ส่งได้ทุกเวลา</p>
+                        <code class="formula">vulnerable time = 2 × Tframe</code>
+                      </div>
+                      <div class="compare-col">
+                        <h5>Slotted ALOHA</h5>
+                        <p>แบ่งเวลาเป็น slot ส่งได้เฉพาะต้น slot เท่านั้น (ชนกันได้น้อยกว่า)</p>
+                        <code class="formula">vulnerable time = Tframe</code>
+                      </div>
+                    </div>
+                  </section>
+
+                  <section class="topic" id="mac-csma">
+                    <h4>CSMA (Carrier Sense Multiple Access)</h4>
+                    <p><strong>sense สื่อกลางก่อนส่งเสมอ</strong> แต่ยังชนกันได้เพราะ <em>propagation delay</em> (สถานีไกลอาจยังไม่รู้ว่ามีสัญญาณอื่นเดินทางมา)</p>
+                    <div class="table-scroll">
+                      <table>
+                        <thead><tr><th>Persistence strategy</th><th>เมื่อ busy</th><th>เมื่อ idle</th></tr></thead>
+                        <tbody>
+                          <tr><td>Nonpersistent</td><td>รอสุ่มแล้วค่อย sense ใหม่</td><td>—</td></tr>
+                          <tr><td>1-persistent</td><td>sense ต่อเนื่อง</td><td>ส่งทันทีที่ว่าง</td></tr>
+                          <tr><td>p-persistent</td><td>sense ต่อ</td><td>ส่งด้วยความน่าจะเป็น p หรือรอ slot ถัดไปด้วยความน่าจะเป็น 1 − p</td></tr>
+                        </tbody>
+                      </table>
+                    </div>
+                  </section>
+
+                  <section class="topic" id="mac-cd">
+                    <h4>CSMA/CD (Collision Detection)</h4>
+                    <p>ใช้ใน Ethernet แบบ shared/half-duplex เดิม — ขณะส่งข้อมูลจะตรวจสอบสื่อกลางต่อเนื่อง ถ้าพบการชนกัน:</p>
+                    <ol class="steps">
+                      <li>หยุดส่งทันที</li>
+                      <li>รอ <strong>binary exponential backoff</strong></li>
+                      <li>sense ใหม่และส่งซ้ำ</li>
+                    </ol>
+                    <code class="formula">r ∈ {0, …, 2<sup>min(n,10)</sup> − 1} · รอ r × Tslot</code>
+                    <p class="note">ไม่ใช้ใน Ethernet switched full-duplex สมัยใหม่</p>
+                  </section>
+
+                  <section class="topic" id="mac-ca">
+                    <h4>CSMA/CA (Collision Avoidance)</h4>
+                    <p>ใช้ใน <strong>Wi-Fi (802.11)</strong> เพราะสถานีไร้สายตรวจจับการชนกันขณะส่งเองไม่ได้ จึงเน้น "หลีกเลี่ยง" ก่อนส่งแทน</p>
+                    <ol class="steps">
+                      <li>sense สื่อกลาง</li>
+                      <li>รอ idle + <strong>IFS</strong> (Interframe Space)</li>
+                      <li>สุ่ม backoff จาก <strong>Contention Window (CW)</strong></li>
+                      <li>นับถอยหลัง (freeze ถ้า busy)</li>
+                      <li>ส่งเมื่อ counter = 0</li>
+                      <li>รอ ACK — ถ้าไม่ได้ ACK จะเพิ่ม CW แล้วลองใหม่</li>
+                    </ol>
+                    <code class="formula">CW<sub>new</sub> = 2 × CW<sub>old</sub> + 1</code>
+                    <div class="callout">
+                      <strong>RTS/CTS (Request / Clear to Send):</strong>
+                      กลไกเสริมเพื่อลดปัญหา <b>hidden-node</b> — สถานีอื่นที่ได้ยิน RTS/CTS จะอัปเดต <b>NAV</b> (Network Allocation Vector) และหลีกเลี่ยงการส่งช่วงนั้น (<b>virtual carrier sensing</b>)
+                    </div>
+                  </section>
+
+                  <section class="topic" id="mac-controlled">
+                    <h4>Controlled access</h4>
+                    <p>สถานีต้อง<strong>ได้รับอนุญาตก่อนส่งเสมอ</strong></p>
+                    <ul>
+                      <li><strong>Reservation:</strong> จองคิวใน minislot ก่อนส่งข้อมูลจริง</li>
+                      <li><strong>Polling:</strong> อุปกรณ์หลัก (primary) ถามอุปกรณ์รอง (secondary) ทีละตัวว่ามีข้อมูลจะส่งไหม (select/poll)</li>
+                      <li><strong>Token Passing:</strong> สถานีเรียงเป็นวงแหวน ต้องได้รับ token พิเศษก่อนถึงจะส่งข้อมูลได้</li>
+                    </ul>
+                  </section>
+
+                  <section class="topic" id="mac-channel">
+                    <h4>Channelization</h4>
+                    <p>แบ่งแบนด์วิดท์ของลิงก์ให้แต่ละสถานีใช้พร้อมกันได้</p>
+                    <div class="table-scroll">
+                      <table>
+                        <thead><tr><th>วิธี</th><th>แบ่งตาม</th><th>รายละเอียด</th></tr></thead>
+                        <tbody>
+                          <tr><td>FDMA</td><td>ความถี่</td><td>ใช้ในมือถือ/ดาวเทียม</td></tr>
+                          <tr><td>TDMA</td><td>ช่วงเวลา</td><td>บนช่องสัญญาณเดียว</td></tr>
+                          <tr><td>CDMA</td><td>รหัส (code)</td><td>ทุกสถานีส่งพร้อมกันบนช่องเดียวกันทั้งหมด แยกกันด้วย orthogonal code (Walsh table) แทนเวลา/ความถี่</td></tr>
+                        </tbody>
+                      </table>
+                    </div>
+                    <p><strong>CDMA encoding:</strong> บิต 0 → <code>−1</code> · บิต 1 → <code>+1</code> · ไม่ส่ง → ไม่มีสัญญาณ (<code>0</code>) · ผู้รับถอดรหัสด้วย <em>inner product</em> ของสัญญาณรวมกับ code ของตนเอง</p>
+                  </section>
+
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- ---------- ไฟล์ 2 ---------- -->
+          <div class="acc-item">
+            <h3 class="acc-heading">
+              <button class="acc-trigger" type="button" aria-expanded="false" aria-controls="acc-eth" id="acc-eth-btn">
+                <span class="acc-index">02</span>
+                <span class="acc-title">
+                  <span class="acc-name">Ethernet</span>
+                  <span class="acc-file">ITDS231-Lecture6.2-Ethernet-2026.pdf · Lecture 6.2</span>
+                </span>
+                <svg class="acc-chevron" viewBox="0 0 20 20" aria-hidden="true"><path d="M5 7.5l5 5 5-5" /></svg>
+              </button>
+            </h3>
+            <div class="acc-panel" id="acc-eth" role="region" aria-labelledby="acc-eth-btn">
+              <div class="acc-panel-inner">
+                <div class="acc-body">
+
+                  <nav class="toc" aria-label="หัวข้อใน Ethernet">
+                    <a href="#eth-history">ประวัติ</a>
+                    <a href="#eth-evolution">วิวัฒนาการ</a>
+                    <a href="#eth-service">บริการ &amp; error control</a>
+                    <a href="#eth-frame">โครงสร้างเฟรม</a>
+                    <a href="#eth-size">ความยาวเฟรม</a>
+                    <a href="#eth-mac">MAC Address</a>
+                    <a href="#eth-switch">Ethernet Switch</a>
+                    <a href="#eth-types">ประเภทสวิตช์ &amp; Auto-MDIX</a>
+                  </nav>
+
+                  <section class="topic" id="eth-history">
+                    <h4>ประวัติ Ethernet</h4>
+                    <ol class="timeline">
+                      <li><span class="tl-era">1973–74</span><span>พัฒนาที่ <strong>Xerox PARC</strong> โดย <strong>Robert Metcalfe</strong> ได้แรงบันดาลใจจาก ALOHAnet</span></li>
+                      <li><span class="tl-era">1983</span><span>กลายเป็นมาตรฐาน <strong>IEEE 802.3</strong></span></li>
+                    </ol>
+                    <p><strong>ชนะคู่แข่ง (Token Ring ฯลฯ) เพราะ:</strong> พัฒนาความเร็วได้ต่อเนื่อง · เปิดให้ทุกคนผลิตอุปกรณ์ตามสเปกได้ · ราคาถูกกว่า</p>
+                  </section>
+
+                  <section class="topic" id="eth-evolution">
+                    <h4>วิวัฒนาการ</h4>
+                    <p>Ethernet รวม <strong>data-link layer และ physical layer</strong> ไว้ในมาตรฐานเดียว</p>
+                    <div class="table-scroll">
+                      <table>
+                        <thead><tr><th>รุ่น</th><th>ความเร็ว</th><th>การเข้าถึงสื่อกลาง</th></tr></thead>
+                        <tbody>
+                          <tr><td>Standard Ethernet</td><td>—</td><td>CSMA/CD บน bus/hub</td></tr>
+                          <tr><td>Fast Ethernet</td><td>100 Mbps</td><td>CSMA/CD เป็นทางเลือกถ้าใช้ hub</td></tr>
+                          <tr><td>Gigabit / 10G+ Ethernet</td><td>ปัจจุบันรองรับถึง 40–100 Gbps</td><td>ใช้ switch เท่านั้น ไม่มี CSMA/CD เลย</td></tr>
+                        </tbody>
+                      </table>
+                    </div>
+                  </section>
+
+                  <section class="topic" id="eth-service">
+                    <h4>บริการของ Ethernet และ error control</h4>
+                    <ul>
+                      <li>ให้บริการแบบ <strong>connectionless</strong> และ<strong>ไม่มี flow control</strong> ของตัวเอง (ไม่มี LLC) — ต้องพึ่งโปรโตคอลชั้นบน (เช่น TCP) จัดการเรื่อง reliable delivery แทน</li>
+                      <li>error control ใช้ <strong>CRC-32</strong> ตรวจสอบเฟรม ถ้าพบว่าเสียหายจะ <strong>"ทิ้งเฟรมเงียบๆ"</strong> โดยไม่แจ้งผู้ส่ง</li>
+                    </ul>
+                  </section>
+
+                  <section class="topic" id="eth-frame">
+                    <h4>โครงสร้างเฟรม Ethernet</h4>
+                    <div class="frame-scroll">
+                      <ol class="frame" aria-label="ลำดับฟิลด์ในเฟรม Ethernet">
+                        <li><span class="frame-name">Preamble</span><span class="frame-size">7 ไบต์</span></li>
+                        <li><span class="frame-name">SFD</span><span class="frame-size">1 ไบต์</span></li>
+                        <li><span class="frame-name">Destination</span><span class="frame-size">6 ไบต์</span></li>
+                        <li><span class="frame-name">Source</span><span class="frame-size">6 ไบต์</span></li>
+                        <li><span class="frame-name">Type</span></li>
+                        <li class="frame-data"><span class="frame-name">Data</span><span class="frame-size">46–1500 ไบต์</span></li>
+                        <li><span class="frame-name">CRC</span></li>
+                      </ol>
+                    </div>
+                    <div class="table-scroll">
+                      <table>
+                        <thead><tr><th>ฟิลด์</th><th>ขนาด</th><th>หน้าที่</th></tr></thead>
+                        <tbody>
+                          <tr><td>Preamble</td><td>7 ไบต์</td><td>สลับ 0/1 ช่วยซิงโครไนซ์นาฬิกา</td></tr>
+                          <tr><td>SFD (Start Frame Delimiter)</td><td>1 ไบต์</td><td>บอกจุดเริ่มเฟรม</td></tr>
+                          <tr><td>Destination Address</td><td>6 ไบต์</td><td>ที่อยู่ผู้รับ</td></tr>
+                          <tr><td>Source Address</td><td>6 ไบต์</td><td>ที่อยู่ผู้ส่ง</td></tr>
+                          <tr><td>Type</td><td>—</td><td>บอกโปรโตคอลชั้นบน เช่น IP, ARP</td></tr>
+                          <tr><td>Data</td><td>46–1500 ไบต์</td><td>ต้อง padding ถ้าสั้นกว่าขั้นต่ำ</td></tr>
+                          <tr><td>CRC</td><td>—</td><td>ตรวจสอบ error คำนวณจาก address + type + data</td></tr>
+                        </tbody>
+                      </table>
+                    </div>
+                  </section>
+
+                  <section class="topic" id="eth-size">
+                    <h4>ความยาวเฟรมขั้นต่ำและสูงสุด</h4>
+                    <div class="compare">
+                      <div class="compare-col">
+                        <h5>ขั้นต่ำ 64 ไบต์ <span class="chip">512 บิต</span></h5>
+                        <p>เพื่อให้ผู้ส่ง<strong>ยังคงส่งข้อมูลอยู่ขณะที่การชนกันอาจเกิดขึ้น</strong> (worst-case round trip บนสายยาวสุดที่มาตรฐานกำหนด) ทำให้ตรวจจับการชนได้ทันภายใต้ CSMA/CD</p>
+                      </div>
+                      <div class="compare-col">
+                        <h5>สูงสุด 1518 ไบต์ <span class="chip">payload 1500</span></h5>
+                        <p>เพื่อประหยัดหน่วยความจำ (ยุคที่หน่วยความจำแพง) และป้องกันสถานีเดียวครองสื่อกลางนานเกินไป</p>
+                      </div>
+                    </div>
+                  </section>
+
+                  <section class="topic" id="eth-mac">
+                    <h4>MAC Address</h4>
+                    <p>ขนาด <strong>48 บิต</strong> เขียนเป็น hex คั่นด้วย <code>:</code></p>
+                    <div class="compare">
+                      <div class="compare-col">
+                        <h5>24 บิตแรก <span class="chip">OUI</span></h5>
+                        <p>กำหนดโดย IEEE ตามผู้ผลิต</p>
+                      </div>
+                      <div class="compare-col">
+                        <h5>24 บิตหลัง</h5>
+                        <p>กำหนดโดยผู้ผลิตเอง</p>
+                      </div>
+                    </div>
+                    <div class="table-scroll">
+                      <table>
+                        <thead><tr><th>ประเภทการส่ง</th><th>ใครเก็บเฟรม</th></tr></thead>
+                        <tbody>
+                          <tr><td>Unicast</td><td>ผู้รับ 1 คนเก็บ ที่เหลือทิ้ง</td></tr>
+                          <tr><td>Multicast</td><td>สมาชิกกลุ่มเก็บ</td></tr>
+                          <tr><td>Broadcast</td><td>ทุกสถานียกเว้นผู้ส่งเก็บทั้งหมด — ใช้ใน DHCP, ARP</td></tr>
+                        </tbody>
+                      </table>
+                    </div>
+                  </section>
+
+                  <section class="topic" id="eth-switch">
+                    <h4>Ethernet Switch</h4>
+                    <p>เรียนรู้ MAC address จากเฟรมที่เข้ามา (<strong>source MAC + พอร์ตที่รับเข้า</strong>) สร้างตาราง <strong>MAC address table</strong> (เก็บ entry ไว้ประมาณ 5 นาที) เมื่อรับเฟรม:</p>
+                    <div class="compare">
+                      <div class="compare-col">
+                        <h5>Frame filtering</h5>
+                        <p>destination MAC <strong>อยู่ในตาราง</strong> → ส่งออกเฉพาะพอร์ตนั้น</p>
+                      </div>
+                      <div class="compare-col">
+                        <h5>Flooding</h5>
+                        <p>destination MAC <strong>ไม่อยู่ในตาราง</strong> (unknown unicast) หรือเป็น broadcast/multicast → ส่งออกทุกพอร์ตยกเว้นพอร์ตที่รับเข้ามา</p>
+                      </div>
+                    </div>
+                  </section>
+
+                  <section class="topic" id="eth-types">
+                    <h4>ประเภทสวิตช์ และ Auto-MDIX</h4>
+                    <div class="compare">
+                      <div class="compare-col">
+                        <h5>Store-and-forward</h5>
+                        <p>รับเฟรมทั้งเฟรม ตรวจ CRC ก่อนส่งต่อ — รองรับ QoS</p>
+                      </div>
+                      <div class="compare-col">
+                        <h5>Cut-through</h5>
+                        <p>ส่งต่อทันทีที่รู้ destination address ยังไม่รอรับครบเฟรม — เร็วกว่าแต่ไม่ตรวจ error ก่อน · มีแบบย่อย <strong>fragment-free</strong> ที่เช็ค 64 ไบต์แรกก่อน</p>
+                      </div>
+                    </div>
+                    <div class="compare">
+                      <div class="compare-col">
+                        <h5>Auto-MDIX</h5>
+                        <p>สวิตช์สมัยใหม่ตรวจจับชนิดสายที่เสียบเข้ามาอัตโนมัติ (ใช้สายตรงหรือไขว้ก็ได้)</p>
+                      </div>
+                      <div class="compare-col">
+                        <h5>Autonegotiation <span class="chip">คนละอย่างกัน</span></h5>
+                        <p>การเจรจาความเร็ว/duplex ระหว่างอุปกรณ์สองฝั่งอัตโนมัติ</p>
+                      </div>
+                    </div>
+                  </section>
+
+                </div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </section>
+
+      <!-- =============================================================
+           แท็บ 2: สรุป (cheat sheet)
+           ============================================================= -->
+      <section class="panel" id="summary" role="tabpanel" aria-labelledby="tab-summary" tabindex="-1">
+        <div class="panel-head">
+          <h2>Cheat sheet</h2>
+          <p class="panel-sub">ตาราง สูตร และคำที่มักออกสอบของบทที่ 4 รวมไว้ในหน้าเดียว</p>
+        </div>
+
+        <div class="sheet">
+
+          <article class="sheet-card sheet-card--wide">
+            <h3><span class="sheet-num">01</span> วิธีเข้าถึงสื่อกลาง 3 กลุ่ม</h3>
+            <div class="table-scroll">
+              <table>
+                <thead><tr><th>กลุ่ม</th><th>หลักการ</th><th>ตัวอย่าง</th></tr></thead>
+                <tbody>
+                  <tr><td class="nowrap">Contention <span class="note">(random access)</span></td><td>สถานีแข่งกันส่ง อาจชนกัน</td><td>ALOHA, CSMA, CSMA/CD, CSMA/CA</td></tr>
+                  <tr><td class="nowrap">Controlled access</td><td>ต้องได้รับอนุญาตก่อนส่งเสมอ</td><td>Reservation, Polling, Token passing</td></tr>
+                  <tr><td class="nowrap">Channelization</td><td>แบ่งแบนด์วิดท์ให้ใช้พร้อมกัน</td><td>FDMA, TDMA, CDMA</td></tr>
+                </tbody>
+              </table>
+            </div>
+          </article>
+
+          <article class="sheet-card">
+            <h3><span class="sheet-num">02</span> ALOHA vs Slotted ALOHA</h3>
+            <dl class="defs">
+              <div><dt>Pure</dt><dd>ส่งได้ทุกเวลา · vulnerable time <strong>2 × Tframe</strong></dd></div>
+              <div><dt>Slotted</dt><dd>ส่งได้เฉพาะต้น slot · vulnerable time <strong>Tframe</strong></dd></div>
+            </dl>
+            <p class="note">ไม่ sense ก่อนส่ง · timeout = 2 × propagation delay สูงสุด → random backoff</p>
+          </article>
+
+          <article class="sheet-card">
+            <h3><span class="sheet-num">03</span> CSMA persistence</h3>
+            <dl class="defs defs--stack">
+              <div><dt>Nonpersistent</dt><dd>busy → รอสุ่ม แล้ว sense ใหม่</dd></div>
+              <div><dt>1-persistent</dt><dd>busy → sense ต่อเนื่อง · ว่างปุ๊บส่งทันที</dd></div>
+              <div><dt>p-persistent</dt><dd>idle → ส่งด้วยความน่าจะเป็น p หรือรอ slot ถัดไปด้วย 1 − p</dd></div>
+            </dl>
+            <p class="note">ยังชนได้เพราะ propagation delay</p>
+          </article>
+
+          <article class="sheet-card sheet-card--wide">
+            <h3><span class="sheet-num">04</span> CSMA/CD vs CSMA/CA</h3>
+            <div class="table-scroll">
+              <table>
+                <thead><tr><th></th><th>CSMA/CD</th><th>CSMA/CA</th></tr></thead>
+                <tbody>
+                  <tr><td class="nowrap">ใช้ใน</td><td>Ethernet shared / half-duplex เดิม</td><td>Wi-Fi (802.11)</td></tr>
+                  <tr><td class="nowrap">แนวคิด</td><td>ตรวจจับการชนขณะส่ง</td><td>หลีกเลี่ยงก่อนส่ง (ตรวจจับขณะส่งเองไม่ได้)</td></tr>
+                  <tr><td class="nowrap">ขั้นตอน</td><td>ชน → หยุดทันที → backoff → sense ใหม่ → ส่งซ้ำ</td><td>sense → idle + IFS → สุ่ม backoff จาก CW → นับถอยหลัง (freeze ถ้า busy) → ส่งเมื่อ 0 → รอ ACK</td></tr>
+                  <tr><td class="nowrap">Backoff</td><td>r ∈ {0,…,2<sup>min(n,10)</sup> − 1} × Tslot</td><td>ไม่ได้ ACK → CW<sub>new</sub> = 2 × CW<sub>old</sub> + 1</td></tr>
+                  <tr><td class="nowrap">กลไกเสริม</td><td>—</td><td>RTS/CTS + NAV (virtual carrier sensing) แก้ hidden-node</td></tr>
+                </tbody>
+              </table>
+            </div>
+          </article>
+
+          <article class="sheet-card">
+            <h3><span class="sheet-num">05</span> FDMA · TDMA · CDMA</h3>
+            <dl class="defs defs--codes">
+              <div><dt>FDMA</dt><dd>แบ่งตาม<strong>ความถี่</strong> · มือถือ/ดาวเทียม</dd></div>
+              <div><dt>TDMA</dt><dd>แบ่งตาม<strong>ช่วงเวลา</strong> บนช่องเดียว</dd></div>
+              <div><dt>CDMA</dt><dd>ส่งพร้อมกันช่องเดียว แยกด้วย<strong>รหัส</strong> (Walsh)</dd></div>
+            </dl>
+            <p class="note">CDMA: 0 → −1 · 1 → +1 · ไม่ส่ง → 0 · ถอดด้วย inner product</p>
+          </article>
+
+          <article class="sheet-card sheet-card--wide">
+            <h3><span class="sheet-num">06</span> โครงสร้างเฟรม Ethernet</h3>
+            <div class="frame-scroll">
+              <ol class="frame" aria-label="ลำดับฟิลด์ในเฟรม Ethernet พร้อมขนาด">
+                <li><span class="frame-name">Preamble</span><span class="frame-size">7 B</span></li>
+                <li><span class="frame-name">SFD</span><span class="frame-size">1 B</span></li>
+                <li><span class="frame-name">Dest</span><span class="frame-size">6 B</span></li>
+                <li><span class="frame-name">Src</span><span class="frame-size">6 B</span></li>
+                <li><span class="frame-name">Type</span><span class="frame-size">2 B*</span></li>
+                <li class="frame-data"><span class="frame-name">Data</span><span class="frame-size">46–1500 B</span></li>
+                <li><span class="frame-name">CRC</span><span class="frame-size">4 B*</span></li>
+              </ol>
+            </div>
+            <p class="note">* สไลด์ไม่ได้ระบุขนาด Type/CRC — CRC-32 = 32 บิต = 4 ไบต์ และ Type = 1518 − 6 − 6 − 1500 − 4 = 2 ไบต์ · Preamble สลับ 0/1 ซิงค์นาฬิกา · SFD บอกจุดเริ่ม · CRC คำนวณจาก address + type + data</p>
+          </article>
+
+          <article class="sheet-card">
+            <h3><span class="sheet-num">07</span> ความยาวเฟรม</h3>
+            <code class="formula formula--wrap">ขั้นต่ำ 64 ไบต์ = 512 บิต</code>
+            <p>ผู้ส่งต้องยังส่งอยู่ตลอด worst-case round trip บนสายยาวสุด → <strong>ตรวจจับการชนได้ทัน</strong> (CSMA/CD)</p>
+            <code class="formula formula--wrap">สูงสุด 1518 ไบต์ (payload 1500)</code>
+            <p>ประหยัดหน่วยความจำ + กันสถานีเดียวครองสื่อกลาง</p>
+          </article>
+
+          <article class="sheet-card sheet-card--wide">
+            <h3><span class="sheet-num">08</span> การ forward ของ Ethernet switch</h3>
+            <div class="table-scroll">
+              <table>
+                <thead><tr><th>destination MAC</th><th>switch ทำอะไร</th><th>เรียกว่า</th></tr></thead>
+                <tbody>
+                  <tr><td>Known unicast (อยู่ในตาราง)</td><td>ส่งออกเฉพาะพอร์ตนั้น</td><td>Frame filtering</td></tr>
+                  <tr><td>Unknown unicast (ไม่อยู่ในตาราง)</td><td>ส่งออกทุกพอร์ตยกเว้นพอร์ตที่รับเข้า</td><td>Flooding</td></tr>
+                  <tr><td>Broadcast / Multicast</td><td>ส่งออกทุกพอร์ตยกเว้นพอร์ตที่รับเข้า</td><td>Flooding</td></tr>
+                </tbody>
+              </table>
+            </div>
+            <p class="note">เรียนรู้จาก source MAC + พอร์ตขาเข้า · entry อยู่ ~5 นาที · Store-and-forward ตรวจ CRC ก่อน / Cut-through ส่งทันทีที่รู้ destination</p>
+          </article>
+
+        </div>
+      </section>
+
+      <!-- =============================================================
+           แท็บ 3: แบบฝึกหัด (20 ข้อ)
+           data-answer = ตัวเลือกที่ถูก (ก=a, ข=b, ค=c, ง=d ตามเฉลยที่ผู้ใช้กำหนด)
+           ============================================================= -->
+      <section class="panel" id="quiz" role="tabpanel" aria-labelledby="tab-quiz" tabindex="-1">
+        <div class="panel-head">
+          <h2>แบบฝึกหัด 20 ข้อ</h2>
+          <p class="panel-sub">เลือกคำตอบให้ครบแล้วกด "ตรวจคำตอบ" ด้านล่าง ระบบจะเฉลยพร้อมคำอธิบายทุกข้อ</p>
+        </div>
+
+        <form class="quiz" id="quiz-form" novalidate>
+
+          <fieldset class="q" data-answer="c">
+            <legend class="q-head"><span class="q-num">01</span><span class="q-text">การสื่อสารแบบใดที่อุปกรณ์ทั้งสองฝั่งส่งและรับข้อมูลพร้อมกันได้บนสื่อกลางเดียวกัน?</span></legend>
+            <div class="q-options">
+              <label class="opt"><input type="radio" name="q1" value="a" /><span class="opt-key">A</span><span class="opt-text">Simplex</span></label>
+              <label class="opt"><input type="radio" name="q1" value="b" /><span class="opt-key">B</span><span class="opt-text">Half-duplex</span></label>
+              <label class="opt"><input type="radio" name="q1" value="c" /><span class="opt-key">C</span><span class="opt-text">Full-duplex</span></label>
+              <label class="opt"><input type="radio" name="q1" value="d" /><span class="opt-key">D</span><span class="opt-text">Broadcast only</span></label>
+            </div>
+            <div class="q-feedback"><div class="q-feedback-inner"><p class="q-verdict" aria-live="polite"></p><p class="q-explain">Full-duplex ส่งและรับพร้อมกันได้ (เช่น Ethernet switch สมัยใหม่) · Half-duplex ส่งหรือรับได้ทีละอย่าง (WLAN, hub Ethernet เก่า) · Simplex ทิศทางเดียว (รีโมท)</p></div></div>
+          </fieldset>
+
+          <fieldset class="q" data-answer="b">
+            <legend class="q-head"><span class="q-num">02</span><span class="q-text">Multiple Access Control มีวัตถุประสงค์หลักคืออะไร?</span></legend>
+            <div class="q-options">
+              <label class="opt"><input type="radio" name="q2" value="a" /><span class="opt-key">A</span><span class="opt-text">เข้ารหัสข้อมูลระหว่างส่ง</span></label>
+              <label class="opt"><input type="radio" name="q2" value="b" /><span class="opt-key">B</span><span class="opt-text">กำหนดกฎว่าอุปกรณ์ใดส่งข้อมูลบนสื่อกลางร่วมได้เมื่อใด เพื่อลด/หลีกเลี่ยงการชนกัน</span></label>
+              <label class="opt"><input type="radio" name="q2" value="c" /><span class="opt-key">C</span><span class="opt-text">จัดเส้นทางแพ็กเก็ตข้ามเครือข่าย</span></label>
+              <label class="opt"><input type="radio" name="q2" value="d" /><span class="opt-key">D</span><span class="opt-text">แปลงชื่อโดเมนเป็น IP address</span></label>
+            </div>
+            <div class="q-feedback"><div class="q-feedback-inner"><p class="q-verdict" aria-live="polite"></p><p class="q-explain">Multiple Access Control คือกฎที่กำหนดว่าอุปกรณ์ใดส่งข้อมูลบนสื่อกลางร่วมกันได้เมื่อใด เพื่อลด/หลีกเลี่ยงการชนกัน</p></div></div>
+          </fieldset>
+
+          <fieldset class="q" data-answer="b">
+            <legend class="q-head"><span class="q-num">03</span><span class="q-text">วิธีเข้าถึงสื่อกลางแบ่งเป็น 3 กลุ่มหลักคือข้อใด?</span></legend>
+            <div class="q-options">
+              <label class="opt"><input type="radio" name="q3" value="a" /><span class="opt-key">A</span><span class="opt-text">TCP, UDP, ICMP</span></label>
+              <label class="opt"><input type="radio" name="q3" value="b" /><span class="opt-key">B</span><span class="opt-text">Contention-based, Controlled access, Channelization</span></label>
+              <label class="opt"><input type="radio" name="q3" value="c" /><span class="opt-key">C</span><span class="opt-text">Unicast, Multicast, Broadcast</span></label>
+              <label class="opt"><input type="radio" name="q3" value="d" /><span class="opt-key">D</span><span class="opt-text">LLC, MAC, PHY</span></label>
+            </div>
+            <div class="q-feedback"><div class="q-feedback-inner"><p class="q-verdict" aria-live="polite"></p><p class="q-explain">3 กลุ่ม: Random access / contention (ALOHA, CSMA, CSMA/CD, CSMA/CA) · Controlled access (reservation, polling, token passing) · Channelization (FDMA, TDMA, CDMA) · ข้อ C คือประเภทการส่งของ MAC address</p></div></div>
+          </fieldset>
+
+          <fieldset class="q" data-answer="b">
+            <legend class="q-head"><span class="q-num">04</span><span class="q-text">เหตุใด Ethernet แบบ switched full-duplex สมัยใหม่จึงไม่ต้องใช้ CSMA/CD?</span></legend>
+            <div class="q-options">
+              <label class="opt"><input type="radio" name="q4" value="a" /><span class="opt-key">A</span><span class="opt-text">เพราะไม่มีการส่งข้อมูลเลย</span></label>
+              <label class="opt"><input type="radio" name="q4" value="b" /><span class="opt-key">B</span><span class="opt-text">เพราะแต่ละพอร์ตของสวิตช์เป็น point-to-point link แยกกัน ไม่มีการชนกัน</span></label>
+              <label class="opt"><input type="radio" name="q4" value="c" /><span class="opt-key">C</span><span class="opt-text">เพราะใช้ wireless แทนสายทั้งหมด</span></label>
+              <label class="opt"><input type="radio" name="q4" value="d" /><span class="opt-key">D</span><span class="opt-text">เพราะ CSMA/CD ถูกยกเลิกแล้ว</span></label>
+            </div>
+            <div class="q-feedback"><div class="q-feedback-inner"><p class="q-verdict" aria-live="polite"></p><p class="q-explain">Switched full-duplex: แต่ละพอร์ตเป็น point-to-point link แยกกัน จึงไม่มีการชนกัน · CSMA/CD ใช้กับ Ethernet แบบ shared bus/hub เดิมที่มีโอกาสชนกัน</p></div></div>
+          </fieldset>
+
+          <fieldset class="q" data-answer="b">
+            <legend class="q-head"><span class="q-num">05</span><span class="q-text">ALOHA (protocol ดั้งเดิม) มีลักษณะเด่นคือข้อใด?</span></legend>
+            <div class="q-options">
+              <label class="opt"><input type="radio" name="q5" value="a" /><span class="opt-key">A</span><span class="opt-text">ต้อง sense สื่อกลางก่อนส่งเสมอ</span></label>
+              <label class="opt"><input type="radio" name="q5" value="b" /><span class="opt-key">B</span><span class="opt-text">สถานีส่งข้อมูลได้ทันทีที่มีข้อมูล โดยไม่ต้อง sense ก่อน</span></label>
+              <label class="opt"><input type="radio" name="q5" value="c" /><span class="opt-key">C</span><span class="opt-text">ใช้ token ควบคุมสิทธิ์การส่ง</span></label>
+              <label class="opt"><input type="radio" name="q5" value="d" /><span class="opt-key">D</span><span class="opt-text">แบ่ง channel ตามความถี่</span></label>
+            </div>
+            <div class="q-feedback"><div class="q-feedback-inner"><p class="q-verdict" aria-live="polite"></p><p class="q-explain">ALOHA ไม่ sense สื่อกลางก่อนส่ง ส่งได้ทันทีที่มีข้อมูล ถ้าไม่ได้ ACK ภายใน timeout (2 เท่าของ propagation delay สูงสุด) จะรอ random backoff แล้วส่งใหม่ · การ sense ก่อนส่งคือ CSMA</p></div></div>
+          </fieldset>
+
+          <fieldset class="q" data-answer="b">
+            <legend class="q-head"><span class="q-num">06</span><span class="q-text">Vulnerable time ของ Pure ALOHA เท่ากับเท่าใด?</span></legend>
+            <div class="q-options">
+              <label class="opt"><input type="radio" name="q6" value="a" /><span class="opt-key">A</span><span class="opt-text">Tframe</span></label>
+              <label class="opt"><input type="radio" name="q6" value="b" /><span class="opt-key">B</span><span class="opt-text">2 × Tframe</span></label>
+              <label class="opt"><input type="radio" name="q6" value="c" /><span class="opt-key">C</span><span class="opt-text">0.5 × Tframe</span></label>
+              <label class="opt"><input type="radio" name="q6" value="d" /><span class="opt-key">D</span><span class="opt-text">4 × Tframe</span></label>
+            </div>
+            <div class="q-feedback"><div class="q-feedback-inner"><p class="q-verdict" aria-live="polite"></p><p class="q-explain">Pure ALOHA ส่งได้ทุกเวลา vulnerable time = 2 × Tframe · Tframe คือค่าของ Slotted ALOHA</p></div></div>
+          </fieldset>
+
+          <fieldset class="q" data-answer="b">
+            <legend class="q-head"><span class="q-num">07</span><span class="q-text">Slotted ALOHA ลดโอกาสชนกันเมื่อเทียบกับ Pure ALOHA ได้อย่างไร?</span></legend>
+            <div class="q-options">
+              <label class="opt"><input type="radio" name="q7" value="a" /><span class="opt-key">A</span><span class="opt-text">เพิ่มแบนด์วิดท์ของช่องสัญญาณ</span></label>
+              <label class="opt"><input type="radio" name="q7" value="b" /><span class="opt-key">B</span><span class="opt-text">บังคับส่งได้เฉพาะจุดเริ่ม time slot ลด vulnerable time เหลือ Tframe</span></label>
+              <label class="opt"><input type="radio" name="q7" value="c" /><span class="opt-key">C</span><span class="opt-text">ใช้การเข้ารหัสแบบ CDMA</span></label>
+              <label class="opt"><input type="radio" name="q7" value="d" /><span class="opt-key">D</span><span class="opt-text">เพิ่มจำนวนสถานีที่เชื่อมต่อได้</span></label>
+            </div>
+            <div class="q-feedback"><div class="q-feedback-inner"><p class="q-verdict" aria-live="polite"></p><p class="q-explain">Slotted ALOHA แบ่งเวลาเป็น slot ส่งได้เฉพาะต้น slot vulnerable time ลดจาก 2 × Tframe เหลือ Tframe จึงชนกันได้น้อยกว่า</p></div></div>
+          </fieldset>
+
+          <fieldset class="q" data-answer="b">
+            <legend class="q-head"><span class="q-num">08</span><span class="q-text">เหตุใด CSMA จึงยังชนกันได้แม้ sense สื่อกลางก่อนส่ง?</span></legend>
+            <div class="q-options">
+              <label class="opt"><input type="radio" name="q8" value="a" /><span class="opt-key">A</span><span class="opt-text">เพราะสถานีไม่เคย sense จริง</span></label>
+              <label class="opt"><input type="radio" name="q8" value="b" /><span class="opt-key">B</span><span class="opt-text">เพราะ propagation delay ทำให้สถานีไกลอาจยังไม่รู้ว่ามีสัญญาณอื่นเดินทางมา</span></label>
+              <label class="opt"><input type="radio" name="q8" value="c" /><span class="opt-key">C</span><span class="opt-text">เพราะ CSMA ไม่รองรับสื่อกลางแบบมีสาย</span></label>
+              <label class="opt"><input type="radio" name="q8" value="d" /><span class="opt-key">D</span><span class="opt-text">เพราะทุกสถานีส่งพร้อมกัน</span></label>
+            </div>
+            <div class="q-feedback"><div class="q-feedback-inner"><p class="q-verdict" aria-live="polite"></p><p class="q-explain">CSMA sense ก่อนส่งเสมอ แต่ propagation delay ทำให้สถานีที่อยู่ไกลอาจยังไม่รู้ว่ามีสัญญาณอื่นเดินทางมา จึงยังชนกันได้</p></div></div>
+          </fieldset>
+
+          <fieldset class="q" data-answer="b">
+            <legend class="q-head"><span class="q-num">09</span><span class="q-text">กลยุทธ์ p-persistent CSMA ทำงานอย่างไรเมื่อ channel ว่าง?</span></legend>
+            <div class="q-options">
+              <label class="opt"><input type="radio" name="q9" value="a" /><span class="opt-key">A</span><span class="opt-text">ส่งข้อมูลทันทีเสมอ</span></label>
+              <label class="opt"><input type="radio" name="q9" value="b" /><span class="opt-key">B</span><span class="opt-text">ส่งด้วยความน่าจะเป็น p หรือรอ slot ถัดไปด้วยความน่าจะเป็น (1-p)</span></label>
+              <label class="opt"><input type="radio" name="q9" value="c" /><span class="opt-key">C</span><span class="opt-text">รอแบบสุ่มโดยไม่มีความน่าจะเป็นเกี่ยวข้อง</span></label>
+              <label class="opt"><input type="radio" name="q9" value="d" /><span class="opt-key">D</span><span class="opt-text">ปิดการส่งข้อมูลทันที</span></label>
+            </div>
+            <div class="q-feedback"><div class="q-feedback-inner"><p class="q-verdict" aria-live="polite"></p><p class="q-explain">p-persistent: busy → sense ต่อ · idle → ส่งด้วยความน่าจะเป็น p หรือรอ slot ถัดไปด้วยความน่าจะเป็น 1 − p · ส่งทันทีที่ว่างคือ 1-persistent · รอสุ่มคือ nonpersistent</p></div></div>
+          </fieldset>
+
+          <fieldset class="q" data-answer="b">
+            <legend class="q-head"><span class="q-num">10</span><span class="q-text">CSMA/CD ทำอะไรเมื่อตรวจพบการชนกันระหว่างส่งข้อมูล?</span></legend>
+            <div class="q-options">
+              <label class="opt"><input type="radio" name="q10" value="a" /><span class="opt-key">A</span><span class="opt-text">ส่งข้อมูลต่อไปจนจบ</span></label>
+              <label class="opt"><input type="radio" name="q10" value="b" /><span class="opt-key">B</span><span class="opt-text">หยุดส่งทันที รอ backoff แบบสุ่ม แล้วค่อย sense และส่งใหม่</span></label>
+              <label class="opt"><input type="radio" name="q10" value="c" /><span class="opt-key">C</span><span class="opt-text">เปลี่ยนไปใช้ CSMA/CA ทันที</span></label>
+              <label class="opt"><input type="radio" name="q10" value="d" /><span class="opt-key">D</span><span class="opt-text">ปิดการเชื่อมต่อถาวร</span></label>
+            </div>
+            <div class="q-feedback"><div class="q-feedback-inner"><p class="q-verdict" aria-live="polite"></p><p class="q-explain">CSMA/CD: พบการชน → หยุดส่งทันที → binary exponential backoff (สุ่ม r จาก {0,…,2<sup>min(n,10)</sup> − 1} แล้วรอ r × Tslot) → sense ใหม่และส่งซ้ำ</p></div></div>
+          </fieldset>
+
+          <fieldset class="q" data-answer="b">
+            <legend class="q-head"><span class="q-num">11</span><span class="q-text">CSMA/CA (Wi-Fi 802.11) ต่างจาก CSMA/CD อย่างไร?</span></legend>
+            <div class="q-options">
+              <label class="opt"><input type="radio" name="q11" value="a" /><span class="opt-key">A</span><span class="opt-text">CSMA/CA ตรวจจับการชนกันได้แม่นยำกว่า</span></label>
+              <label class="opt"><input type="radio" name="q11" value="b" /><span class="opt-key">B</span><span class="opt-text">CSMA/CA ตรวจจับการชนขณะส่งเองไม่ได้ จึงเน้นหลีกเลี่ยงก่อนส่งแทน</span></label>
+              <label class="opt"><input type="radio" name="q11" value="c" /><span class="opt-key">C</span><span class="opt-text">CSMA/CA ใช้กับสายเคเบิลเท่านั้น</span></label>
+              <label class="opt"><input type="radio" name="q11" value="d" /><span class="opt-key">D</span><span class="opt-text">CSMA/CA ไม่มีกลไก backoff เลย</span></label>
+            </div>
+            <div class="q-feedback"><div class="q-feedback-inner"><p class="q-verdict" aria-live="polite"></p><p class="q-explain">สถานีไร้สายตรวจจับการชนขณะส่งเองไม่ได้ CSMA/CA จึงหลีกเลี่ยงก่อนส่ง: รอ idle + IFS → สุ่ม backoff จาก CW → นับถอยหลัง → ส่ง → รอ ACK (ไม่ได้ ACK: CW<sub>new</sub> = 2 × CW<sub>old</sub> + 1) — จึงมี backoff เช่นกัน</p></div></div>
+          </fieldset>
+
+          <fieldset class="q" data-answer="b">
+            <legend class="q-head"><span class="q-num">12</span><span class="q-text">กลไก RTS/CTS ใน CSMA/CA มีไว้เพื่ออะไรเป็นหลัก?</span></legend>
+            <div class="q-options">
+              <label class="opt"><input type="radio" name="q12" value="a" /><span class="opt-key">A</span><span class="opt-text">เพิ่มความเร็วในการส่งข้อมูล</span></label>
+              <label class="opt"><input type="radio" name="q12" value="b" /><span class="opt-key">B</span><span class="opt-text">ลดความเสี่ยงชนกัน โดยเฉพาะสถานการณ์ hidden-node หรือเฟรมขนาดใหญ่</span></label>
+              <label class="opt"><input type="radio" name="q12" value="c" /><span class="opt-key">C</span><span class="opt-text">เข้ารหัสข้อมูลก่อนส่ง</span></label>
+              <label class="opt"><input type="radio" name="q12" value="d" /><span class="opt-key">D</span><span class="opt-text">เปลี่ยนความถี่ของสัญญาณ</span></label>
+            </div>
+            <div class="q-feedback"><div class="q-feedback-inner"><p class="q-verdict" aria-live="polite"></p><p class="q-explain">RTS/CTS (Request/Clear to Send) ลดปัญหา hidden-node — สถานีอื่นที่ได้ยิน RTS/CTS จะอัปเดต NAV (Network Allocation Vector) และหลีกเลี่ยงการส่งช่วงนั้น (virtual carrier sensing)</p></div></div>
+          </fieldset>
+
+          <fieldset class="q" data-answer="c">
+            <legend class="q-head"><span class="q-num">13</span><span class="q-text">วิธี controlled access ใดที่สถานีได้รับอนุญาตส่งเมื่อได้รับเฟรมพิเศษที่ส่งวนรอบสถานีต่างๆ?</span></legend>
+            <div class="q-options">
+              <label class="opt"><input type="radio" name="q13" value="a" /><span class="opt-key">A</span><span class="opt-text">Reservation</span></label>
+              <label class="opt"><input type="radio" name="q13" value="b" /><span class="opt-key">B</span><span class="opt-text">Polling</span></label>
+              <label class="opt"><input type="radio" name="q13" value="c" /><span class="opt-key">C</span><span class="opt-text">Token Passing</span></label>
+              <label class="opt"><input type="radio" name="q13" value="d" /><span class="opt-key">D</span><span class="opt-text">FDMA</span></label>
+            </div>
+            <div class="q-feedback"><div class="q-feedback-inner"><p class="q-verdict" aria-live="polite"></p><p class="q-explain">Token Passing: สถานีเรียงเป็นวงแหวน ต้องได้รับ token พิเศษก่อนจึงส่งได้ · Reservation จองคิวใน minislot · Polling ให้ primary ถาม secondary ทีละตัว · FDMA เป็น channelization</p></div></div>
+          </fieldset>
+
+          <fieldset class="q" data-answer="b">
+            <legend class="q-head"><span class="q-num">14</span><span class="q-text">Channelization ต่างจาก Contention-based และ Controlled access อย่างไร?</span></legend>
+            <div class="q-options">
+              <label class="opt"><input type="radio" name="q14" value="a" /><span class="opt-key">A</span><span class="opt-text">ไม่มีการแบ่งสื่อกลางเลย</span></label>
+              <label class="opt"><input type="radio" name="q14" value="b" /><span class="opt-key">B</span><span class="opt-text">แบ่งแบนด์วิดท์เป็นช่องทางแยกตามความถี่ เวลา หรือรหัส ให้แต่ละสถานีใช้งาน</span></label>
+              <label class="opt"><input type="radio" name="q14" value="c" /><span class="opt-key">C</span><span class="opt-text">ใช้ token วนรอบสถานี</span></label>
+              <label class="opt"><input type="radio" name="q14" value="d" /><span class="opt-key">D</span><span class="opt-text">สถานีแข่งกันส่งข้อมูลอย่างเสรี</span></label>
+            </div>
+            <div class="q-feedback"><div class="q-feedback-inner"><p class="q-verdict" aria-live="polite"></p><p class="q-explain">Channelization แบ่งแบนด์วิดท์ของลิงก์ให้แต่ละสถานีใช้พร้อมกันได้ ตามความถี่ (FDMA) เวลา (TDMA) หรือรหัส (CDMA) · ข้อ C คือ token passing · ข้อ D คือ random access</p></div></div>
+          </fieldset>
+
+          <fieldset class="q" data-answer="b">
+            <legend class="q-head"><span class="q-num">15</span><span class="q-text">CDMA ต่างจาก FDMA และ TDMA อย่างไร?</span></legend>
+            <div class="q-options">
+              <label class="opt"><input type="radio" name="q15" value="a" /><span class="opt-key">A</span><span class="opt-text">CDMA ใช้ช่องความถี่แยกกันเหมือน FDMA</span></label>
+              <label class="opt"><input type="radio" name="q15" value="b" /><span class="opt-key">B</span><span class="opt-text">ทุกสถานีใน CDMA ส่งข้อมูลพร้อมกันได้บนช่องสัญญาณเดียวกันทั้งหมด แยกด้วยรหัส (code) แทนเวลา/ความถี่</span></label>
+              <label class="opt"><input type="radio" name="q15" value="c" /><span class="opt-key">C</span><span class="opt-text">CDMA ต้องรอคิวตามลำดับเวลาเหมือน TDMA</span></label>
+              <label class="opt"><input type="radio" name="q15" value="d" /><span class="opt-key">D</span><span class="opt-text">CDMA ไม่ใช้ในเครือข่ายมือถือ</span></label>
+            </div>
+            <div class="q-feedback"><div class="q-feedback-inner"><p class="q-verdict" aria-live="polite"></p><p class="q-explain">CDMA: ทุกสถานีส่งพร้อมกันบนช่องเดียวกัน แยกด้วย orthogonal code (Walsh table) — บิต 0 = −1, บิต 1 = +1, ไม่ส่ง = 0 ผู้รับถอดรหัสด้วย inner product กับ code ของตนเอง</p></div></div>
+          </fieldset>
+
+          <fieldset class="q" data-answer="b">
+            <legend class="q-head"><span class="q-num">16</span><span class="q-text">เฟรม Ethernet มีฟิลด์ Preamble และ SFD เพื่อจุดประสงค์ใด?</span></legend>
+            <div class="q-options">
+              <label class="opt"><input type="radio" name="q16" value="a" /><span class="opt-key">A</span><span class="opt-text">ระบุตำแหน่งปลายทางของเฟรม</span></label>
+              <label class="opt"><input type="radio" name="q16" value="b" /><span class="opt-key">B</span><span class="opt-text">แจ้งเตือนให้ผู้รับซิงโครไนซ์สัญญาณนาฬิกาและรู้ว่าเฟรมกำลังเริ่มต้น</span></label>
+              <label class="opt"><input type="radio" name="q16" value="c" /><span class="opt-key">C</span><span class="opt-text">เข้ารหัสข้อมูลในเฟรม</span></label>
+              <label class="opt"><input type="radio" name="q16" value="d" /><span class="opt-key">D</span><span class="opt-text">ตรวจสอบ error ของเฟรม</span></label>
+            </div>
+            <div class="q-feedback"><div class="q-feedback-inner"><p class="q-verdict" aria-live="polite"></p><p class="q-explain">Preamble 7 ไบต์ (สลับ 0/1) ช่วยซิงโครไนซ์นาฬิกา · SFD 1 ไบต์ บอกจุดเริ่มเฟรม · ปลายทางอยู่ใน Destination Address · การตรวจ error เป็นหน้าที่ของ CRC</p></div></div>
+          </fieldset>
+
+          <fieldset class="q" data-answer="b">
+            <legend class="q-head"><span class="q-num">17</span><span class="q-text">เหตุใดเฟรม Ethernet มาตรฐานต้องมีความยาวขั้นต่ำ 64 ไบต์?</span></legend>
+            <div class="q-options">
+              <label class="opt"><input type="radio" name="q17" value="a" /><span class="opt-key">A</span><span class="opt-text">เพื่อประหยัดหน่วยความจำเท่านั้น</span></label>
+              <label class="opt"><input type="radio" name="q17" value="b" /><span class="opt-key">B</span><span class="opt-text">เพื่อให้ผู้ส่งยังคงส่งข้อมูลอยู่ขณะที่การชนกันอาจเกิดขึ้น ทำให้ตรวจจับการชนได้ทันภายใต้ CSMA/CD</span></label>
+              <label class="opt"><input type="radio" name="q17" value="c" /><span class="opt-key">C</span><span class="opt-text">เพราะมาตรฐาน IP กำหนดไว้เช่นนั้น</span></label>
+              <label class="opt"><input type="radio" name="q17" value="d" /><span class="opt-key">D</span><span class="opt-text">เพื่อรองรับความเร็ว 100 Gbps</span></label>
+            </div>
+            <div class="q-feedback"><div class="q-feedback-inner"><p class="q-verdict" aria-live="polite"></p><p class="q-explain">เฟรมขั้นต่ำ 64 ไบต์ (512 บิต) ทำให้ผู้ส่งยังส่งอยู่ในช่วง worst-case round trip บนสายยาวสุดที่มาตรฐานกำหนด จึงตรวจจับการชนได้ทันภายใต้ CSMA/CD · การประหยัดหน่วยความจำเป็นเหตุผลของความยาวสูงสุด 1518 ไบต์</p></div></div>
+          </fieldset>
+
+          <fieldset class="q" data-answer="b">
+            <legend class="q-head"><span class="q-num">18</span><span class="q-text">MAC Address 48 บิต แบ่งเป็นสองส่วนคือข้อใด?</span></legend>
+            <div class="q-options">
+              <label class="opt"><input type="radio" name="q18" value="a" /><span class="opt-key">A</span><span class="opt-text">24 บิตแรกคือ IP, 24 บิตหลังคือ Port</span></label>
+              <label class="opt"><input type="radio" name="q18" value="b" /><span class="opt-key">B</span><span class="opt-text">24 บิตแรกกำหนดโดย IEEE ตามผู้ผลิต (OUI) 24 บิตหลังกำหนดโดยผู้ผลิตเอง</span></label>
+              <label class="opt"><input type="radio" name="q18" value="c" /><span class="opt-key">C</span><span class="opt-text">ทั้งหมดกำหนดโดยผู้ใช้งานเอง</span></label>
+              <label class="opt"><input type="radio" name="q18" value="d" /><span class="opt-key">D</span><span class="opt-text">24 บิตแรกคือ checksum</span></label>
+            </div>
+            <div class="q-feedback"><div class="q-feedback-inner"><p class="q-verdict" aria-live="polite"></p><p class="q-explain">MAC address 48 บิต เขียนเป็น hex คั่นด้วย ':' — 24 บิตแรก IEEE กำหนดตามผู้ผลิต (OUI) · 24 บิตหลังผู้ผลิตกำหนดเอง</p></div></div>
+          </fieldset>
+
+          <fieldset class="q" data-answer="b">
+            <legend class="q-head"><span class="q-num">19</span><span class="q-text">เมื่อสวิตช์ได้รับเฟรมที่ destination MAC address ไม่อยู่ในตาราง จะทำอย่างไร?</span></legend>
+            <div class="q-options">
+              <label class="opt"><input type="radio" name="q19" value="a" /><span class="opt-key">A</span><span class="opt-text">ทิ้งเฟรมนั้นทันที</span></label>
+              <label class="opt"><input type="radio" name="q19" value="b" /><span class="opt-key">B</span><span class="opt-text">ส่งออกไปทุกพอร์ตยกเว้นพอร์ตที่รับเข้ามา (flooding)</span></label>
+              <label class="opt"><input type="radio" name="q19" value="c" /><span class="opt-key">C</span><span class="opt-text">ส่งกลับไปยังต้นทางเท่านั้น</span></label>
+              <label class="opt"><input type="radio" name="q19" value="d" /><span class="opt-key">D</span><span class="opt-text">รอจนกว่าจะรู้จัก MAC address นั้น</span></label>
+            </div>
+            <div class="q-feedback"><div class="q-feedback-inner"><p class="q-verdict" aria-live="polite"></p><p class="q-explain">Unknown unicast (รวมถึง broadcast/multicast) → flooding: ส่งออกทุกพอร์ตยกเว้นพอร์ตที่รับเข้ามา · ถ้า destination MAC อยู่ในตาราง → ส่งเฉพาะพอร์ตนั้น (frame filtering)</p></div></div>
+          </fieldset>
+
+          <fieldset class="q" data-answer="a">
+            <legend class="q-head"><span class="q-num">20</span><span class="q-text">Store-and-forward switch ต่างจาก Cut-through switch อย่างไร?</span></legend>
+            <div class="q-options">
+              <label class="opt"><input type="radio" name="q20" value="a" /><span class="opt-key">A</span><span class="opt-text">Store-and-forward รับเฟรมทั้งเฟรมตรวจ CRC ก่อนส่งต่อ ส่วน Cut-through ส่งต่อทันทีที่รู้ destination address โดยยังไม่รอรับครบเฟรม</span></label>
+              <label class="opt"><input type="radio" name="q20" value="b" /><span class="opt-key">B</span><span class="opt-text">Cut-through ตรวจสอบ error ได้แม่นยำกว่า</span></label>
+              <label class="opt"><input type="radio" name="q20" value="c" /><span class="opt-key">C</span><span class="opt-text">Store-and-forward เร็วกว่า Cut-through เสมอ</span></label>
+              <label class="opt"><input type="radio" name="q20" value="d" /><span class="opt-key">D</span><span class="opt-text">ทั้งสองแบบทำงานเหมือนกันทุกประการ</span></label>
+            </div>
+            <div class="q-feedback"><div class="q-feedback-inner"><p class="q-verdict" aria-live="polite"></p><p class="q-explain">Store-and-forward รับครบเฟรม ตรวจ CRC ก่อนส่งต่อ (รองรับ QoS) · Cut-through ส่งต่อทันทีที่รู้ destination address เร็วกว่าแต่ไม่ตรวจ error ก่อน (แบบย่อย fragment-free เช็ค 64 ไบต์แรก)</p></div></div>
+          </fieldset>
+
+          <div class="quiz-result" id="quiz-result" hidden tabindex="-1">
+            <div class="score-ring" aria-hidden="true">
+              <svg viewBox="0 0 120 120">
+                <circle class="ring-track" cx="60" cy="60" r="52" />
+                <circle class="ring-fill" cx="60" cy="60" r="52" pathLength="100" />
+              </svg>
+              <span class="score-pct"><span id="score-pct">0</span>%</span>
+            </div>
+            <div class="score-body">
+              <p class="score-line" role="status">ได้ <strong id="score-num">0</strong> / 20 คะแนน</p>
+              <p class="score-msg" id="score-msg"></p>
+              <div class="score-actions">
+                <button class="btn btn--ghost btn--sm" type="button" id="toggle-wrong" aria-pressed="false">ดูเฉพาะข้อที่ผิด</button>
+              </div>
+            </div>
+          </div>
+
+          <div class="quiz-bar">
+            <div class="quiz-progress">
+              <span class="quiz-count"><span id="answered">0</span> / 20 ข้อ</span>
+              <span class="progress" aria-hidden="true"><span class="progress-fill" id="progress-fill"></span></span>
+              <span class="quiz-hint" id="quiz-hint" aria-live="polite"></span>
+            </div>
+            <div class="quiz-actions">
+              <button class="btn btn--ghost" type="reset" id="quiz-reset">ทำใหม่</button>
+              <button class="btn btn--primary" type="submit" id="quiz-submit">ตรวจคำตอบ</button>
+            </div>
+          </div>
+        </form>
+      </section>
+
+    </div>
+  </main>
+
+  <footer class="site-footer">
+    <div class="wrap">
+      <p>สรุปจากสไลด์ ITDS231 Computer Networks (Faculty of ICT, Mahidol University) เพื่อใช้ทบทวนส่วนตัว — ถ้าเนื้อหาขัดกับสไลด์ ให้ยึดสไลด์เป็นหลัก</p>
+    </div>
+  </footer>
+
+  <script src="assets/js/network.js" defer></script>
+</body>
+</html>
