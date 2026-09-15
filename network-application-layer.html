@@ -22,6 +22,15 @@
 <body>
   <a class="skip-link" href="#tabs">ข้ามไปที่เนื้อหา</a>
 
+  <svg class="dg-defs" aria-hidden="true" focusable="false">
+    <defs>
+      <marker id="arr" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path class="dg-arrow" d="M0 0L10 5L0 10z" /></marker>
+      <marker id="arr-muted" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path class="dg-arrow--muted" d="M0 0L10 5L0 10z" /></marker>
+      <marker id="arr-ok" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path class="dg-arrow--ok" d="M0 0L10 5L0 10z" /></marker>
+      <marker id="arr-bad" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path class="dg-arrow--bad" d="M0 0L10 5L0 10z" /></marker>
+    </defs>
+  </svg>
+
   <header class="site-header">
     <div class="wrap">
       <a class="wordmark" href="index.html" aria-label="โต๊ะทบทวน หน้าแรก">
@@ -87,7 +96,7 @@
            ============================================================= -->
       <section class="panel" id="content" role="tabpanel" aria-labelledby="tab-content" tabindex="-1">
         <div class="panel-head">
-          <h2>เนื้อหาแยกตามไฟล์สไลด์</h2>
+          <h2>เนื้อหาแยกตามหัวข้อในสไลด์</h2>
           <div class="panel-actions">
             <button class="btn btn--ghost btn--sm" type="button" data-acc-all="open">เปิดทั้งหมด</button>
             <button class="btn btn--ghost btn--sm" type="button" data-acc-all="close">ปิดทั้งหมด</button>
@@ -96,14 +105,14 @@
 
         <div class="acc">
 
-          <!-- ---------- ไฟล์ 1 ---------- -->
+          <!-- ================= 01 Principles ================= -->
           <div class="acc-item is-open">
             <h3 class="acc-heading">
               <button class="acc-trigger" type="button" aria-expanded="true" aria-controls="acc-principles" id="acc-principles-btn">
                 <span class="acc-index">01</span>
                 <span class="acc-title">
                   <span class="acc-name">หลักการของแอปพลิเคชันเครือข่าย</span>
-                  <span class="acc-file">chapter2_application layer_1-1.pdf · Lecture 3</span>
+                  <span class="acc-file">chapter2_application layer_1-1.pdf · Lecture 3 · สไลด์ 2–26</span>
                 </span>
                 <svg class="acc-chevron" viewBox="0 0 20 20" aria-hidden="true"><path d="M5 7.5l5 5 5-5" /></svg>
               </button>
@@ -113,48 +122,107 @@
                 <div class="acc-body">
 
                   <nav class="toc" aria-label="หัวข้อในหลักการของแอปพลิเคชันเครือข่าย">
-                    <a href="#app-overview">ภาพรวม</a>
+                    <a href="#app-overview">ภาพรวม &amp; เป้าหมาย</a>
+                    <a href="#app-create">การสร้าง network app</a>
                     <a href="#app-arch">Client-Server vs P2P</a>
                     <a href="#app-process">Process</a>
-                    <a href="#app-addressing">Addressing processes</a>
                     <a href="#app-socket">Socket</a>
+                    <a href="#app-addressing">Addressing processes</a>
                     <a href="#app-transport">App ↔ Transport</a>
                     <a href="#app-tcp-udp">TCP vs UDP</a>
                     <a href="#app-tls">TLS</a>
+                    <a href="#app-takeaways">Key takeaways</a>
                   </nav>
 
                   <section class="topic" id="app-overview">
-                    <h4>ภาพรวมบท Application Layer</h4>
-                    <ul>
-                      <li>network app principles</li>
-                      <li>Web / HTTP</li>
-                      <li>Email / SMTP / IMAP</li>
-                      <li>DNS</li>
-                      <li>video streaming / CDN</li>
-                      <li>socket programming (UDP / TCP)</li>
-                    </ul>
-                    <p><strong>ตัวอย่างแอปในชีวิตประจำวัน:</strong> social media · web · messaging · email · เกมออนไลน์ · streaming (YouTube/Netflix) · P2P file sharing · VoIP · video conferencing · internet search · remote login</p>
+                    <h4>ภาพรวมบท Application Layer และเป้าหมาย</h4>
+                    <p>บทนี้อ้างอิงหนังสือ <em>Computer Networking: A Top-Down Approach</em> 9th edition (Kurose &amp; Ross, Pearson 2025) หัวข้อทั้งหมดของบทได้แก่ หลักการของแอปพลิเคชันเครือข่าย (principles of network applications), Web และ HTTP, E-mail (SMTP, IMAP), ระบบ DNS, video streaming และ content distribution networks และ socket programming ด้วย UDP และ TCP</p>
+                    <p><strong>เป้าหมายของบท (Our goals)</strong> มี 3 ด้าน</p>
+                    <ol class="steps">
+                      <li>เข้าใจทั้งแนวคิดและการนำไปใช้งานจริงของ application-layer protocols ได้แก่ <strong>transport-layer service models</strong>, <strong>client-server paradigm</strong> และ <strong>peer-to-peer paradigm</strong></li>
+                      <li>เรียนรู้โปรโตคอลผ่านการศึกษาโปรโตคอลและโครงสร้างพื้นฐานที่ใช้กันแพร่หลาย ได้แก่ HTTP, SMTP, IMAP, DNS, video streaming systems และ CDNs (Content Delivery networks)</li>
+                      <li>เขียนโปรแกรมแอปพลิเคชันเครือข่ายด้วย <strong>socket API</strong></li>
+                    </ol>
+                    <p><strong>ตัวอย่าง network apps:</strong> social media · Web · text messaging · e-mail · multi-user network games · streaming stored video (YouTube, Hulu, Netflix) · P2P file sharing · voice over IP · real-time video conferencing (เช่น Zoom) · Internet search · remote login</p>
+                    <div class="callout callout--def">
+                      <span class="callout-label">คำย่อที่พบในบท</span>
+                      <p><b>SMTP</b> = Simple Mail Transfer Protocol · <b>DASH</b> = Dynamic Adaptive Streaming over HTTP (MPEG-DASH) · <b>CDN</b> = Content Delivery network</p>
+                    </div>
+                  </section>
+
+                  <section class="topic" id="app-create">
+                    <h4>การสร้าง network app (Creating a network app)</h4>
+                    <p>การสร้างแอปพลิเคชันเครือข่ายคือการเขียนโปรแกรมที่ <strong>ทำงานบนอุปกรณ์ปลายทาง (end systems) ต่างเครื่องกัน</strong> และ<strong>สื่อสารกันผ่านเครือข่าย</strong> เช่น ซอฟต์แวร์ web server คุยกับซอฟต์แวร์ browser โดยทั้งสองฝั่งมี protocol stack ครบ 5 ชั้น (application, transport, network, data link, physical)</p>
+                    <p>นักพัฒนา<strong>ไม่ต้องเขียนซอฟต์แวร์ให้อุปกรณ์แกนกลางเครือข่าย (network-core devices)</strong> เพราะอุปกรณ์เหล่านั้นไม่ได้รันแอปพลิเคชันของผู้ใช้ (web, streaming, gaming, Zoom, email ทำงานบนปลายทางเท่านั้น)</p>
+                    <div class="callout callout--why">
+                      <span class="callout-label">ทำไมถึงแยกแบบนี้</span>
+                      <p>การที่แอปพลิเคชันอยู่บน end systems เท่านั้น <b>ทำให้พัฒนาและเผยแพร่แอปได้อย่างรวดเร็ว</b> (rapid app development, propagation) โดยไม่ต้องแก้ไขซอฟต์แวร์ของระบบเครือข่ายส่วนกลาง</p>
+                    </div>
                   </section>
 
                   <section class="topic" id="app-arch">
-                    <h4>สถาปัตยกรรม: Client-Server vs P2P</h4>
+                    <h4>สถาปัตยกรรม: Client-Server vs Peer-to-Peer</h4>
                     <div class="compare">
                       <div class="compare-col">
-                        <h5>Client-Server</h5>
+                        <h5>Client-Server paradigm</h5>
+                        <p><strong>Server</strong></p>
                         <ul>
-                          <li><strong>เซิร์ฟเวอร์:</strong> เป็น <em>always-on host</em> มี <em>permanent IP address</em> มักอยู่ใน data center เพื่อรองรับการขยายตัว</li>
-                          <li><strong>ไคลเอนต์:</strong> เชื่อมต่อเป็นครั้งคราว อาจมี dynamic IP ไม่คุยกันเองโดยตรง</li>
-                          <li><strong>ตัวอย่าง:</strong> HTTP, IMAP, FTP</li>
+                          <li>เป็น <em>always-on host</em> เปิดทำงานตลอดเวลา</li>
+                          <li>มี <em>permanent IP address</em> (IP ถาวร)</li>
+                          <li>มักอยู่ใน data center เพื่อรองรับการขยายตัว (for scaling)</li>
+                        </ul>
+                        <p><strong>Clients</strong></p>
+                        <ul>
+                          <li>ติดต่อและสื่อสารกับ server</li>
+                          <li>อาจเชื่อมต่อเป็นครั้งคราว (intermittently connected)</li>
+                          <li>อาจมี dynamic IP address</li>
+                          <li><strong>ไม่สื่อสารกันเองโดยตรง</strong></li>
+                        </ul>
+                        <p><strong>ตัวอย่าง:</strong> HTTP (Web), IMAP (Email), FTP</p>
+                      </div>
+                      <div class="compare-col">
+                        <h5>Peer-to-peer (P2P) architecture</h5>
+                        <ul>
+                          <li><strong>ไม่มี always-on server</strong></li>
+                          <li>end systems ใดๆ สื่อสารกันเองโดยตรง</li>
+                          <li>peer ขอใช้บริการจาก peer อื่น และให้บริการตอบแทนแก่ peer อื่นด้วย</li>
+                          <li><strong>self scalability</strong> — peer ใหม่นำทั้ง service capacity ใหม่ และ service demand ใหม่เข้ามา</li>
+                          <li>peer เชื่อมต่อเป็นครั้งคราวและเปลี่ยน IP address ได้ → <strong>จัดการซับซ้อน</strong> (complex management)</li>
+                        </ul>
+                        <p><strong>ตัวอย่าง:</strong> P2P file sharing [BitTorrent]</p>
+                      </div>
+                    </div>
+                    <p>สไลด์ภาษาไทยขยายความว่า Client-Server คือรูปแบบที่แบ่งหน้าที่ชัดเจน เครื่อง Client (มือถือ/คอม) ส่งคำขอ (Request) ส่วนเครื่อง Server (ศูนย์ข้อมูลที่เปิด 24 ชม.) ประมวลผลและส่งข้อมูลตอบกลับ (Response) ขณะที่ P2P ไม่มีเครื่องส่วนกลาง ทุกเครื่องในเครือข่ายมีสิทธิ์เท่ากัน เป็นทั้งผู้รับและผู้ปล่อยข้อมูลพร้อมกัน (ยิ่งคนใช้เยอะ ระบบยิ่งเร็ว) ส่วน Blockchain คืองานบนระบบ P2P ผสมคณิตศาสตร์ เปลี่ยนจากคอมพิวเตอร์เครื่องเดียวที่ใครก็แอบแฮกได้ เป็นคอมพิวเตอร์นับล้านเครื่องทั่วโลกที่ช่วยกันถือข้อมูลชุดเดียวกัน</p>
+                    <div class="table-scroll">
+                      <table>
+                        <thead><tr><th>ประเด็น</th><th>Client-Server</th><th>Peer-to-Peer (P2P)</th></tr></thead>
+                        <tbody>
+                          <tr><td>การพึ่งพาเซิร์ฟเวอร์ (Server Reliance)</td><td>สูงมาก (ต้องเปิดตลอดเวลา)</td><td>ไม่มี</td></tr>
+                          <tr><td>การขยายตัว (Scalability)</td><td>ต้องเพิ่มเซิร์ฟเวอร์ใน Data Center</td><td><strong>ขยายตัวได้เองอัตโนมัติ (Self-scaling)</strong></td></tr>
+                          <tr><td>การสื่อสารระหว่างไคลเอนต์</td><td>ผ่านเซิร์ฟเวอร์เท่านั้น</td><td>สื่อสารกันโดยตรง</td></tr>
+                          <tr><td>ความซับซ้อนในการจัดการ</td><td>ง่าย (Centralized)</td><td><strong>ซับซ้อนมาก (Dynamic IPs)</strong></td></tr>
+                        </tbody>
+                      </table>
+                    </div>
+                    <div class="compare">
+                      <div class="compare-col">
+                        <h5>ใช้ Client-Server เมื่อไร</h5>
+                        <p>บริการส่วนใหญ่บนอินเทอร์เน็ตใช้ระบบนี้ <strong>เพราะควบคุมความปลอดภัยง่าย และผู้ให้บริการเก็บข้อมูลพฤติกรรมผู้ใช้ได้ดี</strong></p>
+                        <ul>
+                          <li>Social Media (LINE, Facebook, Instagram)</li>
+                          <li>สตรีมมิ่งความบันเทิง (YouTube, Netflix, Hulu)</li>
+                          <li>ธนาคารและการชำระเงิน (Mobile Banking)</li>
+                          <li>เกมออนไลน์ยอดฮิต (RoV, Free Fire)</li>
                         </ul>
                       </div>
                       <div class="compare-col">
-                        <h5>P2P (Peer-to-Peer)</h5>
+                        <h5>ใช้ P2P เมื่อไร</h5>
+                        <p>เมื่อ<strong>ต้องส่งข้อมูลปริมาณมหาศาล</strong> หรือ<strong>ต้องการความปลอดภัยสูงแบบกระจายศูนย์</strong> โดยไม่ให้ใครคนเดียวผูกขาดระบบ</p>
                         <ul>
-                          <li>ไม่มีเซิร์ฟเวอร์ส่วนกลางที่เปิดตลอดเวลา</li>
-                          <li>อุปกรณ์ปลายทางคุยกันเองโดยตรง</li>
-                          <li><strong>self-scalability:</strong> peer ใหม่เพิ่มทั้งความสามารถให้บริการและความต้องการใช้บริการ</li>
-                          <li>จัดการซับซ้อนกว่า เพราะ IP เปลี่ยนได้ตลอด</li>
-                          <li><strong>ตัวอย่าง:</strong> BitTorrent, blockchain</li>
+                          <li><strong>BitTorrent:</strong> แทนที่จะโหลดไฟล์เกม 50 GB จากเว็บตรงๆ (ทำให้เว็บช้า) คอมพิวเตอร์ของผู้ใช้ทั่วโลกที่เปิดโปรแกรมอยู่ต่อท่อ socket คุยตรงหากันเอง ช่วยกันส่งชิ้นส่วนไฟล์เหมือนจิ๊กซอว์จนครบ</li>
+                          <li><strong>เงินดิจิทัลและบล็อกเชน (Bitcoin, Ethereum):</strong> ไม่พึ่งเซิร์ฟเวอร์ธนาคารกลาง คอมพิวเตอร์ผู้ใช้ทุกคนในเครือข่าย P2P ช่วยกันตรวจสอบและบันทึกบัญชีการโอนร่วมกันอย่างโปร่งใส</li>
+                          <li>ส่งไฟล์ระยะใกล้ (Apple AirDrop / Android Quick Share)</li>
+                          <li>โทรศัพท์และวิดีโอคอลยุคใหม่ (WebRTC ใน Zoom หรือ Discord)</li>
                         </ul>
                       </div>
                     </div>
@@ -162,95 +230,150 @@
 
                   <section class="topic" id="app-process">
                     <h4>Process และการสื่อสารระหว่างโปรเซส</h4>
-                    <p><strong>Process</strong> คือโปรแกรมที่รันอยู่บนโฮสต์</p>
-                    <ul>
-                      <li><strong>ในเครื่องเดียวกัน:</strong> คุยกันผ่าน <em>Inter-Process Communication (IPC)</em> ซึ่งควบคุมโดย OS</li>
-                      <li><strong>ต่างเครื่อง:</strong> คุยกันด้วยการแลกเปลี่ยนข้อความ (<em>messages</em>)</li>
-                    </ul>
+                    <div class="callout callout--def">
+                      <span class="callout-label">นิยาม</span>
+                      <p><strong>Process</strong> คือโปรแกรมที่กำลังทำงานอยู่บนโฮสต์ (program running within a host)</p>
+                    </div>
                     <div class="compare">
                       <div class="compare-col">
-                        <h5>Client process</h5>
-                        <p>ฝ่ายเริ่มการสื่อสาร</p>
+                        <h5>ในเครื่องเดียวกัน (Same Host)</h5>
+                        <p>สองโปรเซสสื่อสารกันด้วย <strong>inter-process communication (IPC)</strong> ซึ่งกำหนดและควบคุมโดยระบบปฏิบัติการ (OS)</p>
                       </div>
                       <div class="compare-col">
-                        <h5>Server process</h5>
-                        <p>ฝ่ายรอรับการติดต่อ</p>
+                        <h5>ข้ามเครื่อง (Different Hosts)</h5>
+                        <p>โปรเซสบนโฮสต์ต่างกันสื่อสารด้วย<strong>การแลกเปลี่ยนข้อความ (exchanging messages)</strong> ข้ามเครือข่าย</p>
+                      </div>
+                    </div>
+                    <p><strong>Client process</strong> คือโปรเซสที่<strong>เริ่มต้นการสื่อสาร</strong> (initiates communication) ส่วน <strong>server process</strong> คือโปรเซสที่<strong>รอให้ถูกติดต่อ</strong> (waits to be contacted)</p>
+                    <div class="callout callout--warn">
+                      <span class="callout-label">ข้อควรระวัง</span>
+                      <p>แม้แอปแบบ P2P จะไม่มี always-on server แต่<strong>แอปที่ใช้สถาปัตยกรรม P2P ก็ยังมีทั้ง client process และ server process</strong> — เพราะในการสื่อสารแต่ละครั้งต้องมีฝ่ายที่เริ่มและฝ่ายที่รอ</p>
+                    </div>
+                    <p><strong>ภาพ IPC ในเครื่องเดียว (สไลด์ภาษาไทย):</strong> สมมุติในคอมพิวเตอร์มีแอป Chrome (Process A) และแอป Word (Process B) — IPC อยู่ตรงรอยต่อระหว่างโปรแกรม ทำหน้าที่เหมือนสะพานเจาะกำแพงให้ Process A และ B คุยกันได้โดยตรงผ่าน "โต๊ะกลาง" คือ RAM (shared memory) แต่ถ้า Process A ต้องการคุยกับเซิร์ฟเวอร์ต่างประเทศ ข้อมูลจะถูกส่งไม้ต่อลงไปที่ socket (TCP/UDP) เพื่อแปลงเป็น packet วิ่งลงชั้นกายภาพ เช่น สายเคเบิลใยแก้วนำแสงใต้ทะเล (ไทย → อเมริกา) ที่แบ่งช่องความถี่แบบ FDM/OFDM</p>
+                  </section>
+
+                  <section class="topic" id="app-socket">
+                    <h4>Socket: ประตูเชื่อมสู่เครือข่าย</h4>
+                    <p>โปรเซสส่งและรับข้อความผ่าน <strong>socket</strong> ของตัวเอง socket เปรียบเสมือน<strong>ประตู</strong></p>
+                    <ol class="steps">
+                      <li>โปรเซสผู้ส่ง<strong>ผลักข้อความ (message) ออกไปทางประตู</strong> (sending process shoves message out door)</li>
+                      <li>เมื่อพ้นประตูไปแล้ว โปรเซสผู้ส่งอาศัย<strong>โครงสร้างพื้นฐานฝั่ง transport</strong> ที่อยู่อีกด้านของประตู นำข้อความไปส่งถึง socket ของโปรเซสผู้รับ</li>
+                    </ol>
+                    <p>การสื่อสารหนึ่งครั้ง<strong>มี socket 2 ตัวเสมอ</strong> — ฝั่งละหนึ่งตัว</p>
+                    <div class="compare">
+                      <div class="compare-col">
+                        <h5>เหนือ socket <span class="chip">controlled by app developer</span></h5>
+                        <p>ชั้น application (process) — นักพัฒนาควบคุม "ฝั่งในบ้าน"</p>
+                      </div>
+                      <div class="compare-col">
+                        <h5>ใต้ socket <span class="chip">controlled by OS</span></h5>
+                        <p>transport, network, link, physical — ระบบปฏิบัติการควบคุม "ฝั่งนอกบ้าน"</p>
                       </div>
                     </div>
                   </section>
 
                   <section class="topic" id="app-addressing">
                     <h4>Addressing processes</h4>
-                    <p>IP address ระบุได้แค่ระดับเครื่อง/โฮสต์เท่านั้น (Network Layer) แต่หนึ่งเครื่องรันได้หลายโปรเซสพร้อมกัน จึงต้องใช้คู่ <strong>"IP address + Port Number"</strong> ในการระบุตัวตนที่แน่นอนของโปรเซสผ่านเครือข่าย</p>
-                    <code class="formula">ตัวตนของ process บนเครือข่าย = IP address + Port number</code>
-                    <div class="callout">
-                      <strong>เปรียบเทียบ:</strong>
-                      <b>IP</b> = บ้านเลขที่ ·
-                      <b>Port</b> = หมายเลขห้อง ·
-                      ส่วนภายในเครื่องเองใช้ <b>Process ID (PID)</b>
-                    </div>
-                  </section>
-
-                  <section class="topic" id="app-socket">
-                    <h4>Socket</h4>
-                    <p><strong>Socket</strong> คือจุดที่ process ส่ง/รับข้อความ เปรียบเหมือน<em>ประตู</em></p>
+                    <p>โปรเซสจะรับข้อความได้ต้องมี<strong>ตัวระบุ (identifier)</strong> อุปกรณ์โฮสต์แต่ละเครื่องมี <strong>IP address ขนาด 32 บิต</strong> ที่ไม่ซ้ำกัน คำถามคือ IP address ของโฮสต์ที่โปรเซสนั้นรันอยู่ <strong>เพียงพอ</strong>จะระบุตัวโปรเซสหรือไม่? คำตอบคือ<strong>ไม่พอ</strong> เพราะโฮสต์เดียวอาจมีหลายโปรเซสทำงานอยู่พร้อมกัน</p>
+                    <ul>
+                      <li><strong>IP address ทำงานที่ Network Layer (Layer 3)</strong> ใช้ระบุตัวตนของเครื่อง/โฮสต์บนเครือข่ายเท่านั้น ไม่ได้ระบุถึงแอปพลิเคชันหรือโปรเซสที่รันอยู่ภายใน</li>
+                      <li><strong>หนึ่งเครื่องรันได้หลายโปรเซส:</strong> เครื่องที่มี IP เพียง 1 ค่าอาจรัน Web server, SSH daemon และ Database พร้อมกัน IP อย่างเดียวจึงแยกแยะโปรเซสเหล่านั้นไม่ได้</li>
+                    </ul>
+                    <code class="formula">IP Address + Port Number = Exact Process Identifier</code>
                     <div class="compare">
                       <div class="compare-col">
-                        <h5>เหนือ socket <span class="chip">แอปพลิเคชันควบคุม</span></h5>
-                        <p>ส่วนของแอปพลิเคชัน (process)</p>
+                        <h5>ผ่านระบบเครือข่าย (Over the Network)</h5>
+                        <p>ต้องระบุคู่กันระหว่าง <strong>IP address + หมายเลขพอร์ต (Port Number)</strong> รวมถึงโปรโตคอลขนส่ง (TCP หรือ UDP) โดย port (Layer 4) ทำหน้าที่ส่งข้อมูลไปยัง socket ที่ผูกอยู่กับโปรเซสนั้น</p>
                       </div>
                       <div class="compare-col">
-                        <h5>ใต้ socket <span class="chip">OS ควบคุม</span></h5>
-                        <p>transport, network, link, physical</p>
+                        <h5>ภายในเครื่องโฮสต์เอง (Locally)</h5>
+                        <p>ระบบปฏิบัติการกำหนดหมายเลขประจำตัวเฉพาะเรียกว่า <strong>Process ID (PID)</strong> ให้ทุกโปรเซสที่กำลังทำงาน</p>
                       </div>
+                    </div>
+                    <div class="callout callout--why">
+                      <span class="callout-label">เปรียบเทียบ: ป้ายจ่าหน้าพัสดุ (Shipping Label)</span>
+                      <p><b>IP Address</b> = บ้านเลขที่ (ระบุอุปกรณ์/House) · <b>Port Number</b> = หมายเลขห้อง (ระบุ process/Specific Room)</p>
+                      <p>ตัวอย่างในสไลด์: ส่งข้อมูลไปที่ <code>128.119.245.12:80</code> = บ้านเลขที่ 128.119.245.12 ห้องหมายเลข 80 ซึ่งเป็น Web Server (HTTP) ส่วน Mail Server ในภาพใช้ port 25</p>
                     </div>
                   </section>
 
                   <section class="topic" id="app-transport">
-                    <h4>แอปพลิเคชันกับ Transport protocol</h4>
+                    <h4>Internet applications และ transport protocols</h4>
                     <div class="table-scroll">
                       <table>
-                        <thead><tr><th>แอปพลิเคชัน</th><th>Application-layer protocol</th><th>Transport protocol</th></tr></thead>
+                        <thead><tr><th>application</th><th>application layer protocol</th><th>transport protocol</th></tr></thead>
                         <tbody>
-                          <tr><td>file transfer</td><td>FTP</td><td>TCP</td></tr>
-                          <tr><td>email</td><td>SMTP</td><td>TCP</td></tr>
-                          <tr><td>web</td><td>HTTP</td><td>TCP</td></tr>
-                          <tr><td>internet telephony</td><td>SIP / RTP</td><td>TCP หรือ UDP</td></tr>
-                          <tr><td>streaming audio/video</td><td>HTTP / DASH</td><td>TCP</td></tr>
-                          <tr><td>interactive games</td><td>—</td><td>UDP หรือ TCP</td></tr>
+                          <tr><td>file transfer/download</td><td>FTP [RFC 959]</td><td>TCP</td></tr>
+                          <tr><td>e-mail</td><td>SMTP [RFC 5321]</td><td>TCP</td></tr>
+                          <tr><td>Web documents</td><td>HTTP [RFC 7230, 9110]</td><td>TCP</td></tr>
+                          <tr><td>Internet telephony</td><td>SIP [RFC 3261], RTP [RFC 3550] หรือ proprietary</td><td>TCP or UDP</td></tr>
+                          <tr><td>streaming audio/video</td><td>HTTP [RFC 7230], DASH</td><td>TCP</td></tr>
+                          <tr><td>interactive games</td><td>WOW, FPS (proprietary)</td><td>UDP or TCP</td></tr>
                         </tbody>
                       </table>
                     </div>
                   </section>
 
                   <section class="topic" id="app-tcp-udp">
-                    <h4>บริการของ TCP และ UDP</h4>
+                    <h4>บริการของ Internet transport protocols: TCP และ UDP</h4>
                     <div class="compare">
                       <div class="compare-col">
                         <h5>TCP service</h5>
                         <ul>
-                          <li>reliable transport</li>
-                          <li>flow control</li>
-                          <li>congestion control</li>
-                          <li>connection-oriented</li>
+                          <li><strong>reliable transport</strong> ระหว่างโปรเซสผู้ส่งและผู้รับ</li>
+                          <li><strong>flow control:</strong> ผู้ส่งจะไม่ส่งจนผู้รับรับไม่ทัน (sender won't overwhelm receiver) — กลไกควบคุมความเร็วการส่งข้อมูล</li>
+                          <li><strong>congestion control:</strong> ลดความเร็วผู้ส่ง (throttle sender) เมื่อเครือข่ายรับภาระเกิน</li>
+                          <li><strong>connection-oriented:</strong> ต้องมีการ setup ระหว่าง client process กับ server process ก่อน</li>
                         </ul>
-                        <p><strong>ไม่รับประกัน:</strong> timing, throughput ขั้นต่ำ, security</p>
+                        <p><strong>ไม่ให้บริการ:</strong> timing, minimum throughput guarantee, security</p>
                       </div>
                       <div class="compare-col">
                         <h5>UDP service</h5>
-                        <p><strong>unreliable data transfer</strong></p>
-                        <p><strong>ไม่มี:</strong> reliability, flow control, congestion control, timing, throughput guarantee, security หรือ connection setup ใดๆ</p>
+                        <ul>
+                          <li><strong>unreliable data transfer</strong> ระหว่างโปรเซสผู้ส่งและผู้รับ</li>
+                        </ul>
+                        <p><strong>ไม่ให้บริการ:</strong> reliability, flow control, congestion control, timing, throughput guarantee, security หรือ connection setup</p>
                       </div>
+                    </div>
+                    <div class="callout callout--def">
+                      <span class="callout-label">คำถามชวนคิดในสไลด์</span>
+                      <p><b>Q: why bother? Why is there a UDP?</b> — ถ้า UDP ไม่รับประกันอะไรเลย ทำไมยังต้องมี? (สังเกตจากตาราง App ↔ Transport ว่า Internet telephony และ interactive games เลือกใช้ UDP ได้)</p>
                     </div>
                   </section>
 
                   <section class="topic" id="app-tls">
-                    <h4>Securing TCP ด้วย TLS</h4>
-                    <ul>
-                      <li><strong>TLS (Transport Layer Security)</strong> เข้ารหัสการเชื่อมต่อ TCP ให้ <em>data integrity</em> และ <em>endpoint authentication</em></li>
-                      <li>TLS ทำงานอยู่ที่ <strong>application layer</strong> — แอปเรียกใช้ TLS library ซึ่งใช้ TCP อีกที</li>
-                      <li>cleartext ที่ส่งเข้า socket จะถูกเข้ารหัสก่อนวิ่งออกอินเทอร์เน็ต</li>
-                    </ul>
+                    <h4>Securing TCP ด้วย TLS (Transport Layer Security)</h4>
+                    <div class="compare">
+                      <div class="compare-col">
+                        <h5>ปัญหา: Vanilla TCP &amp; UDP sockets</h5>
+                        <ul>
+                          <li><strong>ไม่มีการเข้ารหัส</strong> (no encryption)</li>
+                          <li>รหัสผ่านแบบ cleartext ที่ส่งเข้า socket <strong>วิ่งผ่านอินเทอร์เน็ตแบบ cleartext</strong></li>
+                          <li>ผู้อื่นดักจับแพ็กเก็ตแล้วอ่านได้เลยโดยไม่ต้องถอดรหัส</li>
+                        </ul>
+                      </div>
+                      <div class="compare-col">
+                        <h5>ทางแก้: TLS</h5>
+                        <ul>
+                          <li>ให้ <strong>encrypted TCP connections</strong></li>
+                          <li><strong>data integrity</strong> — ยืนยันความถูกต้องของข้อมูล</li>
+                          <li><strong>end-point authentication</strong> — ยืนยันตัวตนปลายทาง</li>
+                        </ul>
+                      </div>
+                    </div>
+                    <div class="callout callout--warn">
+                      <span class="callout-label">ข้อควรระวัง: TLS อยู่ชั้นไหน</span>
+                      <p>แม้ชื่อจะมีคำว่า Transport แต่ <strong>TLS implemented in application layer</strong> — แอปเรียกใช้ TLS libraries ซึ่งใช้ TCP อีกทีหนึ่ง ผลคือ cleartext ที่ส่งเข้า "socket" จะวิ่งผ่านอินเทอร์เน็ต<b>แบบเข้ารหัสแล้ว</b></p>
+                    </div>
+                  </section>
+
+                  <section class="topic" id="app-takeaways">
+                    <h4>ภาพรวมกลไกของชั้นแอปพลิเคชัน (Key Takeaways)</h4>
+                    <ol class="steps">
+                      <li><strong>สถาปัตยกรรม (Architecture):</strong> แอปพลิเคชันถูกออกแบบให้ทำงานบน End Systems โดยเลือกใช้แบบ Client-Server (พึ่งพาศูนย์กลาง) หรือ P2P (กระจายศูนย์)</li>
+                      <li><strong>การเชื่อมต่อและระบุตัวตน (Sockets &amp; Addressing):</strong> Process สื่อสารกันผ่านประตูที่เรียกว่า Socket โดยหาเป้าหมายเจอด้วยการผสาน IP Address เข้ากับ Port Number</li>
+                      <li><strong>การเลือกพาหนะขนส่ง (Transport Protocols):</strong> แอปต้องเลือกระหว่าง TCP (ข้อมูลครบถ้วนแน่นอน) หรือ UDP (ส่งเร็วแต่ไม่รับประกัน) ตามความต้องการใช้งานจริง และเสริมความปลอดภัยด้วย TLS</li>
+                    </ol>
                   </section>
 
                 </div>
@@ -258,14 +381,14 @@
             </div>
           </div>
 
-          <!-- ---------- ไฟล์ 2 ---------- -->
+          <!-- ================= 02 Web & HTTP ================= -->
           <div class="acc-item">
             <h3 class="acc-heading">
               <button class="acc-trigger" type="button" aria-expanded="false" aria-controls="acc-http" id="acc-http-btn">
                 <span class="acc-index">02</span>
                 <span class="acc-title">
                   <span class="acc-name">เว็บและ HTTP</span>
-                  <span class="acc-file">chapter2_Lecture4_application layer_rev2-1.pdf · Lecture 4</span>
+                  <span class="acc-file">chapter2_application layer_1-1.pdf · Lecture 3 · สไลด์ 28–47</span>
                 </span>
                 <svg class="acc-chevron" viewBox="0 0 20 20" aria-hidden="true"><path d="M5 7.5l5 5 5-5" /></svg>
               </button>
@@ -276,113 +399,988 @@
 
                   <nav class="toc" aria-label="หัวข้อในเว็บและ HTTP">
                     <a href="#http-objects">เว็บเพจและ objects</a>
-                    <a href="#http-overview">HTTP คืออะไร</a>
-                    <a href="#http-persistent">Non-persistent vs Persistent</a>
-                    <a href="#http-request">Request message</a>
-                    <a href="#http-response">Response &amp; Status code</a>
+                    <a href="#http-overview">HTTP overview</a>
+                    <a href="#http-stateless">Stateless</a>
+                    <a href="#http-nonpersistent">Non-persistent HTTP</a>
+                    <a href="#http-persistent">Persistent HTTP &amp; timeline</a>
+                    <a href="#http-request">Request message &amp; methods</a>
+                    <a href="#http-response">Response &amp; status codes</a>
                   </nav>
 
                   <section class="topic" id="http-objects">
                     <h4>เว็บเพจประกอบด้วย objects</h4>
-                    <ul>
-                      <li>เว็บเพจประกอบด้วย <strong>objects</strong> หลายชิ้น — HTML file, รูปภาพ, CSS/JS, สื่ออื่นๆ</li>
-                      <li>แต่ละชิ้นระบุด้วย <strong>URL</strong> และอาจเก็บอยู่คนละเว็บเซิร์ฟเวอร์กันได้</li>
-                    </ul>
-                    <div class="callout">
-                      <strong>ตัวอย่าง:</strong>
-                      <b>base HTML</b> จาก server ตรง ·
-                      <b>รูป</b> จาก CDN ·
-                      <b>ฟอนต์</b> จาก Google
+                    <p>หน้าเว็บ 1 หน้า<strong>ไม่ได้เป็นไฟล์เดียว</strong> แต่ประกอบด้วย <strong>objects</strong> หลายชิ้น และแต่ละชิ้น<strong>เก็บอยู่บน Web server คนละเครื่องกันได้</strong> object อาจเป็น HTML file, JPEG image, Java applet, audio file ฯลฯ โดยทั่วไปเว็บเพจมี <strong>base HTML-file</strong> ที่อ้างอิงถึง object อื่นหลายชิ้น และทุกชิ้นระบุที่อยู่ได้ด้วย URL</p>
+                    <code class="formula">www.someschool.edu/someDept/pic.gif  →  host name = www.someschool.edu · path name = /someDept/pic.gif</code>
+                    <dl class="defs defs--stack">
+                      <div><dt>Base HTML File</dt><dd>ไฟล์โครงสร้างหลักของหน้าเว็บ เป็นตัวชี้บอกว่าต้องดึง object ไหนมาแสดง</dd></div>
+                      <div><dt>รูปภาพ</dt><dd>เช่น .jpg, .png</dd></div>
+                      <div><dt>ไฟล์สไตล์/การทำงาน</dt><dd>เช่น .css หรือ .js (JavaScript)</dd></div>
+                      <div><dt>สื่ออื่นๆ</dt><dd>เช่น ไฟล์วิดีโอ ไฟล์เสียง หรือฟอนต์</dd></div>
+                    </dl>
+                    <div class="callout callout--why">
+                      <span class="callout-label">ทำไมถึงเก็บไว้คนละ Web Server ได้</span>
+                      <p>เพราะการอ้างอิง object แต่ละชิ้นใช้ <b>URL</b> ระบุที่อยู่ เว็บ 1 หน้าจึงดึงข้อมูลจากหลายเครื่องพร้อมกันได้ เวลา browser (client) โหลดเว็บเพจ มันจะส่ง HTTP Request ไปยัง Web Server ต่างๆ เพื่อดึง object แต่ละชิ้นกลับมารวบรวมและแสดงผลเป็นหน้าเว็บสมบูรณ์</p>
                     </div>
+                    <figure class="diagram">
+                      <div class="diagram-scroll">
+                        <svg viewBox="0 0 760 320" role="img" aria-labelledby="dg-objs-t dg-objs-d">
+                          <title id="dg-objs-t">browser ดึง object ของเว็บเพจเดียวจาก web server หลายเครื่อง</title>
+                          <desc id="dg-objs-d">1 browser ส่ง HTTP request ขอ base HTML จาก server-a.com 2 ได้ index.html กลับมาแล้วอ่านพบ object ที่อ้างอิง 3 ขอรูปจาก CDN images.cloudfront.net 4 ขอสคริปต์หรือฟอนต์จาก fonts.googleapis.com แต่ละเครื่องส่ง response กลับมา</desc>
+                          <rect class="dg-box dg-box--accent" x="20" y="100" width="190" height="120" rx="10" />
+                          <text class="dg-text" x="115" y="140" text-anchor="middle">Browser (Client)</text>
+                          <text class="dg-text dg-text--sm" x="115" y="166" text-anchor="middle">รวบรวม objects</text>
+                          <text class="dg-text dg-text--sm" x="115" y="186" text-anchor="middle">แสดงเป็นหน้าเว็บสมบูรณ์</text>
+
+                          <rect class="dg-box" x="520" y="20" width="220" height="72" rx="8" />
+                          <text class="dg-mono" x="630" y="48" text-anchor="middle">server-a.com</text>
+                          <text class="dg-text dg-text--sm" x="630" y="72" text-anchor="middle">Base HTML · /index.html</text>
+                          <rect class="dg-box" x="520" y="124" width="220" height="72" rx="8" />
+                          <text class="dg-mono" x="630" y="152" text-anchor="middle">images.cloudfront.net</text>
+                          <text class="dg-text dg-text--sm" x="630" y="176" text-anchor="middle">CDN · /logo.png</text>
+                          <rect class="dg-box" x="520" y="228" width="220" height="72" rx="8" />
+                          <text class="dg-mono" x="630" y="256" text-anchor="middle">fonts.googleapis.com</text>
+                          <text class="dg-text dg-text--sm" x="630" y="280" text-anchor="middle">Google · สคริปต์/ฟอนต์</text>
+
+                          <path class="dg-line dg-line--accent" d="M210 122 L520 48" marker-end="url(#arr)" />
+                          <path class="dg-line" d="M520 66 L210 140" marker-end="url(#arr-muted)" />
+                          <text class="dg-mono dg-mono--sm" x="330" y="74">1. GET /index.html</text>
+                          <text class="dg-mono dg-mono--sm" x="300" y="130">2. base HTML → พบ object ที่อ้างอิง</text>
+                          <path class="dg-line dg-line--accent" d="M210 158 L520 152" marker-end="url(#arr)" />
+                          <path class="dg-line" d="M520 170 L210 176" marker-end="url(#arr-muted)" />
+                          <text class="dg-mono dg-mono--sm" x="380" y="192">3. GET /logo.png</text>
+                          <path class="dg-line dg-line--accent" d="M210 194 L520 254" marker-end="url(#arr)" />
+                          <path class="dg-line" d="M520 272 L210 212" marker-end="url(#arr-muted)" />
+                          <text class="dg-mono dg-mono--sm" x="300" y="268">4. GET ฟอนต์/สคริปต์</text>
+                        </svg>
+                      </div>
+                      <figcaption>วาดจากตัวอย่างในสไลด์ 29: base HTML จาก server-a.com, รูปจาก CDN (images.cloudfront.net), สคริปต์/ฟอนต์จาก Google (fonts.googleapis.com) — เส้นม่วงคือ HTTP request เส้นเทาคือ response</figcaption>
+                    </figure>
                   </section>
 
                   <section class="topic" id="http-overview">
-                    <h4>HTTP คืออะไร</h4>
-                    <p><strong>HTTP = HyperText Transfer Protocol</strong> เป็น application-layer protocol ของเว็บ ทำงานแบบ client/server</p>
+                    <h4>HTTP overview</h4>
+                    <p><strong>HTTP = hypertext transfer protocol</strong> เป็น application-layer protocol ของเว็บ ทำงานแบบ <strong>client/server model</strong></p>
                     <div class="compare">
                       <div class="compare-col">
-                        <h5>Client <span class="chip">browser</span></h5>
-                        <p>ร้องขอ รับ และแสดงผล objects</p>
+                        <h5>client</h5>
+                        <p>browser ที่ร้องขอ (requests), รับ (receives โดยใช้ HTTP) และ "แสดงผล" (displays) Web objects — ตัวอย่างในสไลด์: iPhone ที่รัน Safari browser, PC ที่รัน Firefox browser</p>
                       </div>
                       <div class="compare-col">
-                        <h5>Server <span class="chip">web server</span></h5>
-                        <p>ส่ง object กลับมาตอบคำขอ</p>
+                        <h5>server</h5>
+                        <p>Web server ส่ง (sends โดยใช้ HTTP) objects กลับเป็น response ต่อ request — ตัวอย่างในสไลด์: server ที่รัน Apache Web server</p>
                       </div>
                     </div>
-                    <p><strong>HTTP ใช้ TCP:</strong></p>
+                    <p><strong>HTTP ใช้ TCP</strong> ตามลำดับนี้</p>
                     <ol class="steps">
-                      <li>client เปิด TCP connection ไปยัง server ที่ <strong>port 80</strong></li>
-                      <li>แลกเปลี่ยน HTTP message กัน</li>
-                      <li>ปิดการเชื่อมต่อ</li>
+                      <li>client เริ่ม TCP connection (สร้าง socket) ไปยัง server ที่ <strong>port 80</strong></li>
+                      <li>server ยอมรับ (accepts) TCP connection จาก client</li>
+                      <li>แลกเปลี่ยน HTTP messages (application-layer protocol messages) ระหว่าง browser (HTTP client) กับ Web server (HTTP server)</li>
+                      <li>ปิด TCP connection</li>
                     </ol>
-                    <div class="callout">
-                      <strong>HTTP เป็น "stateless":</strong>
-                      เซิร์ฟเวอร์ไม่เก็บข้อมูลหรือจดจำประวัติคำขอในอดีตของ client เลย ·
-                      <b>ข้อดี:</b> ระบบง่าย ไม่ซับซ้อน ·
-                      แต่ต้องพึ่งกลไกอื่น เช่น <b>cookie</b> ถ้าต้องการจดจำสถานะ
+                  </section>
+
+                  <section class="topic" id="http-stateless">
+                    <h4>HTTP is "stateless"</h4>
+                    <div class="callout callout--def">
+                      <span class="callout-label">นิยาม</span>
+                      <p><strong>Stateless:</strong> server <b>ไม่เก็บข้อมูลใดๆ เกี่ยวกับ request ในอดีตของ client</b> (server maintains no information about past client requests) ทุกคำขอจึงเป็นเรื่องใหม่ทั้งหมด</p>
+                    </div>
+                    <div class="callout callout--why">
+                      <span class="callout-label">ทำไมต้อง stateless (aside ในสไลด์)</span>
+                      <p>โปรโตคอลที่เก็บ "state" นั้นซับซ้อน: (1) ต้องเก็บประวัติในอดีต (state) ไว้ (2) ถ้า server หรือ client ล่ม (crash) ภาพของ state ที่แต่ละฝั่งรับรู้อาจไม่ตรงกัน และต้องปรับให้ตรงกันใหม่</p>
+                      <p>สไลด์สรุปว่า การไม่จำสถานะช่วยให้ระบบ<b>ทำงานได้เร็ว ไม่ซับซ้อน</b> และหากเซิร์ฟเวอร์ล่มก็ไม่เกิดปัญหาข้อมูลสถานะไม่ตรงกัน (เมื่อต้องการให้จำผู้ใช้ได้ ใช้ cookies — ดูการ์ด 03)</p>
+                    </div>
+                  </section>
+
+                  <section class="topic" id="http-nonpersistent">
+                    <h4>HTTP connections 2 แบบ และตัวอย่าง Non-persistent HTTP</h4>
+                    <div class="compare">
+                      <div class="compare-col">
+                        <h5>Non-persistent HTTP <span class="chip">เปิด → ส่ง 1 ชิ้น → ปิด</span></h5>
+                        <ol>
+                          <li>เปิด TCP connection</li>
+                          <li>ส่ง object ได้<strong>อย่างมาก 1 ชิ้น</strong>ผ่าน connection นั้น</li>
+                          <li>ปิด TCP connection</li>
+                        </ol>
+                        <p>การดาวน์โหลดหลาย object <strong>ต้องใช้หลาย connection</strong> (หน้าเว็บมีหลายภาพ ต้องเปิดการเชื่อมต่อใหม่ซ้ำๆ)</p>
+                      </div>
+                      <div class="compare-col">
+                        <h5>Persistent HTTP <span class="chip">เปิด → ส่งหลายชิ้น → ปิด</span></h5>
+                        <ul>
+                          <li>เปิด TCP connection ไปยัง server</li>
+                          <li>ส่ง<strong>หลาย object ผ่าน TCP connection เดียว</strong>ระหว่าง client กับ server นั้นได้</li>
+                          <li>ปิด TCP connection</li>
+                        </ul>
+                        <p>ลดภาระการทำงานของทั้งฝั่ง client และ server</p>
+                      </div>
+                    </div>
+                    <p><strong>ตัวอย่าง Non-persistent HTTP:</strong> ผู้ใช้พิมพ์ URL <code>www.someSchool.edu/someDepartment/home.index</code> ซึ่งเป็นไฟล์ที่มีข้อความและ<strong>อ้างอิงรูป jpeg 10 รูป</strong></p>
+                    <ol class="steps">
+                      <li><strong>1a.</strong> HTTP client เริ่ม TCP connection ไปยัง HTTP server (process) ที่ www.someSchool.edu port 80</li>
+                      <li><strong>1b.</strong> HTTP server ที่โฮสต์ www.someSchool.edu ซึ่งรอ TCP connection อยู่ที่ port 80 "ยอมรับ" connection และแจ้ง client</li>
+                      <li><strong>2.</strong> HTTP client ส่ง HTTP request message (มี URL) เข้า TCP connection socket บอกว่าต้องการ object someDepartment/home.index</li>
+                      <li><strong>3.</strong> HTTP server รับ request สร้าง response message ที่มี object ที่ขอ แล้วส่งเข้า socket</li>
+                      <li><strong>4.</strong> HTTP server ปิด TCP connection</li>
+                      <li><strong>5.</strong> HTTP client ได้ response ที่มีไฟล์ html แสดงผล html และเมื่อ parse ไฟล์ html ก็พบ jpeg object ที่อ้างอิงอยู่ 10 ชิ้น</li>
+                      <li><strong>6.</strong> ทำขั้นตอน 1–5 ซ้ำสำหรับ jpeg object ทั้ง 10 ชิ้น</li>
+                    </ol>
+                    <p><strong>RTT (Round Trip Time)</strong> คือเวลาที่แพ็กเก็ตขนาดเล็กใช้เดินทางจาก client ไป server และกลับมา เวลาตอบสนองของ HTTP <strong>ต่อ 1 object</strong> แบบ non-persistent ประกอบด้วย</p>
+                    <ul>
+                      <li><strong>1 RTT</strong> สำหรับเริ่ม TCP connection (Initiate → Acknowledge)</li>
+                      <li><strong>1 RTT</strong> สำหรับ HTTP request และรอให้ข้อมูลไม่กี่ byte แรกของ response กลับมา</li>
+                      <li><strong>เวลาส่งไฟล์/object จริง</strong> (object/file transmission time)</li>
+                    </ul>
+                    <code class="formula">Non-persistent HTTP response time = 2RTT + file transmission time</code>
+                    <div class="callout callout--warn">
+                      <span class="callout-label">ข้อควรระวัง</span>
+                      <p>สูตรนี้คือเวลา<strong>ต่อ object 1 ชิ้น</strong> — ต้องเสียเวลาถึง 2 RTT ต่อการดึงข้อมูลเพียง 1 ชิ้น หน้าเว็บในตัวอย่างที่มี base HTML + jpeg 10 รูป จึงเกิดขั้นตอนนี้ซ้ำ 11 ครั้ง</p>
                     </div>
                   </section>
 
                   <section class="topic" id="http-persistent">
-                    <h4>Non-persistent vs Persistent HTTP</h4>
+                    <h4>Persistent HTTP (HTTP 1.1)</h4>
                     <div class="compare">
                       <div class="compare-col">
-                        <h5>Non-persistent HTTP</h5>
+                        <h5>ปัญหาของ Non-persistent HTTP</h5>
                         <ul>
-                          <li>เปิด TCP connection → ส่งได้<strong>อย่างมาก 1 object</strong> → ปิด connection</li>
-                          <li>ถ้ามีหลาย object ต้องเปิด-ปิดใหม่ทุกครั้ง</li>
+                          <li>ใช้ <strong>2 RTTs ต่อ object</strong></li>
+                          <li>มี <strong>OS overhead</strong> สำหรับทุก TCP connection</li>
+                          <li>browser มักเปิด<strong>หลาย TCP connection ขนานกัน</strong>เพื่อดึง object ที่อ้างอิงพร้อมๆ กัน</li>
                         </ul>
                       </div>
                       <div class="compare-col">
-                        <h5>Persistent HTTP <span class="chip">HTTP/1.1</span></h5>
+                        <h5>Persistent HTTP (HTTP1.1)</h5>
                         <ul>
-                          <li>เปิด TCP connection ค้างไว้ ส่งได้<strong>หลาย object</strong> ผ่าน connection เดียวกัน</li>
-                          <li>client ส่งคำขอทันทีที่เจอ object ที่อ้างอิง</li>
-                          <li>เหลือเพียงประมาณ <strong>1 RTT</strong> สำหรับทุก object รวมกัน (เร็วกว่า non-persistent มาก)</li>
+                          <li>server <strong>เปิด connection ค้างไว้</strong>หลังส่ง response</li>
+                          <li>HTTP messages ถัดไประหว่าง client/server คู่เดิมส่งผ่าน connection ที่เปิดอยู่</li>
+                          <li>client ส่ง request <strong>ทันทีที่เจอ object ที่อ้างอิง</strong></li>
+                          <li>ใช้เวลาเพียง<strong>ประมาณ 1 RTT สำหรับ object ที่อ้างอิงทั้งหมด</strong> (ลดเวลาตอบสนองลงครึ่งหนึ่ง)</li>
                         </ul>
                       </div>
                     </div>
-                    <p><strong>เวลาตอบสนองของ Non-persistent HTTP</strong></p>
-                    <code class="formula">response time = 2RTT + file transmission time</code>
-                    <ul>
-                      <li>1 RTT สำหรับเปิด TCP connection</li>
-                      <li>1 RTT สำหรับส่งคำขอ + รับ byte แรก</li>
-                    </ul>
+                    <div class="demo-box" data-widget="http-timeline">
+                      <span class="demo-box-title">ลองเล่น: timeline RTT ของ Non-persistent เทียบกับ Persistent HTTP</span>
+                      <div class="seg" role="group" aria-label="เลือกรูปแบบการเชื่อมต่อ">
+                        <button type="button" data-mode="both" aria-pressed="true">เทียบทั้งสองแบบ</button>
+                        <button type="button" data-mode="non" aria-pressed="false">Non-persistent</button>
+                        <button type="button" data-mode="per" aria-pressed="false">Persistent (HTTP 1.1)</button>
+                      </div>
+                      <div class="demo-fields">
+                        <div class="demo-field"><label for="ht-objects">object ที่ base HTML อ้างอิง (ชิ้น)</label><input class="demo-input" id="ht-objects" data-input="objects" type="number" min="0" max="30" value="10" inputmode="numeric" /></div>
+                        <div class="demo-field"><label for="ht-rtt">RTT (ms)</label><input class="demo-input" id="ht-rtt" data-input="rtt" type="number" min="0" value="100" inputmode="decimal" /></div>
+                        <div class="demo-field"><label for="ht-tx">file transmission time ต่อ object (ms)</label><input class="demo-input" id="ht-tx" data-input="tx" type="number" min="0" value="20" inputmode="decimal" /></div>
+                      </div>
+                      <div class="rtt-bars">
+                        <div class="rtt-row" data-row="non"><span class="rtt-label">Non-persistent</span><div class="rtt-track" aria-hidden="true"></div><span class="rtt-total"></span></div>
+                        <div class="rtt-row" data-row="per"><span class="rtt-label">Persistent</span><div class="rtt-track" aria-hidden="true"></div><span class="rtt-total"></span></div>
+                      </div>
+                      <div class="rtt-legend" aria-hidden="true">
+                        <span><i class="rtt-key rtt-seg--tcp"></i>1 RTT เริ่ม TCP connection</span>
+                        <span><i class="rtt-key rtt-seg--req"></i>1 RTT request + byte แรก</span>
+                        <span><i class="rtt-key rtt-seg--tx"></i>file transmission time</span>
+                      </div>
+                      <p class="demo-status" aria-live="polite"></p>
+                      <p class="demo-hint">คิดตามสไลด์: non-persistent ใช้ 2RTT + transmission ต่อทุก object (ไม่นับการเปิดหลาย connection ขนานกัน) · persistent ใช้ 2RTT สำหรับ base HTML แล้ว "as little as one RTT" สำหรับ object ที่อ้างอิงทั้งหมด</p>
+                    </div>
                   </section>
 
                   <section class="topic" id="http-request">
-                    <h4>HTTP Request message</h4>
-                    <p>เป็น <strong>ASCII</strong> อ่านได้ ประกอบด้วย</p>
-                    <code class="formula">request line (method, URL, version) + header lines + entity body</code>
+                    <h4>HTTP request message</h4>
+                    <p>HTTP message มี 2 ประเภท คือ <strong>request</strong> และ <strong>response</strong> ข้อความ HTTP เป็นแบบ <strong>ASCII</strong> ซึ่งมนุษย์อ่านเข้าใจได้ (human-readable format) ตัวอย่าง request จากสไลด์</p>
+                    <pre class="code-block"><code>GET /index.html HTTP/1.1\r\n
+Host: www-net.cs.umass.edu\r\n
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:80.0) Gecko/20100101 Firefox/80.0 \r\n
+Accept: text/html,application/xhtml+xml\r\n
+Accept-Language: en-us,en;q=0.5\r\n
+Accept-Encoding: gzip,deflate\r\n
+Connection: keep-alive\r\n
+\r\n</code></pre>
+                    <dl class="defs defs--stack">
+                      <div><dt>request line</dt><dd>บรรทัดแรก ระบุคำสั่ง (method เช่น GET, POST, HEAD), เป้าหมาย (URL) และเวอร์ชัน</dd></div>
+                      <div><dt>header lines</dt><dd>ข้อมูลเพิ่มเติมเกี่ยวกับ client เช่น เครื่องผู้ใช้/เบราว์เซอร์ (User-Agent) หรือภาษาที่รองรับ (Accept-Language)</dd></div>
+                      <div><dt>\r\n</dt><dd><code>\r</code> = carriage return character · <code>\n</code> = line-feed character ใช้ปิดท้ายทุกบรรทัด</dd></div>
+                      <div><dt>\r\n ต้นบรรทัด</dt><dd>carriage return + line feed ที่ต้นบรรทัด (บรรทัดว่าง) บอกว่า<strong>จบส่วน header lines</strong>แล้ว</dd></div>
+                    </dl>
+                    <p><strong>รูปแบบทั่วไป (general format):</strong> request line = <code>method</code> sp <code>URL</code> sp <code>version</code> cr lf · header lines = <code>header field name</code> : <code>value</code> cr lf (หลายบรรทัด) · บรรทัดว่าง cr lf · ตามด้วย <code>entity body</code></p>
                     <div class="table-scroll">
                       <table>
-                        <thead><tr><th>Method</th><th>หน้าที่</th></tr></thead>
+                        <thead><tr><th>Method</th><th>หน้าที่ (ตามสไลด์)</th></tr></thead>
                         <tbody>
-                          <tr><td><code>GET</code></td><td>ร้องขอข้อมูล ส่ง user data แนบไปกับ URL ได้ (หลัง <code>?</code>)</td></tr>
-                          <tr><td><code>POST</code></td><td>ส่งข้อมูลจากฟอร์มของผู้ใช้ไปเก็บใน entity body</td></tr>
-                          <tr><td><code>HEAD</code></td><td>ขอแค่ header กลับมา โดยไม่โหลดไฟล์เนื้อหาจริง</td></tr>
-                          <tr><td><code>PUT</code></td><td>อัปโหลด/แทนที่ไฟล์บนเซิร์ฟเวอร์ทั้งหมดด้วยเนื้อหาใหม่</td></tr>
+                          <tr><td><code>GET</code></td><td><strong>ร้องขอข้อมูล</strong>จากเซิร์ฟเวอร์ และใช้ส่งข้อมูลไปเซิร์ฟเวอร์ได้ด้วยการใส่ user data ไว้ใน URL field ของ GET request ต่อจากเครื่องหมาย <code>?</code> เช่น <code>www.somesite.com/animalsearch?monkeys&amp;banana</code></td></tr>
+                          <tr><td><code>POST</code></td><td>เว็บเพจมักมี form input — user input ถูกส่งจาก client ไป server ไว้ใน <strong>entity body</strong> ของ HTTP POST request message (ข้อมูลจึงถูกซ่อนไว้ใน entity body)</td></tr>
+                          <tr><td><code>HEAD</code></td><td>ขอ<strong>เฉพาะ headers</strong> ที่จะได้กลับมาถ้าร้องขอ URL นั้นด้วย GET โดยไม่ต้องโหลดไฟล์จริง (ใช้เช็คสถานะหรือลิงก์)</td></tr>
+                          <tr><td><code>PUT</code></td><td>อัปโหลดไฟล์ (object) ใหม่ขึ้น server และ<strong>แทนที่ไฟล์ที่มีอยู่ ณ URL ที่ระบุทั้งหมด</strong>ด้วยเนื้อหาใน entity body</td></tr>
                         </tbody>
                       </table>
                     </div>
+                    <p class="note">สไลด์แนะนำแบบฝึกหัด interactive เพิ่มเติมที่ http://gaia.cs.umass.edu/kurose_ross/interactive/</p>
                   </section>
 
                   <section class="topic" id="http-response">
-                    <h4>HTTP Response message และ Status code</h4>
-                    <p>ประกอบด้วย</p>
-                    <code class="formula">status line (protocol, status code, status phrase) + header lines + entity body</code>
-                    <p>entity body คือข้อมูลจริง เช่น ไฟล์ HTML</p>
+                    <h4>HTTP response message และ Status codes</h4>
+                    <pre class="code-block"><code>HTTP/1.1 200 OK
+Date: Tue, 08 Sep 2020 00:53:20 GMT
+Server: Apache/2.4.6 (CentOS) OpenSSL/1.0.2k-fips PHP/7.4.9 mod_perl/2.0.11 Perl/v5.16.3
+Last-Modified: Tue, 01 Mar 2016 18:57:50 GMT
+ETag: "a5b-52d015789ee9e"
+Accept-Ranges: bytes
+Content-Length: 2651
+Content-Type: text/html; charset=UTF-8
+\r\n
+data data data data data ...</code></pre>
+                    <dl class="defs defs--stack">
+                      <div><dt>status line</dt><dd>แจ้ง protocol, status code และ status phrase (ผลลัพธ์การทำงาน) เช่น <code>HTTP/1.1 200 OK</code></dd></div>
+                      <div><dt>header lines</dt><dd>ข้อมูลจำเพาะของเซิร์ฟเวอร์ และขนาด/ประเภทของไฟล์ที่ส่งมา เช่น Server, Content-Length, Content-Type</dd></div>
+                      <div><dt>entity body (data)</dt><dd>เนื้อหาไฟล์ของจริง เช่น ไฟล์ HTML หรือรูปภาพที่ถูกขอ</dd></div>
+                    </dl>
                     <div class="table-scroll">
                       <table>
                         <thead><tr><th>Status code</th><th>ความหมาย</th></tr></thead>
                         <tbody>
-                          <tr><td><code>200 OK</code></td><td>สำเร็จ</td></tr>
-                          <tr><td><code>301 Moved Permanently</code></td><td>ย้ายถาวร มี URL ใหม่ใน header</td></tr>
-                          <tr><td><code>400 Bad Request</code></td><td>เซิร์ฟเวอร์ไม่เข้าใจคำขอ</td></tr>
-                          <tr><td><code>404 Not Found</code></td><td>ไม่พบไฟล์</td></tr>
-                          <tr><td><code>505 HTTP Version Not Supported</code></td><td>เซิร์ฟเวอร์ไม่รองรับเวอร์ชันที่ client ร้องขอ</td></tr>
+                          <tr><td><code>200 OK</code></td><td>สำเร็จ! เซิร์ฟเวอร์พบไฟล์และส่งข้อมูลกลับมาเรียบร้อย</td></tr>
+                          <tr><td><code>301 Moved Permanently</code></td><td>ย้ายถาวร (เซิร์ฟเวอร์จะระบุ URL ตำแหน่งใหม่มาให้ใน header)</td></tr>
+                          <tr><td><code>400 Bad Request</code></td><td>เซิร์ฟเวอร์ไม่เข้าใจคำขอของ client</td></tr>
+                          <tr><td><code>404 Not Found</code></td><td>ค้นหาไม่พบ (ไม่มีไฟล์นี้อยู่บนเว็บเซิร์ฟเวอร์)</td></tr>
+                          <tr><td><code>505 HTTP Version Not Supported</code></td><td>เซิร์ฟเวอร์ไม่รองรับ HTTP เวอร์ชันที่ client ร้องขอ</td></tr>
                         </tbody>
                       </table>
+                    </div>
+                  </section>
+
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- ================= 03 Cookies, cache, HTTP/2-3 ================= -->
+          <div class="acc-item">
+            <h3 class="acc-heading">
+              <button class="acc-trigger" type="button" aria-expanded="false" aria-controls="acc-adv" id="acc-adv-btn">
+                <span class="acc-index">03</span>
+                <span class="acc-title">
+                  <span class="acc-name">Ports, Cookies, Web cache และ HTTP/2 – HTTP/3</span>
+                  <span class="acc-file">chapter2_Lecture4_application layer_rev2-1.pdf · Lecture 4 · สไลด์ 4–36</span>
+                </span>
+                <svg class="acc-chevron" viewBox="0 0 20 20" aria-hidden="true"><path d="M5 7.5l5 5 5-5" /></svg>
+              </button>
+            </h3>
+            <div class="acc-panel" id="acc-adv" role="region" aria-labelledby="acc-adv-btn">
+              <div class="acc-panel-inner">
+                <div class="acc-body">
+
+                  <nav class="toc" aria-label="หัวข้อใน cookies และ web cache">
+                    <a href="#adv-ports">ตารางพอร์ต</a>
+                    <a href="#adv-cookies">Cookies</a>
+                    <a href="#adv-tracking">Tracking &amp; privacy</a>
+                    <a href="#adv-cache">Web caches</a>
+                    <a href="#adv-cache-example">ตัวอย่างคำนวณ caching</a>
+                    <a href="#adv-conditional">Conditional GET</a>
+                    <a href="#adv-http2">HTTP/2</a>
+                    <a href="#adv-http3">HTTP/3 &amp; QUIC</a>
+                  </nav>
+
+                  <section class="topic" id="adv-ports">
+                    <h4>ตารางพอร์ตยอดนิยมที่ใช้งานบ่อย</h4>
+                    <div class="table-scroll">
+                      <table>
+                        <thead><tr><th>Port</th><th>Protocol / Service</th><th>ลักษณะการใช้งาน</th></tr></thead>
+                        <tbody>
+                          <tr><td>20, 21</td><td>FTP</td><td>ส่งโอนไฟล์ (20 = Data, 21 = Control)</td></tr>
+                          <tr><td>22</td><td>SSH / SFTP</td><td>รีโมตควบคุมเครื่องแบบเข้ารหัส / โอนไฟล์ปลอดภัย</td></tr>
+                          <tr><td>23</td><td>Telnet</td><td>รีโมตควบคุมเครื่องแบบข้อความธรรมดา (ไม่ปลอดภัย)</td></tr>
+                          <tr><td>25</td><td>SMTP</td><td>ส่งอีเมลระหว่างเซิร์ฟเวอร์แบบเดิม (Plain Text)</td></tr>
+                          <tr><td>53</td><td>DNS</td><td>ค้นหาแปลงชื่อโดเมนเป็น IP Address (UDP/TCP)</td></tr>
+                          <tr><td>80</td><td>HTTP</td><td>เว็บไซต์ทั่วไปแบบไม่เข้ารหัส</td></tr>
+                          <tr><td>110</td><td>POP3</td><td>ดึงอีเมลลงเครื่องแบบเดิม (Plain Text)</td></tr>
+                          <tr><td>143</td><td>IMAP</td><td>ซิงก์เปิดอ่านอีเมลแบบเดิม (Plain Text)</td></tr>
+                          <tr><td>443</td><td>HTTPS / QUIC</td><td>เว็บไซต์แบบปลอดภัย (SSL/TLS / HTTP/2 / HTTP/3)</td></tr>
+                          <tr><td>465, 587</td><td>SMTPS / Submission</td><td>ส่งอีเมลแบบเข้ารหัสความปลอดภัย</td></tr>
+                          <tr><td>993</td><td>IMAPS</td><td>ซิงก์อ่านอีเมลแบบเข้ารหัสความปลอดภัย</td></tr>
+                          <tr><td>995</td><td>POP3S</td><td>ดึงอีเมลแบบเข้ารหัสความปลอดภัย</td></tr>
+                          <tr><td>3306</td><td>MySQL</td><td>การเชื่อมต่อฐานข้อมูล MySQL / MariaDB</td></tr>
+                          <tr><td>5432</td><td>PostgreSQL</td><td>การเชื่อมต่อฐานข้อมูล PostgreSQL</td></tr>
+                          <tr><td>6379</td><td>Redis</td><td>การเชื่อมต่อ In-memory Database / Cache</td></tr>
+                          <tr><td>8080, 8443</td><td>HTTP-Alt</td><td>พอร์ตทดสอบเว็บเซิร์ฟเวอร์ หรือใช้ในการพัฒนาซอฟต์แวร์</td></tr>
+                        </tbody>
+                      </table>
+                    </div>
+                  </section>
+
+                  <section class="topic" id="adv-cookies">
+                    <h4>Maintaining user/server state: cookies</h4>
+                    <p>Cookies คือกลไกที่นำมาแก้จุดอ่อนของ HTTP ที่เป็น <strong>stateless (ไม่มีความจำ)</strong> เพื่อให้ระบบจำได้ว่าผู้ใช้คือใครและกำลังทำอะไรอยู่ในการรับ-ส่งข้อมูลแต่ละครั้ง การสร้าง state ด้วย cookies มี <strong>4 องค์ประกอบ</strong></p>
+                    <ol class="steps">
+                      <li><strong>Header ใน HTTP Response:</strong> server ส่ง header <code>Set-Cookie:</code> กลับไปเพื่อมอบรหัสประจำตัว (Cookie ID) ให้ browser</li>
+                      <li><strong>ไฟล์ Cookie ฝั่ง Client:</strong> browser บันทึก Cookie ID นั้นไว้บนเครื่องผู้ใช้</li>
+                      <li><strong>Header ใน HTTP Request:</strong> เมื่อคลิกหน้าถัดไป browser แนบ header <code>Cookie:</code> พร้อมรหัสประจำตัวกลับไปหา server โดยอัตโนมัติ</li>
+                      <li><strong>Database ฝั่ง Backend:</strong> server นำ Cookie ID ที่ได้รับไปค้นในฐานข้อมูลว่าผู้ใช้คนนี้คือใคร และมีข้อมูลสถานะอะไรค้างไว้</li>
+                    </ol>
+                    <p><strong>ตัวอย่างในสไลด์ (Amazon):</strong> client มี cookie file ของ ebay (8734) อยู่แล้ว เมื่อส่ง HTTP request ปกติไปยัง Amazon server ครั้งแรก server สร้าง ID <strong>1678</strong> ให้ผู้ใช้ สร้าง entry ใน backend database แล้วตอบกลับด้วย <code>set-cookie: 1678</code> — cookie file ของ client จึงมีทั้ง <code>ebay 8734</code> และ <code>amazon 1678</code> ต่อมา request ถัดไปแนบ <code>cookie: 1678</code> ไปด้วย server ทำ <em>cookie-specific action</em> (เข้าถึงข้อมูลผู้ใช้) และแม้ผ่านไป<strong>หนึ่งสัปดาห์</strong> request ใหม่ก็ยังแนบ <code>cookie: 1678</code> ให้ server จำผู้ใช้ได้</p>
+                    <p><strong>ประโยชน์การใช้งานหลัก:</strong> Session Management (จำการล็อกอิน ไม่ต้องพิมพ์รหัสผ่านใหม่ทุกครั้งที่เปลี่ยนหน้า) · Shopping Cart (จำสินค้าในตะกร้า) · User Preferences (จำการตั้งค่า เช่น ภาษา หรือโหมดมืด/สว่าง) · Tracking / Recommendation (บันทึกพฤติกรรมเพื่อแสดงโฆษณาหรือเนื้อหาที่เกี่ยวข้อง)</p>
+                    <div class="callout callout--def">
+                      <span class="callout-label">หมายเหตุ: Cookie ID แบบปลอดภัย</span>
+                      <p>อ้างอิง RFC 4122 / RFC 9562 — การสร้าง <b>Cryptographically Secure UUID</b> ทำได้ด้วยตัวสร้างเลขสุ่มระดับงานเข้ารหัส (CSPRNG — Cryptographically Secure Pseudo-Random Number Generator) เพื่อสร้าง UUID version 4 (UUID ที่เกิดจากการสุ่ม 128 บิต)</p>
+                    </div>
+                  </section>
+
+                  <section class="topic" id="adv-tracking">
+                    <h4>Cookies กับการติดตามพฤติกรรม (tracking) และความเป็นส่วนตัว</h4>
+                    <div class="compare">
+                      <div class="compare-col">
+                        <h5>First-party cookie</h5>
+                        <p>มาจาก<strong>เว็บไซต์ที่ผู้ใช้เลือกเข้าเอง</strong> (ผู้ส่ง base html file) — เป็นประโยชน์ เช่น จำสินค้าในตะกร้า แต่เว็บก็ใช้บันทึกประวัติการค้นหา การคลิก หรือเวลาที่ใช้ในแต่ละหน้า เพื่อสร้างโปรไฟล์ความสนใจของผู้ใช้</p>
+                      </div>
+                      <div class="compare-col">
+                        <h5>Third-party cookie</h5>
+                        <p>มาจาก<strong>เว็บที่ผู้ใช้ไม่ได้เลือกเข้า</strong> เช่น บริษัทโฆษณาที่ฝังโค้ดไว้ ถ้าหลายเว็บฝังโค้ดจากบริษัทเดียวกัน บริษัทนั้นใช้ Cookie ID เดิมตามรอยผู้ใช้ไปทุกเว็บ รู้ว่าเข้าเว็บอะไรบ้าง แล้วใช้ทำโฆษณาเจาะจงเป้าหมาย (Targeted Ads)</p>
+                      </div>
+                    </div>
+                    <p><strong>ตัวอย่างในสไลด์ (NY Times + AdX):</strong></p>
+                    <ol class="steps">
+                      <li>ผู้ใช้เปิด nytimes.com (sports) → ได้ first-party cookie <code>1634</code> (nytimes บันทึก "1634: sports, 2/15/22") หน้าเว็บมีโฆษณาฝังอยู่ browser จึงไป fetch ad จาก AdX.com พร้อม <code>Referrer: NY Times Sports</code> → ได้ third-party cookie <code>7493</code> (AdX บันทึก "7493: NY Times sports, 2/15/22") แล้วแสดงหน้าที่ประกอบเสร็จ</li>
+                      <li>วันถัดมาผู้ใช้เข้า socks.com ซึ่งมีโฆษณา AdX เช่นกัน browser ส่ง <code>Referrer: socks.com, cookie: 7493</code> → AdX รู้ว่าเป็นคนเดิม บันทึก "7493: socks.com, 2/16/22"</li>
+                      <li>อีกวันกลับไป nytimes.com (arts) → nytimes อัปเดต 1634: arts ส่วน AdX ได้ <code>cookie: 7493</code> อีกครั้ง และ<strong>ส่งโฆษณาถุงเท้า (socks) กลับมาแสดง</strong> ทั้งที่ผู้ใช้อยู่บน NY Times</li>
+                    </ol>
+                    <p>สรุป cookies ใช้ได้เพื่อ (1) ติดตามพฤติกรรมบนเว็บเดียว (first party) (2) ติดตามข้ามหลายเว็บ (third party) <strong>โดยผู้ใช้ไม่เคยเลือกเข้าเว็บ tracker เลย</strong> (3) การติดตามอาจมองไม่เห็น — แทนที่จะเป็นโฆษณาที่ทำให้เกิด HTTP GET ไปยัง tracker อาจเป็น invisible link ก็ได้</p>
+                    <div class="table-scroll">
+                      <table>
+                        <thead><tr><th>Browser (Engine)</th><th>Third-party cookies</th></tr></thead>
+                        <tbody>
+                          <tr><td>Mozilla Firefox (Gecko)</td><td>บล็อกเป็นค่าเริ่มต้น 100% ผ่าน Enhanced Tracking Protection (ETP)</td></tr>
+                          <tr><td>Apple Safari (WebKit)</td><td>บล็อกเป็นค่าเริ่มต้น 100% ผ่าน Intelligent Tracking Prevention (ITP)</td></tr>
+                          <tr><td>Google Chrome (Blink)</td><td>ไม่บล็อกทั้งหมด เน้นให้ผู้ใช้เลือกเอง (User Choice) ร่วมกับกลไก Privacy Sandbox — สไลด์ภาษาอังกฤษระบุว่าเคยตั้งเป้าปิดใน Chrome ปี 2023</td></tr>
+                          <tr><td>Microsoft Edge (Blink)</td><td>บล็อกคุกกี้จากโดเมนในบัญชีดำการติดตาม (Known Trackers) เป็นค่าเริ่มต้น</td></tr>
+                        </tbody>
+                      </table>
+                    </div>
+                    <div class="callout callout--def">
+                      <span class="callout-label">GDPR (EU General Data Protection Regulation) and cookies</span>
+                      <p>GDPR recital 30 (May 2018): บุคคลอาจถูกเชื่อมโยงกับ online identifiers เช่น IP address หรือ cookie identifiers ซึ่งทิ้งร่องรอยที่นำไปสร้างโปรไฟล์และระบุตัวบุคคลได้ — <b>เมื่อคุกกี้ระบุตัวตนบุคคลได้ คุกกี้ถือเป็นข้อมูลส่วนบุคคลภายใต้ GDPR</b> และผู้ใช้ต้องมีสิทธิ์ควบคุมอย่างชัดเจนว่าจะอนุญาตคุกกี้หรือไม่</p>
+                    </div>
+                  </section>
+
+                  <section class="topic" id="adv-cache">
+                    <h4>Web caches (aka proxy servers)</h4>
+                    <div class="callout callout--def">
+                      <span class="callout-label">เป้าหมาย (Goal)</span>
+                      <p>ตอบสนอง request ของ client <b>โดยไม่ต้องไปถึง origin server</b> (satisfy client requests without involving origin server)</p>
+                    </div>
+                    <ol class="steps">
+                      <li>ผู้ใช้ตั้งค่า browser ให้ชี้ไปที่ Web cache (local)</li>
+                      <li>browser ส่ง HTTP request ทั้งหมดไปที่ cache</li>
+                      <li><strong>ถ้า object อยู่ใน cache:</strong> cache ส่ง object กลับให้ client ทันที</li>
+                      <li><strong>ถ้าไม่มี:</strong> cache ขอ object จาก origin server, เก็บ object ที่ได้ไว้ใน cache แล้วจึงส่งกลับให้ client</li>
+                    </ol>
+                    <p>Web cache ทำหน้าที่<strong>เป็นทั้ง client และ server</strong> — เป็น server ของ client ที่ร้องขอ และเป็น client ของ origin server</p>
+                    <div class="callout callout--why">
+                      <span class="callout-label">ทำไมต้องทำ Web caching</span>
+                      <p>(1) <b>ลดเวลาตอบสนอง</b> เพราะ cache อยู่ใกล้ client กว่า (2) <b>ลด traffic บน access link</b> ขององค์กร (3) อินเทอร์เน็ตเต็มไปด้วย cache ทำให้ผู้ให้บริการเนื้อหารายเล็ก ("poor" content providers) ส่งเนื้อหาได้มีประสิทธิภาพขึ้น — มีเซิร์ฟเวอร์หลักเครื่องเดียวก็รองรับผู้ใช้พร้อมกันจำนวนมากได้</p>
+                    </div>
+                    <p>server บอก cache ว่า object นี้เก็บ cache ได้แค่ไหนผ่าน response header เช่น <code>Cache-Control: max-age=3600</code> = ให้เก็บไฟล์นี้ไว้ได้ 3,600 วินาที (1 ชั่วโมง) ส่วน <code>no-cache</code> = ต้องยิงไปถาม server ก่อนทุกครั้ง</p>
+                    <div class="table-scroll">
+                      <table>
+                        <thead><tr><th>ตำแหน่ง cache</th><th>อยู่ที่ไหน</th><th>หน้าที่</th></tr></thead>
+                        <tbody>
+                          <tr><td>1. Client-Side / Browser Cache</td><td>ดิสก์หรือ RAM ของเครื่องผู้ใช้</td><td>เก็บรูป, CSS, JS ของเว็บที่เคยเปิด เข้าเว็บเดิมซ้ำจะโหลดทันทีโดยไม่ต้องยิง request ออกไป</td></tr>
+                          <tr><td>2. Institutional Network / Forward Proxy</td><td>ใน LAN ของบริษัท มหาวิทยาลัย องค์กร (ก่อนถึง Access Router)</td><td>ดัก HTTP request ในองค์กร ถ้ามีคนเคยโหลดไฟล์แล้ว คนอื่นดึงจาก cache ได้ทันทีโดยไม่ต้องวิ่งออก access link</td></tr>
+                          <tr><td>3. ISP Edge / CDN Cache</td><td>Edge Node ของ ISP หรือ CDN (เช่น Cloudflare, Akamai)</td><td>กระจายคลังข้อมูลไว้ใกล้ผู้ใช้ทั่วโลก ลด RTT ส่งข้อมูลถึงผู้ใช้เร็ว</td></tr>
+                          <tr><td>4. Server-Side / Reverse Proxy Cache</td><td>ด้านหน้า Origin Server ใน Data Center หรือ Cloud</td><td>รับภาระส่งไฟล์คงที่ (Static Assets) แทน ไม่ให้ Web Server/Database ทำงานหนักเกินไป</td></tr>
+                        </tbody>
+                      </table>
+                    </div>
+                    <div class="compare">
+                      <div class="compare-col"><h5>Forward Proxy</h5><p>ตั้งอยู่<strong>ฝั่ง client</strong> ช่วยซ่อน IP address ของผู้ใช้ บล็อกเว็บไม่เหมาะสม หรือทำ web caching ภายในองค์กร</p></div>
+                      <div class="compare-col"><h5>Reverse Proxy</h5><p>ตั้งอยู่<strong>ฝั่ง server</strong> ช่วยรับ traffic ปริมาณมาก กระจายภาระงาน (Load Balancing) ปกป้องเซิร์ฟเวอร์หลักจากการโจมตี และ cache ไฟล์คงที่</p></div>
+                    </div>
+                    <p>ลักษณะร่วมของ proxy server คือเป็น<strong>ตัวกลางส่งต่อคำขอ (Intermediary)</strong> รับ request จาก client ส่งต่อไป destination server แล้วนำ response ส่งกลับให้ผู้ใช้</p>
+                  </section>
+
+                  <section class="topic" id="adv-cache-example">
+                    <h4>ตัวอย่างคำนวณ: ทำไม web cache ถึงคุ้มกว่าซื้อ link เร็วขึ้น</h4>
+                    <p><strong>Scenario:</strong> เครือข่ายองค์กร (institutional network) ใช้ LAN 1 Gbps ต่อออกอินเทอร์เน็ตผ่าน <strong>access link 1.54 Mbps</strong> · RTT จาก router ขององค์กรถึง server = <strong>2 วินาที</strong> · ขนาด web object = <strong>100K bits</strong> · อัตรา request เฉลี่ยจาก browser ไป origin servers = 15 ครั้ง/วินาที · อัตราข้อมูลเฉลี่ยไปยัง browser = <strong>1.50 Mbps</strong></p>
+                    <ol class="steps">
+                      <li><strong>Access link utilization</strong> = avg data rate ÷ access link rate = 1.50 ÷ 1.54 ≈ <strong>0.97 (97%)</strong></li>
+                      <li><strong>LAN utilization</strong> = 1.50 Mbps ÷ 1000 Mbps = <strong>0.0015 (0.15%)</strong></li>
+                      <li><strong>end-end delay</strong> = Internet delay + access link delay + LAN delay = <strong>2 sec + minutes + usecs</strong></li>
+                    </ol>
+                    <div class="callout callout--warn">
+                      <span class="callout-label">ปัญหา</span>
+                      <p><strong>large queueing delays at high utilization!</strong> — access link ถูกใช้ 97% คิวจึงยาวจนดีเลย์ระดับนาที (สไลด์คำนวณ transmission delay ของ object ไว้ด้วย: 100K bits ÷ 1.54 Mbps ≈ 0.065 วินาที)</p>
+                    </div>
+                    <div class="compare">
+                      <div class="compare-col">
+                        <h5>Option 1: ซื้อ access link ที่เร็วขึ้น</h5>
+                        <p>เปลี่ยน access link เป็น <strong>154 Mbps</strong> → access link utilization = 1.50 ÷ 154 ≈ <strong>0.0097</strong> และ access link delay ลดจากระดับนาทีเหลือ <strong>msecs</strong></p>
+                        <p><strong>Cost:</strong> faster access link — <strong>แพง!</strong></p>
+                      </div>
+                      <div class="compare-col">
+                        <h5>Option 2: ติดตั้ง web cache</h5>
+                        <p>วาง local web cache ไว้ในเครือข่ายองค์กร (ต่อกับ LAN 1 Gbps) โดยสมมุติ <strong>cache hit rate = 0.4</strong></p>
+                        <p><strong>Cost:</strong> web cache — <strong>ถูก!</strong></p>
+                      </div>
+                    </div>
+                    <p><strong>คำนวณ Option 2 ทีละขั้น</strong></p>
+                    <code class="formula">Average Delay = (Hit Rate × Delay_Hit) + (Miss Rate × Delay_Miss)</code>
+                    <ol class="steps">
+                      <li><strong>กรณี cache hit ภายในองค์กร (40% หรือ 0.4):</strong> ดึงข้อมูลจาก web cache ใน LAN → Delay<sub>Hit</sub> ≈ <strong>0 วินาที</strong> (ระดับมิลลิวินาที น้อยจนตัดทิ้งได้)</li>
+                      <li><strong>กรณีต้องไป original server (60% หรือ 0.6):</strong> ต้องวิ่งออกอินเทอร์เน็ต → Delay<sub>Miss</sub> = RTT + Transmission Delay = 2 + (100K bits ÷ 1.54 Mbps) = 2 + 0.065 = <strong>2.065 วินาที</strong></li>
+                      <li><strong>traffic ที่ต้องวิ่งผ่าน access link</strong> เหลือเพียง 60% ของเดิม: avg data rate = 1.50 × 0.60 = 0.90 Mbps → traffic intensity = 0.90 ÷ 1.54 ≈ <strong>0.58</strong> — ลดลงมาจนไม่มีคิวหนาแน่น จึงละ queueing delay ได้</li>
+                      <li><strong>รวม:</strong> Average Delay = (0.4 × 0) + (0.6 × 2.065) = 0 + 1.239 ≈ <strong>1.24 วินาที</strong> (ถ้าปัด transmission delay ออก คิดแค่ RTT 2 วินาที จะได้ 0.6 × 2 = 1.2 วินาที)</li>
+                    </ol>
+                    <div class="callout callout--why">
+                      <span class="callout-label">สรุปผลลัพธ์</span>
+                      <p>web cache ลด average end-to-end delay จากเดิมที่รอคิวนานมหาศาลจนใช้งานไม่ได้ (∞) เหลือเพียง <b>1.24 วินาที</b> — <b>lower average end-end delay than with 154 Mbps link (and cheaper too!)</b></p>
+                    </div>
+                    <div class="demo-box" data-widget="cache-calc">
+                      <span class="demo-box-title">ลองเล่น: ตัวคำนวณ web cache (ค่าเริ่มต้นตามสไลด์)</span>
+                      <div class="demo-fields">
+                        <div class="demo-field"><label for="cc-link">access link rate (Mbps)</label><input class="demo-input" id="cc-link" data-input="link" type="number" step="0.01" min="0" value="1.54" inputmode="decimal" /></div>
+                        <div class="demo-field"><label for="cc-rate">avg data rate ไป browser (Mbps)</label><input class="demo-input" id="cc-rate" data-input="rate" type="number" step="0.01" min="0" value="1.50" inputmode="decimal" /></div>
+                        <div class="demo-field"><label for="cc-rtt">RTT ไป origin server (วินาที)</label><input class="demo-input" id="cc-rtt" data-input="rtt" type="number" step="0.1" min="0" value="2" inputmode="decimal" /></div>
+                        <div class="demo-field"><label for="cc-size">web object size (K bits)</label><input class="demo-input" id="cc-size" data-input="size" type="number" step="1" min="0" value="100" inputmode="decimal" /></div>
+                      </div>
+                      <div class="demo-field">
+                        <label for="cc-hit">cache hit rate</label>
+                        <div class="range-field"><input id="cc-hit" data-input="hit" type="range" min="0" max="100" step="5" value="40" /><output data-output="hit" for="cc-hit">40%</output></div>
+                      </div>
+                      <ol class="calc-steps" aria-live="polite"></ol>
+                    </div>
+                  </section>
+
+                  <section class="topic" id="adv-conditional">
+                    <h4>Browser caching: Conditional GET</h4>
+                    <p><strong>เป้าหมาย:</strong> ไม่ต้องส่ง object ถ้า browser มีสำเนาใน cache ที่ยังเป็นปัจจุบัน — จึงไม่มี object transmission delay และไม่เปลือง network resources</p>
+                    <ul>
+                      <li><strong>client:</strong> ระบุวันที่ของสำเนาที่ cache ไว้ใน HTTP request ด้วย header <code>If-modified-since: &lt;date&gt;</code></li>
+                      <li><strong>server:</strong> ถ้าสำเนาของ browser ยังเป็นปัจจุบัน response <strong>จะไม่มี object</strong></li>
+                    </ul>
+                    <div class="compare">
+                      <div class="compare-col"><h5>object ไม่ถูกแก้ไขหลัง &lt;date&gt;</h5><p>ตอบกลับ <code>HTTP/1.0 304 Not Modified</code> (ไม่มีเนื้อหาไฟล์)</p></div>
+                      <div class="compare-col"><h5>object ถูกแก้ไขหลัง &lt;date&gt;</h5><p>ตอบกลับ <code>HTTP/1.0 200 OK</code> พร้อม &lt;data&gt; ฉบับใหม่</p></div>
+                    </div>
+                    <p class="note">สไลด์สรุป "Web Cache / Proxy" สรุปว่า การส่ง If-Modified-Since แล้วได้ 304 Not Modified กลับมา <strong>ประหยัด bandwidth ด้วยเงื่อนไขการตรวจสอบสถานะ</strong></p>
+                  </section>
+
+                  <section class="topic" id="adv-http2">
+                    <h4>HTTP/2</h4>
+                    <div class="callout callout--def">
+                      <span class="callout-label">Key goal</span>
+                      <p><b>ลด delay ของ HTTP request ที่มีหลาย object</b> (decreased delay in multi-object HTTP requests)</p>
+                    </div>
+                    <p><strong>HTTP1.1</strong> นำ multiple, pipelined GETs over single TCP connection มาใช้ — browser รัวส่ง GET หลายอันไปพร้อมกันบน TCP connection เดียวได้ ไม่ต้องรอ response ทีละอันเหมือนยุค HTTP/1.0 แต่มีปัญหา</p>
+                    <ul>
+                      <li>server ตอบ <strong>ตามลำดับที่ request มาถึง (FCFS: first-come-first-served)</strong> เท่านั้น</li>
+                      <li>ด้วย FCFS object เล็กอาจต้องรอหลัง object ใหญ่ → เรียกว่า <strong>head-of-line (HOL) blocking</strong></li>
+                      <li><strong>loss recovery</strong> (retransmit TCP segments ที่หาย) ทำให้การส่ง object หยุดชะงัก — ทุกอย่างวิ่งบน TCP เส้นเดียว เมื่อ packet หาย TCP ระงับการส่งทั้งหมดไว้เพื่อรอ retransmission ไฟล์อื่นในคิวจึงติดขัด (stall) ตาม</li>
+                    </ul>
+                    <p><strong>HTTP/2 [RFC 7540, 2015]</strong> เพิ่มความยืดหยุ่นให้ server ในการส่ง object โดยเปลี่ยนมาใช้ multiplexing หั่นไฟล์เป็นเฟรมเล็กๆ ส่งสลับกันได้</p>
+                    <ul>
+                      <li><strong>methods, status codes และ header fields ส่วนใหญ่ไม่เปลี่ยนจาก HTTP 1.1</strong> (ยังใช้ GET, POST, 200, 404) ผู้พัฒนาจึงไม่ต้องเขียนโค้ดเว็บใหม่</li>
+                      <li>ลำดับการส่ง object ขึ้นกับ <strong>priority ที่ client กำหนด</strong> ไม่จำเป็นต้อง FCFS</li>
+                      <li><strong>push</strong> object ที่ยังไม่ถูกขอไปให้ client ล่วงหน้า</li>
+                      <li><strong>แบ่ง object เป็น frames</strong> และจัดตารางส่ง frame เพื่อบรรเทา HOL blocking</li>
+                    </ul>
+                    <figure class="diagram">
+                      <div class="diagram-scroll">
+                        <svg viewBox="0 0 760 250" role="img" aria-labelledby="dg-hol-t dg-hol-d">
+                          <title id="dg-hol-t">HOL blocking ใน HTTP 1.1 เทียบกับ frame แทรกสลับใน HTTP/2</title>
+                          <desc id="dg-hol-d">client ขอ object ใหญ่ O1 และ object เล็ก O2 O3 O4 แถวบน HTTP 1.1 ส่ง O1 จนจบก่อน O2 O3 O4 จึงต้องรอ แถวล่าง HTTP/2 แบ่งเป็น frame ส่งสลับ O2 O3 O4 ถึงเร็ว O1 ช้าลงเล็กน้อย</desc>
+                          <text class="dg-mono" x="20" y="36">HTTP 1.1</text>
+                          <text class="dg-text dg-text--sm" x="120" y="36">objects ถูกส่งตามลำดับที่ขอ: O2, O3, O4 ต้องรอหลัง O1</text>
+                          <rect class="dg-box dg-box--accent" x="20" y="50" width="480" height="44" rx="4" /><text class="dg-text" x="260" y="77" text-anchor="middle">O1 (large object)</text>
+                          <rect class="dg-box dg-box--ok" x="500" y="50" width="70" height="44" rx="4" /><text class="dg-text" x="535" y="77" text-anchor="middle">O2</text>
+                          <rect class="dg-box dg-box--warn" x="570" y="50" width="70" height="44" rx="4" /><text class="dg-text" x="605" y="77" text-anchor="middle">O3</text>
+                          <rect class="dg-box" x="640" y="50" width="70" height="44" rx="4" /><text class="dg-text" x="675" y="77" text-anchor="middle">O4</text>
+
+                          <text class="dg-mono" x="20" y="144">HTTP/2</text>
+                          <text class="dg-text dg-text--sm" x="120" y="144">แบ่งเป็น frames ส่งแทรกสลับ: O2, O3, O4 ถึงเร็ว O1 ช้าลงเล็กน้อย</text>
+                          <rect class="dg-box dg-box--accent" x="20" y="158" width="80" height="44" rx="4" /><text class="dg-text" x="60" y="185" text-anchor="middle">O1</text>
+                          <rect class="dg-box dg-box--ok" x="100" y="158" width="70" height="44" rx="4" /><text class="dg-text" x="135" y="185" text-anchor="middle">O2</text>
+                          <rect class="dg-box dg-box--warn" x="170" y="158" width="70" height="44" rx="4" /><text class="dg-text" x="205" y="185" text-anchor="middle">O3</text>
+                          <rect class="dg-box" x="240" y="158" width="70" height="44" rx="4" /><text class="dg-text" x="275" y="185" text-anchor="middle">O4</text>
+                          <rect class="dg-box dg-box--accent" x="310" y="158" width="400" height="44" rx="4" /><text class="dg-text" x="510" y="185" text-anchor="middle">O1 (frames ที่เหลือ)</text>
+                          <path class="dg-line" d="M20 226 H740" marker-end="url(#arr-muted)" />
+                          <text class="dg-text dg-text--sm" x="740" y="244" text-anchor="end">time →</text>
+                        </svg>
+                      </div>
+                      <figcaption>วาดใหม่จากสไลด์ 29–30 "HTTP/2: mitigating HOL blocking" — client ขอ object ใหญ่ 1 ชิ้น (เช่นไฟล์วิดีโอ) และ object เล็ก 3 ชิ้น</figcaption>
+                    </figure>
+                  </section>
+
+                  <section class="topic" id="adv-http3">
+                    <h4>HTTP/2 to HTTP/3 และ QUIC</h4>
+                    <p><strong>HTTP/2 over single TCP connection</strong> ยังมีข้อจำกัด</p>
+                    <ul>
+                      <li>แก้ HOL blocking ได้ แต่<strong>ยังติดปัญหาตอน retransmission เมื่อแพ็กเก็ตสูญหาย</strong> เพราะข้อมูลของ HTTP/2 ยังส่งในสาย TCP เส้นเดียว จึงเกิดแนวคิดที่จะเพิ่มการส่งให้มากกว่า 1 ทาง</li>
+                      <li><strong>no security</strong> over vanilla TCP connection</li>
+                    </ul>
+                    <p><strong>HTTP/3:</strong> เพิ่ม security และ error-control / congestion-control <strong>แยกต่อ object</strong> (more pipelining) โดยวิ่งบน <strong>UDP</strong></p>
+                    <div class="compare">
+                      <div class="compare-col">
+                        <h5>HTTP/2 over TCP</h5>
+                        <p>Application: <code>HTTP/2</code> → <code>TLS</code> · Transport: <code>TCP</code> · Network: <code>IP</code></p>
+                      </div>
+                      <div class="compare-col">
+                        <h5>HTTP/3 = HTTP/2 over QUIC over UDP</h5>
+                        <p>Application: <code>HTTP/2 (slimmed)</code> → <code>QUIC</code> · Transport: <code>UDP</code> · Network: <code>IP</code></p>
+                      </div>
+                    </div>
+                    <p><strong>QUIC (Quick UDP Internet Connections)</strong> เป็น application-layer protocol ที่อยู่บน UDP เพื่อเพิ่มประสิทธิภาพของ HTTP ใช้งานบน Google servers และแอปจำนวนมาก (Chrome, mobile YouTube app) สไลด์ยกตัวอย่างบริการที่ใช้ QUIC: YouTube, Google Search, Maps, Gmail, Android, Facebook, Instagram, WhatsApp, Uber, Spotify, Netflix</p>
+                    <ul>
+                      <li>QUIC ใช้แนวทางเดียวกับที่จะเรียนในบท transport สำหรับ connection establishment, error control และ congestion control — สเปกของ QUIC ระบุว่าผู้ที่รู้จัก loss detection และ congestion control ของ TCP จะพบอัลกอริทึมที่คล้ายกัน</li>
+                      <li><strong>connection establishment:</strong> reliability, congestion control, authentication, encryption และ state สร้างเสร็จภายใน <strong>1 RTT</strong></li>
+                    </ul>
+                    <div class="compare">
+                      <div class="compare-col">
+                        <h5>TCP + TLS</h5>
+                        <p><strong>2 serial handshakes:</strong> TCP handshake (transport layer: reliability, congestion control state) แล้วตามด้วย TLS handshake (security: authentication, crypto state) ก่อนจึงส่ง data ได้</p>
+                      </div>
+                      <div class="compare-col">
+                        <h5>QUIC</h5>
+                        <p><strong>1 handshake</strong> สร้าง reliability, congestion control, authentication, crypto state พร้อมกัน (QUIC 1RTT handshake)</p>
+                      </div>
+                    </div>
+                    <div class="callout callout--def">
+                      <span class="callout-label">QUIC: 0-RTT connection establishment</span>
+                      <p>เมื่อจบ QUIC connection แรก server ส่ง <b>TLS session ticket</b> ให้ client เก็บ cache ไว้ ตอนเริ่ม connection ที่สอง client ใช้ session ticket ล่าสุดสำหรับ encryption และ authentication ของ connection ใหม่ได้ทันที → <b>0 RTT handshake delay</b> ส่ง data ได้ตั้งแต่ต้น</p>
+                    </div>
+                  </section>
+
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- ================= 04 Email & DNS ================= -->
+          <div class="acc-item">
+            <h3 class="acc-heading">
+              <button class="acc-trigger" type="button" aria-expanded="false" aria-controls="acc-maildns" id="acc-maildns-btn">
+                <span class="acc-index">04</span>
+                <span class="acc-title">
+                  <span class="acc-name">E-mail (SMTP, IMAP) และ DNS</span>
+                  <span class="acc-file">chapter2_Lecture4_application layer_rev2-1.pdf · Lecture 4 · สไลด์ 5–6, 38–60</span>
+                </span>
+                <svg class="acc-chevron" viewBox="0 0 20 20" aria-hidden="true"><path d="M5 7.5l5 5 5-5" /></svg>
+              </button>
+            </h3>
+            <div class="acc-panel" id="acc-maildns" role="region" aria-labelledby="acc-maildns-btn">
+              <div class="acc-panel-inner">
+                <div class="acc-body">
+
+                  <nav class="toc" aria-label="หัวข้อใน e-mail และ DNS">
+                    <a href="#mail-components">E-mail components</a>
+                    <a href="#mail-smtp">SMTP</a>
+                    <a href="#mail-format">Message format &amp; access</a>
+                    <a href="#dns-intro">DNS คืออะไร</a>
+                    <a href="#dns-hierarchy">Hierarchy &amp; servers</a>
+                    <a href="#dns-resolution">Iterated vs recursive</a>
+                    <a href="#dns-records">Caching &amp; records</a>
+                    <a href="#dns-message">Messages &amp; registration</a>
+                    <a href="#dns-security">DNS security</a>
+                  </nav>
+
+                  <section class="topic" id="mail-components">
+                    <h4>E-mail: 3 องค์ประกอบหลัก</h4>
+                    <dl class="defs defs--stack">
+                      <div><dt>user agents</dt><dd>หรือ "mail reader" ใช้เขียน แก้ไข และอ่านข้อความอีเมล เช่น Outlook, iPhone mail client — ข้อความขาออกและขาเข้าถูกเก็บไว้บน server</dd></div>
+                      <div><dt>mail servers</dt><dd>มี <strong>mailbox</strong> เก็บข้อความขาเข้าของผู้ใช้ และ <strong>message queue</strong> ของข้อความขาออกที่รอส่ง</dd></div>
+                      <div><dt>SMTP</dt><dd>simple mail transfer protocol — โปรโตคอลระหว่าง mail servers สำหรับส่งอีเมล ฝั่ง "client" คือ mail server ผู้ส่ง ฝั่ง "server" คือ mail server ผู้รับ</dd></div>
+                    </dl>
+                    <figure class="diagram">
+                      <div class="diagram-scroll">
+                        <svg viewBox="0 0 760 150" role="img" aria-labelledby="dg-mail-t dg-mail-d">
+                          <title id="dg-mail-t">เส้นทางการเดินทางของอีเมล</title>
+                          <desc id="dg-mail-d">Sender ใช้ User Agent ส่งไป Sender's Mail Server ซึ่ง push ด้วย SMTP ไป Receiver's Mail Server ที่มีคิว แล้ว Receiver ดึงด้วย IMAP หรือ POP3</desc>
+                          <rect class="dg-box" x="20" y="40" width="120" height="64" rx="8" /><text class="dg-text" x="80" y="78" text-anchor="middle">Sender</text>
+                          <rect class="dg-box" x="200" y="40" width="150" height="64" rx="8" /><text class="dg-text" x="275" y="68" text-anchor="middle">Sender's</text><text class="dg-text" x="275" y="90" text-anchor="middle">Mail Server</text>
+                          <rect class="dg-box dg-box--accent" x="430" y="40" width="150" height="64" rx="8" /><text class="dg-text" x="505" y="68" text-anchor="middle">Receiver's Mail</text><text class="dg-text" x="505" y="90" text-anchor="middle">Server (Queue)</text>
+                          <rect class="dg-box" x="640" y="40" width="100" height="64" rx="8" /><text class="dg-text" x="690" y="78" text-anchor="middle">Receiver</text>
+                          <path class="dg-line" d="M140 72 H200" marker-end="url(#arr-muted)" /><text class="dg-text dg-text--sm" x="170" y="128" text-anchor="middle">User Agent</text>
+                          <path class="dg-line dg-line--accent" d="M350 72 H430" marker-end="url(#arr)" /><text class="dg-mono dg-mono--sm" x="390" y="30" text-anchor="middle">SMTP (Push)</text>
+                          <path class="dg-line dg-line--warn" d="M580 72 H640" marker-end="url(#arr)" /><text class="dg-mono dg-mono--sm dg-mono--warn" x="610" y="30" text-anchor="middle">IMAP/POP3 (Pull)</text>
+                        </svg>
+                      </div>
+                      <figcaption>วาดใหม่จากสไลด์สรุป "Email Routing Path" — SMTP ใช้ push ข้อความไปหา server ผู้รับ ส่วนผู้รับ pull ข้อความลงมาด้วย IMAP/POP3</figcaption>
+                    </figure>
+                    <div class="table-scroll">
+                      <table>
+                        <thead><tr><th>โปรโตคอล</th><th>ลักษณะ (สไลด์สรุป)</th></tr></thead>
+                        <tbody>
+                          <tr><td>SMTP</td><td>ใช้ส่งอีเมล (Push Protocol) มีข้อจำกัดรับเฉพาะข้อความ ASCII 7-bit (ต้องแนบไฟล์ด้วย MIME)</td></tr>
+                          <tr><td>POP3</td><td>ดาวน์โหลดแล้วลบทิ้งจากเซิร์ฟเวอร์</td></tr>
+                          <tr><td>IMAP</td><td>อ่านจากเซิร์ฟเวอร์ ซิงค์โฟลเดอร์ได้หลายอุปกรณ์</td></tr>
+                        </tbody>
+                      </table>
+                    </div>
+                  </section>
+
+                  <section class="topic" id="mail-smtp">
+                    <h4>SMTP (RFC 5321)</h4>
+                    <ul>
+                      <li>ใช้ <strong>TCP</strong> เพื่อส่งข้อความอีเมลอย่างเชื่อถือได้ จาก client (mail server ที่เริ่ม connection) ไปยัง server ที่ <strong>port 25</strong></li>
+                      <li><strong>direct transfer:</strong> server ผู้ส่ง (ทำตัวเป็น client) ส่งตรงไปยัง server ผู้รับ</li>
+                      <li>การส่งมี <strong>3 phases</strong>: SMTP handshaking (greeting) → SMTP transfer of messages → SMTP closure</li>
+                      <li>ทำงานแบบ <strong>command/response</strong> (เหมือน HTTP) — commands เป็น ASCII text, response เป็น status code และ phrase</li>
+                    </ul>
+                    <p><strong>ลำดับบน timeline ในสไลด์:</strong> "client" SMTP server เริ่ม TCP connection (ใช้ 1 RTT) → "server" ตอบ <code>220</code> (เซิร์ฟเวอร์พร้อมให้บริการ) → client ส่ง <code>HELO</code> → server ตอบ <code>250 Hello</code> (จบ SMTP handshaking) → เข้าสู่ SMTP transfers ซึ่งมี response อย่าง <code>354 Start mail input</code></p>
+                    <p><strong>Scenario: Alice ส่งอีเมลถึง Bob</strong></p>
+                    <ol class="steps">
+                      <li>Alice ใช้ user agent (UA) เขียนข้อความ "to" <code>bob@someschool.edu</code></li>
+                      <li>UA ของ Alice ส่งข้อความไปยัง mail server ของเธอด้วย SMTP ข้อความถูกวางใน message queue</li>
+                      <li>ฝั่ง client ของ SMTP ที่ mail server เปิด TCP connection กับ mail server ของ Bob</li>
+                      <li>SMTP client ส่งข้อความของ Alice ผ่าน TCP connection</li>
+                      <li>mail server ของ Bob วางข้อความไว้ใน mailbox ของ Bob</li>
+                      <li>Bob เรียก user agent ของเขาเพื่ออ่านข้อความ</li>
+                    </ol>
+                  </section>
+
+                  <section class="topic" id="mail-format">
+                    <h4>Mail message format และ mail access protocols</h4>
+                    <p>SMTP (RFC 5321) คือโปรโตคอลแลกเปลี่ยนอีเมล เหมือนที่ RFC 7231 กำหนด HTTP ส่วน <strong>RFC 2822</strong> กำหนด<strong>รูปแบบของตัวข้อความอีเมลเอง</strong> (เหมือนที่ HTML กำหนดรูปแบบของเอกสารเว็บ)</p>
+                    <ul>
+                      <li><strong>header lines</strong> เช่น <code>To:</code>, <code>From:</code>, <code>Subject:</code></li>
+                      <li>บรรทัดว่าง (blank line) คั่นระหว่าง header กับ body</li>
+                      <li><strong>Body:</strong> ตัว "message" เป็นตัวอักษร ASCII เท่านั้น</li>
+                    </ul>
+                    <div class="callout callout--warn">
+                      <span class="callout-label">ข้อควรระวัง</span>
+                      <p>header <code>To:</code> / <code>From:</code> ที่อยู่ในตัวข้อความอีเมล <strong>ไม่ใช่สิ่งเดียวกับคำสั่ง SMTP</strong> <code>MAIL FROM:</code> และ <code>RCPT TO:</code></p>
+                    </div>
+                    <p><strong>การดึงอีเมล (Retrieving email):</strong> SMTP ใช้ส่ง/เก็บอีเมลไปยัง server ของผู้รับ ส่วน<strong>การดึงจาก server</strong> ใช้ mail access protocol</p>
+                    <ul>
+                      <li><strong>IMAP: Internet Mail Access Protocol [RFC 3501]</strong> ข้อความเก็บบน server — IMAP ให้บริการดึง ลบ และจัดโฟลเดอร์ของข้อความบน server</li>
+                      <li><strong>HTTP:</strong> gmail, Hotmail, Yahoo!Mail ฯลฯ ให้ web-based interface ที่ทำงานบน SMTP (เพื่อส่ง) และ IMAP (หรือ POP) เพื่อดึงข้อความ</li>
+                    </ul>
+                  </section>
+
+                  <section class="topic" id="dns-intro">
+                    <h4>DNS: Domain Name System</h4>
+                    <p>มนุษย์มีตัวระบุหลายแบบ (เลขประจำตัว, ชื่อ, เลขพาสปอร์ต) อุปกรณ์บนอินเทอร์เน็ตก็เช่นกัน: <strong>IP address (32 bit)</strong> ใช้ระบุที่อยู่ของ datagrams และ <strong>"name"</strong> เช่น cs.umass.edu ใช้โดยมนุษย์ คำถามคือจะจับคู่ระหว่าง IP address กับชื่อ (และกลับกัน) อย่างไร?</p>
+                    <div class="callout callout--def">
+                      <span class="callout-label">นิยาม: Domain Name System (DNS)</span>
+                      <p>(1) <b>distributed database</b> ที่สร้างเป็นลำดับชั้นของ name servers จำนวนมาก (2) <b>application-layer protocol</b> ที่ hosts และ DNS servers สื่อสารกันเพื่อ resolve ชื่อ (แปล address/name)</p>
+                      <p>ข้อสังเกต: เป็นฟังก์ชันแกนหลักของอินเทอร์เน็ต แต่ทำเป็น application-layer protocol — ความซับซ้อนอยู่ที่ "edge" ของเครือข่าย · สไลด์สรุประบุว่า DNS ทำงานผ่าน <b>UDP port 53</b> (เน้นความเร็ว)</p>
+                    </div>
+                    <div class="compare">
+                      <div class="compare-col">
+                        <h5>DNS services</h5>
+                        <ul>
+                          <li>hostname-to-IP-address translation</li>
+                          <li>host aliasing (canonical, alias names)</li>
+                          <li>mail server aliasing</li>
+                          <li>load distribution — replicated Web servers: หลาย IP address ตรงกับชื่อเดียว</li>
+                        </ul>
+                      </div>
+                      <div class="compare-col">
+                        <h5>Q: ทำไมไม่ทำ DNS แบบรวมศูนย์?</h5>
+                        <ul>
+                          <li>single point of failure</li>
+                          <li>traffic volume</li>
+                          <li>distant centralized database</li>
+                          <li>maintenance</li>
+                        </ul>
+                        <p><strong>A: ไม่ scale!</strong> — DNS servers ของ Comcast อย่างเดียวรับ 600B DNS queries/day และของ Akamai 2.2T DNS queries/day</p>
+                      </div>
+                    </div>
+                  </section>
+
+                  <section class="topic" id="dns-hierarchy">
+                    <h4>DNS: distributed, hierarchical database</h4>
+                    <p>ลำดับชั้นมี 3 ระดับ: <strong>Root DNS Servers</strong> → <strong>Top Level Domain</strong> (.com, .org, .edu DNS servers …) → <strong>Authoritative</strong> (yahoo.com, amazon.com, pbs.org, nyu.edu, umass.edu DNS servers …)</p>
+                    <p><strong>ตัวอย่าง (1st approximation):</strong> client ต้องการ IP address ของ www.amazon.com</p>
+                    <ol class="steps">
+                      <li>client ถาม root server เพื่อหา .com DNS server</li>
+                      <li>client ถาม .com DNS server เพื่อหา amazon.com DNS server</li>
+                      <li>client ถาม amazon.com DNS server เพื่อได้ IP address ของ www.amazon.com</li>
+                    </ol>
+                    <dl class="defs defs--stack">
+                      <div><dt>Root name servers</dt><dd>จุดติดต่อทางการ<strong>สุดท้าย</strong> (contact-of-last-resort) ของ name servers ที่ resolve ชื่อไม่ได้ · เป็นฟังก์ชันสำคัญมาก อินเทอร์เน็ตทำงานไม่ได้ถ้าไม่มี · DNSSEC ให้ความปลอดภัย (authentication, message integrity) · ICANN (Internet Corporation for Assigned Names and Numbers) ดูแล root DNS domain · มี <strong>13 logical root name "servers"</strong> ทั่วโลก (ชื่อ a.root-servers.net ถึง m.root-servers.net) แต่ละ "server" ถูก replicate หลายชุด</dd></div>
+                      <div><dt>Top-Level Domain (TLD) servers</dt><dd>รับผิดชอบ .com, .org, .net, .edu, .aero, .jobs, .museums และ country domains ทั้งหมด เช่น .cn, .uk, .fr, .ca, .jp · Network Solutions: authoritative registry ของ .com, .net · Educause: .edu TLD</dd></div>
+                      <div><dt>Authoritative DNS servers</dt><dd>DNS server ขององค์กรเอง ให้ hostname-to-IP mappings แบบ authoritative สำหรับ host ที่มีชื่อขององค์กร · องค์กรดูแลเองหรือให้ service provider ดูแลก็ได้</dd></div>
+                      <div><dt>Local DNS name servers</dt><dd>เมื่อ host ส่ง DNS query จะไปที่ local DNS server ก่อน ซึ่งตอบจาก local cache ของคู่ name-to-address ล่าสุด (อาจล้าสมัย!) หรือส่งต่อ request เข้าไปใน DNS hierarchy · ISP แต่ละรายมี local DNS server (ดูของตัวเองได้ด้วย <code>scutil --dns</code> บน MacOS หรือ <code>ipconfig /all</code> บน Windows) · local DNS server <strong>ไม่ได้อยู่ใน hierarchy โดยตรง</strong></dd></div>
+                    </dl>
+                  </section>
+
+                  <section class="topic" id="dns-resolution">
+                    <h4>DNS name resolution: iterated query vs recursive query</h4>
+                    <p><strong>ตัวอย่าง:</strong> host ที่ engineering.nyu.edu ต้องการ IP address ของ gaia.cs.umass.edu โดยมี local DNS server คือ dns.nyu.edu และ authoritative DNS server คือ dns.cs.umass.edu</p>
+                    <figure class="diagram">
+                      <div class="diagram-scroll">
+                        <svg viewBox="0 0 760 330" role="img" aria-labelledby="dg-dnsq-t dg-dnsq-d">
+                          <title id="dg-dnsq-t">DNS iterated query เทียบกับ recursive query</title>
+                          <desc id="dg-dnsq-d">ซ้าย iterated: local DNS ถาม root TLD และ authoritative ทีละตัวเอง แต่ละ server ตอบกลับมาที่ local ขั้น 1 ถึง 8 ขวา recursive: แต่ละ server ถามต่อให้ตามลำดับ root ถาม TLD TLD ถาม authoritative แล้วส่งคำตอบย้อนกลับ</desc>
+                          <text class="dg-mono" x="20" y="22">Iterated query</text>
+                          <text class="dg-mono" x="410" y="22">Recursive query</text>
+                          <path class="dg-line dg-line--dash" d="M385 10 V320" />
+                          <!-- iterated nodes -->
+                          <g>
+                            <rect class="dg-box" x="20" y="258" width="140" height="48" rx="8" /><text class="dg-text dg-text--sm" x="90" y="278" text-anchor="middle">requesting host</text><text class="dg-mono dg-mono--sm" x="90" y="296" text-anchor="middle">engineering.nyu.edu</text>
+                            <rect class="dg-box dg-box--accent" x="20" y="140" width="140" height="48" rx="8" /><text class="dg-text dg-text--sm" x="90" y="160" text-anchor="middle">local DNS server</text><text class="dg-mono dg-mono--sm" x="90" y="178" text-anchor="middle">dns.nyu.edu</text>
+                            <rect class="dg-box" x="230" y="36" width="140" height="40" rx="8" /><text class="dg-text dg-text--sm" x="300" y="61" text-anchor="middle">root DNS server</text>
+                            <rect class="dg-box" x="230" y="144" width="140" height="40" rx="8" /><text class="dg-text dg-text--sm" x="300" y="169" text-anchor="middle">TLD DNS server</text>
+                            <rect class="dg-box" x="230" y="256" width="140" height="52" rx="8" /><text class="dg-text dg-text--sm" x="300" y="276" text-anchor="middle">authoritative</text><text class="dg-mono dg-mono--sm" x="300" y="294" text-anchor="middle">dns.cs.umass.edu</text>
+                          </g>
+                          <path class="dg-line dg-line--accent" d="M80 258 V190" marker-end="url(#arr)" /><text class="dg-mono dg-mono--sm" x="68" y="228" text-anchor="end">1</text>
+                          <path class="dg-line" d="M100 190 V258" marker-end="url(#arr-muted)" /><text class="dg-mono dg-mono--sm" x="112" y="228">8</text>
+                          <path class="dg-line dg-line--accent" d="M160 146 L230 60" marker-end="url(#arr)" /><text class="dg-mono dg-mono--sm" x="182" y="96">2</text>
+                          <path class="dg-line" d="M230 74 L164 154" marker-end="url(#arr-muted)" /><text class="dg-mono dg-mono--sm" x="212" y="122">3</text>
+                          <path class="dg-line dg-line--accent" d="M160 160 H228" marker-end="url(#arr)" /><text class="dg-mono dg-mono--sm" x="194" y="154" text-anchor="middle">4</text>
+                          <path class="dg-line" d="M230 172 H162" marker-end="url(#arr-muted)" /><text class="dg-mono dg-mono--sm" x="194" y="188" text-anchor="middle">5</text>
+                          <path class="dg-line dg-line--accent" d="M160 184 L230 262" marker-end="url(#arr)" /><text class="dg-mono dg-mono--sm" x="214" y="212">6</text>
+                          <path class="dg-line" d="M230 278 L158 190" marker-end="url(#arr-muted)" /><text class="dg-mono dg-mono--sm" x="180" y="250">7</text>
+                          <!-- recursive nodes -->
+                          <g>
+                            <rect class="dg-box" x="400" y="258" width="140" height="48" rx="8" /><text class="dg-text dg-text--sm" x="470" y="278" text-anchor="middle">requesting host</text><text class="dg-mono dg-mono--sm" x="470" y="296" text-anchor="middle">engineering.nyu.edu</text>
+                            <rect class="dg-box dg-box--accent" x="400" y="140" width="140" height="48" rx="8" /><text class="dg-text dg-text--sm" x="470" y="160" text-anchor="middle">local DNS server</text><text class="dg-mono dg-mono--sm" x="470" y="178" text-anchor="middle">dns.nyu.edu</text>
+                            <rect class="dg-box" x="600" y="36" width="140" height="40" rx="8" /><text class="dg-text dg-text--sm" x="670" y="61" text-anchor="middle">root DNS server</text>
+                            <rect class="dg-box" x="600" y="144" width="140" height="40" rx="8" /><text class="dg-text dg-text--sm" x="670" y="169" text-anchor="middle">TLD DNS server</text>
+                            <rect class="dg-box" x="600" y="256" width="140" height="52" rx="8" /><text class="dg-text dg-text--sm" x="670" y="276" text-anchor="middle">authoritative</text><text class="dg-mono dg-mono--sm" x="670" y="294" text-anchor="middle">dns.cs.umass.edu</text>
+                          </g>
+                          <path class="dg-line dg-line--accent" d="M460 258 V190" marker-end="url(#arr)" /><text class="dg-mono dg-mono--sm" x="448" y="228" text-anchor="end">1</text>
+                          <path class="dg-line" d="M480 190 V258" marker-end="url(#arr-muted)" /><text class="dg-mono dg-mono--sm" x="492" y="228">8</text>
+                          <path class="dg-line dg-line--accent" d="M540 150 L600 62" marker-end="url(#arr)" /><text class="dg-mono dg-mono--sm" x="558" y="98">2</text>
+                          <path class="dg-line" d="M604 76 L544 164" marker-end="url(#arr-muted)" /><text class="dg-mono dg-mono--sm" x="586" y="130">7</text>
+                          <path class="dg-line dg-line--accent" d="M660 76 V144" marker-end="url(#arr)" /><text class="dg-mono dg-mono--sm" x="650" y="114" text-anchor="end">3</text>
+                          <path class="dg-line" d="M680 144 V76" marker-end="url(#arr-muted)" /><text class="dg-mono dg-mono--sm" x="690" y="114">6</text>
+                          <path class="dg-line dg-line--accent" d="M660 184 V256" marker-end="url(#arr)" /><text class="dg-mono dg-mono--sm" x="650" y="224" text-anchor="end">4</text>
+                          <path class="dg-line" d="M680 256 V184" marker-end="url(#arr-muted)" /><text class="dg-mono dg-mono--sm" x="690" y="224">5</text>
+                        </svg>
+                      </div>
+                      <figcaption>วาดใหม่จากสไลด์ 52–53 — เส้นม่วงคือคำถาม เส้นเทาคือคำตอบ ตัวเลขคือลำดับขั้น 1–8</figcaption>
+                    </figure>
+                    <div class="compare">
+                      <div class="compare-col">
+                        <h5>Iterated query</h5>
+                        <p>server ที่ถูกถาม<strong>ตอบกลับด้วยชื่อ server ที่ควรไปถามต่อ</strong> — "I don't know this name, but ask this server" local DNS server จึงเป็นผู้วนถาม root → TLD → authoritative เอง</p>
+                      </div>
+                      <div class="compare-col">
+                        <h5>Recursive query</h5>
+                        <p><strong>ผลักภาระการ resolve ชื่อไปให้ name server ที่ถูกถาม</strong> ซึ่งไปถามต่อเองเป็นทอดๆ แล้วส่งคำตอบย้อนกลับ</p>
+                        <p>คำถามในสไลด์: จะเกิด <strong>heavy load at upper levels of hierarchy?</strong></p>
+                      </div>
+                    </div>
+                  </section>
+
+                  <section class="topic" id="dns-records">
+                    <h4>Caching DNS information และ DNS records</h4>
+                    <ul>
+                      <li>เมื่อ name server (ตัวใดก็ได้) เรียนรู้ mapping แล้วจะ <strong>cache</strong> ไว้ และตอบ query ถัดไปด้วย mapping ที่ cache ทันที → <strong>ปรับปรุง response time</strong></li>
+                      <li>cache entries หมดอายุ (หายไป) หลังเวลาหนึ่งเรียกว่า <strong>TTL</strong> · local name servers มักจะ cache TLD servers ไว้</li>
+                    </ul>
+                    <div class="callout callout--warn">
+                      <span class="callout-label">ข้อควรระวัง: cache อาจล้าสมัย</span>
+                      <p>ถ้า host ที่มีชื่อเปลี่ยน IP address อินเทอร์เน็ตทั้งหมดอาจยังไม่รู้จนกว่า TTL ทั้งหมดจะหมดอายุ — DNS จึงเป็น <strong>best-effort name-to-address translation</strong></p>
+                    </div>
+                    <p>DNS เป็น distributed database ที่เก็บ <strong>resource records (RR)</strong> รูปแบบ <code>(name, value, type, ttl)</code></p>
+                    <div class="table-scroll">
+                      <table>
+                        <thead><tr><th>type</th><th>name</th><th>value</th></tr></thead>
+                        <tbody>
+                          <tr><td><code>A</code></td><td>hostname</td><td>IP address</td></tr>
+                          <tr><td><code>NS</code></td><td>domain (เช่น foo.com)</td><td>hostname ของ authoritative name server สำหรับ domain นี้</td></tr>
+                          <tr><td><code>CNAME</code></td><td>alias name ของชื่อ "canonical" (ชื่อจริง) — เช่น www.ibm.com จริงๆ คือ servereast.backup2.ibm.com</td><td>canonical name (เมื่อ query เจอ CNAME ระบบนำชื่อจริงไปหา IP address ต่อให้อัตโนมัติ)</td></tr>
+                          <tr><td><code>MX</code></td><td>name</td><td>ชื่อของ SMTP mail server ที่ผูกกับชื่อนั้น</td></tr>
+                        </tbody>
+                      </table>
+                    </div>
+                  </section>
+
+                  <section class="topic" id="dns-message">
+                    <h4>DNS protocol messages และการนำข้อมูลเข้า DNS</h4>
+                    <p>DNS query และ reply <strong>ใช้รูปแบบข้อความเดียวกัน</strong></p>
+                    <dl class="defs defs--stack">
+                      <div><dt>identification (2 bytes)</dt><dd>หมายเลข 16 bit ของ query — reply ใช้หมายเลขเดียวกัน</dd></div>
+                      <div><dt>flags (2 bytes)</dt><dd>query หรือ reply · recursion desired · recursion available · reply is authoritative</dd></div>
+                      <div><dt># questions / # answer RRs / # authority RRs / # additional RRs</dt><dd>จำนวนรายการในแต่ละส่วน</dd></div>
+                      <div><dt>questions</dt><dd>name, type fields ของ query</dd></div>
+                      <div><dt>answers</dt><dd>RRs ที่ตอบ query</dd></div>
+                      <div><dt>authority</dt><dd>records ของ authoritative servers</dd></div>
+                      <div><dt>additional info</dt><dd>ข้อมูลเสริมที่ "เป็นประโยชน์" อาจนำไปใช้ได้</dd></div>
+                    </dl>
+                    <p><strong>ตัวอย่าง: startup ใหม่ชื่อ "Network Utopia"</strong></p>
+                    <ol class="steps">
+                      <li>จดทะเบียนชื่อ networkuptopia.com กับ DNS registrar (เช่น Network Solutions) โดยให้ชื่อและ IP address ของ authoritative name server (primary และ secondary)</li>
+                      <li>registrar ใส่ NS และ A RRs ลงใน .com TLD server: <code>(networkutopia.com, dns1.networkutopia.com, NS)</code> และ <code>(dns1.networkutopia.com, 212.212.212.1, A)</code></li>
+                      <li>สร้าง authoritative server ของตัวเองที่ IP address 212.212.212.1 พร้อม type A record สำหรับ www.networkuptopia.com และ type MX record สำหรับ networkutopia.com</li>
+                    </ol>
+                  </section>
+
+                  <section class="topic" id="dns-security">
+                    <h4>DNS security</h4>
+                    <div class="compare">
+                      <div class="compare-col">
+                        <h5>DDoS attacks</h5>
+                        <ul>
+                          <li>ถล่ม root servers ด้วย traffic — ยังไม่เคยสำเร็จ เพราะมี traffic filtering และ local DNS servers cache IP ของ TLD servers ไว้ จึงข้าม root server ได้</li>
+                          <li>ถล่ม TLD servers — อาจอันตรายกว่า</li>
+                        </ul>
+                      </div>
+                      <div class="compare-col">
+                        <h5>Spoofing attacks</h5>
+                        <ul>
+                          <li>ดักจับ DNS queries แล้วตอบกลับด้วย reply ปลอม</li>
+                          <li>DNS cache poisoning</li>
+                          <li>RFC 4033: DNSSEC authentication services</li>
+                        </ul>
+                      </div>
+                    </div>
+                  </section>
+
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- ================= 05 Video, CDN, sockets ================= -->
+          <div class="acc-item">
+            <h3 class="acc-heading">
+              <button class="acc-trigger" type="button" aria-expanded="false" aria-controls="acc-video" id="acc-video-btn">
+                <span class="acc-index">05</span>
+                <span class="acc-title">
+                  <span class="acc-name">Video streaming, CDNs และ Socket programming</span>
+                  <span class="acc-file">chapter2_Lecture4_application layer_rev2-1.pdf · Lecture 4 · สไลด์ 62–79</span>
+                </span>
+                <svg class="acc-chevron" viewBox="0 0 20 20" aria-hidden="true"><path d="M5 7.5l5 5 5-5" /></svg>
+              </button>
+            </h3>
+            <div class="acc-panel" id="acc-video" role="region" aria-labelledby="acc-video-btn">
+              <div class="acc-panel-inner">
+                <div class="acc-body">
+
+                  <nav class="toc" aria-label="หัวข้อใน video streaming และ socket">
+                    <a href="#video-context">Context</a>
+                    <a href="#video-coding">Video coding</a>
+                    <a href="#video-streaming">Streaming stored video</a>
+                    <a href="#video-dash">DASH</a>
+                    <a href="#video-cdn">CDNs &amp; Netflix</a>
+                    <a href="#sock-intro">Socket programming</a>
+                  </nav>
+
+                  <section class="topic" id="video-context">
+                    <h4>Video Streaming และ CDNs: บริบท</h4>
+                    <ul>
+                      <li>traffic ของ video streaming <strong>ใช้ bandwidth อินเทอร์เน็ตมากที่สุด</strong> — Netflix, YouTube, Amazon Prime รวมกันเป็น <strong>80% ของ residential ISP traffic (2020)</strong></li>
+                      <li><strong>ความท้าทายด้าน scale:</strong> จะไปถึงผู้ใช้ราว 1B คนได้อย่างไร?</li>
+                      <li><strong>ความท้าทายด้าน heterogeneity:</strong> ผู้ใช้มีความสามารถต่างกัน (wired vs mobile, bandwidth มาก vs น้อย)</li>
+                      <li><strong>ทางแก้:</strong> โครงสร้างพื้นฐานระดับ application แบบกระจาย (distributed, application-level infrastructure)</li>
+                    </ul>
+                  </section>
+
+                  <section class="topic" id="video-coding">
+                    <h4>Multimedia: video coding</h4>
+                    <p><strong>video</strong> คือลำดับของภาพที่แสดงด้วยอัตราคงที่ (เช่น 24 images/sec) · <strong>digital image</strong> คืออาร์เรย์ของ pixels แต่ละ pixel แทนด้วย bits · <strong>coding</strong> ใช้ความซ้ำซ้อน (redundancy) ภายในภาพและระหว่างภาพเพื่อลดจำนวน bits ที่ใช้เข้ารหัส</p>
+                    <div class="compare">
+                      <div class="compare-col">
+                        <h5>spatial coding <span class="chip">ภายในภาพ</span></h5>
+                        <p>แทนที่จะส่งค่าสีเดียวกัน (สีม่วงทั้งหมด) N ค่า ให้ส่งแค่ 2 ค่า: ค่าสี (purple) และจำนวนครั้งที่ซ้ำ (N)</p>
+                      </div>
+                      <div class="compare-col">
+                        <h5>temporal coding <span class="chip">ข้ามภาพ</span></h5>
+                        <p>แทนที่จะส่งภาพ frame i+1 ทั้งภาพ ให้ส่งเฉพาะ<strong>ส่วนที่ต่างจาก frame i</strong></p>
+                      </div>
+                    </div>
+                    <ul>
+                      <li><strong>CBR (constant bit rate):</strong> video encoding rate คงที่</li>
+                      <li><strong>VBR (variable bit rate):</strong> encoding rate เปลี่ยนตามปริมาณ spatial/temporal coding ที่เปลี่ยน</li>
+                      <li><strong>ตัวอย่าง:</strong> MPEG 1 (CD-ROM) 1.5 Mbps · MPEG2 (DVD) 3–6 Mbps · MPEG4 (ใช้บ่อยบนอินเทอร์เน็ต) 64Kbps – 12 Mbps</li>
+                    </ul>
+                  </section>
+
+                  <section class="topic" id="video-streaming">
+                    <h4>Streaming stored video</h4>
+                    <p>scenario อย่างง่าย: video server (stored video) ส่งวิดีโอผ่านอินเทอร์เน็ตไปยัง client ขั้นตอนคือ (1) วิดีโอถูกบันทึก (เช่น 30 frames/sec) (2) วิดีโอถูกส่ง (3) วิดีโอถูกรับและเล่นที่ client (30 frames/sec) — <strong>streaming</strong> คือขณะที่ client เล่นส่วนต้นของวิดีโออยู่ server ยังส่งส่วนหลังอยู่</p>
+                    <div class="callout callout--warn">
+                      <span class="callout-label">Main challenges</span>
+                      <p>bandwidth จาก server ถึง client <b>เปลี่ยนไปตามเวลา</b> ตามระดับ congestion (ในบ้าน, access network, network core, video server) และ packet loss / delay จาก congestion ทำให้เล่นช้าหรือคุณภาพวิดีโอแย่</p>
+                    </div>
+                    <ul>
+                      <li><strong>continuous playout constraint:</strong> ระหว่างเล่นวิดีโอ timing ต้องตรงกับต้นฉบับ แต่ network delay แปรผัน (<strong>jitter</strong>) จึงต้องมี <strong>client-side buffer</strong></li>
+                      <li><strong>ความท้าทายอื่น:</strong> client interactivity (pause, fast-forward, rewind, jump) และ video packets อาจหายและถูกส่งซ้ำ</li>
+                    </ul>
+                    <p><strong>Playout buffering:</strong> ส่งวิดีโอด้วย constant bit rate → เดินทางผ่าน variable network delay → client รับ → เล่นด้วย constant bit rate หลังจาก <strong>client playout delay</strong> โดยพักข้อมูลใน buffer เพื่อชดเชย network-added delay และ delay jitter</p>
+                    <div class="callout callout--def">
+                      <span class="callout-label">ตัวอย่างในสไลด์</span>
+                      <p>ณ เวลา t0 มี chunk มาถึงแล้ว <b>6 chunks</b> และเล่นไปแล้ว <b>2 chunks</b> → ใน buffer จึงเหลือ 6 − 2 = <b>4 chunks</b></p>
+                    </div>
+                  </section>
+
+                  <section class="topic" id="video-dash">
+                    <h4>Streaming multimedia: DASH (Dynamic, Adaptive Streaming over HTTP)</h4>
+                    <div class="compare">
+                      <div class="compare-col">
+                        <h5>server</h5>
+                        <ul>
+                          <li>แบ่งไฟล์วิดีโอเป็นหลาย <strong>chunks</strong></li>
+                          <li>แต่ละ chunk เข้ารหัสไว้<strong>หลาย rate</strong> (เช่น 360p, 720p, 1080p, 4K)</li>
+                          <li>แต่ละ rate เก็บเป็นไฟล์แยก และ replicate ไว้ใน CDN nodes ต่างๆ</li>
+                          <li><strong>manifest file:</strong> บอก URLs ของ chunk ต่างๆ</li>
+                        </ul>
+                      </div>
+                      <div class="compare-col">
+                        <h5>client</h5>
+                        <ul>
+                          <li>ประเมิน bandwidth จาก server ถึง client เป็นระยะ</li>
+                          <li>อ่าน manifest แล้วขอทีละ chunk — เลือก coding rate สูงสุดที่ bandwidth ปัจจุบันรับไหว</li>
+                          <li>เลือก rate ต่างกันในแต่ละช่วงเวลาได้ และขอจาก server ต่างกันได้</li>
+                        </ul>
+                      </div>
+                    </div>
+                    <p><strong>"intelligence" อยู่ที่ client</strong> — client ตัดสินใจเองว่า (1) <strong>เมื่อไร</strong>จะขอ chunk (ไม่ให้ buffer ว่าง/ล้น) (2) ขอ <strong>encoding rate</strong> ไหน (คุณภาพสูงขึ้นเมื่อ bandwidth มากขึ้น) (3) ขอจาก<strong>ที่ไหน</strong> (URL server ที่ "ใกล้" client หรือมี bandwidth สูง)</p>
+                    <code class="formula">Streaming video = encoding + DASH + playout buffering</code>
+                  </section>
+
+                  <section class="topic" id="video-cdn">
+                    <h4>Content distribution networks (CDNs)</h4>
+                    <p><strong>ความท้าทาย:</strong> จะสตรีมเนื้อหา (ที่เลือกจากวิดีโอนับล้าน) ไปยังผู้ใช้หลายแสนคนพร้อมกันได้อย่างไร?</p>
+                    <div class="compare">
+                      <div class="compare-col">
+                        <h5>Option 1: single, large "mega-server"</h5>
+                        <ul>
+                          <li>single point of failure</li>
+                          <li>point of network congestion</li>
+                          <li>เส้นทางยาว (และอาจ congested) ไปยัง client ที่อยู่ไกล</li>
+                        </ul>
+                        <p><strong>สรุป: solution นี้ไม่ scale</strong></p>
+                      </div>
+                      <div class="compare-col">
+                        <h5>Option 2: CDN</h5>
+                        <p>เก็บ/ให้บริการสำเนาวิดีโอหลายชุดที่หลายไซต์กระจายตามภูมิศาสตร์</p>
+                        <ul>
+                          <li><strong>enter deep:</strong> ดัน CDN servers ลึกเข้าไปใน access networks จำนวนมาก ใกล้ผู้ใช้ — Akamai: 240,000 servers ใน &gt; 120 ประเทศ (2015)</li>
+                          <li><strong>bring home:</strong> cluster ใหญ่จำนวนน้อยกว่า (หลักสิบ) ใน POPs ใกล้ access nets — ใช้โดย Limelight</li>
+                        </ul>
+                      </div>
+                    </div>
+                    <p><strong>Netflix ทำงานอย่างไร:</strong> Netflix เก็บสำเนาเนื้อหา (เช่น MADMEN) ไว้ที่ OpenConnect CDN nodes ทั่วโลก ผู้ใช้ขอเนื้อหา ("where's Madmen?") ผู้ให้บริการส่ง <strong>manifest file</strong> กลับมา client ใช้ manifest ดึงเนื้อหาด้วย rate สูงสุดที่รองรับได้ และอาจเปลี่ยน rate หรือเปลี่ยนสำเนาถ้าเส้นทางเครือข่าย congested</p>
+                    <div class="callout callout--def">
+                      <span class="callout-label">OTT ("over the top") challenges</span>
+                      <p>การรับมืออินเทอร์เน็ตที่ congested จาก "edge": เนื้อหาไหนควรวางที่ CDN node ไหน? ควรดึงเนื้อหาจาก CDN node ไหน? ด้วย rate เท่าไร?</p>
+                    </div>
+                  </section>
+
+                  <section class="topic" id="sock-intro">
+                    <h4>Socket programming</h4>
+                    <p><strong>เป้าหมาย:</strong> เรียนรู้วิธีสร้าง client/server applications ที่สื่อสารกันด้วย sockets · <strong>socket</strong> คือประตูระหว่าง application process กับ end-end-transport protocol (app developer ควบคุมเหนือ socket, OS ควบคุมใต้ socket)</p>
+                    <div class="compare">
+                      <div class="compare-col"><h5>UDP socket</h5><p>unreliable datagram</p></div>
+                      <div class="compare-col"><h5>TCP socket</h5><p>reliable, byte stream-oriented</p></div>
+                    </div>
+                    <p><strong>Application Example</strong> ที่ใช้ทั้งสองแบบ</p>
+                    <ol class="steps">
+                      <li>client อ่านบรรทัดตัวอักษร (data) จาก keyboard แล้วส่ง data ไปยัง server</li>
+                      <li>server รับ data แล้วแปลงตัวอักษรเป็นตัวพิมพ์ใหญ่</li>
+                      <li>server ส่ง data ที่แก้แล้วกลับไปให้ client</li>
+                      <li>client รับ data ที่แก้แล้วและแสดงบรรทัดนั้นบนหน้าจอ</li>
+                    </ol>
+                    <p><strong>Socket programming with UDP:</strong> ไม่มี "connection" ระหว่าง client กับ server</p>
+                    <ul>
+                      <li>ไม่มี handshaking ก่อนส่งข้อมูล</li>
+                      <li>ผู้ส่ง<strong>แนบ IP destination address และ port # ไปกับทุก packet เอง</strong></li>
+                      <li>ผู้รับดึง IP address และ port# ของผู้ส่งออกมาจาก packet ที่ได้รับ</li>
+                    </ul>
+                    <div class="callout callout--warn">
+                      <span class="callout-label">ข้อควรระวัง</span>
+                      <p>ด้วย UDP ข้อมูลที่ส่ง<strong>อาจสูญหายหรือมาถึงไม่เรียงลำดับ</strong> — มุมมองของแอป: UDP ให้การส่งกลุ่มของ bytes ("datagrams") ระหว่าง client และ server processes แบบ unreliable</p>
                     </div>
                   </section>
 

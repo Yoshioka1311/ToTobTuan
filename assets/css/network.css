@@ -1105,6 +1105,61 @@ html:not(.js) .seg { display: none; }
 .demo-status.is-ok { color: var(--success); }
 .demo-status.is-bad { color: var(--danger); }
 
+/* ---- Interactive: RTT timeline bars (HTTP) ---- */
+.rtt-bars { display: grid; gap: var(--space-3); margin-top: var(--space-2); }
+.rtt-row {
+  display: grid;
+  grid-template-columns: 150px minmax(0, 1fr) auto;
+  gap: var(--space-3);
+  align-items: center;
+  font-size: var(--fs-sm);
+}
+.rtt-label { font-weight: 600; color: var(--text); }
+.rtt-track {
+  display: flex;
+  height: 30px;
+  overflow: hidden;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  background: var(--graphite-950);
+}
+.rtt-seg { flex: none; height: 100%; min-width: 1px; box-shadow: inset -1px 0 0 var(--graphite-950); }
+.rtt-seg--tcp { background: var(--iris-500); }
+.rtt-seg--req { background: var(--iris-300); }
+.rtt-seg--tx { background: var(--success); }
+.rtt-total { font-family: var(--font-mono); color: var(--iris-200); white-space: nowrap; }
+.rtt-legend { display: flex; flex-wrap: wrap; gap: 6px 16px; margin-top: var(--space-3); font-size: var(--fs-xs); color: var(--text-muted); }
+.rtt-key { display: inline-block; width: 12px; height: 12px; margin-right: 6px; border-radius: 3px; vertical-align: -1px; }
+
+/* ---- Interactive: calculators (ขั้นตอนคำนวณแสดงสด) ---- */
+.calc-steps { list-style: none; display: grid; gap: 6px; margin: var(--space-3) 0 0; padding: 0 !important; counter-reset: calc; }
+.calc-steps li {
+  margin: 0;
+  padding: 8px 12px 8px 40px;
+  position: relative;
+  border-left: 3px solid var(--iris-500);
+  border-radius: var(--radius-sm);
+  background: var(--graphite-950);
+  font-size: var(--fs-sm);
+  overflow-x: auto;
+}
+.calc-steps li::before {
+  counter-increment: calc;
+  content: counter(calc);
+  position: absolute;
+  left: 12px;
+  top: 8px;
+  font-family: var(--font-mono);
+  font-size: var(--fs-xs);
+  color: var(--iris-300);
+}
+.calc-steps li.is-result { border-left-color: var(--success); }
+.calc-steps li.is-warn { border-left-color: var(--warn); color: var(--warn); }
+.calc-expr { display: block; font-family: var(--font-mono); font-size: 0.85rem; color: var(--iris-200); white-space: nowrap; }
+.range-field { display: flex; align-items: center; gap: var(--space-3); }
+.range-field input[type="range"] { flex: 1; min-width: 0; accent-color: var(--iris-400); height: 44px; }
+.range-field output { min-width: 4ch; font-family: var(--font-mono); color: var(--iris-200); text-align: right; }
+
 /* ---- Responsive ---- */
 @media (max-width: 860px) {
   ol.tl-track { grid-auto-flow: row; grid-auto-columns: auto; gap: var(--space-3); padding-left: 28px; }
@@ -1119,6 +1174,8 @@ html:not(.js) .seg { display: none; }
   .url-legend > div { grid-template-columns: 1fr; gap: 2px; }
   .semantic-map { grid-template-columns: 1fr; grid-template-areas: "header" "nav" "section" "article" "aside" "footer"; }
   .tabs--4 .tab { padding-inline: 4px; font-size: var(--fs-sm); }
+  .rtt-row { grid-template-columns: 1fr auto; }
+  .rtt-row .rtt-track { grid-column: 1 / -1; grid-row: 2; }
   .course-hero { padding-block: var(--space-5) var(--space-5); }
   .chapter-nav { display: grid; grid-template-columns: 1fr 1fr; margin-bottom: var(--space-5); }
   .chapter-link { flex-direction: column; align-items: flex-start; gap: 0; padding: 8px 12px; }

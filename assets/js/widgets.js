@@ -147,6 +147,116 @@
     update();
   });
 
+  /* ------------------------------------------------ Number helpers */
+  const num = (input) => {
+    const v = parseFloat(String(input.value).replace(",", "."));
+    return Number.isFinite(v) ? v : 0;
+  };
+  // ตัดศูนย์ท้ายทศนิยม: fmt(0.0650, 3) → "0.065"
+  const fmt = (v, digits = 3) => {
+    if (!Number.isFinite(v)) return "∞";
+    return Number(v.toFixed(digits)).toLocaleString("en-US", { maximumFractionDigits: digits });
+  };
+  const li = (html, cls) => {
+    const node = document.createElement("li");
+    if (cls) node.className = cls;
+    node.innerHTML = html;
+    return node;
+  };
+
+  /* ------------------------------------- HTTP RTT timeline (บทที่ 2) */
+  document.querySelectorAll('[data-widget="http-timeline"]').forEach((root) => {
+    const nInput = root.querySelector("[data-input=objects]");
+    const rttInput = root.querySelector("[data-input=rtt]");
+    const txInput = root.querySelector("[data-input=tx]");
+    const rows = { non: root.querySelector('[data-row="non"]'), per: root.querySelector('[data-row="per"]') };
+    const buttons = Array.from(root.querySelectorAll("button[data-mode]"));
+    const status = root.querySelector(".demo-status");
+    let mode = "both";
+
+    const seg = (cls, ms, title) => ({ cls, ms, title });
+    function build() {
+      const n = Math.max(0, Math.min(30, Math.round(num(nInput))));
+      const rtt = Math.max(0, num(rttInput));
+      const tx = Math.max(0, num(txInput));
+      const non = [];
+      for (let i = 0; i <= n; i++) {
+        const name = i === 0 ? "base HTML" : `object ${i}`;
+        non.push(seg("tcp", rtt, `1 RTT: เปิด TCP connection (${name})`), seg("req", rtt, `1 RTT: ส่ง request + รับ byte แรก (${name})`), seg("tx", tx, `file transmission time (${name})`));
+      }
+      const per = [seg("tcp", rtt, "1 RTT: เปิด TCP connection ครั้งเดียว"), seg("req", rtt, "1 RTT: request base HTML"), seg("tx", tx, "file transmission time (base HTML)")];
+      if (n > 0) {
+        per.push(seg("req", rtt, `1 RTT: request object ที่อ้างอิงทั้ง ${n} ชิ้นผ่าน connection เดิม`));
+        for (let i = 1; i <= n; i++) per.push(seg("tx", tx, `file transmission time (object ${i})`));
+      }
+      const total = (list) => list.reduce((s, x) => s + x.ms, 0);
+      const totals = { non: total(non), per: total(per) };
+      const visible = mode === "both" ? ["non", "per"] : [mode];
+      const scale = Math.max(...visible.map((k) => totals[k]), 1);
+
+      Object.entries({ non, per }).forEach(([key, list]) => {
+        const row = rows[key];
+        row.hidden = !visible.includes(key);
+        const track = row.querySelector(".rtt-track");
+        track.innerHTML = "";
+        list.forEach((s) => {
+          if (!s.ms) return;
+          const d = document.createElement("span");
+          d.className = `rtt-seg rtt-seg--${s.cls}`;
+          d.style.width = `${(s.ms / scale) * 100}%`;
+          d.title = `${s.title} · ${fmt(s.ms, 1)} ms`;
+          track.append(d);
+        });
+        row.querySelector(".rtt-total").textContent = `${fmt(totals[key], 1)} ms`;
+      });
+
+      const rttCount = { non: 2 * (n + 1), per: n > 0 ? 3 : 2 };
+      status.textContent = `Non-persistent ใช้ ${rttCount.non} RTT + transmission ${n + 1} object = ${fmt(totals.non, 1)} ms · Persistent ใช้อย่างน้อย ${rttCount.per} RTT + transmission ${n + 1} object = ${fmt(totals.per, 1)} ms`;
+    }
+    buttons.forEach((b) => b.addEventListener("click", () => {
+      mode = b.dataset.mode;
+      buttons.forEach((x) => x.setAttribute("aria-pressed", String(x === b)));
+      build();
+    }));
+    [nInput, rttInput, txInput].forEach((i) => i.addEventListener("input", build));
+    build();
+  });
+
+  /* ------------------------------------ Web cache calculator (บทที่ 2) */
+  document.querySelectorAll('[data-widget="cache-calc"]').forEach((root) => {
+    const $ = (name) => root.querySelector(`[data-input=${name}]`);
+    const hitOut = root.querySelector("[data-output=hit]");
+    const steps = root.querySelector(".calc-steps");
+    function build() {
+      const link = num($("link"));
+      const rate = num($("rate"));
+      const rtt = num($("rtt"));
+      const size = num($("size"));
+      const hit = Math.max(0, Math.min(100, num($("hit")))) / 100;
+      const miss = 1 - hit;
+      hitOut.textContent = `${Math.round(hit * 100)}%`;
+      const utilNoCache = link ? rate / link : Infinity;
+      const trans = link ? (size * 1e3) / (link * 1e6) : Infinity;
+      const delayMiss = rtt + trans;
+      const rateWithCache = rate * miss;
+      const intensity = link ? rateWithCache / link : Infinity;
+      const avg = hit * 0 + miss * delayMiss;
+      steps.innerHTML = "";
+      steps.append(
+        li(`ไม่มี cache: access link utilization = avg data rate ÷ access link rate<span class="calc-expr">${fmt(rate)} Mbps ÷ ${fmt(link)} Mbps ≈ <strong>${fmt(utilNoCache, 2)}</strong></span>`, utilNoCache >= 0.9 ? "is-warn" : ""),
+        li(`Transmission delay ของ object 1 ชิ้น = ขนาด object ÷ access link rate<span class="calc-expr">${fmt(size)}K bits ÷ ${fmt(link)} Mbps ≈ <strong>${fmt(trans, 3)} วินาที</strong></span>`),
+        li(`cache miss ต้องออกไป origin server: Delay<sub>Miss</sub> = RTT + transmission delay<span class="calc-expr">${fmt(rtt)} + ${fmt(trans, 3)} = <strong>${fmt(delayMiss, 3)} วินาที</strong></span>`),
+        li(`มี cache: traffic ที่วิ่งผ่าน access link เหลือ ${fmt(miss * 100, 1)}% → traffic intensity<span class="calc-expr">(${fmt(rate)} × ${fmt(miss, 2)}) ÷ ${fmt(link)} = ${fmt(rateWithCache, 3)} ÷ ${fmt(link)} ≈ <strong>${fmt(intensity, 2)}</strong></span>`, intensity >= 0.9 ? "is-warn" : ""),
+        li(`Average delay = Hit rate × Delay<sub>Hit</sub> + Miss rate × Delay<sub>Miss</sub> (Delay<sub>Hit</sub> ≈ 0)<span class="calc-expr">${fmt(hit, 2)} × 0 + ${fmt(miss, 2)} × ${fmt(delayMiss, 3)} ≈ <strong>${fmt(avg, 2)} วินาที</strong></span>`, "is-result"),
+      );
+      if (intensity >= 0.9) {
+        steps.append(li("traffic intensity ยังสูงใกล้ 1 → queueing delay ที่ access link จะมาก (กรณีไม่มี cache ในสไลด์ใช้เวลาระดับนาที) สูตรเฉลี่ยข้างบนที่ตัด queueing delay ออกจึงใช้ไม่ได้", "is-warn"));
+      }
+    }
+    root.querySelectorAll("input").forEach((i) => i.addEventListener("input", build));
+    build();
+  });
+
   /* -------------------------------------------- Form validation demo */
   document.querySelectorAll('form[data-widget="validation-demo"]').forEach((form) => {
     const status = form.querySelector(".demo-status");
