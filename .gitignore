@@ -19,3 +19,15 @@ node_modules/
 
 # Claude Code local settings (CLAUDE.md ยังถูก track)
 .claude/settings.local.json
+
+# ความลับ / credential — ห้ามขึ้น git
+.env
+.env.*
+*.pem
+*.key
+*.p12
+*.pfx
+secrets.*
+credentials*.json
+.npmrc
+.netrc
