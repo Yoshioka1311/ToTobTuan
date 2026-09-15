@@ -38,23 +38,33 @@ HTML/CSS/JS ไม่มี framework ไม่มี build tool — ห้า�
 | `network-application-layer.html` | ITDS231 **บทที่ 2: Application Layer** (Lecture 3 & 4) — โครง 3 แท็บเดียวกัน: accordion 2 การ์ด · cheat sheet 7 การ์ด · quiz 20 ข้อ |
 | `network-data-link-layer.html` | ITDS231 **บทที่ 3: Data Link Layer** (Lecture 5.0–5.2) — accordion 3 การ์ด · cheat sheet 6 การ์ด · quiz 20 ข้อ |
 | `network-mac-ethernet.html` | ITDS231 **บทที่ 4: MAC + Ethernet** (Lecture 6.1–6.2) — accordion 2 การ์ด · cheat sheet 8 การ์ด · quiz 20 ข้อ |
+| `web-intro-html-basics.html` | ITDS241 **บทที่ 1: Internet & HTML Basics** — **4 แท็บ**: เนื้อหา (accordion 5 การ์ด) · สรุป (6 การ์ด) · แบบฝึกหัด (quiz 20 ข้อ) · **เขียนโค้ด** (24 ข้อ กลุ่ม 1–4) |
+| `web-media-forms-semantic.html` | ITDS241 **บทที่ 2: Media, Forms & Semantic** — 4 แท็บ: accordion 4 การ์ด · สรุป 6 การ์ด · quiz 20 ข้อ · เขียนโค้ด (12 ข้อ กลุ่ม 5–6) |
 
 การ์ด "การออกแบบฐานข้อมูล (7-Eleven Schema)" ใน index เป็นเนื้อหาเดิมของผู้ใช้ ยังไม่มีหน้าของตัวเอง
-การ์ด ITDS231 ใน index ลิงก์ไป `network.html` (บทที่ 1) ที่เดียว แล้วสลับบทด้วย chapter switcher ต้นหน้า
+การ์ด ITDS231 ใน index ลิงก์ไป `network.html` (บทที่ 1) · การ์ด ITDS241 ลิงก์ไป `web-intro-html-basics.html` — ทุกหน้าบทมี **course nav** ต้นหน้า: ปุ่มเลือกวิชา (Network / Web) แล้วตามด้วยลิงก์บทของวิชานั้น
 
 ### ⚠️ กฎเรื่องเนื้อหา (สำคัญ) — content lock
-- เนื้อหาวิชา, คำถาม quiz 20 ข้อ, ตัวเลือก, คำตอบ (`data-answer`) และคำอธิบายใน **ทุกหน้าบท: `network.html`, `network-application-layer.html`, `network-data-link-layer.html`, `network-mac-ethernet.html`** **ห้ามแก้/ลบ** เมื่อทำงานด้าน UI — ปรับได้แค่ markup/class/ดีไซน์/interaction (เช่น chapter switcher)
-- **บทที่ 3 และ 4 (lock แล้ว)**: เนื้อหามาจากสรุปที่ผู้ใช้พิมพ์ให้ในแชท (สกัดจาก `ITDS231-Lecture5.0-DLP-Foundation-2026.pdf`, `ITDS231-Lecture5.1-Error-Detection-2026.pdf`, `ITDS231-Lecture5.2-Flow-Control-2026.pdf`, `ITDS231-Lecture6.1-MAC-n-2026.pdf`, `ITDS231-Lecture6.2-Ethernet-2026.pdf` ใน Downloads — ไม่ได้อ่าน PDF เอง) คำถาม/ตัวเลือก/เฉลยตรงตัวตามผู้ใช้
+- เนื้อหาวิชา, คำถาม quiz 20 ข้อ, ตัวเลือก, คำตอบ (`data-answer`) และคำอธิบายใน **ทุกหน้าบท: `network.html`, `network-application-layer.html`, `network-data-link-layer.html`, `network-mac-ethernet.html`, `web-intro-html-basics.html`, `web-media-forms-semantic.html`** **ห้ามแก้/ลบ** เมื่อทำงานด้าน UI — ปรับได้แค่ markup/class/ดีไซน์/interaction (เช่น course nav)
+- **แท็บ "แบบฝึกหัด" (quiz) ห้ามแตะเด็ดขาด** ทุกหน้า — ถ้าต้องแก้แท็บเนื้อหาให้ใช้วิธี splice เฉพาะ `<section id="content">` แล้วตรวจว่าส่วนสรุป + quiz เหมือนเดิมทุกไบต์
+- **ขยายแท็บเนื้อหา Network บทที่ 1–4 (session 4, ผู้ใช้อนุญาต)**: เนื้อหาในแท็บ "เนื้อหา" ถูกเขียนเพิ่มจาก **PDF ต้นฉบับโดยตรง** (อ่านด้วย PyMuPDF, หน้าที่เป็นรูปถูก render แล้วอ่านภาพ) — กฎคือ **ห้ามเพิ่มข้อมูลที่ไม่ได้มาจากสไลด์** (รวมถึง "เหตุผล" ที่สไลด์ไม่ได้เขียน) ตัวอย่างตัวเลขต้องมีวิธีทำทีละขั้น · แท็บสรุปและ quiz ไม่ได้แก้
+  - บทที่ 2: สไลด์ HTTP พื้นฐานจริงอยู่ใน `chapter2_application layer_1-1.pdf` (slide 28–47) ไม่ใช่ไฟล์ Lecture4 — ป้ายไฟล์ของการ์ดถูกแก้ให้ตรงแล้ว
+  - เครื่องคิด transmission/propagation delay อยู่ในบทที่ 1 (สูตรเป็นของบทที่ 1) แม้ผู้ใช้จะเขียนว่าบทที่ 2
+  - บทที่ 4 หน้าเนื้อหาตอนนี้แสดง Type = 2 ไบต์ และ CRC = 4 ไบต์ เพราะมีในสไลด์ Lecture 6.2 หน้า 16 (18 bytes of header and trailer)
+- **บทที่ 3 และ 4 (lock แล้ว)**: เนื้อหาเดิม + quiz มาจากสรุปที่ผู้ใช้พิมพ์ให้ในแชท (สกัดจาก `ITDS231-Lecture5.0-DLP-Foundation-2026.pdf`, `ITDS231-Lecture5.1-Error-Detection-2026.pdf`, `ITDS231-Lecture5.2-Flow-Control-2026.pdf`, `ITDS231-Lecture6.1-MAC-n-2026.pdf`, `ITDS231-Lecture6.2-Ethernet-2026.pdf` ใน Downloads) คำถาม/ตัวเลือก/เฉลยตรงตัวตามผู้ใช้
   - เฉลยบทที่ 3 = `bbbbbbbbbbbbbbabbabb` (ข้อ 15=A, 18=A, ที่เหลือ B)
   - เฉลยบทที่ 4 = `cbbbbbbbbbbbcbbbbbba` (ข้อ 1=C, 13=C, 20=A, ที่เหลือ B)
   - `.q-explain` ของบทที่ 3–4 เขียนโดย Claude อ้างจากเนื้อหาที่ผู้ใช้ให้เท่านั้น
-  - cheat sheet บทที่ 4 การ์ด 06: ขนาด Type (2 ไบต์) และ CRC (4 ไบต์) **ไม่อยู่ในสรุปของผู้ใช้** — Claude คำนวณจาก CRC-32 และ 1518 − 6 − 6 − 1500 − 4 และติดเครื่องหมาย * พร้อมหมายเหตุไว้ ส่วนหน้าเนื้อหาแสดง "—"
-  - ข้อสังเกตจากต้นฉบับ (คงไว้ตามที่ผู้ใช้ให้): บทที่ 3 ระบุ Ethernet 802.3 เป็น "LLC/SNAP+MAC" แต่บทที่ 4 ระบุว่า Ethernet "ไม่มี LLC"
-- **บทที่ 2 (lock แล้ว)**: เนื้อหามาจากสรุปที่ผู้ใช้พิมพ์ให้ในแชท (สกัดจาก `chapter2_application layer_1-1.pdf` และ `chapter2_Lecture4_application layer_rev2-1.pdf` ใน Downloads — ไม่ได้อ่าน PDF เอง) คำถาม/ตัวเลือก/เฉลยใช้ตามที่ผู้ใช้กำหนดตรงตัว
+  - cheat sheet บทที่ 4 การ์ด 06: ขนาด Type (2 ไบต์) และ CRC (4 ไบต์) ติดเครื่องหมาย * พร้อมหมายเหตุไว้ (ตอนนั้นยังไม่ได้อ่านสไลด์ — ภายหลังยืนยันจากสไลด์แล้ว)
+  - ข้อสังเกตจากต้นฉบับ (คงไว้): บทที่ 3 ระบุ Ethernet 802.3 เป็น "LLC/SNAP+MAC" แต่บทที่ 4 ระบุว่า Ethernet "ไม่มี LLC" · บทที่ 4 กลุ่มแรกของ multiple access สไลด์เรียกทั้ง "Random access" และ "Contention-based"
+- **Web ITDS241 บทที่ 1–2 (lock แล้ว)**: เนื้อหามาจากไฟล์ที่ผู้ใช้ให้ · quiz ใช้คำตอบที่ผู้ใช้กำหนดตรงตัว (ส่วนใหญ่เป็น B — ห้ามสลับตัวเลือกถ้าผู้ใช้ไม่ขอ)
+  - เฉลย Web บทที่ 1 = `bbbcbbccbbbcbbbbabbb` · เฉลย Web บทที่ 2 = `bbcbbbbbcbbbbbbbbbbc`
+  - โจทย์เขียนโค้ด 36 ข้อ (6 กลุ่มตามที่ผู้ใช้กำหนด) — ไม่มีกลุ่ม audio/video/iframe เพราะไม่อยู่ใน 6 กลุ่มของผู้ใช้
+- **บทที่ 2 (lock แล้ว)**: เนื้อหามาจากสรุปที่ผู้ใช้พิมพ์ให้ในแชท (สกัดจาก `chapter2_application layer_1-1.pdf` และ `chapter2_Lecture4_application layer_rev2-1.pdf` ใน Downloads) คำถาม/ตัวเลือก/เฉลยใช้ตามที่ผู้ใช้กำหนดตรงตัว
   - เฉลยบทที่ 2 = `b b b b b b d b b b b b b b b b b a c b` (ข้อ 7=D, 18=A, 19=C, ที่เหลือ B) — **ไม่ได้กระจาย A–D** เพราะผู้ใช้สั่งห้ามเปลี่ยนเฉลย ห้ามสลับลำดับตัวเลือกเองถ้าผู้ใช้ไม่ขอ
   - ข้อความใน `.q-explain` ของบทที่ 2 เขียนโดย Claude โดยอ้างจากเนื้อหาที่ผู้ใช้ให้เท่านั้น (ผู้ใช้ไม่ได้ให้คำอธิบายมา)
 - เนื้อหาสรุปมาจาก PDF 3 ไฟล์ของผู้ใช้ (อยู่ใน `C:\Users\bossz\Downloads\`, ไม่ได้อยู่ใน repo และ `*.pdf` ถูก gitignore):
-  `Chapter_1_Intro_rev1.pdf` (117 หน้า, ส่วนใหญ่มี text), `ITDS231_Internet_Architecture_rev1.pdf` (20 หน้า) และ `ITDS231_Network_Topography.pdf` (15 หน้า) — สองไฟล์หลังเป็น **รูปภาพล้วน** ต้อง render เป็น PNG แล้วอ่าน (ใช้ PyMuPDF ติดตั้งแบบ `pip install --target <scratchpad>`; เครื่องนี้ไม่มี poppler)
+  `Chapter_1_Intro_rev1.pdf` (117 หน้า, ส่วนใหญ่มี text), `ITDS231_Internet_Architecture_rev1.pdf` (20 หน้า) และ `ITDS231_Network_Topography.pdf` (15 หน้า) — สองไฟล์หลังเป็น **รูปภาพล้วน** ต้อง render เป็น PNG แล้วอ่าน (ใช้ PyMuPDF ติดตั้งแบบ `pip install --target .cache/pylib` หลังขออนุญาต; เครื่องนี้ไม่มี poppler)
 - ค่าความเร็วสัญญาณ: Chapter 1 ใช้ ~2×10⁸ m/s, สไลด์ Architecture เขียน ~2.5×10⁸ m/s แต่โจทย์ใช้ 2×10⁸ — หน้าเว็บระบุทั้งสองแบบไว้แล้ว
 - quiz บทที่ 1: เฉลยกระจาย A/B/C/D อย่างละ 5 ข้อ
 
@@ -66,22 +76,58 @@ network.html                     ITDS231 บทที่ 1 (เนื้อห�
 network-application-layer.html   ITDS231 บทที่ 2 (ใช้ network.css / network.js ร่วมกันทุกบท)
 network-data-link-layer.html     ITDS231 บทที่ 3
 network-mac-ethernet.html        ITDS231 บทที่ 4
+web-intro-html-basics.html       ITDS241 บทที่ 1 (4 แท็บ รวมเขียนโค้ด)
+web-media-forms-semantic.html    ITDS241 บทที่ 2
 assets/
   favicon.svg           โลโก้ (3 โหนดเชื่อมกัน) ใช้เป็น favicon + wordmark
   css/
     tokens.css          design tokens (สี ฟอนต์ ระยะ radius เงา motion) — แก้สีที่นี่ที่เดียว
-    base.css            reset, typography, header, .btn, .chip, .card, .table-scroll, .formula, footer
+    base.css            reset, typography, header, .btn, .chip, .card, .table-scroll, .formula, footer, [hidden]
     home.css            เฉพาะ index.html (hero, ticker, subject cards)
-    network.css         หน้าวิชา: chapter switcher, tabs, accordion, topic content (รวม .frame แผนภาพฟิลด์เฟรม), cheat sheet, quiz (สถานะคงที่เท่านั้น)
+    network.css         หน้าบททุกวิชา: course nav, tabs, accordion, topic content (.frame, callout, diagram/dg-*, code-block, render-preview),
+                        widget ทุกตัว (demo-box, calc-steps, rtt-*, arq-*, bit-row, long-division, bo-*), cheat sheet, quiz
+    exercise.css        เฉพาะแท็บเขียนโค้ด (cx-*) ของหน้า Web
     motion.css          keyframes + transition ของ component ทั้งหมด + prefers-reduced-motion (โหลดเป็นไฟล์สุดท้าย)
   js/
-    network.js          tabs (ARIA, arrow keys, #hash), accordion, quiz (ตรวจ/คะแนน/รีเซ็ต/กรองข้อผิด)
+    network.js          tabs (ARIA, arrow keys, #hash), accordion, quiz — ใช้กับหน้า Web ด้วย
+    widgets.js          course nav + widget ที่ประกาศด้วย data-widget (ดูหัวข้อ Widgets) · expose window.TotobWidgets
+    code-exercise.js    engine แท็บเขียนโค้ด (ดูหัวข้อ Code exercise)
+    exercises-web-1.js  โจทย์กลุ่ม 1–4 (window.CODE_EXERCISE_SET id "web-1")
+    exercises-web-2.js  โจทย์กลุ่ม 5–6 (id "web-2")
 README.md               คำอธิบายสั้น + วิธี deploy
 .nojekyll               ให้ GitHub Pages ไม่ประมวลผล Jekyll
 .gitignore
 ```
 
-ลำดับการโหลด CSS: `tokens → base → (home | network) → motion`
+ลำดับการโหลด CSS: `tokens → base → (home | network [+ exercise]) → motion` · JS: `widgets.js → network.js [→ exercises-web-N.js → code-exercise.js]` (defer ทั้งหมด)
+
+## Widgets และแผนภาพ (assets/js/widgets.js)
+
+ทุก widget เป็น progressive enhancement: เนื้อหาต้องอ่านได้ครบโดยไม่มี JS · ตัวเลขทุกค่าต้องมาจากสไลด์
+| data-widget | หน้า | markup ที่ต้องมี |
+| --- | --- | --- |
+| `url-anatomy`, `layout-demo`, `pattern-tester`, `validation-demo` (form) | Web | ดูตัวอย่างในหน้า Web |
+| `delay-calc` | Network บทที่ 1 | `[data-input=l/lu/r/d/s/proc/queue]`, ปุ่ม `[data-preset=q1/q2/q3]`, `.demo-status`, `ol.calc-steps` |
+| `http-timeline` | บทที่ 2 | `[data-input=objects/rtt/tx]`, `[data-row=non/per] .rtt-track/.rtt-total`, `button[data-mode=both/non/per]`, `.demo-status` |
+| `cache-calc` | บทที่ 2 | `[data-input=link/rate/rtt/size/hit]`, `[data-output=hit]`, `.calc-steps` |
+| `arq-window` | บทที่ 3 | `button[data-proto=gbn/sr]`, `[data-strip=s/r]`, `.arq-caption`, `.arq-step`, `[data-step=prev/next]` (สถานการณ์ m=3, Frame 1 หาย) |
+| `hamming` | บทที่ 3 | `input` (7 บิต d7→d1), `.bit-row`, `.demo-status`, `.calc-steps` |
+| `crc-calc` | บทที่ 3 | `[data-input=data/divisor]`, `pre.long-division`, `.calc-steps` |
+| `backoff-sim` | บทที่ 4 | `[data-input=tprop]`, `[data-action=collide/example/reset]`, `.demo-status`, `.calc-steps` (Kmax = 15 → abort) |
+
+- โค้ดตัวอย่าง HTML: `pre.code-block[data-lang=html]` ถูก highlight อัตโนมัติ · ใส่ `data-render` จะมี iframe `sandbox=""` srcdoc แสดงผล (ไม่ใช้ lazy loading — เคยทำให้ว่าง)
+- SVG แผนภาพ: `figure.diagram > .diagram-scroll > svg[role=img]` + `<title>/<desc>` + `figcaption` บอกสไลด์ที่มา · class `dg-box(--accent|ok|bad|warn)`, `dg-line(--accent|ok|bad|warn|dash)`, `dg-text(--sm|ok|bad)`, `dg-mono(--sm|warn)` · marker `#arr #arr-muted #arr-ok #arr-bad` ต้องมี `svg.dg-defs` 1 ชุดต่อหน้า (ต่อจาก skip-link) · ห้ามใช้ glyph ที่ฟอนต์ไม่มี (เช่น ①)
+- callout: `.callout.callout--def|--warn|--why` + `span.callout-label`
+
+## Code exercise (แท็บ "เขียนโค้ด" เฉพาะหน้า Web)
+
+- panel `#code` (tablist ใช้ `.tabs--4`) มี `#code-exercise` · โหลด `exercise.css`, ไฟล์โจทย์ แล้ว `code-exercise.js`
+- รูปแบบข้อมูล `window.CODE_EXERCISE_SET = { id, groups: [{ title, tasks: [{ id, title, level: 1|2|3, prompt (HTML), starter?, solution, checks: [{ hint, test: (doc, code, h) => boolean }] }] }] }`
+- ตรวจ: `DOMParser` parse โค้ด แล้วรัน checks ตามลำดับ · ไม่ผ่าน = แสดง hint ของ check แรกที่ตก + "และยังมีอีก N จุด" (ห้ามให้ hint บอกเฉลยตรงๆ · backtick ใน hint แสดงเป็นโค้ด) · ปุ่ม "ดูเฉลย" แยกต่างหาก
+- helpers `h`: `norm`, `text`, `tagInSource`, `doctypeFirst`, `comments`, `commentNodes`, `before`, `ownText`, `outsideForm`, `labelFor`, `attr`
+- state: `localStorage["totobtuan:code-exercise:v1:<set id>"] = { current, tasks: { "<id>": { code, status: "pass"|"fail" } } }` (ห่อ try/catch) — ถ้าเปลี่ยนรูปแบบให้ขึ้น `v2`
+- editor: Tab/Shift+Tab ย่อหน้า (กด Esc แล้ว Tab เพื่อออกจากช่อง), Enter คงระดับย่อหน้า, Ctrl+Enter ตรวจ, live preview, รีเซ็ตข้อ/ทั้งหมด (confirm)
+- ทดสอบ: `window.TotobCodeExercise.validate(id, code)` — ทุก solution ต้องผ่าน และโค้ดว่างต้องไม่ผ่าน
 
 ## Design system — "Iris & Graphite"
 
@@ -161,31 +207,39 @@ README.md               คำอธิบายสั้น + วิธี depl
 - [x] ทดสอบ headless Edge ทั้ง 4 บท: เฉลยตรงกับที่กำหนด, คะแนนเต็ม 20, ไม่มี id ซ้ำ, ลิงก์ toc ไม่เสีย, aria-current ถูกหน้า, ไม่มี horizontal scroll ที่ 390px ทุกแท็บ, reduced motion, ไม่มี JS error
 - [x] commit แยกต่อบท แล้ว push `origin/main`
 
+**Session 4 (2026-09-15)** — prompt 3 ส่วน (ลำดับทำ 2 → 3 → 1)
+- [x] **Web ITDS241**: สร้าง `web-intro-html-basics.html` และ `web-media-forms-semantic.html` (เนื้อหาละเอียด + widget + render preview + quiz ตามเฉลยผู้ใช้) · course nav (เลือกวิชา → บท) ทุกหน้าบท · การ์ด Web ใน index
+- [x] **แท็บเขียนโค้ด** (เฉพาะหน้า Web): `code-exercise.js` + โจทย์ 36 ข้อ ตรวจด้วย DOMParser, ไม่เฉลยตรง, ปุ่มดูเฉลย, บันทึก localStorage — ทดสอบแล้วว่าทุก solution ผ่าน / โค้ดว่างไม่ผ่าน
+- [x] **ขยายแท็บเนื้อหา Network บทที่ 1–4** จาก PDF ต้นฉบับ (commit แยกต่อบท): บทที่ 2 เขียนการ์ดใหม่ 5 ใบ (+ HTTP objects diagram, http-timeline, cache-calc, HOL/DNS/mail diagram) · บทที่ 3 เขียนใหม่ทั้งแท็บ (+ crc-calc, hamming, arq-window) · บทที่ 4 เขียนใหม่ทั้งแท็บ (+ ผัง CSMA/CD, ผัง switch MAC learning, backoff-sim) · บทที่ 1 เพิ่มแผนภาพ ISP/IXP (วาดตามสไลด์ 1-57), delay-calc, วิธีทำทีละขั้น และ callout
+- [x] เพิ่ม `[hidden] { display: none !important; }` ใน base.css (แก้ปุ่ม/ผล quiz ที่ควรซ่อนแต่ยังแสดง)
+- [x] ทดสอบ headless Edge ทุกหน้า: เฉลย quiz ไม่เปลี่ยน, ไม่มี id ซ้ำ, ลิงก์ toc ครบ, widget คำนวณตรงกับตัวอย่างในสไลด์, ไม่มี horizontal scroll ที่ 390px, ไม่มี JS error
+- เครื่องมือชั่วคราว (PyMuPDF ใน `.cache/pylib`, สคริปต์ CDP `.cache/shoot.mjs`, `.cache/splice.mjs`) ถูกลบเมื่อจบงานตาม Safety Rules — ถ้าต้องอ่าน PDF อีกให้ขออนุญาตติดตั้ง PyMuPDF ลง `.cache/` ใหม่
+
 ## สิ่งที่ยังไม่ได้ทำ / แผนต่อไป
 
 - (ถ้าผู้ใช้ต้องการ) สลับลำดับตัวเลือก quiz บทที่ 2 ให้เฉลยกระจาย A–D — ต้องได้รับอนุญาตก่อน เพราะเปลี่ยนตัวอักษรของเฉลย
-- ITDS231 บทที่ 2 ส่วนที่เหลือของสไลด์ (Email/SMTP/IMAP, DNS, video streaming/CDN, socket programming) ยังไม่มีในเว็บ — มีแค่ในหัวข้อภาพรวม
 - เพิ่มหน้าวิชาอื่น (เช่น วิชาฐานข้อมูลที่มีการ์ดรออยู่แล้ว — ใน Downloads มีสไลด์ชื่อ ITDS222 ERDiagram แต่ยังไม่ได้ยืนยันกับผู้ใช้ว่าเป็นวิชาเดียวกัน) — ดู "วิธีเพิ่มวิชาใหม่" ด้านล่าง
 - ITDS231 หัวข้อที่ยังไม่มีในเว็บ: Data & Signals, VLAN, STP — เพิ่มเป็นหน้าบทใหม่ตาม pattern หลายบทเมื่อผู้ใช้ให้เนื้อหา
-- (ถ้าผู้ใช้ต้องการ) สลับลำดับตัวเลือก quiz บทที่ 3–4 ให้เฉลยกระจาย A–D (ตอนนี้ส่วนใหญ่เป็น B) — ต้องขออนุญาตก่อน
-- chapter switcher: ถ้ามีเกิน ~6 บท ควรเปลี่ยนเป็น dropdown/scroll แนวนอน (ตอนนี้ 4 บท desktop แถวเดียว, มือถือ 2×2)
+- (ถ้าผู้ใช้ต้องการ) สลับลำดับตัวเลือก quiz บทที่ 3–4 และ Web บทที่ 1–2 ให้เฉลยกระจาย A–D (ตอนนี้ส่วนใหญ่เป็น B) — ต้องขออนุญาตก่อน
+- (ถ้าผู้ใช้ต้องการ) โจทย์เขียนโค้ดกลุ่ม media (audio/video/iframe) — ตอนนี้ไม่มีเพราะไม่อยู่ใน 6 กลุ่มที่ผู้ใช้กำหนด
+- course nav: ถ้าวิชาใดมีเกิน ~6 บท ควรเปลี่ยนเป็น dropdown/scroll แนวนอน (ตอนนี้ 4 บท desktop แถวเดียว, มือถือ 2×2)
 - ไอเดีย (ยังไม่ได้ขอ): จำคำตอบ quiz ด้วย localStorage, ธีมสว่าง, สุ่มลำดับคำถาม
 
 ## วิธีเพิ่มบทใหม่ในวิชาเดิม (pattern หลายบท)
 
-วิชาเดียว = หลายไฟล์ .html (1 ไฟล์ต่อ 1 บท) ใช้ `network.css` + `network.js` ร่วมกัน ไม่ต้องแก้ JS
+วิชาเดียว = หลายไฟล์ .html (1 ไฟล์ต่อ 1 บท) ใช้ `network.css` + `widgets.js` + `network.js` ร่วมกัน ไม่ต้องแก้ JS (Network ใช้ prefix `network-` · Web ใช้ `web-`)
 1. ตั้งชื่อ `<subject>-<topic>.html` (lowercase, คั่นด้วย `-`) เช่น `network-transport-layer.html` · บทที่ 1 คงชื่อ `network.html` ไว้เพราะมีลิงก์จาก index และ deep link เดิม
 2. คัดลอกโครงจากหน้าบทล่าสุด: header, `.course-hero`, tabbar, 3 panel (`#content` / `#summary` / `#quiz`), `quiz-result`, `quiz-bar` — id เหล่านี้ JS ใช้ ห้ามเปลี่ยนชื่อ
-3. **chapter switcher**: เพิ่ม `<a class="chapter-link">` ของบทใหม่ใน `.chapter-nav` ของ**ทุกหน้าบท** (ลำดับเดียวกันทุกหน้า) และใส่ `aria-current="page"` เฉพาะลิงก์ของหน้าตัวเอง
-4. id ของหัวข้อย่อยใช้ prefix ต่อบท (บทที่ 2 `app-*` `http-*` · บทที่ 3 `dl-*` `err-*` `fc-*` · บทที่ 4 `mac-*` `eth-*`) เพื่อไม่ชนกันเวลาลิงก์ข้ามหน้า
+3. **course nav**: `nav.course-nav` มี `.subject-switch` (ปุ่ม `.subject-btn[data-subject]`) และ `.chapter-nav[data-subject]` ต่อวิชา — เพิ่ม `<a class="chapter-link">` ของบทใหม่ใน `.chapter-nav` ของวิชานั้นใน**ทุกหน้าบททุกวิชา** (ลำดับเดียวกัน) และใส่ `aria-current="page"` เฉพาะลิงก์ของหน้าตัวเอง · ปุ่มวิชาของหน้านั้นต้อง `aria-pressed="true"`
+4. id ของหัวข้อย่อยใช้ prefix ต่อบท (บทที่ 2 `app-*` `http-*` · บทที่ 3 `dl-*` `err-*` `fc-*` · บทที่ 4 `mac-*` `eth-*` · Web ดูในไฟล์) เพื่อไม่ชนกันเวลาลิงก์ข้ามหน้า
    - cheat sheet grid 3 คอลัมน์: จัดให้ (จำนวนการ์ดกว้าง × 2 + การ์ดปกติ) หาร 3 ลงตัว จะไม่มีช่องว่างท้าย
-5. การ์ดใน index ยังชี้ `network.html` — อัปเดตแค่ chip จำนวนบทและ `card-sub`
+5. การ์ดใน index ชี้บทที่ 1 ของวิชา — อัปเดตแค่ chip จำนวนบทและ `card-sub`
 6. เพิ่มแถวในตารางหน้าใน CLAUDE.md + README และบันทึกว่าเนื้อหาบทใหม่ถูก lock
 
 ## วิธีเพิ่มวิชาใหม่
 
 1. คัดลอก `network.html` เป็น `<subject>.html` (lowercase, ไม่มีช่องว่าง — GitHub Pages แยกตัวพิมพ์เล็ก/ใหญ่) แล้วเปลี่ยนเนื้อหาใน 3 แท็บ
-2. ใช้ `assets/css/network.css` + `assets/js/network.js` ได้เลย (ถ้าไม่มี quiz ต้องปรับ JS ให้ข้ามส่วน quiz เมื่อไม่มี `#quiz-form`)
+2. ใช้ `assets/css/network.css` + `assets/js/widgets.js` + `assets/js/network.js` ได้เลย · เพิ่มปุ่มวิชาใน `.subject-switch` และ `.chapter-nav` ใหม่ในทุกหน้าบท (ถ้าไม่มี quiz ต้องปรับ JS ให้ข้ามส่วน quiz เมื่อไม่มี `#quiz-form`)
 3. เพิ่มการ์ด `<a class="subject-card" href="<subject>.html">` ใน `index.html`
 4. ลิงก์ทุกอันต้องเป็น relative path (ไม่ขึ้นต้นด้วย `/`) เพราะ Pages อยู่ใต้ `/<repo>/`
 
