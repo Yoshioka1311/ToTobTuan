@@ -6,13 +6,21 @@
      { id: "web-1",                       // ใช้เป็นส่วนหนึ่งของ localStorage key
        groups: [{ title, tasks: [{
          id: "1.1", title, level: 1|2|3,  // 1 ง่าย · 2 กลาง · 3 ยาก
+         mode: "html" | "js",             // ไม่ใส่ = html (โจทย์ CSS ก็ใช้ html: เขียน <style> ในโค้ด)
          prompt: "<p>HTML ของคำสั่งงาน</p>",
          starter: "",                     // โค้ดตั้งต้น (ไม่บังคับ)
          solution: "เฉลย",
+         // mode "js" เท่านั้น:
+         fixture: "<button id=...>",      // HTML ที่มีอยู่ในหน้าก่อนโค้ดผู้ใช้ทำงาน (แสดงในคำสั่งงานให้อัตโนมัติ)
+         probe: "return ...",             // โค้ดของผู้สร้างโจทย์ รันหลังโค้ดผู้ใช้ (ใน sandbox) ค่าที่ return ไปอยู่ใน r.probe
+         wait: 0,                         // ms ที่รอก่อนรัน probe (ใส่เฉพาะโจทย์ที่ใช้ setTimeout)
          checks: [{ hint: "ยังไม่พบ ...", test: (doc, code, h) => boolean }]
+         //  mode js: test: (r, code, h) => boolean โดย r = { logs[], errors[], probe, probeError, loopLimit, timeout, html }
        }] }] }
 
-   validate: parse โค้ดด้วย DOMParser แล้วรัน checks ตามลำดับ
+   validate (async): html → parse ด้วย DOMParser แล้วรัน checks ตามลำดับ
+                     js   → รันโค้ดใน iframe sandbox (TotobWidgets.runJs: allow-scripts ไม่มี allow-same-origin,
+                            CSP ปิด network, loop guard + timeout) แล้วรัน checks กับผลลัพธ์
              ผ่าน = ทุก check คืน true · ไม่ผ่าน = แสดง hint ของ check แรกที่ตก + จำนวนที่เหลือ
    state:    localStorage["totobtuan:code-exercise:v1:<set id>"] =
              { current: "1.1", tasks: { "1.1": { code, status: "pass"|"fail" } } }
@@ -72,17 +80,96 @@
     outsideForm: (doc) => Array.from(doc.querySelectorAll("input, select, textarea, button")).filter((el) => !el.closest("form")),
     labelFor: (doc, input) => (input && input.id ? doc.querySelector(`label[for="${CSS.escape(input.id)}"]`) : null),
     attr: (el, name) => (el ? (el.getAttribute(name) || "").trim() : ""),
+    hasClass: (el, cls) => Boolean(el && el.classList && el.classList.contains(cls)),
+
+    /* ---- CSS: parse <style> ทุกตัวด้วย CSSOM (constructable stylesheet — parse อย่างเดียว ไม่ถูกนำไปใช้กับหน้าเว็บ) */
+    // คืน [{ selectors: ["h1", ".a p"], style: CSSStyleDeclaration, media: "screen and (max-width: 768px)" | "" }]
+    cssRules: (doc) => {
+      const out = [];
+      const walk = (rules, media) => Array.from(rules).forEach((rule) => {
+        if (rule.selectorText !== undefined && rule.style) {
+          out.push({ selectors: splitSelectors(rule.selectorText), style: rule.style, media });
+        } else if (rule.media && rule.cssRules) {
+          walk(rule.cssRules, rule.media.mediaText.toLowerCase());
+        }
+      });
+      doc.querySelectorAll("style").forEach((styleEl) => {
+        try {
+          const sheet = new CSSStyleSheet();
+          sheet.replaceSync(styleEl.textContent);
+          walk(sheet.cssRules, "");
+        } catch (e) { /* CSS parse ไม่ได้ → ไม่นับ */ }
+      });
+      return out;
+    },
+    // ค่า property จาก rule ล่าสุดที่ selector ตรง (normalize ช่องว่าง/ตัวพิมพ์) · media: "" = ไม่อยู่ใน @media, null = ไม่สนใจ
+    cssValue: (doc, selector, prop, media = "") => {
+      const want = normSelector(selector);
+      let value = "";
+      h.cssRules(doc).forEach((r) => {
+        if (media !== null && !mediaMatches(r.media, media)) return;
+        if (!r.selectors.includes(want)) return;
+        const v = r.style.getPropertyValue(prop).trim();
+        if (v) value = v.toLowerCase();
+      });
+      return value;
+    },
+    // มี rule ที่ selector ใดก็ได้ใน list ของมันจับ element นี้ และกำหนด prop = value ไหม
+    cssAppliesTo: (doc, el, prop, test) => h.cssRules(doc).some((r) => !r.media && r.selectors.some((sel) => {
+      try { return el.matches(sel) && test(r.style.getPropertyValue(prop).trim().toLowerCase(), sel); } catch (e) { return false; }
+    })),
+    cssMediaRules: (doc) => h.cssRules(doc).filter((r) => r.media),
+    // สีเดียวกันไหม ("blue" = "#00f" = "rgb(0, 0, 255)") — ให้ canvas แปลงเป็นรูปแบบเดียวกัน
+    sameColor: (a, b) => {
+      if (!a || !b) return false;
+      const ctx = colorCtx || (colorCtx = document.createElement("canvas").getContext("2d"));
+      const normColor = (c) => { ctx.fillStyle = "#010203"; ctx.fillStyle = String(c).trim(); return ctx.fillStyle; };
+      const na = normColor(a);
+      return na !== "#010203" && na === normColor(b);
+    },
+    // JS: ตัด comment และเนื้อใน string ออก (ใช้หา keyword ในโค้ดโดยไม่หลงไปเจอในข้อความ)
+    jsCode: (code) => stripJs(code),
+    logs: (r) => (r && Array.isArray(r.logs) ? r.logs : []),
+    noErrors: (r) => Boolean(r && !r.timeout && (!r.errors || r.errors.length === 0)),
   };
 
-  function validate(task, code) {
-    const doc = new DOMParser().parseFromString(code, "text/html");
+  let colorCtx = null;
+  function normSelector(sel) {
+    return String(sel).trim().replace(/\s*([>+~,])\s*/g, "$1").replace(/\s+/g, " ").toLowerCase();
+  }
+  function splitSelectors(text) {
+    return String(text).split(",").map(normSelector).filter(Boolean);
+  }
+  function mediaMatches(actual, wanted) {
+    if (wanted === "") return actual === "";
+    const squash = (m) => String(m).toLowerCase().replace(/\s+/g, "");
+    return squash(actual).includes(squash(wanted));
+  }
+  function stripJs(code) {
+    return String(code).replace(
+      /("(?:[^"\\\n]|\\.)*"|'(?:[^'\\\n]|\\.)*'|`(?:[^`\\]|\\.)*`)|\/\*[\s\S]*?\*\/|\/\/[^\n]*/g,
+      (m, str) => (str ? '""' : " "),
+    );
+  }
+
+  const isJs = (task) => task.mode === "js";
+
+  async function validate(task, code) {
+    let subject;
+    if (isJs(task)) {
+      subject = W.runJs
+        ? await W.runJs({ code, fixture: task.fixture || "", probe: task.probe || "", wait: task.wait || 0 })
+        : { logs: [], errors: ["ไม่พบตัวรันโค้ด"], timeout: true };
+    } else {
+      subject = new DOMParser().parseFromString(code, "text/html");
+    }
     const failed = [];
     task.checks.forEach((check) => {
       let ok = false;
-      try { ok = Boolean(check.test(doc, code, h)); } catch (e) { ok = false; }
+      try { ok = Boolean(check.test(subject, code, h)); } catch (e) { ok = false; }
       if (!ok) failed.push(check.hint);
     });
-    return { pass: failed.length === 0, failed };
+    return { pass: failed.length === 0, failed, result: isJs(task) ? subject : null };
   }
 
   /* ------------------------------------------------------------ Render */
@@ -160,18 +247,22 @@
   const liveToggle = el("input", { type: "checkbox" });
   liveToggle.checked = state.live !== false;
   const frame = el("iframe", { sandbox: "", title: "ผลลัพธ์ของโค้ดที่เขียน" });
+  const previewTitle = el("h4", { text: "ผลลัพธ์ใน browser" });
+  const consoleOut = el("pre", { class: "cx-console", "aria-live": "polite", hidden: "" });
   const previewCard = el("div", { class: "cx-card cx-preview" }, [
     el("div", { class: "cx-preview-head" }, [
-      el("h4", { text: "ผลลัพธ์ใน browser" }),
+      previewTitle,
       el("label", { class: "cx-live" }, [liveToggle, "อัปเดตอัตโนมัติขณะพิมพ์"]),
     ]),
     frame,
+    consoleOut,
   ]);
 
   const solutionCode = el("code");
+  const solutionPre = el("pre", { class: "code-block", "data-lang": "html" }, solutionCode);
   const solutionBox = el("div", { class: "cx-card cx-solution", hidden: "" }, [
     el("p", { class: "cx-solution-note", text: "เฉลยเป็นเพียงคำตอบหนึ่งที่ผ่าน — เขียนต่างจากนี้ก็ผ่านได้ถ้าครบทุกเงื่อนไข" }),
-    el("pre", { class: "code-block", "data-lang": "html" }, solutionCode),
+    solutionPre,
   ]);
 
   const prevBtn = el("button", { class: "btn btn--ghost btn--sm", type: "button", text: "← ข้อก่อนหน้า" });
@@ -184,8 +275,29 @@
   let current = byId.has(state.current) ? byId.get(state.current) : tasks[0];
 
   const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
+  const consoleLine = (kind, text) => consoleOut.append(el("span", { class: `run-line run-line--${kind}`, text }));
+  let previewRun = 0;
   const renderPreview = () => {
-    frame.srcdoc = W.buildSrcdoc ? W.buildSrcdoc(editor.value) : editor.value;
+    if (!isJs(current)) {
+      previewRun++;
+      if (frame.__runnerListener) { window.removeEventListener("message", frame.__runnerListener); frame.__runnerListener = null; }
+      frame.setAttribute("sandbox", "");
+      frame.srcdoc = W.buildSrcdoc ? W.buildSrcdoc(editor.value) : editor.value;
+      return;
+    }
+    // JS: รันในกรอบ sandbox (allow-scripts) แสดง fixture ที่ถูกแก้ด้วยโค้ด + console ด้านล่าง (ไม่รัน probe)
+    if (!W.runJs) return;
+    const run = ++previewRun;
+    consoleOut.textContent = "";
+    W.runJs({
+      code: editor.value,
+      fixture: current.fixture || "",
+      frame,
+      wait: current.wait || 0,
+      onEvent: (d) => { if (run === previewRun) consoleLine(d.type === "error" ? "error" : d.kind || "log", d.text); },
+    }).then((r) => {
+      if (run === previewRun && !r.logs.length && !r.errors.length) consoleLine("muted", "(ยังไม่มีผลลัพธ์ใน console)");
+    });
   };
 
   function updateStatusUI() {
@@ -252,10 +364,24 @@
     );
     title.textContent = current.title;
     prompt.innerHTML = current.prompt;
+    const js = isJs(current);
+    if (js && current.fixture) {
+      const fx = el("pre", { class: "code-block", "data-lang": "html" }, el("code", { html: W.highlightHtml ? W.highlightHtml(current.fixture.trim()) : escapeHtml(current.fixture) }));
+      prompt.append(el("p", { class: "cx-fixture-label", text: "HTML ที่มีอยู่ในหน้าแล้ว (โค้ด JS ของคุณจะทำงานหลังจากนี้):" }), fx);
+    }
+    editor.placeholder = js ? "พิมพ์โค้ด JavaScript ที่นี่…" : "พิมพ์โค้ด HTML ที่นี่…";
+    previewTitle.textContent = js ? (current.fixture ? "ผลลัพธ์ในหน้าเว็บ + console" : "ผลลัพธ์ใน console") : "ผลลัพธ์ใน browser";
+    frame.hidden = js && !current.fixture;
+    frame.classList.toggle("is-short", js);
+    consoleOut.hidden = !js;
+    consoleOut.textContent = "";
+    solutionPre.dataset.lang = js ? "js" : "html";
 
     const saved = state.tasks[id];
     editor.value = saved && typeof saved.code === "string" ? saved.code : current.starter || "";
-    solutionCode.innerHTML = W.highlightHtml ? W.highlightHtml(current.solution) : current.solution.replace(/</g, "&lt;");
+    solutionCode.innerHTML = js
+      ? (W.highlightJs ? W.highlightJs(current.solution) : escapeHtml(current.solution))
+      : (W.highlightHtml ? W.highlightHtml(current.solution) : current.solution.replace(/</g, "&lt;"));
     setSolution(false);
     feedback.className = "cx-feedback";
     feedback.innerHTML = "";
@@ -273,19 +399,39 @@
     if (focus) card.focus({ preventScroll: true });
   }
 
-  function check() {
+  let checking = false;
+  async function check() {
+    if (checking) return;
+    const task = current;
     const code = editor.value;
-    const e = entry(current.id);
+    const e = entry(task.id);
     e.code = code;
     if (!code.trim()) {
       showFeedback("fail", "ยังไม่มีโค้ดให้ตรวจ", [{ html: "ลองเขียนโค้ดตามคำสั่งงานด้านบนก่อน แล้วกดตรวจอีกครั้ง" }]);
       return;
     }
-    const { pass, failed } = validate(current, code);
+    checking = true;
+    checkBtn.disabled = true;
+    checkBtn.textContent = isJs(task) ? "กำลังรันและตรวจ…" : "กำลังตรวจ…";
+    let outcome;
+    try {
+      outcome = await validate(task, code);
+    } finally {
+      checking = false;
+      checkBtn.disabled = false;
+      checkBtn.textContent = "ตรวจคำตอบ";
+    }
+    if (current !== task) return; // ผู้ใช้เปลี่ยนข้อระหว่างรอผล
+    const { pass, failed, result } = outcome;
     e.status = pass ? "pass" : "fail";
     save();
     updateStatusUI();
     renderPreview();
+    if (!pass && result && (result.timeout || result.loopLimit)) {
+      failed.unshift(result.timeout ? "โค้ดทำงานนานเกินไปจนหมดเวลา — ตรวจสอบว่าลูปมีทางจบ" : "ลูปวนเกินจำนวนรอบที่อนุญาต — ตรวจสอบเงื่อนไขของลูปให้มีทางจบ");
+    } else if (!pass && result && result.errors && result.errors.length) {
+      failed.unshift(`โค้ดมี error ตอนรัน: ${result.errors[0]}`);
+    }
     if (pass) {
       showFeedback("pass", PRAISE[Math.floor(Math.random() * PRAISE.length)], [
         { html: tasks.indexOf(current) < tasks.length - 1 ? "กด “ข้อถัดไป” ด้านล่างเพื่อทำโจทย์ต่อ" : "ครบทุกข้อในชุดนี้แล้ว" },
@@ -310,7 +456,7 @@
     saveTimer = setTimeout(() => { entry(current.id).code = editor.value; save(); }, 300);
     if (liveToggle.checked) {
       clearTimeout(previewTimer);
-      previewTimer = setTimeout(renderPreview, 450);
+      previewTimer = setTimeout(renderPreview, isJs(current) ? 900 : 450);
     }
   });
 

@@ -1,0 +1,1094 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>ITDS241 บทที่ 3: CSS Fundamentals · โต๊ะทบทวน</title>
+<meta name="description" content="ITDS241 Web Technologies and Applications บทที่ 3: CSS syntax, selectors ทุกแบบ, specificity, 3 วิธีเพิ่ม CSS, cascading order, box model, CSS units, float/clear พร้อม cheat sheet แบบฝึกหัด 20 ข้อ และโจทย์เขียนโค้ด" />
+<meta name="theme-color" content="#17151a" />
+<link rel="icon" href="assets/favicon.svg" type="image/svg+xml" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link
+  href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500..700&family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans+Thai:wght@500;600&family=IBM+Plex+Sans+Thai+Looped:wght@400;500;600&display=swap"
+  rel="stylesheet"
+/>
+<link rel="stylesheet" href="assets/css/tokens.css" />
+<link rel="stylesheet" href="assets/css/base.css" />
+<link rel="stylesheet" href="assets/css/network.css" />
+<link rel="stylesheet" href="assets/css/exercise.css" />
+<link rel="stylesheet" href="assets/css/motion.css" />
+<script>document.documentElement.classList.add("js");</script>
+</head>
+<body>
+  <a class="skip-link" href="#tabs">ข้ามไปที่เนื้อหา</a>
+
+  <svg class="dg-defs" aria-hidden="true" focusable="false">
+    <defs>
+      <marker id="arr" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path class="dg-arrow" d="M0 0L10 5L0 10z" /></marker>
+      <marker id="arr-muted" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path class="dg-arrow--muted" d="M0 0L10 5L0 10z" /></marker>
+      <marker id="arr-ok" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path class="dg-arrow--ok" d="M0 0L10 5L0 10z" /></marker>
+      <marker id="arr-bad" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path class="dg-arrow--bad" d="M0 0L10 5L0 10z" /></marker>
+    </defs>
+  </svg>
+
+  <header class="site-header">
+    <div class="wrap">
+      <a class="wordmark" href="index.html" aria-label="โต๊ะทบทวน หน้าแรก">
+        <img class="wordmark-mark" src="assets/favicon.svg" alt="" width="26" height="26" />
+        <span class="wordmark-text">โต๊ะ<span>ทบทวน</span></span>
+      </a>
+      <a class="crumb" href="index.html"><span class="arrow" aria-hidden="true">←</span> รายวิชาทั้งหมด</a>
+    </div>
+  </header>
+
+  <main>
+    <section class="course-hero wrap">
+      <nav class="course-nav" aria-label="เลือกวิชาและบท">
+        <div class="subject-switch">
+          <button class="subject-btn" type="button" data-subject="network" aria-pressed="false"><span class="subject-code">ITDS231</span> Network</button>
+          <button class="subject-btn" type="button" data-subject="web" aria-pressed="true"><span class="subject-code">ITDS241</span> Web</button>
+        </div>
+        <div class="chapter-nav" data-subject="network" data-label="ITDS231 Computer Networks" role="group" aria-label="บทของวิชา ITDS231 Computer Networks">
+          <a class="chapter-link" href="network.html"><span class="chapter-num">บทที่ 1</span><span class="chapter-name">Intro &amp; Topology</span></a>
+          <a class="chapter-link" href="network-application-layer.html"><span class="chapter-num">บทที่ 2</span><span class="chapter-name">Application Layer</span></a>
+          <a class="chapter-link" href="network-data-link-layer.html"><span class="chapter-num">บทที่ 3</span><span class="chapter-name">Data Link Layer</span></a>
+          <a class="chapter-link" href="network-mac-ethernet.html"><span class="chapter-num">บทที่ 4</span><span class="chapter-name">MAC + Ethernet</span></a>
+        </div>
+        <div class="chapter-nav" data-subject="web" data-label="ITDS241 Web Technologies and Applications" role="group" aria-label="บทของวิชา ITDS241 Web Technologies and Applications">
+          <a class="chapter-link" href="web-intro-html-basics.html"><span class="chapter-num">บทที่ 1</span><span class="chapter-name">Internet &amp; HTML Basics</span></a>
+          <a class="chapter-link" href="web-media-forms-semantic.html"><span class="chapter-num">บทที่ 2</span><span class="chapter-name">Media, Forms &amp; Semantic</span></a>
+          <a class="chapter-link" href="web-css-fundamentals.html" aria-current="page"><span class="chapter-num">บทที่ 3</span><span class="chapter-name">CSS Fundamentals</span></a>
+          <a class="chapter-link" href="web-css-layout-responsive.html"><span class="chapter-num">บทที่ 4</span><span class="chapter-name">CSS Layout &amp; Responsive</span></a>
+          <a class="chapter-link" href="web-js-fundamentals.html"><span class="chapter-num">บทที่ 5</span><span class="chapter-name">JavaScript Fundamentals</span></a>
+          <a class="chapter-link" href="web-js-functions-oop-dom.html"><span class="chapter-num">บทที่ 6</span><span class="chapter-name">Functions, OOP &amp; DOM</span></a>
+          <a class="chapter-link" href="web-ecmascript-features.html"><span class="chapter-num">บทที่ 7</span><span class="chapter-name">ECMAScript Features</span></a>
+        </div>
+      </nav>
+      <span class="eyebrow">ITDS241 · บทที่ 3 · Lecture 03</span>
+      <h1>CSS Fundamentals</h1>
+      <p class="course-lede">CSS ส่วนที่ 1 — แยก style ออกจาก HTML, อ่านโครงสร้างกฎ CSS, เลือก element ด้วย selector 7 แบบ, ตัดสินว่ากฎไหนชนะด้วย specificity และ cascading order แล้วจัดหน้าตาด้วย property พื้นฐานและ box model</p>
+      <ul class="course-meta" aria-label="ข้อมูลบทเรียน">
+        <li class="chip chip--accent">ITDS241 Web Technologies and Applications</li>
+        <li class="chip">1 ไฟล์สไลด์ · Lecture03 CSS Part 1</li>
+        <li class="chip">แบบฝึกหัด 20 ข้อ</li>
+        <li class="chip">โจทย์เขียนโค้ด 6 ข้อ</li>
+      </ul>
+    </section>
+
+    <div class="tabbar" id="tabs">
+      <div class="wrap">
+        <div class="tabs tabs--4" role="tablist" aria-label="ส่วนของหน้า">
+          <button class="tab" role="tab" id="tab-content" aria-controls="content" aria-selected="true" type="button">
+            <svg class="tab-icon" viewBox="0 0 20 20" aria-hidden="true"><path d="M4 3.5h8.5L16 7v9.5H4z M12 3.5V7h4 M7 10h6 M7 13h4" /></svg>
+            เนื้อหา
+          </button>
+          <button class="tab" role="tab" id="tab-summary" aria-controls="summary" aria-selected="false" type="button">
+            <svg class="tab-icon" viewBox="0 0 20 20" aria-hidden="true"><path d="M3.5 4h13v12h-13z M3.5 8h13 M8.5 8v8" /></svg>
+            สรุป
+          </button>
+          <button class="tab" role="tab" id="tab-quiz" aria-controls="quiz" aria-selected="false" type="button">
+            <svg class="tab-icon" viewBox="0 0 20 20" aria-hidden="true"><path d="M10 17a7 7 0 1 0 0-14 7 7 0 0 0 0 14z M6.8 10.2l2.2 2.2 4.2-4.6" /></svg>
+            แบบฝึกหัด
+          </button>
+          <button class="tab" role="tab" id="tab-code" aria-controls="code" aria-selected="false" type="button">
+            <svg class="tab-icon" viewBox="0 0 20 20" aria-hidden="true"><path d="M7 6l-4 4 4 4 M13 6l4 4-4 4 M11.2 4.5l-2.4 11" /></svg>
+            เขียนโค้ด
+          </button>
+          <span class="tab-indicator" aria-hidden="true"></span>
+        </div>
+      </div>
+    </div>
+
+    <div class="wrap panels">
+
+      <!-- =============================================================
+           แท็บ 1: เนื้อหา
+           ============================================================= -->
+      <section class="panel" id="content" role="tabpanel" aria-labelledby="tab-content" tabindex="-1">
+        <div class="panel-head">
+          <h2>เนื้อหาแยกตามหัวข้อในสไลด์</h2>
+          <div class="panel-actions">
+            <button class="btn btn--ghost btn--sm" type="button" data-acc-all="open">เปิดทั้งหมด</button>
+            <button class="btn btn--ghost btn--sm" type="button" data-acc-all="close">ปิดทั้งหมด</button>
+          </div>
+        </div>
+
+        <div class="acc">
+
+<!-- ================= 01 CSS & Syntax ================= -->
+          <div class="acc-item is-open">
+            <h3 class="acc-heading">
+              <button class="acc-trigger" type="button" aria-expanded="true" aria-controls="acc-c3-intro" id="acc-c3-intro-btn">
+                <span class="acc-index">01</span>
+                <span class="acc-title">
+                  <span class="acc-name">CSS คืออะไร และโครงสร้างไวยากรณ์ CSS</span>
+                  <span class="acc-file">69-2-ITDS241-Lecture03-CSS-Part1 · ส่วน A–B</span>
+                </span>
+                <svg class="acc-chevron" viewBox="0 0 20 20" aria-hidden="true"><path d="M5 7.5l5 5 5-5" /></svg>
+              </button>
+            </h3>
+            <div class="acc-panel" id="acc-c3-intro" role="region" aria-labelledby="acc-c3-intro-btn">
+              <div class="acc-panel-inner">
+                <div class="acc-body">
+
+                  <nav class="toc" aria-label="หัวข้อในการ์ด CSS และ syntax">
+                    <a href="#c3-what">CSS คืออะไร</a>
+                    <a href="#c3-syntax">CSS Syntax</a>
+                    <a href="#c3-color">การระบุสี</a>
+                  </nav>
+
+                  <section class="topic" id="c3-what">
+                    <h4>Cascading Style Sheets (CSS) คืออะไร</h4>
+                    <div class="callout callout--def">
+                      <span class="callout-label">นิยาม</span>
+                      <p><b>Cascading Style Sheets (CSS)</b> ถูกสร้างขึ้นเพื่ออธิบายว่า HTML element แต่ละตัว<b>ควรแสดงผลอย่างไร</b>บนหน้าจอ บนกระดาษ หรือบนสื่ออื่นๆ</p>
+                    </div>
+                    <p>แนวคิดสำคัญของ CSS คือ<strong>การแยกการจัดรูปแบบ (style) ออกจาก HTML tag</strong> — HTML ทำหน้าที่บอกโครงสร้างและความหมายของเนื้อหา ส่วน CSS ทำหน้าที่บอกหน้าตา เมื่อแยกกันแล้วการจัดการสไตล์ของทั้งเว็บจะง่ายขึ้นมาก</p>
+                    <div class="callout callout--why">
+                      <span class="callout-label">ทำไมการแยก style ออกมาจึงช่วยได้มาก</span>
+                      <p>เมื่อเก็บสไตล์ไว้ใน <b>external style sheet</b> (ไฟล์ .css แยก) หลายหน้า HTML ใช้ไฟล์เดียวกันได้ จึง<b>ประหยัดความพยายามได้มาก</b> — แก้ที่ไฟล์เดียวแล้วมีผลกับทุกหน้าที่เชื่อมไฟล์นั้นอยู่ (รายละเอียดอยู่ในการ์ด 03)</p>
+                    </div>
+                  </section>
+
+                  <section class="topic" id="c3-syntax">
+                    <h4>โครงสร้างไวยากรณ์ CSS (CSS Syntax)</h4>
+                    <p>กฎ CSS หนึ่งกฎ (rule) ประกอบด้วย <strong>selector</strong> ที่บอกว่าจะจัดสไตล์ element ไหน ตามด้วย <strong>declaration block</strong> ที่บอกว่าจะจัดสไตล์อย่างไร ตัวอย่างจากสไลด์:</p>
+                    <pre class="code-block" data-lang="css"><code>body {
+    background-color: red;
+    font-family: Arial;
+}</code></pre>
+                    <div class="table-scroll">
+                      <table>
+                        <thead><tr><th>ส่วนประกอบ</th><th>ในตัวอย่าง</th><th>ความหมาย</th></tr></thead>
+                        <tbody>
+                          <tr><td class="nowrap">Selector</td><td><code>body</code></td><td>ชี้ไปยัง HTML element ที่ต้องการจัดสไตล์</td></tr>
+                          <tr><td class="nowrap">Declaration</td><td><code>background-color: red;</code></td><td>ชื่อ CSS property กับค่า (value) <strong>คั่นด้วย colon (:)</strong> และ<strong>จบด้วย semicolon (;)</strong></td></tr>
+                          <tr><td class="nowrap">Declaration block</td><td><code>{ ... }</code></td><td>กลุ่มของ declaration ที่ครอบด้วยวงเล็บปีกกา</td></tr>
+                          <tr><td class="nowrap">Comment</td><td><code>/* ... */</code></td><td>คำอธิบายในโค้ด browser จะไม่แสดงผล</td></tr>
+                        </tbody>
+                      </table>
+                    </div>
+                    <div class="callout callout--warn">
+                      <span class="callout-label">ข้อควรระวัง</span>
+                      <p>property กับค่าคั่นด้วย <b>:</b> (ไม่ใช่ <b>=</b> แบบ attribute ใน HTML) และแต่ละ declaration ปิดท้ายด้วย <b>;</b> — ส่วน comment ใน CSS ใช้ <code>/* ... */</code> ไม่ใช่ <code>&lt;!-- --&gt;</code> แบบ HTML</p>
+                    </div>
+                  </section>
+
+                  <section class="topic" id="c3-color">
+                    <h4>การระบุสีใน HTML/CSS</h4>
+                    <p>สีระบุได้ 2 แบบ</p>
+                    <div class="compare">
+                      <div class="compare-col">
+                        <h5>รหัสเลขฐานสิบหก <span class="chip">RGB hexadecimal</span></h5>
+                        <p>เขียนขึ้นต้นด้วย <code>#</code> เช่น <code>#FF0000</code> = red</p>
+                      </div>
+                      <div class="compare-col">
+                        <h5>ชื่อสี <span class="chip">color name</span></h5>
+                        <p>ใช้ชื่อสีได้โดยตรง เช่น <code>red</code>, <code>orange</code>, <code>gold</code></p>
+                      </div>
+                    </div>
+                    <pre class="code-block" data-lang="html" data-render="110"><code>&lt;style&gt;
+  /* สีเดียวกัน เขียนได้ 2 แบบ */
+  .hex  { color: #FF0000; }
+  .name { color: red; }
+  .gold { background-color: gold; }
+&lt;/style&gt;
+&lt;p class="hex"&gt;สีจากรหัส #FF0000&lt;/p&gt;
+&lt;p class="name"&gt;สีจากชื่อ red&lt;/p&gt;
+&lt;p class="gold"&gt;พื้นหลังสี gold&lt;/p&gt;</code></pre>
+                  </section>
+
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- ================= 02 Selectors & Specificity ================= -->
+          <div class="acc-item">
+            <h3 class="acc-heading">
+              <button class="acc-trigger" type="button" aria-expanded="false" aria-controls="acc-c3-sel" id="acc-c3-sel-btn">
+                <span class="acc-index">02</span>
+                <span class="acc-title">
+                  <span class="acc-name">CSS Selectors และ Specificity</span>
+                  <span class="acc-file">69-2-ITDS241-Lecture03-CSS-Part1 · ส่วน C–D</span>
+                </span>
+                <svg class="acc-chevron" viewBox="0 0 20 20" aria-hidden="true"><path d="M5 7.5l5 5 5-5" /></svg>
+              </button>
+            </h3>
+            <div class="acc-panel" id="acc-c3-sel" role="region" aria-labelledby="acc-c3-sel-btn">
+              <div class="acc-panel-inner">
+                <div class="acc-body">
+
+                  <nav class="toc" aria-label="หัวข้อในการ์ด selectors">
+                    <a href="#c3-universal">Universal</a>
+                    <a href="#c3-element">Element</a>
+                    <a href="#c3-class">Class</a>
+                    <a href="#c3-id">ID</a>
+                    <a href="#c3-group">Grouping</a>
+                    <a href="#c3-descendant">Descendant</a>
+                    <a href="#c3-pseudo">Pseudo-class</a>
+                    <a href="#c3-lab">ลองเล่น selector</a>
+                    <a href="#c3-specificity">Specificity</a>
+                  </nav>
+
+                  <p>selector คือ<strong>หัวใจของ CSS</strong> เพราะเป็นตัวบอกว่ากฎนั้นมีผลกับ element ไหน บทนี้เรียน selector หลัก 7 แบบต่อไปนี้</p>
+
+                  <section class="topic" id="c3-universal">
+                    <h4>1. Universal selector <code>*</code></h4>
+                    <p>เครื่องหมาย <code>*</code> <strong>เลือกทุก element ในหน้า</strong> ใช้เมื่อต้องการให้ทุก element ใช้ style ร่วมกัน ตัวอย่างนี้ทำให้ข้อความทุก element จัดกึ่งกลางและเป็นสี coral</p>
+                    <pre class="code-block" data-lang="html" data-render="120"><code>&lt;style&gt;
+  * { text-align: center; color: coral; }
+&lt;/style&gt;
+&lt;h1&gt;Heading&lt;/h1&gt;
+&lt;p&gt;Paragraph&lt;/p&gt;
+&lt;span&gt;Span&lt;/span&gt;</code></pre>
+                  </section>
+
+                  <section class="topic" id="c3-element">
+                    <h4>2. Element selector</h4>
+                    <p>ใช้<strong>ชื่อ HTML tag เป็น selector โดยตรง</strong> เช่น <code>p { color: coral; }</code> จะมีผลกับ <code>&lt;p&gt;</code> <strong>ทุกตัว</strong>ในหน้า แต่ไม่มีผลกับ tag อื่น</p>
+                    <pre class="code-block" data-lang="html" data-render="110"><code>&lt;style&gt;
+  p { color: coral; }
+&lt;/style&gt;
+&lt;h2&gt;h2 ไม่เปลี่ยนสี&lt;/h2&gt;
+&lt;p&gt;p ตัวที่ 1 เป็นสี coral&lt;/p&gt;
+&lt;p&gt;p ตัวที่ 2 ก็เป็นสี coral&lt;/p&gt;</code></pre>
+                  </section>
+
+                  <section class="topic" id="c3-class">
+                    <h4>3. Class selector <code>.ชื่อclass</code></h4>
+                    <p>ใช้ <strong>attribute <code>class</code></strong> ของ tag เป็น selector โดย<strong>เขียนนำหน้าด้วยจุด (.)</strong> เช่น <code>.clsSp { ... }</code> จะมีผลกับ<strong>ทุก element</strong> ที่มี <code>class="clsSp"</code> ไม่ว่าจะเป็น tag อะไร</p>
+                    <ul>
+                      <li><strong>เจาะจงร่วมกับชื่อ tag ได้:</strong> <code>p.clsSp { ... }</code> มีผล<strong>เฉพาะ <code>&lt;p&gt;</code></strong> ที่มี <code>class="clsSp"</code> เท่านั้น — tag อื่นที่มี class เดียวกัน (เช่น <code>&lt;span class="clsSp"&gt;</code>) จะไม่ได้รับผล</li>
+                      <li><strong>element หนึ่งตัวใส่หลาย class ได้</strong> โดยเว้นวรรคคั่น เช่น <code>&lt;p class="line red"&gt;</code> ซึ่งจะได้รับสไตล์ทั้งจาก <code>.line</code> และ <code>.red</code></li>
+                    </ul>
+                    <pre class="code-block" data-lang="html" data-render="150"><code>&lt;style&gt;
+  .clsSp  { background-color: gold; }
+  p.clsSp { color: blue; }
+  .line   { border-bottom: 2px solid gray; }
+  .red    { color: red; }
+&lt;/style&gt;
+&lt;p class="clsSp"&gt;p class="clsSp" — พื้น gold และตัวอักษรสีน้ำเงิน&lt;/p&gt;
+&lt;span class="clsSp"&gt;span class="clsSp" — พื้น gold แต่ไม่เป็นสีน้ำเงิน&lt;/span&gt;
+&lt;p class="line red"&gt;p class="line red" — ได้ทั้งเส้นใต้และสีแดง&lt;/p&gt;</code></pre>
+                  </section>
+
+                  <section class="topic" id="c3-id">
+                    <h4>4. ID selector <code>#ชื่อid</code></h4>
+                    <p>ใช้ <strong>attribute <code>id</code></strong> เป็น selector โดย<strong>เขียนนำหน้าด้วย hash (#)</strong> เช่น <code>#p1 { ... }</code> จะมีผลเฉพาะ element ที่มี <code>id="p1"</code></p>
+                    <div class="callout callout--warn">
+                      <span class="callout-label">ข้อควรจำ</span>
+                      <p>ค่า <b>id ต้องไม่ซ้ำกันในหน้า</b> — ID selector จึงชี้ element ได้ตัวเดียว ต่างจาก class ที่ใช้ซ้ำกับหลาย element ได้ · จำให้ขึ้นใจ: <b>. = class</b> และ <b># = id</b></p>
+                    </div>
+                  </section>
+
+                  <section class="topic" id="c3-group">
+                    <h4>5. Grouping selector <code>A, B</code></h4>
+                    <p>เมื่อหลาย selector ต้องการ<strong>สไตล์เดียวกัน</strong> ให้จัดกลุ่มรวมไว้ในกฎเดียว<strong>คั่นด้วยจุลภาค (,)</strong> แทนการเขียนกฎซ้ำหลายรอบ</p>
+                    <pre class="code-block" data-lang="css"><code>#p1, .clsSp {
+    color: coral;
+}</code></pre>
+                  </section>
+
+                  <section class="topic" id="c3-descendant">
+                    <h4>6. Descendant selector <code>A B</code></h4>
+                    <p>เลือก element ที่อยู่<strong>ข้างใน</strong> element อื่น โดย<strong>เขียนคั่นด้วยช่องว่าง</strong> เช่น <code>article p { ... }</code> จะมีผล<strong>เฉพาะ <code>&lt;p&gt;</code> ที่อยู่ภายใน <code>&lt;article&gt;</code></strong> เท่านั้น</p>
+                    <pre class="code-block" data-lang="html" data-render="130"><code>&lt;style&gt;
+  article p { color: coral; }
+&lt;/style&gt;
+&lt;p&gt;p นอก article — ไม่เปลี่ยนสี&lt;/p&gt;
+&lt;article&gt;
+  &lt;p&gt;p ใน article — เป็นสี coral&lt;/p&gt;
+&lt;/article&gt;</code></pre>
+                    <div class="callout callout--warn">
+                      <span class="callout-label">อย่าสับสน: ช่องว่าง กับ จุลภาค</span>
+                      <p><code>article p</code> (ช่องว่าง) = <b>p ที่อยู่ใน article</b> · <code>article, p</code> (จุลภาค) = <b>article และ p ทุกตัว</b> (grouping)</p>
+                    </div>
+                  </section>
+
+                  <section class="topic" id="c3-pseudo">
+                    <h4>7. Pseudo-class selector</h4>
+                    <p>ใช้กำหนด<strong>สไตล์พิเศษของ element ในสถานะต่างๆ</strong> ตัวอย่างในสไลด์คือลิงก์</p>
+                    <div class="table-scroll">
+                      <table>
+                        <thead><tr><th>Selector</th><th>สถานะของลิงก์</th></tr></thead>
+                        <tbody>
+                          <tr><td><code>a</code></td><td>ลิงก์ที่ยังไม่ได้คลิก</td></tr>
+                          <tr><td><code>a:hover</code></td><td>ตอนเมาส์ชี้อยู่บนลิงก์</td></tr>
+                          <tr><td><code>a:active</code></td><td>ตอนลิงก์กำลังถูกคลิก</td></tr>
+                        </tbody>
+                      </table>
+                    </div>
+                    <pre class="code-block" data-lang="html" data-render="80"><code>&lt;style&gt;
+  a        { color: blue; }
+  a:hover  { color: orange; }
+  a:active { color: red; }
+&lt;/style&gt;
+&lt;a href="#"&gt;ลองเอาเมาส์ชี้ แล้วกดค้างที่ลิงก์นี้&lt;/a&gt;</code></pre>
+                    <p class="note">นอกจากนี้ยังมี <strong>Combinator selectors</strong> (เลือกตามความสัมพันธ์ระหว่าง element), <strong>Pseudo-elements selectors</strong> (เลือกและจัดสไตล์เฉพาะบางส่วนของ element) และ <strong>Attribute selectors</strong> (เลือกตาม attribute หรือค่าของ attribute) — เป็นหัวข้อขั้นสูงที่สไลด์แนะนำให้ศึกษาเพิ่มเติมที่ W3Schools</p>
+                  </section>
+
+                  <section class="topic" id="c3-lab">
+                    <h4>ลองเล่น: selector นี้เลือก element ไหนบ้าง</h4>
+                    <div class="demo-box" data-widget="selector-lab">
+                      <span class="demo-box-title">กดเลือก selector แล้วดูว่า element ใดในโครงด้านล่างถูกเลือก (ใช้ querySelectorAll จริง)</span>
+                      <div class="seg seg--wrap" role="group" aria-label="เลือก selector">
+                        <button type="button" data-selector="*" aria-pressed="false"><code>*</code></button>
+                        <button type="button" data-selector="p" aria-pressed="true"><code>p</code></button>
+                        <button type="button" data-selector=".clsSp" aria-pressed="false"><code>.clsSp</code></button>
+                        <button type="button" data-selector="p.clsSp" aria-pressed="false"><code>p.clsSp</code></button>
+                        <button type="button" data-selector="#p1" aria-pressed="false"><code>#p1</code></button>
+                        <button type="button" data-selector="#p1, .clsSp" aria-pressed="false"><code>#p1, .clsSp</code></button>
+                        <button type="button" data-selector="article p" aria-pressed="false"><code>article p</code></button>
+                        <button type="button" data-selector=".red" aria-pressed="false"><code>.red</code></button>
+                      </div>
+                      <template class="sel-source">
+                        <h1 data-i="1">หัวข้อ</h1>
+                        <p data-i="2" id="p1">ย่อหน้าแรก</p>
+                        <p data-i="3" class="clsSp">ย่อหน้าที่สอง</p>
+                        <span data-i="4" class="clsSp">ข้อความใน span</span>
+                        <article data-i="5">
+                          <p data-i="6">ย่อหน้าใน article</p>
+                          <p data-i="7" class="line red">อีกย่อหน้าใน article</p>
+                        </article>
+                      </template>
+                      <div class="sel-tree" aria-hidden="true">
+                        <div class="sel-node" data-i="1"><code>&lt;h1&gt;</code> หัวข้อ</div>
+                        <div class="sel-node" data-i="2"><code>&lt;p id="p1"&gt;</code> ย่อหน้าแรก</div>
+                        <div class="sel-node" data-i="3"><code>&lt;p class="clsSp"&gt;</code> ย่อหน้าที่สอง</div>
+                        <div class="sel-node" data-i="4"><code>&lt;span class="clsSp"&gt;</code> ข้อความใน span</div>
+                        <div class="sel-node" data-i="5"><code>&lt;article&gt;</code>
+                          <div class="sel-node" data-i="6"><code>&lt;p&gt;</code> ย่อหน้าใน article</div>
+                          <div class="sel-node" data-i="7"><code>&lt;p class="line red"&gt;</code> อีกย่อหน้าใน article</div>
+                        </div>
+                      </div>
+                      <p class="demo-status" aria-live="polite"></p>
+                    </div>
+                  </section>
+
+                  <section class="topic" id="c3-specificity">
+                    <h4>CSS Specificity — เมื่อกฎหลายข้อชี้ element เดียวกัน</h4>
+                    <p>ถ้ามีกฎ CSS หลายกฎที่<strong>ขัดแย้งกัน</strong>และชี้ไปที่ element เดียวกัน browser จะเลือกใช้กฎตาม<strong>ความเฉพาะเจาะจง (specificity)</strong> ของ selector</p>
+                    <div class="callout callout--def">
+                      <span class="callout-label">กฎ Specificity</span>
+                      <p><b>ID selector</b> เฉพาะเจาะจงสูงสุด <b>&gt; class selector</b> <b>&gt; element selector</b></p>
+                      <p>ถ้าความเฉพาะเจาะจง<b>เท่ากัน</b> กฎที่<b>ประกาศทีหลังสุด (the latest rule)</b> จะถูกนำไปใช้</p>
+                    </div>
+                    <p><strong>ตัวอย่างที่ 1 — selector ต่างระดับกัน:</strong> <code>&lt;p&gt;</code> ตัวเดียวถูกชี้โดยทั้ง element, class และ id ผลที่ได้คือสีจาก <code>#p1</code> เพราะ ID เฉพาะเจาะจงสูงสุด (แม้จะเขียนไว้ก่อนกฎอื่น)</p>
+                    <pre class="code-block" data-lang="html" data-render="70"><code>&lt;style&gt;
+  #p1    { color: blue; }
+  .clsSp { color: green; }
+  p      { color: coral; }
+&lt;/style&gt;
+&lt;p id="p1" class="clsSp"&gt;ข้อความนี้เป็นสีอะไร? (blue จาก #p1)&lt;/p&gt;</code></pre>
+                    <p><strong>ตัวอย่างที่ 2 — selector ระดับเดียวกัน:</strong> มี element selector <code>p</code> สองกฎ ความเฉพาะเจาะจงเท่ากัน จึงใช้กฎที่เขียนทีหลังสุด</p>
+                    <pre class="code-block" data-lang="html" data-render="70"><code>&lt;style&gt;
+  p { color: coral; }
+  p { color: purple; }   /* ประกาศทีหลังสุด → ชนะ */
+&lt;/style&gt;
+&lt;p&gt;ข้อความนี้เป็นสี purple&lt;/p&gt;</code></pre>
+                  </section>
+
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- ================= 03 Adding CSS & Cascading ================= -->
+          <div class="acc-item">
+            <h3 class="acc-heading">
+              <button class="acc-trigger" type="button" aria-expanded="false" aria-controls="acc-c3-add" id="acc-c3-add-btn">
+                <span class="acc-index">03</span>
+                <span class="acc-title">
+                  <span class="acc-name">3 วิธีเพิ่ม CSS และ Cascading Order</span>
+                  <span class="acc-file">69-2-ITDS241-Lecture03-CSS-Part1 · ส่วน E–F</span>
+                </span>
+                <svg class="acc-chevron" viewBox="0 0 20 20" aria-hidden="true"><path d="M5 7.5l5 5 5-5" /></svg>
+              </button>
+            </h3>
+            <div class="acc-panel" id="acc-c3-add" role="region" aria-labelledby="acc-c3-add-btn">
+              <div class="acc-panel-inner">
+                <div class="acc-body">
+
+                  <nav class="toc" aria-label="หัวข้อในการ์ดการเพิ่ม CSS">
+                    <a href="#c3-external">External CSS</a>
+                    <a href="#c3-internal">Internal CSS</a>
+                    <a href="#c3-inline">Inline CSS</a>
+                    <a href="#c3-cascade">Cascading Order</a>
+                  </nav>
+
+                  <section class="topic" id="c3-external">
+                    <h4>1. External CSS</h4>
+                    <p>กำหนด CSS ทั้งหมดไว้ใน<strong>ไฟล์ .css แยกต่างหาก</strong> แล้วเชื่อมไฟล์นั้นเข้ากับ HTML ด้วย <code>&lt;link&gt;</code> <strong>ในส่วน <code>&lt;head&gt;</code></strong></p>
+                    <pre class="code-block" data-lang="html"><code>&lt;head&gt;
+    &lt;link rel="stylesheet" href="myStyle.css" /&gt;
+&lt;/head&gt;</code></pre>
+                    <pre class="code-block" data-lang="css"><code>/* ไฟล์ myStyle.css */
+body {
+    background-color: red;
+    font-family: Arial;
+}</code></pre>
+                    <div class="callout callout--why">
+                      <span class="callout-label">ข้อดี</span>
+                      <p><b>ไฟล์ CSS 1 ไฟล์ใช้ร่วมกับหลายไฟล์ HTML ได้</b> จึงประหยัดความพยายามมากที่สุดเมื่อต้องแก้สไตล์ทั้งเว็บไซต์</p>
+                    </div>
+                  </section>
+
+                  <section class="topic" id="c3-internal">
+                    <h4>2. Internal CSS</h4>
+                    <p>กำหนด CSS ทั้งหมดไว้ใน <code>&lt;style&gt;...&lt;/style&gt;</code> <strong>ภายในส่วน <code>&lt;head&gt;</code></strong> ของเอกสาร HTML นั้นๆ — เหมาะกับหน้าที่มีสไตล์เฉพาะตัวและไม่ใช้ร่วมกับหน้าอื่น</p>
+                    <pre class="code-block" data-lang="html"><code>&lt;head&gt;
+    &lt;style&gt;
+        body { background-color: red; }
+    &lt;/style&gt;
+&lt;/head&gt;</code></pre>
+                  </section>
+
+                  <section class="topic" id="c3-inline">
+                    <h4>3. Inline CSS</h4>
+                    <p>กำหนด CSS ผ่าน <strong>attribute <code>style</code></strong> ของ element นั้นโดยตรง (เขียน declaration ลงในค่าของ attribute)</p>
+                    <pre class="code-block" data-lang="html" data-render="200"><code>&lt;div style="background-color: gray;"&gt;
+  &lt;p style="color: white; font-size: 10em;"&gt;Hi&lt;/p&gt;
+&lt;/div&gt;</code></pre>
+                  </section>
+
+                  <section class="topic" id="c3-cascade">
+                    <h4>Cascading Order — ลำดับความสำคัญเมื่อสไตล์ซ้อนกัน</h4>
+                    <p>เมื่อ element เดียวถูกกำหนดสไตล์<strong>มากกว่า 1 ทาง</strong> ลำดับความสำคัญจากมากไปน้อยคือ</p>
+                    <ol class="steps">
+                      <li><strong>Inline CSS</strong> (attribute style)</li>
+                      <li><strong>Internal CSS</strong> และ <strong>External CSS</strong> (สำคัญเท่ากัน — ดูข้อควรระวัง)</li>
+                      <li><strong>Browser Default</strong> (สไตล์เริ่มต้นของ browser)</li>
+                    </ol>
+                    <code class="formula">Inline CSS &gt; Internal CSS &gt; External CSS &gt; Browser Default</code>
+                    <div class="callout callout--warn">
+                      <span class="callout-label">ข้อที่มักเข้าใจผิด</span>
+                      <p><b>Internal CSS กับ External CSS มีความสำคัญเท่ากัน</b> — Internal ไม่ได้ชนะ External เสมอไป ตัวที่<b>ถูกประกาศทีหลังในเอกสาร</b> (ไม่ว่าจะเป็น <code>&lt;style&gt;</code> หรือ <code>&lt;link&gt;</code>) คือตัวที่มีผลจริง</p>
+                      <p>เช่น ถ้าวาง <code>&lt;link&gt;</code> ไว้<b>หลัง</b> <code>&lt;style&gt;</code> ค่าจาก external CSS จะ override internal CSS ที่ชี้ไปยัง element เดียวกัน</p>
+                    </div>
+                    <div class="compare">
+                      <div class="compare-col">
+                        <h5><code>&lt;style&gt;</code> มาทีหลัง → Internal มีผล</h5>
+                        <pre class="code-block" data-lang="html"><code>&lt;head&gt;
+  &lt;link rel="stylesheet" href="myStyle.css" /&gt;
+  &lt;style&gt; p { color: green; } &lt;/style&gt;
+&lt;/head&gt;</code></pre>
+                      </div>
+                      <div class="compare-col">
+                        <h5><code>&lt;link&gt;</code> มาทีหลัง → External มีผล</h5>
+                        <pre class="code-block" data-lang="html"><code>&lt;head&gt;
+  &lt;style&gt; p { color: green; } &lt;/style&gt;
+  &lt;link rel="stylesheet" href="myStyle.css" /&gt;
+&lt;/head&gt;</code></pre>
+                      </div>
+                    </div>
+                    <p>ตัวอย่างที่ลองได้ในหน้านี้ (Inline เทียบ Internal): <code>&lt;style&gt;</code> กำหนดให้ <code>p</code> เป็นสีเขียว แต่ <code>&lt;p&gt;</code> ตัวที่สองมี attribute style สีแดง จึงเป็นสีแดงเพราะ Inline สำคัญที่สุด</p>
+                    <pre class="code-block" data-lang="html" data-render="90"><code>&lt;style&gt;
+  p { color: green; }
+&lt;/style&gt;
+&lt;p&gt;Internal CSS → สีเขียว&lt;/p&gt;
+&lt;p style="color: red;"&gt;Inline CSS ชนะ → สีแดง&lt;/p&gt;</code></pre>
+                  </section>
+
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- ================= 04 Properties & In Action ================= -->
+          <div class="acc-item">
+            <h3 class="acc-heading">
+              <button class="acc-trigger" type="button" aria-expanded="false" aria-controls="acc-c3-props" id="acc-c3-props-btn">
+                <span class="acc-index">04</span>
+                <span class="acc-title">
+                  <span class="acc-name">CSS Property พื้นฐาน และ CSS in Action</span>
+                  <span class="acc-file">69-2-ITDS241-Lecture03-CSS-Part1 · ส่วน G–H</span>
+                </span>
+                <svg class="acc-chevron" viewBox="0 0 20 20" aria-hidden="true"><path d="M5 7.5l5 5 5-5" /></svg>
+              </button>
+            </h3>
+            <div class="acc-panel" id="acc-c3-props" role="region" aria-labelledby="acc-c3-props-btn">
+              <div class="acc-panel-inner">
+                <div class="acc-body">
+
+                  <nav class="toc" aria-label="หัวข้อในการ์ด CSS property">
+                    <a href="#c3-font">Font</a>
+                    <a href="#c3-border">Border</a>
+                    <a href="#c3-box">Box Model</a>
+                    <a href="#c3-dimension">Dimension</a>
+                    <a href="#c3-units">CSS Units</a>
+                    <a href="#c3-float">Float &amp; Clear</a>
+                    <a href="#c3-align">Alignment</a>
+                    <a href="#c3-navbar">Navigation bar</a>
+                  </nav>
+
+                  <section class="topic" id="c3-font">
+                    <h4>Font-related properties</h4>
+                    <div class="table-scroll">
+                      <table>
+                        <thead><tr><th>Property</th><th>ใช้ทำอะไร / ค่าที่ใช้</th></tr></thead>
+                        <tbody>
+                          <tr><td><code>color</code></td><td>สีตัวอักษร</td></tr>
+                          <tr><td><code>font-family</code></td><td>แบบอักษร เลือกได้ทั้ง <strong>specific font</strong> เช่น Arial, Courier New หรือ <strong>generic font family</strong> ที่แทบทุก browser รองรับ</td></tr>
+                          <tr><td><code>font-size</code></td><td>ขนาดตัวอักษร ใช้หน่วย <code>px</code> หรือ <code>em</code></td></tr>
+                          <tr><td><code>font-weight</code></td><td>ความหนา เช่น <code>normal</code> / <code>bold</code></td></tr>
+                          <tr><td><code>font-style</code></td><td>รูปแบบ เช่น <code>italic</code></td></tr>
+                        </tbody>
+                      </table>
+                    </div>
+                    <pre class="code-block" data-lang="html" data-render="120"><code>&lt;style&gt;
+  .a { color: navy; font-family: Arial; font-size: 20px; }
+  .b { font-family: "Courier New"; font-weight: bold; }
+  .c { font-size: 1.5em; font-style: italic; }
+&lt;/style&gt;
+&lt;p class="a"&gt;Arial 20px สี navy&lt;/p&gt;
+&lt;p class="b"&gt;Courier New ตัวหนา&lt;/p&gt;
+&lt;p class="c"&gt;1.5em ตัวเอียง&lt;/p&gt;</code></pre>
+                  </section>
+
+                  <section class="topic" id="c3-border">
+                    <h4>Border-related properties</h4>
+                    <div class="table-scroll">
+                      <table>
+                        <thead><tr><th>Property</th><th>ใช้ทำอะไร</th></tr></thead>
+                        <tbody>
+                          <tr><td><code>border-color</code></td><td>สีเส้นขอบ</td></tr>
+                          <tr><td><code>border-width</code></td><td>ความหนาเส้นขอบ</td></tr>
+                          <tr><td><code>border-style</code></td><td>รูปแบบเส้น เช่น <code>solid</code>, <code>dotted</code>, <code>dashed</code>, <code>hidden</code> ฯลฯ</td></tr>
+                          <tr><td><code>border-radius</code></td><td>ทำมุมโค้ง <strong>กำหนดแต่ละมุมแยกกันได้</strong></td></tr>
+                        </tbody>
+                      </table>
+                    </div>
+                    <pre class="code-block" data-lang="html" data-render="170"><code>&lt;style&gt;
+  div { margin: 8px; padding: 8px; border-width: 3px; border-color: teal; }
+  .solid  { border-style: solid; border-radius: 12px; }
+  .dotted { border-style: dotted; }
+  .dashed { border-style: dashed; border-radius: 20px 0 20px 0; }
+&lt;/style&gt;
+&lt;div class="solid"&gt;solid + border-radius 12px&lt;/div&gt;
+&lt;div class="dotted"&gt;dotted&lt;/div&gt;
+&lt;div class="dashed"&gt;dashed + มุมโค้งเฉพาะบางมุม&lt;/div&gt;</code></pre>
+                  </section>
+
+                  <section class="topic" id="c3-box">
+                    <h4>CSS Box Model</h4>
+                    <p><strong>ทุก element ใน CSS ถูกมองเป็นกล่อง</strong> ประกอบด้วย 4 ชั้น เรียงจาก<strong>ในสุดไปนอกสุด</strong></p>
+                    <div class="box-model" role="img" aria-label="Box model: Content อยู่ในสุด ล้อมด้วย Padding, Border และ Margin ตามลำดับ">
+                      <div class="bm-layer bm-margin"><span class="bm-label">Margin — พื้นที่ว่างรอบนอกสุด (ระยะห่างจาก element อื่น)</span>
+                        <div class="bm-layer bm-border"><span class="bm-label">Border — เส้นขอบ</span>
+                          <div class="bm-layer bm-padding"><span class="bm-label">Padding — พื้นที่ว่างรอบเนื้อหา</span>
+                            <div class="bm-layer bm-content">Content — เนื้อหาจริง</div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <code class="formula">ในสุด → นอกสุด: Content → Padding → Border → Margin</code>
+                    <div class="callout callout--def">
+                      <span class="callout-label">Shorthand property: border</span>
+                      <p><code>border</code> เป็น <b>shorthand property</b> ที่รวม width / style / color ไว้ในบรรทัดเดียว เช่น <code>border: 5px solid gray;</code></p>
+                    </div>
+                    <pre class="code-block" data-lang="html" data-render="150"><code>&lt;style&gt;
+  .box {
+    background-color: lightyellow;
+    padding: 20px;
+    border: 5px solid gray;
+    margin: 25px;
+  }
+&lt;/style&gt;
+&lt;div class="box"&gt;Content: padding 20px · border 5px · margin 25px&lt;/div&gt;</code></pre>
+                  </section>
+
+                  <section class="topic" id="c3-dimension">
+                    <h4>Dimension: width และ height</h4>
+                    <p><code>width</code> และ <code>height</code> กำหนดขนาดของ element ได้ 2 แบบ</p>
+                    <div class="compare">
+                      <div class="compare-col"><h5>Fixed</h5><p>หน่วย <code>px</code> — ขนาดคงที่ ไม่เปลี่ยนตาม container</p></div>
+                      <div class="compare-col"><h5>Relative</h5><p>หน่วย <code>%</code> — ขนาดสัมพัทธ์กับ <strong>container ของมัน</strong></p></div>
+                    </div>
+                    <pre class="code-block" data-lang="html" data-render="110"><code>&lt;style&gt;
+  div { background-color: lightblue; margin: 6px 0; height: 30px; }
+  .fixed    { width: 200px; }
+  .relative { width: 50%; }
+&lt;/style&gt;
+&lt;div class="fixed"&gt;width: 200px&lt;/div&gt;
+&lt;div class="relative"&gt;width: 50% ของ container&lt;/div&gt;</code></pre>
+                  </section>
+
+                  <section class="topic" id="c3-units">
+                    <h4>CSS Units</h4>
+                    <div class="compare">
+                      <div class="compare-col">
+                        <h5>Absolute length units</h5>
+                        <p>ขนาด<strong>คงที่แน่นอน</strong> เช่น <code>cm</code>, <code>mm</code>, <code>in</code>, <code>px</code>, <code>pt</code></p>
+                      </div>
+                      <div class="compare-col">
+                        <h5>Relative length units</h5>
+                        <p>ขนาด<strong>สัมพัทธ์กับ property อื่น</strong> เช่น <code>em</code> (สัมพัทธ์กับ <strong>font-size</strong>), <code>rem</code>, <code>vm</code>, <code>%</code></p>
+                      </div>
+                    </div>
+                    <div class="callout callout--why">
+                      <span class="callout-label">ทำไมใช้หน่วย relative</span>
+                      <p>หน่วย relative อย่าง <b>em / rem ช่วยสร้าง layout ที่ยืดหยุ่นและสเกลได้ดีบนอุปกรณ์ต่างชนิดกัน</b></p>
+                    </div>
+                    <p>ตัวอย่าง em: ข้อความใน <code>&lt;span&gt;</code> ขนาด <code>2em</code> คือ 2 เท่าของ font-size ของ element แม่ — ถ้าแม่เปลี่ยนขนาด ลูกก็เปลี่ยนตาม</p>
+                    <pre class="code-block" data-lang="html" data-render="110"><code>&lt;style&gt;
+  .small { font-size: 12px; }
+  .big   { font-size: 20px; }
+  span   { font-size: 2em; }
+&lt;/style&gt;
+&lt;p class="small"&gt;แม่ 12px → &lt;span&gt;ลูก 2em&lt;/span&gt;&lt;/p&gt;
+&lt;p class="big"&gt;แม่ 20px → &lt;span&gt;ลูก 2em&lt;/span&gt;&lt;/p&gt;</code></pre>
+                  </section>
+
+                  <section class="topic" id="c3-float">
+                    <h4>Float และ Clear</h4>
+                    <div class="compare">
+                      <div class="compare-col">
+                        <h5><code>float: left | right | none;</code></h5>
+                        <p>ทำให้ element <strong>"ลอย"</strong> ไปด้านที่กำหนด แล้วให้ element อื่น<strong>ไหลมาล้อมรอบ</strong>ได้</p>
+                      </div>
+                      <div class="compare-col">
+                        <h5><code>clear: left | right | both | none;</code></h5>
+                        <p>กำหนดว่า<strong>ไม่อนุญาตให้มี float element อยู่ด้านที่ระบุ</strong>ของ element นี้ — ป้องกันการไหลทับกัน</p>
+                      </div>
+                    </div>
+                    <pre class="code-block" data-lang="html" data-render="190"><code>&lt;style&gt;
+  .pic   { float: left; width: 80px; height: 60px; margin-right: 10px; background-color: coral; }
+  .clear { clear: left; background-color: lightgray; }
+&lt;/style&gt;
+&lt;div class="pic"&gt;&lt;/div&gt;
+&lt;p&gt;ข้อความนี้ไหลมาล้อมรอบกล่องสี coral ที่ float: left
+   ข้อความนี้ไหลมาล้อมรอบกล่องสี coral ที่ float: left&lt;/p&gt;
+&lt;p class="clear"&gt;ย่อหน้านี้มี clear: left จึงไม่ยอมให้มี float
+   อยู่ทางซ้าย และลงไปอยู่ใต้กล่องแทน&lt;/p&gt;</code></pre>
+                  </section>
+
+                  <section class="topic" id="c3-align">
+                    <h4>CSS in Action: Alignment (จัดตำแหน่ง)</h4>
+                    <p><code>section { width: 80%; margin: auto; }</code> ทำให้ section <strong>กว้าง 80% ของ container</strong> และ <code>margin: auto</code> ทำให้<strong>อยู่กึ่งกลางแนวนอน</strong> จากนั้นเพิ่ม padding และ border ให้ <code>&lt;p&gt;</code> ข้างใน ช่วยให้อ่านง่ายและแบ่งส่วนชัดเจนขึ้น</p>
+                    <pre class="code-block" data-lang="html" data-render="170"><code>&lt;style&gt;
+  body    { background-color: whitesmoke; }
+  section { width: 80%; margin: auto; background-color: white; }
+  p       { padding: 10px; border: 2px solid lightgray; }
+&lt;/style&gt;
+&lt;section&gt;
+  &lt;p&gt;section กว้าง 80% และอยู่กึ่งกลางด้วย margin: auto&lt;/p&gt;
+  &lt;p&gt;padding + border ช่วยแบ่งส่วนให้อ่านง่าย&lt;/p&gt;
+&lt;/section&gt;</code></pre>
+                    <div class="callout callout--warn">
+                      <span class="callout-label">จุดที่ต้องจำ</span>
+                      <p><code>margin: auto</code> จัด element ให้อยู่กึ่งกลางแนวนอนของ container เมื่อ<b>กำหนด width แล้ว</b> (ในตัวอย่างคือ 80%)</p>
+                    </div>
+                  </section>
+
+                  <section class="topic" id="c3-navbar">
+                    <h4>CSS in Action: Navigation bar</h4>
+                    <p><code>display: block;</code> ทำให้ element <strong>ขึ้นบรรทัดใหม่และกินพื้นที่เต็มความกว้าง</strong> จึงใช้จัด <code>&lt;a&gt;</code> ใน <code>&lt;nav&gt;</code> ให้เป็นเมนูแนวตั้งเต็มแถบได้ และใช้ <code>text-decoration: none;</code> <strong>ลบขีดเส้นใต้ของลิงก์</strong>ออก</p>
+                    <pre class="code-block" data-lang="html" data-render="170"><code>&lt;style&gt;
+  nav   { width: 200px; background-color: #333; }
+  nav a { display: block; padding: 10px; color: white; text-decoration: none; }
+  nav a:hover { background-color: coral; }
+&lt;/style&gt;
+&lt;nav&gt;
+  &lt;a href="#"&gt;Home&lt;/a&gt;
+  &lt;a href="#"&gt;News&lt;/a&gt;
+  &lt;a href="#"&gt;Contact&lt;/a&gt;
+&lt;/nav&gt;</code></pre>
+                  </section>
+
+                </div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </section>
+
+      <!-- =============================================================
+           แท็บ 2: สรุป (cheat sheet)
+           ============================================================= -->
+      <section class="panel" id="summary" role="tabpanel" aria-labelledby="tab-summary" tabindex="-1">
+        <div class="panel-head">
+          <h2>Cheat sheet</h2>
+          <p class="panel-sub">selector, specificity, วิธีเพิ่ม CSS, cascading order, box model และหน่วยของบทที่ 3 รวมไว้ในหน้าเดียว</p>
+        </div>
+
+        <div class="sheet">
+
+<article class="sheet-card sheet-card--wide">
+            <h3><span class="sheet-num">01</span> CSS Selectors</h3>
+            <div class="table-scroll">
+              <table>
+                <thead><tr><th>Selector</th><th>Syntax</th><th>เลือกอะไร</th></tr></thead>
+                <tbody>
+                  <tr><td class="nowrap">Universal</td><td class="nowrap"><code>* { }</code></td><td>ทุก element ในหน้า</td></tr>
+                  <tr><td class="nowrap">Element</td><td class="nowrap"><code>p { }</code></td><td>&lt;p&gt; ทุกตัว</td></tr>
+                  <tr><td class="nowrap">Class</td><td class="nowrap"><code>.clsSp { }</code> · <code>p.clsSp { }</code></td><td>ทุก element ที่ class="clsSp" · เฉพาะ &lt;p&gt; ที่ class="clsSp"</td></tr>
+                  <tr><td class="nowrap">ID</td><td class="nowrap"><code>#p1 { }</code></td><td>element ที่ id="p1" (id ห้ามซ้ำในหน้า)</td></tr>
+                  <tr><td class="nowrap">Grouping</td><td class="nowrap"><code>#p1, .clsSp { }</code></td><td>หลาย selector ใช้สไตล์เดียวกัน (คั่นด้วย ,)</td></tr>
+                  <tr><td class="nowrap">Descendant</td><td class="nowrap"><code>article p { }</code></td><td>&lt;p&gt; ที่อยู่ภายใน &lt;article&gt; (คั่นด้วยช่องว่าง)</td></tr>
+                  <tr><td class="nowrap">Pseudo-class</td><td class="nowrap"><code>a:hover { }</code></td><td>element ในสถานะพิเศษ: a (ยังไม่คลิก) · a:hover (เมาส์ชี้) · a:active (กำลังคลิก)</td></tr>
+                </tbody>
+              </table>
+            </div>
+            <p class="note">หลาย class ต่อ element: <code>class="line red"</code> · ขั้นสูง: combinator, pseudo-elements, attribute selectors</p>
+          </article>
+
+          <article class="sheet-card">
+            <h3><span class="sheet-num">02</span> Specificity</h3>
+            <code class="formula">ID &gt; class &gt; element</code>
+            <dl class="defs defs--stack">
+              <div><dt>กฎขัดแย้งกัน</dt><dd>ใช้ selector ที่<strong>เฉพาะเจาะจงกว่า</strong></dd></div>
+              <div><dt>specificity เท่ากัน</dt><dd>กฎที่<strong>ประกาศทีหลังสุด</strong>ชนะ</dd></div>
+            </dl>
+          </article>
+
+          <article class="sheet-card sheet-card--wide">
+            <h3><span class="sheet-num">03</span> 3 วิธีเพิ่ม CSS เข้า HTML</h3>
+            <div class="table-scroll">
+              <table>
+                <thead><tr><th>วิธี</th><th>เขียนที่ไหน</th><th>จุดเด่น</th></tr></thead>
+                <tbody>
+                  <tr><td class="nowrap">External</td><td>ไฟล์ .css แยก + <code>&lt;link rel="stylesheet" href="myStyle.css" /&gt;</code> ใน &lt;head&gt;</td><td>1 ไฟล์ใช้ร่วมหลายหน้า ประหยัดความพยายามที่สุด</td></tr>
+                  <tr><td class="nowrap">Internal</td><td><code>&lt;style&gt;...&lt;/style&gt;</code> ใน &lt;head&gt;</td><td>หน้าที่มีสไตล์เฉพาะตัว</td></tr>
+                  <tr><td class="nowrap">Inline</td><td>attribute <code>style="color: white;"</code> ของ element</td><td>มีผลกับ element นั้นตัวเดียว</td></tr>
+                </tbody>
+              </table>
+            </div>
+          </article>
+
+          <article class="sheet-card">
+            <h3><span class="sheet-num">04</span> Cascading Order</h3>
+            <code class="formula">Inline &gt; Internal ≈ External &gt; Default</code>
+            <p><strong>Internal กับ External สำคัญเท่ากัน</strong> — ตัวที่ประกาศทีหลังในเอกสาร (&lt;style&gt; หรือ &lt;link&gt;) มีผล</p>
+            <p class="note">&lt;link&gt; อยู่หลัง &lt;style&gt; → External override Internal</p>
+          </article>
+
+          <article class="sheet-card sheet-card--wide">
+            <h3><span class="sheet-num">05</span> Box Model + property พื้นฐาน</h3>
+            <div class="box-model box-model--sm" role="img" aria-label="Box model: Content, Padding, Border, Margin จากในไปนอก">
+              <div class="bm-layer bm-margin"><span class="bm-label">Margin</span>
+                <div class="bm-layer bm-border"><span class="bm-label">Border</span>
+                  <div class="bm-layer bm-padding"><span class="bm-label">Padding</span>
+                    <div class="bm-layer bm-content">Content</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <dl class="defs defs--stack">
+              <div><dt>border (shorthand)</dt><dd><code>border: 5px solid gray;</code> = width + style + color</dd></div>
+              <div><dt>font</dt><dd>color · font-family · font-size (px/em) · font-weight · font-style</dd></div>
+              <div><dt>border-*</dt><dd>color · width · style (solid/dotted/dashed/hidden) · radius (แยกมุมได้)</dd></div>
+              <div><dt>float / clear</dt><dd>float: left/right/none ลอยให้ element อื่นล้อม · clear: left/right/both/none ห้ามมี float ด้านนั้น</dd></div>
+              <div><dt>layout</dt><dd><code>width: 80%; margin: auto;</code> กึ่งกลางแนวนอน · <code>display: block;</code> ขึ้นบรรทัดใหม่เต็มกว้าง · <code>text-decoration: none;</code> ลบเส้นใต้ลิงก์</dd></div>
+            </dl>
+          </article>
+
+          <article class="sheet-card">
+            <h3><span class="sheet-num">06</span> CSS Units</h3>
+            <div class="table-scroll">
+              <table>
+                <thead><tr><th>กลุ่ม</th><th>ตัวอย่าง</th></tr></thead>
+                <tbody>
+                  <tr><td class="nowrap">Absolute</td><td>cm, mm, in, <strong>px</strong>, pt — ขนาดคงที่</td></tr>
+                  <tr><td class="nowrap">Relative</td><td><strong>em</strong> (เทียบ font-size), rem, vm, % — ยืดหยุ่นหลายอุปกรณ์</td></tr>
+                </tbody>
+              </table>
+            </div>
+            <p class="note">width/height: px = fixed · % = สัมพัทธ์กับ container</p>
+          </article>
+
+        </div>
+      </section>
+
+      <!-- =============================================================
+           แท็บ 3: แบบฝึกหัด (20 ข้อ)
+           data-answer = ตัวเลือกที่ถูก (ก=a, ข=b, ค=c, ง=d ตามเฉลยที่ผู้ใช้กำหนด)
+           ============================================================= -->
+      <section class="panel" id="quiz" role="tabpanel" aria-labelledby="tab-quiz" tabindex="-1">
+        <div class="panel-head">
+          <h2>แบบฝึกหัด 20 ข้อ</h2>
+          <p class="panel-sub">เลือกคำตอบให้ครบแล้วกด "ตรวจคำตอบ" ด้านล่าง ระบบจะเฉลยพร้อมคำอธิบายทุกข้อ</p>
+        </div>
+
+        <form class="quiz" id="quiz-form" novalidate>
+
+          <fieldset class="q" data-answer="a">
+            <legend class="q-head"><span class="q-num">01</span><span class="q-text">โครงสร้างไวยากรณ์ CSS ประกอบด้วยส่วนใดบ้าง?</span></legend>
+            <div class="q-options">
+              <label class="opt"><input type="radio" name="q1" value="a" /><span class="opt-key">A</span><span class="opt-text">Selector และ Declaration block (property: value)</span></label>
+              <label class="opt"><input type="radio" name="q1" value="b" /><span class="opt-key">B</span><span class="opt-text">Tag และ Attribute เท่านั้น</span></label>
+              <label class="opt"><input type="radio" name="q1" value="c" /><span class="opt-key">C</span><span class="opt-text">Header และ Footer</span></label>
+              <label class="opt"><input type="radio" name="q1" value="d" /><span class="opt-key">D</span><span class="opt-text">Class และ ID เท่านั้น</span></label>
+            </div>
+            <div class="q-feedback"><div class="q-feedback-inner"><p class="q-verdict" aria-live="polite"></p><p class="q-explain">กฎ CSS = selector (ชี้ element) + declaration block { property: value; } ที่ครอบด้วยวงเล็บปีกกา</p></div></div>
+          </fieldset>
+
+          <fieldset class="q" data-answer="b">
+            <legend class="q-head"><span class="q-num">02</span><span class="q-text">Selector แบบ Universal (*) มีผลอย่างไร?</span></legend>
+            <div class="q-options">
+              <label class="opt"><input type="radio" name="q2" value="a" /><span class="opt-key">A</span><span class="opt-text">เลือกเฉพาะ tag แรกของหน้า</span></label>
+              <label class="opt"><input type="radio" name="q2" value="b" /><span class="opt-key">B</span><span class="opt-text">เลือกทุก element ในหน้าเพื่อใช้ style ร่วมกัน</span></label>
+              <label class="opt"><input type="radio" name="q2" value="c" /><span class="opt-key">C</span><span class="opt-text">เลือกเฉพาะ element ที่มี id</span></label>
+              <label class="opt"><input type="radio" name="q2" value="d" /><span class="opt-key">D</span><span class="opt-text">ไม่มีผลใดๆ</span></label>
+            </div>
+            <div class="q-feedback"><div class="q-feedback-inner"><p class="q-verdict" aria-live="polite"></p><p class="q-explain">* เลือกทุก element ในหน้า เช่น * { text-align: center; color: coral; }</p></div></div>
+          </fieldset>
+
+          <fieldset class="q" data-answer="b">
+            <legend class="q-head"><span class="q-num">03</span><span class="q-text">Selector .clsSp เลือก element ใด?</span></legend>
+            <div class="q-options">
+              <label class="opt"><input type="radio" name="q3" value="a" /><span class="opt-key">A</span><span class="opt-text">element ที่มี id=&quot;clsSp&quot;</span></label>
+              <label class="opt"><input type="radio" name="q3" value="b" /><span class="opt-key">B</span><span class="opt-text">element ที่มี attribute class=&quot;clsSp&quot;</span></label>
+              <label class="opt"><input type="radio" name="q3" value="c" /><span class="opt-key">C</span><span class="opt-text">element ชื่อ tag &quot;clsSp&quot;</span></label>
+              <label class="opt"><input type="radio" name="q3" value="d" /><span class="opt-key">D</span><span class="opt-text">element ทุกตัวในหน้า</span></label>
+            </div>
+            <div class="q-feedback"><div class="q-feedback-inner"><p class="q-verdict" aria-live="polite"></p><p class="q-explain">จุด (.) นำหน้า = class selector → มีผลกับทุก element ที่มี class=&quot;clsSp&quot; · ส่วน id ใช้ #</p></div></div>
+          </fieldset>
+
+          <fieldset class="q" data-answer="b">
+            <legend class="q-head"><span class="q-num">04</span><span class="q-text">Selector #p1 เลือก element ใด?</span></legend>
+            <div class="q-options">
+              <label class="opt"><input type="radio" name="q4" value="a" /><span class="opt-key">A</span><span class="opt-text">element ที่มี class=&quot;p1&quot;</span></label>
+              <label class="opt"><input type="radio" name="q4" value="b" /><span class="opt-key">B</span><span class="opt-text">element ที่มี id=&quot;p1&quot;</span></label>
+              <label class="opt"><input type="radio" name="q4" value="c" /><span class="opt-key">C</span><span class="opt-text">element ทุกตัวชื่อ &lt;p&gt;</span></label>
+              <label class="opt"><input type="radio" name="q4" value="d" /><span class="opt-key">D</span><span class="opt-text">element ลำดับที่ 1 ของหน้า</span></label>
+            </div>
+            <div class="q-feedback"><div class="q-feedback-inner"><p class="q-verdict" aria-live="polite"></p><p class="q-explain">hash (#) นำหน้า = ID selector → มีผลเฉพาะ element ที่มี id=&quot;p1&quot; (id ต้องไม่ซ้ำกันในหน้า)</p></div></div>
+          </fieldset>
+
+          <fieldset class="q" data-answer="b">
+            <legend class="q-head"><span class="q-num">05</span><span class="q-text">Selector &quot;article p&quot; (เว้นวรรค) หมายถึงอะไร?</span></legend>
+            <div class="q-options">
+              <label class="opt"><input type="radio" name="q5" value="a" /><span class="opt-key">A</span><span class="opt-text">เลือก &lt;article&gt; หรือ &lt;p&gt; อย่างใดอย่างหนึ่ง</span></label>
+              <label class="opt"><input type="radio" name="q5" value="b" /><span class="opt-key">B</span><span class="opt-text">เลือกเฉพาะ &lt;p&gt; ทุกตัวที่อยู่ภายใน &lt;article&gt;</span></label>
+              <label class="opt"><input type="radio" name="q5" value="c" /><span class="opt-key">C</span><span class="opt-text">เลือก &lt;article&gt; ที่มี attribute p</span></label>
+              <label class="opt"><input type="radio" name="q5" value="d" /><span class="opt-key">D</span><span class="opt-text">Syntax ผิด ใช้ไม่ได้</span></label>
+            </div>
+            <div class="q-feedback"><div class="q-feedback-inner"><p class="q-verdict" aria-live="polite"></p><p class="q-explain">Descendant selector เขียนคั่นด้วยช่องว่าง: article p = &lt;p&gt; ที่อยู่ภายใน &lt;article&gt; · ถ้าคั่นด้วยจุลภาคจะเป็น grouping</p></div></div>
+          </fieldset>
+
+          <fieldset class="q" data-answer="b">
+            <legend class="q-head"><span class="q-num">06</span><span class="q-text">Pseudo-class a:hover ใช้ทำอะไร?</span></legend>
+            <div class="q-options">
+              <label class="opt"><input type="radio" name="q6" value="a" /><span class="opt-key">A</span><span class="opt-text">กำหนดสไตล์ลิงก์ตอนปกติ</span></label>
+              <label class="opt"><input type="radio" name="q6" value="b" /><span class="opt-key">B</span><span class="opt-text">กำหนดสไตล์ลิงก์ตอนเมาส์ชี้อยู่</span></label>
+              <label class="opt"><input type="radio" name="q6" value="c" /><span class="opt-key">C</span><span class="opt-text">กำหนดสไตล์ลิงก์ที่เคยคลิกไปแล้ว</span></label>
+              <label class="opt"><input type="radio" name="q6" value="d" /><span class="opt-key">D</span><span class="opt-text">กำหนดสไตล์เฉพาะลิงก์ที่ยังไม่ได้คลิก</span></label>
+            </div>
+            <div class="q-feedback"><div class="q-feedback-inner"><p class="q-verdict" aria-live="polite"></p><p class="q-explain">a = ลิงก์ที่ยังไม่ได้คลิก · a:hover = ตอนเมาส์ชี้อยู่ · a:active = ตอนกำลังถูกคลิก</p></div></div>
+          </fieldset>
+
+          <fieldset class="q" data-answer="b">
+            <legend class="q-head"><span class="q-num">07</span><span class="q-text">หลักการ CSS Specificity ข้อใดถูกต้อง?</span></legend>
+            <div class="q-options">
+              <label class="opt"><input type="radio" name="q7" value="a" /><span class="opt-key">A</span><span class="opt-text">Element selector มีความเฉพาะเจาะจงสูงสุด</span></label>
+              <label class="opt"><input type="radio" name="q7" value="b" /><span class="opt-key">B</span><span class="opt-text">ID selector มีความเฉพาะเจาะจงสูงสุด รองลงมาคือ class แล้วจึงเป็น element</span></label>
+              <label class="opt"><input type="radio" name="q7" value="c" /><span class="opt-key">C</span><span class="opt-text">Class selector มีความเฉพาะเจาะจงสูงสุด</span></label>
+              <label class="opt"><input type="radio" name="q7" value="d" /><span class="opt-key">D</span><span class="opt-text">ทุก selector มีความเฉพาะเจาะจงเท่ากันหมด</span></label>
+            </div>
+            <div class="q-feedback"><div class="q-feedback-inner"><p class="q-verdict" aria-live="polite"></p><p class="q-explain">ลำดับ specificity: ID &gt; class &gt; element</p></div></div>
+          </fieldset>
+
+          <fieldset class="q" data-answer="b">
+            <legend class="q-head"><span class="q-num">08</span><span class="q-text">เมื่อ specificity เท่ากัน กฎ CSS ใดจะถูกใช้?</span></legend>
+            <div class="q-options">
+              <label class="opt"><input type="radio" name="q8" value="a" /><span class="opt-key">A</span><span class="opt-text">กฎที่เขียนก่อน</span></label>
+              <label class="opt"><input type="radio" name="q8" value="b" /><span class="opt-key">B</span><span class="opt-text">กฎที่เขียนทีหลังสุด</span></label>
+              <label class="opt"><input type="radio" name="q8" value="c" /><span class="opt-key">C</span><span class="opt-text">กฎที่สั้นที่สุด</span></label>
+              <label class="opt"><input type="radio" name="q8" value="d" /><span class="opt-key">D</span><span class="opt-text">ใช้ทั้งสองกฎพร้อมกัน</span></label>
+            </div>
+            <div class="q-feedback"><div class="q-feedback-inner"><p class="q-verdict" aria-live="polite"></p><p class="q-explain">ถ้าความเฉพาะเจาะจงเท่ากัน the latest rule (กฎที่ประกาศทีหลังสุด) จะถูกนำไปใช้</p></div></div>
+          </fieldset>
+
+          <fieldset class="q" data-answer="b">
+            <legend class="q-head"><span class="q-num">09</span><span class="q-text">วิธีการเพิ่ม CSS เข้า HTML มีกี่แบบ อะไรบ้าง?</span></legend>
+            <div class="q-options">
+              <label class="opt"><input type="radio" name="q9" value="a" /><span class="opt-key">A</span><span class="opt-text">2 แบบ: Internal, External</span></label>
+              <label class="opt"><input type="radio" name="q9" value="b" /><span class="opt-key">B</span><span class="opt-text">3 แบบ: External, Internal, Inline</span></label>
+              <label class="opt"><input type="radio" name="q9" value="c" /><span class="opt-key">C</span><span class="opt-text">4 แบบ</span></label>
+              <label class="opt"><input type="radio" name="q9" value="d" /><span class="opt-key">D</span><span class="opt-text">1 แบบเท่านั้น</span></label>
+            </div>
+            <div class="q-feedback"><div class="q-feedback-inner"><p class="q-verdict" aria-live="polite"></p><p class="q-explain">External (ไฟล์ .css + &lt;link&gt;), Internal (&lt;style&gt; ใน &lt;head&gt;) และ Inline (attribute style)</p></div></div>
+          </fieldset>
+
+          <fieldset class="q" data-answer="b">
+            <legend class="q-head"><span class="q-num">10</span><span class="q-text">External CSS เชื่อมกับ HTML ด้วย tag ใด และอยู่ที่ส่วนใด?</span></legend>
+            <div class="q-options">
+              <label class="opt"><input type="radio" name="q10" value="a" /><span class="opt-key">A</span><span class="opt-text">&lt;style&gt; ใน &lt;body&gt;</span></label>
+              <label class="opt"><input type="radio" name="q10" value="b" /><span class="opt-key">B</span><span class="opt-text">&lt;link rel=&quot;stylesheet&quot;&gt; ใน &lt;head&gt;</span></label>
+              <label class="opt"><input type="radio" name="q10" value="c" /><span class="opt-key">C</span><span class="opt-text">&lt;script&gt; ใน &lt;head&gt;</span></label>
+              <label class="opt"><input type="radio" name="q10" value="d" /><span class="opt-key">D</span><span class="opt-text">&lt;css&gt; ใน &lt;body&gt;</span></label>
+            </div>
+            <div class="q-feedback"><div class="q-feedback-inner"><p class="q-verdict" aria-live="polite"></p><p class="q-explain">&lt;link rel=&quot;stylesheet&quot; href=&quot;myStyle.css&quot; /&gt; วางไว้ในส่วน &lt;head&gt;</p></div></div>
+          </fieldset>
+
+          <fieldset class="q" data-answer="b">
+            <legend class="q-head"><span class="q-num">11</span><span class="q-text">ลำดับความสำคัญของ Cascading Order (จากสูงสุดไปต่ำสุด)?</span></legend>
+            <div class="q-options">
+              <label class="opt"><input type="radio" name="q11" value="a" /><span class="opt-key">A</span><span class="opt-text">External &gt; Internal &gt; Inline &gt; Browser Default</span></label>
+              <label class="opt"><input type="radio" name="q11" value="b" /><span class="opt-key">B</span><span class="opt-text">Inline &gt; Internal &gt; External &gt; Browser Default</span></label>
+              <label class="opt"><input type="radio" name="q11" value="c" /><span class="opt-key">C</span><span class="opt-text">Internal &gt; External &gt; Inline &gt; Browser Default</span></label>
+              <label class="opt"><input type="radio" name="q11" value="d" /><span class="opt-key">D</span><span class="opt-text">ทุกแบบมีความสำคัญเท่ากัน</span></label>
+            </div>
+            <div class="q-feedback"><div class="q-feedback-inner"><p class="q-verdict" aria-live="polite"></p><p class="q-explain">Inline CSS &gt; Internal CSS &gt; External CSS &gt; Browser Default (โดย Internal กับ External จริงๆ สำคัญเท่ากัน ตัดสินด้วยลำดับที่ประกาศ)</p></div></div>
+          </fieldset>
+
+          <fieldset class="q" data-answer="b">
+            <legend class="q-head"><span class="q-num">12</span><span class="q-text">Internal CSS กับ External CSS อันไหนสำคัญกว่ากัน?</span></legend>
+            <div class="q-options">
+              <label class="opt"><input type="radio" name="q12" value="a" /><span class="opt-key">A</span><span class="opt-text">Internal สำคัญกว่า External เสมอ</span></label>
+              <label class="opt"><input type="radio" name="q12" value="b" /><span class="opt-key">B</span><span class="opt-text">มีความสำคัญเท่ากัน ขึ้นอยู่กับว่าอันไหนถูกประกาศทีหลัง</span></label>
+              <label class="opt"><input type="radio" name="q12" value="c" /><span class="opt-key">C</span><span class="opt-text">External สำคัญกว่า Internal เสมอ</span></label>
+              <label class="opt"><input type="radio" name="q12" value="d" /><span class="opt-key">D</span><span class="opt-text">ไม่มีผลถ้ามี Inline CSS</span></label>
+            </div>
+            <div class="q-feedback"><div class="q-feedback-inner"><p class="q-verdict" aria-live="polite"></p><p class="q-explain">สำคัญเท่ากัน — ตัวที่ถูกประกาศทีหลังในเอกสาร (&lt;style&gt; หรือ &lt;link&gt;) มีผลจริง เช่น &lt;link&gt; อยู่หลัง &lt;style&gt; → external override internal</p></div></div>
+          </fieldset>
+
+          <fieldset class="q" data-answer="b">
+            <legend class="q-head"><span class="q-num">13</span><span class="q-text">ใน CSS Box Model เรียงจากในสุดไปนอกสุดคือข้อใด?</span></legend>
+            <div class="q-options">
+              <label class="opt"><input type="radio" name="q13" value="a" /><span class="opt-key">A</span><span class="opt-text">Margin → Border → Padding → Content</span></label>
+              <label class="opt"><input type="radio" name="q13" value="b" /><span class="opt-key">B</span><span class="opt-text">Content → Padding → Border → Margin</span></label>
+              <label class="opt"><input type="radio" name="q13" value="c" /><span class="opt-key">C</span><span class="opt-text">Border → Content → Padding → Margin</span></label>
+              <label class="opt"><input type="radio" name="q13" value="d" /><span class="opt-key">D</span><span class="opt-text">Padding → Content → Margin → Border</span></label>
+            </div>
+            <div class="q-feedback"><div class="q-feedback-inner"><p class="q-verdict" aria-live="polite"></p><p class="q-explain">Content (เนื้อหา) → Padding (ว่างรอบเนื้อหา) → Border (เส้นขอบ) → Margin (ว่างรอบนอกสุด)</p></div></div>
+          </fieldset>
+
+          <fieldset class="q" data-answer="d">
+            <legend class="q-head"><span class="q-num">14</span><span class="q-text">หน่วยใดต่อไปนี้เป็น Absolute length unit?</span></legend>
+            <div class="q-options">
+              <label class="opt"><input type="radio" name="q14" value="a" /><span class="opt-key">A</span><span class="opt-text">em</span></label>
+              <label class="opt"><input type="radio" name="q14" value="b" /><span class="opt-key">B</span><span class="opt-text">rem</span></label>
+              <label class="opt"><input type="radio" name="q14" value="c" /><span class="opt-key">C</span><span class="opt-text">%</span></label>
+              <label class="opt"><input type="radio" name="q14" value="d" /><span class="opt-key">D</span><span class="opt-text">px</span></label>
+            </div>
+            <div class="q-feedback"><div class="q-feedback-inner"><p class="q-verdict" aria-live="polite"></p><p class="q-explain">Absolute: cm, mm, in, px, pt · Relative: em, rem, vm, %</p></div></div>
+          </fieldset>
+
+          <fieldset class="q" data-answer="b">
+            <legend class="q-head"><span class="q-num">15</span><span class="q-text">หน่วย em สัมพันธ์กับอะไร?</span></legend>
+            <div class="q-options">
+              <label class="opt"><input type="radio" name="q15" value="a" /><span class="opt-key">A</span><span class="opt-text">ขนาดหน้าจอ</span></label>
+              <label class="opt"><input type="radio" name="q15" value="b" /><span class="opt-key">B</span><span class="opt-text">font-size</span></label>
+              <label class="opt"><input type="radio" name="q15" value="c" /><span class="opt-key">C</span><span class="opt-text">ความกว้างของ viewport</span></label>
+              <label class="opt"><input type="radio" name="q15" value="d" /><span class="opt-key">D</span><span class="opt-text">ความสูงของ body</span></label>
+            </div>
+            <div class="q-feedback"><div class="q-feedback-inner"><p class="q-verdict" aria-live="polite"></p><p class="q-explain">em เป็น relative length unit ที่สัมพัทธ์กับ font-size</p></div></div>
+          </fieldset>
+
+          <fieldset class="q" data-answer="b">
+            <legend class="q-head"><span class="q-num">16</span><span class="q-text">CSS property float: left; ทำอะไร?</span></legend>
+            <div class="q-options">
+              <label class="opt"><input type="radio" name="q16" value="a" /><span class="opt-key">A</span><span class="opt-text">จัดข้อความให้ชิดซ้าย</span></label>
+              <label class="opt"><input type="radio" name="q16" value="b" /><span class="opt-key">B</span><span class="opt-text">ทำให้ element ลอยไปทางซ้าย ให้ element อื่นไหลมาล้อมรอบ</span></label>
+              <label class="opt"><input type="radio" name="q16" value="c" /><span class="opt-key">C</span><span class="opt-text">ล็อกตำแหน่ง element ไว้กับที่</span></label>
+              <label class="opt"><input type="radio" name="q16" value="d" /><span class="opt-key">D</span><span class="opt-text">ซ่อน element นั้น</span></label>
+            </div>
+            <div class="q-feedback"><div class="q-feedback-inner"><p class="q-verdict" aria-live="polite"></p><p class="q-explain">float ทำให้ element &quot;ลอย&quot; ไปด้านที่กำหนด แล้ว element อื่นไหลมาล้อมรอบได้</p></div></div>
+          </fieldset>
+
+          <fieldset class="q" data-answer="b">
+            <legend class="q-head"><span class="q-num">17</span><span class="q-text">CSS property clear: left; มีผลอย่างไร?</span></legend>
+            <div class="q-options">
+              <label class="opt"><input type="radio" name="q17" value="a" /><span class="opt-key">A</span><span class="opt-text">ลบ float ของ element นั้นออก</span></label>
+              <label class="opt"><input type="radio" name="q17" value="b" /><span class="opt-key">B</span><span class="opt-text">ไม่อนุญาตให้มี float element อยู่ทางซ้ายของ element นี้</span></label>
+              <label class="opt"><input type="radio" name="q17" value="c" /><span class="opt-key">C</span><span class="opt-text">ล้างสีพื้นหลังของ element</span></label>
+              <label class="opt"><input type="radio" name="q17" value="d" /><span class="opt-key">D</span><span class="opt-text">บังคับให้ element ลอยไปทางซ้าย</span></label>
+            </div>
+            <div class="q-feedback"><div class="q-feedback-inner"><p class="q-verdict" aria-live="polite"></p><p class="q-explain">clear กำหนดว่าไม่อนุญาตให้มี float element อยู่ด้านที่ระบุของ element นี้ (ป้องกันการไหลทับกัน)</p></div></div>
+          </fieldset>
+
+          <fieldset class="q" data-answer="b">
+            <legend class="q-head"><span class="q-num">18</span><span class="q-text">display: block; มีผลต่อ element อย่างไร?</span></legend>
+            <div class="q-options">
+              <label class="opt"><input type="radio" name="q18" value="a" /><span class="opt-key">A</span><span class="opt-text">ซ่อน element</span></label>
+              <label class="opt"><input type="radio" name="q18" value="b" /><span class="opt-key">B</span><span class="opt-text">ทำให้ element ขึ้นบรรทัดใหม่และกินความกว้างเต็มพื้นที่</span></label>
+              <label class="opt"><input type="radio" name="q18" value="c" /><span class="opt-key">C</span><span class="opt-text">ทำให้ element อยู่กึ่งกลางแนวตั้ง</span></label>
+              <label class="opt"><input type="radio" name="q18" value="d" /><span class="opt-key">D</span><span class="opt-text">ทำให้ element โปร่งใส</span></label>
+            </div>
+            <div class="q-feedback"><div class="q-feedback-inner"><p class="q-verdict" aria-live="polite"></p><p class="q-explain">display: block ทำให้ element ขึ้นบรรทัดใหม่และกินพื้นที่เต็มความกว้าง — ใช้จัด &lt;a&gt; ใน &lt;nav&gt; เป็นเมนูแนวตั้ง</p></div></div>
+          </fieldset>
+
+          <fieldset class="q" data-answer="b">
+            <legend class="q-head"><span class="q-num">19</span><span class="q-text">property margin: auto; มีผลอย่างไรเมื่อกำหนด width แล้ว?</span></legend>
+            <div class="q-options">
+              <label class="opt"><input type="radio" name="q19" value="a" /><span class="opt-key">A</span><span class="opt-text">ทำให้ element อยู่ชิดซ้ายเสมอ</span></label>
+              <label class="opt"><input type="radio" name="q19" value="b" /><span class="opt-key">B</span><span class="opt-text">จัด element ให้อยู่กึ่งกลางแนวนอนของ container</span></label>
+              <label class="opt"><input type="radio" name="q19" value="c" /><span class="opt-key">C</span><span class="opt-text">ทำให้ element เต็มความกว้างหน้าจอ</span></label>
+              <label class="opt"><input type="radio" name="q19" value="d" /><span class="opt-key">D</span><span class="opt-text">ไม่มีผลใดๆ</span></label>
+            </div>
+            <div class="q-feedback"><div class="q-feedback-inner"><p class="q-verdict" aria-live="polite"></p><p class="q-explain">section { width: 80%; margin: auto; } → กว้าง 80% และอยู่กึ่งกลางแนวนอน</p></div></div>
+          </fieldset>
+
+          <fieldset class="q" data-answer="b">
+            <legend class="q-head"><span class="q-num">20</span><span class="q-text">text-decoration: none; มักใช้กับ tag ใดเพื่อลบขีดเส้นใต้?</span></legend>
+            <div class="q-options">
+              <label class="opt"><input type="radio" name="q20" value="a" /><span class="opt-key">A</span><span class="opt-text">&lt;p&gt;</span></label>
+              <label class="opt"><input type="radio" name="q20" value="b" /><span class="opt-key">B</span><span class="opt-text">&lt;a&gt;</span></label>
+              <label class="opt"><input type="radio" name="q20" value="c" /><span class="opt-key">C</span><span class="opt-text">&lt;img&gt;</span></label>
+              <label class="opt"><input type="radio" name="q20" value="d" /><span class="opt-key">D</span><span class="opt-text">&lt;table&gt;</span></label>
+            </div>
+            <div class="q-feedback"><div class="q-feedback-inner"><p class="q-verdict" aria-live="polite"></p><p class="q-explain">ใช้กับลิงก์ &lt;a&gt; (เช่นใน navigation bar) เพื่อลบขีดเส้นใต้ลิงก์ออก</p></div></div>
+          </fieldset>
+
+          <div class="quiz-result" id="quiz-result" hidden tabindex="-1">
+            <div class="score-ring" aria-hidden="true">
+              <svg viewBox="0 0 120 120">
+                <circle class="ring-track" cx="60" cy="60" r="52" />
+                <circle class="ring-fill" cx="60" cy="60" r="52" pathLength="100" />
+              </svg>
+              <span class="score-pct"><span id="score-pct">0</span>%</span>
+            </div>
+            <div class="score-body">
+              <p class="score-line" role="status">ได้ <strong id="score-num">0</strong> / 20 คะแนน</p>
+              <p class="score-msg" id="score-msg"></p>
+              <div class="score-actions">
+                <button class="btn btn--ghost btn--sm" type="button" id="toggle-wrong" aria-pressed="false">ดูเฉพาะข้อที่ผิด</button>
+              </div>
+            </div>
+          </div>
+
+          <div class="quiz-bar">
+            <div class="quiz-progress">
+              <span class="quiz-count"><span id="answered">0</span> / 20 ข้อ</span>
+              <span class="progress" aria-hidden="true"><span class="progress-fill" id="progress-fill"></span></span>
+              <span class="quiz-hint" id="quiz-hint" aria-live="polite"></span>
+            </div>
+            <div class="quiz-actions">
+              <button class="btn btn--ghost" type="reset" id="quiz-reset">ทำใหม่</button>
+              <button class="btn btn--primary" type="submit" id="quiz-submit">ตรวจคำตอบ</button>
+            </div>
+          </div>
+        </form>
+      </section>
+
+      <!-- =============================================================
+           แท็บ 4: เขียนโค้ด (code exercise) — โจทย์อยู่ใน assets/js/exercises-web-3.js
+           ============================================================= -->
+      <section class="panel" id="code" role="tabpanel" aria-labelledby="tab-code" tabindex="-1">
+        <div class="panel-head">
+          <h2>แบบฝึกหัดเขียนโค้ด</h2>
+          <p class="panel-sub">เขียน HTML + <code>&lt;style&gt;</code> ในช่องแก้ไข ดูผลลัพธ์ใน browser ทันที แล้วกด "ตรวจคำตอบ" ระบบจะอ่านกฎ CSS ของคุณแล้วตรวจให้อัตโนมัติ (Ctrl + Enter ก็ตรวจได้) · โค้ดและความคืบหน้าบันทึกไว้ใน browser นี้</p>
+        </div>
+        <div class="cx" id="code-exercise">
+          <p class="cx-nojs">แบบฝึกหัดเขียนโค้ดต้องเปิด JavaScript ใน browser</p>
+        </div>
+      </section>
+
+    </div>
+  </main>
+  <footer class="site-footer">
+    <div class="wrap">
+      <p>สรุปจากสไลด์ ITDS241 Web Technologies and Applications (Faculty of ICT, Mahidol University) เพื่อใช้ทบทวนส่วนตัว — ถ้าเนื้อหาขัดกับสไลด์ ให้ยึดสไลด์เป็นหลัก</p>
+    </div>
+  </footer>
+
+  <script src="assets/js/widgets.js" defer></script>
+  <script src="assets/js/network.js" defer></script>
+  <script src="assets/js/exercises-web-3.js" defer></script>
+  <script src="assets/js/code-exercise.js" defer></script>
+</body>
+</html>

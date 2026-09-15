@@ -86,8 +86,379 @@
     }
   });
 
+  /* ------------------------------------------------- CSS syntax highlight */
+  // selector → tok-tag · property → tok-attr · value → tok-val · comment → tok-comment
+  function highlightCss(src) {
+    const re = /\/\*[\s\S]*?\*\/|"(?:[^"\\\n]|\\.)*"|'(?:[^'\\\n]|\\.)*'|[{};]|[^{};"'/]+|\//g;
+    const parts = [];
+    let m;
+    while ((m = re.exec(src))) parts.push(m[0]);
+    let out = "";
+    let depth = 0;
+    let inValue = false;
+    const nextDelim = (i) => {
+      for (let j = i + 1; j < parts.length; j++) if (/^[{};]$/.test(parts[j])) return parts[j];
+      return "";
+    };
+    parts.forEach((p, i) => {
+      if (p.startsWith("/*")) { out += tok("comment", p); return; }
+      if (p === "{") { depth++; inValue = false; out += esc(p); return; }
+      if (p === "}") { depth = Math.max(0, depth - 1); inValue = false; out += esc(p); return; }
+      if (p === ";") { inValue = false; out += esc(p); return; }
+      if (p[0] === '"' || p[0] === "'") { out += tok("val", p); return; }
+      if (!p.trim()) { out += esc(p); return; }
+      if (nextDelim(i) === "{" || depth === 0) {
+        const lead = /^\s*/.exec(p)[0];
+        const tail = /\s*$/.exec(p)[0];
+        out += esc(lead) + tok(p.trim().startsWith("@") ? "doctype" : "tag", p.trim()) + esc(tail);
+        return;
+      }
+      if (inValue) { out += tok("val", p); return; }
+      const colon = p.indexOf(":");
+      if (colon < 0) { out += tok("attr", p); return; }
+      out += tok("attr", p.slice(0, colon)) + esc(":");
+      const rest = p.slice(colon + 1);
+      if (rest) out += tok("val", rest);
+      inValue = true;
+    });
+    return out;
+  }
+
+  /* -------------------------------------------------- JS syntax highlight */
+  const JS_KEYWORDS = new Set("var let const function return if else for while do switch case break continue default new class extends super this typeof instanceof in of try catch finally throw async await yield import export from static get set delete void".split(" "));
+  const JS_LITERALS = new Set(["true", "false", "null", "undefined", "NaN", "Infinity"]);
+  function highlightJs(src) {
+    const re = /(\/\/[^\n]*|\/\*[\s\S]*?\*\/)|("(?:[^"\\\n]|\\.)*"|'(?:[^'\\\n]|\\.)*'|`(?:[^`\\]|\\.)*`)|(\b\d[\d_]*(?:\.\d+)?(?:e[+-]?\d+)?n?\b)|([A-Za-z_$][\w$]*)(\s*\()?/g;
+    let out = "";
+    let last = 0;
+    let m;
+    while ((m = re.exec(src))) {
+      out += esc(src.slice(last, m.index));
+      if (m[1]) out += tok("comment", m[1]);
+      else if (m[2]) out += tok("val", m[2]);
+      else if (m[3]) out += tok("entity", m[3]);
+      else if (JS_KEYWORDS.has(m[4])) out += tok("tag", m[4]) + esc(m[5] || "");
+      else if (JS_LITERALS.has(m[4])) out += tok("entity", m[4]) + esc(m[5] || "");
+      else if (m[5]) out += tok("attr", m[4]) + esc(m[5]);
+      else out += esc(m[4]);
+      last = re.lastIndex;
+    }
+    return out + esc(src.slice(last));
+  }
+
+  document.querySelectorAll('pre.code-block[data-lang="css"]').forEach((pre) => {
+    const code = pre.querySelector("code") || pre;
+    code.innerHTML = highlightCss(code.textContent);
+  });
+
+  /* ---------------------------------------------------------------------
+     JS sandbox — รันโค้ด JavaScript ของผู้ใช้/ตัวอย่างอย่างปลอดภัย
+     - iframe sandbox="allow-scripts" (ไม่มี allow-same-origin) → origin เป็น opaque
+       เข้าถึง DOM / localStorage / cookie ของหน้าเว็บหลักไม่ได้
+     - CSP ใน srcdoc ปิด network ทั้งหมด (default-src 'none')
+     - loop guard: แทรก __loopGuard() ในเงื่อนไข while / for / do-while → เกินจำนวนรอบ = throw
+     - timeout ฝั่งหน้าหลัก: ไม่ได้ผลลัพธ์ภายในเวลาที่กำหนด → ทิ้ง iframe
+     - สื่อสารกลับด้วย postMessage + token สุ่ม และตรวจ event.source ทุกครั้ง
+     --------------------------------------------------------------------- */
+  const LOOP_LIMIT = 100000;
+  const REGEX_AFTER_WORD = new Set(["return", "typeof", "instanceof", "in", "of", "new", "delete", "void", "throw", "case", "do", "else", "yield", "await"]);
+
+  // แยก token แบบหยาบพอสำหรับหา while/for ที่ไม่ได้อยู่ใน string, comment, template หรือ regex
+  function lexJs(src) {
+    const tokens = [];
+    const n = src.length;
+    let i = 0;
+    let prevSig = null;
+    const push = (type, start, end) => {
+      const t = { type, start, end, value: src.slice(start, end) };
+      tokens.push(t);
+      if (type !== "space" && type !== "comment") prevSig = t;
+    };
+    const skipQuoted = (j) => {
+      const q = src[j];
+      j++;
+      while (j < n) {
+        if (src[j] === "\\") { j += 2; continue; }
+        if (src[j] === q || src[j] === "\n") return j + 1;
+        j++;
+      }
+      return n;
+    };
+    const skipTemplate = (j) => {
+      j++;
+      while (j < n) {
+        const c = src[j];
+        if (c === "\\") { j += 2; continue; }
+        if (c === "`") return j + 1;
+        if (c === "$" && src[j + 1] === "{") {
+          j += 2;
+          let depth = 1;
+          while (j < n && depth > 0) {
+            const d = src[j];
+            if (d === "'" || d === '"') { j = skipQuoted(j); continue; }
+            if (d === "`") { j = skipTemplate(j); continue; }
+            if (d === "{") depth++;
+            else if (d === "}") depth--;
+            j++;
+          }
+          continue;
+        }
+        j++;
+      }
+      return n;
+    };
+    const regexAllowed = () => {
+      if (!prevSig) return true;
+      if (prevSig.type === "word") return REGEX_AFTER_WORD.has(prevSig.value);
+      if (prevSig.type === "punct") return !/^[)\]}]$/.test(prevSig.value);
+      return false;
+    };
+    while (i < n) {
+      const c = src[i];
+      const start = i;
+      if (/\s/.test(c)) {
+        while (i < n && /\s/.test(src[i])) i++;
+        push("space", start, i);
+      } else if (c === "/" && src[i + 1] === "/") {
+        const nl = src.indexOf("\n", i);
+        i = nl < 0 ? n : nl;
+        push("comment", start, i);
+      } else if (c === "/" && src[i + 1] === "*") {
+        const endc = src.indexOf("*/", i + 2);
+        i = endc < 0 ? n : endc + 2;
+        push("comment", start, i);
+      } else if (c === "'" || c === '"') {
+        i = skipQuoted(i);
+        push("string", start, i);
+      } else if (c === "`") {
+        i = skipTemplate(i);
+        push("string", start, i);
+      } else if (c === "/" && regexAllowed()) {
+        let j = i + 1;
+        let inClass = false;
+        while (j < n && src[j] !== "\n") {
+          const d = src[j];
+          if (d === "\\") { j += 2; continue; }
+          if (inClass) { if (d === "]") inClass = false; } else if (d === "[") inClass = true;
+          else if (d === "/") { j++; while (j < n && /[a-z]/i.test(src[j])) j++; break; }
+          j++;
+        }
+        i = j;
+        push("regex", start, i);
+      } else if (/[\w$-￿]/.test(c)) {
+        while (i < n && /[\w$-￿]/.test(src[i])) i++;
+        push("word", start, i);
+      } else {
+        i++;
+        push("punct", start, i);
+      }
+    }
+    return tokens;
+  }
+
+  function guardLoops(src) {
+    const tokens = lexJs(src);
+    const inserts = []; // [position, text]
+    const sig = tokens.filter((t) => t.type !== "space" && t.type !== "comment");
+    sig.forEach((t, k) => {
+      if (t.type !== "word" || (t.value !== "while" && t.value !== "for")) return;
+      if (k > 0 && sig[k - 1].value === ".") return;
+      const open = sig[k + 1];
+      if (!open || open.value !== "(") return;
+      let depth = 0;
+      const semis = [];
+      let close = null;
+      for (let j = k + 1; j < sig.length; j++) {
+        const v = sig[j].value;
+        if (sig[j].type !== "punct") continue;
+        if (v === "(" || v === "[" || v === "{") depth++;
+        else if (v === ")" || v === "]" || v === "}") {
+          depth--;
+          if (depth === 0) { close = sig[j]; break; }
+        } else if (v === ";" && depth === 1) semis.push(sig[j]);
+      }
+      if (!close) return;
+      if (t.value === "while") {
+        inserts.push([open.end, "__loopGuard() && ("], [close.start, ")"]);
+      } else if (semis.length === 2) {
+        const cond = src.slice(semis[0].end, semis[1].start);
+        if (cond.trim()) inserts.push([semis[0].end, " __loopGuard() && ("], [semis[1].start, ")"]);
+        else inserts.push([semis[0].end, " __loopGuard()"]);
+      }
+    });
+    inserts.sort((a, b) => b[0] - a[0]);
+    let out = src;
+    inserts.forEach(([pos, text]) => { out = out.slice(0, pos) + text + out.slice(pos); });
+    return out;
+  }
+
+  const HARNESS = (token) => `(function(){
+  var T=${JSON.stringify(token)},logs=[],errors=[],count=0,LIMIT=${LOOP_LIMIT},hit=false;
+  function send(m){m.token=T;try{parent.postMessage(m,"*");}catch(e){}}
+  function fmt(v,d){d=d||0;var t=typeof v;
+    if(t==="string")return d?JSON.stringify(v):v;
+    if(t==="bigint")return v+"n";
+    if(t==="number"||t==="boolean"||t==="symbol")return String(v);
+    if(v===undefined)return "undefined";if(v===null)return "null";
+    if(t==="function")return "ƒ "+(v.name||"anonymous")+"()";
+    try{
+      if(v instanceof Error)return v.name+": "+v.message;
+      if(typeof Node!=="undefined"&&v instanceof Node)return v.nodeType===1?"<"+v.tagName.toLowerCase()+">":v.nodeName;
+      if(d>2)return Array.isArray(v)?"[…]":"{…}";
+      if(Array.isArray(v))return "["+v.map(function(x){return fmt(x,d+1);}).join(", ")+"]";
+      if(v instanceof Map)return "Map("+v.size+") {"+Array.from(v).map(function(e){return fmt(e[0],d+1)+" => "+fmt(e[1],d+1);}).join(", ")+"}";
+      if(v instanceof Set)return "Set("+v.size+") {"+Array.from(v).map(function(x){return fmt(x,d+1);}).join(", ")+"}";
+      if(v instanceof Date)return v.toString();
+      if(typeof v.then==="function")return "Promise {…}";
+      var name=v.constructor&&v.constructor.name&&v.constructor.name!=="Object"?v.constructor.name+" ":"";
+      return name+"{"+Object.keys(v).map(function(k){return k+": "+fmt(v[k],d+1);}).join(", ")+"}";
+    }catch(e){return String(v);}
+  }
+  function out(kind){return function(){var s=Array.prototype.map.call(arguments,function(a){return fmt(a,0);}).join(" ");if(logs.length<300){logs.push(s);send({type:"log",kind:kind,text:s});}};}
+  console.log=out("log");console.info=out("log");console.table=out("log");console.warn=out("warn");console.error=out("error");
+  window.alert=function(m){console.log("[alert] "+fmt(m,0));};window.confirm=function(){return false;};window.prompt=function(){return null;};
+  window.__loopGuard=function(){if(++count>LIMIT){hit=true;throw new Error("หยุดการทำงาน: ลูปวนเกิน "+LIMIT+" รอบ (อาจเป็น infinite loop)");}return true;};
+  function report(err,fallback){var s=err&&err.name?err.name+": "+err.message:String(fallback||err);if(errors.length<50){errors.push(s);send({type:"error",text:s});}}
+  window.addEventListener("error",function(e){report(e.error,e.message);});
+  window.addEventListener("unhandledrejection",function(e){report(e.reason,"Unhandled promise rejection");});
+  window.__done=function(probe,probeError){var p;try{p=probe===undefined?undefined:JSON.parse(JSON.stringify(probe));}catch(e){p=String(probe);}
+    send({type:"done",logs:logs.slice(),errors:errors.slice(),probe:p,probeError:probeError||null,loopLimit:hit,html:(function(){if(!document.body)return "";var b=document.body.cloneNode(true);Array.prototype.forEach.call(b.querySelectorAll("script"),function(x){x.remove();});return b.innerHTML.trim();})()});};
+})();`;
+
+  const safeScript = (s) => String(s).replace(/<\/(script)/gi, "<\\/$1").replace(/<!--/g, "<\\!--");
+  const randomToken = () => Array.from(crypto.getRandomValues(new Uint8Array(12)), (b) => b.toString(16).padStart(2, "0")).join("");
+
+  function buildJsDoc({ code, fixture, probe, wait, token }) {
+    // wait = 0 → รัน probe ทันทีหลังโค้ดผู้ใช้ (ไม่พึ่ง setTimeout เพราะ browser หน่วง timer ของ iframe ข้าม origin ที่เพิ่งใช้ CPU หนัก)
+    const delay = Math.max(0, Number(wait) || 0);
+    const probeScript = `(function(run){if(${delay}>0){setTimeout(run,${delay});}else{run();}})(function(){var p,pe=null;try{p=(function(){${safeScript(probe || "")}\n})();}catch(e){pe=(e&&e.name?e.name+": ":"")+(e&&e.message||e);}
+if(p&&typeof p.then==="function"){p.then(function(v){__done(v,pe);},function(e){__done(undefined,String(e&&e.message||e));});}else{__done(p,pe);}});`;
+    return `<!DOCTYPE html><html lang="th"><head><meta charset="utf-8">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'unsafe-inline'; style-src 'unsafe-inline'; img-src data:">
+<meta name="color-scheme" content="light"><style>:root{background:Canvas;color:CanvasText;font-family:system-ui,sans-serif}</style>
+<script>${HARNESS(token)}<\/script></head><body>
+${fixture || ""}
+<script>${safeScript(guardLoops(code || ""))}\n<\/script>
+<script>${probeScript}<\/script>
+</body></html>`;
+  }
+
+  // opts: { code, fixture, probe, wait, timeout, frame (iframe ที่จะใช้แสดงผล ถ้าไม่ใส่จะสร้าง iframe ซ่อน), onEvent }
+  function runJs(opts = {}) {
+    const { code = "", fixture = "", probe = "", wait = 0, timeout = 2500, frame = null, onEvent = null } = opts;
+    return new Promise((resolve) => {
+      const token = randomToken();
+      const temp = !frame;
+      const target = frame || document.createElement("iframe");
+      if (target.__runnerListener) window.removeEventListener("message", target.__runnerListener);
+      if (temp) {
+        // ไม่ใช้ display:none — วางไว้นอกจอแทน เพื่อไม่ให้ browser หน่วง timer ของ iframe ที่ซ่อนอยู่
+        target.style.cssText = "position:fixed;left:-10000px;top:0;width:480px;height:320px;border:0;opacity:0;pointer-events:none";
+        target.setAttribute("aria-hidden", "true");
+        target.tabIndex = -1;
+        target.title = "sandbox";
+      }
+      target.setAttribute("sandbox", "allow-scripts");
+      const logs = [];
+      const errors = [];
+      let settled = false;
+      const cleanup = () => {
+        window.removeEventListener("message", listener);
+        target.__runnerListener = null;
+        if (temp) target.remove();
+      };
+      const listener = (e) => {
+        if (e.source !== target.contentWindow) return;
+        const d = e.data;
+        if (!d || typeof d !== "object" || d.token !== token) return;
+        if (d.type === "log") { logs.push(d.text); if (onEvent) onEvent(d); }
+        else if (d.type === "error") { errors.push(d.text); if (onEvent) onEvent(d); }
+        else if (d.type === "done" && !settled) {
+          settled = true;
+          clearTimeout(timer);
+          if (temp) cleanup();
+          resolve({ logs: d.logs, errors: d.errors, probe: d.probe, probeError: d.probeError, loopLimit: d.loopLimit, html: d.html, timeout: false });
+        }
+      };
+      const timer = setTimeout(() => {
+        if (settled) return;
+        settled = true;
+        cleanup();
+        if (!temp) target.srcdoc = "";
+        const msg = "หมดเวลา: โค้ดทำงานนานเกินไป (อาจมี infinite loop หรือรอ event ที่ไม่เกิดขึ้น)";
+        if (onEvent) onEvent({ type: "error", text: msg });
+        resolve({ logs, errors: errors.concat(msg), probe: undefined, probeError: null, loopLimit: false, html: "", timeout: true });
+      }, timeout + (Number(wait) || 0));
+      window.addEventListener("message", listener);
+      target.__runnerListener = listener;
+      if (temp) document.body.append(target);
+      target.srcdoc = buildJsDoc({ code, fixture, probe, wait, token });
+    });
+  }
+
+  /* -------- โค้ดตัวอย่าง JS ที่กดรันได้: <pre class="code-block" data-lang="js" data-run [data-fixture="template-id"]> */
+  function renderConsoleLine(list, kind, text) {
+    const line = document.createElement("span");
+    line.className = `run-line run-line--${kind}`;
+    line.textContent = text;
+    list.append(line);
+  }
+  document.querySelectorAll('pre.code-block[data-lang="js"]').forEach((pre) => {
+    const code = pre.querySelector("code") || pre;
+    const source = code.textContent;
+    code.innerHTML = highlightJs(source);
+    if (!pre.hasAttribute("data-run")) return;
+
+    const box = document.createElement("div");
+    box.className = "run-box";
+    const head = document.createElement("div");
+    head.className = "run-head";
+    const btn = document.createElement("button");
+    btn.type = "button";
+    btn.className = "btn btn--ghost btn--sm";
+    btn.textContent = "▶ รันโค้ดนี้";
+    const note = document.createElement("span");
+    note.className = "run-note";
+    note.textContent = "รันใน sandbox แยกจากหน้าเว็บ · ผลจาก console.log แสดงด้านล่าง";
+    head.append(btn, note);
+    box.append(head);
+
+    const fixtureTpl = pre.dataset.fixture ? document.getElementById(pre.dataset.fixture) : null;
+    let frame = null;
+    if (fixtureTpl) {
+      frame = document.createElement("iframe");
+      frame.className = "run-frame";
+      frame.title = "ผลลัพธ์ของโค้ดตัวอย่าง";
+      frame.style.height = `${Number(pre.dataset.runHeight) || 140}px`;
+      frame.setAttribute("sandbox", "allow-scripts");
+      frame.srcdoc = buildSrcdoc(fixtureTpl.innerHTML);
+      box.append(frame);
+    }
+    const output = document.createElement("pre");
+    output.className = "run-output";
+    output.setAttribute("aria-live", "polite");
+    output.dataset.empty = "กดปุ่ม ▶ เพื่อดูผลลัพธ์";
+    box.append(output);
+    pre.after(box);
+
+    btn.addEventListener("click", async () => {
+      output.textContent = "";
+      btn.disabled = true;
+      const result = await runJs({
+        code: source,
+        fixture: fixtureTpl ? fixtureTpl.innerHTML : "",
+        frame,
+        wait: Number(pre.dataset.wait) || 0,
+        onEvent: (d) => renderConsoleLine(output, d.type === "error" ? "error" : d.kind || "log", d.text),
+      });
+      if (!result.logs.length && !result.errors.length) renderConsoleLine(output, "muted", "(ไม่มีผลลัพธ์ใน console)");
+      btn.disabled = false;
+      btn.textContent = "↻ รันอีกครั้ง";
+    });
+  });
+
   // ให้ไฟล์อื่น (code exercise) ใช้ซ้ำได้
-  window.TotobWidgets = { highlightHtml, buildSrcdoc };
+  window.TotobWidgets = { highlightHtml, highlightCss, highlightJs, buildSrcdoc, runJs, guardLoops };
 
   /* ------------------------------------------------------- URL anatomy */
   document.querySelectorAll('[data-widget="url-anatomy"]').forEach((root) => {
@@ -145,6 +516,30 @@
     }));
     input.addEventListener("input", update);
     update();
+  });
+
+  /* ---------------------------------------- Selector lab (Web บทที่ 3) */
+  // จับคู่ selector กับ HTML ใน <template> ด้วย querySelectorAll จริง แล้วไฮไลต์โหนดที่มี data-i ตรงกัน
+  document.querySelectorAll('[data-widget="selector-lab"]').forEach((root) => {
+    const tpl = root.querySelector("template.sel-source");
+    const doc = new DOMParser().parseFromString(`<!DOCTYPE html><body>${tpl.innerHTML}</body>`, "text/html");
+    const nodes = Array.from(root.querySelectorAll(".sel-node"));
+    const status = root.querySelector(".demo-status");
+    const buttons = Array.from(root.querySelectorAll("button[data-selector]"));
+    const apply = (selector) => {
+      const hits = new Set(Array.from(doc.querySelectorAll(selector)).map((n) => n.getAttribute("data-i")).filter(Boolean));
+      nodes.forEach((n) => n.classList.toggle("is-match", hits.has(n.dataset.i)));
+      const names = nodes.filter((n) => hits.has(n.dataset.i)).map((n) => n.querySelector("code").textContent);
+      status.textContent = names.length
+        ? `${selector} เลือก ${names.length} element: ${names.join(" · ")}`
+        : `${selector} ไม่ตรงกับ element ใดเลย`;
+    };
+    buttons.forEach((b) => b.addEventListener("click", () => {
+      buttons.forEach((x) => x.setAttribute("aria-pressed", String(x === b)));
+      apply(b.dataset.selector);
+    }));
+    const start = buttons.find((b) => b.getAttribute("aria-pressed") === "true") || buttons[0];
+    apply(start.dataset.selector);
   });
 
   /* ------------------------------------------------ Number helpers */

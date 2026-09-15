@@ -151,6 +151,13 @@
   background: var(--text);
 }
 
+.cx-preview iframe.is-short { height: 180px; }
+.cx-preview .cx-console { margin-top: var(--space-3); }
+.cx-preview iframe[hidden] + .cx-console { margin-top: 0; }
+.cx-fixture-label { margin-top: var(--space-3); font-size: var(--fs-sm); color: var(--text-muted); }
+.cx-prompt .code-block { margin: var(--space-2) 0 0; }
+.cx-prompt pre code { background: none; border: 0; padding: 0; border-radius: 0; color: inherit; }
+
 /* ผลตรวจ */
 .cx-feedback {
   padding: var(--space-4);
