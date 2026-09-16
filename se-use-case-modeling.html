@@ -1,0 +1,1005 @@
+<!DOCTYPE html>
+<html lang="th" data-theme="se">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>ITDS261 บทที่ 4: Use Case Modeling · โต๊ะทบทวน</title>
+<meta name="description" content="ITDS261 Introduction to Software Engineering บทที่ 4: requirements analysis, 5 แนวทาง requirements modeling, scenario-based modeling, สัญลักษณ์ use case diagram, ความสัมพันธ์ association / inheritance / includes / extends, 6 ขั้นตอนพัฒนา use case และ 8 องค์ประกอบของ use case narrative พร้อมบริบทกรณีศึกษา Zoo Ticketing System cheat sheet และแบบฝึกหัด 20 ข้อ" />
+<meta name="theme-color" content="#121815" />
+<link rel="icon" href="assets/favicon.svg" type="image/svg+xml" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link
+  href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500..700&family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans+Thai:wght@500;600&family=IBM+Plex+Sans+Thai+Looped:wght@400;500;600&display=swap"
+  rel="stylesheet"
+/>
+<link rel="stylesheet" href="assets/css/tokens.css" />
+<link rel="stylesheet" href="assets/css/base.css" />
+<link rel="stylesheet" href="assets/css/network.css" />
+<link rel="stylesheet" href="assets/css/motion.css" />
+<script>document.documentElement.classList.add("js");</script>
+</head>
+<body>
+  <a class="skip-link" href="#tabs">ข้ามไปที่เนื้อหา</a>
+
+  <svg class="dg-defs" aria-hidden="true" focusable="false">
+    <defs>
+      <marker id="arr" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path class="dg-arrow" d="M0 0L10 5L0 10z" /></marker>
+      <marker id="arr-muted" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path class="dg-arrow--muted" d="M0 0L10 5L0 10z" /></marker>
+      <marker id="arr-ok" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path class="dg-arrow--ok" d="M0 0L10 5L0 10z" /></marker>
+      <marker id="arr-bad" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path class="dg-arrow--bad" d="M0 0L10 5L0 10z" /></marker>
+    </defs>
+  </svg>
+
+  <header class="site-header">
+    <div class="wrap">
+      <a class="wordmark" href="index.html" aria-label="โต๊ะทบทวน หน้าแรก">
+        <img class="wordmark-mark" src="assets/favicon.svg" alt="" width="26" height="26" />
+        <span class="wordmark-text">โต๊ะ<span>ทบทวน</span></span>
+      </a>
+      <a class="crumb" href="index.html"><span class="arrow" aria-hidden="true">←</span> รายวิชาทั้งหมด</a>
+    </div>
+  </header>
+
+  <main>
+    <section class="course-hero wrap">
+      <nav class="course-nav" aria-label="เลือกวิชาและบท">
+        <div class="subject-switch">
+          <button class="subject-btn" type="button" data-subject="network" aria-pressed="false"><span class="subject-code">ITDS231</span> Network</button>
+          <button class="subject-btn" type="button" data-subject="web" aria-pressed="false"><span class="subject-code">ITDS241</span> Web</button>
+          <button class="subject-btn" type="button" data-subject="se" aria-pressed="true"><span class="subject-code">ITDS261</span> SE</button>
+        </div>
+        <div class="chapter-nav" data-subject="network" data-label="ITDS231 Computer Networks" role="group" aria-label="บทของวิชา ITDS231 Computer Networks">
+          <a class="chapter-link" href="network.html"><span class="chapter-num">บทที่ 1</span><span class="chapter-name">Intro &amp; Topology</span></a>
+          <a class="chapter-link" href="network-application-layer.html"><span class="chapter-num">บทที่ 2</span><span class="chapter-name">Application Layer</span></a>
+          <a class="chapter-link" href="network-data-link-layer.html"><span class="chapter-num">บทที่ 3</span><span class="chapter-name">Data Link Layer</span></a>
+          <a class="chapter-link" href="network-mac-ethernet.html"><span class="chapter-num">บทที่ 4</span><span class="chapter-name">MAC + Ethernet</span></a>
+        </div>
+        <div class="chapter-nav" data-subject="web" data-label="ITDS241 Web Technologies and Applications" role="group" aria-label="บทของวิชา ITDS241 Web Technologies and Applications">
+          <a class="chapter-link" href="web-intro-html-basics.html"><span class="chapter-num">บทที่ 1</span><span class="chapter-name">Internet &amp; HTML Basics</span></a>
+          <a class="chapter-link" href="web-media-forms-semantic.html"><span class="chapter-num">บทที่ 2</span><span class="chapter-name">Media, Forms &amp; Semantic</span></a>
+          <a class="chapter-link" href="web-css-fundamentals.html"><span class="chapter-num">บทที่ 3</span><span class="chapter-name">CSS Fundamentals</span></a>
+          <a class="chapter-link" href="web-css-layout-responsive.html"><span class="chapter-num">บทที่ 4</span><span class="chapter-name">CSS Layout &amp; Responsive</span></a>
+          <a class="chapter-link" href="web-js-fundamentals.html"><span class="chapter-num">บทที่ 5</span><span class="chapter-name">JavaScript Fundamentals</span></a>
+          <a class="chapter-link" href="web-js-functions-oop-dom.html"><span class="chapter-num">บทที่ 6</span><span class="chapter-name">Functions, OOP &amp; DOM</span></a>
+          <a class="chapter-link" href="web-ecmascript-features.html"><span class="chapter-num">บทที่ 7</span><span class="chapter-name">ECMAScript Features</span></a>
+        </div>
+        <div class="chapter-nav" data-subject="se" data-label="ITDS261 Introduction to Software Engineering" role="group" aria-label="บทของวิชา ITDS261 Introduction to Software Engineering">
+          <a class="chapter-link" href="se-foundation-pm.html"><span class="chapter-num">บทที่ 1</span><span class="chapter-name">SE Foundation &amp; PM</span></a>
+          <a class="chapter-link" href="se-process-models.html"><span class="chapter-num">บทที่ 2</span><span class="chapter-name">Process Models</span></a>
+          <a class="chapter-link" href="se-requirement-engineering.html"><span class="chapter-num">บทที่ 3</span><span class="chapter-name">Requirement Engineering</span></a>
+          <a class="chapter-link" href="se-use-case-modeling.html" aria-current="page"><span class="chapter-num">บทที่ 4</span><span class="chapter-name">Use Case Modeling</span></a>
+          <a class="chapter-link" href="se-flow-behavior-modeling.html"><span class="chapter-num">บทที่ 5</span><span class="chapter-name">Flow &amp; Behavior Modeling</span></a>
+          <a class="chapter-link" href="se-ui-design.html"><span class="chapter-num">บทที่ 6</span><span class="chapter-name">UI Design</span></a>
+        </div>
+      </nav>
+      <span class="eyebrow">ITDS261 · บทที่ 4 · Lecture 4 + In-class exercise</span>
+      <h1>Use Case Modeling</h1>
+      <p class="course-lede">requirements analysis เชื่อม requirement ที่เขียนไว้เข้ากับแบบจำลองที่นำไปออกแบบต่อได้ บทนี้เน้น scenario-based modeling: อ่านและวาด use case diagram ให้ถูกสัญลักษณ์ แยก includes กับ extends ให้ออก และเขียน use case narrative ให้ครบ 8 ส่วน</p>
+      <ul class="course-meta" aria-label="ข้อมูลบทเรียน">
+        <li class="chip chip--accent">ITDS261 Introduction to Software Engineering</li>
+        <li class="chip">L4 Use case modeling (24 หน้า)</li>
+        <li class="chip">In-class: Zoo Ticketing System</li>
+        <li class="chip">แบบฝึกหัด 20 ข้อ</li>
+      </ul>
+    </section>
+
+    <div class="tabbar" id="tabs">
+      <div class="wrap">
+        <div class="tabs" role="tablist" aria-label="ส่วนของหน้า">
+          <button class="tab" role="tab" id="tab-content" aria-controls="content" aria-selected="true" type="button">
+            <svg class="tab-icon" viewBox="0 0 20 20" aria-hidden="true"><path d="M4 3.5h8.5L16 7v9.5H4z M12 3.5V7h4 M7 10h6 M7 13h4" /></svg>
+            เนื้อหา
+          </button>
+          <button class="tab" role="tab" id="tab-summary" aria-controls="summary" aria-selected="false" type="button">
+            <svg class="tab-icon" viewBox="0 0 20 20" aria-hidden="true"><path d="M3.5 4h13v12h-13z M3.5 8h13 M8.5 8v8" /></svg>
+            สรุป
+          </button>
+          <button class="tab" role="tab" id="tab-quiz" aria-controls="quiz" aria-selected="false" type="button">
+            <svg class="tab-icon" viewBox="0 0 20 20" aria-hidden="true"><path d="M10 17a7 7 0 1 0 0-14 7 7 0 0 0 0 14z M6.8 10.2l2.2 2.2 4.2-4.6" /></svg>
+            แบบฝึกหัด
+          </button>
+          <span class="tab-indicator" aria-hidden="true"></span>
+        </div>
+      </div>
+    </div>
+
+    <div class="wrap panels">
+
+      <!-- =============================================================
+           แท็บ 1: เนื้อหา
+           ============================================================= -->
+      <section class="panel" id="content" role="tabpanel" aria-labelledby="tab-content" tabindex="-1">
+        <div class="panel-head">
+          <h2>เนื้อหาแยกตามหัวข้อในสไลด์</h2>
+          <div class="panel-actions">
+            <button class="btn btn--ghost btn--sm" type="button" data-acc-all="open">เปิดทั้งหมด</button>
+            <button class="btn btn--ghost btn--sm" type="button" data-acc-all="close">ปิดทั้งหมด</button>
+          </div>
+        </div>
+
+        <div class="acc">
+
+<!-- ================= 01 Requirements analysis และ modeling ================= -->
+          <div class="acc-item is-open">
+            <h3 class="acc-heading">
+              <button class="acc-trigger" type="button" aria-expanded="true" aria-controls="acc-uc-analysis" id="acc-uc-analysis-btn">
+                <span class="acc-index">01</span>
+                <span class="acc-title">
+                  <span class="acc-name">Requirements Analysis · 5 แนวทาง Modeling · Scenario-based Modeling</span>
+                  <span class="acc-file">L4 Use case modeling · slide 4–11</span>
+                </span>
+                <svg class="acc-chevron" viewBox="0 0 20 20" aria-hidden="true"><path d="M5 7.5l5 5 5-5" /></svg>
+              </button>
+            </h3>
+            <div class="acc-panel" id="acc-uc-analysis" role="region" aria-labelledby="acc-uc-analysis-btn">
+              <div class="acc-panel-inner">
+                <div class="acc-body">
+
+                  <nav class="toc" aria-label="หัวข้อในการ์ด requirements analysis">
+                    <a href="#uc-bridge">A Bridge</a>
+                    <a href="#uc-analysis">Requirements analysis</a>
+                    <a href="#uc-approaches">5 แนวทาง modeling</a>
+                    <a href="#uc-scenario">Scenario-based models</a>
+                    <a href="#uc-steps">5 ขั้นตอน analysis &amp; modeling</a>
+                  </nav>
+
+                  <section class="topic" id="uc-bridge">
+                    <h4>Requirements Analysis คือสะพานเชื่อม</h4>
+                    <figure class="diagram">
+                      <div class="diagram-scroll">
+                        <svg viewBox="0 0 720 120" role="img" aria-labelledby="uc-bridge-t uc-bridge-d">
+                          <title id="uc-bridge-t">Requirements analysis เป็นสะพาน</title>
+                          <desc id="uc-bridge-d">Requirements specification ไปสู่ Analysis model แล้วไปสู่ Design model</desc>
+                          <rect class="dg-box" x="20" y="30" width="190" height="56" rx="10" />
+                          <text class="dg-text" x="115" y="63" text-anchor="middle">Requirements specification</text>
+                          <rect class="dg-box dg-box--accent" x="265" y="30" width="190" height="56" rx="10" />
+                          <text class="dg-text" x="360" y="63" text-anchor="middle">Analysis model</text>
+                          <rect class="dg-box" x="510" y="30" width="190" height="56" rx="10" />
+                          <text class="dg-text" x="605" y="63" text-anchor="middle">Design model</text>
+                          <line class="dg-line dg-line--accent" x1="212" y1="58" x2="260" y2="58" marker-end="url(#arr)" />
+                          <line class="dg-line dg-line--accent" x1="457" y1="58" x2="505" y2="58" marker-end="url(#arr)" />
+                        </svg>
+                      </div>
+                      <figcaption>สไลด์ 4-4 A Bridge</figcaption>
+                    </figure>
+                  </section>
+
+                  <section class="topic" id="uc-analysis">
+                    <h4>Requirements Analysis ทำอะไร</h4>
+                    <ul class="tight">
+                      <li>ระบุ<strong>คุณลักษณะการทำงาน</strong>ของซอฟต์แวร์ (operational characteristics)</li>
+                      <li>ขยายความ requirement พื้นฐานที่ได้จาก elicitation</li>
+                      <li>ระบุ <strong>interface</strong> ของซอฟต์แวร์กับส่วนอื่นของระบบ</li>
+                      <li>สร้าง <strong>model</strong> ที่แสดง user scenarios, functional activities, ความสัมพันธ์ของคลาส และ data flow</li>
+                      <li>กำหนด<strong>ข้อจำกัด</strong>ที่ซอฟต์แวร์ต้องทำตาม</li>
+                      <li>มักทำโดย <strong>Business Analyst (BA)</strong></li>
+                    </ul>
+                    <p><strong>วัตถุประสงค์:</strong></p>
+                    <ol class="steps">
+                      <li>อธิบายสิ่งที่ลูกค้าต้องการ</li>
+                      <li>วางรากฐานสำหรับการออกแบบซอฟต์แวร์</li>
+                      <li>กำหนดชุด requirement ที่ตรวจสอบ (validate) ได้เมื่อสร้างซอฟต์แวร์เสร็จ</li>
+                    </ol>
+                  </section>
+
+                  <section class="topic" id="uc-approaches">
+                    <h4>5 แนวทาง Requirements Modeling</h4>
+                    <div class="table-scroll">
+                      <table>
+                        <thead><tr><th>Model</th><th>แสดงอะไร</th></tr></thead>
+                        <tbody>
+                          <tr><td><strong>Scenario-based models</strong></td><td>requirement จาก<strong>มุมมองผู้ใช้ (actors)</strong> — บทนี้</td></tr>
+                          <tr><td><strong>Class models</strong></td><td>คลาสเชิงวัตถุ attribute operation และความสัมพันธ์</td></tr>
+                          <tr><td><strong>Flow models</strong></td><td>การเคลื่อนที่ของข้อมูล และการแปลงข้อมูลระหว่าง process — บทที่ 5</td></tr>
+                          <tr><td><strong>Behavioral models</strong></td><td>ซอฟต์แวร์มีพฤติกรรมตอบสนองต่อ event อย่างไร</td></tr>
+                          <tr><td><strong>Data models</strong></td><td>โดเมนข้อมูลของปัญหา เช่น ER diagram</td></tr>
+                        </tbody>
+                      </table>
+                    </div>
+                  </section>
+
+                  <section class="topic" id="uc-scenario">
+                    <h4>Scenario-based Models</h4>
+                    <ul class="tight">
+                      <li>อธิบายว่า <strong>actor จะปฏิสัมพันธ์กับระบบอย่างไรในสถานการณ์เฉพาะ</strong></li>
+                      <li>เน้น <strong>functional requirement จากมุมมองของ actor</strong></li>
+                      <li>ใช้ validate requirement กับ stakeholder ได้ดี</li>
+                      <li>เทคนิคที่ใช้บ่อย → <strong>Use case modelling</strong></li>
+                    </ul>
+                    <p class="quote">"Use-cases are simply an aid to defining what exists outside the system (<strong>actors</strong>) and what should be performed by the system (<strong>use cases</strong>)." — Ivar Jacobson</p>
+                    <p><strong>จะเขียนอะไร:</strong> การประชุมเก็บ requirement และกลไก RE อื่นๆ ใช้เพื่อระบุ stakeholder, กำหนด scope ของปัญหา, ระบุเป้าหมายการทำงานโดยรวม, จัดลำดับความสำคัญ, ร่าง functional requirement ที่รู้ทั้งหมด และอธิบายสิ่งของ (objects) ที่ระบบจัดการ — <strong>เริ่มสร้าง use case ด้วยการลิสต์ function หรือ activity ที่ actor แต่ละตัวทำ</strong></p>
+                  </section>
+
+                  <section class="topic" id="uc-steps">
+                    <h4>5 ขั้นตอน Requirements Analysis and Modeling</h4>
+                    <ol class="steps">
+                      <li>วิเคราะห์ functional requirement เพื่อ<strong>เข้าใจโครงสร้างของ problem domain</strong></li>
+                      <li><strong>แตกโครงสร้างเป็นส่วนย่อย</strong> เพื่อเข้าใจธรรมชาติ ความสัมพันธ์ และหน้าที่ของแต่ละส่วน</li>
+                      <li>ระบุ<strong>พฤติกรรมและ functional requirement จากมุมมองของ stakeholder</strong></li>
+                      <li><strong>เขียน พัฒนา และปรับปรุง use case diagram และ narrative</strong></li>
+                      <li><strong>ยืนยัน</strong>ว่า requirement model ตอบความต้องการของ stakeholder ทุกฝ่าย</li>
+                    </ol>
+                  </section>
+
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- ================= 02 แนวคิดและสัญลักษณ์ ================= -->
+          <div class="acc-item">
+            <h3 class="acc-heading">
+              <button class="acc-trigger" type="button" aria-expanded="false" aria-controls="acc-uc-symbols" id="acc-uc-symbols-btn">
+                <span class="acc-index">02</span>
+                <span class="acc-title">
+                  <span class="acc-name">แนวคิดหลัก · สัญลักษณ์พื้นฐาน · องค์ประกอบ 3 อย่าง</span>
+                  <span class="acc-file">L4 Use case modeling · slide 12–14</span>
+                </span>
+                <svg class="acc-chevron" viewBox="0 0 20 20" aria-hidden="true"><path d="M5 7.5l5 5 5-5" /></svg>
+              </button>
+            </h3>
+            <div class="acc-panel" id="acc-uc-symbols" role="region" aria-labelledby="acc-uc-symbols-btn">
+              <div class="acc-panel-inner">
+                <div class="acc-body">
+
+                  <nav class="toc" aria-label="หัวข้อในการ์ดสัญลักษณ์ use case">
+                    <a href="#uc-concepts">3 แนวคิดหลัก</a>
+                    <a href="#uc-symbols">สัญลักษณ์พื้นฐาน</a>
+                    <a href="#uc-components">โครงสร้างไดอะแกรม</a>
+                  </nav>
+
+                  <section class="topic" id="uc-concepts">
+                    <h4>System Concepts for Use Case Modeling</h4>
+                    <dl class="defs defs--stack">
+                      <div><dt>Use case</dt><dd>ลำดับขั้นตอน (scenario) ที่<strong>สัมพันธ์กันเชิงพฤติกรรม ทั้งแบบอัตโนมัติและ manual</strong> เพื่อทำ<strong>งานทางธุรกิจหนึ่งงาน</strong>ให้สำเร็จ — อธิบายฟังก์ชันของระบบจากมุมมองผู้ใช้ภายนอก ด้วยคำศัพท์ที่เขาเข้าใจ</dd></div>
+                      <div><dt>Use case diagram</dt><dd>ไดอะแกรมที่แสดง<strong>ปฏิสัมพันธ์ระหว่างระบบกับระบบภายนอกและผู้ใช้</strong> — บอกด้วยภาพว่า<strong>ใครจะใช้ระบบ และใช้อย่างไร</strong></dd></div>
+                      <div><dt>Use case narrative</dt><dd><strong>คำอธิบายเชิงข้อความ</strong>ของเหตุการณ์ทางธุรกิจ และวิธีที่ผู้ใช้ปฏิสัมพันธ์กับระบบเพื่อทำงานนั้นให้สำเร็จ</dd></div>
+                    </dl>
+                  </section>
+
+                  <section class="topic" id="uc-symbols">
+                    <h4>Basic Use Case Symbols</h4>
+                    <figure class="diagram">
+                      <div class="diagram-scroll">
+                        <svg viewBox="0 0 720 200" role="img" aria-labelledby="uc-sym-t uc-sym-d">
+                          <title id="uc-sym-t">สัญลักษณ์พื้นฐานของ use case diagram</title>
+                          <desc id="uc-sym-d">ซ้าย: use case เป็นวงรีชื่อขึ้นต้นด้วยกริยา เช่น Book a ticket และ View product กลาง: actor เป็นรูปคนแท่ง ขวา: system boundary เป็นกล่องกำกับชื่อระบบ เช่น Library Management System</desc>
+                          <text class="dg-mono dg-mono--sm" x="120" y="24" text-anchor="middle">Use case</text>
+                          <ellipse class="dg-box dg-box--accent" cx="120" cy="70" rx="90" ry="26" />
+                          <text class="dg-text" x="120" y="75" text-anchor="middle">Book a ticket</text>
+                          <ellipse class="dg-box dg-box--accent" cx="120" cy="140" rx="90" ry="26" />
+                          <text class="dg-text" x="120" y="145" text-anchor="middle">View product</text>
+                          <text class="dg-text dg-text--sm" x="120" y="190" text-anchor="middle">วงรี · ขึ้นต้นด้วย verb</text>
+                          <text class="dg-mono dg-mono--sm" x="340" y="24" text-anchor="middle">Actor</text>
+                          <circle class="dg-box" cx="340" cy="62" r="12" />
+                          <path class="dg-line" d="M340 74 V118 M318 90 H362 M340 118 L322 148 M340 118 L358 148" />
+                          <text class="dg-text" x="340" y="170" text-anchor="middle">actor</text>
+                          <text class="dg-text dg-text--sm" x="340" y="190" text-anchor="middle">stickman · กำกับชื่อ actor</text>
+                          <text class="dg-mono dg-mono--sm" x="580" y="24" text-anchor="middle">System boundary</text>
+                          <rect class="dg-box" x="460" y="40" width="240" height="126" rx="4" />
+                          <text class="dg-text" x="580" y="64" text-anchor="middle">Library Management System</text>
+                          <text class="dg-text dg-text--sm" x="580" y="190" text-anchor="middle">กล่อง · กำกับชื่อระบบ</text>
+                        </svg>
+                      </div>
+                      <figcaption>สไลด์ 4-13 Basic Use Case Symbols</figcaption>
+                    </figure>
+                  </section>
+
+                  <section class="topic" id="uc-components">
+                    <h4>Three Components — วางตำแหน่งอย่างไร</h4>
+                    <figure class="diagram">
+                      <div class="diagram-scroll">
+                        <svg viewBox="0 0 720 260" role="img" aria-labelledby="uc-comp-t uc-comp-d">
+                          <title id="uc-comp-t">โครงสร้างของ use case diagram</title>
+                          <desc id="uc-comp-d">Actor อยู่นอกกล่อง System Name ภายในกล่องมี Use case 1, 2, 3 และมีเส้น association จาก actor ไปยัง use case ทั้งสาม</desc>
+                          <circle class="dg-box" cx="90" cy="100" r="12" />
+                          <path class="dg-line" d="M90 112 V156 M68 128 H112 M90 156 L72 186 M90 156 L108 186" />
+                          <text class="dg-text" x="90" y="210" text-anchor="middle">Actor</text>
+                          <rect class="dg-box" x="250" y="16" width="440" height="228" rx="4" />
+                          <text class="dg-text" x="470" y="42" text-anchor="middle">System Name</text>
+                          <ellipse class="dg-box dg-box--accent" cx="470" cy="84" rx="90" ry="24" />
+                          <text class="dg-text" x="470" y="89" text-anchor="middle">Use case 1</text>
+                          <ellipse class="dg-box dg-box--accent" cx="470" cy="148" rx="90" ry="24" />
+                          <text class="dg-text" x="470" y="153" text-anchor="middle">Use case 2</text>
+                          <ellipse class="dg-box dg-box--accent" cx="470" cy="210" rx="90" ry="24" />
+                          <text class="dg-text" x="470" y="215" text-anchor="middle">Use case 3</text>
+                          <line class="dg-line" x1="116" y1="130" x2="380" y2="88" />
+                          <line class="dg-line" x1="116" y1="140" x2="380" y2="148" />
+                          <line class="dg-line" x1="116" y1="150" x2="380" y2="206" />
+                          <text class="dg-text dg-text--sm" x="220" y="96" text-anchor="middle">association</text>
+                        </svg>
+                      </div>
+                      <figcaption>สไลด์ 4-14 และ 4-17 — actor นอกกล่อง, use case ในกล่อง, เส้นแสดงความสัมพันธ์</figcaption>
+                    </figure>
+                    <ul class="checklist">
+                      <li><strong>Actor อยู่นอก</strong> system boundary</li>
+                      <li><strong>Use case อยู่ใน</strong> system boundary</li>
+                      <li><strong>เส้นเชื่อม</strong>แสดงความสัมพันธ์</li>
+                    </ul>
+                  </section>
+
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- ================= 03 ความสัมพันธ์ ================= -->
+          <div class="acc-item">
+            <h3 class="acc-heading">
+              <button class="acc-trigger" type="button" aria-expanded="false" aria-controls="acc-uc-relations" id="acc-uc-relations-btn">
+                <span class="acc-index">03</span>
+                <span class="acc-title">
+                  <span class="acc-name">ความสัมพันธ์: Association · Inheritance · Includes · Extends</span>
+                  <span class="acc-file">L4 Use case modeling · slide 15–20</span>
+                </span>
+                <svg class="acc-chevron" viewBox="0 0 20 20" aria-hidden="true"><path d="M5 7.5l5 5 5-5" /></svg>
+              </button>
+            </h3>
+            <div class="acc-panel" id="acc-uc-relations" role="region" aria-labelledby="acc-uc-relations-btn">
+              <div class="acc-panel-inner">
+                <div class="acc-body">
+
+                  <nav class="toc" aria-label="หัวข้อในการ์ดความสัมพันธ์">
+                    <a href="#uc-rel-overview">ภาพรวม 4 ความสัมพันธ์</a>
+                    <a href="#uc-inheritance">Inheritance</a>
+                    <a href="#uc-includes">Includes</a>
+                    <a href="#uc-extends">Extends</a>
+                  </nav>
+
+                  <section class="topic" id="uc-rel-overview">
+                    <h4>Use Case Relationships</h4>
+                    <div class="table-scroll">
+                      <table>
+                        <thead><tr><th>ระดับ</th><th>ความสัมพันธ์</th><th>ระหว่าง</th><th>ความหมาย</th></tr></thead>
+                        <tbody>
+                          <tr><td>High-level</td><td><strong>Association</strong></td><td>actor ↔ use case</td><td>ปฏิสัมพันธ์ระหว่าง actor กับ use case</td></tr>
+                          <tr><td>Detailed</td><td><strong>Inheritance</strong></td><td>actor ↔ actor</td><td>ย้ายพฤติกรรมร่วมของหลาย actor ไปไว้ที่ <strong>abstract actor</strong> ร่วมกัน เพื่อลดความซ้ำซ้อน</td></tr>
+                          <tr><td>Detailed</td><td><strong>Includes</strong></td><td>use case → use case</td><td>ลดความซับซ้อนของ use case ใหญ่ โดย<strong>แยกพฤติกรรมร่วม</strong>ออกมา</td></tr>
+                          <tr><td>Detailed</td><td><strong>Extends</strong></td><td>use case → use case</td><td>ให้<strong>พฤติกรรมเสริมที่เป็นทางเลือก</strong>จาก base use case</td></tr>
+                        </tbody>
+                      </table>
+                    </div>
+                  </section>
+
+                  <section class="topic" id="uc-inheritance">
+                    <h4>Inheritance (ระหว่าง actor)</h4>
+                    <p>เมื่อ actor หลายตัวมีพฤติกรรมร่วมกัน ให้<strong>ย้ายพฤติกรรมร่วมไปไว้ที่ abstract actor</strong> แล้วให้ actor เดิมสืบทอด เพื่อไม่ต้องลากเส้นซ้ำ</p>
+                    <figure class="diagram">
+                      <div class="diagram-scroll">
+                        <svg viewBox="0 0 720 270" role="img" aria-labelledby="uc-inh-t uc-inh-d">
+                          <title id="uc-inh-t">Inheritance ระหว่าง actor แบบก่อนและหลัง</title>
+                          <desc id="uc-inh-d">ก่อน: Actor A และ Actor B ต่างลากเส้นไปยัง Use case X และ Use case Y ซ้ำกัน หลัง: Actor A และ Actor B มีลูกศรหัวสามเหลี่ยมโปร่งชี้ไปที่ Abstract actor ซึ่งเชื่อมกับ Use case X และ Y เพียงชุดเดียว</desc>
+                          <defs>
+                            <marker id="uc-hollow" viewBox="0 0 12 12" refX="11" refY="6" markerWidth="11" markerHeight="11" orient="auto-start-reverse"><path class="dg-box" d="M1 1L11 6L1 11z" /></marker>
+                          </defs>
+                          <text class="dg-mono" x="170" y="22" text-anchor="middle">Before</text>
+                          <circle class="dg-box" cx="50" cy="60" r="10" /><path class="dg-line" d="M50 70 V100 M34 82 H66 M50 100 L38 122 M50 100 L62 122" /><text class="dg-text dg-text--sm" x="50" y="140" text-anchor="middle">Actor A</text>
+                          <circle class="dg-box" cx="50" cy="170" r="10" /><path class="dg-line" d="M50 180 V210 M34 192 H66 M50 210 L38 232 M50 210 L62 232" /><text class="dg-text dg-text--sm" x="50" y="256" text-anchor="middle">Actor B</text>
+                          <ellipse class="dg-box dg-box--accent" cx="240" cy="90" rx="75" ry="22" /><text class="dg-text" x="240" y="95" text-anchor="middle">Use case X</text>
+                          <ellipse class="dg-box dg-box--accent" cx="240" cy="170" rx="75" ry="22" /><text class="dg-text" x="240" y="175" text-anchor="middle">Use case Y</text>
+                          <line class="dg-line" x1="68" y1="82" x2="165" y2="90" /><line class="dg-line" x1="68" y1="86" x2="170" y2="164" />
+                          <line class="dg-line" x1="68" y1="190" x2="170" y2="100" /><line class="dg-line" x1="68" y1="194" x2="165" y2="172" />
+                          <line class="dg-line dg-line--dash" x1="360" y1="20" x2="360" y2="260" />
+                          <text class="dg-mono" x="545" y="22" text-anchor="middle">After</text>
+                          <circle class="dg-box" cx="410" cy="60" r="10" /><path class="dg-line" d="M410 70 V100 M394 82 H426 M410 100 L398 122 M410 100 L422 122" /><text class="dg-text dg-text--sm" x="410" y="140" text-anchor="middle">Actor A</text>
+                          <circle class="dg-box" cx="410" cy="170" r="10" /><path class="dg-line" d="M410 180 V210 M394 192 H426 M410 210 L398 232 M410 210 L422 232" /><text class="dg-text dg-text--sm" x="410" y="256" text-anchor="middle">Actor B</text>
+                          <circle class="dg-box dg-box--warn" cx="520" cy="112" r="10" /><path class="dg-line dg-line--warn" d="M520 122 V152 M504 134 H536 M520 152 L508 174 M520 152 L532 174" /><text class="dg-text dg-text--sm" x="520" y="194" text-anchor="middle">Abstract actor</text>
+                          <line class="dg-line" x1="428" y1="84" x2="500" y2="124" marker-end="url(#uc-hollow)" />
+                          <line class="dg-line" x1="428" y1="190" x2="500" y2="146" marker-end="url(#uc-hollow)" />
+                          <ellipse class="dg-box dg-box--accent" cx="640" cy="90" rx="66" ry="22" /><text class="dg-text" x="640" y="95" text-anchor="middle">Use case X</text>
+                          <ellipse class="dg-box dg-box--accent" cx="640" cy="170" rx="66" ry="22" /><text class="dg-text" x="640" y="175" text-anchor="middle">Use case Y</text>
+                          <line class="dg-line" x1="538" y1="130" x2="574" y2="96" /><line class="dg-line" x1="538" y1="138" x2="574" y2="166" />
+                        </svg>
+                      </div>
+                      <figcaption>แผนภาพแนวคิดตามสไลด์ 4-18 "Before / After" — ชื่อ actor และ use case เป็นชื่อสมมติ (X, Y) เพื่อแสดงรูปแบบเท่านั้น</figcaption>
+                    </figure>
+                  </section>
+
+                  <section class="topic" id="uc-includes">
+                    <h4>Includes (ระหว่าง use case)</h4>
+                    <p>ใช้<strong>ลดความซับซ้อนของ use case ขนาดใหญ่ด้วยการแยกพฤติกรรมร่วม</strong>ออกมา · วาดเป็น<strong>ลูกศรจาก use case ต้นทาง ชี้ไปยัง use case ที่ถูกใช้</strong> กำกับ <code>&lt;&lt;includes&gt;&gt;</code></p>
+                    <figure class="diagram">
+                      <div class="diagram-scroll">
+                        <svg viewBox="0 0 720 260" role="img" aria-labelledby="uc-inc-t uc-inc-d">
+                          <title id="uc-inc-t">ตัวอย่างความสัมพันธ์ includes จากสไลด์</title>
+                          <desc id="uc-inc-d">ซ้าย: Checkout มีลูกศรประกำกับ includes ชี้ไปที่ Scan Item, Calculate Total and Tax และ Payment ขวา: Deposit Funds และ Withdraw Cash มีลูกศรประกำกับ includes ชี้ไปที่ Customer Authentication</desc>
+                          <ellipse class="dg-box dg-box--accent" cx="90" cy="130" rx="70" ry="24" />
+                          <text class="dg-text" x="90" y="135" text-anchor="middle">Checkout</text>
+                          <ellipse class="dg-box" cx="310" cy="46" rx="80" ry="22" /><text class="dg-text dg-text--sm" x="310" y="51" text-anchor="middle">Scan Item</text>
+                          <ellipse class="dg-box" cx="310" cy="130" rx="92" ry="22" /><text class="dg-text dg-text--sm" x="310" y="135" text-anchor="middle">Calculate Total and Tax</text>
+                          <ellipse class="dg-box" cx="310" cy="214" rx="80" ry="22" /><text class="dg-text dg-text--sm" x="310" y="219" text-anchor="middle">Payment</text>
+                          <line class="dg-line dg-line--dash" x1="146" y1="116" x2="232" y2="56" marker-end="url(#arr-muted)" />
+                          <line class="dg-line dg-line--dash" x1="162" y1="130" x2="214" y2="130" marker-end="url(#arr-muted)" />
+                          <line class="dg-line dg-line--dash" x1="146" y1="144" x2="232" y2="204" marker-end="url(#arr-muted)" />
+                          <text class="dg-mono dg-mono--sm" x="170" y="76" text-anchor="middle">&lt;&lt;includes&gt;&gt;</text>
+                          <text class="dg-mono dg-mono--sm" x="170" y="196" text-anchor="middle">&lt;&lt;includes&gt;&gt;</text>
+                          <line class="dg-line dg-line--dash" x1="415" y1="10" x2="415" y2="250" />
+                          <ellipse class="dg-box dg-box--accent" cx="530" cy="56" rx="72" ry="22" /><text class="dg-text" x="530" y="61" text-anchor="middle">Deposit Funds</text>
+                          <ellipse class="dg-box dg-box--accent" cx="530" cy="204" rx="72" ry="22" /><text class="dg-text" x="530" y="209" text-anchor="middle">Withdraw Cash</text>
+                          <ellipse class="dg-box" cx="630" cy="130" rx="84" ry="24" /><text class="dg-text dg-text--sm" x="630" y="135" text-anchor="middle">Customer Authentication</text>
+                          <line class="dg-line dg-line--dash" x1="560" y1="77" x2="600" y2="105" marker-end="url(#arr-muted)" />
+                          <line class="dg-line dg-line--dash" x1="560" y1="183" x2="600" y2="155" marker-end="url(#arr-muted)" />
+                          <text class="dg-mono dg-mono--sm" x="482" y="134" text-anchor="middle">&lt;&lt;includes&gt;&gt;</text>
+                        </svg>
+                      </div>
+                      <figcaption>ตัวอย่างในสไลด์ 4-19: Checkout includes Scan Item, Calculate Total and Tax, Payment · Deposit Funds และ Withdraw Cash include Customer Authentication</figcaption>
+                    </figure>
+                  </section>
+
+                  <section class="topic" id="uc-extends">
+                    <h4>Extends (ระหว่าง use case)</h4>
+                    <p>ให้<strong>พฤติกรรมเสริมที่เป็นทางเลือก (optional)</strong> จาก base use case ที่<strong>สมบูรณ์ในตัวเองอยู่แล้ว</strong> · วาดเป็น<strong>ลูกศรจาก use case ที่ขยาย ชี้ไปยัง base use case</strong> กำกับ <code>&lt;&lt;extends&gt;&gt;</code></p>
+                    <figure class="diagram">
+                      <div class="diagram-scroll">
+                        <svg viewBox="0 0 720 120" role="img" aria-labelledby="uc-ext-t uc-ext-d">
+                          <title id="uc-ext-t">ตัวอย่างความสัมพันธ์ extends จากสไลด์</title>
+                          <desc id="uc-ext-d">Get Help On Registration มีลูกศรประกำกับ extends ชี้ไปที่ Registration ซึ่งเป็น base use case</desc>
+                          <ellipse class="dg-box" cx="170" cy="60" rx="140" ry="28" />
+                          <text class="dg-text" x="170" y="65" text-anchor="middle">Get Help On Registration</text>
+                          <ellipse class="dg-box dg-box--accent" cx="580" cy="60" rx="110" ry="28" />
+                          <text class="dg-text" x="580" y="65" text-anchor="middle">Registration</text>
+                          <line class="dg-line dg-line--dash" x1="312" y1="60" x2="464" y2="60" marker-end="url(#arr-muted)" />
+                          <text class="dg-mono dg-mono--sm" x="388" y="48" text-anchor="middle">&lt;&lt;extends&gt;&gt;</text>
+                          <text class="dg-text dg-text--sm" x="580" y="108" text-anchor="middle">base use case (สมบูรณ์ในตัวเอง)</text>
+                          <text class="dg-text dg-text--sm" x="170" y="108" text-anchor="middle">พฤติกรรมเสริม (ทางเลือก)</text>
+                        </svg>
+                      </div>
+                      <figcaption>ตัวอย่างในสไลด์ 4-20: Registration complete and meaningful on its own — could be extended with optional Get Help On Registration</figcaption>
+                    </figure>
+                    <div class="callout callout--warn">
+                      <span class="callout-label">ทิศลูกศร includes vs extends</span>
+                      <p><b>Includes:</b> ลูกศรออกจาก use case <b>ต้นทาง (ใหญ่)</b> → ชี้ไปที่ use case <b>ที่ถูกใช้ (พฤติกรรมร่วม)</b> · <b>Extends:</b> ลูกศรออกจาก use case <b>ที่ขยาย (ทางเลือก)</b> → ชี้ไปที่ <b>base use case</b> — ทั้งคู่ใช้เส้นประและกำกับ stereotype</p>
+                    </div>
+                  </section>
+
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- ================= 04 ขั้นตอนพัฒนา และ narrative ================= -->
+          <div class="acc-item">
+            <h3 class="acc-heading">
+              <button class="acc-trigger" type="button" aria-expanded="false" aria-controls="acc-uc-develop" id="acc-uc-develop-btn">
+                <span class="acc-index">04</span>
+                <span class="acc-title">
+                  <span class="acc-name">6 ขั้นตอนพัฒนา Use Case · 8 องค์ประกอบของ Use Case Narrative</span>
+                  <span class="acc-file">L4 Use case modeling · slide 21–24</span>
+                </span>
+                <svg class="acc-chevron" viewBox="0 0 20 20" aria-hidden="true"><path d="M5 7.5l5 5 5-5" /></svg>
+              </button>
+            </h3>
+            <div class="acc-panel" id="acc-uc-develop" role="region" aria-labelledby="acc-uc-develop-btn">
+              <div class="acc-panel-inner">
+                <div class="acc-body">
+
+                  <nav class="toc" aria-label="หัวข้อในการ์ดขั้นตอนพัฒนา use case">
+                    <a href="#uc-six-steps">6 ขั้นตอน</a>
+                    <a href="#uc-narrative">Use case narrative</a>
+                    <a href="#uc-example">ตัวอย่างประกอบ: ระบบห้องสมุด</a>
+                  </nav>
+
+                  <section class="topic" id="uc-six-steps">
+                    <h4>Developing a Use Case — 6 ขั้นตอน</h4>
+                    <ol class="steps">
+                      <li><strong>Identify the system boundary</strong> — กำหนดว่ากำลัง model ระบบใด แล้ววาดกล่องแทน scope ของระบบ</li>
+                      <li><strong>Identify the actors</strong> — ใครจะปฏิสัมพันธ์กับระบบ แบ่งเป็น <strong>primary</strong> (ใช้ระบบตรงเพื่อบรรลุเป้าหมาย เช่น customer) และ <strong>secondary</strong> (บทบาทสนับสนุน เช่น payment service)</li>
+                      <li><strong>Identify use cases</strong> — ลิสต์งาน/เป้าหมายหลักที่ actor ต้องการ ควรสะท้อน functional requirement (เช่น "Book Ticket", "Generate Report")</li>
+                      <li><strong>Establish relationships between actors and use cases</strong> — เชื่อม actor กับ use case ที่เขาเริ่มหรือมีส่วนร่วม และพิจารณาประเภทความสัมพันธ์</li>
+                      <li><strong>Draw a use case diagram</strong> — actor นอกกล่อง use case ในกล่อง แสดง association และความสัมพันธ์ให้ชัด</li>
+                      <li><strong>Review and refine</strong> — ตรวจว่าครอบคลุม functional requirement ทั้งหมด และ validate กับ stakeholder ว่าครบถ้วนถูกต้อง</li>
+                    </ol>
+                  </section>
+
+                  <section class="topic" id="uc-narrative">
+                    <h4>Use Case Narrative</h4>
+                    <p><strong>คำอธิบายเชิงข้อความแบบละเอียด</strong>ว่าระบบปฏิสัมพันธ์กับ external entities (actors) อย่างไรเพื่อบรรลุเป้าหมายหนึ่ง — ให้คำอธิบายทีละขั้น และ<strong>มักเขียนในรูปแบบตาราง</strong></p>
+                    <div class="table-scroll">
+                      <table>
+                        <thead><tr><th>#</th><th>องค์ประกอบ</th><th>ความหมาย</th></tr></thead>
+                        <tbody>
+                          <tr><td>1</td><td><strong>Use Case Name</strong></td><td>ชื่อชัดเจน อธิบายได้ — <strong>ต้องตรงกับชื่อใน use case diagram</strong></td></tr>
+                          <tr><td>2</td><td><strong>Primary Actor</strong></td><td>ผู้ใช้หรือระบบที่ปฏิสัมพันธ์กับ use case</td></tr>
+                          <tr><td>3</td><td><strong>Goal in Context</strong></td><td>วัตถุประสงค์ของ use case</td></tr>
+                          <tr><td>4</td><td><strong>Precondition</strong></td><td>เงื่อนไขที่ต้องเป็นจริง<strong>ก่อน</strong> use case เริ่ม</td></tr>
+                          <tr><td>5</td><td><strong>Trigger</strong></td><td><strong>เหตุการณ์</strong>ที่ทำให้ use case เริ่ม</td></tr>
+                          <tr><td>6</td><td><strong>Scenario</strong></td><td>ลำดับปฏิสัมพันธ์ปกติระหว่าง actor กับระบบ — เรียกอีกชื่อว่า <strong>"main flow" หรือ "basic flow"</strong></td></tr>
+                          <tr><td>7</td><td><strong>Exception</strong></td><td>สิ่งที่เกิดขึ้นเมื่อมีบางอย่างผิดพลาด เช่น error หรือ input ไม่ถูกต้อง</td></tr>
+                          <tr><td>8</td><td><strong>Postcondition</strong></td><td>สถานะของระบบ<strong>หลัง</strong> use case เสร็จ</td></tr>
+                        </tbody>
+                      </table>
+                    </div>
+                    <div class="callout callout--warn">
+                      <span class="callout-label">3 ตัวที่มักสับสน</span>
+                      <p><b>Precondition</b> = สถานะที่ต้องจริงก่อนเริ่ม (เช่น login แล้ว) · <b>Trigger</b> = เหตุการณ์ที่จุดให้เริ่ม (เช่น ผู้ใช้กดปุ่ม) · <b>Postcondition</b> = สถานะหลังจบ</p>
+                    </div>
+                  </section>
+
+                  <section class="topic" id="uc-example">
+                    <h4>ตัวอย่างประกอบ: ระบบยืม-คืนหนังสือห้องสมุด</h4>
+                    <div class="callout callout--def">
+                      <span class="callout-label">อ่านก่อน — ตัวอย่างนี้สร้างขึ้นเพื่ออธิบาย</span>
+                      <p>ไดอะแกรมและ narrative ด้านล่าง<b>ไม่ได้มาจากสไลด์</b> และ<b>ไม่ใช่เฉลยของแบบฝึกหัด Zoo Ticketing System</b> — เป็นระบบสมมติขนาดเล็กเพื่อให้เห็นว่าสัญลักษณ์ ความสัมพันธ์ และ 8 องค์ประกอบของ narrative ประกอบกันอย่างไร</p>
+                    </div>
+                    <figure class="diagram">
+                      <div class="diagram-scroll">
+                        <svg viewBox="0 0 720 300" role="img" aria-labelledby="uc-lib-t uc-lib-d">
+                          <title id="uc-lib-t">ตัวอย่างประกอบ use case diagram ระบบยืม-คืนหนังสือ</title>
+                          <desc id="uc-lib-d">Actor สมาชิกเชื่อมกับ Search Book ส่วน actor บรรณารักษ์เชื่อมกับ Borrow Book และ Return Book ทั้งหมดอยู่ในกล่อง Library Borrowing System Borrow Book includes Verify Member และ Pay Fine extends Return Book</desc>
+                          <circle class="dg-box" cx="60" cy="70" r="11" /><path class="dg-line" d="M60 81 V115 M42 95 H78 M60 115 L46 140 M60 115 L74 140" /><text class="dg-text" x="60" y="162" text-anchor="middle">สมาชิก</text>
+                          <circle class="dg-box" cx="60" cy="196" r="11" /><path class="dg-line" d="M60 207 V241 M42 221 H78 M60 241 L46 266 M60 241 L74 266" /><text class="dg-text" x="60" y="288" text-anchor="middle">บรรณารักษ์</text>
+                          <rect class="dg-box" x="150" y="14" width="556" height="276" rx="4" />
+                          <text class="dg-text" x="428" y="40" text-anchor="middle">Library Borrowing System (ตัวอย่างประกอบ)</text>
+                          <ellipse class="dg-box dg-box--accent" cx="290" cy="84" rx="80" ry="22" /><text class="dg-text" x="290" y="89" text-anchor="middle">Search Book</text>
+                          <ellipse class="dg-box dg-box--accent" cx="290" cy="170" rx="80" ry="22" /><text class="dg-text" x="290" y="175" text-anchor="middle">Borrow Book</text>
+                          <ellipse class="dg-box dg-box--accent" cx="290" cy="250" rx="80" ry="22" /><text class="dg-text" x="290" y="255" text-anchor="middle">Return Book</text>
+                          <ellipse class="dg-box" cx="590" cy="170" rx="80" ry="22" /><text class="dg-text" x="590" y="175" text-anchor="middle">Verify Member</text>
+                          <ellipse class="dg-box" cx="590" cy="250" rx="80" ry="22" /><text class="dg-text" x="590" y="255" text-anchor="middle">Pay Fine</text>
+                          <line class="dg-line" x1="80" y1="96" x2="210" y2="86" />
+                          <line class="dg-line" x1="80" y1="220" x2="212" y2="176" />
+                          <line class="dg-line" x1="80" y1="228" x2="212" y2="246" />
+                          <line class="dg-line dg-line--dash" x1="372" y1="170" x2="505" y2="170" marker-end="url(#arr-muted)" />
+                          <text class="dg-mono dg-mono--sm" x="440" y="160" text-anchor="middle">&lt;&lt;includes&gt;&gt;</text>
+                          <line class="dg-line dg-line--dash" x1="508" y1="250" x2="374" y2="250" marker-end="url(#arr-muted)" />
+                          <text class="dg-mono dg-mono--sm" x="440" y="240" text-anchor="middle">&lt;&lt;extends&gt;&gt;</text>
+                        </svg>
+                      </div>
+                      <figcaption>ตัวอย่างประกอบที่สร้างขึ้นเพื่ออธิบาย (ไม่ได้มาจากสไลด์): Borrow Book ต้องตรวจสมาชิกทุกครั้ง → includes · Pay Fine เกิดเฉพาะบางกรณีตอนคืน → extends</figcaption>
+                    </figure>
+                    <div class="table-scroll">
+                      <table>
+                        <thead><tr><th>องค์ประกอบ</th><th>Use case narrative: Borrow Book (ตัวอย่างประกอบ)</th></tr></thead>
+                        <tbody>
+                          <tr><td><strong>Use Case Name</strong></td><td>Borrow Book (ชื่อเดียวกับในไดอะแกรม)</td></tr>
+                          <tr><td><strong>Primary Actor</strong></td><td>บรรณารักษ์</td></tr>
+                          <tr><td><strong>Goal in Context</strong></td><td>บันทึกการยืมหนังสือให้สมาชิก และกำหนดวันคืน</td></tr>
+                          <tr><td><strong>Precondition</strong></td><td>บรรณารักษ์เข้าสู่ระบบแล้ว · หนังสือมีสถานะ "ว่าง"</td></tr>
+                          <tr><td><strong>Trigger</strong></td><td>สมาชิกนำหนังสือมาขอยืมที่เคาน์เตอร์</td></tr>
+                          <tr><td><strong>Scenario</strong></td><td>1. บรรณารักษ์สแกนบัตรสมาชิก · 2. ระบบตรวจสอบสมาชิก (Verify Member) · 3. บรรณารักษ์สแกนบาร์โค้ดหนังสือ · 4. ระบบบันทึกการยืมและคำนวณวันคืน · 5. ระบบแสดงวันคืนให้บรรณารักษ์แจ้งสมาชิก</td></tr>
+                          <tr><td><strong>Exception</strong></td><td>2a. บัตรสมาชิกหมดอายุ → ระบบแจ้งเตือนและไม่บันทึกการยืม · 3a. อ่านบาร์โค้ดไม่ได้ → ให้บรรณารักษ์พิมพ์รหัสหนังสือเอง</td></tr>
+                          <tr><td><strong>Postcondition</strong></td><td>หนังสือมีสถานะ "ถูกยืม" และมีรายการยืมผูกกับสมาชิกคนนั้นพร้อมวันคืน</td></tr>
+                        </tbody>
+                      </table>
+                    </div>
+                  </section>
+
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- ================= 05 Zoo Ticketing System ================= -->
+          <div class="acc-item">
+            <h3 class="acc-heading">
+              <button class="acc-trigger" type="button" aria-expanded="false" aria-controls="acc-uc-zoo" id="acc-uc-zoo-btn">
+                <span class="acc-index">05</span>
+                <span class="acc-title">
+                  <span class="acc-name">กรณีศึกษาอ้างอิง: Zoo Ticketing System (บริบทระบบ)</span>
+                  <span class="acc-file">In-class exercise · Use case modeling (Zoo Ticketing System) · 4 หน้า</span>
+                </span>
+                <svg class="acc-chevron" viewBox="0 0 20 20" aria-hidden="true"><path d="M5 7.5l5 5 5-5" /></svg>
+              </button>
+            </h3>
+            <div class="acc-panel" id="acc-uc-zoo" role="region" aria-labelledby="acc-uc-zoo-btn">
+              <div class="acc-panel-inner">
+                <div class="acc-body">
+
+                  <nav class="toc" aria-label="หัวข้อในการ์ด Zoo Ticketing System">
+                    <a href="#uc-zoo-task">โจทย์ในชั้นเรียน</a>
+                    <a href="#uc-zoo-system">คำอธิบายระบบ</a>
+                  </nav>
+
+                  <section class="topic" id="uc-zoo-task">
+                    <h4>โจทย์ในชั้นเรียน</h4>
+                    <div class="callout callout--warn">
+                      <span class="callout-label">ข้อมูลอ้างอิงเท่านั้น — ไม่มีเฉลย</span>
+                      <p>เอกสารต้นฉบับเป็น<b>แบบฝึกหัดเปล่า</b>ให้นักศึกษากรอกเอง และ<b>ไม่มีเฉลยให้อ้างอิง</b> หน้านี้จึงสรุปเฉพาะคำอธิบายระบบ ไม่มี use case diagram หรือ narrative ของระบบนี้ — ใช้ 6 ขั้นตอนและ 8 องค์ประกอบในการ์ดที่ 04 ฝึกทำเอง แล้วตรวจกับผู้สอน</p>
+                    </div>
+                    <p><strong>คำชี้แจงในเอกสาร:</strong></p>
+                    <ol class="steps">
+                      <li>อ่านทำความเข้าใจระบบที่กำหนดให้</li>
+                      <li>วาด <strong>Use case diagram</strong> ของระบบ</li>
+                      <li>เขียน <strong>Use case narrative จำนวน 2 กรณี</strong> เพื่ออธิบาย 2 use cases ที่อยู่ใน use case diagram</li>
+                    </ol>
+                    <p class="note">ระบบเดียวกันนี้ถูกใช้ต่อในบทที่ 5 สำหรับฝึกวาด DFD</p>
+                  </section>
+
+                  <section class="topic" id="uc-zoo-system">
+                    <h4>คำอธิบายระบบจำหน่ายบัตรเข้าสวนสัตว์</h4>
+                    <p>ระบบถูกออกแบบมาเพื่อรองรับการจำหน่ายและจัดการบัตรเข้าสวนสัตว์ ทั้ง<strong>การซื้อบัตรล่วงหน้าผ่านระบบ</strong>และ<strong>การซื้อบัตร ณ จุดจำหน่ายหน้าสวนสัตว์</strong> — ผู้ใช้งานหลัก 3 กลุ่ม:</p>
+                    <div class="table-scroll">
+                      <table>
+                        <thead><tr><th>ผู้ใช้งาน</th><th>สิ่งที่ทำได้ในระบบ (ตามคำอธิบาย)</th></tr></thead>
+                        <tbody>
+                          <tr><td><strong>ผู้เยี่ยมชม</strong></td><td>เลือกประเภทบัตร (เด็ก / ผู้ใหญ่ / ผู้สูงอายุ) และวันที่เข้าชม → ระบบแสดงราคาตามที่ผู้ดูแลระบบกำหนด → ชำระเงินผ่านบัตรเครดิตหรือ QR Code → เมื่อชำระสำเร็จ ระบบออกตั๋วพร้อม Booking ID และ QR Code · ตรวจสอบรายละเอียดและสถานะของตั๋วได้ · ส่งคำขอยกเลิกตั๋วก่อนวันเข้าชมได้ โดยระบบตรวจเงื่อนไขการคืนเงินและคืนเงินหากเป็นไปตามนโยบาย</td></tr>
+                          <tr><td><strong>เจ้าหน้าที่ขายตั๋ว</strong></td><td>ปฏิบัติงาน ณ จุดจำหน่ายหน้าสวนสัตว์ · จำหน่ายตั๋ว (เลือกประเภทบัตร จำนวน วันที่เข้าชม รับชำระเงินผ่านช่องทางที่กำหนด และออกตั๋ว) · ตรวจสอบ แก้ไข หรือยกเลิกรายการตั๋วตามคำร้องขอของผู้เยี่ยมชม โดยคืนเงินตามนโยบาย</td></tr>
+                          <tr><td><strong>ผู้ดูแลระบบ</strong></td><td>กำหนดรอบและช่วงเวลาการเข้าชม · กำหนดและปรับราคาบัตรตามช่วงเวลา ฤดูกาล หรือกิจกรรมพิเศษ · จัดการบัญชีและสิทธิ์การใช้งานของเจ้าหน้าที่ขายตั๋ว · เรียกดูและสร้างรายงานสรุปยอดขายและสถิติผู้เข้าชม</td></tr>
+                        </tbody>
+                      </table>
+                    </div>
+                  </section>
+
+                </div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </section>
+
+      <!-- =============================================================
+           แท็บ 2: สรุป (cheat sheet)
+           ============================================================= -->
+      <section class="panel" id="summary" role="tabpanel" aria-labelledby="tab-summary" tabindex="-1">
+        <div class="panel-head">
+          <h2>Cheat sheet</h2>
+          <p class="panel-sub">สัญลักษณ์ use case, 4 ความสัมพันธ์, 6 ขั้นตอนพัฒนา, 8 องค์ประกอบ narrative และบริบท Zoo Ticketing System ในหน้าเดียว</p>
+        </div>
+
+        <div class="sheet">
+
+<article class="sheet-card">
+            <h3><span class="sheet-num">01</span> 3 สัญลักษณ์พื้นฐาน</h3>
+            <div class="table-scroll">
+              <table>
+                <thead><tr><th>สัญลักษณ์</th><th>รูป</th><th>กฎ</th></tr></thead>
+                <tbody>
+                  <tr><td><strong>Use case</strong></td><td>วงรี</td><td>ชื่อขึ้นต้นด้วย <strong>verb</strong> · อยู่<strong>ใน</strong>กล่อง</td></tr>
+                  <tr><td><strong>Actor</strong></td><td>stickman</td><td>กำกับชื่อ actor · อยู่<strong>นอก</strong>กล่อง</td></tr>
+                  <tr><td><strong>System boundary</strong></td><td>กล่อง</td><td>กำกับชื่อระบบ</td></tr>
+                </tbody>
+              </table>
+            </div>
+            <p class="note">Actor: <strong>primary</strong> ใช้ระบบตรง (customer) · <strong>secondary</strong> บทบาทสนับสนุน (payment service)</p>
+          </article>
+
+          <article class="sheet-card sheet-card--wide">
+            <h3><span class="sheet-num">02</span> 4 ความสัมพันธ์</h3>
+            <div class="table-scroll">
+              <table>
+                <thead><tr><th>ความสัมพันธ์</th><th>ระหว่าง</th><th>ความหมาย</th><th>วาด / ตัวอย่าง</th></tr></thead>
+                <tbody>
+                  <tr><td><strong>Association</strong></td><td>actor – use case</td><td>ปฏิสัมพันธ์ (high-level)</td><td>เส้นทึบ</td></tr>
+                  <tr><td><strong>Inheritance</strong></td><td>actor – actor</td><td>ย้ายพฤติกรรมร่วมไป abstract actor</td><td>ลูกศรหัวสามเหลี่ยมชี้ไป abstract actor</td></tr>
+                  <tr><td><strong>Includes</strong></td><td>use case → use case</td><td>แยก<strong>พฤติกรรมร่วม</strong>จาก use case ใหญ่</td><td>ต้นทาง → ที่ถูกใช้ · <code>&lt;&lt;includes&gt;&gt;</code> · Checkout → Scan Item</td></tr>
+                  <tr><td><strong>Extends</strong></td><td>use case → use case</td><td>พฤติกรรม<strong>ทางเลือก</strong>ของ base ที่สมบูรณ์ในตัว</td><td>ส่วนขยาย → base · <code>&lt;&lt;extends&gt;&gt;</code> · Get Help On Registration → Registration</td></tr>
+                </tbody>
+              </table>
+            </div>
+          </article>
+
+          <article class="sheet-card">
+            <h3><span class="sheet-num">03</span> 6 ขั้นตอนพัฒนา use case</h3>
+            <ol class="steps">
+              <li>ระบุ <strong>system boundary</strong></li>
+              <li>ระบุ <strong>actors</strong> (primary / secondary)</li>
+              <li>ระบุ <strong>use cases</strong> (สะท้อน functional req.)</li>
+              <li>สร้าง<strong>ความสัมพันธ์</strong> actor – use case</li>
+              <li><strong>วาด</strong> use case diagram</li>
+              <li><strong>Review and refine</strong> — ครบ functional req.? validate กับ stakeholder</li>
+            </ol>
+          </article>
+
+          <article class="sheet-card sheet-card--wide">
+            <h3><span class="sheet-num">04</span> 8 องค์ประกอบของ Use Case Narrative</h3>
+            <div class="table-scroll">
+              <table>
+                <thead><tr><th>องค์ประกอบ</th><th>ความหมาย</th><th>องค์ประกอบ</th><th>ความหมาย</th></tr></thead>
+                <tbody>
+                  <tr><td><strong>Use Case Name</strong></td><td>ชื่อตรงกับในไดอะแกรม</td><td><strong>Trigger</strong></td><td>เหตุการณ์ที่ทำให้เริ่ม</td></tr>
+                  <tr><td><strong>Primary Actor</strong></td><td>ผู้ใช้/ระบบที่ปฏิสัมพันธ์</td><td><strong>Scenario</strong></td><td>ลำดับปกติ = main flow / basic flow</td></tr>
+                  <tr><td><strong>Goal in Context</strong></td><td>วัตถุประสงค์</td><td><strong>Exception</strong></td><td>เมื่อผิดพลาด / input ไม่ถูกต้อง</td></tr>
+                  <tr><td><strong>Precondition</strong></td><td>ต้องจริงก่อนเริ่ม</td><td><strong>Postcondition</strong></td><td>สถานะระบบหลังจบ</td></tr>
+                </tbody>
+              </table>
+            </div>
+            <p class="note">narrative = คำอธิบายเชิงข้อความละเอียดว่าระบบปฏิสัมพันธ์กับ actor อย่างไรเพื่อบรรลุเป้าหมายหนึ่ง · มักเขียนเป็นตาราง</p>
+          </article>
+
+          <article class="sheet-card">
+            <h3><span class="sheet-num">05</span> Zoo Ticketing System (บริบท)</h3>
+            <dl class="defs defs--stack">
+              <div><dt>ผู้เยี่ยมชม</dt><dd>เลือกประเภทบัตร/วันที่ · ชำระเงิน (บัตรเครดิต / QR) · รับตั๋ว Booking ID + QR · ตรวจสถานะ · ขอยกเลิกก่อนวันเข้าชม</dd></div>
+              <div><dt>เจ้าหน้าที่ขายตั๋ว</dt><dd>ขายตั๋วหน้าสวนสัตว์ · ตรวจสอบ/แก้ไข/ยกเลิกรายการตามคำร้อง</dd></div>
+              <div><dt>ผู้ดูแลระบบ</dt><dd>รอบและช่วงเวลาเข้าชม · ราคาตามฤดูกาล/กิจกรรม · บัญชีและสิทธิ์เจ้าหน้าที่ · รายงานยอดขายและสถิติ</dd></div>
+            </dl>
+            <p class="note">แบบฝึกหัดในชั้นเรียน ไม่มีเฉลย — ฝึกวาดเองด้วย 6 ขั้นตอน</p>
+          </article>
+
+          <article class="sheet-card">
+            <h3><span class="sheet-num">06</span> 5 แนวทาง Requirements Modeling</h3>
+            <dl class="defs defs--stack">
+              <div><dt>Scenario-based</dt><dd>มุมมองผู้ใช้ (actors) → use case</dd></div>
+              <div><dt>Class</dt><dd>คลาส attribute operation ความสัมพันธ์</dd></div>
+              <div><dt>Flow</dt><dd>ข้อมูลเคลื่อนที่/แปลงระหว่าง process</dd></div>
+              <div><dt>Behavioral</dt><dd>พฤติกรรมตอบสนอง event</dd></div>
+              <div><dt>Data</dt><dd>โดเมนข้อมูล เช่น ER diagram</dd></div>
+            </dl>
+          </article>
+
+          <article class="sheet-card">
+            <h3><span class="sheet-num">07</span> แนวคิดหลัก</h3>
+            <p><strong>Requirements analysis</strong> = สะพาน: requirements specification → analysis model → design model (มักทำโดย BA)</p>
+            <p><strong>Use case</strong> = ลำดับขั้นตอนที่สัมพันธ์เชิงพฤติกรรม (อัตโนมัติ + manual) เพื่อทำงานธุรกิจ 1 งาน</p>
+            <p class="note">Jacobson: use case ช่วยนิยามสิ่งที่อยู่<strong>นอกระบบ (actors)</strong> และสิ่งที่<strong>ระบบควรทำ (use cases)</strong></p>
+          </article>
+
+        </div>
+      </section>
+
+      <!-- =============================================================
+           แท็บ 3: แบบฝึกหัด (20 ข้อ)
+           data-answer = ตัวเลือกที่ถูก (ก=a, ข=b, ค=c, ง=d ตามเฉลยที่ผู้ใช้กำหนด)
+           ============================================================= -->
+      <section class="panel" id="quiz" role="tabpanel" aria-labelledby="tab-quiz" tabindex="-1">
+        <div class="panel-head">
+          <h2>แบบฝึกหัด 20 ข้อ</h2>
+          <p class="panel-sub">เลือกคำตอบให้ครบแล้วกด "ตรวจคำตอบ" ด้านล่าง ระบบจะเฉลยพร้อมคำอธิบายทุกข้อ</p>
+        </div>
+
+        <form class="quiz" id="quiz-form" novalidate>
+
+          <fieldset class="q" data-answer="b">
+            <legend class="q-head"><span class="q-num">01</span><span class="q-text">Use Case คืออะไร?</span></legend>
+            <div class="q-options">
+              <label class="opt"><input type="radio" name="q1" value="a" /><span class="opt-key">A</span><span class="opt-text">โค้ดต้นฉบับของฟังก์ชันหนึ่ง</span></label>
+              <label class="opt"><input type="radio" name="q1" value="b" /><span class="opt-key">B</span><span class="opt-text">ลำดับขั้นตอนที่สัมพันธ์กันเชิงพฤติกรรม ทั้งแบบอัตโนมัติและ manual เพื่อทำงานทางธุรกิจหนึ่งงานให้สำเร็จ</span></label>
+              <label class="opt"><input type="radio" name="q1" value="c" /><span class="opt-key">C</span><span class="opt-text">แผนภาพฐานข้อมูล</span></label>
+              <label class="opt"><input type="radio" name="q1" value="d" /><span class="opt-key">D</span><span class="opt-text">รายงานผลการทดสอบ</span></label>
+            </div>
+            <div class="q-feedback"><div class="q-feedback-inner"><p class="q-verdict" aria-live="polite"></p><p class="q-explain">สไลด์ 4-12: use case – a behaviourally related sequence of steps (scenario), both automated and manual, for the purpose of completing a single business task</p></div></div>
+          </fieldset>
+
+          <fieldset class="q" data-answer="a">
+            <legend class="q-head"><span class="q-num">02</span><span class="q-text">สัญลักษณ์พื้นฐานของ Use Case Diagram ประกอบด้วยอะไรบ้าง?</span></legend>
+            <div class="q-options">
+              <label class="opt"><input type="radio" name="q2" value="a" /><span class="opt-key">A</span><span class="opt-text">วงรี (Use case), รูปคนแท่ง (Actor), กล่องสี่เหลี่ยม (System boundary)</span></label>
+              <label class="opt"><input type="radio" name="q2" value="b" /><span class="opt-key">B</span><span class="opt-text">สี่เหลี่ยมขนมเปียกปูนเท่านั้น</span></label>
+              <label class="opt"><input type="radio" name="q2" value="c" /><span class="opt-key">C</span><span class="opt-text">วงกลมและลูกศรเท่านั้น</span></label>
+              <label class="opt"><input type="radio" name="q2" value="d" /><span class="opt-key">D</span><span class="opt-text">ตารางข้อมูลเท่านั้น</span></label>
+            </div>
+            <div class="q-feedback"><div class="q-feedback-inner"><p class="q-verdict" aria-live="polite"></p><p class="q-explain">Basic use case symbols: use case = ellipse · actor = stickman · system boundary = box ที่กำกับชื่อระบบ</p></div></div>
+          </fieldset>
+
+          <fieldset class="q" data-answer="b">
+            <legend class="q-head"><span class="q-num">03</span><span class="q-text">ชื่อของ Use case ควรเริ่มต้นด้วยอะไร?</span></legend>
+            <div class="q-options">
+              <label class="opt"><input type="radio" name="q3" value="a" /><span class="opt-key">A</span><span class="opt-text">คำนาม</span></label>
+              <label class="opt"><input type="radio" name="q3" value="b" /><span class="opt-key">B</span><span class="opt-text">คำกริยา (verb)</span></label>
+              <label class="opt"><input type="radio" name="q3" value="c" /><span class="opt-key">C</span><span class="opt-text">ตัวเลข</span></label>
+              <label class="opt"><input type="radio" name="q3" value="d" /><span class="opt-key">D</span><span class="opt-text">ชื่อ Actor</span></label>
+            </div>
+            <div class="q-feedback"><div class="q-feedback-inner"><p class="q-verdict" aria-live="polite"></p><p class="q-explain">สไลด์ 4-13 ให้ use case begin with &quot;verb&quot; เช่น Book a ticket, View product</p></div></div>
+          </fieldset>
+
+          <fieldset class="q" data-answer="b">
+            <legend class="q-head"><span class="q-num">04</span><span class="q-text">ความสัมพันธ์แบบ &quot;Association&quot; หมายถึงอะไร?</span></legend>
+            <div class="q-options">
+              <label class="opt"><input type="radio" name="q4" value="a" /><span class="opt-key">A</span><span class="opt-text">การสืบทอดพฤติกรรมระหว่าง actor</span></label>
+              <label class="opt"><input type="radio" name="q4" value="b" /><span class="opt-key">B</span><span class="opt-text">การปฏิสัมพันธ์ระหว่าง actor กับ use case</span></label>
+              <label class="opt"><input type="radio" name="q4" value="c" /><span class="opt-key">C</span><span class="opt-text">การขยายพฤติกรรมเสริมของ use case</span></label>
+              <label class="opt"><input type="radio" name="q4" value="d" /><span class="opt-key">D</span><span class="opt-text">การแยก use case ที่ซ้ำซ้อนออก</span></label>
+            </div>
+            <div class="q-feedback"><div class="q-feedback-inner"><p class="q-verdict" aria-live="polite"></p><p class="q-explain">Association (high-level relationship) represents an interaction between an actor and a use case · ตัวเลือกอื่นคือ inheritance, extends และ includes</p></div></div>
+          </fieldset>
+
+          <fieldset class="q" data-answer="b">
+            <legend class="q-head"><span class="q-num">05</span><span class="q-text">ความสัมพันธ์แบบ &quot;Includes&quot; ใช้เพื่อจุดประสงค์ใด?</span></legend>
+            <div class="q-options">
+              <label class="opt"><input type="radio" name="q5" value="a" /><span class="opt-key">A</span><span class="opt-text">เพิ่มพฤติกรรมเสริมที่เป็นทางเลือก</span></label>
+              <label class="opt"><input type="radio" name="q5" value="b" /><span class="opt-key">B</span><span class="opt-text">ลดความซับซ้อนของ use case ขนาดใหญ่ โดยแยกพฤติกรรมร่วมออกมาเป็น use case ย่อย</span></label>
+              <label class="opt"><input type="radio" name="q5" value="c" /><span class="opt-key">C</span><span class="opt-text">เชื่อม actor สองตัวเข้าด้วยกัน</span></label>
+              <label class="opt"><input type="radio" name="q5" value="d" /><span class="opt-key">D</span><span class="opt-text">กำหนดขอบเขตของระบบ</span></label>
+            </div>
+            <div class="q-feedback"><div class="q-feedback-inner"><p class="q-verdict" aria-live="polite"></p><p class="q-explain">Includes simplifies large use case by extracting common behaviours เช่น Checkout includes Scan Item, Calculate Total and Tax, Payment · พฤติกรรมเสริมแบบทางเลือกคือ extends</p></div></div>
+          </fieldset>
+
+          <fieldset class="q" data-answer="a">
+            <legend class="q-head"><span class="q-num">06</span><span class="q-text">ความสัมพันธ์แบบ &quot;Extends&quot; ใช้เพื่อจุดประสงค์ใด?</span></legend>
+            <div class="q-options">
+              <label class="opt"><input type="radio" name="q6" value="a" /><span class="opt-key">A</span><span class="opt-text">ให้พฤติกรรมเสริมที่เป็นทางเลือกจาก use case หลักที่สมบูรณ์ในตัวเองอยู่แล้ว</span></label>
+              <label class="opt"><input type="radio" name="q6" value="b" /><span class="opt-key">B</span><span class="opt-text">บังคับให้ use case ทำงานร่วมกันเสมอ</span></label>
+              <label class="opt"><input type="radio" name="q6" value="c" /><span class="opt-key">C</span><span class="opt-text">ลบ use case ที่ซ้ำซ้อน</span></label>
+              <label class="opt"><input type="radio" name="q6" value="d" /><span class="opt-key">D</span><span class="opt-text">เชื่อม system boundary สองระบบเข้าด้วยกัน</span></label>
+            </div>
+            <div class="q-feedback"><div class="q-feedback-inner"><p class="q-verdict" aria-live="polite"></p><p class="q-explain">Extends provides an optional behaviour from the base use case — Registration สมบูรณ์ในตัวเอง และอาจขยายด้วย Get Help On Registration</p></div></div>
+          </fieldset>
+
+          <fieldset class="q" data-answer="a">
+            <legend class="q-head"><span class="q-num">07</span><span class="q-text">ความสัมพันธ์แบบ &quot;Inheritance&quot; ระหว่าง actor มีไว้เพื่ออะไร?</span></legend>
+            <div class="q-options">
+              <label class="opt"><input type="radio" name="q7" value="a" /><span class="opt-key">A</span><span class="opt-text">ย้ายพฤติกรรมร่วมของ actor หลายตัวไปไว้ที่ abstract actor ร่วมกัน เพื่อลดความซ้ำซ้อน</span></label>
+              <label class="opt"><input type="radio" name="q7" value="b" /><span class="opt-key">B</span><span class="opt-text">ทำให้ actor หายไปจากไดอะแกรม</span></label>
+              <label class="opt"><input type="radio" name="q7" value="c" /><span class="opt-key">C</span><span class="opt-text">เชื่อม use case สองตัวเข้าด้วยกัน</span></label>
+              <label class="opt"><input type="radio" name="q7" value="d" /><span class="opt-key">D</span><span class="opt-text">กำหนดสิทธิ์การเข้าถึงระบบ</span></label>
+            </div>
+            <div class="q-feedback"><div class="q-feedback-inner"><p class="q-verdict" aria-live="polite"></p><p class="q-explain">Inheritance: common behavior of multiple actors is moved to a shared abstract actor to avoid redundancy</p></div></div>
+          </fieldset>
+
+          <fieldset class="q" data-answer="b">
+            <legend class="q-head"><span class="q-num">08</span><span class="q-text">Actor แบบ &quot;Secondary&quot; หมายถึงอะไร?</span></legend>
+            <div class="q-options">
+              <label class="opt"><input type="radio" name="q8" value="a" /><span class="opt-key">A</span><span class="opt-text">Actor หลักที่ใช้ระบบเพื่อบรรลุเป้าหมายโดยตรง</span></label>
+              <label class="opt"><input type="radio" name="q8" value="b" /><span class="opt-key">B</span><span class="opt-text">Actor ที่มีบทบาทสนับสนุน เช่น บริการชำระเงินภายนอก</span></label>
+              <label class="opt"><input type="radio" name="q8" value="c" /><span class="opt-key">C</span><span class="opt-text">Actor ที่ไม่มีความสำคัญและควรตัดออก</span></label>
+              <label class="opt"><input type="radio" name="q8" value="d" /><span class="opt-key">D</span><span class="opt-text">ผู้ดูแลระบบเท่านั้น</span></label>
+            </div>
+            <div class="q-feedback"><div class="q-feedback-inner"><p class="q-verdict" aria-live="polite"></p><p class="q-explain">สไลด์ 4-21: actors can be primary (directly use the system to achieve goals, e.g., customer) or secondary (supporting role, e.g., a payment service)</p></div></div>
+          </fieldset>
+
+          <fieldset class="q" data-answer="b">
+            <legend class="q-head"><span class="q-num">09</span><span class="q-text">ขั้นตอนแรกในการพัฒนา Use Case Diagram คือข้อใด?</span></legend>
+            <div class="q-options">
+              <label class="opt"><input type="radio" name="q9" value="a" /><span class="opt-key">A</span><span class="opt-text">เขียน Use Case Narrative ทันที</span></label>
+              <label class="opt"><input type="radio" name="q9" value="b" /><span class="opt-key">B</span><span class="opt-text">ระบุขอบเขตของระบบ (system boundary)</span></label>
+              <label class="opt"><input type="radio" name="q9" value="c" /><span class="opt-key">C</span><span class="opt-text">ทดสอบระบบ</span></label>
+              <label class="opt"><input type="radio" name="q9" value="d" /><span class="opt-key">D</span><span class="opt-text">ออกแบบฐานข้อมูล</span></label>
+            </div>
+            <div class="q-feedback"><div class="q-feedback-inner"><p class="q-verdict" aria-live="polite"></p><p class="q-explain">Developing a use case ขั้น 1) identify the system boundary → 2) actors → 3) use cases → 4) relationships → 5) draw → 6) review and refine</p></div></div>
+          </fieldset>
+
+          <fieldset class="q" data-answer="b">
+            <legend class="q-head"><span class="q-num">10</span><span class="q-text">Use Case Narrative คืออะไร?</span></legend>
+            <div class="q-options">
+              <label class="opt"><input type="radio" name="q10" value="a" /><span class="opt-key">A</span><span class="opt-text">แผนภาพความสัมพันธ์ของฐานข้อมูล</span></label>
+              <label class="opt"><input type="radio" name="q10" value="b" /><span class="opt-key">B</span><span class="opt-text">คำอธิบายเชิงข้อความแบบละเอียด อธิบายว่าระบบปฏิสัมพันธ์กับ actor ภายนอกอย่างไรเพื่อบรรลุเป้าหมายหนึ่ง</span></label>
+              <label class="opt"><input type="radio" name="q10" value="c" /><span class="opt-key">C</span><span class="opt-text">รายงานสรุปยอดขาย</span></label>
+              <label class="opt"><input type="radio" name="q10" value="d" /><span class="opt-key">D</span><span class="opt-text">เอกสารสัญญาจ้าง</span></label>
+            </div>
+            <div class="q-feedback"><div class="q-feedback-inner"><p class="q-verdict" aria-live="polite"></p><p class="q-explain">สไลด์ 4-23: a detailed textual description of how a system interacts with external entities (actors) to achieve a specific goal — มักเขียนเป็นตาราง</p></div></div>
+          </fieldset>
+
+          <fieldset class="q" data-answer="b">
+            <legend class="q-head"><span class="q-num">11</span><span class="q-text">องค์ประกอบ &quot;Trigger&quot; ใน Use Case Narrative หมายถึงอะไร?</span></legend>
+            <div class="q-options">
+              <label class="opt"><input type="radio" name="q11" value="a" /><span class="opt-key">A</span><span class="opt-text">เงื่อนไขที่ต้องเป็นจริงก่อน use case จะเริ่มได้</span></label>
+              <label class="opt"><input type="radio" name="q11" value="b" /><span class="opt-key">B</span><span class="opt-text">เหตุการณ์ที่เป็นตัวกระตุ้นให้ use case เริ่มทำงาน</span></label>
+              <label class="opt"><input type="radio" name="q11" value="c" /><span class="opt-key">C</span><span class="opt-text">ผลลัพธ์สุดท้ายหลัง use case เสร็จสิ้น</span></label>
+              <label class="opt"><input type="radio" name="q11" value="d" /><span class="opt-key">D</span><span class="opt-text">ชื่อของ use case</span></label>
+            </div>
+            <div class="q-feedback"><div class="q-feedback-inner"><p class="q-verdict" aria-live="polite"></p><p class="q-explain">Trigger = the event that initiates the use case · เงื่อนไขก่อนเริ่มคือ precondition และสถานะหลังจบคือ postcondition</p></div></div>
+          </fieldset>
+
+          <fieldset class="q" data-answer="b">
+            <legend class="q-head"><span class="q-num">12</span><span class="q-text">องค์ประกอบ &quot;Postcondition&quot; หมายถึงอะไร?</span></legend>
+            <div class="q-options">
+              <label class="opt"><input type="radio" name="q12" value="a" /><span class="opt-key">A</span><span class="opt-text">เงื่อนไขก่อนเริ่ม use case</span></label>
+              <label class="opt"><input type="radio" name="q12" value="b" /><span class="opt-key">B</span><span class="opt-text">สถานะของระบบหลังจาก use case ทำงานเสร็จสิ้นแล้ว</span></label>
+              <label class="opt"><input type="radio" name="q12" value="c" /><span class="opt-key">C</span><span class="opt-text">ชื่อของ Primary Actor</span></label>
+              <label class="opt"><input type="radio" name="q12" value="d" /><span class="opt-key">D</span><span class="opt-text">เหตุการณ์ที่กระตุ้นให้เริ่มทำงาน</span></label>
+            </div>
+            <div class="q-feedback"><div class="q-feedback-inner"><p class="q-verdict" aria-live="polite"></p><p class="q-explain">Postcondition = the state of the system after the use case is completed</p></div></div>
+          </fieldset>
+
+          <fieldset class="q" data-answer="a">
+            <legend class="q-head"><span class="q-num">13</span><span class="q-text">องค์ประกอบ &quot;Exception&quot; หมายถึงอะไร?</span></legend>
+            <div class="q-options">
+              <label class="opt"><input type="radio" name="q13" value="a" /><span class="opt-key">A</span><span class="opt-text">สิ่งที่เกิดขึ้นเมื่อมีบางอย่างผิดพลาด เช่น error หรือข้อมูลไม่ถูกต้อง</span></label>
+              <label class="opt"><input type="radio" name="q13" value="b" /><span class="opt-key">B</span><span class="opt-text">ลำดับขั้นตอนหลักปกติ</span></label>
+              <label class="opt"><input type="radio" name="q13" value="c" /><span class="opt-key">C</span><span class="opt-text">ชื่อของระบบ</span></label>
+              <label class="opt"><input type="radio" name="q13" value="d" /><span class="opt-key">D</span><span class="opt-text">เป้าหมายของ use case</span></label>
+            </div>
+            <div class="q-feedback"><div class="q-feedback-inner"><p class="q-verdict" aria-live="polite"></p><p class="q-explain">Exception = what happens if something goes wrong, such as an error or invalid input · ลำดับปกติคือ scenario</p></div></div>
+          </fieldset>
+
+          <fieldset class="q" data-answer="b">
+            <legend class="q-head"><span class="q-num">14</span><span class="q-text">&quot;Scenario&quot; ใน Use Case Narrative บางครั้งเรียกอีกชื่อว่าอะไร?</span></legend>
+            <div class="q-options">
+              <label class="opt"><input type="radio" name="q14" value="a" /><span class="opt-key">A</span><span class="opt-text">&quot;Exception flow&quot;</span></label>
+              <label class="opt"><input type="radio" name="q14" value="b" /><span class="opt-key">B</span><span class="opt-text">&quot;Main flow&quot; หรือ &quot;Basic flow&quot;</span></label>
+              <label class="opt"><input type="radio" name="q14" value="c" /><span class="opt-key">C</span><span class="opt-text">&quot;Postcondition flow&quot;</span></label>
+              <label class="opt"><input type="radio" name="q14" value="d" /><span class="opt-key">D</span><span class="opt-text">&quot;Trigger flow&quot;</span></label>
+            </div>
+            <div class="q-feedback"><div class="q-feedback-inner"><p class="q-verdict" aria-live="polite"></p><p class="q-explain">Scenario = the typical sequence of interactions between the actor and the system. Sometimes it is called &quot;main flow&quot; or &quot;basic flow&quot;</p></div></div>
+          </fieldset>
+
+          <fieldset class="q" data-answer="a">
+            <legend class="q-head"><span class="q-num">15</span><span class="q-text">Requirements Modeling Approaches ที่เรียนมี 5 ประเภทหลักคือข้อใด?</span></legend>
+            <div class="q-options">
+              <label class="opt"><input type="radio" name="q15" value="a" /><span class="opt-key">A</span><span class="opt-text">Scenario-based, Class, Flow, Behavioral, Data models</span></label>
+              <label class="opt"><input type="radio" name="q15" value="b" /><span class="opt-key">B</span><span class="opt-text">Waterfall, Agile, Spiral, Incremental, Code and Fix</span></label>
+              <label class="opt"><input type="radio" name="q15" value="c" /><span class="opt-key">C</span><span class="opt-text">Elicitation, Specification, Validation, Change, Management</span></label>
+              <label class="opt"><input type="radio" name="q15" value="d" /><span class="opt-key">D</span><span class="opt-text">Input, Process, Output, Store, Control</span></label>
+            </div>
+            <div class="q-feedback"><div class="q-feedback-inner"><p class="q-verdict" aria-live="polite"></p><p class="q-explain">สไลด์ 4-7 (Pressman): scenario-based models, class models, flow models, behavioral models, data models · ตัวเลือก B คือ process models ของบทที่ 2</p></div></div>
+          </fieldset>
+
+          <fieldset class="q" data-answer="b">
+            <legend class="q-head"><span class="q-num">16</span><span class="q-text">Scenario-based Models เน้นอธิบาย requirement จากมุมมองใด?</span></legend>
+            <div class="q-options">
+              <label class="opt"><input type="radio" name="q16" value="a" /><span class="opt-key">A</span><span class="opt-text">มุมมองของโปรแกรมเมอร์</span></label>
+              <label class="opt"><input type="radio" name="q16" value="b" /><span class="opt-key">B</span><span class="opt-text">มุมมองของผู้ใช้ (actors) ที่ปฏิสัมพันธ์กับระบบ</span></label>
+              <label class="opt"><input type="radio" name="q16" value="c" /><span class="opt-key">C</span><span class="opt-text">มุมมองของฐานข้อมูล</span></label>
+              <label class="opt"><input type="radio" name="q16" value="d" /><span class="opt-key">D</span><span class="opt-text">มุมมองของเซิร์ฟเวอร์</span></label>
+            </div>
+            <div class="q-feedback"><div class="q-feedback-inner"><p class="q-verdict" aria-live="polite"></p><p class="q-explain">Scenario-based models depict requirements from the users' point of view (i.e., actors) และ focus on functional requirements from actors' point of view</p></div></div>
+          </fieldset>
+
+          <fieldset class="q" data-answer="b">
+            <legend class="q-head"><span class="q-num">17</span><span class="q-text">ชื่อของ Use Case ในไดอะแกรม ต้องสอดคล้องกับสิ่งใด?</span></legend>
+            <div class="q-options">
+              <label class="opt"><input type="radio" name="q17" value="a" /><span class="opt-key">A</span><span class="opt-text">ชื่อของ Actor ที่เกี่ยวข้อง</span></label>
+              <label class="opt"><input type="radio" name="q17" value="b" /><span class="opt-key">B</span><span class="opt-text">ชื่อที่ใช้ใน Use Case Narrative ของ use case เดียวกัน</span></label>
+              <label class="opt"><input type="radio" name="q17" value="c" /><span class="opt-key">C</span><span class="opt-text">ชื่อของ system boundary</span></label>
+              <label class="opt"><input type="radio" name="q17" value="d" /><span class="opt-key">D</span><span class="opt-text">ไม่จำเป็นต้องสอดคล้องกัน</span></label>
+            </div>
+            <div class="q-feedback"><div class="q-feedback-inner"><p class="q-verdict" aria-live="polite"></p><p class="q-explain">Use Case Name ใน narrative: a clear, descriptive title. The name must be consistent with the one in a use case diagram</p></div></div>
+          </fieldset>
+
+          <fieldset class="q" data-answer="a">
+            <legend class="q-head"><span class="q-num">18</span><span class="q-text">ตามคำกล่าวของ Ivar Jacobson, Use case มีไว้เพื่อช่วยนิยามอะไร?</span></legend>
+            <div class="q-options">
+              <label class="opt"><input type="radio" name="q18" value="a" /><span class="opt-key">A</span><span class="opt-text">สิ่งที่อยู่ &quot;ภายนอก&quot; ระบบ (actors) และสิ่งที่ &quot;ระบบควรทำ&quot; (use cases)</span></label>
+              <label class="opt"><input type="radio" name="q18" value="b" /><span class="opt-key">B</span><span class="opt-text">โครงสร้างฐานข้อมูลเท่านั้น</span></label>
+              <label class="opt"><input type="radio" name="q18" value="c" /><span class="opt-key">C</span><span class="opt-text">ภาษาโปรแกรมมิ่งที่ใช้พัฒนา</span></label>
+              <label class="opt"><input type="radio" name="q18" value="d" /><span class="opt-key">D</span><span class="opt-text">งบประมาณของโปรเจกต์</span></label>
+            </div>
+            <div class="q-feedback"><div class="q-feedback-inner"><p class="q-verdict" aria-live="polite"></p><p class="q-explain">&quot;Use-cases are simply an aid to defining what exists outside the system (actors) and what should be performed by the system (use cases).&quot; — Ivar Jacobson</p></div></div>
+          </fieldset>
+
+          <fieldset class="q" data-answer="b">
+            <legend class="q-head"><span class="q-num">19</span><span class="q-text">ขั้นตอนสุดท้ายในการพัฒนา Use Case (&quot;Review and refine&quot;) ควรทำอะไร?</span></legend>
+            <div class="q-options">
+              <label class="opt"><input type="radio" name="q19" value="a" /><span class="opt-key">A</span><span class="opt-text">ลบ use case ทั้งหมดที่ซับซ้อน</span></label>
+              <label class="opt"><input type="radio" name="q19" value="b" /><span class="opt-key">B</span><span class="opt-text">ตรวจสอบว่า functional requirement ครบถ้วน และยืนยันกับ stakeholder</span></label>
+              <label class="opt"><input type="radio" name="q19" value="c" /><span class="opt-key">C</span><span class="opt-text">เขียนโค้ดทันที</span></label>
+              <label class="opt"><input type="radio" name="q19" value="d" /><span class="opt-key">D</span><span class="opt-text">ปิดโปรเจกต์</span></label>
+            </div>
+            <div class="q-feedback"><div class="q-feedback-inner"><p class="q-verdict" aria-live="polite"></p><p class="q-explain">6) Review and refine: check if all functional requirements are covered · validate with stakeholders to confirm completeness and accuracy</p></div></div>
+          </fieldset>
+
+          <fieldset class="q" data-answer="a">
+            <legend class="q-head"><span class="q-num">20</span><span class="q-text">Requirements Analysis ทำหน้าที่เป็น &quot;สะพาน&quot; เชื่อมระหว่างอะไร?</span></legend>
+            <div class="q-options">
+              <label class="opt"><input type="radio" name="q20" value="a" /><span class="opt-key">A</span><span class="opt-text">Requirements specification และ Analysis model ซึ่งนำไปสู่ Design model</span></label>
+              <label class="opt"><input type="radio" name="q20" value="b" /><span class="opt-key">B</span><span class="opt-text">ลูกค้าและนักลงทุน</span></label>
+              <label class="opt"><input type="radio" name="q20" value="c" /><span class="opt-key">C</span><span class="opt-text">ฮาร์ดแวร์และซอฟต์แวร์</span></label>
+              <label class="opt"><input type="radio" name="q20" value="d" /><span class="opt-key">D</span><span class="opt-text">ทีม QA และทีมพัฒนา</span></label>
+            </div>
+            <div class="q-feedback"><div class="q-feedback-inner"><p class="q-verdict" aria-live="polite"></p><p class="q-explain">สไลด์ 4-4 A Bridge: requirements specification → analysis model → design model</p></div></div>
+          </fieldset>
+
+          <div class="quiz-result" id="quiz-result" hidden tabindex="-1">
+            <div class="score-ring" aria-hidden="true">
+              <svg viewBox="0 0 120 120">
+                <circle class="ring-track" cx="60" cy="60" r="52" />
+                <circle class="ring-fill" cx="60" cy="60" r="52" pathLength="100" />
+              </svg>
+              <span class="score-pct"><span id="score-pct">0</span>%</span>
+            </div>
+            <div class="score-body">
+              <p class="score-line" role="status">ได้ <strong id="score-num">0</strong> / 20 คะแนน</p>
+              <p class="score-msg" id="score-msg"></p>
+              <div class="score-actions">
+                <button class="btn btn--ghost btn--sm" type="button" id="toggle-wrong" aria-pressed="false">ดูเฉพาะข้อที่ผิด</button>
+              </div>
+            </div>
+          </div>
+
+          <div class="quiz-bar">
+            <div class="quiz-progress">
+              <span class="quiz-count"><span id="answered">0</span> / 20 ข้อ</span>
+              <span class="progress" aria-hidden="true"><span class="progress-fill" id="progress-fill"></span></span>
+              <span class="quiz-hint" id="quiz-hint" aria-live="polite"></span>
+            </div>
+            <div class="quiz-actions">
+              <button class="btn btn--ghost" type="reset" id="quiz-reset">ทำใหม่</button>
+              <button class="btn btn--primary" type="submit" id="quiz-submit">ตรวจคำตอบ</button>
+            </div>
+          </div>
+        </form>
+      </section>
+
+    </div>
+  </main>
+  <footer class="site-footer">
+    <div class="wrap">
+      <p>สรุปจากสไลด์ ITDS261 Introduction to Software Engineering (Faculty of ICT, Mahidol University) เพื่อใช้ทบทวนส่วนตัว — ถ้าเนื้อหาขัดกับสไลด์ ให้ยึดสไลด์เป็นหลัก</p>
+    </div>
+  </footer>
+
+  <script src="assets/js/widgets.js" defer></script>
+  <script src="assets/js/network.js" defer></script>
+</body>
+</html>
