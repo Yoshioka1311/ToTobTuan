@@ -1,0 +1,1212 @@
+<!DOCTYPE html>
+<html lang="th" data-theme="se">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>ITDS261 บทที่ 5: Flow & Behavior Modeling (DFD) · โต๊ะทบทวน</title>
+<meta name="description" content="ITDS261 Introduction to Software Engineering บทที่ 5: structured analysis, flow-oriented modeling, สัญลักษณ์ DFD 4 แบบ, context diagram, การแตกระดับและ balancing, กฎของ data flow, internal และ hierarchical consistency, ระบบเลข process, PSPEC, structured English, decision table, control flow และ CSPEC พร้อม cheat sheet และแบบฝึกหัด 20 ข้อ" />
+<meta name="theme-color" content="#121815" />
+<link rel="icon" href="assets/favicon.svg" type="image/svg+xml" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link
+  href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500..700&family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans+Thai:wght@500;600&family=IBM+Plex+Sans+Thai+Looped:wght@400;500;600&display=swap"
+  rel="stylesheet"
+/>
+<link rel="stylesheet" href="assets/css/tokens.css" />
+<link rel="stylesheet" href="assets/css/base.css" />
+<link rel="stylesheet" href="assets/css/network.css" />
+<link rel="stylesheet" href="assets/css/motion.css" />
+<script>document.documentElement.classList.add("js");</script>
+</head>
+<body>
+  <a class="skip-link" href="#tabs">ข้ามไปที่เนื้อหา</a>
+
+  <svg class="dg-defs" aria-hidden="true" focusable="false">
+    <defs>
+      <marker id="arr" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path class="dg-arrow" d="M0 0L10 5L0 10z" /></marker>
+      <marker id="arr-muted" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path class="dg-arrow--muted" d="M0 0L10 5L0 10z" /></marker>
+      <marker id="arr-ok" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path class="dg-arrow--ok" d="M0 0L10 5L0 10z" /></marker>
+      <marker id="arr-bad" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path class="dg-arrow--bad" d="M0 0L10 5L0 10z" /></marker>
+    </defs>
+  </svg>
+
+  <header class="site-header">
+    <div class="wrap">
+      <a class="wordmark" href="index.html" aria-label="โต๊ะทบทวน หน้าแรก">
+        <img class="wordmark-mark" src="assets/favicon.svg" alt="" width="26" height="26" />
+        <span class="wordmark-text">โต๊ะ<span>ทบทวน</span></span>
+      </a>
+      <a class="crumb" href="index.html"><span class="arrow" aria-hidden="true">←</span> รายวิชาทั้งหมด</a>
+    </div>
+  </header>
+
+  <main>
+    <section class="course-hero wrap">
+      <nav class="course-nav" aria-label="เลือกวิชาและบท">
+        <div class="subject-switch">
+          <button class="subject-btn" type="button" data-subject="network" aria-pressed="false"><span class="subject-code">ITDS231</span> Network</button>
+          <button class="subject-btn" type="button" data-subject="web" aria-pressed="false"><span class="subject-code">ITDS241</span> Web</button>
+          <button class="subject-btn" type="button" data-subject="se" aria-pressed="true"><span class="subject-code">ITDS261</span> SE</button>
+        </div>
+        <div class="chapter-nav" data-subject="network" data-label="ITDS231 Computer Networks" role="group" aria-label="บทของวิชา ITDS231 Computer Networks">
+          <a class="chapter-link" href="network.html"><span class="chapter-num">บทที่ 1</span><span class="chapter-name">Intro &amp; Topology</span></a>
+          <a class="chapter-link" href="network-application-layer.html"><span class="chapter-num">บทที่ 2</span><span class="chapter-name">Application Layer</span></a>
+          <a class="chapter-link" href="network-data-link-layer.html"><span class="chapter-num">บทที่ 3</span><span class="chapter-name">Data Link Layer</span></a>
+          <a class="chapter-link" href="network-mac-ethernet.html"><span class="chapter-num">บทที่ 4</span><span class="chapter-name">MAC + Ethernet</span></a>
+        </div>
+        <div class="chapter-nav" data-subject="web" data-label="ITDS241 Web Technologies and Applications" role="group" aria-label="บทของวิชา ITDS241 Web Technologies and Applications">
+          <a class="chapter-link" href="web-intro-html-basics.html"><span class="chapter-num">บทที่ 1</span><span class="chapter-name">Internet &amp; HTML Basics</span></a>
+          <a class="chapter-link" href="web-media-forms-semantic.html"><span class="chapter-num">บทที่ 2</span><span class="chapter-name">Media, Forms &amp; Semantic</span></a>
+          <a class="chapter-link" href="web-css-fundamentals.html"><span class="chapter-num">บทที่ 3</span><span class="chapter-name">CSS Fundamentals</span></a>
+          <a class="chapter-link" href="web-css-layout-responsive.html"><span class="chapter-num">บทที่ 4</span><span class="chapter-name">CSS Layout &amp; Responsive</span></a>
+          <a class="chapter-link" href="web-js-fundamentals.html"><span class="chapter-num">บทที่ 5</span><span class="chapter-name">JavaScript Fundamentals</span></a>
+          <a class="chapter-link" href="web-js-functions-oop-dom.html"><span class="chapter-num">บทที่ 6</span><span class="chapter-name">Functions, OOP &amp; DOM</span></a>
+          <a class="chapter-link" href="web-ecmascript-features.html"><span class="chapter-num">บทที่ 7</span><span class="chapter-name">ECMAScript Features</span></a>
+        </div>
+        <div class="chapter-nav" data-subject="se" data-label="ITDS261 Introduction to Software Engineering" role="group" aria-label="บทของวิชา ITDS261 Introduction to Software Engineering">
+          <a class="chapter-link" href="se-foundation-pm.html"><span class="chapter-num">บทที่ 1</span><span class="chapter-name">SE Foundation &amp; PM</span></a>
+          <a class="chapter-link" href="se-process-models.html"><span class="chapter-num">บทที่ 2</span><span class="chapter-name">Process Models</span></a>
+          <a class="chapter-link" href="se-requirement-engineering.html"><span class="chapter-num">บทที่ 3</span><span class="chapter-name">Requirement Engineering</span></a>
+          <a class="chapter-link" href="se-use-case-modeling.html"><span class="chapter-num">บทที่ 4</span><span class="chapter-name">Use Case Modeling</span></a>
+          <a class="chapter-link" href="se-flow-behavior-modeling.html" aria-current="page"><span class="chapter-num">บทที่ 5</span><span class="chapter-name">Flow &amp; Behavior Modeling</span></a>
+          <a class="chapter-link" href="se-ui-design.html"><span class="chapter-num">บทที่ 6</span><span class="chapter-name">UI Design</span></a>
+        </div>
+      </nav>
+      <span class="eyebrow">ITDS261 · บทที่ 5 · Lecture 6 + 7</span>
+      <h1>Flow &amp; Behavior Modeling (DFD)</h1>
+      <p class="course-lede">Data flow diagram แสดงว่าข้อมูลถูกแปลงอย่างไรขณะเคลื่อนผ่านระบบ บทนี้ไล่ตั้งแต่สัญลักษณ์ 4 แบบ context diagram การแตกระดับพร้อม balancing กฎที่ห้ามทำผิด ไปจนถึงการอธิบายภายใน process ด้วย PSPEC และ control flow</p>
+      <ul class="course-meta" aria-label="ข้อมูลบทเรียน">
+        <li class="chip chip--accent">ITDS261 Introduction to Software Engineering</li>
+        <li class="chip">L6 Flow and Behavior I (43 หน้า)</li>
+        <li class="chip">L7 Flow and Behavior II (25 หน้า)</li>
+        <li class="chip">แบบฝึกหัด 20 ข้อ</li>
+      </ul>
+    </section>
+
+    <div class="tabbar" id="tabs">
+      <div class="wrap">
+        <div class="tabs" role="tablist" aria-label="ส่วนของหน้า">
+          <button class="tab" role="tab" id="tab-content" aria-controls="content" aria-selected="true" type="button">
+            <svg class="tab-icon" viewBox="0 0 20 20" aria-hidden="true"><path d="M4 3.5h8.5L16 7v9.5H4z M12 3.5V7h4 M7 10h6 M7 13h4" /></svg>
+            เนื้อหา
+          </button>
+          <button class="tab" role="tab" id="tab-summary" aria-controls="summary" aria-selected="false" type="button">
+            <svg class="tab-icon" viewBox="0 0 20 20" aria-hidden="true"><path d="M3.5 4h13v12h-13z M3.5 8h13 M8.5 8v8" /></svg>
+            สรุป
+          </button>
+          <button class="tab" role="tab" id="tab-quiz" aria-controls="quiz" aria-selected="false" type="button">
+            <svg class="tab-icon" viewBox="0 0 20 20" aria-hidden="true"><path d="M10 17a7 7 0 1 0 0-14 7 7 0 0 0 0 14z M6.8 10.2l2.2 2.2 4.2-4.6" /></svg>
+            แบบฝึกหัด
+          </button>
+          <span class="tab-indicator" aria-hidden="true"></span>
+        </div>
+      </div>
+    </div>
+
+    <div class="wrap panels">
+
+      <!-- =============================================================
+           แท็บ 1: เนื้อหา
+           ============================================================= -->
+      <section class="panel" id="content" role="tabpanel" aria-labelledby="tab-content" tabindex="-1">
+        <div class="panel-head">
+          <h2>เนื้อหาแยกตามหัวข้อในสไลด์</h2>
+          <div class="panel-actions">
+            <button class="btn btn--ghost btn--sm" type="button" data-acc-all="open">เปิดทั้งหมด</button>
+            <button class="btn btn--ghost btn--sm" type="button" data-acc-all="close">ปิดทั้งหมด</button>
+          </div>
+        </div>
+
+        <div class="acc">
+
+<!-- ================= 01 Flow-oriented modeling และสัญลักษณ์ ================= -->
+          <div class="acc-item is-open">
+            <h3 class="acc-heading">
+              <button class="acc-trigger" type="button" aria-expanded="true" aria-controls="acc-dfd-notation" id="acc-dfd-notation-btn">
+                <span class="acc-index">01</span>
+                <span class="acc-title">
+                  <span class="acc-name">Structured Analysis · Flow-Oriented Modeling · สัญลักษณ์ DFD 4 แบบ</span>
+                  <span class="acc-file">L6 Flow and Behavior I · slide 5–16</span>
+                </span>
+                <svg class="acc-chevron" viewBox="0 0 20 20" aria-hidden="true"><path d="M5 7.5l5 5 5-5" /></svg>
+              </button>
+            </h3>
+            <div class="acc-panel" id="acc-dfd-notation" role="region" aria-labelledby="acc-dfd-notation-btn">
+              <div class="acc-panel-inner">
+                <div class="acc-body">
+
+                  <nav class="toc" aria-label="หัวข้อในการ์ดสัญลักษณ์ DFD">
+                    <a href="#dfd-strategies">Structured vs OO analysis</a>
+                    <a href="#dfd-flow">Flow-oriented modeling</a>
+                    <a href="#dfd-notation">สัญลักษณ์ 4 แบบ</a>
+                    <a href="#dfd-entity-process">External entity &amp; process</a>
+                    <a href="#dfd-flow-store">Data flow &amp; data store</a>
+                  </nav>
+
+                  <section class="topic" id="dfd-strategies">
+                    <h4>Requirements Modeling Strategies</h4>
+                    <div class="compare">
+                      <div class="compare-col">
+                        <strong>Structured analysis</strong>
+                        <ul class="tight">
+                          <li>มอง<strong>ข้อมูล</strong>กับ<strong>กระบวนการที่แปลงข้อมูล</strong>เป็นสิ่งแยกกัน</li>
+                          <li>data object ถูก model ด้วย attribute และความสัมพันธ์</li>
+                          <li>process ถูก model ให้เห็นว่าแปลงข้อมูลอย่างไรขณะข้อมูลไหลผ่านระบบ</li>
+                        </ul>
+                      </div>
+                      <div class="compare-col">
+                        <strong>Object-oriented analysis</strong>
+                        <ul class="tight">
+                          <li>เน้น<strong>นิยามคลาส</strong></li>
+                          <li>และ<strong>วิธีที่คลาสทำงานร่วมกัน</strong>เพื่อสะท้อน requirement ของลูกค้า</li>
+                        </ul>
+                      </div>
+                    </div>
+                  </section>
+
+                  <section class="topic" id="dfd-flow">
+                    <h4>Flow-Oriented Modeling</h4>
+                    <ul class="tight">
+                      <li>แสดงว่า <strong>data object ถูกแปลง (transform) อย่างไรขณะเคลื่อนที่ผ่านระบบ</strong></li>
+                      <li>ใช้ <strong>Data Flow Diagram (DFD)</strong> เป็นรูปแบบไดอะแกรม</li>
+                      <li>หลายคนมองว่าเป็นแนวทาง <strong>"old school"</strong> แต่ยังให้มุมมองของระบบที่เป็นเอกลักษณ์ — <strong>ใช้เสริม</strong> analysis model แบบอื่น</li>
+                    </ul>
+                    <figure class="diagram">
+                      <div class="diagram-scroll">
+                        <svg viewBox="0 0 720 110" role="img" aria-labelledby="dfd-io-t dfd-io-d">
+                          <title id="dfd-io-t">The flow model</title>
+                          <desc id="dfd-io-d">Input เข้าสู่ computer based system แล้วออกมาเป็น Output</desc>
+                          <text class="dg-text" x="120" y="60" text-anchor="middle">Input</text>
+                          <line class="dg-line dg-line--accent" x1="160" y1="55" x2="245" y2="55" marker-end="url(#arr)" />
+                          <rect class="dg-box dg-box--accent" x="250" y="20" width="220" height="70" rx="12" />
+                          <text class="dg-text" x="360" y="60" text-anchor="middle">computer based system</text>
+                          <line class="dg-line dg-line--accent" x1="472" y1="55" x2="557" y2="55" marker-end="url(#arr)" />
+                          <text class="dg-text" x="600" y="60" text-anchor="middle">Output</text>
+                        </svg>
+                      </div>
+                      <figcaption>สไลด์ 6-8 — Every computer-based system transforms input into output</figcaption>
+                    </figure>
+                  </section>
+
+                  <section class="topic" id="dfd-notation">
+                    <h4>Flow Modeling Notation</h4>
+                    <figure class="diagram">
+                      <div class="diagram-scroll">
+                        <svg viewBox="0 0 720 270" role="img" aria-labelledby="dfd-sym-t dfd-sym-d">
+                          <title id="dfd-sym-t">สัญลักษณ์ DFD สองสำนัก</title>
+                          <desc id="dfd-sym-d">ตารางสัญลักษณ์: external entity เป็นสี่เหลี่ยมทั้งสองสำนัก process เป็นวงกลมแบบ Yourdon/DeMarco และสี่เหลี่ยมมุมมนแบบ Gane/Sarson data flow เป็นลูกศรทั้งสองสำนัก data store เป็นเส้นขนานสองเส้นแบบ Yourdon/DeMarco และสี่เหลี่ยมเปิดด้านขวาแบบ Gane/Sarson</desc>
+                          <text class="dg-mono dg-mono--sm" x="360" y="24" text-anchor="middle">Yourdon/DeMarco</text>
+                          <text class="dg-mono dg-mono--sm" x="590" y="24" text-anchor="middle">Gane/Sarson</text>
+                          <text class="dg-text" x="30" y="66">external entity</text>
+                          <rect class="dg-box" x="310" y="42" width="100" height="40" />
+                          <rect class="dg-box" x="540" y="42" width="100" height="40" />
+                          <text class="dg-text" x="30" y="126">process</text>
+                          <circle class="dg-box dg-box--accent" cx="360" cy="120" r="26" />
+                          <rect class="dg-box dg-box--accent" x="550" y="94" width="80" height="54" rx="10" />
+                          <line class="dg-line" x1="550" y1="112" x2="630" y2="112" />
+                          <text class="dg-text" x="30" y="186">data flow</text>
+                          <line class="dg-line dg-line--accent" x1="310" y1="180" x2="405" y2="180" marker-end="url(#arr)" />
+                          <line class="dg-line dg-line--accent" x1="540" y1="180" x2="635" y2="180" marker-end="url(#arr)" />
+                          <text class="dg-text" x="30" y="242">data store</text>
+                          <line class="dg-line" x1="310" y1="222" x2="410" y2="222" />
+                          <line class="dg-line" x1="310" y1="252" x2="410" y2="252" />
+                          <path class="dg-line" d="M640 222 H540 V252 H640" />
+                          <line class="dg-line" x1="566" y1="222" x2="566" y2="252" />
+                        </svg>
+                      </div>
+                      <figcaption>สไลด์ 6-10 Flow Modeling Notation (วาดใหม่อย่างย่อ)</figcaption>
+                    </figure>
+                  </section>
+
+                  <section class="topic" id="dfd-entity-process">
+                    <h4>External Entity และ Process</h4>
+                    <dl class="defs defs--stack">
+                      <div><dt>External entity</dt><dd><strong>ผู้ผลิตหรือผู้บริโภคข้อมูล</strong> — คน องค์กร หรือระบบที่อยู่<strong>ภายนอก</strong>ระบบ และมีปฏิสัมพันธ์กับระบบ (ส่งข้อมูลเข้าหรือรับข้อมูลออก) เช่น a person, a device, a sensor, a computer-based system · <em>data must always originate somewhere and must always be sent to something</em></dd></div>
+                      <div><dt>Process</dt><dd><strong>ตัวแปลงข้อมูล (data transformer)</strong> — เปลี่ยน input เป็น output เช่น compute taxes, determine area, format report, display graph · <em>data must always be processed in some way to achieve system function</em></dd></div>
+                    </dl>
+                    <p><strong>logical process ที่ควรใส่ใน DFD (สไลด์ 6-13):</strong></p>
+                    <div class="table-scroll">
+                      <table>
+                        <thead><tr><th>Process ที่…</th><th>ตัวอย่าง</th></tr></thead>
+                        <tbody>
+                          <tr><td>คำนวณ (perform computations)</td><td>calculate grade point average</td></tr>
+                          <tr><td>ตัดสินใจ (make decisions)</td><td>determine availability of ordered products</td></tr>
+                          <tr><td>เรียง กรอง หรือสรุปข้อมูล</td><td>identify overdue invoices</td></tr>
+                          <tr><td>จัดข้อมูลให้เป็นสารสนเทศ</td><td>generate a report or answer a question</td></tr>
+                          <tr><td>กระตุ้น process อื่น</td><td>turn on the furnace or instruct a robot</td></tr>
+                          <tr><td>ใช้ข้อมูลที่เก็บไว้</td><td>create, read, update or delete a record</td></tr>
+                        </tbody>
+                      </table>
+                    </div>
+                  </section>
+
+                  <section class="topic" id="dfd-flow-store">
+                    <h4>Data Flow และ Data Store</h4>
+                    <dl class="defs defs--stack">
+                      <div><dt>Data flow</dt><dd><strong>ข้อมูลที่กำลังเคลื่อนที่ (data in motion)</strong> — input ของ process, output จาก process หรือการสร้าง/ลบ/อัปเดตข้อมูลใน data store</dd></div>
+                      <div><dt>Data flow packet concept</dt><dd>ข้อมูลที่ควรเดินทางไปด้วยกัน ให้แสดงเป็น<strong>data flow เส้นเดียว</strong> ไม่ว่าจะมีเอกสารจริงกี่ชิ้นก็ตาม</dd></div>
+                      <div><dt>Data store</dt><dd><strong>ที่เก็บข้อมูลถาวร</strong>ที่ process ต้องใช้หรือสร้างขึ้น · flow ที่<strong>ออกจาก</strong> data store = <strong>data retrieval</strong> · flow ที่<strong>เข้า</strong> data store = <strong>update หรือ new data</strong></dd></div>
+                    </dl>
+                    <figure class="diagram">
+                      <div class="diagram-scroll">
+                        <svg viewBox="0 0 720 120" role="img" aria-labelledby="dfd-tri-t dfd-tri-d">
+                          <title id="dfd-tri-t">ตัวอย่าง data flow: compute triangle area</title>
+                          <desc id="dfd-tri-d">data flow base และ height เข้าสู่ process compute triangle area แล้วออกเป็น data flow area</desc>
+                          <line class="dg-line dg-line--accent" x1="150" y1="36" x2="296" y2="56" marker-end="url(#arr)" />
+                          <text class="dg-text" x="110" y="40" text-anchor="middle">base</text>
+                          <line class="dg-line dg-line--accent" x1="150" y1="92" x2="296" y2="70" marker-end="url(#arr)" />
+                          <text class="dg-text" x="110" y="96" text-anchor="middle">height</text>
+                          <circle class="dg-box dg-box--accent" cx="360" cy="62" r="58" />
+                          <text class="dg-text dg-text--sm" x="360" y="58" text-anchor="middle">compute</text>
+                          <text class="dg-text dg-text--sm" x="360" y="76" text-anchor="middle">triangle area</text>
+                          <line class="dg-line dg-line--accent" x1="420" y1="62" x2="570" y2="62" marker-end="url(#arr)" />
+                          <text class="dg-text" x="610" y="67" text-anchor="middle">area</text>
+                        </svg>
+                      </div>
+                      <figcaption>สไลด์ 6-14 — ข้อมูลเริ่มเป็น input แล้วถูกแปลงเป็น output</figcaption>
+                    </figure>
+                  </section>
+
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- ================= 02 Context diagram, hierarchy, balancing ================= -->
+          <div class="acc-item">
+            <h3 class="acc-heading">
+              <button class="acc-trigger" type="button" aria-expanded="false" aria-controls="acc-dfd-levels" id="acc-dfd-levels-btn">
+                <span class="acc-index">02</span>
+                <span class="acc-title">
+                  <span class="acc-name">กฎการสร้าง DFD · Context Diagram (Level 0) · Decomposition · Balancing</span>
+                  <span class="acc-file">L6 Flow and Behavior I · slide 17–26</span>
+                </span>
+                <svg class="acc-chevron" viewBox="0 0 20 20" aria-hidden="true"><path d="M5 7.5l5 5 5-5" /></svg>
+              </button>
+            </h3>
+            <div class="acc-panel" id="acc-dfd-levels" role="region" aria-labelledby="acc-dfd-levels-btn">
+              <div class="acc-panel-inner">
+                <div class="acc-body">
+
+                  <nav class="toc" aria-label="หัวข้อในการ์ดระดับของ DFD">
+                    <a href="#dfd-decomposition">ทำไมต้องหลายระดับ</a>
+                    <a href="#dfd-guidelines">Guidelines &amp; ขั้นตอนสร้าง</a>
+                    <a href="#dfd-context">Context diagram</a>
+                    <a href="#dfd-hierarchy">Flow modeling notes</a>
+                    <a href="#dfd-balancing">Balancing</a>
+                  </nav>
+
+                  <section class="topic" id="dfd-decomposition">
+                    <h4>Depicting Business Processes with DFDs</h4>
+                    <ul class="tight">
+                      <li>business process <strong>ซับซ้อนเกินกว่าจะแสดงใน DFD เดียว</strong></li>
+                      <li>จึงสร้าง<strong>ลำดับชั้น (hierarchy) ของ DFD หลาย "level"</strong> อย่างตั้งใจ</li>
+                      <li>สร้าง hierarchy ด้วย <strong>Decomposition</strong> — child diagram แสดงส่วนหนึ่งของ parent diagram อย่างละเอียดขึ้น</li>
+                    </ul>
+                  </section>
+
+                  <section class="topic" id="dfd-guidelines">
+                    <h4>Data Flow Diagramming: Guidelines</h4>
+                    <ul class="checklist">
+                      <li>ทุกไอคอนต้องมี<strong>ชื่อที่มีความหมาย</strong></li>
+                      <li>DFD วิวัฒนาการผ่าน<strong>หลายระดับรายละเอียด</strong></li>
+                      <li><strong>เริ่มต้นด้วย context level diagram (level 0) เสมอ</strong></li>
+                      <li><strong>แสดง external entities ที่ level 0 เสมอ</strong></li>
+                      <li><strong>ใส่ชื่อ data flow arrow เสมอ</strong></li>
+                    </ul>
+                    <p><strong>Constructing a DFD:</strong></p>
+                    <ol class="steps">
+                      <li>ทบทวน user scenarios และ/หรือ data model เพื่อแยก data object และใช้ grammatical parse หา "operations"</li>
+                      <li>กำหนด external entities (ผู้ผลิตและผู้บริโภคข้อมูล)</li>
+                      <li>สร้าง level 0 DFD (context diagram)</li>
+                    </ol>
+                  </section>
+
+                  <section class="topic" id="dfd-context">
+                    <h4>Context Diagram (Level 0)</h4>
+                    <ul class="tight">
+                      <li><strong>DFD ระดับบนสุด</strong>ของทุก process model</li>
+                      <li>แสดงบริบทที่ business process อยู่</li>
+                      <li>แสดง business process ทั้งหมด<strong>เป็นเพียง process เดียว (process 'zero')</strong></li>
+                      <li>แสดง<strong>external entity ทั้งหมด</strong>ที่รับข้อมูลจากหรือส่งข้อมูลให้ระบบ</li>
+                    </ul>
+                    <figure class="diagram">
+                      <div class="diagram-scroll">
+                        <svg viewBox="0 0 720 240" role="img" aria-labelledby="dfd-ctx-t dfd-ctx-d">
+                          <title id="dfd-ctx-t">ตัวอย่าง level 0 DFD: digital video processor</title>
+                          <desc id="dfd-ctx-d">external entity user ส่ง processing request และ external entity video source ส่ง NTSC video signal เข้าสู่ process digital video processor ซึ่งส่ง requested video signal ไปยัง external entity monitor</desc>
+                          <rect class="dg-box" x="20" y="30" width="120" height="50" />
+                          <text class="dg-text" x="80" y="60" text-anchor="middle">user</text>
+                          <rect class="dg-box" x="20" y="160" width="120" height="50" />
+                          <text class="dg-text" x="80" y="190" text-anchor="middle">video source</text>
+                          <circle class="dg-box dg-box--accent" cx="370" cy="120" r="70" />
+                          <text class="dg-text" x="370" y="114" text-anchor="middle">digital video</text>
+                          <text class="dg-text" x="370" y="134" text-anchor="middle">processor</text>
+                          <rect class="dg-box" x="590" y="95" width="110" height="50" />
+                          <text class="dg-text" x="645" y="125" text-anchor="middle">monitor</text>
+                          <line class="dg-line dg-line--accent" x1="142" y1="60" x2="306" y2="96" marker-end="url(#arr)" />
+                          <text class="dg-mono dg-mono--sm" x="220" y="58" text-anchor="middle">processing request</text>
+                          <line class="dg-line dg-line--accent" x1="142" y1="182" x2="306" y2="146" marker-end="url(#arr)" />
+                          <text class="dg-mono dg-mono--sm" x="220" y="196" text-anchor="middle">NTSC video signal</text>
+                          <line class="dg-line dg-line--accent" x1="442" y1="120" x2="585" y2="120" marker-end="url(#arr)" />
+                          <text class="dg-mono dg-mono--sm" x="514" y="108" text-anchor="middle">requested video signal</text>
+                        </svg>
+                      </div>
+                      <figcaption>สไลด์ 6-21 Level-0 DFD (context diagram) example — process เดียว, external entity ครบ, data flow มีชื่อทุกเส้น</figcaption>
+                    </figure>
+                    <p class="note">สไลด์ 6-35 ถึง 6-37 มีตัวอย่าง DFD Level 0 / 1 / 2 ของ <strong>Library Query System</strong> ด้วย (ในสไลด์เป็นภาพ) — ใช้ดูประกอบการแตกระดับได้</p>
+                  </section>
+
+                  <section class="topic" id="dfd-hierarchy">
+                    <h4>The Data Flow Hierarchy — Flow Modeling Notes</h4>
+                    <ul class="tight">
+                      <li>แต่ละ bubble (process) ถูกขยายรายละเอียด<strong>จนกว่าจะทำเพียงอย่างเดียว</strong></li>
+                      <li><strong>อัตราการขยาย (expansion ratio) ลดลง</strong>เมื่อจำนวนระดับเพิ่มขึ้น</li>
+                      <li>ระบบส่วนใหญ่ต้องการ <strong>3 ถึง 7 ระดับ</strong>สำหรับ flow model ที่เพียงพอ</li>
+                      <li>data flow เส้นเดียวอาจถูกขยายเมื่อระดับเพิ่ม (<strong>data dictionary</strong> ให้ข้อมูลรายละเอียด)</li>
+                    </ul>
+                  </section>
+
+                  <section class="topic" id="dfd-balancing">
+                    <h4>Balancing</h4>
+                    <ul class="tight">
+                      <li>ทำให้ข้อมูลที่แสดงใน DFD <strong>ระดับหนึ่งถูกแสดงอย่างถูกต้องในระดับถัดไป</strong></li>
+                      <li><strong>data flow บน parent diagram ถูกส่งต่อลงมายัง child diagram</strong></li>
+                      <li><strong>child diagram เพิ่ม process ใหม่และ data flow ใหม่</strong>ได้</li>
+                    </ul>
+                    <figure class="diagram">
+                      <div class="diagram-scroll">
+                        <svg viewBox="0 0 720 300" role="img" aria-labelledby="dfd-bal-t dfd-bal-d">
+                          <title id="dfd-bal-t">แนวคิด balancing ระหว่าง parent และ child</title>
+                          <desc id="dfd-bal-d">บน: parent diagram มี Input B เข้า process 3 และ Data flow D ออก ล่าง: child diagram ของ process 3 มี 3.1, 3.2, 3.3 โดย Input B เข้าที่ 3.1 และ Data flow D ออกจาก 3.3 เหมือน parent ส่วน flow ภายในและ Error เป็นของที่เพิ่มใหม่ใน child</desc>
+                          <text class="dg-mono dg-mono--sm" x="20" y="24">Parent diagram</text>
+                          <line class="dg-line dg-line--accent" x1="150" y1="70" x2="300" y2="70" marker-end="url(#arr)" />
+                          <text class="dg-mono dg-mono--sm" x="225" y="58" text-anchor="middle">Input B</text>
+                          <rect class="dg-box dg-box--accent" x="305" y="40" width="110" height="60" rx="10" />
+                          <text class="dg-text" x="360" y="76" text-anchor="middle">3</text>
+                          <line class="dg-line dg-line--accent" x1="417" y1="70" x2="567" y2="70" marker-end="url(#arr)" />
+                          <text class="dg-mono dg-mono--sm" x="492" y="58" text-anchor="middle">Data flow D</text>
+                          <line class="dg-line dg-line--dash" x1="20" y1="124" x2="700" y2="124" />
+                          <text class="dg-mono dg-mono--sm" x="20" y="150">Child diagram of process 3</text>
+                          <line class="dg-line dg-line--accent" x1="20" y1="220" x2="96" y2="220" marker-end="url(#arr)" />
+                          <text class="dg-mono dg-mono--sm" x="58" y="208" text-anchor="middle">Input B</text>
+                          <rect class="dg-box" x="100" y="190" width="100" height="60" rx="10" />
+                          <text class="dg-text" x="150" y="226" text-anchor="middle">3.1</text>
+                          <line class="dg-line" x1="202" y1="220" x2="306" y2="220" marker-end="url(#arr-muted)" />
+                          <text class="dg-text dg-text--sm" x="254" y="208" text-anchor="middle">flow ใหม่</text>
+                          <rect class="dg-box" x="310" y="190" width="100" height="60" rx="10" />
+                          <text class="dg-text" x="360" y="226" text-anchor="middle">3.2</text>
+                          <line class="dg-line" x1="412" y1="220" x2="516" y2="220" marker-end="url(#arr-muted)" />
+                          <text class="dg-text dg-text--sm" x="464" y="208" text-anchor="middle">flow ใหม่</text>
+                          <rect class="dg-box" x="520" y="190" width="100" height="60" rx="10" />
+                          <text class="dg-text" x="570" y="226" text-anchor="middle">3.3</text>
+                          <line class="dg-line dg-line--accent" x1="622" y1="220" x2="700" y2="220" marker-end="url(#arr)" />
+                          <text class="dg-mono dg-mono--sm" x="660" y="208" text-anchor="middle">Data flow D</text>
+                          <line class="dg-line dg-line--bad dg-line--dash" x1="150" y1="252" x2="150" y2="286" marker-end="url(#arr-bad)" />
+                          <text class="dg-text dg-text--sm dg-text--bad" x="162" y="284">Error (เพิ่มได้ใน child)</text>
+                        </svg>
+                      </div>
+                      <figcaption>แผนภาพแนวคิดอย่างย่อ — ชื่อ Input B / Data flow D / Error มาจากสไลด์ 6-26 ส่วนการเชื่อมภายใน child วาดใหม่เพื่อแสดงหลัก: flow เข้า-ออกของ parent ต้องตรงกับ child · child เพิ่ม process, flow ใหม่ และ error line / transaction file ได้</figcaption>
+                    </figure>
+                  </section>
+
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- ================= 03 กฎ consistency และ numbering ================= -->
+          <div class="acc-item">
+            <h3 class="acc-heading">
+              <button class="acc-trigger" type="button" aria-expanded="false" aria-controls="acc-dfd-rules" id="acc-dfd-rules-btn">
+                <span class="acc-index">03</span>
+                <span class="acc-title">
+                  <span class="acc-name">กฎของ Data Flow · Internal &amp; Hierarchical Consistency · ระบบเลข Process</span>
+                  <span class="acc-file">L6 Flow and Behavior I · slide 27–34</span>
+                </span>
+                <svg class="acc-chevron" viewBox="0 0 20 20" aria-hidden="true"><path d="M5 7.5l5 5 5-5" /></svg>
+              </button>
+            </h3>
+            <div class="acc-panel" id="acc-dfd-rules" role="region" aria-labelledby="acc-dfd-rules-btn">
+              <div class="acc-panel-inner">
+                <div class="acc-body">
+
+                  <nav class="toc" aria-label="หัวข้อในการ์ดกฎของ DFD">
+                    <a href="#dfd-flow-rules">Rules for data flows</a>
+                    <a href="#dfd-dont-break">Don't break DFD rules</a>
+                    <a href="#dfd-internal">Internal consistency</a>
+                    <a href="#dfd-hier-consistency">Hierarchical consistency</a>
+                    <a href="#dfd-numbering">Diagram numbering</a>
+                  </nav>
+
+                  <section class="topic" id="dfd-flow-rules">
+                    <h4>Rules for Data Flows</h4>
+                    <ul class="checklist">
+                      <li>data flow <strong>ต้องมีชื่อเสมอ</strong> (should never go unnamed)</li>
+                      <li>ใน logical modeling ชื่อ data flow ควร<strong>อธิบายตัวข้อมูล ไม่ใช่อธิบายการ implement</strong></li>
+                      <li>data flow ทุกเส้น<strong>ต้องเริ่มต้นและ/หรือสิ้นสุดที่ process</strong></li>
+                    </ul>
+                  </section>
+
+                  <section class="topic" id="dfd-dont-break">
+                    <h4>Don't Break DFD Rules!</h4>
+                    <figure class="diagram">
+                      <div class="diagram-scroll">
+                        <svg viewBox="0 0 720 330" role="img" aria-labelledby="dfd-rule-t dfd-rule-d">
+                          <title id="dfd-rule-t">3 กฎที่ห้ามทำผิด</title>
+                          <desc id="dfd-rule-d">แถว 1: data flow แยกเป็นสองเส้นโดยไม่ผ่าน process ผิด แถว 2: external entity ต่อตรงกับ data store ผิด ต้องผ่าน process แถว 3: process ที่มีแต่ input ไม่มี output ผิด ต้องมีอย่างน้อยหนึ่ง input และหนึ่ง output</desc>
+                          <text class="dg-mono dg-mono--sm" x="20" y="22">1. Data flows should not split into two or more different data flows</text>
+                          <text class="dg-text dg-text--bad" x="30" y="70">✗</text>
+                          <line class="dg-line dg-line--bad" x1="60" y1="64" x2="160" y2="64" />
+                          <line class="dg-line dg-line--bad" x1="160" y1="64" x2="250" y2="40" marker-end="url(#arr-bad)" />
+                          <line class="dg-line dg-line--bad" x1="160" y1="64" x2="250" y2="88" marker-end="url(#arr-bad)" />
+                          <text class="dg-text dg-text--sm" x="300" y="68">แตกเส้นกลางอากาศ</text>
+                          <text class="dg-mono dg-mono--sm" x="20" y="132">2. All data flows must either originate or terminate at a process</text>
+                          <text class="dg-text dg-text--bad" x="30" y="182">✗</text>
+                          <rect class="dg-box" x="60" y="156" width="100" height="40" />
+                          <text class="dg-text dg-text--sm" x="110" y="181" text-anchor="middle">entity</text>
+                          <line class="dg-line dg-line--bad" x1="162" y1="176" x2="250" y2="176" marker-end="url(#arr-bad)" />
+                          <path class="dg-line" d="M340 162 H256 V190 H340" />
+                          <text class="dg-text dg-text--sm" x="298" y="181" text-anchor="middle">store</text>
+                          <text class="dg-text dg-text--ok" x="390" y="182">✓</text>
+                          <rect class="dg-box" x="415" y="156" width="80" height="40" />
+                          <text class="dg-text dg-text--sm" x="455" y="181" text-anchor="middle">entity</text>
+                          <line class="dg-line dg-line--ok" x1="497" y1="176" x2="538" y2="176" marker-end="url(#arr-ok)" />
+                          <circle class="dg-box dg-box--accent" cx="566" cy="176" r="24" />
+                          <text class="dg-text dg-text--sm" x="566" y="181" text-anchor="middle">process</text>
+                          <line class="dg-line dg-line--ok" x1="592" y1="176" x2="624" y2="176" marker-end="url(#arr-ok)" />
+                          <path class="dg-line" d="M705 162 H630 V190 H705" />
+                          <text class="dg-text dg-text--sm" x="668" y="181" text-anchor="middle">store</text>
+                          <text class="dg-mono dg-mono--sm" x="20" y="244">3. Processes need at least one input data flow and one output data flow</text>
+                          <text class="dg-text dg-text--bad" x="30" y="294">✗</text>
+                          <line class="dg-line dg-line--bad" x1="60" y1="288" x2="150" y2="288" marker-end="url(#arr-bad)" />
+                          <circle class="dg-box dg-box--bad" cx="180" cy="288" r="26" />
+                          <text class="dg-text dg-text--sm" x="180" y="293" text-anchor="middle">process</text>
+                          <text class="dg-text dg-text--sm" x="220" y="293">ไม่มี output</text>
+                          <text class="dg-text dg-text--ok" x="390" y="294">✓</text>
+                          <line class="dg-line dg-line--ok" x1="415" y1="288" x2="508" y2="288" marker-end="url(#arr-ok)" />
+                          <circle class="dg-box dg-box--accent" cx="538" cy="288" r="26" />
+                          <text class="dg-text dg-text--sm" x="538" y="293" text-anchor="middle">process</text>
+                          <line class="dg-line dg-line--ok" x1="566" y1="288" x2="660" y2="288" marker-end="url(#arr-ok)" />
+                        </svg>
+                      </div>
+                      <figcaption>วาดประกอบกฎ 3 ข้อในสไลด์ 6-28 (ภาพตัวอย่างวาดใหม่ ชื่อกล่องเป็นชื่อสมมติ)</figcaption>
+                    </figure>
+                  </section>
+
+                  <section class="topic" id="dfd-internal">
+                    <h4>Dataflow Analysis: Internal Consistency</h4>
+                    <div class="table-scroll">
+                      <table>
+                        <thead><tr><th>ส่วน</th><th>กฎ</th></tr></thead>
+                        <tbody>
+                          <tr><td><strong>Context diagram</strong></td><td>ต้องมีอยู่ · มี<strong>เพียง 1 process</strong> · มี input จาก external entity อย่างน้อย 1 และ output ไป external entity อย่างน้อย 1 · process <strong>ต้องเลข 0</strong></td></tr>
+                          <tr><td><strong>Detailed DFDs</strong></td><td>อย่างน้อย 1 process · <strong>ไม่เกิน 7 process</strong></td></tr>
+                          <tr><td><strong>Process</strong></td><td>อย่างน้อย 1 input และ 1 output data flow · ต้องเชื่อมกับ data store, process หรือ external entity · ต้องมีชื่อ</td></tr>
+                          <tr><td><strong>External entity</strong></td><td><strong>ปรากฏเฉพาะใน context diagram</strong> · ต้องเชื่อมกับ process · ต้องมีชื่อ</td></tr>
+                          <tr><td><strong>Data flow</strong></td><td>ต้องเป็น interface ระหว่าง process กับ process อื่น / data store / external entity · flow เข้า-ออก data store ต้องมีองค์ประกอบเป็น subset ของ data store · ต้องมีชื่อ</td></tr>
+                          <tr><td><strong>Data store</strong></td><td>ต้องเป็น <strong>interface ระหว่าง 2 process</strong> · ต้องมีชื่อ</td></tr>
+                        </tbody>
+                      </table>
+                    </div>
+                  </section>
+
+                  <section class="topic" id="dfd-hier-consistency">
+                    <h4>Dataflow Analysis: Hierarchical Consistency</h4>
+                    <div class="table-scroll">
+                      <table>
+                        <thead><tr><th>ส่วน</th><th>กฎ</th></tr></thead>
+                        <tbody>
+                          <tr><td><strong>Data flow diagram</strong></td><td>ต้องมี parent diagram <strong>ยกเว้น context diagram</strong></td></tr>
+                          <tr><td><strong>Process</strong></td><td>ต้องแตกเป็นอีก diagram หรือ <strong>primitive process specification</strong> · ต้อง<strong>เลขตาม parent</strong></td></tr>
+                          <tr><td><strong>Data flow</strong></td><td>input (output) บน parent ต้องปรากฏบน child เป็น input (output) <strong>และกลับกัน</strong> · flow ที่แตกจาก flow ของ parent ต้องมีองค์ประกอบรวมตรงกับ flow นั้น · ต้องแตกเป็น record definition หรือ element definition (อาจอยู่ใน ERD)</td></tr>
+                          <tr><td><strong>Data store</strong></td><td>ต้องแตกเป็น file definition หรือ record definition (อาจอยู่ใน ERD)</td></tr>
+                          <tr><td><strong>Primitive process specification</strong></td><td>input/output ต้องตรงกับ primitive process บน DFD · ใช้ identifier เดียวกับ process นั้น</td></tr>
+                        </tbody>
+                      </table>
+                    </div>
+                  </section>
+
+                  <section class="topic" id="dfd-numbering">
+                    <h4>Diagram Numbering</h4>
+                    <p>เลข process ที่ถูกต้องช่วยให้เห็นว่า process อยู่ตรงไหนในลำดับชั้น:</p>
+                    <figure class="diagram">
+                      <div class="diagram-scroll">
+                        <svg viewBox="0 0 720 250" role="img" aria-labelledby="dfd-num-t dfd-num-d">
+                          <title id="dfd-num-t">ระบบเลข process ตามระดับ</title>
+                          <desc id="dfd-num-d">Level 0 มี process 0 แตกเป็น Level 1 process 1, 2, 3 process 1 แตกเป็น Level 2 process 1.1, 1.2, 1.3 และ process 1.1 แตกเป็น Level 3 process 1.1.1, 1.1.2</desc>
+                          <text class="dg-mono dg-mono--sm" x="20" y="42">Level 0</text>
+                          <text class="dg-mono dg-mono--sm" x="20" y="102">Level 1</text>
+                          <text class="dg-mono dg-mono--sm" x="20" y="162">Level 2</text>
+                          <text class="dg-mono dg-mono--sm" x="20" y="222">Level 3</text>
+                          <circle class="dg-box dg-box--accent" cx="400" cy="38" r="20" /><text class="dg-mono" x="400" y="43" text-anchor="middle">0</text>
+                          <circle class="dg-box dg-box--accent" cx="260" cy="98" r="20" /><text class="dg-mono" x="260" y="103" text-anchor="middle">1</text>
+                          <circle class="dg-box" cx="400" cy="98" r="20" /><text class="dg-mono" x="400" y="103" text-anchor="middle">2</text>
+                          <circle class="dg-box" cx="540" cy="98" r="20" /><text class="dg-mono" x="540" y="103" text-anchor="middle">3</text>
+                          <line class="dg-line" x1="386" y1="52" x2="274" y2="84" /><line class="dg-line" x1="400" y1="58" x2="400" y2="78" /><line class="dg-line" x1="414" y1="52" x2="526" y2="84" />
+                          <circle class="dg-box dg-box--accent" cx="160" cy="158" r="22" /><text class="dg-mono dg-mono--sm" x="160" y="162" text-anchor="middle">1.1</text>
+                          <circle class="dg-box" cx="260" cy="158" r="22" /><text class="dg-mono dg-mono--sm" x="260" y="162" text-anchor="middle">1.2</text>
+                          <circle class="dg-box" cx="360" cy="158" r="22" /><text class="dg-mono dg-mono--sm" x="360" y="162" text-anchor="middle">1.3</text>
+                          <line class="dg-line" x1="248" y1="114" x2="176" y2="142" /><line class="dg-line" x1="260" y1="118" x2="260" y2="136" /><line class="dg-line" x1="272" y1="114" x2="344" y2="142" />
+                          <circle class="dg-box" cx="110" cy="218" r="24" /><text class="dg-mono dg-mono--sm" x="110" y="222" text-anchor="middle">1.1.1</text>
+                          <circle class="dg-box" cx="210" cy="218" r="24" /><text class="dg-mono dg-mono--sm" x="210" y="222" text-anchor="middle">1.1.2</text>
+                          <line class="dg-line" x1="148" y1="178" x2="122" y2="198" /><line class="dg-line" x1="172" y1="178" x2="198" y2="198" />
+                          <text class="dg-text dg-text--sm" x="480" y="162">parent "dot" unique number</text>
+                          <text class="dg-text dg-text--sm" x="480" y="222">สองจุด</text>
+                        </svg>
+                      </div>
+                      <figcaption>สไลด์ 6-33 Diagram Numbering (วาดเป็นต้นไม้อย่างย่อ)</figcaption>
+                    </figure>
+                    <div class="table-scroll">
+                      <table>
+                        <thead><tr><th>ระดับ</th><th>รูปแบบเลข</th></tr></thead>
+                        <tbody>
+                          <tr><td>Context diagram</td><td>เป็น <strong>"Level 0"</strong> เสมอ (process เลข 0)</td></tr>
+                          <tr><td>Level 1</td><td>เลขจำนวนเต็ม <strong>1, 2, 3, …</strong></td></tr>
+                          <tr><td>Level 2</td><td><strong>หนึ่งจุด</strong>: เลข parent "จุด" เลขเฉพาะ — <strong>1.1, 1.2, 1.3, …</strong></td></tr>
+                          <tr><td>Level 3</td><td><strong>สองจุด</strong> — <strong>1.1.1, 1.1.2, 1.1.3, …</strong></td></tr>
+                        </tbody>
+                      </table>
+                    </div>
+                  </section>
+
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- ================= 04 PSPEC, Structured English, Decision table ================= -->
+          <div class="acc-item">
+            <h3 class="acc-heading">
+              <button class="acc-trigger" type="button" aria-expanded="false" aria-controls="acc-dfd-pspec" id="acc-dfd-pspec-btn">
+                <span class="acc-index">04</span>
+                <span class="acc-title">
+                  <span class="acc-name">อธิบาย Process: PSPEC · Structured English · Decision Table</span>
+                  <span class="acc-file">L7 Flow and Behavior II · slide 10–20</span>
+                </span>
+                <svg class="acc-chevron" viewBox="0 0 20 20" aria-hidden="true"><path d="M5 7.5l5 5 5-5" /></svg>
+              </button>
+            </h3>
+            <div class="acc-panel" id="acc-dfd-pspec" role="region" aria-labelledby="acc-dfd-pspec-btn">
+              <div class="acc-panel-inner">
+                <div class="acc-body">
+
+                  <nav class="toc" aria-label="หัวข้อในการ์ด PSPEC">
+                    <a href="#dfd-pspec">PSPEC</a>
+                    <a href="#dfd-triangle">ตัวอย่าง Analyze Triangle</a>
+                    <a href="#dfd-structured-english">Structured English</a>
+                    <a href="#dfd-decision-table">Policy &amp; decision table</a>
+                    <a href="#dfd-look-ahead">DFDs: a look ahead</a>
+                  </nav>
+
+                  <section class="topic" id="dfd-pspec">
+                    <h4>Process Specification (PSPEC)</h4>
+                    <p>ใช้อธิบาย<strong>รายละเอียดการทำงานภายในของแต่ละ process</strong> — เขียนได้ 5 รูปแบบ:</p>
+                    <ul class="tight">
+                      <li><strong>narrative</strong> (คำบรรยาย)</li>
+                      <li><strong>pseudocode (PDL)</strong></li>
+                      <li><strong>equations</strong> (สมการ)</li>
+                      <li><strong>tables</strong> (ตาราง)</li>
+                      <li><strong>diagrams and/or charts</strong> (แผนภาพ)</li>
+                    </ul>
+                  </section>
+
+                  <section class="topic" id="dfd-triangle">
+                    <h4>ตัวอย่าง PSPEC: Analyze Triangle</h4>
+                    <p>process <strong>analyze triangle</strong> รับ data flow <em>side dimensions of triangle</em> และส่งออก <em>triangle type</em> หรือ <em>error message</em></p>
+                    <div class="compare">
+                      <div class="compare-col">
+                        <strong>แบบ narrative (สไลด์ 7-12)</strong>
+                        <p>รับค่า A, B, C ที่เป็นความยาวด้านของสามเหลี่ยม ทดสอบว่าทุกค่าเป็นบวกหรือไม่ ถ้าพบค่าติดลบให้สร้าง error message · จากนั้นประเมินข้อมูลที่ถูกต้องว่าเป็นสามเหลี่ยมได้หรือไม่ และถ้าได้ เป็นชนิดใด — equilateral, isosceles หรือ scalene — แล้วส่งชนิดออกไป</p>
+                      </div>
+                      <div class="compare-col">
+                        <strong>แบบ PDL (สไลด์ 7-13)</strong>
+                        <pre class="code-block"><code>read side dimensions;
+if any dimension is negative
+  then produce error message;
+if the largest dimension is less than
+   the sum of the others
+  then determine number of equal sides;
+    if three sides are equal
+      then type is equilateral;
+    if two sides are equal
+      then type is isosceles;
+    if no sides are equal
+      then 1) type is scalene;
+           2) output triangle type;
+else output type = 0,
+  indication that no triangle exists;</code></pre>
+                      </div>
+                    </div>
+                    <div class="demo-box" data-widget="triangle-pspec">
+                      <span class="demo-box-title">ลองเล่น: รัน PDL ของ Analyze Triangle ทีละบรรทัด</span>
+                      <div class="demo-fields">
+                        <div class="demo-field"><label for="tri-a">ด้าน A</label><input class="demo-input" id="tri-a" data-input="a" type="number" step="any" value="3" inputmode="decimal" /></div>
+                        <div class="demo-field"><label for="tri-b">ด้าน B</label><input class="demo-input" id="tri-b" data-input="b" type="number" step="any" value="4" inputmode="decimal" /></div>
+                        <div class="demo-field"><label for="tri-c">ด้าน C</label><input class="demo-input" id="tri-c" data-input="c" type="number" step="any" value="5" inputmode="decimal" /></div>
+                      </div>
+                      <p class="demo-status" aria-live="polite"></p>
+                      <ol class="calc-steps"></ol>
+                      <p class="demo-hint">ลองค่า 5, 5, 5 · 5, 5, 8 · 1, 2, 3 · −1, 4, 5 แล้วดูว่า PDL เดินไปทางไหน</p>
+                    </div>
+                  </section>
+
+                  <section class="topic" id="dfd-structured-english">
+                    <h4>Structured English</h4>
+                    <p><strong>ไวยากรณ์ภาษาสำหรับระบุ logic ของ process</strong> — อิงจุดแข็งของ <strong>structured programming</strong> ผสมกับ <strong>ภาษาอังกฤษธรรมชาติ</strong> (PDL ของ Analyze Triangle ด้านบนก็เขียนในลักษณะนี้: ใช้ if / then / else ร่วมกับประโยคภาษาอังกฤษ)</p>
+                  </section>
+
+                  <section class="topic" id="dfd-decision-table">
+                    <h4>Policies และ Decision Tables</h4>
+                    <dl class="defs defs--stack">
+                      <div><dt>Policy</dt><dd>ชุดกฎที่กำหนดว่า process หนึ่งต้องทำให้สำเร็จอย่างไร</dd></div>
+                      <div><dt>Decision table</dt><dd>การนำเสนอแบบ<strong>ตาราง</strong>ที่ระบุ<strong>ชุดเงื่อนไข (conditions)</strong> และ<strong>การกระทำที่สอดคล้องกัน (actions)</strong> ตามที่ต้องใช้ implement policy</dd></div>
+                    </dl>
+                    <p><strong>ตัวอย่างประกอบ:</strong> นำ logic ของ PDL Analyze Triangle ข้างบนมาเขียนเป็น decision table — แต่ละคอลัมน์คือ 1 กฎ</p>
+                    <div class="table-scroll">
+                      <table>
+                        <thead><tr><th></th><th>กฎ 1</th><th>กฎ 2</th><th>กฎ 3</th><th>กฎ 4</th><th>กฎ 5</th></tr></thead>
+                        <tbody>
+                          <tr><td><strong>C1:</strong> มีด้านติดลบ</td><td>Y</td><td>N</td><td>N</td><td>N</td><td>N</td></tr>
+                          <tr><td><strong>C2:</strong> ด้านยาวสุด &lt; ผลรวมอีกสองด้าน</td><td>–</td><td>N</td><td>Y</td><td>Y</td><td>Y</td></tr>
+                          <tr><td><strong>C3:</strong> จำนวนด้านที่เท่ากัน</td><td>–</td><td>–</td><td>3</td><td>2</td><td>0</td></tr>
+                          <tr><td><strong>A:</strong> ผลลัพธ์</td><td>error message</td><td>type = 0</td><td>equilateral</td><td>isosceles</td><td>scalene</td></tr>
+                        </tbody>
+                      </table>
+                    </div>
+                    <p class="note">ตารางนี้แปลงมาจาก PDL ในสไลด์ 7-13 เพื่อให้เห็นโครงสร้าง conditions/actions — สไลด์ 7-18 "A Simple Decision Table" เป็นภาพตัวอย่างอีกชุดหนึ่ง · "–" = ไม่ต้องพิจารณาเงื่อนไขนั้น</p>
+                  </section>
+
+                  <section class="topic" id="dfd-look-ahead">
+                    <h4>DFDs: A Look Ahead</h4>
+                    <ul class="tight">
+                      <li>DFD เป็นส่วนหนึ่งของ <strong>analysis model</strong> ซึ่ง <strong>map ไปสู่ design model</strong></li>
+                      <li><strong>A design note:</strong> PSPEC หนึ่งอันอาจกลายเป็น <strong>"component" หนึ่งหรือหลายตัว</strong>ใน software design</li>
+                    </ul>
+                  </section>
+
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- ================= 05 Control flow ================= -->
+          <div class="acc-item">
+            <h3 class="acc-heading">
+              <button class="acc-trigger" type="button" aria-expanded="false" aria-controls="acc-dfd-control" id="acc-dfd-control-btn">
+                <span class="acc-index">05</span>
+                <span class="acc-title">
+                  <span class="acc-name">Control Flow Modeling · CSPEC</span>
+                  <span class="acc-file">L7 Flow and Behavior II · slide 21–24</span>
+                </span>
+                <svg class="acc-chevron" viewBox="0 0 20 20" aria-hidden="true"><path d="M5 7.5l5 5 5-5" /></svg>
+              </button>
+            </h3>
+            <div class="acc-panel" id="acc-dfd-control" role="region" aria-labelledby="acc-dfd-control-btn">
+              <div class="acc-panel-inner">
+                <div class="acc-body">
+
+                  <nav class="toc" aria-label="หัวข้อในการ์ด control flow">
+                    <a href="#dfd-control">Control flow คืออะไร</a>
+                    <a href="#dfd-control-dfd">Control flow ใน DFD</a>
+                    <a href="#dfd-cspec">CSPEC</a>
+                  </nav>
+
+                  <section class="topic" id="dfd-control">
+                    <h4>Control Flow Modeling</h4>
+                    <ul class="tight">
+                      <li>control flow แทน <strong>"events"</strong> และ process ที่จัดการ event</li>
+                      <li><strong>Event</strong> คือ<strong>เงื่อนไข Boolean</strong> ที่หาได้จาก:
+                        <ul class="tight">
+                          <li>ลิสต์ sensor ทั้งหมดที่ซอฟต์แวร์ "อ่าน"</li>
+                          <li>ลิสต์ interrupt condition ทั้งหมด</li>
+                          <li>ลิสต์ "switch" ทั้งหมดที่ operator กด</li>
+                          <li>ลิสต์ data condition ทั้งหมด</li>
+                          <li>ทบทวน noun/verb parse ของ processing narrative แล้วดู "control items" ที่อาจเป็น input/output ของ CSPEC</li>
+                        </ul>
+                      </li>
+                      <li>control flow คือ<strong>สัญญาณที่สั่งการ หรือบ่งชี้ว่ามีบางอย่างเกิดขึ้น</strong></li>
+                      <li>เกิดขึ้น<strong>ณ จุดเวลาที่ไม่ต่อเนื่อง (discrete point in time)</strong></li>
+                    </ul>
+                  </section>
+
+                  <section class="topic" id="dfd-control-dfd">
+                    <h4>Control Flows in DFD</h4>
+                    <figure class="diagram">
+                      <div class="diagram-scroll">
+                        <svg viewBox="0 0 720 150" role="img" aria-labelledby="dfd-cf-t dfd-cf-d">
+                          <title id="dfd-cf-t">data flow เทียบกับ control flow</title>
+                          <desc id="dfd-cf-d">บน: data flow เป็นลูกศรเส้นทึบกำกับชื่อข้อมูล ล่าง: control flow เป็นลูกศรเส้นประกำกับชื่อ event</desc>
+                          <text class="dg-text" x="30" y="50">Data flow</text>
+                          <line class="dg-line dg-line--accent" x1="200" y1="45" x2="560" y2="45" marker-end="url(#arr)" />
+                          <text class="dg-mono dg-mono--sm" x="380" y="34" text-anchor="middle">ชื่อข้อมูล · เส้นทึบ</text>
+                          <text class="dg-text" x="30" y="112">Control flow</text>
+                          <line class="dg-line dg-line--warn dg-line--dash" x1="200" y1="107" x2="560" y2="107" marker-end="url(#arr-muted)" />
+                          <text class="dg-mono dg-mono--sm dg-mono--warn" x="380" y="96" text-anchor="middle">ชื่อ event · เส้นประ (dotted arrow)</text>
+                        </svg>
+                      </div>
+                      <figcaption>สไลด์ 7-23 — control flow แสดงด้วย dotted arrow line, ลูกศรบอกทิศ, เขียนชื่อ event ข้างเส้น</figcaption>
+                    </figure>
+                  </section>
+
+                  <section class="topic" id="dfd-cspec">
+                    <h4>Control Specification (CSPEC)</h4>
+                    <div class="compare">
+                      <div class="compare-col">
+                        <strong>Sequential spec</strong>
+                        <ul class="tight">
+                          <li>state diagram</li>
+                        </ul>
+                      </div>
+                      <div class="compare-col">
+                        <strong>Combinatorial spec</strong>
+                        <ul class="tight">
+                          <li>state transition table</li>
+                          <li>decision tables</li>
+                          <li>activation tables</li>
+                        </ul>
+                      </div>
+                    </div>
+                    <div class="callout callout--warn">
+                      <span class="callout-label">PSPEC vs CSPEC</span>
+                      <p><b>PSPEC</b> อธิบายการทำงานภายใน process (narrative, PDL, equation, table, diagram) · <b>CSPEC</b> อธิบายการควบคุมตาม event (state diagram, state transition table, decision table, activation table)</p>
+                    </div>
+                  </section>
+
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- ================= 06 Zoo Ticketing System DFD exercise ================= -->
+          <div class="acc-item">
+            <h3 class="acc-heading">
+              <button class="acc-trigger" type="button" aria-expanded="false" aria-controls="acc-dfd-zoo" id="acc-dfd-zoo-btn">
+                <span class="acc-index">06</span>
+                <span class="acc-title">
+                  <span class="acc-name">กรณีศึกษาอ้างอิง: DFD ของ Zoo Ticketing System (บริบท)</span>
+                  <span class="acc-file">L6 slide 43 · L7 slide 25 · Exercise</span>
+                </span>
+                <svg class="acc-chevron" viewBox="0 0 20 20" aria-hidden="true"><path d="M5 7.5l5 5 5-5" /></svg>
+              </button>
+            </h3>
+            <div class="acc-panel" id="acc-dfd-zoo" role="region" aria-labelledby="acc-dfd-zoo-btn">
+              <div class="acc-panel-inner">
+                <div class="acc-body">
+
+                  <nav class="toc" aria-label="หัวข้อในการ์ด Zoo Ticketing DFD">
+                    <a href="#dfd-zoo-task">โจทย์</a>
+                    <a href="#dfd-zoo-context">บริบทของผู้เยี่ยมชม</a>
+                  </nav>
+
+                  <section class="topic" id="dfd-zoo-task">
+                    <h4>โจทย์ในสไลด์</h4>
+                    <div class="callout callout--warn">
+                      <span class="callout-label">ข้อมูลอ้างอิงเท่านั้น — ไม่มีเฉลย</span>
+                      <p>แบบฝึกหัดนี้<b>ไม่มีเฉลยในเอกสารต้นฉบับ</b> หน้านี้จึงไม่วาด DFD ของระบบนี้ — ใช้ guidelines, กฎ consistency และระบบเลข process ในการ์ด 02–03 ตรวจงานของตัวเอง</p>
+                    </div>
+                    <ol class="steps">
+                      <li><strong>L6 (สไลด์ 6-43):</strong> วาด <strong>context DFD</strong> ของระบบจำหน่ายบัตรเข้าสวนสัตว์ สำหรับผู้เยี่ยมชม</li>
+                      <li><strong>L7 (สไลด์ 7-25):</strong> ใช้ zoo ticketing system วาด <strong>DFD Level 1</strong> ของระบบ</li>
+                      <li><strong>L7 (สไลด์ 7-25):</strong> วาด <strong>DFD Level 2</strong> ของ process หนึ่งที่นิยามไว้ใน DFD Level 1</li>
+                    </ol>
+                  </section>
+
+                  <section class="topic" id="dfd-zoo-context">
+                    <h4>บริบทที่โจทย์ context DFD ให้มา (ส่วนของผู้เยี่ยมชม)</h4>
+                    <p>ผู้เยี่ยมชมสามารถซื้อตั๋วผ่านระบบโดยเลือกประเภทบัตร เช่น เด็ก ผู้ใหญ่ หรือผู้สูงอายุ และเลือกวันที่เข้าชม ระบบจะแสดงราคาตั๋วตามข้อมูลที่ผู้ดูแลระบบกำหนด จากนั้นผู้เยี่ยมชมสามารถชำระเงินผ่านบัตรเครดิตหรือ QR Code เมื่อชำระเงินสำเร็จ ระบบจะออกตั๋วพร้อม Booking ID และ QR Code ให้แก่ผู้เยี่ยมชม ผู้เยี่ยมชมสามารถตรวจสอบรายละเอียดและสถานะของตั๋วได้ หากต้องการยกเลิกตั๋วก่อนถึงวันที่เข้าชม ผู้เยี่ยมชมสามารถส่งคำขอยกเลิกผ่านระบบ โดยระบบจะตรวจสอบเงื่อนไขการคืนเงินและดำเนินการคืนเงินหากเป็นไปตามนโยบายที่กำหนด</p>
+                    <p class="note">คำอธิบายระบบฉบับเต็ม (รวมเจ้าหน้าที่ขายตั๋วและผู้ดูแลระบบ) อยู่ในบทที่ 4 การ์ด 05</p>
+                    <div class="callout callout--def">
+                      <span class="callout-label">เช็กลิสต์ตรวจ context DFD ของตัวเอง (จากกฎในสไลด์)</span>
+                      <p>มี process <b>เดียว</b> เลข <b>0</b> · external entity ครบทุกตัวที่รับ/ส่งข้อมูล · มี input จาก entity อย่างน้อย 1 และ output อย่างน้อย 1 · <b>data flow ทุกเส้นมีชื่อ</b> ที่อธิบายตัวข้อมูล · ไม่มี data flow แตกเส้นเองโดยไม่ผ่าน process</p>
+                    </div>
+                  </section>
+
+                </div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </section>
+
+      <!-- =============================================================
+           แท็บ 2: สรุป (cheat sheet)
+           ============================================================= -->
+      <section class="panel" id="summary" role="tabpanel" aria-labelledby="tab-summary" tabindex="-1">
+        <div class="panel-head">
+          <h2>Cheat sheet</h2>
+          <p class="panel-sub">สัญลักษณ์ DFD, กฎ consistency, ระบบเลข process, กฎ data flow, PSPEC และ control flow ในหน้าเดียว</p>
+        </div>
+
+        <div class="sheet">
+
+<article class="sheet-card">
+            <h3><span class="sheet-num">01</span> 4 สัญลักษณ์ DFD</h3>
+            <div class="table-scroll">
+              <table>
+                <thead><tr><th>สัญลักษณ์</th><th>ความหมาย</th></tr></thead>
+                <tbody>
+                  <tr><td><strong>External entity</strong></td><td>ผู้ผลิต/ผู้บริโภคข้อมูลภายนอก (คน องค์กร อุปกรณ์ sensor ระบบอื่น)</td></tr>
+                  <tr><td><strong>Process</strong></td><td>data transformer: input → output</td></tr>
+                  <tr><td><strong>Data flow</strong></td><td>data in motion · ต้องมีชื่อ</td></tr>
+                  <tr><td><strong>Data store</strong></td><td>ข้อมูลถาวร · ออก = retrieval · เข้า = update/new data</td></tr>
+                </tbody>
+              </table>
+            </div>
+            <p class="note">2 สำนัก: Yourdon/DeMarco (process วงกลม) · Gane/Sarson (process สี่เหลี่ยมมุมมน)</p>
+          </article>
+
+          <article class="sheet-card sheet-card--wide">
+            <h3><span class="sheet-num">02</span> Internal Consistency แยกตามสัญลักษณ์</h3>
+            <div class="table-scroll">
+              <table>
+                <thead><tr><th>ส่วน</th><th>กฎ</th></tr></thead>
+                <tbody>
+                  <tr><td><strong>Context diagram</strong></td><td>ต้องมี · <strong>1 process เลข 0</strong> · input จาก entity ≥ 1 และ output ไป entity ≥ 1</td></tr>
+                  <tr><td><strong>Detailed DFD</strong></td><td>process <strong>1–7</strong> ตัว</td></tr>
+                  <tr><td><strong>Process</strong></td><td><strong>input ≥ 1 และ output ≥ 1</strong> · ต่อกับ store/process/entity · มีชื่อ</td></tr>
+                  <tr><td><strong>External entity</strong></td><td><strong>อยู่เฉพาะ context diagram</strong> · ต่อกับ process · มีชื่อ</td></tr>
+                  <tr><td><strong>Data flow</strong></td><td>interface ระหว่าง process กับ process / store / entity · มีชื่อ</td></tr>
+                  <tr><td><strong>Data store</strong></td><td>interface <strong>ระหว่าง 2 process</strong> · มีชื่อ</td></tr>
+                </tbody>
+              </table>
+            </div>
+            <p class="note"><strong>Hierarchical:</strong> ต้องมี parent (ยกเว้น context) · process แตกเป็น diagram หรือ primitive spec และเลขตาม parent · flow เข้า/ออกของ parent ต้องอยู่บน child ทิศเดียวกัน (และกลับกัน)</p>
+          </article>
+
+          <article class="sheet-card">
+            <h3><span class="sheet-num">03</span> ระบบเลข Process</h3>
+            <dl class="defs defs--codes">
+              <div><dt>L0</dt><dd>context diagram · process <strong>0</strong></dd></div>
+              <div><dt>L1</dt><dd><strong>1, 2, 3</strong></dd></div>
+              <div><dt>L2</dt><dd><strong>1.1, 1.2</strong> (หนึ่งจุด)</dd></div>
+              <div><dt>L3</dt><dd><strong>1.1.1, 1.1.2</strong> (สองจุด)</dd></div>
+            </dl>
+            <p class="note">แตกแต่ละ bubble จนทำอย่างเดียว · ส่วนใหญ่ 3–7 ระดับ · สร้าง hierarchy ด้วย <strong>decomposition</strong></p>
+          </article>
+
+          <article class="sheet-card">
+            <h3><span class="sheet-num">04</span> 3 กฎห้ามทำผิดของ Data Flow</h3>
+            <ol class="steps">
+              <li>data flow <strong>ห้ามแตก</strong>เป็นหลายเส้นโดยไม่ผ่าน process</li>
+              <li>data flow ทุกเส้น<strong>ต้องเริ่มหรือจบที่ process</strong> (entity ↔ store ตรงๆ ไม่ได้)</li>
+              <li>process ต้องมี <strong>input ≥ 1 และ output ≥ 1</strong></li>
+            </ol>
+            <p class="note">flow ต้องมีชื่อเสมอ · ชื่ออธิบายตัวข้อมูล ไม่ใช่วิธี implement</p>
+          </article>
+
+          <article class="sheet-card">
+            <h3><span class="sheet-num">05</span> PSPEC 5 รูปแบบ</h3>
+            <ul class="tight">
+              <li>narrative</li>
+              <li>pseudocode (PDL)</li>
+              <li>equations</li>
+              <li>tables</li>
+              <li>diagrams and/or charts</li>
+            </ul>
+            <p class="note"><strong>Structured English</strong> = structured programming + natural English · <strong>Decision table</strong> = conditions + actions เพื่อ implement policy</p>
+          </article>
+
+          <article class="sheet-card sheet-card--wide">
+            <h3><span class="sheet-num">06</span> Control flow vs Data flow</h3>
+            <div class="table-scroll">
+              <table>
+                <thead><tr><th></th><th>Data flow</th><th>Control flow</th></tr></thead>
+                <tbody>
+                  <tr><td>เส้น</td><td><strong>เส้นทึบ</strong></td><td><strong>เส้นประ (dotted arrow)</strong> · ชื่อ event ข้างเส้น</td></tr>
+                  <tr><td>แทน</td><td>ข้อมูลที่เคลื่อนที่</td><td><strong>event</strong> = เงื่อนไข Boolean · สัญญาณสั่งการ/บ่งชี้ว่ามีบางอย่างเกิด</td></tr>
+                  <tr><td>เวลา</td><td>ไหลผ่าน process</td><td>ณ <strong>discrete point in time</strong></td></tr>
+                  <tr><td>spec</td><td>PSPEC</td><td><strong>CSPEC</strong>: state diagram · state transition table · decision table · activation table</td></tr>
+                </tbody>
+              </table>
+            </div>
+            <p class="note">event หาได้จาก sensor ที่อ่าน, interrupt, switch ที่ operator กด, data condition, control items จาก noun/verb parse</p>
+          </article>
+
+          <article class="sheet-card">
+            <h3><span class="sheet-num">07</span> Context Diagram &amp; Balancing</h3>
+            <p><strong>Context diagram</strong> = DFD บนสุด · business process ทั้งหมดเป็น <strong>process 'zero'</strong> · แสดง external entity ทุกตัว · เริ่มที่ level 0 เสมอ</p>
+            <p><strong>Balancing</strong> = ข้อมูลระดับหนึ่งแสดงถูกต้องในระดับถัดไป · flow ของ parent ส่งลง child · child เพิ่ม process/flow ใหม่ได้</p>
+            <p class="note">analysis model (รวม DFD) → map ไป design model</p>
+          </article>
+
+        </div>
+      </section>
+
+      <!-- =============================================================
+           แท็บ 3: แบบฝึกหัด (20 ข้อ)
+           data-answer = ตัวเลือกที่ถูก (ก=a, ข=b, ค=c, ง=d ตามเฉลยที่ผู้ใช้กำหนด)
+           ============================================================= -->
+      <section class="panel" id="quiz" role="tabpanel" aria-labelledby="tab-quiz" tabindex="-1">
+        <div class="panel-head">
+          <h2>แบบฝึกหัด 20 ข้อ</h2>
+          <p class="panel-sub">เลือกคำตอบให้ครบแล้วกด "ตรวจคำตอบ" ด้านล่าง ระบบจะเฉลยพร้อมคำอธิบายทุกข้อ</p>
+        </div>
+
+        <form class="quiz" id="quiz-form" novalidate>
+
+          <fieldset class="q" data-answer="b">
+            <legend class="q-head"><span class="q-num">01</span><span class="q-text">Data Flow Diagram (DFD) ใช้แสดงสิ่งใดเป็นหลัก?</span></legend>
+            <div class="q-options">
+              <label class="opt"><input type="radio" name="q1" value="a" /><span class="opt-key">A</span><span class="opt-text">โครงสร้างคลาสเชิงวัตถุ</span></label>
+              <label class="opt"><input type="radio" name="q1" value="b" /><span class="opt-key">B</span><span class="opt-text">การเปลี่ยนแปลง (transform) ของข้อมูลขณะเคลื่อนที่ผ่านระบบ</span></label>
+              <label class="opt"><input type="radio" name="q1" value="c" /><span class="opt-key">C</span><span class="opt-text">ลำดับเวลาของโปรเจกต์</span></label>
+              <label class="opt"><input type="radio" name="q1" value="d" /><span class="opt-key">D</span><span class="opt-text">ความสัมพันธ์ระหว่าง actor</span></label>
+            </div>
+            <div class="q-feedback"><div class="q-feedback-inner"><p class="q-verdict" aria-live="polite"></p><p class="q-explain">Flow-oriented modeling represents how data objects are transformed as they move through the system และ DFD คือรูปแบบไดอะแกรมที่ใช้</p></div></div>
+          </fieldset>
+
+          <fieldset class="q" data-answer="a">
+            <legend class="q-head"><span class="q-num">02</span><span class="q-text">สัญลักษณ์ DFD มีกี่ประเภทหลัก อะไรบ้าง?</span></legend>
+            <div class="q-options">
+              <label class="opt"><input type="radio" name="q2" value="a" /><span class="opt-key">A</span><span class="opt-text">4 ประเภท: External Entity, Process, Data Flow, Data Store</span></label>
+              <label class="opt"><input type="radio" name="q2" value="b" /><span class="opt-key">B</span><span class="opt-text">2 ประเภท: Actor, Use case</span></label>
+              <label class="opt"><input type="radio" name="q2" value="c" /><span class="opt-key">C</span><span class="opt-text">3 ประเภท: Class, Attribute, Method</span></label>
+              <label class="opt"><input type="radio" name="q2" value="d" /><span class="opt-key">D</span><span class="opt-text">5 ประเภท รวม Actor ด้วย</span></label>
+            </div>
+            <div class="q-feedback"><div class="q-feedback-inner"><p class="q-verdict" aria-live="polite"></p><p class="q-explain">Flow modeling notation ในสไลด์ 6-10 มี 4 ตัว: external entity, process, data flow, data store (วาดได้ทั้งแบบ Yourdon/DeMarco และ Gane/Sarson)</p></div></div>
+          </fieldset>
+
+          <fieldset class="q" data-answer="b">
+            <legend class="q-head"><span class="q-num">03</span><span class="q-text">&quot;External Entity&quot; ใน DFD คืออะไร?</span></legend>
+            <div class="q-options">
+              <label class="opt"><input type="radio" name="q3" value="a" /><span class="opt-key">A</span><span class="opt-text">กระบวนการแปลงข้อมูลภายในระบบ</span></label>
+              <label class="opt"><input type="radio" name="q3" value="b" /><span class="opt-key">B</span><span class="opt-text">ผู้ผลิตหรือผู้บริโภคข้อมูลที่อยู่ภายนอกระบบ เช่น คน อุปกรณ์ หรือระบบอื่น</span></label>
+              <label class="opt"><input type="radio" name="q3" value="c" /><span class="opt-key">C</span><span class="opt-text">ที่เก็บข้อมูลถาวร</span></label>
+              <label class="opt"><input type="radio" name="q3" value="d" /><span class="opt-key">D</span><span class="opt-text">เส้นทางการไหลของข้อมูล</span></label>
+            </div>
+            <div class="q-feedback"><div class="q-feedback-inner"><p class="q-verdict" aria-live="polite"></p><p class="q-explain">External entity = a producer or consumer of data · a person, organization, or system that is external to the system เช่น a person, a device, a sensor, a computer-based system</p></div></div>
+          </fieldset>
+
+          <fieldset class="q" data-answer="b">
+            <legend class="q-head"><span class="q-num">04</span><span class="q-text">&quot;Process&quot; ใน DFD ทำหน้าที่อะไร?</span></legend>
+            <div class="q-options">
+              <label class="opt"><input type="radio" name="q4" value="a" /><span class="opt-key">A</span><span class="opt-text">เก็บข้อมูลไว้ใช้ภายหลัง</span></label>
+              <label class="opt"><input type="radio" name="q4" value="b" /><span class="opt-key">B</span><span class="opt-text">แปลงข้อมูลจาก input เป็น output ผ่านการคำนวณ ตัดสินใจ กรอง หรือสรุปข้อมูล</span></label>
+              <label class="opt"><input type="radio" name="q4" value="c" /><span class="opt-key">C</span><span class="opt-text">เป็นผู้ใช้งานระบบภายนอก</span></label>
+              <label class="opt"><input type="radio" name="q4" value="d" /><span class="opt-key">D</span><span class="opt-text">เชื่อมสอง process เข้าด้วยกันโดยตรงเสมอ</span></label>
+            </div>
+            <div class="q-feedback"><div class="q-feedback-inner"><p class="q-verdict" aria-live="polite"></p><p class="q-explain">Process = a data transformer (changes input to output) — perform computations, make decisions, sort/filter/summarize, organize data into information, trigger other processes, use stored data</p></div></div>
+          </fieldset>
+
+          <fieldset class="q" data-answer="b">
+            <legend class="q-head"><span class="q-num">05</span><span class="q-text">Context Diagram (Level 0) มีกฎอย่างไรตาม Internal Consistency?</span></legend>
+            <div class="q-options">
+              <label class="opt"><input type="radio" name="q5" value="a" /><span class="opt-key">A</span><span class="opt-text">ต้องมีมากกว่า 1 process</span></label>
+              <label class="opt"><input type="radio" name="q5" value="b" /><span class="opt-key">B</span><span class="opt-text">ต้องมีเพียง 1 process เท่านั้น และ process นั้นต้องมีหมายเลข 0</span></label>
+              <label class="opt"><input type="radio" name="q5" value="c" /><span class="opt-key">C</span><span class="opt-text">ไม่ต้องมี external entity เลย</span></label>
+              <label class="opt"><input type="radio" name="q5" value="d" /><span class="opt-key">D</span><span class="opt-text">ต้องมี data store อย่างน้อย 1 อัน</span></label>
+            </div>
+            <div class="q-feedback"><div class="q-feedback-inner"><p class="q-verdict" aria-live="polite"></p><p class="q-explain">Internal consistency ของ context diagram: must exist · must contain only one process · at least one input from and one output to an external entity · the process must be numbered 0</p></div></div>
+          </fieldset>
+
+          <fieldset class="q" data-answer="a">
+            <legend class="q-head"><span class="q-num">06</span><span class="q-text">Detailed DFD ตามกฎ Internal Consistency ควรมีจำนวน process เท่าใด?</span></legend>
+            <div class="q-options">
+              <label class="opt"><input type="radio" name="q6" value="a" /><span class="opt-key">A</span><span class="opt-text">อย่างน้อย 1 และไม่เกิน 7 process</span></label>
+              <label class="opt"><input type="radio" name="q6" value="b" /><span class="opt-key">B</span><span class="opt-text">ต้องมีเท่ากับ 0 เท่านั้น</span></label>
+              <label class="opt"><input type="radio" name="q6" value="c" /><span class="opt-key">C</span><span class="opt-text">ไม่จำกัดจำนวน</span></label>
+              <label class="opt"><input type="radio" name="q6" value="d" /><span class="opt-key">D</span><span class="opt-text">ต้องมีเท่ากับจำนวน actor เท่านั้น</span></label>
+            </div>
+            <div class="q-feedback"><div class="q-feedback-inner"><p class="q-verdict" aria-live="polite"></p><p class="q-explain">Detailed DFDs: at least one process · no more than seven processes</p></div></div>
+          </fieldset>
+
+          <fieldset class="q" data-answer="b">
+            <legend class="q-head"><span class="q-num">07</span><span class="q-text">กฎของ Data Flow ข้อใดถูกต้อง?</span></legend>
+            <div class="q-options">
+              <label class="opt"><input type="radio" name="q7" value="a" /><span class="opt-key">A</span><span class="opt-text">Data flow ไม่จำเป็นต้องมีชื่อกำกับก็ได้</span></label>
+              <label class="opt"><input type="radio" name="q7" value="b" /><span class="opt-key">B</span><span class="opt-text">Data flow ทุกเส้นต้องเริ่มต้นหรือสิ้นสุดที่ process เสมอ</span></label>
+              <label class="opt"><input type="radio" name="q7" value="c" /><span class="opt-key">C</span><span class="opt-text">Data flow แยกออกเป็นหลายเส้นได้อย่างอิสระโดยไม่ต้องผ่าน process</span></label>
+              <label class="opt"><input type="radio" name="q7" value="d" /><span class="opt-key">D</span><span class="opt-text">Data flow ไม่จำเป็นต้องเชื่อมกับ process เลย</span></label>
+            </div>
+            <div class="q-feedback"><div class="q-feedback-inner"><p class="q-verdict" aria-live="polite"></p><p class="q-explain">Rules for data flows: never go unnamed · all data flows must begin and/or end at a process · data flows should not split into two or more different data flows</p></div></div>
+          </fieldset>
+
+          <fieldset class="q" data-answer="b">
+            <legend class="q-head"><span class="q-num">08</span><span class="q-text">การแตกไดอะแกรมจากระดับบน (parent) ไปสู่ระดับล่าง (child) ที่มีรายละเอียดมากขึ้น เรียกว่าอะไร?</span></legend>
+            <div class="q-options">
+              <label class="opt"><input type="radio" name="q8" value="a" /><span class="opt-key">A</span><span class="opt-text">Balancing</span></label>
+              <label class="opt"><input type="radio" name="q8" value="b" /><span class="opt-key">B</span><span class="opt-text">Decomposition</span></label>
+              <label class="opt"><input type="radio" name="q8" value="c" /><span class="opt-key">C</span><span class="opt-text">Normalization</span></label>
+              <label class="opt"><input type="radio" name="q8" value="d" /><span class="opt-key">D</span><span class="opt-text">Aggregation</span></label>
+            </div>
+            <div class="q-feedback"><div class="q-feedback-inner"><p class="q-verdict" aria-live="polite"></p><p class="q-explain">สไลด์ 6-17: to build the hierarchy, use Decomposition — child diagrams show a portion of the parent diagram in greater detail · ส่วน balancing คือการตรวจความสอดคล้องระหว่างระดับ</p></div></div>
+          </fieldset>
+
+          <fieldset class="q" data-answer="b">
+            <legend class="q-head"><span class="q-num">09</span><span class="q-text">&quot;Balancing&quot; ใน DFD หมายถึงอะไร?</span></legend>
+            <div class="q-options">
+              <label class="opt"><input type="radio" name="q9" value="a" /><span class="opt-key">A</span><span class="opt-text">การทำให้ diagram ทุกระดับมีจำนวน process เท่ากัน</span></label>
+              <label class="opt"><input type="radio" name="q9" value="b" /><span class="opt-key">B</span><span class="opt-text">การทำให้ข้อมูลที่แสดงในระดับหนึ่งสอดคล้องกันกับระดับถัดไป</span></label>
+              <label class="opt"><input type="radio" name="q9" value="c" /><span class="opt-key">C</span><span class="opt-text">การจัดสมดุลงบประมาณโปรเจกต์</span></label>
+              <label class="opt"><input type="radio" name="q9" value="d" /><span class="opt-key">D</span><span class="opt-text">การปรับสีของไดอะแกรม</span></label>
+            </div>
+            <div class="q-feedback"><div class="q-feedback-inner"><p class="q-verdict" aria-live="polite"></p><p class="q-explain">Balancing ensures that information presented at one level of a DFD is accurately represented in the next level DFD — data flows on the parent are carried down to the child</p></div></div>
+          </fieldset>
+
+          <fieldset class="q" data-answer="b">
+            <legend class="q-head"><span class="q-num">10</span><span class="q-text">ระบบเลขของ process ในระดับ 2 (Level 2) มีรูปแบบอย่างไร?</span></legend>
+            <div class="q-options">
+              <label class="opt"><input type="radio" name="q10" value="a" /><span class="opt-key">A</span><span class="opt-text">ตัวเลขเดี่ยว เช่น 1, 2, 3</span></label>
+              <label class="opt"><input type="radio" name="q10" value="b" /><span class="opt-key">B</span><span class="opt-text">เลขของ parent ตามด้วยจุดและเลขเฉพาะ เช่น 1.1, 1.2, 1.3</span></label>
+              <label class="opt"><input type="radio" name="q10" value="c" /><span class="opt-key">C</span><span class="opt-text">ตัวอักษรเท่านั้น เช่น A, B, C</span></label>
+              <label class="opt"><input type="radio" name="q10" value="d" /><span class="opt-key">D</span><span class="opt-text">ไม่มีระบบเลขที่แน่นอน</span></label>
+            </div>
+            <div class="q-feedback"><div class="q-feedback-inner"><p class="q-verdict" aria-live="polite"></p><p class="q-explain">Diagram numbering: context = Level 0 · Level 1 = integer (1, 2, 3) · Level 2 = parent number dot unique number (1.1, 1.2) · Level 3 = two dots (1.1.1)</p></div></div>
+          </fieldset>
+
+          <fieldset class="q" data-answer="a">
+            <legend class="q-head"><span class="q-num">11</span><span class="q-text">PSPEC (Process Specification) ใช้อธิบายอะไร?</span></legend>
+            <div class="q-options">
+              <label class="opt"><input type="radio" name="q11" value="a" /><span class="opt-key">A</span><span class="opt-text">รายละเอียดวิธีการทำงานภายในของแต่ละ process</span></label>
+              <label class="opt"><input type="radio" name="q11" value="b" /><span class="opt-key">B</span><span class="opt-text">โครงสร้างฐานข้อมูล</span></label>
+              <label class="opt"><input type="radio" name="q11" value="c" /><span class="opt-key">C</span><span class="opt-text">แผนภาพองค์กร</span></label>
+              <label class="opt"><input type="radio" name="q11" value="d" /><span class="opt-key">D</span><span class="opt-text">งบประมาณของโปรเจกต์</span></label>
+            </div>
+            <div class="q-feedback"><div class="q-feedback-inner"><p class="q-verdict" aria-live="polite"></p><p class="q-explain">PSPEC ใช้ explain the processes — เขียนได้เป็น narrative, pseudocode (PDL), equations, tables หรือ diagrams/charts เช่น PSPEC ของ Analyze Triangle</p></div></div>
+          </fieldset>
+
+          <fieldset class="q" data-answer="b">
+            <legend class="q-head"><span class="q-num">12</span><span class="q-text">Structured English คืออะไร?</span></legend>
+            <div class="q-options">
+              <label class="opt"><input type="radio" name="q12" value="a" /><span class="opt-key">A</span><span class="opt-text">ภาษาโปรแกรมมิ่งจริง</span></label>
+              <label class="opt"><input type="radio" name="q12" value="b" /><span class="opt-key">B</span><span class="opt-text">ไวยากรณ์ที่ผสมจุดแข็งของ structured programming กับภาษาอังกฤษธรรมชาติ เพื่อระบุ logic ของ process</span></label>
+              <label class="opt"><input type="radio" name="q12" value="c" /><span class="opt-key">C</span><span class="opt-text">เอกสารสัญญาทางกฎหมาย</span></label>
+              <label class="opt"><input type="radio" name="q12" value="d" /><span class="opt-key">D</span><span class="opt-text">รูปแบบของ Use Case Narrative</span></label>
+            </div>
+            <div class="q-feedback"><div class="q-feedback-inner"><p class="q-verdict" aria-live="polite"></p><p class="q-explain">Structured English – a language syntax for specifying the logic of a process, based on the relative strengths of structured programming and natural English</p></div></div>
+          </fieldset>
+
+          <fieldset class="q" data-answer="b">
+            <legend class="q-head"><span class="q-num">13</span><span class="q-text">Decision Table ใช้เพื่อจุดประสงค์ใด?</span></legend>
+            <div class="q-options">
+              <label class="opt"><input type="radio" name="q13" value="a" /><span class="opt-key">A</span><span class="opt-text">แสดงลำดับเวลาของโปรเจกต์</span></label>
+              <label class="opt"><input type="radio" name="q13" value="b" /><span class="opt-key">B</span><span class="opt-text">นำเสนอเงื่อนไขและการกระทำที่สอดคล้องกันในรูปแบบตาราง เพื่อ implement policy</span></label>
+              <label class="opt"><input type="radio" name="q13" value="c" /><span class="opt-key">C</span><span class="opt-text">แสดงโครงสร้างองค์กร</span></label>
+              <label class="opt"><input type="radio" name="q13" value="d" /><span class="opt-key">D</span><span class="opt-text">แสดงผลการทดสอบซอฟต์แวร์</span></label>
+            </div>
+            <div class="q-feedback"><div class="q-feedback-inner"><p class="q-verdict" aria-live="polite"></p><p class="q-explain">Decision table – a tabular form of presentation that specifies a set of conditions and their corresponding actions, as required to implement a policy</p></div></div>
+          </fieldset>
+
+          <fieldset class="q" data-answer="b">
+            <legend class="q-head"><span class="q-num">14</span><span class="q-text">Control Flow ใน DFD แสดงด้วยสัญลักษณ์ใด?</span></legend>
+            <div class="q-options">
+              <label class="opt"><input type="radio" name="q14" value="a" /><span class="opt-key">A</span><span class="opt-text">เส้นทึบ (solid line)</span></label>
+              <label class="opt"><input type="radio" name="q14" value="b" /><span class="opt-key">B</span><span class="opt-text">เส้นประ (dotted arrow line)</span></label>
+              <label class="opt"><input type="radio" name="q14" value="c" /><span class="opt-key">C</span><span class="opt-text">วงรี</span></label>
+              <label class="opt"><input type="radio" name="q14" value="d" /><span class="opt-key">D</span><span class="opt-text">สี่เหลี่ยมขนมเปียกปูน</span></label>
+            </div>
+            <div class="q-feedback"><div class="q-feedback-inner"><p class="q-verdict" aria-live="polite"></p><p class="q-explain">Control flows in DFD: represented as a dotted arrow line · ลูกศรบอกทิศ · เขียนชื่อ event ไว้ข้างเส้น</p></div></div>
+          </fieldset>
+
+          <fieldset class="q" data-answer="b">
+            <legend class="q-head"><span class="q-num">15</span><span class="q-text">Control Flow เป็นตัวแทนของอะไร?</span></legend>
+            <div class="q-options">
+              <label class="opt"><input type="radio" name="q15" value="a" /><span class="opt-key">A</span><span class="opt-text">ข้อมูลที่ไหลผ่านระบบอย่างต่อเนื่อง</span></label>
+              <label class="opt"><input type="radio" name="q15" value="b" /><span class="opt-key">B</span><span class="opt-text">&quot;Event&quot; หรือเงื่อนไข Boolean ที่เกิดขึ้น ณ จุดเวลาหนึ่งๆ และสัญญาณที่สั่งการหรือบ่งชี้ว่ามีบางอย่างเกิดขึ้น</span></label>
+              <label class="opt"><input type="radio" name="q15" value="c" /><span class="opt-key">C</span><span class="opt-text">ที่เก็บข้อมูลถาวรของระบบ</span></label>
+              <label class="opt"><input type="radio" name="q15" value="d" /><span class="opt-key">D</span><span class="opt-text">ผู้ใช้งานภายนอกระบบ</span></label>
+            </div>
+            <div class="q-feedback"><div class="q-feedback-inner"><p class="q-verdict" aria-live="polite"></p><p class="q-explain">A control flow represents &quot;events&quot; (Boolean conditions) — a signal that carries out a command or indicates that something has occurred, at a discrete point in time</p></div></div>
+          </fieldset>
+
+          <fieldset class="q" data-answer="a">
+            <legend class="q-head"><span class="q-num">16</span><span class="q-text">CSPEC (Control Specification) สามารถแสดงในรูปแบบใดได้บ้าง?</span></legend>
+            <div class="q-options">
+              <label class="opt"><input type="radio" name="q16" value="a" /><span class="opt-key">A</span><span class="opt-text">State diagram, state transition table, decision table, activation table</span></label>
+              <label class="opt"><input type="radio" name="q16" value="b" /><span class="opt-key">B</span><span class="opt-text">เฉพาะ Gantt chart เท่านั้น</span></label>
+              <label class="opt"><input type="radio" name="q16" value="c" /><span class="opt-key">C</span><span class="opt-text">เฉพาะ Use Case Diagram เท่านั้น</span></label>
+              <label class="opt"><input type="radio" name="q16" value="d" /><span class="opt-key">D</span><span class="opt-text">เฉพาะ ERD เท่านั้น</span></label>
+            </div>
+            <div class="q-feedback"><div class="q-feedback-inner"><p class="q-verdict" aria-live="polite"></p><p class="q-explain">สไลด์ 7-24: CSPEC can be state diagram (sequential spec), state transition table, decision tables, activation tables (combinatorial spec)</p></div></div>
+          </fieldset>
+
+          <fieldset class="q" data-answer="b">
+            <legend class="q-head"><span class="q-num">17</span><span class="q-text">&quot;Analysis model&quot; (ซึ่งรวม DFD) มีความสัมพันธ์อย่างไรกับ &quot;Design model&quot;?</span></legend>
+            <div class="q-options">
+              <label class="opt"><input type="radio" name="q17" value="a" /><span class="opt-key">A</span><span class="opt-text">ไม่มีความเกี่ยวข้องกันเลย</span></label>
+              <label class="opt"><input type="radio" name="q17" value="b" /><span class="opt-key">B</span><span class="opt-text">Analysis model จะถูก map ไปสู่ Design model ในขั้นตอนถัดไป</span></label>
+              <label class="opt"><input type="radio" name="q17" value="c" /><span class="opt-key">C</span><span class="opt-text">Design model ต้องสร้างก่อน Analysis model เสมอ</span></label>
+              <label class="opt"><input type="radio" name="q17" value="d" /><span class="opt-key">D</span><span class="opt-text">ทั้งสองแบบเป็นสิ่งเดียวกัน</span></label>
+            </div>
+            <div class="q-feedback"><div class="q-feedback-inner"><p class="q-verdict" aria-live="polite"></p><p class="q-explain">สไลด์ 7-19 DFDs: A Look Ahead — analysis model maps into design model และ PSPEC หนึ่งอันอาจกลายเป็น component หนึ่งหรือหลายตัวใน software design</p></div></div>
+          </fieldset>
+
+          <fieldset class="q" data-answer="b">
+            <legend class="q-head"><span class="q-num">18</span><span class="q-text">หากมี process ที่ไม่มี input หรือ output data flow เลย ถือว่าอย่างไร?</span></legend>
+            <div class="q-options">
+              <label class="opt"><input type="radio" name="q18" value="a" /><span class="opt-key">A</span><span class="opt-text">ถูกต้องตามกฎเสมอ</span></label>
+              <label class="opt"><input type="radio" name="q18" value="b" /><span class="opt-key">B</span><span class="opt-text">ผิดกฎ เพราะ process ต้องมีอย่างน้อย 1 input และ 1 output data flow</span></label>
+              <label class="opt"><input type="radio" name="q18" value="c" /><span class="opt-key">C</span><span class="opt-text">ยอมรับได้เฉพาะ process หมายเลข 0</span></label>
+              <label class="opt"><input type="radio" name="q18" value="d" /><span class="opt-key">D</span><span class="opt-text">ต้องมีแค่ input เท่านั้นไม่ต้องมี output</span></label>
+            </div>
+            <div class="q-feedback"><div class="q-feedback-inner"><p class="q-verdict" aria-live="polite"></p><p class="q-explain">Don't break DFD rules: processes need to have at least one input data flow and one output data flow — กฎนี้ใช้กับทุก process รวม process 0 ด้วย</p></div></div>
+          </fieldset>
+
+          <fieldset class="q" data-answer="a">
+            <legend class="q-head"><span class="q-num">19</span><span class="q-text">Data Flow ที่ไหลเข้า/ออกจาก Data Store เรียกว่าอะไรตามลำดับ?</span></legend>
+            <div class="q-options">
+              <label class="opt"><input type="radio" name="q19" value="a" /><span class="opt-key">A</span><span class="opt-text">Retrieval (ไหลออก) และ Update/new data (ไหลเข้า)</span></label>
+              <label class="opt"><input type="radio" name="q19" value="b" /><span class="opt-key">B</span><span class="opt-text">Input และ Output เท่านั้น ไม่มีชื่อเฉพาะ</span></label>
+              <label class="opt"><input type="radio" name="q19" value="c" /><span class="opt-key">C</span><span class="opt-text">Trigger และ Postcondition</span></label>
+              <label class="opt"><input type="radio" name="q19" value="d" /><span class="opt-key">D</span><span class="opt-text">Association และ Extension</span></label>
+            </div>
+            <div class="q-feedback"><div class="q-feedback-inner"><p class="q-verdict" aria-live="polite"></p><p class="q-explain">สไลด์ 6-16: data flows leaving the data store are data retrievals · data flows entering the data store are updates or new data added</p></div></div>
+          </fieldset>
+
+          <fieldset class="q" data-answer="a">
+            <legend class="q-head"><span class="q-num">20</span><span class="q-text">เหตุใดจึงต้องมีหลายระดับ (levels) ของ DFD สำหรับ business process?</span></legend>
+            <div class="q-options">
+              <label class="opt"><input type="radio" name="q20" value="a" /><span class="opt-key">A</span><span class="opt-text">เพราะ business process มักซับซ้อนเกินกว่าจะแสดงในไดอะแกรมเดียวได้ครบถ้วน จึงต้องแตกเป็นลำดับชั้นผ่าน decomposition</span></label>
+              <label class="opt"><input type="radio" name="q20" value="b" /><span class="opt-key">B</span><span class="opt-text">เพราะกฎหมายบังคับ</span></label>
+              <label class="opt"><input type="radio" name="q20" value="c" /><span class="opt-key">C</span><span class="opt-text">เพื่อให้ไดอะแกรมดูสวยงามขึ้นเท่านั้น</span></label>
+              <label class="opt"><input type="radio" name="q20" value="d" /><span class="opt-key">D</span><span class="opt-text">ไม่มีเหตุผลพิเศษใด</span></label>
+            </div>
+            <div class="q-feedback"><div class="q-feedback-inner"><p class="q-verdict" aria-live="polite"></p><p class="q-explain">Business processes are too complex to be shown on a single DFD — จึงสร้าง hierarchy หลาย level ด้วย decomposition</p></div></div>
+          </fieldset>
+
+          <div class="quiz-result" id="quiz-result" hidden tabindex="-1">
+            <div class="score-ring" aria-hidden="true">
+              <svg viewBox="0 0 120 120">
+                <circle class="ring-track" cx="60" cy="60" r="52" />
+                <circle class="ring-fill" cx="60" cy="60" r="52" pathLength="100" />
+              </svg>
+              <span class="score-pct"><span id="score-pct">0</span>%</span>
+            </div>
+            <div class="score-body">
+              <p class="score-line" role="status">ได้ <strong id="score-num">0</strong> / 20 คะแนน</p>
+              <p class="score-msg" id="score-msg"></p>
+              <div class="score-actions">
+                <button class="btn btn--ghost btn--sm" type="button" id="toggle-wrong" aria-pressed="false">ดูเฉพาะข้อที่ผิด</button>
+              </div>
+            </div>
+          </div>
+
+          <div class="quiz-bar">
+            <div class="quiz-progress">
+              <span class="quiz-count"><span id="answered">0</span> / 20 ข้อ</span>
+              <span class="progress" aria-hidden="true"><span class="progress-fill" id="progress-fill"></span></span>
+              <span class="quiz-hint" id="quiz-hint" aria-live="polite"></span>
+            </div>
+            <div class="quiz-actions">
+              <button class="btn btn--ghost" type="reset" id="quiz-reset">ทำใหม่</button>
+              <button class="btn btn--primary" type="submit" id="quiz-submit">ตรวจคำตอบ</button>
+            </div>
+          </div>
+        </form>
+      </section>
+
+    </div>
+  </main>
+  <footer class="site-footer">
+    <div class="wrap">
+      <p>สรุปจากสไลด์ ITDS261 Introduction to Software Engineering (Faculty of ICT, Mahidol University) เพื่อใช้ทบทวนส่วนตัว — ถ้าเนื้อหาขัดกับสไลด์ ให้ยึดสไลด์เป็นหลัก</p>
+    </div>
+  </footer>
+
+  <script src="assets/js/widgets.js" defer></script>
+  <script src="assets/js/network.js" defer></script>
+</body>
+</html>
