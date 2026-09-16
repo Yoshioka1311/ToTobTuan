@@ -251,7 +251,8 @@ README.md               คำอธิบายสั้น + วิธี depl
 - [x] บทที่ 7 `web-ecmascript-features.html` (ไม่มีแท็บเขียนโค้ด) — ES6 → ES2026 จากสไลด์ ECMAScript Version ทั้ง 124 หน้า
 - [x] course nav ครบ 7 บทในทุกหน้าบททุกวิชา (sync ด้วยสคริปต์ชั่วคราว `.cache/nav.mjs` ที่แทนที่เฉพาะบล็อก `<nav class="course-nav">`) · การ์ด ITDS241 ใน index เป็น "7 บท" · README + CLAUDE.md อัปเดตครบ
 - [x] ทดสอบ headless Edge บทที่ 5–7: quiz 20/20 ตรงเฉลย, ไม่มี id ซ้ำ, ลิงก์ toc ครบ, `aria-current` ถูกหน้า, ไม่มี horizontal scroll ที่ 390px ทุกแท็บ, ไม่มี JS error, ทุก solution ของ code exercise ผ่าน / โค้ดว่าง + starter + "เฉลยปลอม" ไม่ผ่าน, รันโค้ดทุกกล่อง `data-run` แล้วผลตรงกับคอมเมนต์ในโค้ด (error 3 กล่องเป็นการสาธิต ReferenceError / TypeError โดยตั้งใจ)
-- หน้าบทใหม่สร้างจากสคริปต์ชั่วคราว `.cache/build.mjs` (+ `.cache/wN.mjs`, `wN-content.html`, `wN-summary.html`) — ถ้า `.cache` หายให้คัดลอกโครงจาก `web-js-functions-oop-dom.html` แทน · PyMuPDF ติดตั้งไว้ที่ `.cache/pylib` (ผู้ใช้อนุญาตใน session นี้) พร้อมสคริปต์ `.cache/pdf.py`
+- **เครื่องมือที่เก็บไว้ใน `.cache/` (gitignore, ผู้ใช้อนุญาตให้เก็บ)**: `build.mjs` สร้างหน้าบทจาก config (`node .cache/build.mjs w7` อ่าน `w7.mjs` + `w7-content.html` + `w7-summary.html`) · `nav.mjs` sync `<nav class="course-nav">` ให้ทุกหน้าบทตรงกัน (แก้ลำดับบทที่ `NETWORK`/`WEB` ในไฟล์นี้ไฟล์เดียว) · `shoot.mjs` ทดสอบด้วย headless Edge + CDP (`node .cache/shoot.mjs <plan.json>`) · `plan-all.json` plan ตรวจทั้งเว็บ (quiz answers, id ซ้ำ, toc, nav, aria-current) · `pdf.py` อ่าน PDF · `w3.mjs`–`w7.mjs` config ของแต่ละบท (quiz + metadata)
+- ไฟล์ `wN-content.html` / `wN-summary.html` ถูกลบหลัง build แล้ว — ถ้าจะแก้เนื้อหาบทเดิมให้แก้ที่ไฟล์ `.html` ของบทนั้นโดยตรง (ระวัง content lock) · PyMuPDF ถูกลบออกจาก `.cache/pylib` แล้ว ถ้าต้องอ่าน PDF อีกให้ขออนุญาตติดตั้งใหม่ (`pip install --target .cache/pylib pymupdf`)
 
 ## สิ่งที่ยังไม่ได้ทำ / แผนต่อไป
 
