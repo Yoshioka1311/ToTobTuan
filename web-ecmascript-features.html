@@ -1,0 +1,1553 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>ITDS241 บทที่ 7: ECMAScript Features · โต๊ะทบทวน</title>
+<meta name="description" content="ITDS241 Web Technologies and Applications บทที่ 7: ECMAScript คืออะไร ไล่ฟีเจอร์ตั้งแต่ ES6 (ES2015) จนถึง ES2026 — Promises, template literals, spread/rest, destructuring, async/await, optional chaining, logical assignment, Set methods และของใหม่ล่าสุด พร้อมโค้ดที่กดรันได้ cheat sheet และแบบฝึกหัด 20 ข้อ" />
+<meta name="theme-color" content="#17151a" />
+<link rel="icon" href="assets/favicon.svg" type="image/svg+xml" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link
+  href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500..700&family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans+Thai:wght@500;600&family=IBM+Plex+Sans+Thai+Looped:wght@400;500;600&display=swap"
+  rel="stylesheet"
+/>
+<link rel="stylesheet" href="assets/css/tokens.css" />
+<link rel="stylesheet" href="assets/css/base.css" />
+<link rel="stylesheet" href="assets/css/network.css" />
+<link rel="stylesheet" href="assets/css/motion.css" />
+<script>document.documentElement.classList.add("js");</script>
+</head>
+<body>
+  <a class="skip-link" href="#tabs">ข้ามไปที่เนื้อหา</a>
+
+  <svg class="dg-defs" aria-hidden="true" focusable="false">
+    <defs>
+      <marker id="arr" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path class="dg-arrow" d="M0 0L10 5L0 10z" /></marker>
+      <marker id="arr-muted" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path class="dg-arrow--muted" d="M0 0L10 5L0 10z" /></marker>
+      <marker id="arr-ok" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path class="dg-arrow--ok" d="M0 0L10 5L0 10z" /></marker>
+      <marker id="arr-bad" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path class="dg-arrow--bad" d="M0 0L10 5L0 10z" /></marker>
+    </defs>
+  </svg>
+
+  <header class="site-header">
+    <div class="wrap">
+      <a class="wordmark" href="index.html" aria-label="โต๊ะทบทวน หน้าแรก">
+        <img class="wordmark-mark" src="assets/favicon.svg" alt="" width="26" height="26" />
+        <span class="wordmark-text">โต๊ะ<span>ทบทวน</span></span>
+      </a>
+      <a class="crumb" href="index.html"><span class="arrow" aria-hidden="true">←</span> รายวิชาทั้งหมด</a>
+    </div>
+  </header>
+
+  <main>
+    <section class="course-hero wrap">
+      <nav class="course-nav" aria-label="เลือกวิชาและบท">
+        <div class="subject-switch">
+          <button class="subject-btn" type="button" data-subject="network" aria-pressed="false"><span class="subject-code">ITDS231</span> Network</button>
+          <button class="subject-btn" type="button" data-subject="web" aria-pressed="true"><span class="subject-code">ITDS241</span> Web</button>
+        </div>
+        <div class="chapter-nav" data-subject="network" data-label="ITDS231 Computer Networks" role="group" aria-label="บทของวิชา ITDS231 Computer Networks">
+          <a class="chapter-link" href="network.html"><span class="chapter-num">บทที่ 1</span><span class="chapter-name">Intro &amp; Topology</span></a>
+          <a class="chapter-link" href="network-application-layer.html"><span class="chapter-num">บทที่ 2</span><span class="chapter-name">Application Layer</span></a>
+          <a class="chapter-link" href="network-data-link-layer.html"><span class="chapter-num">บทที่ 3</span><span class="chapter-name">Data Link Layer</span></a>
+          <a class="chapter-link" href="network-mac-ethernet.html"><span class="chapter-num">บทที่ 4</span><span class="chapter-name">MAC + Ethernet</span></a>
+        </div>
+        <div class="chapter-nav" data-subject="web" data-label="ITDS241 Web Technologies and Applications" role="group" aria-label="บทของวิชา ITDS241 Web Technologies and Applications">
+          <a class="chapter-link" href="web-intro-html-basics.html"><span class="chapter-num">บทที่ 1</span><span class="chapter-name">Internet &amp; HTML Basics</span></a>
+          <a class="chapter-link" href="web-media-forms-semantic.html"><span class="chapter-num">บทที่ 2</span><span class="chapter-name">Media, Forms &amp; Semantic</span></a>
+          <a class="chapter-link" href="web-css-fundamentals.html"><span class="chapter-num">บทที่ 3</span><span class="chapter-name">CSS Fundamentals</span></a>
+          <a class="chapter-link" href="web-css-layout-responsive.html"><span class="chapter-num">บทที่ 4</span><span class="chapter-name">CSS Layout &amp; Responsive</span></a>
+          <a class="chapter-link" href="web-js-fundamentals.html"><span class="chapter-num">บทที่ 5</span><span class="chapter-name">JavaScript Fundamentals</span></a>
+          <a class="chapter-link" href="web-js-functions-oop-dom.html"><span class="chapter-num">บทที่ 6</span><span class="chapter-name">Functions, OOP &amp; DOM</span></a>
+          <a class="chapter-link" href="web-ecmascript-features.html" aria-current="page"><span class="chapter-num">บทที่ 7</span><span class="chapter-name">ECMAScript Features</span></a>
+        </div>
+      </nav>
+      <span class="eyebrow">ITDS241 · บทที่ 7 · ECMAScript Version</span>
+      <h1>ECMAScript Features</h1>
+      <p class="course-lede">ไล่ดูว่าแต่ละรุ่นของ ECMAScript เพิ่มอะไรเข้ามาบ้าง ตั้งแต่ ES6 (ES2015) ที่เปลี่ยนหน้าตา JavaScript ไปทั้งภาษา จนถึง ES2026 ที่ยังใหม่มาก · โค้ดตัวอย่างส่วนใหญ่กดรันได้ทันที ส่วนที่เบราว์เซอร์ยังไม่รองรับมีหมายเหตุกำกับไว้</p>
+      <ul class="course-meta" aria-label="ข้อมูลบทเรียน">
+        <li class="chip chip--accent">ITDS241 Web Technologies and Applications</li>
+        <li class="chip">1 ไฟล์สไลด์ · ECMAScript Version (Updated 2026Aug06)</li>
+        <li class="chip">ES6 → ES2026</li>
+        <li class="chip">แบบฝึกหัด 20 ข้อ</li>
+      </ul>
+    </section>
+
+    <div class="tabbar" id="tabs">
+      <div class="wrap">
+        <div class="tabs" role="tablist" aria-label="ส่วนของหน้า">
+          <button class="tab" role="tab" id="tab-content" aria-controls="content" aria-selected="true" type="button">
+            <svg class="tab-icon" viewBox="0 0 20 20" aria-hidden="true"><path d="M4 3.5h8.5L16 7v9.5H4z M12 3.5V7h4 M7 10h6 M7 13h4" /></svg>
+            เนื้อหา
+          </button>
+          <button class="tab" role="tab" id="tab-summary" aria-controls="summary" aria-selected="false" type="button">
+            <svg class="tab-icon" viewBox="0 0 20 20" aria-hidden="true"><path d="M3.5 4h13v12h-13z M3.5 8h13 M8.5 8v8" /></svg>
+            สรุป
+          </button>
+          <button class="tab" role="tab" id="tab-quiz" aria-controls="quiz" aria-selected="false" type="button">
+            <svg class="tab-icon" viewBox="0 0 20 20" aria-hidden="true"><path d="M10 17a7 7 0 1 0 0-14 7 7 0 0 0 0 14z M6.8 10.2l2.2 2.2 4.2-4.6" /></svg>
+            แบบฝึกหัด
+          </button>
+          <span class="tab-indicator" aria-hidden="true"></span>
+        </div>
+      </div>
+    </div>
+
+    <div class="wrap panels">
+
+      <!-- =============================================================
+           แท็บ 1: เนื้อหา
+           ============================================================= -->
+      <section class="panel" id="content" role="tabpanel" aria-labelledby="tab-content" tabindex="-1">
+        <div class="panel-head">
+          <h2>เนื้อหาแยกตามหัวข้อในสไลด์</h2>
+          <div class="panel-actions">
+            <button class="btn btn--ghost btn--sm" type="button" data-acc-all="open">เปิดทั้งหมด</button>
+            <button class="btn btn--ghost btn--sm" type="button" data-acc-all="close">ปิดทั้งหมด</button>
+          </div>
+        </div>
+
+        <div class="acc">
+
+<!-- ================= 01 ECMAScript คืออะไร ================= -->
+          <div class="acc-item is-open">
+            <h3 class="acc-heading">
+              <button class="acc-trigger" type="button" aria-expanded="true" aria-controls="acc-es-intro" id="acc-es-intro-btn">
+                <span class="acc-index">01</span>
+                <span class="acc-title">
+                  <span class="acc-name">ECMAScript คืออะไร และมีเวอร์ชันอะไรบ้าง</span>
+                  <span class="acc-file">ITDS241-ECMAScript Version · slide 4–7</span>
+                </span>
+                <svg class="acc-chevron" viewBox="0 0 20 20" aria-hidden="true"><path d="M5 7.5l5 5 5-5" /></svg>
+              </button>
+            </h3>
+            <div class="acc-panel" id="acc-es-intro" role="region" aria-labelledby="acc-es-intro-btn">
+              <div class="acc-panel-inner">
+                <div class="acc-body">
+
+                  <nav class="toc" aria-label="หัวข้อในการ์ด ECMAScript คืออะไร">
+                    <a href="#es-what">ECMAScript คืออะไร</a>
+                    <a href="#es-versions">ตารางเวอร์ชันทั้งหมด</a>
+                  </nav>
+
+                  <section class="topic" id="es-what">
+                    <h4>ECMAScript คืออะไร</h4>
+                    <ul class="tight">
+                      <li><strong>ECMAScript (ES)</strong> เป็น <strong>general-purpose programming language</strong></li>
+                      <li>ถูกกำหนดมาตรฐานโดย <strong>Ecma International</strong></li>
+                      <li><strong>JavaScript คือ implementation ของ ES ที่นิยมและถูกใช้มากที่สุด</strong></li>
+                    </ul>
+                    <div class="callout callout--def">
+                      <span class="callout-label">ES กับ JS ต่างกันอย่างไร</span>
+                      <p>ES คือ<b>ข้อกำหนด (specification)</b> ว่าภาษาต้องทำอะไรได้บ้าง ส่วน JS คือ<b>ภาษาจริงที่ทำตามข้อกำหนดนั้น</b> — บทนี้จึงอธิบาย "เวอร์ชัน ES ของ JS"</p>
+                    </div>
+                  </section>
+
+                  <section class="topic" id="es-versions">
+                    <h4>ตารางเวอร์ชัน ECMAScript</h4>
+                    <div class="table-scroll">
+                      <table>
+                        <thead><tr><th>Edition</th><th>Official name</th><th>Date published</th></tr></thead>
+                        <tbody>
+                          <tr><td>ES1</td><td>ES1</td><td>June 1997</td></tr>
+                          <tr><td>ES2</td><td>ES2</td><td>June 1998</td></tr>
+                          <tr><td>ES3</td><td>ES3</td><td>December 1999</td></tr>
+                          <tr><td>ES4</td><td>ES4</td><td><strong>Abandoned</strong></td></tr>
+                          <tr><td>ES5</td><td>ES5</td><td>December 2009</td></tr>
+                          <tr><td>ES5.1</td><td>ES5.1</td><td>June 2011</td></tr>
+                          <tr><td><strong>ES6</strong></td><td><strong>ES2015</strong></td><td>June 2015</td></tr>
+                          <tr><td>ES7</td><td>ES2016</td><td>June 2016</td></tr>
+                          <tr><td>ES8</td><td>ES2017</td><td>June 2017</td></tr>
+                          <tr><td>ES9</td><td>ES2018</td><td>June 2018</td></tr>
+                          <tr><td>ES10</td><td>ES2019</td><td>June 2019</td></tr>
+                          <tr><td>ES11</td><td>ES2020</td><td>June 2020</td></tr>
+                          <tr><td>ES12</td><td>ES2021</td><td>June 2021</td></tr>
+                          <tr><td>ES13</td><td>ES2022</td><td>June 2022</td></tr>
+                          <tr><td>ES14</td><td>ES2023</td><td>June 2023</td></tr>
+                          <tr><td>ES15</td><td>ES2024</td><td>June 2024</td></tr>
+                          <tr><td>ES16</td><td>ES2025</td><td>June 2025</td></tr>
+                          <tr><td>ES17</td><td>ES2026</td><td>June 2026</td></tr>
+                        </tbody>
+                      </table>
+                    </div>
+                    <div class="callout callout--warn">
+                      <span class="callout-label">จุดสังเกต 2 อย่าง</span>
+                      <p><b>ES4 ถูกยกเลิก (Abandoned)</b> ไม่เคยออกมา · ตั้งแต่ <b>ES6 เป็นต้นไปเปลี่ยนมาตั้งชื่อตามปี</b> (ES6 = ES2015) และออกทุกเดือนมิถุนายนของทุกปี — เลข edition กับปีจึงห่างกัน 9 เสมอ (ES11 = ES2020)</p>
+                    </div>
+                  </section>
+
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- ================= 02 ES6 ================= -->
+          <div class="acc-item">
+            <h3 class="acc-heading">
+              <button class="acc-trigger" type="button" aria-expanded="false" aria-controls="acc-es-es6" id="acc-es-es6-btn">
+                <span class="acc-index">02</span>
+                <span class="acc-title">
+                  <span class="acc-name">ES6 (ES2015): Promises, Template Literals, Spread, Destructuring</span>
+                  <span class="acc-file">ITDS241-ECMAScript Version · slide 9–33</span>
+                </span>
+                <svg class="acc-chevron" viewBox="0 0 20 20" aria-hidden="true"><path d="M5 7.5l5 5 5-5" /></svg>
+              </button>
+            </h3>
+            <div class="acc-panel" id="acc-es-es6" role="region" aria-labelledby="acc-es-es6-btn">
+              <div class="acc-panel-inner">
+                <div class="acc-body">
+
+                  <nav class="toc" aria-label="หัวข้อในการ์ด ES6">
+                    <a href="#es6-list">ES6 มีอะไรใหม่</a>
+                    <a href="#es6-promise">Promises</a>
+                    <a href="#es6-then">then / catch</a>
+                    <a href="#es6-template">Template Literals</a>
+                    <a href="#es6-default">Default parameters</a>
+                    <a href="#es6-spread">Spread operator</a>
+                    <a href="#es6-destructure">Destructuring</a>
+                    <a href="#es6-forof">For-of loop</a>
+                    <a href="#es6-mapset">Map, Set และ WeakMap</a>
+                    <a href="#es6-methods">String/Object methods ใหม่</a>
+                    <a href="#es6-rest">Rest parameter</a>
+                  </nav>
+
+                  <section class="topic" id="es6-list">
+                    <h4>ES6 (ES2015) มีอะไรใหม่</h4>
+                    <ul class="tight">
+                      <li>Arrow Functions</li>
+                      <li>let and const</li>
+                      <li>Classes</li>
+                      <li>Promises</li>
+                      <li>Template Literals</li>
+                      <li>Default parameters</li>
+                      <li>The spread operator</li>
+                      <li>Destructuring assignments</li>
+                      <li>For-of loop</li>
+                      <li>Map and Set</li>
+                      <li>New String and Object methods</li>
+                      <li>Function Rest Parameter</li>
+                    </ul>
+                    <p class="note">Arrow functions, <code>let</code>/<code>const</code> และ Classes เรียนไปแล้วในบทที่ 5 และ 6 — หัวข้อนี้จึงเน้นส่วนที่เหลือ</p>
+                  </section>
+
+                  <section class="topic" id="es6-promise">
+                    <h4>Promises</h4>
+                    <div class="callout callout--def">
+                      <span class="callout-label">นิยามจากสไลด์</span>
+                      <p>object ชนิด <b>Promise</b> แทน<b>การเสร็จสิ้น (หรือความล้มเหลว) ในอนาคตของงาน asynchronous</b> พร้อมค่าผลลัพธ์ของมัน</p>
+                    </div>
+                    <div class="compare">
+                      <div class="compare-col">
+                        <h5>Producing code</h5>
+                        <p>ทำบางอย่างที่<strong>ใช้เวลา</strong> เช่น โหลดข้อมูลจากฐานข้อมูล</p>
+                      </div>
+                      <div class="compare-col">
+                        <h5>Consuming code</h5>
+                        <p><strong>รับผลลัพธ์</strong>จาก producing code เมื่อมันพร้อม</p>
+                      </div>
+                    </div>
+                    <p>Promise object คือ<strong>ตัวเชื่อม</strong>ระหว่าง producing code กับ consuming code</p>
+                    <p><strong>สถานะของ promise มี 3 แบบ</strong></p>
+                    <dl class="defs defs--stack">
+                      <div><dt>pending</dt><dd>สถานะเริ่มต้น — ยัง<strong>ไม่ fulfilled และไม่ rejected</strong></dd></div>
+                      <div><dt>fulfilled</dt><dd>งาน<strong>สำเร็จ</strong></dd></div>
+                      <div><dt>rejected</dt><dd>งาน<strong>ล้มเหลว</strong></dd></div>
+                    </dl>
+                    <figure class="diagram">
+                      <div class="diagram-scroll">
+                        <svg viewBox="0 0 720 240" role="img" aria-labelledby="dg-es-pr-t dg-es-pr-d">
+                          <title id="dg-es-pr-t">สถานะภายในของ promise object</title>
+                          <desc id="dg-es-pr-d">เริ่มจาก new Promise executor ได้สถานะ pending ผลลัพธ์ undefined ถ้าเรียก resolve value จะเปลี่ยนเป็นสถานะ fulfilled ผลลัพธ์เป็น value ถ้าเรียก reject error จะเปลี่ยนเป็นสถานะ rejected ผลลัพธ์เป็น error</desc>
+                          <text class="dg-text dg-text--sm" x="120" y="22" text-anchor="middle">new Promise(executor)</text>
+                          <path class="dg-line" d="M120 30 V54" marker-end="url(#arr-muted)" />
+                          <rect class="dg-box dg-box--accent" x="20" y="56" width="200" height="60" rx="8" />
+                          <text class="dg-mono dg-mono--sm" x="36" y="80">state: "pending"</text>
+                          <text class="dg-mono dg-mono--sm" x="36" y="102">result: undefined</text>
+                          <path class="dg-line dg-line--ok" d="M224 78 H454" marker-end="url(#arr-ok)" />
+                          <text class="dg-mono dg-mono--sm" x="339" y="68" text-anchor="middle">resolve(value)</text>
+                          <rect class="dg-box dg-box--ok" x="456" y="46" width="240" height="60" rx="8" />
+                          <text class="dg-mono dg-mono--sm" x="472" y="70">state: "fulfilled"</text>
+                          <text class="dg-mono dg-mono--sm" x="472" y="92">result: value</text>
+                          <path class="dg-line dg-line--bad" d="M224 100 H454 V150" marker-end="url(#arr-bad)" />
+                          <text class="dg-mono dg-mono--sm" x="339" y="120" text-anchor="middle">reject(error)</text>
+                          <rect class="dg-box dg-box--bad" x="456" y="152" width="240" height="60" rx="8" />
+                          <text class="dg-mono dg-mono--sm" x="472" y="176">state: "rejected"</text>
+                          <text class="dg-mono dg-mono--sm" x="472" y="198">result: error</text>
+                        </svg>
+                      </div>
+                      <figcaption>promise เริ่มที่ <code>pending</code> แล้วเปลี่ยนไปทางใดทางหนึ่ง<strong>เพียงครั้งเดียว</strong> · ที่มา: ITDS241-ECMAScript Version slide 14</figcaption>
+                    </figure>
+                    <p><strong>ไวยากรณ์ constructor</strong> — <code>resolve</code> และ <code>reject</code> เป็น callback ที่ <strong>JavaScript engine เตรียมไว้ให้</strong> โค้ดของเราอยู่ใน executor เท่านั้น</p>
+                    <pre class="code-block" data-lang="js"><code>let promise = new Promise(function (resolve, reject) {
+  // executor (the producing code)
+});</code></pre>
+                    <dl class="defs defs--stack">
+                      <div><dt>resolve(value)</dt><dd>งานเสร็จ<strong>สำเร็จ</strong> พร้อมผลลัพธ์ <code>value</code></dd></div>
+                      <div><dt>reject(error)</dt><dd>เกิด<strong>ข้อผิดพลาด</strong> โดย <code>error</code> คือ object ของ error</dd></div>
+                    </dl>
+                    <p><strong>ตัวอย่างจากสไลด์ (producing code)</strong> — สไลด์ตั้ง <code>x = 5</code> ซึ่ง<strong>ไม่เท่ากับ 0</strong> โค้ดจึงเข้า <code>else</code> และจบที่สถานะ <code>rejected</code></p>
+                    <pre class="code-block" data-lang="js" data-run data-wait="1400"><code>let myPromise = new Promise(function (resolve, reject) {
+  let x = 5;
+  if (x == 0) {
+    // after 1 second signal that the job is done with the result "finished"
+    setTimeout(() =&gt; resolve("finished"), 1000);
+  } else {
+    // after 1 second signal that the job is finished with an error
+    setTimeout(() =&gt; reject(new Error("No No!")), 1000);
+  }
+});
+
+myPromise.then(
+  function (value) { console.log("fulfilled:", value); },
+  function (error) { console.log("rejected:", error.message); }
+);</code></pre>
+                  </section>
+
+                  <section class="topic" id="es6-then">
+                    <h4>Consuming code: then, catch และ finally</h4>
+                    <p>function ฝั่งผู้บริโภคผลลัพธ์<strong>ลงทะเบียน (subscribe)</strong> ได้ด้วย method <code>.then</code>, <code>.catch</code> และ <code>.finally</code></p>
+                    <ul class="tight">
+                      <li>argument <strong>ตัวแรก</strong>ของ <code>.then</code> คือ function ที่ทำงานเมื่อ promise ถูก <strong>resolve</strong> และรับผลลัพธ์มา</li>
+                      <li>argument <strong>ตัวที่สอง</strong>ของ <code>.then</code> คือ function ที่ทำงานเมื่อ promise ถูก <strong>reject</strong> และรับ error มา</li>
+                    </ul>
+                    <pre class="code-block" data-lang="js"><code>promise.then(
+  function (result) { /* handle a successful result */ },
+  function (error)  { /* handle an error */ }
+);</code></pre>
+                    <p>ถ้าต้องการ<strong>เน้นที่ error</strong> หรือสนใจเฉพาะ error ใช้ <code>.catch</code> ได้</p>
+                    <pre class="code-block" data-lang="js"><code>myPromise.then(
+  function (value) {
+    Display(value);
+  }
+)
+.catch((error) =&gt; alert(error));</code></pre>
+                  </section>
+
+                  <section class="topic" id="es6-template">
+                    <h4>Template Literals</h4>
+                    <p>เป็นวิธีสร้าง string โดยใช้ <strong>backtick <code>`</code></strong> และ<strong>ฝัง expression ลงใน string</strong> ได้ด้วย <code>${a_variable}</code></p>
+                    <pre class="code-block" data-lang="js" data-run><code>const name = "Wudhichart";
+const string = `Hello, ${name}`;
+const aString = `A String`;
+
+console.log(string);
+console.log(aString);</code></pre>
+                    <p><strong>Tagged templates</strong> ใช้<strong>แปลง literal string ให้เป็น string ที่จัดรูปแบบแล้ว</strong></p>
+                    <pre class="code-block" data-lang="js"><code>let aStr = tag`Hello`
+
+function tag(literals, ...substitutions) {
+  // return a string
+}</code></pre>
+                    <dl class="defs defs--stack">
+                      <div><dt>tag</dt><dd>tag template ซึ่งเป็น <strong>function อะไรก็ได้</strong></dd></div>
+                      <div><dt>literals</dt><dd><strong>array ของ literal string</strong></dd></div>
+                      <div><dt>substitutions</dt><dd><strong>array ของ expression</strong></dd></div>
+                    </dl>
+                  </section>
+
+                  <section class="topic" id="es6-default">
+                    <h4>Default parameters</h4>
+                    <p>function รองรับ <strong>default parameters</strong></p>
+                    <pre class="code-block" data-lang="js"><code>const someFunction = function (index = 0, value = true) { /* ... */ }
+
+someFunction()</code></pre>
+                  </section>
+
+                  <section class="topic" id="es6-spread">
+                    <h4>The spread operator (...)</h4>
+                    <p><strong>array, object หรือ string</strong> ถูก<strong>กระจายออก</strong>ได้ด้วย spread operator <code>...</code></p>
+                    <pre class="code-block" data-lang="js" data-run><code>const a = [1, 2, 3];              // a = 1,2,3
+const b = [...a, 4, 5, 6];        // b = 1,2,3,4,5,6
+const c = [...a];                 // c = 1,2,3  (คัดลอก array)
+
+const message = "Hello";          // message = Hello
+const arrayized = [...message];   // arrayized = H,e,l,l,o
+
+console.log(b.join(","));
+console.log(c.join(","));
+console.log(arrayized.join(","));</code></pre>
+                    <p class="note">สไลด์ระบุว่า <strong>คัดลอก array ได้ด้วย spread operator</strong> และใช้กับ <strong>object และ string</strong> ได้เช่นกัน</p>
+                  </section>
+
+                  <section class="topic" id="es6-destructure">
+                    <h4>Destructuring assignments</h4>
+                    <p>ดึงค่าบางส่วนของ <strong>object และ array</strong> ออกมาได้</p>
+                    <pre class="code-block" data-lang="js" data-run><code>// array
+let arr = [1, 2];
+let [one, two] = arr;            // one = 1, two = 2
+
+// object — เปลี่ยนชื่อตัวแปรตอนดึงออกมาได้ด้วย
+const person = {
+  firstName: "Wudhichart",
+  lastName: "Sawangphol",
+  lecturer: true,
+  age: 30,
+};
+let { firstName: name, age } = person;   // name = Wudhichart, age = 30
+
+console.log(one, two);
+console.log(name, age);</code></pre>
+                  </section>
+
+                  <section class="topic" id="es6-forof">
+                    <h4>For-of loop</h4>
+                    <p>ES6 เพิ่ม <strong>for-of loop</strong> ที่วนผ่าน <strong>iterable object</strong> เช่น array</p>
+                    <pre class="code-block" data-lang="js" data-run><code>for (const ele of ["a", "b", "c"]) {
+  console.log(ele);
+}</code></pre>
+                    <div class="callout callout--why">
+                      <span class="callout-label">ต่างจาก forEach()</span>
+                      <p>ไม่เหมือน <code>forEach()</code> ตรงที่ for-of <b>ใช้ <code>break</code>, <code>continue</code> และ <code>return</code> ได้</b></p>
+                    </div>
+                  </section>
+
+                  <section class="topic" id="es6-mapset">
+                    <h4>Map, Set และ WeakMap</h4>
+                    <p>ES6 เพิ่ม <strong>Map</strong> และ <strong>Set</strong> เข้ามา และเพิ่ม <strong>WeakMap</strong> ซึ่ง<strong>มี key เป็น object ได้อย่างเดียว</strong></p>
+                    <div class="table-scroll">
+                      <table>
+                        <thead><tr><th>Metrics</th><th>Map</th><th>WeakMap</th></tr></thead>
+                        <tbody>
+                          <tr><td class="nowrap">Key Types</td><td>ค่าอะไรก็ได้</td><td><strong>Objects</strong> เท่านั้น</td></tr>
+                          <tr><td class="nowrap">Garbage Collection</td><td>ไม่มีคุณสมบัตินี้</td><td>ถูกเก็บกวาดได้ถ้าไม่มีการอ้างอิงอื่นเหลืออยู่</td></tr>
+                          <tr><td class="nowrap">Iteration</td><td>วนได้ด้วย <code>keys()</code>, <code>values()</code>, <code>entries()</code></td><td><strong>ไม่มี</strong> method เหล่านี้ เพราะไม่ enumerable</td></tr>
+                          <tr><td class="nowrap">Size</td><td>มี property <code>size</code></td><td><strong>ไม่มี</strong> <code>size</code></td></tr>
+                          <tr><td class="nowrap">Performance</td><td>Fast</td><td>Slow</td></tr>
+                        </tbody>
+                      </table>
+                    </div>
+                    <div class="compare">
+                      <div class="compare-col">
+                        <h5>ใช้ Map เมื่อ</h5>
+                        <ul class="tight">
+                          <li>ต้องใช้ข้อมูลชนิดใดก็ได้เป็น key</li>
+                          <li>ต้องวนผ่าน key และ value</li>
+                          <li>ต้องรู้จำนวนคู่ key-value ใน map</li>
+                        </ul>
+                      </div>
+                      <div class="compare-col">
+                        <h5>ใช้ WeakMap เมื่อ</h5>
+                        <ul class="tight">
+                          <li>ต้องผูกข้อมูลกับ object ที่อาจถูกทำลาย เช่น DOM node</li>
+                          <li>ต้องการเลี่ยง memory leak</li>
+                        </ul>
+                      </div>
+                    </div>
+                  </section>
+
+                  <section class="topic" id="es6-methods">
+                    <h4>New String and Object methods</h4>
+                    <div class="table-scroll">
+                      <table>
+                        <thead><tr><th>Method</th><th>ทำอะไร</th></tr></thead>
+                        <tbody>
+                          <tr><td><code>repeat()</code></td><td>ทำซ้ำ string ตามจำนวนที่กำหนด</td></tr>
+                          <tr><td><code>object.is()</code></td><td>บอกว่าค่าสองค่า<strong>เป็นค่าเดียวกันหรือไม่</strong></td></tr>
+                          <tr><td><code>Array.find()</code></td><td>คืน<strong>ค่าแรก</strong>ของ array ที่ผ่าน test function</td></tr>
+                          <tr><td><code>Array.findIndex()</code></td><td>คืน<strong>ตำแหน่ง (index)</strong> ของค่าแรกที่ผ่าน test function</td></tr>
+                        </tbody>
+                      </table>
+                    </div>
+                    <pre class="code-block" data-lang="js" data-run><code>console.log("Hello".repeat(3));        // HelloHelloHello
+
+let numbers = [10, 30, 25, 48];
+let answer = numbers.find((num) =&gt; num &lt; 30);
+console.log(answer);                    // 10</code></pre>
+                    <p class="note">ไล่ทีละขั้นของ <code>find</code> — ตรวจ 10 &lt; 30 เป็นจริงตั้งแต่ตัวแรก จึงคืน <strong>10</strong> แล้วหยุดทันที ไม่ตรวจตัวที่เหลือ</p>
+                  </section>
+
+                  <section class="topic" id="es6-rest">
+                    <h4>Function Rest Parameter</h4>
+                    <p><strong>rest parameter (<code>...</code>)</strong> ทำให้ function รับ argument ได้<strong>ไม่จำกัดจำนวน</strong> — ใช้<strong>สัญลักษณ์เดียวกับ spread operator</strong></p>
+                    <pre class="code-block" data-lang="js" data-run><code>function findMax(...args) {
+  let max = 0;
+  for (let arg of args) {
+    max = max &lt; arg ? arg : max;
+  }
+  return max;
+}
+
+console.log(findMax(3, 9, 2));
+console.log(findMax(1, 4, 7, 2, 6));</code></pre>
+                  </section>
+
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- ================= 03 ES2016–ES2018 ================= -->
+          <div class="acc-item">
+            <h3 class="acc-heading">
+              <button class="acc-trigger" type="button" aria-expanded="false" aria-controls="acc-es-1618" id="acc-es-1618-btn">
+                <span class="acc-index">03</span>
+                <span class="acc-title">
+                  <span class="acc-name">ES2016 – ES2018: includes, padding, Object methods, async/await</span>
+                  <span class="acc-file">ITDS241-ECMAScript Version · slide 35–50</span>
+                </span>
+                <svg class="acc-chevron" viewBox="0 0 20 20" aria-hidden="true"><path d="M5 7.5l5 5 5-5" /></svg>
+              </button>
+            </h3>
+            <div class="acc-panel" id="acc-es-1618" role="region" aria-labelledby="acc-es-1618-btn">
+              <div class="acc-panel-inner">
+                <div class="acc-body">
+
+                  <nav class="toc" aria-label="หัวข้อในการ์ด ES2016 ถึง ES2018">
+                    <a href="#es16">ES2016</a>
+                    <a href="#es17-pad">String padding</a>
+                    <a href="#es17-obj">Object.values / entries</a>
+                    <a href="#es17-misc">getOwnPropertyDescriptors · trailing commas</a>
+                    <a href="#es17-async">Async functions</a>
+                    <a href="#es18">ES2018</a>
+                  </nav>
+
+                  <section class="topic" id="es16">
+                    <h4>ES2016: Array.includes() และ Exponentiation Operator</h4>
+                    <p>ES2016 เพิ่มมา 2 อย่าง: <strong>Array.includes()</strong> และ <strong>Exponentiation Operator</strong></p>
+                    <div class="compare">
+                      <div class="compare-col">
+                        <h5>ES6: ใช้ indexOf</h5>
+                        <p>ถ้าค่าที่คืนมาเป็น <strong>-1</strong> แปลว่า array <strong>ไม่มี</strong> element ที่หา · ถ้าไม่ใช่ -1 แปลว่ามี</p>
+                      </div>
+                      <div class="compare-col">
+                        <h5>ES2016: ใช้ includes</h5>
+                        <p>function นี้คืนค่าเป็น <strong>boolean</strong> ตรงๆ อ่านง่ายกว่า</p>
+                      </div>
+                    </div>
+                    <pre class="code-block" data-lang="js" data-run><code>let numbers = [10, 30, 25, 48];
+
+console.log(numbers.indexOf(30));     // 1  (ไม่ใช่ -1 แปลว่ามีอยู่)
+console.log(numbers.indexOf(99));     // -1 (ไม่มี)
+
+let found = numbers.includes(30);     // Found = true
+console.log(found);</code></pre>
+                  </section>
+
+                  <section class="topic" id="es17-pad">
+                    <h4>ES2017: String padding</h4>
+                    <p>ES2017 เพิ่ม method ของ String มา 2 ตัว: <code>padStart</code> และ <code>padEnd</code></p>
+                    <pre class="code-block" data-lang="js"><code>padStart(targetLength [, padString])
+padEnd(targetLength [, padString])</code></pre>
+                    <pre class="code-block" data-lang="js" data-run><code>let string = "World";
+console.log(string.padStart(10));            // "     World"
+console.log(string.padStart(10, "Hello"));   // "HelloWorld"
+console.log(string.padEnd(10));              // "World     "
+console.log(string.padEnd(10, "Hello"));     // "WorldHello"</code></pre>
+                    <p class="note">ไล่ทีละขั้น — <code>"World"</code> ยาว 5 ตัว ต้องการความยาวรวม 10 จึงเติมอีก 5 ตัว: ถ้าไม่ระบุ padString จะเติมช่องว่าง ถ้าระบุ <code>"Hello"</code> จะเติม <code>Hello</code> ไว้ด้านหน้า (padStart) หรือด้านหลัง (padEnd)</p>
+                  </section>
+
+                  <section class="topic" id="es17-obj">
+                    <h4>ES2017: Object.values() และ Object.entries()</h4>
+                    <dl class="defs defs--stack">
+                      <div><dt>Object.values()</dt><dd>คืน <strong>array ของค่า</strong>ของ properties ทั้งหมดใน object</dd></div>
+                      <div><dt>Object.entries()</dt><dd>คืน <strong>array ของคู่ key-value</strong> ของ properties ทั้งหมดใน object</dd></div>
+                    </dl>
+                    <pre class="code-block" data-lang="js" data-run><code>const person = {
+  firstName: "Wudhichart",
+  lastName: "Sawangphol",
+  lecturer: true,
+  age: 30,
+};
+
+let vals = Object.values(person);
+console.log(vals);
+// ["Wudhichart", "Sawangphol", true, 30]
+
+let ents = Object.entries(person);
+console.log(ents);
+// 0: ["firstName", "Wudhichart"]  1: ["lastName", "Sawangphol"]
+// 2: ["lecturer", true]           3: ["age", 30]</code></pre>
+                    <p class="note">สไลด์ระบุว่า <strong>2 method นี้ใช้กับ array ได้ด้วย</strong></p>
+                  </section>
+
+                  <section class="topic" id="es17-misc">
+                    <h4>ES2017: getOwnPropertyDescriptors() และ Trailing commas</h4>
+                    <p><code>Object.getOwnPropertyDescriptors()</code> คืน <strong>descriptor ของ property ทุกตัวที่เป็นของ object นั้นเอง</strong> — ใช้คู่กับ <code>Object.defineProperties()</code> เพื่อคัดลอก property ไปยัง object ใหม่ได้</p>
+                    <pre class="code-block" data-lang="js" data-run><code>const person = {
+  firstName: "Wudhichart",
+  lastName: "Sawangphol",
+  lecturer: true,
+  age: 30,
+};
+
+const person2 = {};
+Object.defineProperties(person2, Object.getOwnPropertyDescriptors(person));
+
+console.log(person2);
+// person2 = { firstName: "Wudhichart", lastName: "Sawangphol", lecturer: true, age: 30 }</code></pre>
+                    <p><strong>Trailing commas</strong> — ES2017 อนุญาตให้มี<strong>เครื่องหมายจุลภาคปิดท้าย</strong>ได้ทั้งใน function declaration และ function call</p>
+                    <pre class="code-block" data-lang="js"><code>const person = {
+  firstName: "Wudhichart",
+  lastName: "Sawangphol",
+  lecturer: true,
+  age: 30,          // &lt;- จุลภาคตัวนี้ไม่ทำให้ error
+};</code></pre>
+                  </section>
+
+                  <section class="topic" id="es17-async">
+                    <h4>ES2017: Async functions (async / await)</h4>
+                    <ul class="tight">
+                      <li><code>async</code>/<code>await</code> เป็น<strong>ไวยากรณ์พิเศษที่ทำงานกับ promise</strong></li>
+                      <li>คำว่า <strong><code>async</code> หน้า function</strong> หมายความว่า function นั้น<strong>คืนค่าเป็น promise เสมอ</strong></li>
+                      <li>คำว่า <strong><code>await</code></strong> ทำให้ JavaScript <strong>รอจนกว่า promise นั้นจะ settle</strong> แล้วคืนผลลัพธ์ออกมา</li>
+                    </ul>
+                    <p><strong>ตัวอย่างจากสไลด์</strong> — คราวนี้ <code>x = 0</code> จึงเข้า if และ resolve ด้วยค่า <code>"finished"</code></p>
+                    <pre class="code-block" data-lang="js" data-run data-wait="1600"><code>let myPromise = new Promise(function (resolve, reject) {
+  let x = 0;
+  if (x == 0) {
+    setTimeout(() =&gt; resolve("finished"), 1000);
+  } else {
+    setTimeout(() =&gt; reject(new Error("No No!")), 1000);
+  }
+});
+
+function resolveAfter1second() {
+  return myPromise;
+}
+
+const asyncFunction = async () =&gt; {
+  console.log(await resolveAfter1second());
+};
+
+console.log("Before");
+asyncFunction();
+console.log("After");
+// Before
+// After
+// finished</code></pre>
+                    <div class="callout callout--why">
+                      <span class="callout-label">ทำไมลำดับเป็น Before → After → finished</span>
+                      <p><code>asyncFunction()</code> ไปติดอยู่ที่ <code>await</code> แล้ว<b>คืนการควบคุมกลับมาทันที</b> บรรทัด <code>console.log("After")</code> จึงทำงานก่อน ส่วน <code>finished</code> ค่อยพิมพ์เมื่อ promise settle หลัง 1 วินาที</p>
+                    </div>
+                    <pre class="code-block" data-lang="js"><code>async function f() {
+  return 2;
+}
+f().then(alert);</code></pre>
+                  </section>
+
+                  <section class="topic" id="es18">
+                    <h4>ES2018: Rest/Spread Properties และ for-await-of</h4>
+                    <p><strong>Rest properties</strong> และ <strong>Spread properties</strong> — ใช้ <code>...</code> กับ object ได้</p>
+                    <pre class="code-block" data-lang="js" data-run><code>// Rest properties — เก็บ property ที่เหลือไว้ในตัวแปรเดียว
+const { firstName, lastName, ...otherProperties } = {
+  firstName: "Wudhichart",
+  lastName: "Sawangphol",
+  lecturer: true,
+  age: 30,
+};
+
+// Spread properties — กระจาย property กลับออกมาเป็น object ใหม่
+const person2 = { firstName, lastName, ...otherProperties };
+
+console.log(otherProperties);
+console.log(person2);</code></pre>
+                    <p><strong>for-await-of</strong> — ไวยากรณ์ใหม่ที่ให้ใช้ <strong>async iterable object เป็นตัววนลูป</strong></p>
+                    <div class="compare">
+                      <div class="compare-col">
+                        <h5>ไม่ใช้ for-await-of</h5>
+                        <pre class="code-block" data-lang="js"><code>console.log("Start");
+const processArray = async (numbers) =&gt; {
+  numbers.forEach(async (element) =&gt; {
+    const val = await calMultiply(element, 2);
+    console.log(val);
+  });
+  console.log("Finished");
+};
+// Start
+// Finished
+// 2 * 1 = 2
+// 2 * 2 = 4
+// 2 * 3 = 6</code></pre>
+                      </div>
+                      <div class="compare-col">
+                        <h5>ใช้ for-await-of</h5>
+                        <pre class="code-block" data-lang="js"><code>console.log("Start");
+const processArrayWithWait = async (numbers) =&gt; {
+  for await (let element of numbers) {
+    calMultiply(element, 3).then((val) =&gt;
+      console.log(val));
+  }
+  console.log("Finished");
+};
+processArrayWithWait(a);
+// Start
+// 3 * 1 = 3
+// 3 * 2 = 6
+// 3 * 3 = 9
+// Finished</code></pre>
+                      </div>
+                    </div>
+                    <p class="note">สังเกตว่า <strong>"Finished" ย้ายไปอยู่ท้ายสุด</strong> เมื่อใช้ for-await-of เพราะลูปรอผลของแต่ละรอบก่อนไปต่อ · function ที่ใช้คือ</p>
+                    <pre class="code-block" data-lang="js"><code>const a = [1, 2, 3];
+const calMultiply = (value, multiplier) =&gt;
+  new Promise((resolve) =&gt;
+    resolve(`${multiplier} * ${value} = ${multiplier * value}`)
+  );</code></pre>
+                  </section>
+
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- ================= 04 ES2019–ES2022 ================= -->
+          <div class="acc-item">
+            <h3 class="acc-heading">
+              <button class="acc-trigger" type="button" aria-expanded="false" aria-controls="acc-es-1922" id="acc-es-1922-btn">
+                <span class="acc-index">04</span>
+                <span class="acc-title">
+                  <span class="acc-name">ES2019 – ES2022: flat, BigInt, ?? และ ?., logical assignment, .at()</span>
+                  <span class="acc-file">ITDS241-ECMAScript Version · slide 52–76</span>
+                </span>
+                <svg class="acc-chevron" viewBox="0 0 20 20" aria-hidden="true"><path d="M5 7.5l5 5 5-5" /></svg>
+              </button>
+            </h3>
+            <div class="acc-panel" id="acc-es-1922" role="region" aria-labelledby="acc-es-1922-btn">
+              <div class="acc-panel-inner">
+                <div class="acc-body">
+
+                  <nav class="toc" aria-label="หัวข้อในการ์ด ES2019 ถึง ES2022">
+                    <a href="#es19">ES2019</a>
+                    <a href="#es20-bigint">BigInt</a>
+                    <a href="#es20-nullish">Nullish coalescing (??)</a>
+                    <a href="#es20-chain">Optional chaining (?.)</a>
+                    <a href="#es20-match">String.matchAll()</a>
+                    <a href="#es21">ES2021</a>
+                    <a href="#es22">ES2022</a>
+                  </nav>
+
+                  <section class="topic" id="es19">
+                    <h4>ES2019: flat, flatMap, fromEntries, trimStart/trimEnd</h4>
+                    <p><strong><code>Array.prototype.flat()</code></strong> — ทำให้ array หลายมิติ<strong>แบนลง</strong> โดยรับ<strong>ระดับความลึก</strong>เป็น argument</p>
+                    <pre class="code-block" data-lang="js" data-run><code>const array = ["Apple", "Orange", ["Grape", ["Pineapple"]]];
+
+console.log(array.flat());
+// ["Apple", "Orange", "Grape", Array(1)]   ← ยังเหลือ array ซ้อนอยู่ 1 ชั้น
+
+console.log(array.flat(2));
+// ["Apple", "Orange", "Grape", "Pineapple"]</code></pre>
+                    <p><strong><code>flatMap()</code></strong> เป็น method ของ Array ที่<strong>รวม <code>flat()</code> กับ <code>map()</code> เข้าด้วยกัน</strong></p>
+                    <pre class="code-block" data-lang="js" data-run><code>const numbers = [1, 2, 3, 4, 5, 6];
+
+console.log(numbers.map((num) =&gt; [num, num * 2]));
+// [Array(2), Array(2), Array(2), Array(2), Array(2), Array(2)]
+
+console.log(numbers.flatMap((num) =&gt; [num, num * 2]));
+// [1, 2, 2, 4, 3, 6, 4, 8, 5, 10, 6, 12]</code></pre>
+                    <p><strong><code>Object.fromEntries()</code></strong> ใช้<strong>สร้าง object ใหม่จาก properties</strong></p>
+                    <pre class="code-block" data-lang="js" data-run><code>const person = {
+  firstName: "Wudhichart",
+  lastName: "Sawangphol",
+  lecturer: true,
+  age: 30,
+};
+
+const entries = Object.entries(person);
+const person2 = Object.fromEntries(entries);
+
+console.log(person2);
+console.log("person === person2 ?", person === person2);
+// Note: person และ person2 ไม่ใช่ตัวเดียวกัน — person2 เป็น object ใหม่</code></pre>
+                    <p><strong><code>trimStart()</code> และ <code>trimEnd()</code></strong> ใช้<strong>ตัดช่องว่างที่ต้นและท้าย</strong>ของ string ต้นฉบับตามลำดับ</p>
+                  </section>
+
+                  <section class="topic" id="es20-bigint">
+                    <h4>ES2020: BigInt</h4>
+                    <p><strong>BigInt</strong> เป็น <strong>primitive data type ตัวใหม่</strong> — <strong>ไม่มีขีดจำกัด ยกเว้นหน่วยความจำของเครื่อง</strong></p>
+                    <p class="note">ES2020 เพิ่มมา 4 อย่าง: BigInt · Nullish coalescing operator · Optional chaining operator · String.matchAll()</p>
+                  </section>
+
+                  <section class="topic" id="es20-nullish">
+                    <h4>ES2020: Nullish coalescing operator (??)</h4>
+                    <p>operator <code>??</code> ให้<strong>ค่า default เมื่อตัวแปรเป็น <code>null</code> หรือ <code>undefined</code></strong></p>
+                    <pre class="code-block" data-lang="js" data-run><code>const name = "Wudhichart";
+const nullish = null;
+
+const name2 = name ?? "Jidapa";       // Wudhichart
+const name3 = nullish ?? "Jidapa";    // Jidapa
+
+console.log(name2);
+console.log(name3);</code></pre>
+                  </section>
+
+                  <section class="topic" id="es20-chain">
+                    <h4>ES2020: Optional chaining operator (?.)</h4>
+                    <p>operator <code>?.</code> <strong>จัดการกับ null และ undefined ใน object</strong> — ถ้าเจอก็คืน <code>undefined</code> แทนที่จะ error</p>
+                    <pre class="code-block" data-lang="js" data-run><code>const obj = {
+  prop: {
+    subLevelProp: {
+      value: "Wudhichart",
+    },
+  },
+};
+
+console.log(obj.prop.subLevelProp.value);        // Wudhichart
+console.log(obj?.prop?.subLevelProp?.value);     // Wudhichart
+console.log(obj?.prop?.secondsubLevelProp?.value); // undefined
+console.log(obj.prop.secondsubLevelProp.value);  // error</code></pre>
+                    <p>ใช้กับ <strong>array</strong> ได้ด้วย</p>
+                    <pre class="code-block" data-lang="js" data-run><code>const cars = null;
+
+console.log(cars?.[3]);   // undefined
+console.log(cars[3]);     // TypeError: Cannot read property '3' of null</code></pre>
+                  </section>
+
+                  <section class="topic" id="es20-match">
+                    <h4>ES2020: String.matchAll()</h4>
+                    <p>ใช้<strong>ค้นหาทุกตำแหน่งที่ตรงกับ regular expression เดียวกันใน string</strong></p>
+                    <pre class="code-block" data-lang="js" data-run><code>const regexg = /\b(orange)+\b/g;
+const fruits = "orange, banana, orange, apple, orange, apple";
+const matched = fruits.matchAll(regexg);
+
+for (const result of matched) {
+  console.log(result[0], "ที่ตำแหน่ง", result.index);
+}</code></pre>
+                  </section>
+
+                  <section class="topic" id="es21">
+                    <h4>ES2021: Numeric Separator, replaceAll, Logical Assignment</h4>
+                    <p>ES2021 เพิ่ม: Numeric Separator · <code>String.prototype.replaceAll()</code> · Logical Assignment Operators · WeakRef and Finalizers</p>
+                    <p><strong>Numeric Separator</strong> — ใช้ <strong>underscore</strong> คั่นตัวเลขให้อ่านง่าย</p>
+                    <pre class="code-block" data-lang="js" data-run><code>const billion = 1000_000_000;
+console.log(billion);</code></pre>
+                    <p><strong><code>replaceAll()</code></strong> — แทนที่ string <strong>ทุกตำแหน่ง</strong>ที่พบ ด้วยค่าใหม่</p>
+                    <pre class="code-block" data-lang="js" data-run><code>const str =
+  "Wudhichart waits for the man on the stage at the first row as the first person.";
+const newStr = str.replaceAll("first", "last");
+console.log(newStr);</code></pre>
+                    <p><strong>Logical Assignment Operators</strong> — รวมการดำเนินการทางตรรกะ (<code>&amp;&amp;</code>, <code>||</code> หรือ <code>??</code>) เข้ากับการกำหนดค่า</p>
+                    <dl class="defs defs--stack">
+                      <div><dt>&amp;&amp;= (logical AND assignment)</dt><dd>ประเมิน operand ขวาและกำหนดให้ตัวซ้าย <strong>ก็ต่อเมื่อตัวซ้ายเป็น truthy</strong></dd></div>
+                      <div><dt>||= (logical OR assignment)</dt><dd>ประเมิน operand ขวาและกำหนดให้ตัวซ้าย <strong>ก็ต่อเมื่อตัวซ้ายเป็น falsy</strong></dd></div>
+                      <div><dt>??= (nullish coalescing assignment)</dt><dd>ประเมิน operand ขวาและกำหนดให้ตัวซ้าย <strong>ก็ต่อเมื่อตัวซ้ายเป็น nullish</strong> (null หรือ undefined)</dd></div>
+                    </dl>
+                    <pre class="code-block" data-lang="js" data-run><code>// &amp;&amp;=  ตัวซ้าย truthy จึงรับค่าใหม่ / falsy จึงคงค่าเดิม
+let x = 1, y = 0, z = 5;
+x &amp;&amp;= z; console.log(x);   // 5
+y &amp;&amp;= z; console.log(y);   // 0
+
+// ||=  ตัวซ้าย truthy จึงคงค่าเดิม / falsy จึงรับค่าใหม่
+y = 0; x = 1; z = 5;
+x ||= z; console.log(x);   // 1
+y ||= z; console.log(y);   // 5
+
+// ??=  ตัวซ้ายมีค่าอยู่แล้วจึงคงเดิม / ยังไม่มีจึงรับค่าใหม่
+const a = { age: 36 };
+a.age ??= 20;    console.log(a.age);      // 36
+a.height ??= 175; console.log(a.height);  // 175</code></pre>
+                  </section>
+
+                  <section class="topic" id="es22">
+                    <h4>ES2022: .at(), Object.hasOwn(), Cause of error, Top-level await</h4>
+                    <p><strong><code>.at()</code> ของค่าที่มี index</strong> — ใช้ได้ทั้ง array และ string</p>
+                    <pre class="code-block" data-lang="js" data-run><code>const arr = [1, 2, 3, 4];
+console.log(arr.at(2));    // 3
+
+const str = "1234";
+console.log(str.at(3));    // 4</code></pre>
+                    <p><strong><code>Object.hasOwn(obj, propKey)</code></strong></p>
+                    <pre class="code-block" data-lang="js" data-run><code>let object = { foo: false };
+console.log(Object.hasOwn(object, "foo"));   // true</code></pre>
+                    <p><strong>Cause of error</strong> — แนบ error ต้นเหตุไปกับ error ใหม่ได้</p>
+                    <pre class="code-block" data-lang="js"><code>try {
+  doSomeComputationThatThrowAnError()
+} catch (error) {
+  throw new Error('This is error', { cause: error })
+}</code></pre>
+                    <p><strong>Top-level await modules</strong> — JavaScript ให้ใช้ <code>await</code> <strong>นอก function</strong> ได้</p>
+                  </section>
+
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- ================= 05 ES2023–ES2026 ================= -->
+          <div class="acc-item">
+            <h3 class="acc-heading">
+              <button class="acc-trigger" type="button" aria-expanded="false" aria-controls="acc-es-2326" id="acc-es-2326-btn">
+                <span class="acc-index">05</span>
+                <span class="acc-title">
+                  <span class="acc-name">ES2023 – ES2026: findLast, Temporal API, Set methods และของใหม่ล่าสุด</span>
+                  <span class="acc-file">ITDS241-ECMAScript Version · slide 78–123</span>
+                </span>
+                <svg class="acc-chevron" viewBox="0 0 20 20" aria-hidden="true"><path d="M5 7.5l5 5 5-5" /></svg>
+              </button>
+            </h3>
+            <div class="acc-panel" id="acc-es-2326" role="region" aria-labelledby="acc-es-2326-btn">
+              <div class="acc-panel-inner">
+                <div class="acc-body">
+
+                  <nav class="toc" aria-label="หัวข้อในการ์ด ES2023 ถึง ES2026">
+                    <a href="#es23">ES2023</a>
+                    <a href="#es24">ES2024</a>
+                    <a href="#es24-temporal">Temporal API</a>
+                    <a href="#es25">ES2025</a>
+                    <a href="#es26">ES2026</a>
+                  </nav>
+
+                  <section class="topic" id="es23">
+                    <h4>ES2023: findLast, Symbols as WeakMap keys, Change Array by Copy</h4>
+                    <p><strong>Find array from the last</strong> — หา element <strong>จากท้ายมาหน้า</strong>ตามเงื่อนไข มี 2 function ใหม่: <code>findLast()</code> และ <code>findLastIndex()</code></p>
+                    <pre class="code-block" data-lang="js" data-run><code>const aArray = [5, 10, 15, 20];
+const aLastElement = aArray.findLast((n) =&gt; n &gt; 10);
+const aLastIndex = aArray.findLastIndex((n) =&gt; n &gt; 10);
+
+console.log(`The last element is ${aLastElement} at ${aLastIndex}.`);</code></pre>
+                    <p class="note">ไล่ทีละขั้น — ไล่จากท้าย: 20 &gt; 10 เป็นจริงตั้งแต่ตัวแรกที่เจอ จึงได้ค่า <strong>20</strong> ที่ index <strong>3</strong></p>
+                    <p><strong>Symbols as WeakMap keys</strong> — ใน ES2023 ใช้ <strong>Symbol เป็น key ของ WeakMap</strong> ได้</p>
+                    <pre class="code-block" data-lang="js" data-run><code>const weakMap = new WeakMap();
+const key = Symbol("my symbol");
+const someValue = 5;
+
+weakMap.set(key, someValue);
+console.log(weakMap.get(key));</code></pre>
+                    <p><strong>Change Array by Copy</strong> — method ของ array ที่<strong>เปลี่ยนแปลงโดยคืนสำเนาใหม่</strong> (ไม่แก้ array เดิม)</p>
+                    <ul class="tight">
+                      <li><code>Array.prototype.toReversed()</code></li>
+                      <li><code>Array.prototype.toSorted(compareFn)</code></li>
+                      <li><code>Array.prototype.toSpliced(start, deleteCount, ...items)</code></li>
+                      <li><code>Array.prototype.with(index, value)</code></li>
+                    </ul>
+                  </section>
+
+                  <section class="topic" id="es24">
+                    <h4>ES2024: Unicode, waitSync, Top-level await และข้อเสนอที่ยังไม่เป็นมาตรฐาน</h4>
+                    <p>ES2024 ครอบคลุม: Well-formed Unicode Strings · Atomic waitSync · Top-level await · The Pipeline Operator · Records and Tuples · Decorators · Temporal API</p>
+                    <p><strong>Well-formed Unicode Strings</strong> — การจัดการ Unicode ใน JS มักมีความไม่สอดคล้องกัน โดยเฉพาะกับตัวอักษรจากหลายภาษาและสัญลักษณ์ · string ที่รูปแบบผิดทำให้เกิดปัญหาที่คาดไม่ถึงในแอปที่ใช้งานทั่วโลกหรือพึ่งพา API</p>
+                    <pre class="code-block" data-lang="js" data-run><code>const problematicString = "test \uD800";
+console.log(problematicString);
+console.log(problematicString.toWellFormed());</code></pre>
+                    <p class="note"><code>toWellFormed()</code> ทำให้การจัดการ Unicode น่าเชื่อถือสำหรับแอปที่รับ input จากหลายภาษาหรือชุดอักขระซับซ้อน ลด encoding error และเข้ากันข้ามแพลตฟอร์มได้ดีขึ้น</p>
+                    <p><strong>Atomic waitSync</strong> — การออกแบบแบบ single-threaded ของ JS ทำให้จัดการ concurrency ยาก โดยเฉพาะเมื่อแชร์หน่วยความจำระหว่าง thread ใน worker · ES2024 เสนอเทคนิคด้วย <code>waitSync</code> ที่ให้ thread <strong>หยุดรอจนกว่าเงื่อนไขใน shared memory จะเป็นจริง</strong> เพื่อรับประกันการซิงก์และความถูกต้องของข้อมูล</p>
+                    <pre class="code-block" data-lang="js"><code>const sharedArray = new Int32Array(new SharedArrayBuffer(1024));
+
+function performSynchronizedOperation(index, value) {
+  Atomics.waitSync(sharedArray, index, 0);  // Wait until condition is met
+  sharedArray[index] = value;
+  Atomics.notify(sharedArray, index, 1);    // Notify other threads of the update
+}</code></pre>
+                    <p><strong>Top-level await</strong> — เดิม <code>await</code> ใช้ได้เฉพาะใน async function ทำให้ต้องห่อโค้ดด้วย function เพิ่มโดยไม่จำเป็น · ES2024 ให้ใช้ <code>await</code> <strong>ที่ระดับ module ได้โดยตรง</strong></p>
+                    <pre class="code-block" data-lang="js"><code>const data = await fetchData();
+console.log(data);</code></pre>
+                    <div class="callout callout--warn">
+                      <span class="callout-label">ยังใช้ไม่ได้จริงในเบราว์เซอร์</span>
+                      <p>สไลด์ระบุว่า <b>Pipeline Operator (<code>|&gt;</code>)</b> เป็น proposal ระดับ stage 1 · <b>Records and Tuples</b> เป็นเพียงข้อเสนอ · <b>Decorators</b> เป็น stage 2 · <b>Temporal API</b> เป็น stage 3 — ทั้งหมด<b>ยังไม่รองรับในเบราว์เซอร์ที่ใช้งานอยู่ปัจจุบัน</b></p>
+                    </div>
+                    <div class="compare">
+                      <div class="compare-col">
+                        <h5>Pipeline Operator (|&gt;)</h5>
+                        <p>ส่ง<strong>ผลลัพธ์ของ function หนึ่งเป็น input ของตัวถัดไป</strong> แทนการเรียกซ้อนกันหลายชั้นที่อ่านยาก</p>
+                        <pre class="code-block" data-lang="js"><code>const processedValue = -10
+  |&gt; (n =&gt; Math.max(0, n))
+  |&gt; (n =&gt; Math.pow(n, 2))
+  |&gt; Math.ceil;</code></pre>
+                      </div>
+                      <div class="compare-col">
+                        <h5>Records and Tuples</h5>
+                        <p>โครงสร้างข้อมูลที่<strong>แก้ไขไม่ได้หลังสร้าง (immutable)</strong> ช่วยกันการเปลี่ยนแปลงโดยไม่ตั้งใจ เป็นทางเลือกที่ง่ายกว่า object และ array</p>
+                        <pre class="code-block" data-lang="js"><code>const drivingLicence = #{
+  country: "Thailand",
+  number: 123456789870,
+};
+const wallet = #[
+  drivingLicence,
+];</code></pre>
+                      </div>
+                    </div>
+                    <p><strong>Decorators</strong> — function ที่<strong>เสริมความสามารถให้ method เดิม</strong> โดยแก้พฤติกรรมของ object <strong>ได้โดยไม่ต้องแก้โค้ดต้นฉบับ</strong> · มักใช้กับ class และนำหน้าด้วยสัญลักษณ์ <code>@</code></p>
+                    <pre class="code-block" data-lang="js"><code>// A simple decorator
+function log(target, key, descriptor) {
+  console.log(`Logging ${key} function`);
+  return descriptor;
+}
+
+class Example {
+  @log
+  greet() {
+    console.log("Hello, world!");
+  }
+}
+
+const example = new Example();
+example.greet();  // Logs "Logging greet function" and "Hello, world!"</code></pre>
+                    <p>decorator ใช้ได้กับหลายส่วนของ class: <strong>Class Decorators</strong> (ทั้ง class) · <strong>Method Decorators</strong> · <strong>Accessor Decorators</strong> (getter/setter) · <strong>Property Decorators</strong> · <strong>Parameter Decorators</strong> — ช่วยเพิ่มความสามารถอย่าง logging, validation หรือ access control โดยไม่ทำให้ตรรกะหลักรก</p>
+                  </section>
+
+                  <section class="topic" id="es24-temporal">
+                    <h4>ES2024: Temporal API</h4>
+                    <p>object <code>Date</code> ถูกมองว่า<strong>ใช้งานยุ่งยากและเป็นปัญหาเรื้อรังของ JavaScript</strong> จนเกิด library อย่าง moment.js และ date-fns ขึ้นมาช่วย · <code>Date</code> เดิมทีลอกมาจาก Java ซึ่งภายหลัง Java เลิกใช้ไปแล้ว แต่ JavaScript ยังเก็บไว้เพื่อ backward compatibility และ<strong>ไม่ถูกปรับปรุงเลยตั้งแต่เริ่มมี</strong></p>
+                    <p><strong>ทำไมต้องใช้ Temporal API</strong></p>
+                    <dl class="defs defs--stack">
+                      <div><dt>Comprehensive Features</dt><dd>ชุดความสามารถที่<strong>ครอบคลุมกว่า</strong> object <code>Date</code> เดิม</dd></div>
+                      <div><dt>Native Time Zone Support</dt><dd>รองรับ <strong>time zone ทุกเขตในตัว</strong> ทำให้คำนวณวันเวลาข้ามภูมิภาคได้แม่นยำ</dd></div>
+                      <div><dt>No External Dependencies</dt><dd><strong>ไม่ต้องพึ่ง library ภายนอก</strong> พัฒนาง่ายขึ้นและประสิทธิภาพดีขึ้น</dd></div>
+                    </dl>
+                    <p><strong>ความสามารถหลัก</strong>: รองรับ time zone อย่างเต็มรูปแบบ · <strong>parse string ที่รูปแบบเข้มงวดได้อย่างน่าเชื่อถือ</strong> · รองรับ <strong>ปฏิทินที่ไม่ใช่ Gregorian</strong> · <strong>คำนวณวันเวลาได้ง่ายขึ้น</strong></p>
+                    <p class="note">Temporal API ยังอยู่ในขั้นทดลอง — ปัจจุบันอยู่ที่ <strong>Stage 3</strong> ของกระบวนการ TC39 คือใกล้เสร็จแต่<strong>ยังไม่เป็นส่วนหนึ่งของมาตรฐาน ECMAScript อย่างเป็นทางการ</strong></p>
+                  </section>
+
+                  <section class="topic" id="es25">
+                    <h4>ES2025: JSON Modules, Iterator Helpers, Set Methods, RegExp, Promise.try, Float16</h4>
+                    <p><strong>Import Attributes / JSON Modules</strong> — ES2025 ทำให้การ <strong>import ไฟล์ JSON เป็น module โดยตรง</strong> เป็นทางการ พร้อม attribute บอก runtime ว่าจะจัดการไฟล์อย่างไร</p>
+                    <pre class="code-block" data-lang="js"><code>// Synchronous import
+import config from './config.json' with { type: 'json' };
+console.log(config.apiUrl);
+
+// Dynamic import
+const cfg = await import('./config.json', { with: { type: 'json' } });
+console.log(cfg.default.apiUrl);</code></pre>
+                    <p><strong>Iterator Helpers</strong> — method ใหม่สำหรับ functional programming แบบ <strong>lazy</strong> บน iterator · <strong>ไม่สร้าง array ทันที</strong>เหมือน <code>.map()</code>/<code>.filter()</code> ของ array จึงเหมาะกับ pipeline ที่ประมวลผล data stream อย่างมีประสิทธิภาพ</p>
+                    <pre class="code-block" data-lang="js"><code>const it = Iterator.from([1, 2, 3, 4, 5])
+  .filter(n =&gt; n % 2 === 0)   // keep evens
+  .map(n =&gt; n * n)            // square
+  .take(2);                   // first two
+
+console.log(it.toArray());    // [4, 16]</code></pre>
+                    <p><strong>Set Methods and Relationships</strong> — <code>Set</code> ได้การดำเนินการทางเซตแบบคณิตศาสตร์มาในตัว</p>
+                    <pre class="code-block" data-lang="js"><code>const A = new Set([1, 2, 3]);
+const B = new Set([3, 4, 5]);
+
+console.log(A.union(B));                // Set {1, 2, 3, 4, 5}
+console.log(A.intersection(B));         // Set {3}
+console.log(A.difference(B));           // Set {1, 2}
+console.log(A.symmetricDifference(B));  // Set {1, 2, 4, 5}
+console.log(A.isSubsetOf(B));           // false
+console.log(A.isDisjointFrom(B));       // false</code></pre>
+                    <p><strong>RegExp Enhancements</strong></p>
+                    <ul class="tight">
+                      <li><code>RegExp.escape()</code> — <strong>escape string อย่างปลอดภัย</strong>ก่อนนำไปใช้ใน regex</li>
+                      <li><strong>Inline RegExp Modifiers</strong> — ใส่ flag ให้<strong>เฉพาะบางส่วน</strong>ของ regex</li>
+                      <li><strong>Duplicate Named Capture Groups</strong> — ใช้ชื่อ group ซ้ำกันข้าม alternative ได้แล้ว</li>
+                    </ul>
+                    <pre class="code-block" data-lang="js"><code>const userInput = "hello.*+?^${}()|[]\\world";
+const safe = RegExp.escape(userInput);
+console.log(safe);  // "hello\.\*\+\?\^\$\{\}\(\)\|\[\]\\world"
+
+const re = /a(?i:b)c/;                 // only 'b' is case-insensitive
+console.log("aBc".match(re));          // match
+
+const re2 = /(?:(?&lt;num&gt;\d+)|(?&lt;num&gt;[a-z]+))/;
+console.log("123".match(re2).groups.num);  // "123"
+console.log("abc".match(re2).groups.num);  // "abc"</code></pre>
+                    <p><strong><code>Promise.try()</code></strong> — วิธีมาตรฐานในการห่อ function ที่<strong>อาจ throw แบบ synchronous หรือคืน Promise</strong> เพื่อให้ exception ถูกจัดการเป็น promise rejection อย่างถูกต้อง</p>
+                    <pre class="code-block" data-lang="js"><code>function mayThrow() {
+  if (Math.random() &gt; 0.5) throw new Error("Oops");
+  return 42;
+}
+
+Promise.try(() =&gt; mayThrow())
+  .then(val =&gt; console.log("Value:", val))
+  .catch(err =&gt; console.error("Caught:", err.message));</code></pre>
+                    <p><strong>Float16 Support</strong> — typed array ตัวใหม่ <code>Float16Array</code> พร้อม method จัดการ float ความละเอียดครึ่ง (16 บิต) · ใช้หน่วยความจำ<strong>ครึ่งหนึ่งของ <code>Float32Array</code> และหนึ่งในสี่ของ <code>Float64Array</code></strong></p>
+                    <pre class="code-block" data-lang="js"><code>const arr = new Float16Array([0.1, 0.2, 0.3]);
+console.log(arr[0]);          // approximated float16 value
+
+const dv = new DataView(new ArrayBuffer(2));
+dv.setFloat16(0, Math.PI);
+console.log(dv.getFloat16(0));  // rounded float16</code></pre>
+                  </section>
+
+                  <section class="topic" id="es26">
+                    <h4>ES2026: sumPrecise, Error.isError, fromAsync, getOrInsert, rawJSON, Base64</h4>
+                    <p>ES2026 ประกอบด้วย: <code>Math.sumPrecise()</code> · <code>Error.isError()</code> · <code>Array.fromAsync()</code> · <code>Map.getOrInsert()</code> · <code>JSON.rawJSON()</code> · Base64 และ hexadecimal encoding สำหรับ <code>Uint8Array</code></p>
+
+                    <p><strong><code>Math.sumPrecise()</code></strong> — เลขทศนิยมใน JavaScript <strong>ขึ้นชื่อเรื่องความไม่แม่นยำ</strong> · method นี้คำนวณ<strong>ผลบวกที่แม่นยำของ iterable ของตัวเลขโดยไม่สูญเสียความละเอียด</strong> ทำให้งานการเงินและวิทยาศาสตร์เชื่อถือได้โดยไม่ต้องใช้ library ภายนอก</p>
+                    <pre class="code-block" data-lang="js"><code>// The Old Way (Inaccurate)
+const numbers = [1e16, 1, -1e16];
+const badSum = numbers.reduce((a, b) =&gt; a + b);
+// badSum === 0 (เลข 1 หายไป เพราะ 1e16 + 1 ถูกปัดกลับเป็น 1e16)
+console.log("badSum:", badSum);
+
+// ES2026: The New Way (Precise)
+const exactSum = Math.sumPrecise(numbers);
+// exactSum === 1
+console.log("exactSum:", exactSum);</code></pre>
+                    <div class="callout callout--warn">
+                      <span class="callout-label">ยังไม่รองรับในเบราว์เซอร์</span>
+                      <p><code>Math.sumPrecise</code> เป็นข้อเสนอที่ใหม่มากและ<b>ยังไม่รองรับในเบราว์เซอร์ทุกตัว</b> — ถ้ารันตอนนี้มักได้ <code>Math.sumPrecise is not a function</code> ต้องเพิ่ม <code>&lt;script&gt;</code> ที่ import <b>core-js polyfill</b> ก่อน</p>
+                    </div>
+
+                    <p><strong><code>Error.isError()</code></strong> — การตรวจว่าค่าที่ถูก throw เป็น Error จริงหรือไม่นั้นยาก เพราะ <code>instanceof Error</code> <strong>ใช้ไม่ได้ข้าม Realm</strong> (เช่น iframe หรือ Web Worker) · <code>Error.isError(value)</code> เป็นกลไกในตัวที่<strong>ตรวจได้อย่างน่าเชื่อถือไม่ว่า error จะมาจากที่ใด</strong></p>
+                    <pre class="code-block" data-lang="js"><code>// 1. สร้าง iframe (คนละ "Realm")
+const iframe = document.createElement('iframe');
+iframe.style.display = 'none';
+document.body.appendChild(iframe);
+
+// 2. เอา Error constructor จาก realm ของ iframe มา
+const IframeError = iframe.contentWindow.Error;
+
+try {
+  // 3. จำลอง function ที่ throw error จาก iframe นั้น
+  throw new IframeError('Something went wrong in the iframe!');
+} catch (err) {
+  // แบบเดิม: ล้มเหลว เพราะ prototype chain ชี้ไปที่ Error ของ iframe ไม่ใช่ของ window เรา
+  console.log('err instanceof Error:', err instanceof Error);   // false
+  // ES2026: ตรวจข้าม realm ได้อย่างปลอดภัย
+  console.log('Error.isError(err):', Error.isError(err));       // true
+}</code></pre>
+
+                    <p><strong><code>Array.fromAsync()</code></strong> — เดิมต้องวน <code>for await...of</code> แล้ว push เข้า array เองซ้ำๆ · method นี้<strong>สร้าง Array ใหม่จาก async iterable, iterable หรือ array-like ได้ในตัว</strong></p>
+                    <pre class="code-block" data-lang="js"><code>// Fetching pages of data natively
+const data = await Array.fromAsync(asyncDataStream());</code></pre>
+
+                    <p><strong><code>Map.getOrInsert()</code></strong> — เดิมต้องเขียนเงื่อนไขยืดยาว (เช็ค <code>.has()</code> แล้ว <code>.set()</code> แล้ว <code>.get()</code>) · method นี้<strong>อ่านค่าของ key ที่ให้มา หรือคำนวณและใส่ค่า default ลงไปถ้ายังไม่มี key นั้น</strong></p>
+                    <pre class="code-block" data-lang="js"><code>// The Old Way (Verbose Boilerplate)
+const oldVisits = new Map();
+const user1 = 'user_123';
+if (!oldVisits.has(user1)) {
+  oldVisits.set(user1, { count: 0 });
+}
+const oldStats = oldVisits.get(user1);
+oldStats.count++;
+console.log('Old Way visits:', oldVisits.get(user1).count);   // 1
+
+// ES2026: The New Way (Elegant)
+const newVisits = new Map();
+const user2 = 'user_456';
+const newStats = newVisits.getOrInsert(user2, { count: 0 });
+newStats.count++;
+console.log('New Way visits:', newVisits.get(user2).count);   // 1</code></pre>
+
+                    <p><strong><code>JSON.rawJSON()</code></strong> — การ parse JSON ที่มีตัวเลขใหญ่มาก (เช่น id 64 บิต) ทำให้<strong>เกิดความคลาดเคลื่อนจากการปัดเศษ</strong> เพราะ <code>JSON.parse()</code> แปลงเป็น float ที่ไม่แม่นยำ · <code>JSON.rawJSON()</code> ให้<strong>เข้าถึงและ stringify ข้อความ JSON ดิบได้โดยตรง</strong> จึงไม่ทำให้ตัวเลขใหญ่เพี้ยน</p>
+                    <pre class="code-block" data-lang="js"><code>// The Old Way (Inaccurate or crashes)
+const oldPayload = {
+  name: "System Node",
+  id: 9007199254740993   // ถูกปัดลงเป็น 9007199254740992 โดย JavaScript
+};
+console.log('Old Way stringified:', JSON.stringify(oldPayload));
+
+// ES2026: The New Way (JSON.rawJSON)
+const newPayload = {
+  name: "System Node",
+  id: JSON.rawJSON("9007199254740993")
+};
+console.log('New Way stringified:', JSON.stringify(newPayload));
+// Output: '{"name":"System Node","id":9007199254740993}'</code></pre>
+
+                    <p><strong>Base64 และ hexadecimal encoding ของ <code>Uint8Array</code></strong> — เดิมต้องใช้ <code>btoa()</code>/<code>atob()</code> ซึ่งทำงานกับ string ไม่ใช่ byte หรือพึ่ง package ภายนอกที่หนัก · ตอนนี้ method encoding/decoding แบบ Base64 และ Hexadecimal <strong>ถูกเพิ่มเข้า prototype ของ <code>Uint8Array</code> โดยตรง</strong></p>
+                    <pre class="code-block" data-lang="js"><code>const bytes = new Uint8Array([72, 101, 108, 108, 111]);  // "Hello" in ASCII
+
+// The Old Way (Verbose and often performance heavy)
+const oldBase64 = btoa(String.fromCharCode(...bytes));   // Warning: Fails on very large arrays!
+const oldHex = Array.from(bytes).map(b =&gt; b.toString(16).padStart(2, '0')).join('');
+
+// ES2026: The New Way (Native, safe, and performant)
+const base64Str = bytes.toBase64();
+const hexStr = bytes.toHex();
+
+// Native Decoding back to Uint8Array
+const decodedFromBase64 = Uint8Array.fromBase64(base64Str);
+const decodedFromHex = Uint8Array.fromHex(hexStr);
+console.log('Decoded match:', decodedFromBase64[0] === 72);</code></pre>
+                  </section>
+
+                </div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </section>
+
+      <!-- =============================================================
+           แท็บ 2: สรุป (cheat sheet)
+           ============================================================= -->
+      <section class="panel" id="summary" role="tabpanel" aria-labelledby="tab-summary" tabindex="-1">
+        <div class="panel-head">
+          <h2>Cheat sheet</h2>
+          <p class="panel-sub">ตารางเวอร์ชัน ES, ฟีเจอร์ ES6, Promise/async, operator ใหม่ และ method ตามรุ่น รวมไว้ในหน้าเดียว</p>
+        </div>
+
+        <div class="sheet">
+
+<article class="sheet-card sheet-card--wide">
+            <h3><span class="sheet-num">01</span> เวอร์ชัน ES ที่ต้องจำ</h3>
+            <div class="table-scroll">
+              <table>
+                <thead><tr><th>Edition</th><th>ชื่อทางการ</th><th>ออกเมื่อ</th></tr></thead>
+                <tbody>
+                  <tr><td>ES1 / ES2 / ES3</td><td>ES1 / ES2 / ES3</td><td>1997 / 1998 / 1999</td></tr>
+                  <tr><td>ES4</td><td>ES4</td><td><strong>Abandoned</strong> (ไม่เคยออก)</td></tr>
+                  <tr><td>ES5 / ES5.1</td><td>ES5 / ES5.1</td><td>Dec 2009 / Jun 2011</td></tr>
+                  <tr><td><strong>ES6</strong></td><td><strong>ES2015</strong></td><td>June 2015</td></tr>
+                  <tr><td>ES7 … ES13</td><td>ES2016 … ES2022</td><td>June ของทุกปี</td></tr>
+                  <tr><td>ES14 … ES17</td><td>ES2023 … ES2026</td><td>June 2023 … June 2026</td></tr>
+                </tbody>
+              </table>
+            </div>
+            <p class="note">ES = ข้อกำหนดที่ <strong>Ecma International</strong> ดูแล · <strong>JavaScript คือ implementation ของ ES ที่นิยมที่สุด</strong> · ตั้งแต่ ES6 ชื่อทางการเปลี่ยนมาใช้ปี (เลข edition + 9 = ปี)</p>
+          </article>
+
+          <article class="sheet-card">
+            <h3><span class="sheet-num">02</span> ES6 (ES2015) 12 ฟีเจอร์</h3>
+            <ul class="tight">
+              <li>Arrow Functions</li>
+              <li>let and const</li>
+              <li>Classes</li>
+              <li>Promises</li>
+              <li>Template Literals</li>
+              <li>Default parameters</li>
+              <li>The spread operator</li>
+              <li>Destructuring assignments</li>
+              <li>For-of loop</li>
+              <li>Map and Set</li>
+              <li>New String and Object methods</li>
+              <li>Function Rest Parameter</li>
+            </ul>
+            <p class="note"><code>...</code> ใช้ได้ทั้ง <strong>spread</strong> (กระจายออก) และ <strong>rest parameter</strong> (รวบเข้า)</p>
+          </article>
+
+          <article class="sheet-card">
+            <h3><span class="sheet-num">03</span> Promise และ async/await</h3>
+            <div class="table-scroll">
+              <table>
+                <thead><tr><th>state</th><th>result</th></tr></thead>
+                <tbody>
+                  <tr><td><code>pending</code></td><td><code>undefined</code> (สถานะเริ่มต้น)</td></tr>
+                  <tr><td><code>fulfilled</code></td><td><code>value</code> จาก <code>resolve(value)</code></td></tr>
+                  <tr><td><code>rejected</code></td><td><code>error</code> จาก <code>reject(error)</code></td></tr>
+                </tbody>
+              </table>
+            </div>
+            <p>consuming code ลงทะเบียนด้วย <code>.then</code> (arg แรก = สำเร็จ, arg สอง = error) · <code>.catch</code> · <code>.finally</code></p>
+            <p class="note"><code>async</code> หน้า function → function นั้น<strong>คืน promise เสมอ</strong> · <code>await</code> → <strong>รอจน promise settle</strong> แล้วคืนผลลัพธ์</p>
+          </article>
+
+          <article class="sheet-card">
+            <h3><span class="sheet-num">04</span> Operator ใหม่ตามรุ่น</h3>
+            <div class="table-scroll">
+              <table>
+                <thead><tr><th>Operator</th><th>รุ่น</th><th>ทำอะไร</th></tr></thead>
+                <tbody>
+                  <tr><td><code>**</code></td><td>ES2016</td><td>ยกกำลัง</td></tr>
+                  <tr><td><code>??</code></td><td>ES2020</td><td>ค่า default เมื่อ <strong>null / undefined</strong></td></tr>
+                  <tr><td><code>?.</code></td><td>ES2020</td><td>เข้าถึงลึกโดยไม่ error ถ้าเจอ null/undefined</td></tr>
+                  <tr><td><code>_</code></td><td>ES2021</td><td>คั่นตัวเลข <code>1000_000_000</code></td></tr>
+                  <tr><td><code>&amp;&amp;=</code></td><td>ES2021</td><td>กำหนดค่าเมื่อตัวซ้าย <strong>truthy</strong></td></tr>
+                  <tr><td><code>||=</code></td><td>ES2021</td><td>กำหนดค่าเมื่อตัวซ้าย <strong>falsy</strong></td></tr>
+                  <tr><td><code>??=</code></td><td>ES2021</td><td>กำหนดค่าเมื่อตัวซ้าย <strong>nullish</strong></td></tr>
+                  <tr><td><code>|&gt;</code></td><td>ES2024</td><td>pipeline — <strong>ยังเป็น stage 1 ใช้จริงไม่ได้</strong></td></tr>
+                </tbody>
+              </table>
+            </div>
+          </article>
+
+          <article class="sheet-card sheet-card--wide">
+            <h3><span class="sheet-num">05</span> Array / String / Object methods ตามรุ่น</h3>
+            <div class="table-scroll">
+              <table>
+                <thead><tr><th>รุ่น</th><th>Method</th><th>ทำอะไร</th></tr></thead>
+                <tbody>
+                  <tr><td>ES6</td><td><code>repeat()</code> · <code>Object.is()</code> · <code>find()</code> · <code>findIndex()</code></td><td>ทำซ้ำ string · เทียบค่าเดียวกัน · หาค่าแรก/ตำแหน่งแรกที่ผ่าน test</td></tr>
+                  <tr><td>ES2016</td><td><code>includes()</code></td><td>คืน <strong>boolean</strong> ต่างจาก <code>indexOf</code> ที่คืน -1 เมื่อไม่พบ</td></tr>
+                  <tr><td>ES2017</td><td><code>padStart()</code> · <code>padEnd()</code> · <code>Object.values()</code> · <code>Object.entries()</code></td><td>เติมความยาว string · คืน array ของค่า / ของคู่ key-value</td></tr>
+                  <tr><td>ES2019</td><td><code>flat()</code> · <code>flatMap()</code> · <code>Object.fromEntries()</code> · <code>trimStart()</code> · <code>trimEnd()</code></td><td>แบน array (ระบุความลึกได้) · flat+map · สร้าง object จาก entries · ตัดช่องว่างหัว/ท้าย</td></tr>
+                  <tr><td>ES2020</td><td><code>matchAll()</code></td><td>หาทุกตำแหน่งที่ตรง regex</td></tr>
+                  <tr><td>ES2021</td><td><code>replaceAll()</code></td><td>แทนที่ทุกตำแหน่งที่พบ</td></tr>
+                  <tr><td>ES2022</td><td><code>at()</code> · <code>Object.hasOwn()</code></td><td>อ่านค่าตาม index (array/string) · เช็ค property ของ object เอง</td></tr>
+                  <tr><td>ES2023</td><td><code>findLast()</code> · <code>findLastIndex()</code> · <code>toReversed()</code> · <code>toSorted()</code> · <code>toSpliced()</code> · <code>with()</code></td><td>หาจากท้าย · กลุ่ม change array <strong>by copy</strong> (ไม่แก้ของเดิม)</td></tr>
+                </tbody>
+              </table>
+            </div>
+          </article>
+
+          <article class="sheet-card sheet-card--wide">
+            <h3><span class="sheet-num">06</span> ES2024 – ES2026 และสถานะการใช้งานจริง</h3>
+            <div class="table-scroll">
+              <table>
+                <thead><tr><th>รุ่น</th><th>ของใหม่</th><th>สถานะ</th></tr></thead>
+                <tbody>
+                  <tr><td rowspan="4">ES2024</td><td><code>toWellFormed()</code> · <code>Atomics.waitSync()</code> · Top-level await</td><td>ใช้ได้</td></tr>
+                  <tr><td>Pipeline Operator <code>|&gt;</code></td><td><strong>stage 1</strong> — ยังไม่รองรับ</td></tr>
+                  <tr><td>Records <code>#{}</code> และ Tuples <code>#[]</code></td><td><strong>proposal</strong> — ยังไม่รองรับ</td></tr>
+                  <tr><td>Decorators <code>@</code> · Temporal API</td><td><strong>stage 2 / stage 3</strong> — ยังไม่เป็นมาตรฐาน</td></tr>
+                  <tr><td rowspan="2">ES2025</td><td>JSON Modules (<code>with { type: 'json' }</code>) · Iterator Helpers · <code>Promise.try()</code> · <code>Float16Array</code></td><td>ใช้ได้</td></tr>
+                  <tr><td>Set: <code>union</code> <code>intersection</code> <code>difference</code> <code>symmetricDifference</code> <code>isSubsetOf</code> <code>isDisjointFrom</code> · <code>RegExp.escape()</code></td><td>ใช้ได้</td></tr>
+                  <tr><td rowspan="2">ES2026</td><td><code>Math.sumPrecise()</code></td><td><strong>ใหม่มาก</strong> — ต้องใช้ core-js polyfill</td></tr>
+                  <tr><td><code>Error.isError()</code> · <code>Array.fromAsync()</code> · <code>Map.getOrInsert()</code> · <code>JSON.rawJSON()</code> · <code>Uint8Array.toBase64()</code> / <code>toHex()</code></td><td>แก้ปัญหา cross-realm error, async stream, upsert, เลขใหญ่, binary encoding</td></tr>
+                </tbody>
+              </table>
+            </div>
+          </article>
+
+        </div>
+      </section>
+
+      <!-- =============================================================
+           แท็บ 3: แบบฝึกหัด (20 ข้อ)
+           data-answer = ตัวเลือกที่ถูก (ก=a, ข=b, ค=c, ง=d ตามเฉลยที่ผู้ใช้กำหนด)
+           ============================================================= -->
+      <section class="panel" id="quiz" role="tabpanel" aria-labelledby="tab-quiz" tabindex="-1">
+        <div class="panel-head">
+          <h2>แบบฝึกหัด 20 ข้อ</h2>
+          <p class="panel-sub">เลือกคำตอบให้ครบแล้วกด "ตรวจคำตอบ" ด้านล่าง ระบบจะเฉลยพร้อมคำอธิบายทุกข้อ</p>
+        </div>
+
+        <form class="quiz" id="quiz-form" novalidate>
+
+          <fieldset class="q" data-answer="c">
+            <legend class="q-head"><span class="q-num">01</span><span class="q-text">ECMAScript (ES) ถูกกำหนดมาตรฐานโดยองค์กรใด?</span></legend>
+            <div class="q-options">
+              <label class="opt"><input type="radio" name="q1" value="a" /><span class="opt-key">A</span><span class="opt-text">W3C (World Wide Web Consortium)</span></label>
+              <label class="opt"><input type="radio" name="q1" value="b" /><span class="opt-key">B</span><span class="opt-text">IETF</span></label>
+              <label class="opt"><input type="radio" name="q1" value="c" /><span class="opt-key">C</span><span class="opt-text">Ecma International</span></label>
+              <label class="opt"><input type="radio" name="q1" value="d" /><span class="opt-key">D</span><span class="opt-text">ISO</span></label>
+            </div>
+            <div class="q-feedback"><div class="q-feedback-inner"><p class="q-verdict" aria-live="polite"></p><p class="q-explain">สไลด์ระบุว่า ECMAScript is a general-purpose programming language standardized by Ecma International และ JavaScript คือ implementation ของ ES ที่นิยมและถูกใช้มากที่สุด</p></div></div>
+          </fieldset>
+
+          <fieldset class="q" data-answer="b">
+            <legend class="q-head"><span class="q-num">02</span><span class="q-text">ES6 มีชื่อทางการ (official name) ว่าอะไร?</span></legend>
+            <div class="q-options">
+              <label class="opt"><input type="radio" name="q2" value="a" /><span class="opt-key">A</span><span class="opt-text">ES2016</span></label>
+              <label class="opt"><input type="radio" name="q2" value="b" /><span class="opt-key">B</span><span class="opt-text">ES2015</span></label>
+              <label class="opt"><input type="radio" name="q2" value="c" /><span class="opt-key">C</span><span class="opt-text">ES2006</span></label>
+              <label class="opt"><input type="radio" name="q2" value="d" /><span class="opt-key">D</span><span class="opt-text">ES6.0</span></label>
+            </div>
+            <div class="q-feedback"><div class="q-feedback-inner"><p class="q-verdict" aria-live="polite"></p><p class="q-explain">ES6 = ES2015 ออกเดือน June 2015 — ตั้งแต่รุ่นนี้เป็นต้นไปชื่อทางการเปลี่ยนมาใช้ปีที่เผยแพร่</p></div></div>
+          </fieldset>
+
+          <fieldset class="q" data-answer="d">
+            <legend class="q-head"><span class="q-num">03</span><span class="q-text">ECMAScript เวอร์ชันใดถูกยกเลิก (Abandoned) และไม่เคยถูกเผยแพร่ออกมา?</span></legend>
+            <div class="q-options">
+              <label class="opt"><input type="radio" name="q3" value="a" /><span class="opt-key">A</span><span class="opt-text">ES2</span></label>
+              <label class="opt"><input type="radio" name="q3" value="b" /><span class="opt-key">B</span><span class="opt-text">ES3</span></label>
+              <label class="opt"><input type="radio" name="q3" value="c" /><span class="opt-key">C</span><span class="opt-text">ES5.1</span></label>
+              <label class="opt"><input type="radio" name="q3" value="d" /><span class="opt-key">D</span><span class="opt-text">ES4</span></label>
+            </div>
+            <div class="q-feedback"><div class="q-feedback-inner"><p class="q-verdict" aria-live="polite"></p><p class="q-explain">ตารางเวอร์ชันในสไลด์ระบุ ES4 ว่า Abandoned ส่วนรุ่นอื่นมีวันเผยแพร่ครบ</p></div></div>
+          </fieldset>
+
+          <fieldset class="q" data-answer="a">
+            <legend class="q-head"><span class="q-num">04</span><span class="q-text">promise มีสถานะ (state) อะไรบ้าง?</span></legend>
+            <div class="q-options">
+              <label class="opt"><input type="radio" name="q4" value="a" /><span class="opt-key">A</span><span class="opt-text">pending, fulfilled และ rejected</span></label>
+              <label class="opt"><input type="radio" name="q4" value="b" /><span class="opt-key">B</span><span class="opt-text">start, running และ end</span></label>
+              <label class="opt"><input type="radio" name="q4" value="c" /><span class="opt-key">C</span><span class="opt-text">open, closed และ error</span></label>
+              <label class="opt"><input type="radio" name="q4" value="d" /><span class="opt-key">D</span><span class="opt-text">waiting, success และ fail</span></label>
+            </div>
+            <div class="q-feedback"><div class="q-feedback-inner"><p class="q-verdict" aria-live="polite"></p><p class="q-explain">pending คือสถานะเริ่มต้นที่ยังไม่ fulfilled และไม่ rejected · fulfilled คืองานสำเร็จ · rejected คืองานล้มเหลว</p></div></div>
+          </fieldset>
+
+          <fieldset class="q" data-answer="c">
+            <legend class="q-head"><span class="q-num">05</span><span class="q-text">argument ตัวที่สองของ .then() ทำงานเมื่อใด?</span></legend>
+            <div class="q-options">
+              <label class="opt"><input type="radio" name="q5" value="a" /><span class="opt-key">A</span><span class="opt-text">เมื่อ promise ยังอยู่ในสถานะ pending</span></label>
+              <label class="opt"><input type="radio" name="q5" value="b" /><span class="opt-key">B</span><span class="opt-text">เมื่อ promise ถูก resolve สำเร็จ</span></label>
+              <label class="opt"><input type="radio" name="q5" value="c" /><span class="opt-key">C</span><span class="opt-text">เมื่อ promise ถูก reject และรับ error เข้ามา</span></label>
+              <label class="opt"><input type="radio" name="q5" value="d" /><span class="opt-key">D</span><span class="opt-text">ทำงานทุกครั้งไม่ว่าผลจะเป็นอย่างไร</span></label>
+            </div>
+            <div class="q-feedback"><div class="q-feedback-inner"><p class="q-verdict" aria-live="polite"></p><p class="q-explain">argument ตัวแรกของ .then คือ function ที่ทำงานเมื่อ resolve ส่วนตัวที่สองคือ function ที่ทำงานเมื่อ reject และรับ error — ถ้าสนใจเฉพาะ error จะใช้ .catch แทนก็ได้</p></div></div>
+          </fieldset>
+
+          <fieldset class="q" data-answer="d">
+            <legend class="q-head"><span class="q-num">06</span><span class="q-text">Template Literals ใน ES6 ใช้เครื่องหมายอะไรครอบ string และฝัง expression อย่างไร?</span></legend>
+            <div class="q-options">
+              <label class="opt"><input type="radio" name="q6" value="a" /><span class="opt-key">A</span><span class="opt-text">ใช้ ' ' และฝังด้วย #{ }</span></label>
+              <label class="opt"><input type="radio" name="q6" value="b" /><span class="opt-key">B</span><span class="opt-text">ใช้ &quot; &quot; และฝังด้วย @{ }</span></label>
+              <label class="opt"><input type="radio" name="q6" value="c" /><span class="opt-key">C</span><span class="opt-text">ใช้ ' ' และฝังด้วย ${ }</span></label>
+              <label class="opt"><input type="radio" name="q6" value="d" /><span class="opt-key">D</span><span class="opt-text">ใช้ backtick ` ` และฝังด้วย ${ }</span></label>
+            </div>
+            <div class="q-feedback"><div class="q-feedback-inner"><p class="q-verdict" aria-live="polite"></p><p class="q-explain">Template Literals สร้าง string ด้วย backtick และฝัง expression ด้วย ${a_variable} เช่น `Hello, ${name}`</p></div></div>
+          </fieldset>
+
+          <fieldset class="q" data-answer="a">
+            <legend class="q-head"><span class="q-num">07</span><span class="q-text">ถ้า const a = [1, 2, 3]; แล้ว const b = [...a, 4, 5, 6]; ค่าใน b คืออะไร?</span></legend>
+            <div class="q-options">
+              <label class="opt"><input type="radio" name="q7" value="a" /><span class="opt-key">A</span><span class="opt-text">1, 2, 3, 4, 5, 6</span></label>
+              <label class="opt"><input type="radio" name="q7" value="b" /><span class="opt-key">B</span><span class="opt-text">[1, 2, 3], 4, 5, 6</span></label>
+              <label class="opt"><input type="radio" name="q7" value="c" /><span class="opt-key">C</span><span class="opt-text">4, 5, 6</span></label>
+              <label class="opt"><input type="radio" name="q7" value="d" /><span class="opt-key">D</span><span class="opt-text">1, 2, 3</span></label>
+            </div>
+            <div class="q-feedback"><div class="q-feedback-inner"><p class="q-verdict" aria-live="polite"></p><p class="q-explain">spread operator (...) กระจายสมาชิกของ a ออกมาเรียงต่อกับ 4, 5, 6 · ถ้าเขียน [...a] เฉยๆ จะได้สำเนาของ a</p></div></div>
+          </fieldset>
+
+          <fieldset class="q" data-answer="b">
+            <legend class="q-head"><span class="q-num">08</span><span class="q-text">ผลของ const arrayized = [...&quot;Hello&quot;]; คืออะไร?</span></legend>
+            <div class="q-options">
+              <label class="opt"><input type="radio" name="q8" value="a" /><span class="opt-key">A</span><span class="opt-text">&quot;Hello&quot;</span></label>
+              <label class="opt"><input type="radio" name="q8" value="b" /><span class="opt-key">B</span><span class="opt-text">H, e, l, l, o (array 5 สมาชิก)</span></label>
+              <label class="opt"><input type="radio" name="q8" value="c" /><span class="opt-key">C</span><span class="opt-text">[&quot;Hello&quot;] (array 1 สมาชิก)</span></label>
+              <label class="opt"><input type="radio" name="q8" value="d" /><span class="opt-key">D</span><span class="opt-text">เกิด error เพราะ string ใช้ spread ไม่ได้</span></label>
+            </div>
+            <div class="q-feedback"><div class="q-feedback-inner"><p class="q-verdict" aria-live="polite"></p><p class="q-explain">spread operator ใช้กับ string ได้ — ผลคือแปลง string เป็น array ของตัวอักษร</p></div></div>
+          </fieldset>
+
+          <fieldset class="q" data-answer="c">
+            <legend class="q-head"><span class="q-num">09</span><span class="q-text">for-of loop ต่างจาก forEach() อย่างไร ตามที่สไลด์ระบุ?</span></legend>
+            <div class="q-options">
+              <label class="opt"><input type="radio" name="q9" value="a" /><span class="opt-key">A</span><span class="opt-text">for-of ทำงานเร็วกว่าเสมอ</span></label>
+              <label class="opt"><input type="radio" name="q9" value="b" /><span class="opt-key">B</span><span class="opt-text">for-of ใช้กับ object ได้ แต่ forEach ใช้ไม่ได้</span></label>
+              <label class="opt"><input type="radio" name="q9" value="c" /><span class="opt-key">C</span><span class="opt-text">for-of ใช้ break, continue และ return ได้ ส่วน forEach ใช้ไม่ได้</span></label>
+              <label class="opt"><input type="radio" name="q9" value="d" /><span class="opt-key">D</span><span class="opt-text">for-of ไม่ต้องประกาศตัวแปรตัววน</span></label>
+            </div>
+            <div class="q-feedback"><div class="q-feedback-inner"><p class="q-verdict" aria-live="polite"></p><p class="q-explain">สไลด์ระบุว่า unlike forEach(), you can use break, continue, and return — for-of วนผ่าน iterable object เช่น array</p></div></div>
+          </fieldset>
+
+          <fieldset class="q" data-answer="d">
+            <legend class="q-head"><span class="q-num">10</span><span class="q-text">WeakMap ต่างจาก Map ในเรื่อง key อย่างไร?</span></legend>
+            <div class="q-options">
+              <label class="opt"><input type="radio" name="q10" value="a" /><span class="opt-key">A</span><span class="opt-text">WeakMap ใช้ได้เฉพาะ key ที่เป็น string</span></label>
+              <label class="opt"><input type="radio" name="q10" value="b" /><span class="opt-key">B</span><span class="opt-text">WeakMap ใช้ได้เฉพาะ key ที่เป็นตัวเลข</span></label>
+              <label class="opt"><input type="radio" name="q10" value="c" /><span class="opt-key">C</span><span class="opt-text">WeakMap ใช้ key เป็นค่าอะไรก็ได้ แต่ Map ใช้ได้เฉพาะ object</span></label>
+              <label class="opt"><input type="radio" name="q10" value="d" /><span class="opt-key">D</span><span class="opt-text">WeakMap ใช้ key เป็น object เท่านั้น ส่วน Map ใช้ค่าอะไรก็ได้</span></label>
+            </div>
+            <div class="q-feedback"><div class="q-feedback-inner"><p class="q-verdict" aria-live="polite"></p><p class="q-explain">ตารางในสไลด์: Map มี Key Types เป็น any value ส่วน WeakMap เป็น Objects · WeakMap ยังไม่มี size และวนด้วย keys()/values()/entries() ไม่ได้</p></div></div>
+          </fieldset>
+
+          <fieldset class="q" data-answer="a">
+            <legend class="q-head"><span class="q-num">11</span><span class="q-text">Array.find() คืนค่าอะไร?</span></legend>
+            <div class="q-options">
+              <label class="opt"><input type="radio" name="q11" value="a" /><span class="opt-key">A</span><span class="opt-text">ค่าแรกของ array ที่ผ่าน test function</span></label>
+              <label class="opt"><input type="radio" name="q11" value="b" /><span class="opt-key">B</span><span class="opt-text">ตำแหน่ง (index) ของค่าแรกที่ผ่าน test function</span></label>
+              <label class="opt"><input type="radio" name="q11" value="c" /><span class="opt-key">C</span><span class="opt-text">array ของทุกค่าที่ผ่าน test function</span></label>
+              <label class="opt"><input type="radio" name="q11" value="d" /><span class="opt-key">D</span><span class="opt-text">true หรือ false</span></label>
+            </div>
+            <div class="q-feedback"><div class="q-feedback-inner"><p class="q-verdict" aria-live="polite"></p><p class="q-explain">find() คืนค่าแรกที่ผ่านเงื่อนไข ส่วน findIndex() คืนตำแหน่งของค่าแรกที่ผ่านเงื่อนไข เช่น [10, 30, 25, 48].find(num =&gt; num &lt; 30) ได้ 10</p></div></div>
+          </fieldset>
+
+          <fieldset class="q" data-answer="b">
+            <legend class="q-head"><span class="q-num">12</span><span class="q-text">Function Rest Parameter (...) ทำอะไร?</span></legend>
+            <div class="q-options">
+              <label class="opt"><input type="radio" name="q12" value="a" /><span class="opt-key">A</span><span class="opt-text">บังคับให้ function รับ argument ได้ไม่เกิน 3 ตัว</span></label>
+              <label class="opt"><input type="radio" name="q12" value="b" /><span class="opt-key">B</span><span class="opt-text">ทำให้ function รับ argument ได้ไม่จำกัดจำนวน</span></label>
+              <label class="opt"><input type="radio" name="q12" value="c" /><span class="opt-key">C</span><span class="opt-text">ทำให้ function หยุดรอ 1 วินาทีก่อนทำงาน</span></label>
+              <label class="opt"><input type="radio" name="q12" value="d" /><span class="opt-key">D</span><span class="opt-text">ลบ argument ที่ไม่ถูกใช้ทิ้ง</span></label>
+            </div>
+            <div class="q-feedback"><div class="q-feedback-inner"><p class="q-verdict" aria-live="polite"></p><p class="q-explain">rest parameter ใช้สัญลักษณ์เดียวกับ spread operator แต่ทำงานตรงข้าม — รวบ argument ทั้งหมดเข้ามาเป็น array เช่น function findMax(...args)</p></div></div>
+          </fieldset>
+
+          <fieldset class="q" data-answer="c">
+            <legend class="q-head"><span class="q-num">13</span><span class="q-text">Array.includes() ที่เพิ่มมาใน ES2016 ต่างจาก indexOf อย่างไร?</span></legend>
+            <div class="q-options">
+              <label class="opt"><input type="radio" name="q13" value="a" /><span class="opt-key">A</span><span class="opt-text">includes ทำงานกับ string เท่านั้น</span></label>
+              <label class="opt"><input type="radio" name="q13" value="b" /><span class="opt-key">B</span><span class="opt-text">includes คืนตำแหน่งของ element ส่วน indexOf คืน boolean</span></label>
+              <label class="opt"><input type="radio" name="q13" value="c" /><span class="opt-key">C</span><span class="opt-text">includes คืนค่าเป็น boolean ส่วน indexOf คืน -1 เมื่อไม่พบ</span></label>
+              <label class="opt"><input type="radio" name="q13" value="d" /><span class="opt-key">D</span><span class="opt-text">includes ใช้กับ array ที่เรียงลำดับแล้วเท่านั้น</span></label>
+            </div>
+            <div class="q-feedback"><div class="q-feedback-inner"><p class="q-verdict" aria-live="polite"></p><p class="q-explain">ด้วย ES6 ต้องเช็คจาก indexOf ว่าค่าที่ได้เป็น -1 หรือไม่ ส่วน ES2016 ใช้ includes ซึ่งคืน boolean ตรงๆ</p></div></div>
+          </fieldset>
+
+          <fieldset class="q" data-answer="d">
+            <legend class="q-head"><span class="q-num">14</span><span class="q-text">ผลของ &quot;World&quot;.padStart(10, &quot;Hello&quot;) คืออะไร?</span></legend>
+            <div class="q-options">
+              <label class="opt"><input type="radio" name="q14" value="a" /><span class="opt-key">A</span><span class="opt-text">&quot;World     &quot;</span></label>
+              <label class="opt"><input type="radio" name="q14" value="b" /><span class="opt-key">B</span><span class="opt-text">&quot;WorldHello&quot;</span></label>
+              <label class="opt"><input type="radio" name="q14" value="c" /><span class="opt-key">C</span><span class="opt-text">&quot;     World&quot;</span></label>
+              <label class="opt"><input type="radio" name="q14" value="d" /><span class="opt-key">D</span><span class="opt-text">&quot;HelloWorld&quot;</span></label>
+            </div>
+            <div class="q-feedback"><div class="q-feedback-inner"><p class="q-verdict" aria-live="polite"></p><p class="q-explain">padStart เติมข้างหน้าให้ความยาวรวมครบ 10 — &quot;World&quot; ยาว 5 จึงเติม &quot;Hello&quot; ไว้ด้านหน้าได้พอดี · ถ้าใช้ padEnd(10, &quot;Hello&quot;) จะได้ &quot;WorldHello&quot;</p></div></div>
+          </fieldset>
+
+          <fieldset class="q" data-answer="a">
+            <legend class="q-head"><span class="q-num">15</span><span class="q-text">Object.entries(person) คืนค่าอะไร?</span></legend>
+            <div class="q-options">
+              <label class="opt"><input type="radio" name="q15" value="a" /><span class="opt-key">A</span><span class="opt-text">array ของคู่ key-value ของ properties ทั้งหมด</span></label>
+              <label class="opt"><input type="radio" name="q15" value="b" /><span class="opt-key">B</span><span class="opt-text">array ของค่าของ properties ทั้งหมด</span></label>
+              <label class="opt"><input type="radio" name="q15" value="c" /><span class="opt-key">C</span><span class="opt-text">array ของชื่อ property ทั้งหมด</span></label>
+              <label class="opt"><input type="radio" name="q15" value="d" /><span class="opt-key">D</span><span class="opt-text">จำนวน property ทั้งหมดของ object</span></label>
+            </div>
+            <div class="q-feedback"><div class="q-feedback-inner"><p class="q-verdict" aria-live="polite"></p><p class="q-explain">Object.entries() คืน array ของคู่ key-value เช่น [&quot;firstName&quot;, &quot;Wudhichart&quot;] ส่วน Object.values() คืน array ของเฉพาะค่า</p></div></div>
+          </fieldset>
+
+          <fieldset class="q" data-answer="b">
+            <legend class="q-head"><span class="q-num">16</span><span class="q-text">function ที่มีคำว่า async อยู่ข้างหน้า จะคืนค่าเป็นอะไรเสมอ?</span></legend>
+            <div class="q-options">
+              <label class="opt"><input type="radio" name="q16" value="a" /><span class="opt-key">A</span><span class="opt-text">ค่า undefined</span></label>
+              <label class="opt"><input type="radio" name="q16" value="b" /><span class="opt-key">B</span><span class="opt-text">promise</span></label>
+              <label class="opt"><input type="radio" name="q16" value="c" /><span class="opt-key">C</span><span class="opt-text">callback function</span></label>
+              <label class="opt"><input type="radio" name="q16" value="d" /><span class="opt-key">D</span><span class="opt-text">ค่า boolean</span></label>
+            </div>
+            <div class="q-feedback"><div class="q-feedback-inner"><p class="q-verdict" aria-live="polite"></p><p class="q-explain">สไลด์ระบุว่า the word async before a function means that a function always returns a promise ส่วน await ทำให้ JavaScript รอจนกว่า promise นั้นจะ settle</p></div></div>
+          </fieldset>
+
+          <fieldset class="q" data-answer="c">
+            <legend class="q-head"><span class="q-num">17</span><span class="q-text">Nullish coalescing operator (??) ให้ค่าทางขวาเมื่อใด?</span></legend>
+            <div class="q-options">
+              <label class="opt"><input type="radio" name="q17" value="a" /><span class="opt-key">A</span><span class="opt-text">เมื่อค่าทางซ้ายเป็น 0 หรือ string ว่าง</span></label>
+              <label class="opt"><input type="radio" name="q17" value="b" /><span class="opt-key">B</span><span class="opt-text">เมื่อค่าทางซ้ายเป็น false</span></label>
+              <label class="opt"><input type="radio" name="q17" value="c" /><span class="opt-key">C</span><span class="opt-text">เมื่อค่าทางซ้ายเป็น null หรือ undefined</span></label>
+              <label class="opt"><input type="radio" name="q17" value="d" /><span class="opt-key">D</span><span class="opt-text">เมื่อค่าทางซ้ายมีค่าอยู่แล้ว</span></label>
+            </div>
+            <div class="q-feedback"><div class="q-feedback-inner"><p class="q-verdict" aria-live="polite"></p><p class="q-explain">สไลด์ระบุว่า this operator provides a default value when the variable is either null or undefined เช่น null ?? &quot;Jidapa&quot; ได้ &quot;Jidapa&quot; แต่ &quot;Wudhichart&quot; ?? &quot;Jidapa&quot; ได้ &quot;Wudhichart&quot;</p></div></div>
+          </fieldset>
+
+          <fieldset class="q" data-answer="d">
+            <legend class="q-head"><span class="q-num">18</span><span class="q-text">ถ้า const a = { age: 36 }; แล้วเขียน a.age ??= 20; ค่า a.age จะเป็นเท่าใด?</span></legend>
+            <div class="q-options">
+              <label class="opt"><input type="radio" name="q18" value="a" /><span class="opt-key">A</span><span class="opt-text">20</span></label>
+              <label class="opt"><input type="radio" name="q18" value="b" /><span class="opt-key">B</span><span class="opt-text">undefined</span></label>
+              <label class="opt"><input type="radio" name="q18" value="c" /><span class="opt-key">C</span><span class="opt-text">56</span></label>
+              <label class="opt"><input type="radio" name="q18" value="d" /><span class="opt-key">D</span><span class="opt-text">36</span></label>
+            </div>
+            <div class="q-feedback"><div class="q-feedback-inner"><p class="q-verdict" aria-live="polite"></p><p class="q-explain">??= กำหนดค่าให้ตัวซ้ายก็ต่อเมื่อตัวซ้ายเป็น nullish (null หรือ undefined) — a.age มีค่า 36 อยู่แล้วจึงไม่ถูกเปลี่ยน · แต่ a.height ??= 175 จะได้ 175 เพราะยังไม่มีค่า</p></div></div>
+          </fieldset>
+
+          <fieldset class="q" data-answer="a">
+            <legend class="q-head"><span class="q-num">19</span><span class="q-text">กลุ่ม method &quot;Change Array by Copy&quot; ของ ES2023 เช่น toSorted() และ toReversed() มีลักษณะอย่างไร?</span></legend>
+            <div class="q-options">
+              <label class="opt"><input type="radio" name="q19" value="a" /><span class="opt-key">A</span><span class="opt-text">คืน array สำเนาใหม่ที่ถูกเปลี่ยนแปลงแล้ว โดยไม่แก้ array เดิม</span></label>
+              <label class="opt"><input type="radio" name="q19" value="b" /><span class="opt-key">B</span><span class="opt-text">แก้ไข array เดิมโดยตรงเพื่อประหยัดหน่วยความจำ</span></label>
+              <label class="opt"><input type="radio" name="q19" value="c" /><span class="opt-key">C</span><span class="opt-text">ทำงานได้เฉพาะกับ array ของตัวเลขเท่านั้น</span></label>
+              <label class="opt"><input type="radio" name="q19" value="d" /><span class="opt-key">D</span><span class="opt-text">คืนค่าเป็น boolean ว่าการเปลี่ยนแปลงสำเร็จหรือไม่</span></label>
+            </div>
+            <div class="q-feedback"><div class="q-feedback-inner"><p class="q-verdict" aria-live="polite"></p><p class="q-explain">สไลด์ระบุว่าเป็น additional array methods that make change to an array by returning a new copy ได้แก่ toReversed(), toSorted(), toSpliced() และ with()</p></div></div>
+          </fieldset>
+
+          <fieldset class="q" data-answer="b">
+            <legend class="q-head"><span class="q-num">20</span><span class="q-text">ถ้า A = new Set([1, 2, 3]) และ B = new Set([3, 4, 5]) ผลของ A.intersection(B) ใน ES2025 คืออะไร?</span></legend>
+            <div class="q-options">
+              <label class="opt"><input type="radio" name="q20" value="a" /><span class="opt-key">A</span><span class="opt-text">Set {1, 2, 3, 4, 5}</span></label>
+              <label class="opt"><input type="radio" name="q20" value="b" /><span class="opt-key">B</span><span class="opt-text">Set {3}</span></label>
+              <label class="opt"><input type="radio" name="q20" value="c" /><span class="opt-key">C</span><span class="opt-text">Set {1, 2}</span></label>
+              <label class="opt"><input type="radio" name="q20" value="d" /><span class="opt-key">D</span><span class="opt-text">Set {1, 2, 4, 5}</span></label>
+            </div>
+            <div class="q-feedback"><div class="q-feedback-inner"><p class="q-verdict" aria-live="polite"></p><p class="q-explain">intersection คือสมาชิกที่อยู่ในทั้งสองเซต จึงได้ {3} · union ได้ {1,2,3,4,5} · difference ได้ {1,2} · symmetricDifference ได้ {1,2,4,5}</p></div></div>
+          </fieldset>
+
+          <div class="quiz-result" id="quiz-result" hidden tabindex="-1">
+            <div class="score-ring" aria-hidden="true">
+              <svg viewBox="0 0 120 120">
+                <circle class="ring-track" cx="60" cy="60" r="52" />
+                <circle class="ring-fill" cx="60" cy="60" r="52" pathLength="100" />
+              </svg>
+              <span class="score-pct"><span id="score-pct">0</span>%</span>
+            </div>
+            <div class="score-body">
+              <p class="score-line" role="status">ได้ <strong id="score-num">0</strong> / 20 คะแนน</p>
+              <p class="score-msg" id="score-msg"></p>
+              <div class="score-actions">
+                <button class="btn btn--ghost btn--sm" type="button" id="toggle-wrong" aria-pressed="false">ดูเฉพาะข้อที่ผิด</button>
+              </div>
+            </div>
+          </div>
+
+          <div class="quiz-bar">
+            <div class="quiz-progress">
+              <span class="quiz-count"><span id="answered">0</span> / 20 ข้อ</span>
+              <span class="progress" aria-hidden="true"><span class="progress-fill" id="progress-fill"></span></span>
+              <span class="quiz-hint" id="quiz-hint" aria-live="polite"></span>
+            </div>
+            <div class="quiz-actions">
+              <button class="btn btn--ghost" type="reset" id="quiz-reset">ทำใหม่</button>
+              <button class="btn btn--primary" type="submit" id="quiz-submit">ตรวจคำตอบ</button>
+            </div>
+          </div>
+        </form>
+      </section>
+
+    </div>
+  </main>
+  <footer class="site-footer">
+    <div class="wrap">
+      <p>สรุปจากสไลด์ ITDS241 Web Technologies and Applications (Faculty of ICT, Mahidol University) เพื่อใช้ทบทวนส่วนตัว — ถ้าเนื้อหาขัดกับสไลด์ ให้ยึดสไลด์เป็นหลัก</p>
+    </div>
+  </footer>
+
+  <script src="assets/js/widgets.js" defer></script>
+  <script src="assets/js/network.js" defer></script>
+</body>
+</html>

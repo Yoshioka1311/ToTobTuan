@@ -14,10 +14,15 @@
 | ITDS231 บทที่ 4: MAC + Ethernet | `network-mac-ethernet.html` | ALOHA, CSMA/CD, CSMA/CA, channelization, เฟรม Ethernet, switch |
 | ITDS241 บทที่ 1: Internet & HTML Basics | `web-intro-html-basics.html` | 4 แท็บ: เนื้อหา · สรุป · แบบฝึกหัด · **เขียนโค้ด** (ตรวจโค้ด HTML อัตโนมัติ 24 ข้อ) |
 | ITDS241 บทที่ 2: Media, Forms & Semantic | `web-media-forms-semantic.html` | media, forms + validation, semantic layout · เขียนโค้ด 12 ข้อ |
+| ITDS241 บทที่ 3: CSS Fundamentals | `web-css-fundamentals.html` | selector, box model, text/color, specificity · เขียนโค้ด 6 ข้อ |
+| ITDS241 บทที่ 4: CSS Layout & Responsive | `web-css-layout-responsive.html` | display, position, flexbox, media query, responsive · เขียนโค้ด 6 ข้อ |
+| ITDS241 บทที่ 5: JavaScript Fundamentals | `web-js-fundamentals.html` | var/let/const, data types, built-in objects, operator, control flow · เขียนโค้ด 6 ข้อ |
+| ITDS241 บทที่ 6: Functions, OOP & DOM | `web-js-functions-oop-dom.html` | function ทุกแบบ, scope/closure, class + inheritance, DOM และ events · เขียนโค้ด 6 ข้อ |
+| ITDS241 บทที่ 7: ECMAScript Features | `web-ecmascript-features.html` | ES6 → ES2026 · 3 แท็บ (ไม่มีแท็บเขียนโค้ด) |
 
 ทุกหน้าบทเลือกวิชา (Network / Web) และบทได้ที่ต้นหน้า · ลิงก์ตรงไปแต่ละแท็บได้ด้วย `#content`, `#summary`, `#quiz` (หน้า Web มี `#code` เพิ่ม)
 
-แท็บเนื้อหามีแผนภาพ SVG และตัวช่วยคำนวณแบบ interactive เช่น delay calculator (บทที่ 1), HTTP timeline และ web cache (บทที่ 2), CRC / Hamming / sliding window (บทที่ 3), binary exponential backoff (บทที่ 4)
+แท็บเนื้อหามีแผนภาพ SVG และตัวช่วยคำนวณแบบ interactive เช่น delay calculator (Network บทที่ 1), HTTP timeline และ web cache (บทที่ 2), CRC / Hamming / sliding window (บทที่ 3), binary exponential backoff (บทที่ 4) · ฝั่ง Web มี URL anatomy, layout demo, pattern tester, flexbox lab และ media query lab · โค้ดตัวอย่าง JavaScript กดรันได้ในกล่อง sandbox และโค้ด HTML บางกล่องแสดงผลจริงในกรอบ preview
 ความคืบหน้าของแท็บเขียนโค้ดเก็บใน localStorage ของเบราว์เซอร์เท่านั้น
 
 ## เปิดดูบนเครื่อง
@@ -43,9 +48,14 @@ network-data-link-layer.html     ITDS231 บทที่ 3
 network-mac-ethernet.html        ITDS231 บทที่ 4
 web-intro-html-basics.html       ITDS241 บทที่ 1
 web-media-forms-semantic.html    ITDS241 บทที่ 2
+web-css-fundamentals.html        ITDS241 บทที่ 3
+web-css-layout-responsive.html   ITDS241 บทที่ 4
+web-js-fundamentals.html         ITDS241 บทที่ 5
+web-js-functions-oop-dom.html    ITDS241 บทที่ 6
+web-ecmascript-features.html     ITDS241 บทที่ 7
 assets/
   css/  tokens.css · base.css · home.css · network.css · exercise.css · motion.css
-  js/   network.js · widgets.js · code-exercise.js · exercises-web-1.js · exercises-web-2.js
+  js/   network.js · widgets.js · code-exercise.js · exercises-web-1.js … exercises-web-6.js
   favicon.svg
 ```
 

@@ -40,12 +40,17 @@ HTML/CSS/JS ไม่มี framework ไม่มี build tool — ห้า�
 | `network-mac-ethernet.html` | ITDS231 **บทที่ 4: MAC + Ethernet** (Lecture 6.1–6.2) — accordion 2 การ์ด · cheat sheet 8 การ์ด · quiz 20 ข้อ |
 | `web-intro-html-basics.html` | ITDS241 **บทที่ 1: Internet & HTML Basics** — **4 แท็บ**: เนื้อหา (accordion 5 การ์ด) · สรุป (6 การ์ด) · แบบฝึกหัด (quiz 20 ข้อ) · **เขียนโค้ด** (24 ข้อ กลุ่ม 1–4) |
 | `web-media-forms-semantic.html` | ITDS241 **บทที่ 2: Media, Forms & Semantic** — 4 แท็บ: accordion 4 การ์ด · สรุป 6 การ์ด · quiz 20 ข้อ · เขียนโค้ด (12 ข้อ กลุ่ม 5–6) |
+| `web-css-fundamentals.html` | ITDS241 **บทที่ 3: CSS Fundamentals** — 4 แท็บ: accordion 4 การ์ด · สรุป 6 การ์ด · quiz 20 ข้อ · เขียนโค้ด (6 ข้อ กลุ่ม 7) |
+| `web-css-layout-responsive.html` | ITDS241 **บทที่ 4: CSS Layout & Responsive** — 4 แท็บ: accordion 4 การ์ด · สรุป 6 การ์ด · quiz 20 ข้อ · เขียนโค้ด (6 ข้อ กลุ่ม 8) |
+| `web-js-fundamentals.html` | ITDS241 **บทที่ 5: JavaScript Fundamentals** (Lecture 06) — 4 แท็บ: accordion 5 การ์ด · สรุป 6 การ์ด · quiz 20 ข้อ · เขียนโค้ด (6 ข้อ กลุ่ม 9, mode js) |
+| `web-js-functions-oop-dom.html` | ITDS241 **บทที่ 6: Functions, OOP & DOM** (Lecture 07) — 4 แท็บ: accordion 5 การ์ด · สรุป 6 การ์ด · quiz 20 ข้อ · เขียนโค้ด (6 ข้อ กลุ่ม 10, mode js + fixture) |
+| `web-ecmascript-features.html` | ITDS241 **บทที่ 7: ECMAScript Features** (ES6 → ES2026) — **3 แท็บ** (ไม่มีแท็บเขียนโค้ด): accordion 5 การ์ด · สรุป 6 การ์ด · quiz 20 ข้อ |
 
 การ์ด "การออกแบบฐานข้อมูล (7-Eleven Schema)" ใน index เป็นเนื้อหาเดิมของผู้ใช้ ยังไม่มีหน้าของตัวเอง
 การ์ด ITDS231 ใน index ลิงก์ไป `network.html` (บทที่ 1) · การ์ด ITDS241 ลิงก์ไป `web-intro-html-basics.html` — ทุกหน้าบทมี **course nav** ต้นหน้า: ปุ่มเลือกวิชา (Network / Web) แล้วตามด้วยลิงก์บทของวิชานั้น
 
 ### ⚠️ กฎเรื่องเนื้อหา (สำคัญ) — content lock
-- เนื้อหาวิชา, คำถาม quiz 20 ข้อ, ตัวเลือก, คำตอบ (`data-answer`) และคำอธิบายใน **ทุกหน้าบท: `network.html`, `network-application-layer.html`, `network-data-link-layer.html`, `network-mac-ethernet.html`, `web-intro-html-basics.html`, `web-media-forms-semantic.html`** **ห้ามแก้/ลบ** เมื่อทำงานด้าน UI — ปรับได้แค่ markup/class/ดีไซน์/interaction (เช่น course nav)
+- เนื้อหาวิชา, คำถาม quiz 20 ข้อ, ตัวเลือก, คำตอบ (`data-answer`) และคำอธิบายใน **ทุกหน้าบท: `network.html`, `network-application-layer.html`, `network-data-link-layer.html`, `network-mac-ethernet.html`, `web-intro-html-basics.html`, `web-media-forms-semantic.html`, `web-css-fundamentals.html`, `web-css-layout-responsive.html`, `web-js-fundamentals.html`, `web-js-functions-oop-dom.html`, `web-ecmascript-features.html`** **ห้ามแก้/ลบ** เมื่อทำงานด้าน UI — ปรับได้แค่ markup/class/ดีไซน์/interaction (เช่น course nav)
 - **แท็บ "แบบฝึกหัด" (quiz) ห้ามแตะเด็ดขาด** ทุกหน้า — ถ้าต้องแก้แท็บเนื้อหาให้ใช้วิธี splice เฉพาะ `<section id="content">` แล้วตรวจว่าส่วนสรุป + quiz เหมือนเดิมทุกไบต์
 - **ขยายแท็บเนื้อหา Network บทที่ 1–4 (session 4, ผู้ใช้อนุญาต)**: เนื้อหาในแท็บ "เนื้อหา" ถูกเขียนเพิ่มจาก **PDF ต้นฉบับโดยตรง** (อ่านด้วย PyMuPDF, หน้าที่เป็นรูปถูก render แล้วอ่านภาพ) — กฎคือ **ห้ามเพิ่มข้อมูลที่ไม่ได้มาจากสไลด์** (รวมถึง "เหตุผล" ที่สไลด์ไม่ได้เขียน) ตัวอย่างตัวเลขต้องมีวิธีทำทีละขั้น · แท็บสรุปและ quiz ไม่ได้แก้
   - บทที่ 2: สไลด์ HTTP พื้นฐานจริงอยู่ใน `chapter2_application layer_1-1.pdf` (slide 28–47) ไม่ใช่ไฟล์ Lecture4 — ป้ายไฟล์ของการ์ดถูกแก้ให้ตรงแล้ว
@@ -60,6 +65,10 @@ HTML/CSS/JS ไม่มี framework ไม่มี build tool — ห้า�
 - **Web ITDS241 บทที่ 1–2 (lock แล้ว)**: เนื้อหามาจากไฟล์ที่ผู้ใช้ให้ · quiz ใช้คำตอบที่ผู้ใช้กำหนดตรงตัว (ส่วนใหญ่เป็น B — ห้ามสลับตัวเลือกถ้าผู้ใช้ไม่ขอ)
   - เฉลย Web บทที่ 1 = `bbbcbbccbbbcbbbbabbb` · เฉลย Web บทที่ 2 = `bbcbbbbbcbbbbbbbbbbc`
   - โจทย์เขียนโค้ด 36 ข้อ (6 กลุ่มตามที่ผู้ใช้กำหนด) — ไม่มีกลุ่ม audio/video/iframe เพราะไม่อยู่ใน 6 กลุ่มของผู้ใช้
+- **Web ITDS241 บทที่ 3–7 (session 5, lock แล้ว)**: เนื้อหา cheat sheet และ quiz เขียนจาก **PDF ต้นฉบับโดยตรง** (PyMuPDF) — กฎเดียวกับ Network: **ห้ามเพิ่มข้อมูลที่ไม่ได้มาจากสไลด์** · ตัวอย่างตัวเลข/ผลลัพธ์ต้องไล่ทีละขั้นได้ · quiz 20 ข้อของบท 3–7 เขียนโดย Claude จากสไลด์ (ผู้ใช้ไม่ได้กำหนดเฉลยมา) จึงกระจาย A–D
+  - ไฟล์ต้นฉบับใน Downloads: `69-2-ITDS241-Lecture03-CSS-Part1.pdf` (บทที่ 3) · `69-1-ITDS241-Lecture04-CSS-Part2.pdf` (บทที่ 4) · `ITDS241-Lecture06-JavaScript Part 1.pdf` (บทที่ 5) · `ITDS241-Lecture07-JavaScript Part 2.pdf` (บทที่ 6) · `ITDS241-ECMAScript Version_Updated_2026Aug06.pdf` (บทที่ 7)
+  - เฉลยบทที่ 3 = `abbbbbbbbbbbbdbbbbbb` · บทที่ 4 = `bbbbbbbbbbbcbabcabaa` · บทที่ 5 = `bbababbbaababbcbabbb` · บทที่ 6 = `bcbdacbdacbdacdadbba` · บทที่ 7 = `cbdacdabcdabcdabcdab`
+  - บทที่ 7 ไม่มีแท็บเขียนโค้ด (ตามที่ผู้ใช้กำหนด) · ฟีเจอร์ที่สไลด์ระบุว่ายังไม่รองรับในเบราว์เซอร์ (pipeline operator, Records/Tuples, Decorators, Temporal API, `Math.sumPrecise`) เขียนเป็นโค้ดตัวอย่างที่**ไม่มี `data-run`** พร้อม callout เตือนไว้
 - **บทที่ 2 (lock แล้ว)**: เนื้อหามาจากสรุปที่ผู้ใช้พิมพ์ให้ในแชท (สกัดจาก `chapter2_application layer_1-1.pdf` และ `chapter2_Lecture4_application layer_rev2-1.pdf` ใน Downloads) คำถาม/ตัวเลือก/เฉลยใช้ตามที่ผู้ใช้กำหนดตรงตัว
   - เฉลยบทที่ 2 = `b b b b b b d b b b b b b b b b b a c b` (ข้อ 7=D, 18=A, 19=C, ที่เหลือ B) — **ไม่ได้กระจาย A–D** เพราะผู้ใช้สั่งห้ามเปลี่ยนเฉลย ห้ามสลับลำดับตัวเลือกเองถ้าผู้ใช้ไม่ขอ
   - ข้อความใน `.q-explain` ของบทที่ 2 เขียนโดย Claude โดยอ้างจากเนื้อหาที่ผู้ใช้ให้เท่านั้น (ผู้ใช้ไม่ได้ให้คำอธิบายมา)
@@ -78,6 +87,11 @@ network-data-link-layer.html     ITDS231 บทที่ 3
 network-mac-ethernet.html        ITDS231 บทที่ 4
 web-intro-html-basics.html       ITDS241 บทที่ 1 (4 แท็บ รวมเขียนโค้ด)
 web-media-forms-semantic.html    ITDS241 บทที่ 2
+web-css-fundamentals.html        ITDS241 บทที่ 3
+web-css-layout-responsive.html   ITDS241 บทที่ 4
+web-js-fundamentals.html         ITDS241 บทที่ 5
+web-js-functions-oop-dom.html    ITDS241 บทที่ 6
+web-ecmascript-features.html     ITDS241 บทที่ 7 (3 แท็บ ไม่มีเขียนโค้ด)
 assets/
   favicon.svg           โลโก้ (3 โหนดเชื่อมกัน) ใช้เป็น favicon + wordmark
   css/
@@ -94,6 +108,10 @@ assets/
     code-exercise.js    engine แท็บเขียนโค้ด (ดูหัวข้อ Code exercise)
     exercises-web-1.js  โจทย์กลุ่ม 1–4 (window.CODE_EXERCISE_SET id "web-1")
     exercises-web-2.js  โจทย์กลุ่ม 5–6 (id "web-2")
+    exercises-web-3.js  โจทย์กลุ่ม 7 — CSS selectors & properties (id "web-3")
+    exercises-web-4.js  โจทย์กลุ่ม 8 — CSS layout ด้วย flexbox (id "web-4")
+    exercises-web-5.js  โจทย์กลุ่ม 9 — JS ตัวแปร / operator / control flow (id "web-5", mode js)
+    exercises-web-6.js  โจทย์กลุ่ม 10 — JS function / OOP / DOM (id "web-6", mode js + fixture)
 README.md               คำอธิบายสั้น + วิธี deploy
 .nojekyll               ให้ GitHub Pages ไม่ประมวลผล Jekyll
 .gitignore
@@ -106,7 +124,10 @@ README.md               คำอธิบายสั้น + วิธี depl
 ทุก widget เป็น progressive enhancement: เนื้อหาต้องอ่านได้ครบโดยไม่มี JS · ตัวเลขทุกค่าต้องมาจากสไลด์
 | data-widget | หน้า | markup ที่ต้องมี |
 | --- | --- | --- |
-| `url-anatomy`, `layout-demo`, `pattern-tester`, `validation-demo` (form) | Web | ดูตัวอย่างในหน้า Web |
+| `url-anatomy`, `layout-demo`, `pattern-tester`, `validation-demo` (form) | Web บทที่ 1–2 | ดูตัวอย่างในหน้า Web |
+| `selector-lab` | Web บทที่ 3 | `template.sel-source` (HTML ตัวอย่าง มี `data-i` ทุก element), `.sel-node[data-i]`, `button[data-selector]`, `.demo-status` |
+| `flex-lab` | Web บทที่ 4 | `.flex-stage`, `.flex-code code`, `button[data-prop][data-value]` (flex-direction/flex-wrap/justify-content/align-items) |
+| `mq-lab` | Web บทที่ 4 | `input[type=range]`, `output`, `.mq-frame` (iframe ที่เปลี่ยนความกว้างได้ = จำลอง viewport), `.demo-status` |
 | `delay-calc` | Network บทที่ 1 | `[data-input=l/lu/r/d/s/proc/queue]`, ปุ่ม `[data-preset=q1/q2/q3]`, `.demo-status`, `ol.calc-steps` |
 | `http-timeline` | บทที่ 2 | `[data-input=objects/rtt/tx]`, `[data-row=non/per] .rtt-track/.rtt-total`, `button[data-mode=both/non/per]`, `.demo-status` |
 | `cache-calc` | บทที่ 2 | `[data-input=link/rate/rtt/size/hit]`, `[data-output=hit]`, `.calc-steps` |
@@ -116,18 +137,24 @@ README.md               คำอธิบายสั้น + วิธี depl
 | `backoff-sim` | บทที่ 4 | `[data-input=tprop]`, `[data-action=collide/example/reset]`, `.demo-status`, `.calc-steps` (Kmax = 15 → abort) |
 
 - โค้ดตัวอย่าง HTML: `pre.code-block[data-lang=html]` ถูก highlight อัตโนมัติ · ใส่ `data-render` จะมี iframe `sandbox=""` srcdoc แสดงผล (ไม่ใช้ lazy loading — เคยทำให้ว่าง)
+- โค้ดตัวอย่าง CSS/JS: `data-lang=css|js` highlight ได้เหมือนกัน · `pre.code-block[data-lang=js][data-run]` จะมีปุ่ม "▶ รันโค้ดนี้" + กล่อง `.run-output` (รันใน iframe sandbox ผ่าน `TotobWidgets.runJs`, มีตัวกันลูปไม่รู้จบและ timeout) · `data-wait="<ms>"` ใช้กับโค้ดที่มี `setTimeout` เพื่อรอผลก่อนสรุป · `data-fixture="<template id>"` ใส่ HTML ตั้งต้นให้กล่องนั้น
 - SVG แผนภาพ: `figure.diagram > .diagram-scroll > svg[role=img]` + `<title>/<desc>` + `figcaption` บอกสไลด์ที่มา · class `dg-box(--accent|ok|bad|warn)`, `dg-line(--accent|ok|bad|warn|dash)`, `dg-text(--sm|ok|bad)`, `dg-mono(--sm|warn)` · marker `#arr #arr-muted #arr-ok #arr-bad` ต้องมี `svg.dg-defs` 1 ชุดต่อหน้า (ต่อจาก skip-link) · ห้ามใช้ glyph ที่ฟอนต์ไม่มี (เช่น ①)
 - callout: `.callout.callout--def|--warn|--why` + `span.callout-label`
 
 ## Code exercise (แท็บ "เขียนโค้ด" เฉพาะหน้า Web)
 
 - panel `#code` (tablist ใช้ `.tabs--4`) มี `#code-exercise` · โหลด `exercise.css`, ไฟล์โจทย์ แล้ว `code-exercise.js`
-- รูปแบบข้อมูล `window.CODE_EXERCISE_SET = { id, groups: [{ title, tasks: [{ id, title, level: 1|2|3, prompt (HTML), starter?, solution, checks: [{ hint, test: (doc, code, h) => boolean }] }] }] }`
-- ตรวจ: `DOMParser` parse โค้ด แล้วรัน checks ตามลำดับ · ไม่ผ่าน = แสดง hint ของ check แรกที่ตก + "และยังมีอีก N จุด" (ห้ามให้ hint บอกเฉลยตรงๆ · backtick ใน hint แสดงเป็นโค้ด) · ปุ่ม "ดูเฉลย" แยกต่างหาก
-- helpers `h`: `norm`, `text`, `tagInSource`, `doctypeFirst`, `comments`, `commentNodes`, `before`, `ownText`, `outsideForm`, `labelFor`, `attr`
+- รูปแบบข้อมูล `window.CODE_EXERCISE_SET = { id, groups: [{ title, tasks: [{ id, title, level: 1|2|3, mode?: "html"|"js", prompt (HTML), starter?, solution, fixture?, probe?, wait?, checks: [{ hint, test }] }] }] }`
+- **mode `"html"` (ค่าเริ่มต้น, ใช้กับโจทย์ HTML และ CSS)**: `DOMParser` parse โค้ด แล้วรัน checks `test: (doc, code, h) => boolean` ตามลำดับ
+- **mode `"js"` (บทที่ 5–6)**: โค้ดผู้เรียนรันใน iframe sandbox ผ่าน `TotobWidgets.runJs` แล้ว checks เป็น `test: (r, code, h) => boolean` โดย `r = { logs[], errors[], probe, probeError, loopLimit, timeout, html }`
+  - `fixture` = HTML ที่มีอยู่ในหน้าก่อนโค้ดผู้เรียนทำงาน (engine แสดงให้ผู้เรียนเห็นอัตโนมัติ และ preview จะโชว์ผลจริง)
+  - `probe` = โค้ดของผู้ออกโจทย์ที่รัน**ต่อจาก**โค้ดผู้เรียนใน sandbox เดียวกัน · ค่าที่ `return` ไปอยู่ใน `r.probe` (ต้อง JSON-serializable) — ใช้เรียกฟังก์ชัน/คลาสของผู้เรียนด้วยค่าทดสอบอื่น หรือ `.click()` ปุ่มเพื่อทดสอบ event
+  - `wait` = ms ที่รอก่อนรัน probe (ใส่เฉพาะโจทย์ที่ใช้ `setTimeout`)
+- ไม่ผ่าน = แสดง hint ของ check แรกที่ตก + "และยังมีอีก N จุด" (ห้ามให้ hint บอกเฉลยตรงๆ · backtick ใน hint แสดงเป็นโค้ด) · ปุ่ม "ดูเฉลย" แยกต่างหาก
+- helpers `h`: `norm`, `text`, `tagInSource`, `doctypeFirst`, `comments`, `commentNodes`, `before`, `ownText`, `outsideForm`, `labelFor`, `attr`, `hasClass` · CSS: `cssRules`, `cssValue`, `cssAppliesTo`, `cssMediaRules`, `sameColor` · JS: `jsCode` (ตัด comment/string ออกก่อนหา keyword), `logs`, `noErrors`
 - state: `localStorage["totobtuan:code-exercise:v1:<set id>"] = { current, tasks: { "<id>": { code, status: "pass"|"fail" } } }` (ห่อ try/catch) — ถ้าเปลี่ยนรูปแบบให้ขึ้น `v2`
 - editor: Tab/Shift+Tab ย่อหน้า (กด Esc แล้ว Tab เพื่อออกจากช่อง), Enter คงระดับย่อหน้า, Ctrl+Enter ตรวจ, live preview, รีเซ็ตข้อ/ทั้งหมด (confirm)
-- ทดสอบ: `window.TotobCodeExercise.validate(id, code)` — ทุก solution ต้องผ่าน และโค้ดว่างต้องไม่ผ่าน
+- ทดสอบ: `window.TotobCodeExercise.validate(id, code)` (async) — ทุก solution ต้องผ่าน · โค้ดว่างต้องไม่ผ่าน · `starter` ต้องไม่ผ่าน · ควรทดสอบ "เฉลยปลอม" (hardcode ค่า / ใช้วิธีที่โจทย์ห้าม) ว่าไม่ผ่านด้วย
 
 ## Design system — "Iris & Graphite"
 
@@ -215,14 +242,26 @@ README.md               คำอธิบายสั้น + วิธี depl
 - [x] ทดสอบ headless Edge ทุกหน้า: เฉลย quiz ไม่เปลี่ยน, ไม่มี id ซ้ำ, ลิงก์ toc ครบ, widget คำนวณตรงกับตัวอย่างในสไลด์, ไม่มี horizontal scroll ที่ 390px, ไม่มี JS error
 - เครื่องมือชั่วคราว (PyMuPDF ใน `.cache/pylib`, สคริปต์ CDP `.cache/shoot.mjs`, `.cache/splice.mjs`) ถูกลบเมื่อจบงานตาม Safety Rules — ถ้าต้องอ่าน PDF อีกให้ขออนุญาตติดตั้ง PyMuPDF ลง `.cache/` ใหม่
 
+**Session 5 (2026-09-16) — เพิ่ม Web บทที่ 3–7 + code exercise กลุ่ม 7–10 (เสร็จครบ)**
+- [x] engine: JS sandbox runner (`TotobWidgets.runJs`), highlight CSS/JS, code block `data-run`, validate แบบ async + mode `js`, CSS helpers (`cssRules`, `cssValue`, `sameColor`)
+- [x] บทที่ 3 `web-css-fundamentals.html` + `exercises-web-3.js` (กลุ่ม 7 · selector-lab)
+- [x] บทที่ 4 `web-css-layout-responsive.html` + `exercises-web-4.js` (กลุ่ม 8 · flex-lab, mq-lab)
+- [x] บทที่ 5 `web-js-fundamentals.html` + `exercises-web-5.js` (กลุ่ม 9, mode js)
+- [x] บทที่ 6 `web-js-functions-oop-dom.html` + `exercises-web-6.js` (กลุ่ม 10, mode js + fixture) — accordion 5 การ์ด, แผนภาพ class instantiation + DOM tree, โค้ด `data-run` 16 กล่อง, `data-render` 8 กล่อง
+- [x] บทที่ 7 `web-ecmascript-features.html` (ไม่มีแท็บเขียนโค้ด) — ES6 → ES2026 จากสไลด์ ECMAScript Version ทั้ง 124 หน้า
+- [x] course nav ครบ 7 บทในทุกหน้าบททุกวิชา (sync ด้วยสคริปต์ชั่วคราว `.cache/nav.mjs` ที่แทนที่เฉพาะบล็อก `<nav class="course-nav">`) · การ์ด ITDS241 ใน index เป็น "7 บท" · README + CLAUDE.md อัปเดตครบ
+- [x] ทดสอบ headless Edge บทที่ 5–7: quiz 20/20 ตรงเฉลย, ไม่มี id ซ้ำ, ลิงก์ toc ครบ, `aria-current` ถูกหน้า, ไม่มี horizontal scroll ที่ 390px ทุกแท็บ, ไม่มี JS error, ทุก solution ของ code exercise ผ่าน / โค้ดว่าง + starter + "เฉลยปลอม" ไม่ผ่าน, รันโค้ดทุกกล่อง `data-run` แล้วผลตรงกับคอมเมนต์ในโค้ด (error 3 กล่องเป็นการสาธิต ReferenceError / TypeError โดยตั้งใจ)
+- หน้าบทใหม่สร้างจากสคริปต์ชั่วคราว `.cache/build.mjs` (+ `.cache/wN.mjs`, `wN-content.html`, `wN-summary.html`) — ถ้า `.cache` หายให้คัดลอกโครงจาก `web-js-functions-oop-dom.html` แทน · PyMuPDF ติดตั้งไว้ที่ `.cache/pylib` (ผู้ใช้อนุญาตใน session นี้) พร้อมสคริปต์ `.cache/pdf.py`
+
 ## สิ่งที่ยังไม่ได้ทำ / แผนต่อไป
 
 - (ถ้าผู้ใช้ต้องการ) สลับลำดับตัวเลือก quiz บทที่ 2 ให้เฉลยกระจาย A–D — ต้องได้รับอนุญาตก่อน เพราะเปลี่ยนตัวอักษรของเฉลย
 - เพิ่มหน้าวิชาอื่น (เช่น วิชาฐานข้อมูลที่มีการ์ดรออยู่แล้ว — ใน Downloads มีสไลด์ชื่อ ITDS222 ERDiagram แต่ยังไม่ได้ยืนยันกับผู้ใช้ว่าเป็นวิชาเดียวกัน) — ดู "วิธีเพิ่มวิชาใหม่" ด้านล่าง
 - ITDS231 หัวข้อที่ยังไม่มีในเว็บ: Data & Signals, VLAN, STP — เพิ่มเป็นหน้าบทใหม่ตาม pattern หลายบทเมื่อผู้ใช้ให้เนื้อหา
+- (ถ้าผู้ใช้ต้องการ) โจทย์เขียนโค้ดของบทที่ 7 (ECMAScript) — ตอนนี้ไม่มีตามที่ผู้ใช้กำหนด
 - (ถ้าผู้ใช้ต้องการ) สลับลำดับตัวเลือก quiz บทที่ 3–4 และ Web บทที่ 1–2 ให้เฉลยกระจาย A–D (ตอนนี้ส่วนใหญ่เป็น B) — ต้องขออนุญาตก่อน
 - (ถ้าผู้ใช้ต้องการ) โจทย์เขียนโค้ดกลุ่ม media (audio/video/iframe) — ตอนนี้ไม่มีเพราะไม่อยู่ใน 6 กลุ่มที่ผู้ใช้กำหนด
-- course nav: ถ้าวิชาใดมีเกิน ~6 บท ควรเปลี่ยนเป็น dropdown/scroll แนวนอน (ตอนนี้ 4 บท desktop แถวเดียว, มือถือ 2×2)
+- course nav: ตอนนี้ Web มี 7 บทแล้ว — desktop ยังพอดีแบบ wrap, มือถือเรียง 2 คอลัมน์ · ถ้าเพิ่มอีกควรเปลี่ยนเป็น dropdown หรือ scroll แนวนอน
 - ไอเดีย (ยังไม่ได้ขอ): จำคำตอบ quiz ด้วย localStorage, ธีมสว่าง, สุ่มลำดับคำถาม
 
 ## วิธีเพิ่มบทใหม่ในวิชาเดิม (pattern หลายบท)
