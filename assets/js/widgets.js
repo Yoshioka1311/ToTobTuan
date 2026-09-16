@@ -1012,6 +1012,89 @@ body { background-color: black; margin: 0; font: 600 18px/140px system-ui, sans-
     render();
   });
 
+  /* ------------------------- เส้นทางการสื่อสารในทีม (SE บทที่ 1, slide 1-35) */
+  // วาดทุกคู่ของสมาชิก แล้วนับเส้น — ใช้เฉพาะจำนวนคนที่สไลด์ยกตัวอย่าง (2, 4, 6)
+  document.querySelectorAll('[data-widget="comm-paths"]').forEach((root) => {
+    const svg = root.querySelector("svg");
+    const status = root.querySelector(".demo-status");
+    const buttons = Array.from(root.querySelectorAll("button[data-people]"));
+    const NS = "http://www.w3.org/2000/svg";
+    const el = (name, attrs) => {
+      const node = document.createElementNS(NS, name);
+      Object.entries(attrs).forEach(([k, v]) => node.setAttribute(k, v));
+      return node;
+    };
+    function render(n) {
+      buttons.forEach((b) => b.setAttribute("aria-pressed", String(Number(b.dataset.people) === n)));
+      svg.replaceChildren();
+      const cx = 130, cy = 110, r = 80;
+      const pts = Array.from({ length: n }, (_, i) => {
+        const a = -Math.PI / 2 + (i * 2 * Math.PI) / n;
+        return [cx + r * Math.cos(a), cy + r * Math.sin(a)];
+      });
+      let paths = 0;
+      for (let i = 0; i < n; i++) {
+        for (let j = i + 1; j < n; j++) {
+          svg.append(el("line", { class: "dg-line dg-line--accent", x1: pts[i][0], y1: pts[i][1], x2: pts[j][0], y2: pts[j][1] }));
+          paths++;
+        }
+      }
+      pts.forEach(([x, y], i) => {
+        svg.append(el("circle", { class: "dg-box", cx: x, cy: y, r: 15 }));
+        const t = el("text", { class: "dg-mono dg-mono--sm", x, y: y + 4, "text-anchor": "middle" });
+        t.textContent = String(i + 1);
+        svg.append(t);
+      });
+      svg.setAttribute("aria-label", `${n} คน เชื่อมกันได้ ${paths} เส้นทาง`);
+      status.className = "demo-status is-ok";
+      status.textContent = `${n} คน → ลากเส้นเชื่อมได้ ${paths} เส้นทาง (เส้นละ 1 คู่คน)`;
+    }
+    buttons.forEach((b) => b.addEventListener("click", () => render(Number(b.dataset.people))));
+    render(Number((buttons.find((b) => b.getAttribute("aria-pressed") === "true") || buttons[0]).dataset.people));
+  });
+
+  /* ----------------------------- PSPEC: Analyze Triangle (SE บทที่ 5, slide 7-13) */
+  // ทำตาม PDL ในสไลด์ทีละบรรทัด แล้วแสดงว่าผ่านบรรทัดไหนบ้าง
+  document.querySelectorAll('[data-widget="triangle-pspec"]').forEach((root) => {
+    const inputs = ["a", "b", "c"].map((k) => root.querySelector(`[data-input="${k}"]`));
+    const out = root.querySelector(".calc-steps");
+    const status = root.querySelector(".demo-status");
+    function render() {
+      const v = inputs.map((i) => Number(i.value));
+      out.innerHTML = "";
+      if (inputs.some((i) => i.value.trim() === "") || v.some((x) => !Number.isFinite(x))) {
+        status.className = "demo-status is-bad";
+        status.textContent = "ใส่ความยาวด้าน A, B, C ให้ครบเป็นตัวเลข";
+        return;
+      }
+      out.append(li(`<code>read side dimensions;</code><span class="calc-expr">A = ${v[0]}, B = ${v[1]}, C = ${v[2]}</span>`));
+      const neg = v.some((x) => x < 0);
+      out.append(li(`<code>if any dimension is negative</code><span class="calc-expr">${neg ? "จริง → produce error message" : "ไม่จริง → ทำบรรทัดถัดไป"}</span>`, neg ? "is-warn" : ""));
+      if (neg) {
+        status.className = "demo-status is-bad";
+        status.textContent = "output: error message (มีค่าติดลบ)";
+        return;
+      }
+      const sorted = [...v].sort((x, y) => y - x);
+      const ok = sorted[0] < sorted[1] + sorted[2];
+      out.append(li(`<code>if the largest dimension is less than the sum of the others</code><span class="calc-expr">${sorted[0]} &lt; ${sorted[1]} + ${sorted[2]} = ${sorted[1] + sorted[2]} → ${ok ? "จริง" : "ไม่จริง"}</span>`, ok ? "" : "is-warn"));
+      if (!ok) {
+        out.append(li(`<code>else output type = 0</code><span class="calc-expr">ไม่มีสามเหลี่ยมนี้อยู่จริง</span>`, "is-result"));
+        status.className = "demo-status is-bad";
+        status.textContent = "output: triangle type = 0 (no triangle exists)";
+        return;
+      }
+      const equal = v[0] === v[1] && v[1] === v[2] ? 3 : v[0] === v[1] || v[1] === v[2] || v[0] === v[2] ? 2 : 0;
+      const type = equal === 3 ? "equilateral" : equal === 2 ? "isosceles" : "scalene";
+      out.append(li(`<code>determine number of equal sides</code><span class="calc-expr">${equal === 0 ? "no sides are equal" : `${equal === 3 ? "three" : "two"} sides are equal`}</span>`));
+      out.append(li(`<code>type is ${type}; output triangle type</code><span class="calc-expr">${type}</span>`, "is-result"));
+      status.className = "demo-status is-ok";
+      status.textContent = `output: triangle type = ${type}`;
+    }
+    inputs.forEach((i) => i.addEventListener("input", render));
+    render();
+  });
+
   /* -------------------------------------------- Form validation demo */
   document.querySelectorAll('form[data-widget="validation-demo"]').forEach((form) => {
     const status = form.querySelector(".demo-status");

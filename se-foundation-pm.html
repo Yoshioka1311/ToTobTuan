@@ -1,0 +1,1308 @@
+<!DOCTYPE html>
+<html lang="th" data-theme="se">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>ITDS261 บทที่ 1: SE Foundation & Project Management · โต๊ะทบทวน</title>
+<meta name="description" content="ITDS261 Introduction to Software Engineering บทที่ 1: จาก business needs สู่ซอฟต์แวร์ ซอฟต์แวร์และองค์ประกอบ นิยาม software engineering บทบาทในโปรเจกต์ คุณภาพซอฟต์แวร์ และการบริหารโปรเจกต์ (4P's, triple constraint, POMA, WBS, PERT, Gantt) พร้อม cheat sheet และแบบฝึกหัด 20 ข้อ" />
+<meta name="theme-color" content="#121815" />
+<link rel="icon" href="assets/favicon.svg" type="image/svg+xml" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link
+  href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500..700&family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans+Thai:wght@500;600&family=IBM+Plex+Sans+Thai+Looped:wght@400;500;600&display=swap"
+  rel="stylesheet"
+/>
+<link rel="stylesheet" href="assets/css/tokens.css" />
+<link rel="stylesheet" href="assets/css/base.css" />
+<link rel="stylesheet" href="assets/css/network.css" />
+<link rel="stylesheet" href="assets/css/motion.css" />
+<script>document.documentElement.classList.add("js");</script>
+</head>
+<body>
+  <a class="skip-link" href="#tabs">ข้ามไปที่เนื้อหา</a>
+
+  <svg class="dg-defs" aria-hidden="true" focusable="false">
+    <defs>
+      <marker id="arr" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path class="dg-arrow" d="M0 0L10 5L0 10z" /></marker>
+      <marker id="arr-muted" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path class="dg-arrow--muted" d="M0 0L10 5L0 10z" /></marker>
+      <marker id="arr-ok" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path class="dg-arrow--ok" d="M0 0L10 5L0 10z" /></marker>
+      <marker id="arr-bad" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path class="dg-arrow--bad" d="M0 0L10 5L0 10z" /></marker>
+    </defs>
+  </svg>
+
+  <header class="site-header">
+    <div class="wrap">
+      <a class="wordmark" href="index.html" aria-label="โต๊ะทบทวน หน้าแรก">
+        <img class="wordmark-mark" src="assets/favicon.svg" alt="" width="26" height="26" />
+        <span class="wordmark-text">โต๊ะ<span>ทบทวน</span></span>
+      </a>
+      <a class="crumb" href="index.html"><span class="arrow" aria-hidden="true">←</span> รายวิชาทั้งหมด</a>
+    </div>
+  </header>
+
+  <main>
+    <section class="course-hero wrap">
+      <nav class="course-nav" aria-label="เลือกวิชาและบท">
+        <div class="subject-switch">
+          <button class="subject-btn" type="button" data-subject="network" aria-pressed="false"><span class="subject-code">ITDS231</span> Network</button>
+          <button class="subject-btn" type="button" data-subject="web" aria-pressed="false"><span class="subject-code">ITDS241</span> Web</button>
+          <button class="subject-btn" type="button" data-subject="se" aria-pressed="true"><span class="subject-code">ITDS261</span> SE</button>
+        </div>
+        <div class="chapter-nav" data-subject="network" data-label="ITDS231 Computer Networks" role="group" aria-label="บทของวิชา ITDS231 Computer Networks">
+          <a class="chapter-link" href="network.html"><span class="chapter-num">บทที่ 1</span><span class="chapter-name">Intro &amp; Topology</span></a>
+          <a class="chapter-link" href="network-application-layer.html"><span class="chapter-num">บทที่ 2</span><span class="chapter-name">Application Layer</span></a>
+          <a class="chapter-link" href="network-data-link-layer.html"><span class="chapter-num">บทที่ 3</span><span class="chapter-name">Data Link Layer</span></a>
+          <a class="chapter-link" href="network-mac-ethernet.html"><span class="chapter-num">บทที่ 4</span><span class="chapter-name">MAC + Ethernet</span></a>
+        </div>
+        <div class="chapter-nav" data-subject="web" data-label="ITDS241 Web Technologies and Applications" role="group" aria-label="บทของวิชา ITDS241 Web Technologies and Applications">
+          <a class="chapter-link" href="web-intro-html-basics.html"><span class="chapter-num">บทที่ 1</span><span class="chapter-name">Internet &amp; HTML Basics</span></a>
+          <a class="chapter-link" href="web-media-forms-semantic.html"><span class="chapter-num">บทที่ 2</span><span class="chapter-name">Media, Forms &amp; Semantic</span></a>
+          <a class="chapter-link" href="web-css-fundamentals.html"><span class="chapter-num">บทที่ 3</span><span class="chapter-name">CSS Fundamentals</span></a>
+          <a class="chapter-link" href="web-css-layout-responsive.html"><span class="chapter-num">บทที่ 4</span><span class="chapter-name">CSS Layout &amp; Responsive</span></a>
+          <a class="chapter-link" href="web-js-fundamentals.html"><span class="chapter-num">บทที่ 5</span><span class="chapter-name">JavaScript Fundamentals</span></a>
+          <a class="chapter-link" href="web-js-functions-oop-dom.html"><span class="chapter-num">บทที่ 6</span><span class="chapter-name">Functions, OOP &amp; DOM</span></a>
+          <a class="chapter-link" href="web-ecmascript-features.html"><span class="chapter-num">บทที่ 7</span><span class="chapter-name">ECMAScript Features</span></a>
+        </div>
+        <div class="chapter-nav" data-subject="se" data-label="ITDS261 Introduction to Software Engineering" role="group" aria-label="บทของวิชา ITDS261 Introduction to Software Engineering">
+          <a class="chapter-link" href="se-foundation-pm.html" aria-current="page"><span class="chapter-num">บทที่ 1</span><span class="chapter-name">SE Foundation &amp; PM</span></a>
+          <a class="chapter-link" href="se-process-models.html"><span class="chapter-num">บทที่ 2</span><span class="chapter-name">Process Models</span></a>
+          <a class="chapter-link" href="se-requirement-engineering.html"><span class="chapter-num">บทที่ 3</span><span class="chapter-name">Requirement Engineering</span></a>
+          <a class="chapter-link" href="se-use-case-modeling.html"><span class="chapter-num">บทที่ 4</span><span class="chapter-name">Use Case Modeling</span></a>
+          <a class="chapter-link" href="se-flow-behavior-modeling.html"><span class="chapter-num">บทที่ 5</span><span class="chapter-name">Flow &amp; Behavior Modeling</span></a>
+          <a class="chapter-link" href="se-ui-design.html"><span class="chapter-num">บทที่ 6</span><span class="chapter-name">UI Design</span></a>
+        </div>
+      </nav>
+      <span class="eyebrow">ITDS261 · บทที่ 1 · Lecture 1</span>
+      <h1>SE Foundation &amp; Project Management</h1>
+      <p class="course-lede">เริ่มจากคำถามว่าทำไมต้องมีซอฟต์แวร์ ซอฟต์แวร์ประกอบด้วยอะไร และ software engineering ต่างจากการเขียนโปรแกรมเฉยๆ อย่างไร แล้วต่อด้วยการบริหารโปรเจกต์ซอฟต์แวร์: 4P's, triple constraint, กระบวนการ POMA และเครื่องมือวางแผนอย่าง WBS, PERT และ Gantt chart</p>
+      <ul class="course-meta" aria-label="ข้อมูลบทเรียน">
+        <li class="chip chip--accent">ITDS261 Introduction to Software Engineering</li>
+        <li class="chip">1 ไฟล์สไลด์ · L1 SE foundation SPM (76 หน้า)</li>
+        <li class="chip">แบบฝึกหัด 20 ข้อ</li>
+      </ul>
+    </section>
+
+    <div class="tabbar" id="tabs">
+      <div class="wrap">
+        <div class="tabs" role="tablist" aria-label="ส่วนของหน้า">
+          <button class="tab" role="tab" id="tab-content" aria-controls="content" aria-selected="true" type="button">
+            <svg class="tab-icon" viewBox="0 0 20 20" aria-hidden="true"><path d="M4 3.5h8.5L16 7v9.5H4z M12 3.5V7h4 M7 10h6 M7 13h4" /></svg>
+            เนื้อหา
+          </button>
+          <button class="tab" role="tab" id="tab-summary" aria-controls="summary" aria-selected="false" type="button">
+            <svg class="tab-icon" viewBox="0 0 20 20" aria-hidden="true"><path d="M3.5 4h13v12h-13z M3.5 8h13 M8.5 8v8" /></svg>
+            สรุป
+          </button>
+          <button class="tab" role="tab" id="tab-quiz" aria-controls="quiz" aria-selected="false" type="button">
+            <svg class="tab-icon" viewBox="0 0 20 20" aria-hidden="true"><path d="M10 17a7 7 0 1 0 0-14 7 7 0 0 0 0 14z M6.8 10.2l2.2 2.2 4.2-4.6" /></svg>
+            แบบฝึกหัด
+          </button>
+          <span class="tab-indicator" aria-hidden="true"></span>
+        </div>
+      </div>
+    </div>
+
+    <div class="wrap panels">
+
+      <!-- =============================================================
+           แท็บ 1: เนื้อหา
+           ============================================================= -->
+      <section class="panel" id="content" role="tabpanel" aria-labelledby="tab-content" tabindex="-1">
+        <div class="panel-head">
+          <h2>เนื้อหาแยกตามหัวข้อในสไลด์</h2>
+          <div class="panel-actions">
+            <button class="btn btn--ghost btn--sm" type="button" data-acc-all="open">เปิดทั้งหมด</button>
+            <button class="btn btn--ghost btn--sm" type="button" data-acc-all="close">ปิดทั้งหมด</button>
+          </div>
+        </div>
+
+        <div class="acc">
+
+<!-- ================= 01 Business needs และซอฟต์แวร์ ================= -->
+          <div class="acc-item is-open">
+            <h3 class="acc-heading">
+              <button class="acc-trigger" type="button" aria-expanded="true" aria-controls="acc-sef-software" id="acc-sef-software-btn">
+                <span class="acc-index">01</span>
+                <span class="acc-title">
+                  <span class="acc-name">จาก Business Needs สู่ Software และซอฟต์แวร์คืออะไร</span>
+                  <span class="acc-file">L1 SE foundation SPM · slide 5–17</span>
+                </span>
+                <svg class="acc-chevron" viewBox="0 0 20 20" aria-hidden="true"><path d="M5 7.5l5 5 5-5" /></svg>
+              </button>
+            </h3>
+            <div class="acc-panel" id="acc-sef-software" role="region" aria-labelledby="acc-sef-software-btn">
+              <div class="acc-panel-inner">
+                <div class="acc-body">
+
+                  <nav class="toc" aria-label="หัวข้อในการ์ด Business needs และซอฟต์แวร์">
+                    <a href="#sef-needs">Business needs → process → software</a>
+                    <a href="#sef-restaurant">ตัวอย่างร้านอาหาร</a>
+                    <a href="#sef-components">3 องค์ประกอบของซอฟต์แวร์</a>
+                    <a href="#sef-hierarchy">Interaction hierarchy</a>
+                    <a href="#sef-characteristics">คุณลักษณะของซอฟต์แวร์</a>
+                    <a href="#sef-types">ประเภทซอฟต์แวร์</a>
+                  </nav>
+
+                  <section class="topic" id="sef-needs">
+                    <h4>Business Needs → Business Processes → Software Development</h4>
+                    <p>ซอฟต์แวร์ไม่ได้เริ่มจากโค้ด แต่เริ่มจาก<strong>ความต้องการทางธุรกิจ</strong> แล้วไล่ลงมาเป็น 3 ชั้น:</p>
+                    <figure class="diagram">
+                      <div class="diagram-scroll">
+                        <svg viewBox="0 0 720 150" role="img" aria-labelledby="sef-needs-t sef-needs-d">
+                          <title id="sef-needs-t">จาก business needs สู่ software development</title>
+                          <desc id="sef-needs-d">กล่องสามกล่องเรียงซ้ายไปขวา: Business needs คือแรงขับเคลื่อน, Business processes คือการดำเนินงานตามความต้องการ, Software development คือการทำให้ business process ดีขึ้น</desc>
+                          <rect class="dg-box" x="20" y="30" width="190" height="90" rx="10" />
+                          <text class="dg-text" x="115" y="68" text-anchor="middle">Business needs</text>
+                          <text class="dg-text dg-text--sm" x="115" y="94" text-anchor="middle">The driving force</text>
+                          <rect class="dg-box" x="265" y="30" width="190" height="90" rx="10" />
+                          <text class="dg-text" x="360" y="68" text-anchor="middle">Business processes</text>
+                          <text class="dg-text dg-text--sm" x="360" y="94" text-anchor="middle">The execution of needs</text>
+                          <rect class="dg-box dg-box--accent" x="510" y="30" width="190" height="90" rx="10" />
+                          <text class="dg-text" x="605" y="68" text-anchor="middle">Software development</text>
+                          <text class="dg-text dg-text--sm" x="605" y="94" text-anchor="middle">Enabling &amp; improving</text>
+                          <line class="dg-line dg-line--accent" x1="212" y1="75" x2="260" y2="75" marker-end="url(#arr)" />
+                          <line class="dg-line dg-line--accent" x1="457" y1="75" x2="505" y2="75" marker-end="url(#arr)" />
+                        </svg>
+                      </div>
+                      <figcaption>วาดตามสไลด์ 1-5 "Business Needs to Software Development"</figcaption>
+                    </figure>
+                    <dl class="defs defs--stack">
+                      <div><dt>Business needs</dt><dd>แรงขับเคลื่อน (the driving force) — ธุรกิจอยากได้อะไร อยากแก้ปัญหาอะไร</dd></div>
+                      <div><dt>Business processes</dt><dd>การดำเนินงานจริงเพื่อตอบความต้องการ (key focus: <em>How to get work done?</em>) ประกอบด้วย <strong>Actors · Tasks or activities · Rules · Inputs and outputs</strong> วาดเป็นแบบจำลองได้ด้วย <strong>BPMN</strong> และ<strong>อาจมีหรือไม่มีระบบสนับสนุนก็ได้</strong></dd></div>
+                      <div><dt>Software development</dt><dd>ทำให้ business process <strong>มีประสิทธิภาพ แม่นยำ และขยายขนาดได้ (efficient, accurate, scalable)</strong> และทำให้ process ถูก <strong>digitise, automate และ improve</strong> ตาม business need</dd></div>
+                    </dl>
+                  </section>
+
+                  <section class="topic" id="sef-restaurant">
+                    <h4>ตัวอย่าง: ระบบจองโต๊ะร้านอาหาร</h4>
+                    <p>ร้านอาหารรับจองแบบ manual — ลูกค้าโทรมาแล้วพนักงานจดเอง ร้านมีเป้าหมายลด human error และเพิ่มประสิทธิภาพ</p>
+                    <div class="table-scroll">
+                      <table>
+                        <thead><tr><th>ชั้น</th><th>ในตัวอย่างนี้</th></tr></thead>
+                        <tbody>
+                          <tr><td><strong>Business need</strong></td><td>อยากได้ระบบจองออนไลน์เพื่อลดการจองทางโทรศัพท์ (ลดการโทร ลดข้อผิดพลาด)</td></tr>
+                          <tr><td><strong>Business process</strong></td><td>Reservation process: ลูกค้าเลือกเวลา → จัดโต๊ะ → ส่งการยืนยัน</td></tr>
+                          <tr><td><strong>Software development</strong></td><td>สร้างแอปจองโต๊ะที่ลูกค้าจองออนไลน์ได้ และระบบจัดการ <strong>availability check</strong> ให้</td></tr>
+                        </tbody>
+                      </table>
+                    </div>
+                  </section>
+
+                  <section class="topic" id="sef-components">
+                    <h4>ซอฟต์แวร์คืออะไร — 3 องค์ประกอบ</h4>
+                    <p>ตาม Pressman (2015) ซอฟต์แวร์ไม่ใช่แค่โปรแกรม แต่มี 3 ส่วน:</p>
+                    <ol class="steps">
+                      <li><strong>ชุดคำสั่ง (instructions)</strong> — ให้ feature, function และ performance</li>
+                      <li><strong>โครงสร้างข้อมูล (data structures)</strong> — ทำให้โปรแกรมจัดการข้อมูลได้</li>
+                      <li><strong>เอกสารอธิบาย (descriptive information / document)</strong> — อธิบายการทำงานและการใช้งานโปรแกรม</li>
+                    </ol>
+                    <div class="callout callout--warn">
+                      <span class="callout-label">จุดที่มักพลาด</span>
+                      <p>เอกสารก็นับเป็น<b>ส่วนหนึ่งของซอฟต์แวร์</b> — ตรงกับนิยามในสรุปท้ายบทที่ว่า Software = programs, data, and documentation</p>
+                    </div>
+                  </section>
+
+                  <section class="topic" id="sef-hierarchy">
+                    <h4>Interaction Hierarchy</h4>
+                    <figure class="diagram">
+                      <div class="diagram-scroll">
+                        <svg viewBox="0 0 600 230" role="img" aria-labelledby="sef-hier-t sef-hier-d">
+                          <title id="sef-hier-t">Interaction hierarchy</title>
+                          <desc id="sef-hier-d">ชั้นซ้อนจากบนลงล่าง: User, Application Software, Operating System, Hardware</desc>
+                          <rect class="dg-box dg-box--accent" x="170" y="14" width="260" height="42" rx="8" />
+                          <text class="dg-text" x="300" y="41" text-anchor="middle">User</text>
+                          <rect class="dg-box" x="130" y="66" width="340" height="42" rx="8" />
+                          <text class="dg-text" x="300" y="93" text-anchor="middle">Application Software</text>
+                          <rect class="dg-box" x="90" y="118" width="420" height="42" rx="8" />
+                          <text class="dg-text" x="300" y="145" text-anchor="middle">Operating System</text>
+                          <rect class="dg-box" x="50" y="170" width="500" height="42" rx="8" />
+                          <text class="dg-text" x="300" y="197" text-anchor="middle">Hardware</text>
+                        </svg>
+                      </div>
+                      <figcaption>สไลด์ 1-11 (อ้างอิง Pressman, 2015) — ผู้ใช้ติดต่อกับ application software ซึ่งทำงานบน operating system ที่ควบคุม hardware อีกที</figcaption>
+                    </figure>
+                  </section>
+
+                  <section class="topic" id="sef-characteristics">
+                    <h4>คุณลักษณะของซอฟต์แวร์</h4>
+                    <ul class="tight">
+                      <li>ต้องถูก <strong>พัฒนา/วิศวกรรม (developed or engineered)</strong> ไม่ใช่ <strong>ผลิต (manufactured)</strong> แบบสายพาน</li>
+                      <li><strong>จับต้องไม่ได้ (intangible)</strong></li>
+                      <li><strong>ใช้แรงงานคนเข้มข้น (labour intensive)</strong></li>
+                      <li><strong>แก้ไขยาก (difficult to make changes)</strong></li>
+                      <li><strong>ไม่สึกหรอ (does not wear out)</strong> แต่ <strong>ล้าสมัยได้ (can be obsolete)</strong></li>
+                    </ul>
+                    <div class="compare">
+                      <div class="compare-col">
+                        <strong>Windows XP</strong>
+                        <p>ล้าสมัย (obsolete) ปี <strong>2014</strong></p>
+                      </div>
+                      <div class="compare-col">
+                        <strong>Windows 7</strong>
+                        <p>ล้าสมัย (obsolete) ปี <strong>2023</strong></p>
+                      </div>
+                    </div>
+                    <p class="note">ตัวอย่าง software obsolescence ในสไลด์ 1-13 — โปรแกรมไม่ได้พังเพราะใช้งานนาน แต่หมดการรองรับ</p>
+                  </section>
+
+                  <section class="topic" id="sef-types">
+                    <h4>ประเภทของ Software Applications</h4>
+                    <p>แบ่งตามวัตถุประสงค์และการทำงาน (purpose and functionality):</p>
+                    <div class="table-scroll">
+                      <table>
+                        <thead><tr><th>ประเภท</th><th>ตัวอย่างในสไลด์</th></tr></thead>
+                        <tbody>
+                          <tr><td><strong>Productivity</strong></td><td>Microsoft Word / Excel / PowerPoint, Canva, Notion</td></tr>
+                          <tr><td><strong>Communication</strong></td><td>Zoom, Slack, Microsoft Teams, Webex</td></tr>
+                          <tr><td><strong>Media players / editors</strong></td><td>VLC Media Player, Adobe Photoshop / Premier Pro, Audacity</td></tr>
+                          <tr><td><strong>Education</strong></td><td>Duolingo, Coursera, EdX, Quizlet, Lightbot</td></tr>
+                          <tr><td><strong>Business</strong></td><td>QuickBooks (accounting), Salesforce (CRM), SAP (ERP)</td></tr>
+                        </tbody>
+                      </table>
+                    </div>
+                    <p class="quote">"Software is eating the world" — Marc Andreessen</p>
+                  </section>
+
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- ================= 02 SE คืออะไร ความสำเร็จ บทบาท ================= -->
+          <div class="acc-item">
+            <h3 class="acc-heading">
+              <button class="acc-trigger" type="button" aria-expanded="false" aria-controls="acc-sef-se" id="acc-sef-se-btn">
+                <span class="acc-index">02</span>
+                <span class="acc-title">
+                  <span class="acc-name">Software Engineering คืออะไร · ปัจจัยสำเร็จ/ล้มเหลว · บทบาทในโปรเจกต์</span>
+                  <span class="acc-file">L1 SE foundation SPM · slide 18–30</span>
+                </span>
+                <svg class="acc-chevron" viewBox="0 0 20 20" aria-hidden="true"><path d="M5 7.5l5 5 5-5" /></svg>
+              </button>
+            </h3>
+            <div class="acc-panel" id="acc-sef-se" role="region" aria-labelledby="acc-sef-se-btn">
+              <div class="acc-panel-inner">
+                <div class="acc-body">
+
+                  <nav class="toc" aria-label="หัวข้อในการ์ด Software Engineering">
+                    <a href="#sef-definition">นิยามของ Lethbridge</a>
+                    <a href="#sef-aspects">5 มุมมองใน SE</a>
+                    <a href="#sef-success">ปัจจัยสำเร็จ / ล้มเหลว</a>
+                    <a href="#sef-roles">บทบาทในโปรเจกต์</a>
+                  </nav>
+
+                  <section class="topic" id="sef-definition">
+                    <h4>นิยาม Software Engineering (Timothy C. Lethbridge)</h4>
+                    <p class="quote">"A process of solving customers' problems by the systematic development and evolution of large, high-quality software systems within cost, time and other constraints."</p>
+                    <p><strong>แปล:</strong> กระบวนการแก้ปัญหาให้ลูกค้าด้วยการพัฒนาและวิวัฒนาการซอฟต์แวร์ขนาดใหญ่คุณภาพสูงอย่างเป็นระบบ ภายใต้ข้อจำกัดด้านต้นทุน เวลา และอื่นๆ</p>
+                    <div class="table-scroll">
+                      <table>
+                        <thead><tr><th>วลีในนิยาม</th><th>หมายถึง</th></tr></thead>
+                        <tbody>
+                          <tr><td>Solving customers' problems</td><td>&gt;&gt; <strong>our goal</strong> (เป้าหมาย)</td></tr>
+                          <tr><td>Systematic development and evolution</td><td>&gt;&gt; <strong>engineering</strong> (วิศวกรรม)</td></tr>
+                          <tr><td>Large, high-quality software systems</td><td>&gt;&gt; <strong>very complex</strong> (ซับซ้อนมาก)</td></tr>
+                          <tr><td>Cost, time and other constraints</td><td>&gt;&gt; <strong>our limitation</strong> (ขีดจำกัดของเรา)</td></tr>
+                        </tbody>
+                      </table>
+                    </div>
+                  </section>
+
+                  <section class="topic" id="sef-aspects">
+                    <h4>5 มุมมองในงานวิศวกรรมซอฟต์แวร์</h4>
+                    <p>การพัฒนาและดูแลระบบซอฟต์แวร์ต้องพิจารณา (Tsui and Karam, <em>Essentials of Software Engineering</em>):</p>
+                    <ol class="steps">
+                      <li>กระบวนการทางเทคนิคและธุรกิจ (technical and business processes)</li>
+                      <li>วิธีการและเทคนิคเฉพาะ (specific methodologies and techniques)</li>
+                      <li>การวัดคุณลักษณะ/metric ของผลิตภัณฑ์ (product characterization and metrics for measurements)</li>
+                      <li>ทักษะคนและการทำงานเป็นทีม (people skills and teamwork)</li>
+                      <li>การประสานงานและบริหารโปรเจกต์ (project coordination and management)</li>
+                    </ol>
+                  </section>
+
+                  <section class="topic" id="sef-success">
+                    <h4>ปัจจัยความสำเร็จ / ล้มเหลวของโปรเจกต์</h4>
+                    <p>สไลด์ 1-24 วาดโปรเจกต์ซอฟต์แวร์ไว้กับ <strong>Scope, Time, Cost, Quality</strong> และบอกว่าโปรเจกต์ต้องมี: clear objectives and goals, clear requirements, stakeholder involvement, executive management support, realistic planning และ good management</p>
+                    <div class="compare">
+                      <div class="compare-col">
+                        <strong>Key success factors</strong>
+                        <ul class="tight">
+                          <li>การมีส่วนร่วมของผู้ใช้ (user involvement)</li>
+                          <li>การสนับสนุนจากผู้บริหาร (executive management support)</li>
+                          <li>requirement ที่ชัดเจน (clear requirement statements)</li>
+                          <li>การวางแผนที่ดี (proper planning)</li>
+                        </ul>
+                      </div>
+                      <div class="compare-col">
+                        <strong>Top failure reasons</strong>
+                        <ul class="tight">
+                          <li>ขาดข้อมูลจากผู้ใช้ (lack of user input)</li>
+                          <li>requirement ไม่สมบูรณ์ (incomplete requirements)</li>
+                          <li>requirement เปลี่ยนแปลงบ่อย (changing requirements)</li>
+                        </ul>
+                      </div>
+                    </div>
+                    <p><strong>สัดส่วน error จาก Chaos &amp; Capers Jones Report:</strong></p>
+                    <ul class="pct-bars">
+                      <li><span>Code errors</span><span class="pct-track" aria-hidden="true"><span class="pct-fill" style="--pct: 38.33%"></span></span><span class="pct-val">38.33%</span></li>
+                      <li><span>Design errors</span><span class="pct-track" aria-hidden="true"><span class="pct-fill" style="--pct: 24.17%"></span></span><span class="pct-val">24.17%</span></li>
+                      <li><span>Documentation errors</span><span class="pct-track" aria-hidden="true"><span class="pct-fill" style="--pct: 13.33%"></span></span><span class="pct-val">13.33%</span></li>
+                      <li><span>Requirements errors</span><span class="pct-track" aria-hidden="true"><span class="pct-fill" style="--pct: 12.5%"></span></span><span class="pct-val">12.50%</span></li>
+                      <li><span>Bad-fix errors</span><span class="pct-track" aria-hidden="true"><span class="pct-fill" style="--pct: 11.67%"></span></span><span class="pct-val">11.67%</span></li>
+                    </ul>
+                    <p class="note">ผลรวม 38.33 + 24.17 + 13.33 + 12.50 + 11.67 = 100% · แท่งยาวตามเปอร์เซ็นต์จริง</p>
+                    <div class="callout callout--def">
+                      <span class="callout-label">Requirements (สไลด์ 1-27)</span>
+                      <p>Requirements ใช้ <b>define and qualify system</b> กำหนดโดยลูกค้าโดยมีวิศวกรช่วย · <b>Functional</b> = define what must be done · <b>Non-functional</b> = qualify the functional ones · <b>Design constraints</b> = ข้อจำกัดด้าน design/implementation เช่นภาษาโปรแกรม platform</p>
+                    </div>
+                  </section>
+
+                  <section class="topic" id="sef-roles">
+                    <h4>บทบาทในโปรเจกต์ซอฟต์แวร์</h4>
+                    <p><strong>ฝั่งลูกค้า (Client side)</strong></p>
+                    <div class="compare">
+                      <div class="compare-col">
+                        <strong>Customers</strong>
+                        <ul class="tight">
+                          <li>กำหนด business needs</li>
+                          <li>ให้ทุนโปรเจกต์ (fund the project)</li>
+                          <li>อนุมัติผลงานสุดท้าย (approve the final product)</li>
+                        </ul>
+                      </div>
+                      <div class="compare-col">
+                        <strong>End users</strong>
+                        <ul class="tight">
+                          <li>ใช้งานซอฟต์แวร์จริง</li>
+                          <li>ให้ feedback ด้าน usability และ functionality</li>
+                        </ul>
+                      </div>
+                    </div>
+                    <p><strong>ฝั่งพัฒนา (Development side)</strong></p>
+                    <div class="table-scroll">
+                      <table>
+                        <thead><tr><th>บทบาท</th><th>หน้าที่</th></tr></thead>
+                        <tbody>
+                          <tr><td><strong>Project Manager (PM)</strong></td><td>วางแผนและบริหารโปรเจกต์, กำหนด scope, จัดตารางงาน, จัดสรรทรัพยากร, ติดตามความคืบหน้า, จัดการความเสี่ยง, ประสาน stakeholder, ทำให้เสร็จทันเวลาและอยู่ในงบ</td></tr>
+                          <tr><td><strong>Business Analyst (BA)</strong></td><td>รวบรวม (elicit) วิเคราะห์ และตรวจสอบ business/functional/non-functional requirements, จัดทำเอกสาร requirement specification, เป็น<strong>สะพานระหว่างลูกค้า/ผู้ใช้กับทีมพัฒนา</strong></td></tr>
+                          <tr><td><strong>System Analyst (SA)</strong></td><td><strong>แปล requirement เป็น technical specification</strong>, ออกแบบสถาปัตยกรรมซอฟต์แวร์ เลือกเทคโนโลยีและ framework, กำหนด coding standard และ architectural pattern</td></tr>
+                          <tr><td><strong>Software Developer</strong></td><td>implement feature, เขียนและดูแลโค้ด, ทำ unit test, แก้ defect, review โค้ด, รวม component เข้าด้วยกัน</td></tr>
+                          <tr><td><strong>UX/UI Designer</strong></td><td>ทำ user research, สร้าง persona / wireframe / mockup / prototype, ออกแบบ interface และปรับ usability/UX</td></tr>
+                          <tr><td><strong>QA Engineer / Tester</strong></td><td>ทำ test plan และ test case, ทดสอบ functional และ non-functional, รายงาน defect, ยืนยันว่าแก้บั๊กแล้ว, ดูแลคุณภาพซอฟต์แวร์</td></tr>
+                        </tbody>
+                      </table>
+                    </div>
+                    <div class="callout callout--warn">
+                      <span class="callout-label">BA กับ SA ต่างกันตรงไหน</span>
+                      <p><b>BA</b> อยู่ฝั่ง "ต้องการอะไร" — รวบรวมและเขียน requirement เป็นสะพานกับลูกค้า · <b>SA</b> อยู่ฝั่ง "จะสร้างอย่างไร" — แปล requirement เป็น technical specification และออกแบบสถาปัตยกรรม</p>
+                    </div>
+                  </section>
+
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- ================= 03 ประเด็นการพัฒนา คุณภาพ คำศัพท์ ================= -->
+          <div class="acc-item">
+            <h3 class="acc-heading">
+              <button class="acc-trigger" type="button" aria-expanded="false" aria-controls="acc-sef-issues" id="acc-sef-issues-btn">
+                <span class="acc-index">03</span>
+                <span class="acc-title">
+                  <span class="acc-name">ประเด็นในการพัฒนา · ขนาดและความซับซ้อน · Testing · คุณภาพ · คำศัพท์</span>
+                  <span class="acc-file">L1 SE foundation SPM · slide 31–44</span>
+                </span>
+                <svg class="acc-chevron" viewBox="0 0 20 20" aria-hidden="true"><path d="M5 7.5l5 5 5-5" /></svg>
+              </button>
+            </h3>
+            <div class="acc-panel" id="acc-sef-issues" role="region" aria-labelledby="acc-sef-issues-btn">
+              <div class="acc-panel-inner">
+                <div class="acc-body">
+
+                  <nav class="toc" aria-label="หัวข้อในการ์ดประเด็นในการพัฒนา">
+                    <a href="#sef-technical">ประเด็นเทคนิค</a>
+                    <a href="#sef-nontechnical">ประเด็นไม่ใช่เทคนิค</a>
+                    <a href="#sef-size">ขนาดและความซับซ้อน</a>
+                    <a href="#sef-implementation">Implementation &amp; Testing</a>
+                    <a href="#sef-support">Supporting a system</a>
+                    <a href="#sef-quality">คุณภาพซอฟต์แวร์</a>
+                    <a href="#sef-terms">สรุปคำศัพท์</a>
+                  </nav>
+
+                  <section class="topic" id="sef-technical">
+                    <h4>ประเด็นด้านเทคนิค (Technical issues)</h4>
+                    <div class="compare">
+                      <div class="compare-col">
+                        <strong>Process and methodology</strong>
+                        <ul class="tight">
+                          <li>เลือก process</li>
+                          <li>เลือก methodology</li>
+                          <li>เลือก tools ที่สนับสนุน process</li>
+                        </ul>
+                      </div>
+                      <div class="compare-col">
+                        <strong>Technology and tools choices</strong>
+                        <ul class="tight">
+                          <li>development platform</li>
+                          <li>development language</li>
+                          <li>database · network</li>
+                          <li>configuration management</li>
+                        </ul>
+                      </div>
+                    </div>
+                  </section>
+
+                  <section class="topic" id="sef-nontechnical">
+                    <h4>ประเด็นที่ไม่ใช่เทคนิค (Non-technical issues)</h4>
+                    <dl class="defs defs--stack">
+                      <div><dt>Effort estimation and scheduling</dt><dd>ต้องประมาณและประสานงานหลายรายการมากขึ้น (ทั้ง pre-requisite และ co-requisite) — <strong>ยิ่งมีรายการมาก ยิ่งต้องพิจารณาความเสี่ยงและความผันแปรมากขึ้น</strong></dd></div>
+                      <div><dt>Assignments and communications</dt><dd>คนมากขึ้นและทักษะหลากหลายขึ้น → <strong>ต้องสื่อสารกันมากขึ้น → error และการแก้ไขมากขึ้น</strong></dd></div>
+                    </dl>
+                    <p><strong>เพิ่มคนเพื่อแก้ปัญหาได้เสมอหรือไม่?</strong> สไลด์ 1-35 ชี้ว่าจำนวนเส้นทางการสื่อสารเพิ่มขึ้นเมื่อคนเพิ่ม และโอกาสผิดพลาดก็เพิ่มตาม:</p>
+                    <div class="table-scroll">
+                      <table>
+                        <thead><tr><th>จำนวนคน</th><th>เส้นทางการสื่อสาร</th></tr></thead>
+                        <tbody>
+                          <tr><td>2 คน</td><td>1 เส้นทาง</td></tr>
+                          <tr><td>4 คน</td><td>อาจมีได้ถึง 6 เส้นทาง</td></tr>
+                          <tr><td>6 คน</td><td>อาจเพิ่มได้ถึง 15 เส้นทาง</td></tr>
+                        </tbody>
+                      </table>
+                    </div>
+                    <div class="demo-box" data-widget="comm-paths">
+                      <span class="demo-box-title">ลองเล่น: ลากเส้นระหว่างทุกคู่ของคนในทีม แล้วนับเส้น</span>
+                      <div class="cp-picks">
+                        <button class="btn btn--ghost btn--sm" type="button" data-people="2" aria-pressed="false">2 คน</button>
+                        <button class="btn btn--ghost btn--sm" type="button" data-people="4" aria-pressed="true">4 คน</button>
+                        <button class="btn btn--ghost btn--sm" type="button" data-people="6" aria-pressed="false">6 คน</button>
+                      </div>
+                      <div class="cp-stage"><svg viewBox="0 0 260 220" role="img" aria-label="ภาพเส้นเชื่อมระหว่างสมาชิกทีม"></svg></div>
+                      <p class="demo-status" aria-live="polite"></p>
+                      <p class="demo-hint">คนเพิ่มจาก 2 → 6 (3 เท่า) แต่เส้นทางเพิ่มจาก 1 → 15 (15 เท่า) — นี่คือเหตุผลที่สไลด์บอกว่ายิ่งคนมาก ยิ่งสื่อสารมาก และยิ่งมีโอกาสผิดพลาด</p>
+                    </div>
+                  </section>
+
+                  <section class="topic" id="sef-size">
+                    <h4>ขนาดและความซับซ้อนของระบบ (Size and complexity)</h4>
+                    <div class="compare">
+                      <div class="compare-col">
+                        <strong>Breadth (มิติกว้าง — จำนวนมากขึ้น)</strong>
+                        <ul class="tight">
+                          <li>จำนวน major function</li>
+                          <li>feature ในแต่ละ major function</li>
+                          <li>interface ระหว่าง feature และ function</li>
+                          <li>interface กับระบบภายนอก ("external" systems)</li>
+                          <li>จำนวนผู้ใช้พร้อมกันและผู้ใช้ทั้งหมด</li>
+                        </ul>
+                      </div>
+                      <div class="compare-col">
+                        <strong>Depth (มิติลึก — การเชื่อมโยง)</strong>
+                        <ul class="tight">
+                          <li>ระดับการซ้อน (amount of nesting)</li>
+                          <li>จำนวนความสัมพันธ์แบบลูกโซ่ (number of "chained" relationships)</li>
+                        </ul>
+                      </div>
+                    </div>
+                    <p class="note">สไลด์ 1-38 เทียบผังงานที่ทำ task A → B → C ตรงๆ กับผังที่ต้องรอ signal แล้วแตกทางตามค่า a / b / other และมีงานย่อย A2 เพิ่ม — จำนวนงานใกล้กันแต่ผังหลังซับซ้อนกว่าเพราะมีการแตกแขนงและซ้อนกัน</p>
+                  </section>
+
+                  <section class="topic" id="sef-implementation">
+                    <h4>Implementation และ Testing</h4>
+                    <p><strong>Coding conventions</strong> ครอบคลุม file organization, indentation, comments, declarations, statements, white space, naming conventions, programming practices / principles / rules of thumb และ architectural best practices — หลักปฏิบัติ:</p>
+                    <ul class="checklist">
+                      <li>Be consistent — ทำให้สม่ำเสมอ</li>
+                      <li>Choose names carefully — ตั้งชื่ออย่างระวัง</li>
+                      <li>Test before using — ทดสอบก่อนใช้</li>
+                      <li>Know the libraries — รู้จัก library ที่ใช้</li>
+                      <li>Do code reviews — ทำ code review</li>
+                    </ul>
+                    <div class="table-scroll">
+                      <table>
+                        <thead><tr><th>Testing</th><th>ความหมาย</th></tr></thead>
+                        <tbody>
+                          <tr><td><strong>Acceptance testing</strong></td><td>ถ้าไม่ผ่าน <strong>ลูกค้าปฏิเสธโปรแกรม</strong> (client rejects program)</td></tr>
+                          <tr><td><strong>Unit testing</strong></td><td><strong>โปรแกรมเมอร์</strong>ทดสอบทีละชิ้น (on each piece)</td></tr>
+                          <tr><td><strong>Black-box</strong></td><td>สมมติว่า<strong>ไม่รู้โครงสร้างโค้ด</strong> เน้นตรวจ <strong>data validation</strong></td></tr>
+                          <tr><td><strong>White-box</strong></td><td>ทดสอบตาม <strong>code path</strong> ที่เขียนจริง</td></tr>
+                        </tbody>
+                      </table>
+                    </div>
+                  </section>
+
+                  <section class="topic" id="sef-support">
+                    <h4>Supporting a system</h4>
+                    <div class="compare">
+                      <div class="compare-col">
+                        <strong>Pre-release education and preparation</strong>
+                        <ul class="tight">
+                          <li>จำนวนผู้ใช้ที่คาดไว้</li>
+                          <li>จำนวนปัญหาที่รู้แล้วและคุณภาพที่คาดไว้</li>
+                          <li>ปริมาณการฝึกอบรมผู้ใช้และทีม support</li>
+                          <li>จำนวนรอบ fix และ maintenance</li>
+                        </ul>
+                      </div>
+                      <div class="compare-col">
+                        <strong>Post-release user and customer support</strong>
+                        <ul class="tight">
+                          <li>call center และการแก้ปัญหา</li>
+                          <li>แก้ปัญหาใหญ่และแก้โค้ด</li>
+                          <li>แก้ไขและปรับปรุงฟังก์ชัน (modifications and enhancements)</li>
+                        </ul>
+                      </div>
+                    </div>
+                  </section>
+
+                  <section class="topic" id="sef-quality">
+                    <h4>คุณภาพซอฟต์แวร์ (Software quality)</h4>
+                    <p>ตัวอย่าง software quality indicators: <strong>Usability · Efficiency · Testability · Maintainability · Reusability</strong></p>
+                    <p>คำว่า "quality software" มีความหมาย<strong>ต่างกันในมุมมองของแต่ละ stakeholder</strong> — สไลด์ 1-43 วางไว้ 4 มุม: <strong>User, Developer, Customer, Project Manager</strong> และตั้งคำถามว่าจะวัดสิ่งเหล่านี้อย่างไร</p>
+                  </section>
+
+                  <section class="topic" id="sef-terms">
+                    <h4>สรุปคำศัพท์</h4>
+                    <dl class="defs defs--stack">
+                      <div><dt>Software</dt><dd>โปรแกรม ข้อมูล และเอกสารที่รวมกันเป็นระบบที่ใช้งานได้ (programs, data, and documentation that together form a usable system)</dd></div>
+                      <div><dt>Software Engineering</dt><dd>การประยุกต์หลักวิศวกรรมอย่างมีวินัยกับการพัฒนาซอฟต์แวร์ (the disciplined application of engineering principles to software development)</dd></div>
+                      <div><dt>Software Process</dt><dd>ชุดกิจกรรมที่มีโครงสร้างชัดเจนในการพัฒนาระบบ (the structured set of activities required to develop a software system)</dd></div>
+                      <div><dt>Software Product</dt><dd>สิ่งที่ได้จาก software process — ระบบที่ deploy แล้ว + เอกสาร (the deployed system and its documentation)</dd></div>
+                    </dl>
+                  </section>
+
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- ================= 04 Software Project Management ================= -->
+          <div class="acc-item">
+            <h3 class="acc-heading">
+              <button class="acc-trigger" type="button" aria-expanded="false" aria-controls="acc-pm-overview" id="acc-pm-overview-btn">
+                <span class="acc-index">04</span>
+                <span class="acc-title">
+                  <span class="acc-name">Software Project Management: 4P's · Project · Triple Constraint · Knowledge Areas</span>
+                  <span class="acc-file">L1 SE foundation SPM · slide 45–57</span>
+                </span>
+                <svg class="acc-chevron" viewBox="0 0 20 20" aria-hidden="true"><path d="M5 7.5l5 5 5-5" /></svg>
+              </button>
+            </h3>
+            <div class="acc-panel" id="acc-pm-overview" role="region" aria-labelledby="acc-pm-overview-btn">
+              <div class="acc-panel-inner">
+                <div class="acc-body">
+
+                  <nav class="toc" aria-label="หัวข้อในการ์ด Software Project Management">
+                    <a href="#pm-umbrella">Umbrella activity</a>
+                    <a href="#pm-4p">4P's</a>
+                    <a href="#pm-project">Project คืออะไร</a>
+                    <a href="#pm-constraints">Triple constraint</a>
+                    <a href="#pm-definition">Project management</a>
+                    <a href="#pm-knowledge">10 knowledge areas</a>
+                    <a href="#pm-stakeholders">Stakeholders</a>
+                  </nav>
+
+                  <section class="topic" id="pm-umbrella">
+                    <h4>Software Project Management เป็น umbrella activity</h4>
+                    <ul class="tight">
+                      <li>เป็น <strong>umbrella activity</strong> ในงานวิศวกรรมซอฟต์แวร์</li>
+                      <li><strong>เริ่มก่อนกิจกรรมทางเทคนิคใดๆ</strong> (begins before any technical activity)</li>
+                      <li><strong>ดำเนินต่อเนื่องตลอด</strong>กระบวนการพัฒนาซอฟต์แวร์</li>
+                    </ul>
+                  </section>
+
+                  <section class="topic" id="pm-4p">
+                    <h4>The Management Spectrum (4P's)</h4>
+                    <div class="table-scroll">
+                      <table>
+                        <thead><tr><th>P</th><th>ครอบคลุม</th></tr></thead>
+                        <tbody>
+                          <tr><td><strong>People</strong></td><td>roles</td></tr>
+                          <tr><td><strong>Problem</strong></td><td>objectives, scope, alternatives, technical and management constraints</td></tr>
+                          <tr><td><strong>Process</strong></td><td>tasks, milestones, deliverables, QA</td></tr>
+                          <tr><td><strong>Project</strong></td><td>ตัวโปรเจกต์ที่บริหาร</td></tr>
+                        </tbody>
+                      </table>
+                    </div>
+                  </section>
+
+                  <section class="topic" id="pm-project">
+                    <h4>Project คืออะไร</h4>
+                    <p class="quote">"A temporary endeavour undertaken to create a unique product, service, or result" — PMBOK® Guide, Sixth Edition (2017)</p>
+                    <p><strong>ความพยายามชั่วคราว</strong>ที่ทำขึ้นเพื่อสร้างผลิตภัณฑ์ บริการ หรือผลลัพธ์ที่<strong>มีลักษณะเฉพาะตัว</strong></p>
+                    <div class="compare">
+                      <div class="compare-col">
+                        <strong>Project</strong>
+                        <p>ชั่วคราว — จบเมื่อบรรลุวัตถุประสงค์ หรือเมื่อถูกยุติ (terminated)</p>
+                      </div>
+                      <div class="compare-col">
+                        <strong>Operations</strong>
+                        <p>งานที่ทำเพื่อรักษาธุรกิจให้ดำเนินต่อไป (work done to sustain the business)</p>
+                      </div>
+                    </div>
+                    <p><strong>คุณลักษณะของ project (project attributes):</strong></p>
+                    <ul class="tight">
+                      <li>มีจุดประสงค์เฉพาะตัว (has a unique purpose)</li>
+                      <li>ชั่วคราว (temporary)</li>
+                      <li>ขับเคลื่อนการเปลี่ยนแปลง (drive change)</li>
+                      <li>สร้างคุณค่า (enable value creation)</li>
+                      <li>ต้องการทรัพยากร (require resources)</li>
+                      <li>มี customer หรือ sponsor</li>
+                      <li>เกี่ยวข้องกับความไม่แน่นอน (involves uncertainty)</li>
+                    </ul>
+                  </section>
+
+                  <section class="topic" id="pm-constraints">
+                    <h4>ข้อจำกัดของโปรเจกต์ (Triple Constraint)</h4>
+                    <figure class="diagram">
+                      <div class="diagram-scroll">
+                        <svg viewBox="0 0 600 250" role="img" aria-labelledby="pm-tri-t pm-tri-d">
+                          <title id="pm-tri-t">Triple constraint</title>
+                          <desc id="pm-tri-d">สามเหลี่ยมที่มุมเป็น Scope, Cost และ Time ต้องสร้างสมดุลกัน</desc>
+                          <polygon class="dg-box dg-box--accent" points="300,36 470,206 130,206" />
+                          <circle class="dg-box" cx="300" cy="36" r="6" />
+                          <circle class="dg-box" cx="470" cy="206" r="6" />
+                          <circle class="dg-box" cx="130" cy="206" r="6" />
+                          <text class="dg-text" x="300" y="22" text-anchor="middle">Scope</text>
+                          <text class="dg-text" x="490" y="232" text-anchor="middle">Time</text>
+                          <text class="dg-text" x="110" y="232" text-anchor="middle">Cost</text>
+                          <text class="dg-text dg-text--sm" x="300" y="160" text-anchor="middle">ต้องสร้างสมดุลกัน</text>
+                        </svg>
+                      </div>
+                      <figcaption>สไลด์ 1-50 Project Constraints — Scope, Cost, Time</figcaption>
+                    </figure>
+                    <p>ทั้งสามต้อง<strong>สร้างสมดุลกัน (balancing project constraints)</strong> — ถ้าเพิ่มอย่างหนึ่งมักกระทบอีกสองอย่าง</p>
+                  </section>
+
+                  <section class="topic" id="pm-definition">
+                    <h4>Project Management คืออะไร</h4>
+                    <ul class="tight">
+                      <li>การ<strong>ประยุกต์ความรู้ ทักษะ เครื่องมือ และเทคนิค</strong>กับกิจกรรมของโปรเจกต์ เพื่อให้บรรลุ requirement ของโปรเจกต์</li>
+                      <li>Project manager มุ่งให้บรรลุ <strong>triple constraint</strong> (scope, time, cost goals) และอำนวยความสะดวกทั้งกระบวนการให้ตอบความต้องการและความคาดหวังของ stakeholder</li>
+                    </ul>
+                    <div class="callout callout--why">
+                      <span class="callout-label">ทำไมต้องบริหารโปรเจกต์ (สไลด์ 1-53)</span>
+                      <p>ทุกโปรเจกต์ ไม่ว่าเล็กหรือใหญ่ ต้องมี <b>planning, organizing, status monitoring และ adjustment</b> ในระดับหนึ่งเสมอ — ทำตาม software development process อย่างเดียวจึงไม่พอ</p>
+                    </div>
+                  </section>
+
+                  <section class="topic" id="pm-knowledge">
+                    <h4>Project Management Knowledge Areas (10 ด้าน)</h4>
+                    <p>อธิบายสมรรถนะหลัก (ทั้งความรู้และทักษะ) ที่ project manager ต้องพัฒนา:</p>
+                    <ol class="steps">
+                      <li>Scope</li>
+                      <li>Schedule</li>
+                      <li>Cost</li>
+                      <li>Quality</li>
+                      <li>Resource</li>
+                      <li>Communications</li>
+                      <li>Risk</li>
+                      <li>Procurement</li>
+                      <li>Stakeholder</li>
+                      <li>Project integration management</li>
+                    </ol>
+                    <p class="note">บทบาทของ PM (สไลด์ 1-56): ทำงานใกล้ชิดกับ stakeholder โดยเฉพาะ sponsor และทีม · รู้จัก 10 knowledge areas · ใช้เครื่องมือและเทคนิคด้าน project management ได้</p>
+                  </section>
+
+                  <section class="topic" id="pm-stakeholders">
+                    <h4>Project Stakeholders</h4>
+                    <p>Stakeholder คือคนที่<strong>เกี่ยวข้องหรือได้รับผลกระทบ</strong>จากกิจกรรมของโปรเจกต์:</p>
+                    <ul class="tight">
+                      <li>project sponsor หรือ customer</li>
+                      <li>ธนาคารและสถาบันการเงิน</li>
+                      <li>project manager</li>
+                      <li>ทีมโปรเจกต์: technical และ non-technical</li>
+                      <li>support staff</li>
+                      <li>suppliers</li>
+                    </ul>
+                  </section>
+
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- ================= 05 POMA และเครื่องมือ ================= -->
+          <div class="acc-item">
+            <h3 class="acc-heading">
+              <button class="acc-trigger" type="button" aria-expanded="false" aria-controls="acc-pm-poma" id="acc-pm-poma-btn">
+                <span class="acc-index">05</span>
+                <span class="acc-title">
+                  <span class="acc-name">กระบวนการ POMA · WBS / PERT / Gantt · ข้อดีและเป้าหมาย</span>
+                  <span class="acc-file">L1 SE foundation SPM · slide 58–76</span>
+                </span>
+                <svg class="acc-chevron" viewBox="0 0 20 20" aria-hidden="true"><path d="M5 7.5l5 5 5-5" /></svg>
+              </button>
+            </h3>
+            <div class="acc-panel" id="acc-pm-poma" role="region" aria-labelledby="acc-pm-poma-btn">
+              <div class="acc-panel-inner">
+                <div class="acc-body">
+
+                  <nav class="toc" aria-label="หัวข้อในการ์ด POMA และเครื่องมือ">
+                    <a href="#pm-poma">POMA</a>
+                    <a href="#pm-tools">เครื่องมือบริหารโปรเจกต์</a>
+                    <a href="#pm-wbs">WBS</a>
+                    <a href="#pm-pert">PERT และ initial schedule</a>
+                    <a href="#pm-gantt">Gantt chart</a>
+                    <a href="#pm-success">Project success</a>
+                    <a href="#pm-goals">ข้อดีและเป้าหมาย</a>
+                  </nav>
+
+                  <section class="topic" id="pm-poma">
+                    <h4>Software Project Management Process (POMA)</h4>
+                    <figure class="diagram">
+                      <div class="diagram-scroll">
+                        <svg viewBox="0 0 720 150" role="img" aria-labelledby="pm-poma-t pm-poma-d">
+                          <title id="pm-poma-t">กระบวนการ POMA</title>
+                          <desc id="pm-poma-d">Planning ไป Organizing ไป Monitoring ไป Adjusting และมีเส้นประย้อนกลับ แสดงว่าในระดับย่อยอาจวนซ้ำ</desc>
+                          <rect class="dg-box dg-box--accent" x="20" y="34" width="140" height="56" rx="10" />
+                          <text class="dg-text" x="90" y="67" text-anchor="middle">Planning</text>
+                          <rect class="dg-box dg-box--accent" x="200" y="34" width="140" height="56" rx="10" />
+                          <text class="dg-text" x="270" y="67" text-anchor="middle">Organizing</text>
+                          <rect class="dg-box dg-box--accent" x="380" y="34" width="140" height="56" rx="10" />
+                          <text class="dg-text" x="450" y="67" text-anchor="middle">Monitoring</text>
+                          <rect class="dg-box dg-box--accent" x="560" y="34" width="140" height="56" rx="10" />
+                          <text class="dg-text" x="630" y="67" text-anchor="middle">Adjusting</text>
+                          <line class="dg-line dg-line--accent" x1="162" y1="62" x2="195" y2="62" marker-end="url(#arr)" />
+                          <line class="dg-line dg-line--accent" x1="342" y1="62" x2="375" y2="62" marker-end="url(#arr)" />
+                          <line class="dg-line dg-line--accent" x1="522" y1="62" x2="555" y2="62" marker-end="url(#arr)" />
+                          <path class="dg-line dg-line--dash" d="M630 92 V124 H90 V96" marker-end="url(#arr-muted)" />
+                          <text class="dg-text dg-text--sm" x="360" y="118" text-anchor="middle">macro: ดูเป็นลำดับ · micro: อาจวนซ้ำ (iterative)</text>
+                        </svg>
+                      </div>
+                      <figcaption>สไลด์ 1-58 — "This process looks sequential at the macro level, but may be very iterative at the micro level"</figcaption>
+                    </figure>
+                    <div class="table-scroll">
+                      <table>
+                        <thead><tr><th>ขั้น</th><th>ทำอะไร</th></tr></thead>
+                        <tbody>
+                          <tr><td><strong>P</strong>lanning</td><td>เข้าใจ requirement ของโปรเจกต์ · กำหนดเป้าหมายที่<strong>วัดผลได้</strong> · ประมาณ work effort, schedule และทรัพยากรที่ต้องใช้ · กำหนดการจัดสรรทรัพยากร · ระบุและวิเคราะห์ความเสี่ยง (people, process, tools, facilities) → ได้ <strong>Project Plan</strong></td></tr>
+                          <tr><td><strong>O</strong>rganizing</td><td>รับ Project Plan มา → ออกแบบโครงสร้างองค์กร · จ้าง/จัดทีม (hire human resources) · จัดการฝึกอบรมที่จำเป็น · เริ่มกลไกติดตาม (risk tracking and mitigation, project goal monitoring)</td></tr>
+                          <tr><td><strong>M</strong>onitoring</td><td>เมื่อโปรเจกต์เดินแล้วต้องติดตามสม่ำเสมอว่าไปถูกทาง — 3 องค์ประกอบ: <strong>เก็บข้อมูลสถานะ → วิเคราะห์/ประเมินข้อมูล → นำเสนอ/สื่อสารสถานะ</strong></td></tr>
+                          <tr><td><strong>A</strong>djusting</td><td>แทบไม่มีโปรเจกต์ที่ไม่มีปัญหา เมื่อสถานะบ่งชี้ปัญหาต้องกล้าเปลี่ยน — ปรับใน 3 ด้าน (หรือผสมกัน): <strong>ทรัพยากร (resources) · ตารางเวลา (schedule) · เนื้อหาของโปรเจกต์ (project content)</strong></td></tr>
+                        </tbody>
+                      </table>
+                    </div>
+                    <div class="callout callout--warn">
+                      <span class="callout-label">ข้อสำคัญ (สไลด์ 1-63)</span>
+                      <p>Software Project Management Process <b>ไม่ใช่สิ่งเดียวกับ</b> Software Development Process หรือ Software Life Cycle</p>
+                    </div>
+                  </section>
+
+                  <section class="topic" id="pm-tools">
+                    <h4>เครื่องมือและเทคนิคบริหารโปรเจกต์</h4>
+                    <p>ช่วย PM และทีมในด้านต่างๆ ตัวอย่างในสไลด์:</p>
+                    <ul class="tight">
+                      <li>Project charter, scope statement และ <strong>WBS</strong> (scope)</li>
+                      <li><strong>Gantt charts</strong>, network diagrams, critical path analysis</li>
+                      <li>Cost estimates และ earned value management (cost)</li>
+                    </ul>
+                  </section>
+
+                  <section class="topic" id="pm-wbs">
+                    <h4>Work Breakdown Structure (WBS)</h4>
+                    <p>ก่อนวางแผนต้องรู้เป้าหมาย scope และ deliverables ของโปรเจกต์ — WBS เป็นเทคนิคที่ช่วยแตกงาน ขั้นตอนสร้าง:</p>
+                    <ol class="steps">
+                      <li><strong>กำหนด project scope</strong> — ระบบจะมีฟังก์ชันอะไรบ้าง</li>
+                      <li><strong>ระบุ major deliverables</strong> — แตก scope เป็นส่วนใหญ่ (มักตรงกับ phase การพัฒนาหรือ feature ใหญ่) เช่น Project Management, Requirements Analysis, UI/UX Design, Development, Testing, Deployment, Training &amp; Documentation</li>
+                      <li><strong>แตก deliverable เป็น sub-deliverable</strong> — เช่น Development → Login &amp; registration, Book borrow, Book return, Fine calculation</li>
+                      <li><strong>เรียงลำดับงาน</strong> — sequential หรือ parallel</li>
+                      <li><strong>ประมาณเวลา</strong>ของแต่ละงาน</li>
+                      <li><strong>มอบหมายผู้รับผิดชอบ</strong>แต่ละงาน</li>
+                      <li><strong>วาง timeline</strong> ของโปรเจกต์</li>
+                    </ol>
+                    <figure class="diagram">
+                      <div class="diagram-scroll">
+                        <svg viewBox="0 0 720 250" role="img" aria-labelledby="pm-wbs-t pm-wbs-d">
+                          <title id="pm-wbs-t">ลำดับชั้นของ WBS</title>
+                          <desc id="pm-wbs-d">System name แตกเป็น Module, Module แตกเป็น Function, Function แตกเป็น Task พร้อมตัวอย่างระบบห้องสมุดจากสไลด์: Development แตกเป็น Login and registration, Book borrow, Book return, Fine calculation</desc>
+                          <text class="dg-mono dg-mono--sm" x="20" y="44">System name</text>
+                          <text class="dg-mono dg-mono--sm" x="20" y="104">Module</text>
+                          <text class="dg-mono dg-mono--sm" x="20" y="164">Function</text>
+                          <text class="dg-mono dg-mono--sm" x="20" y="224">Task</text>
+                          <rect class="dg-box dg-box--accent" x="310" y="20" width="200" height="38" rx="8" />
+                          <text class="dg-text" x="410" y="44" text-anchor="middle">ระบบ (System)</text>
+                          <rect class="dg-box" x="160" y="80" width="170" height="38" rx="8" />
+                          <text class="dg-text" x="245" y="104" text-anchor="middle">Requirements Analysis</text>
+                          <rect class="dg-box dg-box--accent" x="360" y="80" width="130" height="38" rx="8" />
+                          <text class="dg-text" x="425" y="104" text-anchor="middle">Development</text>
+                          <rect class="dg-box" x="520" y="80" width="110" height="38" rx="8" />
+                          <text class="dg-text" x="575" y="104" text-anchor="middle">Testing …</text>
+                          <line class="dg-line" x1="410" y1="58" x2="245" y2="80" />
+                          <line class="dg-line" x1="410" y1="58" x2="425" y2="80" />
+                          <line class="dg-line" x1="410" y1="58" x2="575" y2="80" />
+                          <rect class="dg-box" x="130" y="140" width="130" height="38" rx="8" />
+                          <text class="dg-text dg-text--sm" x="195" y="164" text-anchor="middle">Login &amp; registration</text>
+                          <rect class="dg-box" x="275" y="140" width="110" height="38" rx="8" />
+                          <text class="dg-text dg-text--sm" x="330" y="164" text-anchor="middle">Book borrow</text>
+                          <rect class="dg-box" x="400" y="140" width="110" height="38" rx="8" />
+                          <text class="dg-text dg-text--sm" x="455" y="164" text-anchor="middle">Book return</text>
+                          <rect class="dg-box" x="525" y="140" width="125" height="38" rx="8" />
+                          <text class="dg-text dg-text--sm" x="587" y="164" text-anchor="middle">Fine calculation</text>
+                          <line class="dg-line dg-line--accent" x1="425" y1="118" x2="195" y2="140" />
+                          <line class="dg-line dg-line--accent" x1="425" y1="118" x2="330" y2="140" />
+                          <line class="dg-line dg-line--accent" x1="425" y1="118" x2="455" y2="140" />
+                          <line class="dg-line dg-line--accent" x1="425" y1="118" x2="587" y2="140" />
+                          <rect class="dg-box dg-box--warn" x="275" y="200" width="110" height="36" rx="8" />
+                          <text class="dg-text dg-text--sm" x="330" y="223" text-anchor="middle">task …</text>
+                          <line class="dg-line dg-line--dash" x1="330" y1="178" x2="330" y2="200" />
+                        </svg>
+                      </div>
+                      <figcaption>ลำดับชั้น System name → Module → Function → Task (สไลด์ 1-70) กับตัวอย่าง sub-deliverable ของ Development จากสไลด์ 1-68 · ระดับ task ในสไลด์ไม่ได้ระบุชื่อ จึงเว้นไว้</figcaption>
+                    </figure>
+                  </section>
+
+                  <section class="topic" id="pm-pert">
+                    <h4>PERT และ Initial Schedule Estimate</h4>
+                    <p><strong>PERT (Program Evaluation and Review Technique)</strong> — แผนภาพแสดง<strong>ความสัมพันธ์และระยะเวลาของงานที่มี dependency กัน</strong> ใช้วางแผนตารางเวลาโปรเจกต์ สไลด์ 1-71 มีงาน Task 1, Task 2, Task 3a–3c, Task 4a–4c, Task 5a–5c ต่อกันไปจนถึง End</p>
+                    <p><strong>ผลลัพธ์ของ WBS = ตารางประมาณการตารางเวลาเบื้องต้น (Initial Schedule Estimate)</strong> ที่ระบุ task, ผู้รับผิดชอบ และเวลา — ตัวอย่างในสไลด์ 1-72:</p>
+                    <div class="table-scroll">
+                      <table>
+                        <thead><tr><th>Task</th><th>Person</th><th>Time (units)</th></tr></thead>
+                        <tbody>
+                          <tr><td>1</td><td>X, Y, Z</td><td>12</td></tr>
+                          <tr><td>2</td><td>X, Y, Z</td><td>2</td></tr>
+                          <tr><td>3a</td><td>X</td><td>8</td></tr>
+                          <tr><td>3b</td><td>Y</td><td>6</td></tr>
+                          <tr><td>3c</td><td>Z</td><td>3</td></tr>
+                          <tr><td>4a</td><td>Z</td><td>20</td></tr>
+                          <tr><td>4b</td><td>X</td><td>2</td></tr>
+                          <tr><td>4c</td><td>Y</td><td>2</td></tr>
+                          <tr><td>5a</td><td>X</td><td>5</td></tr>
+                          <tr><td>5b</td><td>Y</td><td>1</td></tr>
+                          <tr><td>5c</td><td>Z</td><td>1</td></tr>
+                        </tbody>
+                      </table>
+                    </div>
+                    <p class="note">ระยะเวลาของแต่ละ task ตรงกับตัวเลขที่กำกับไว้ในแผนภาพ PERT สไลด์ 1-71</p>
+                  </section>
+
+                  <section class="topic" id="pm-gantt">
+                    <h4>Gantt Chart</h4>
+                    <p>แสดง<strong>ระยะเวลาและลำดับของงาน</strong>ต่างๆ ตามช่วงเวลาในรูปแบบ<strong>แท่ง</strong> — แต่ละงานคือแท่งหนึ่งบนแกนเวลา เห็นว่างานไหนเริ่ม/จบเมื่อไรและซ้อนกับงานไหน</p>
+                    <div class="callout callout--def">
+                      <span class="callout-label">ลำดับการใช้เครื่องมือวางแผน</span>
+                      <p><b>WBS</b> แตกงานและได้ task + คน + เวลา → <b>PERT</b> ดู dependency และระยะเวลาระหว่างงาน → <b>Gantt chart</b> วางงานบนแกนเวลาให้เห็นตารางทั้งโปรเจกต์</p>
+                    </div>
+                  </section>
+
+                  <section class="topic" id="pm-success">
+                    <h4>Project Success</h4>
+                    <p>นิยามความสำเร็จของโปรเจกต์ได้หลายแบบ:</p>
+                    <ul class="tight">
+                      <li>บรรลุเป้าหมาย scope, time และ cost</li>
+                      <li>ลูกค้า / sponsor พอใจ</li>
+                      <li>ผลลัพธ์บรรลุวัตถุประสงค์หลัก เช่น ทำเงินหรือประหยัดเงินได้ตามเป้า ให้ผลตอบแทนการลงทุนที่ดี หรือทำให้ sponsor พอใจ</li>
+                    </ul>
+                    <p><strong>Top 3 success factors (สไลด์ 1-66):</strong> adequate funding · staff expertise · engagement from all stakeholders</p>
+                  </section>
+
+                  <section class="topic" id="pm-goals">
+                    <h4>ข้อดีของการบริหารโปรเจกต์ และเป้าหมาย</h4>
+                    <div class="compare">
+                      <div class="compare-col">
+                        <strong>Advantages of project management</strong>
+                        <ul class="tight">
+                          <li>ควบคุมทรัพยากรการเงิน กายภาพ และคนได้ดีขึ้น</li>
+                          <li>ความสัมพันธ์กับลูกค้าดีขึ้น</li>
+                          <li>พัฒนาได้เร็วขึ้น</li>
+                          <li>ต้นทุนต่ำลง productivity สูงขึ้น</li>
+                          <li>คุณภาพและความน่าเชื่อถือสูงขึ้น</li>
+                          <li>กำไรมากขึ้น</li>
+                          <li>ประสานงานภายในดีขึ้น</li>
+                          <li>ส่งผลดีต่อการบรรลุเป้าหมายเชิงกลยุทธ์</li>
+                          <li>ขวัญกำลังใจทีมงานดีขึ้น</li>
+                        </ul>
+                      </div>
+                      <div class="compare-col">
+                        <strong>Goals of software project management</strong>
+                        <ul class="tight">
+                          <li>ตอบสนองความต้องการของลูกค้า</li>
+                          <li>บรรลุคุณลักษณะของโปรเจกต์ (project attributes are met)</li>
+                          <li>บรรลุเป้าหมายและ milestone</li>
+                          <li>ทีมงานทำงานได้อย่างมีประสิทธิภาพ</li>
+                          <li>เครื่องมือ/ทรัพยากรพร้อมใช้และถูกใช้อย่างมีประสิทธิผล</li>
+                        </ul>
+                      </div>
+                    </div>
+                  </section>
+
+                </div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </section>
+
+      <!-- =============================================================
+           แท็บ 2: สรุป (cheat sheet)
+           ============================================================= -->
+      <section class="panel" id="summary" role="tabpanel" aria-labelledby="tab-summary" tabindex="-1">
+        <div class="panel-head">
+          <h2>Cheat sheet</h2>
+          <p class="panel-sub">องค์ประกอบของซอฟต์แวร์ บทบาทในโปรเจกต์ 4P's triple constraint POMA เครื่องมือวางแผน และสถิติ error รวมไว้ในหน้าเดียว</p>
+        </div>
+
+        <div class="sheet">
+
+<article class="sheet-card">
+            <h3><span class="sheet-num">01</span> 3 องค์ประกอบของซอฟต์แวร์</h3>
+            <div class="table-scroll">
+              <table>
+                <thead><tr><th>องค์ประกอบ</th><th>ทำหน้าที่</th></tr></thead>
+                <tbody>
+                  <tr><td><strong>Instructions</strong></td><td>ให้ feature, function, performance</td></tr>
+                  <tr><td><strong>Data structures</strong></td><td>ให้โปรแกรมจัดการข้อมูลได้</td></tr>
+                  <tr><td><strong>Descriptive information</strong></td><td>เอกสารอธิบายการทำงานและการใช้งาน</td></tr>
+                </tbody>
+              </table>
+            </div>
+            <p class="note">ไม่สึกหรอ แต่<strong>ล้าสมัยได้</strong> (XP 2014, Win 7 2023) · developed/engineered ไม่ใช่ manufactured · intangible · labour intensive · แก้ไขยาก</p>
+          </article>
+
+          <article class="sheet-card sheet-card--wide">
+            <h3><span class="sheet-num">02</span> บทบาทในโปรเจกต์ซอฟต์แวร์</h3>
+            <div class="table-scroll">
+              <table>
+                <thead><tr><th>ฝั่ง</th><th>บทบาท</th><th>หน้าที่หลัก</th></tr></thead>
+                <tbody>
+                  <tr><td rowspan="2">Client</td><td><strong>Customers</strong></td><td>กำหนด business needs · ให้ทุน · อนุมัติผลงาน</td></tr>
+                  <tr><td><strong>End users</strong></td><td>ใช้งานจริง · feedback ด้าน usability/functionality</td></tr>
+                  <tr><td rowspan="6">Development</td><td><strong>PM</strong></td><td>วางแผน · scope · ตารางงาน · ทรัพยากร · ติดตาม · ความเสี่ยง</td></tr>
+                  <tr><td><strong>BA</strong></td><td>รวบรวม/วิเคราะห์/ตรวจ requirement · เอกสาร · สะพานลูกค้า ↔ ทีม</td></tr>
+                  <tr><td><strong>SA</strong></td><td>requirement → technical spec · สถาปัตยกรรม · เทคโนโลยี · coding standard</td></tr>
+                  <tr><td><strong>Developer</strong></td><td>implement · เขียน/ดูแลโค้ด · unit test · แก้ defect</td></tr>
+                  <tr><td><strong>UX/UI Designer</strong></td><td>user research · persona/wireframe/mockup/prototype · ออกแบบ interface</td></tr>
+                  <tr><td><strong>QA / Tester</strong></td><td>test plan/case · functional &amp; non-functional test · รายงาน/ยืนยัน defect</td></tr>
+                </tbody>
+              </table>
+            </div>
+          </article>
+
+          <article class="sheet-card">
+            <h3><span class="sheet-num">03</span> Management Spectrum (4P's)</h3>
+            <dl class="defs">
+              <div><dt>People</dt><dd>roles</dd></div>
+              <div><dt>Problem</dt><dd>objectives · scope · alternatives · constraints</dd></div>
+              <div><dt>Process</dt><dd>tasks · milestones · deliverables · QA</dd></div>
+              <div><dt>Project</dt><dd>ตัวโปรเจกต์ที่บริหาร</dd></div>
+            </dl>
+            <p class="note">Project management เป็น <strong>umbrella activity</strong>: เริ่มก่อนงานเทคนิค และทำต่อเนื่องตลอด</p>
+          </article>
+
+          <article class="sheet-card">
+            <h3><span class="sheet-num">04</span> Project &amp; Triple Constraint</h3>
+            <p><strong>Project</strong> (PMBOK) = ความพยายาม<strong>ชั่วคราว</strong>เพื่อสร้างผลิตภัณฑ์ บริการ หรือผลลัพธ์ที่<strong>เฉพาะตัว</strong> · ต่างจาก <strong>operations</strong> ที่ทำเพื่อให้ธุรกิจดำเนินต่อ</p>
+            <p><strong>Triple constraint:</strong> <strong>Scope · Cost · Time</strong> ต้องสมดุลกัน</p>
+            <p class="note">10 knowledge areas: Scope, Schedule, Cost, Quality, Resource, Communications, Risk, Procurement, Stakeholder, Integration</p>
+          </article>
+
+          <article class="sheet-card">
+            <h3><span class="sheet-num">05</span> POMA 4 ขั้นตอน</h3>
+            <ol class="steps">
+              <li><strong>Planning</strong> — requirement, เป้าหมายวัดผลได้, ประมาณ effort/schedule/ทรัพยากร, ความเสี่ยง → Project Plan</li>
+              <li><strong>Organizing</strong> — โครงสร้างองค์กร, จัดทีม, ฝึกอบรม, เริ่มกลไกติดตาม</li>
+              <li><strong>Monitoring</strong> — เก็บสถานะ → วิเคราะห์/ประเมิน → สื่อสารสถานะ</li>
+              <li><strong>Adjusting</strong> — ปรับ resources / schedule / project content</li>
+            </ol>
+            <p class="note">macro ดูเป็นลำดับ · micro วนซ้ำได้ · <strong>ไม่ใช่</strong> software development process / life cycle</p>
+          </article>
+
+          <article class="sheet-card sheet-card--wide">
+            <h3><span class="sheet-num">06</span> Chaos &amp; Capers Jones Report</h3>
+            <ul class="pct-bars">
+              <li><span>Code errors</span><span class="pct-track" aria-hidden="true"><span class="pct-fill" style="--pct: 38.33%"></span></span><span class="pct-val">38.33%</span></li>
+              <li><span>Design errors</span><span class="pct-track" aria-hidden="true"><span class="pct-fill" style="--pct: 24.17%"></span></span><span class="pct-val">24.17%</span></li>
+              <li><span>Documentation errors</span><span class="pct-track" aria-hidden="true"><span class="pct-fill" style="--pct: 13.33%"></span></span><span class="pct-val">13.33%</span></li>
+              <li><span>Requirements errors</span><span class="pct-track" aria-hidden="true"><span class="pct-fill" style="--pct: 12.5%"></span></span><span class="pct-val">12.50%</span></li>
+              <li><span>Bad-fix errors</span><span class="pct-track" aria-hidden="true"><span class="pct-fill" style="--pct: 11.67%"></span></span><span class="pct-val">11.67%</span></li>
+            </ul>
+            <p><strong>Success:</strong> user involvement · executive support · clear requirements · proper planning &nbsp;|&nbsp; <strong>Failure:</strong> lack of user input · incomplete requirements · changing requirements</p>
+          </article>
+
+          <article class="sheet-card">
+            <h3><span class="sheet-num">07</span> WBS → PERT → Gantt</h3>
+            <ol class="steps">
+              <li><strong>WBS</strong> — แตก scope → deliverable → sub-deliverable → task (System → Module → Function → Task) ได้ <strong>initial schedule estimate</strong> (task · คน · เวลา)</li>
+              <li><strong>PERT</strong> — งานที่มี dependency กัน + ระยะเวลา</li>
+              <li><strong>Gantt chart</strong> — แท่งงานบนแกนเวลา เห็นระยะเวลาและลำดับ</li>
+            </ol>
+            <p class="note">คนเพิ่ม → เส้นทางสื่อสารเพิ่มเร็วกว่า: 2 คน = 1 · 4 คน = 6 · 6 คน = 15</p>
+          </article>
+
+        </div>
+      </section>
+
+      <!-- =============================================================
+           แท็บ 3: แบบฝึกหัด (20 ข้อ)
+           data-answer = ตัวเลือกที่ถูก (ก=a, ข=b, ค=c, ง=d ตามเฉลยที่ผู้ใช้กำหนด)
+           ============================================================= -->
+      <section class="panel" id="quiz" role="tabpanel" aria-labelledby="tab-quiz" tabindex="-1">
+        <div class="panel-head">
+          <h2>แบบฝึกหัด 20 ข้อ</h2>
+          <p class="panel-sub">เลือกคำตอบให้ครบแล้วกด "ตรวจคำตอบ" ด้านล่าง ระบบจะเฉลยพร้อมคำอธิบายทุกข้อ</p>
+        </div>
+
+        <form class="quiz" id="quiz-form" novalidate>
+
+          <fieldset class="q" data-answer="b">
+            <legend class="q-head"><span class="q-num">01</span><span class="q-text">คำจำกัดความของ Software Engineering โดย Timothy C. Lethbridge เน้นย้ำเรื่องใดเป็นหลัก?</span></legend>
+            <div class="q-options">
+              <label class="opt"><input type="radio" name="q1" value="a" /><span class="opt-key">A</span><span class="opt-text">การเขียนโค้ดให้เร็วที่สุด</span></label>
+              <label class="opt"><input type="radio" name="q1" value="b" /><span class="opt-key">B</span><span class="opt-text">กระบวนการแก้ปัญหาให้ลูกค้าด้วยการพัฒนาซอฟต์แวร์คุณภาพสูงอย่างเป็นระบบ ภายใต้ข้อจำกัดด้านต้นทุน เวลา และอื่นๆ</span></label>
+              <label class="opt"><input type="radio" name="q1" value="c" /><span class="opt-key">C</span><span class="opt-text">การออกแบบฐานข้อมูลเชิงสัมพันธ์</span></label>
+              <label class="opt"><input type="radio" name="q1" value="d" /><span class="opt-key">D</span><span class="opt-text">การทดสอบซอฟต์แวร์เท่านั้น</span></label>
+            </div>
+            <div class="q-feedback"><div class="q-feedback-inner"><p class="q-verdict" aria-live="polite"></p><p class="q-explain">Lethbridge นิยามว่า SE คือ &quot;a process of solving customers' problems by the systematic development and evolution of large, high-quality software systems within cost, time and other constraints&quot; — เป้าหมายคือแก้ปัญหาลูกค้า ทำอย่างเป็นระบบ ภายใต้ข้อจำกัด</p></div></div>
+          </fieldset>
+
+          <fieldset class="q" data-answer="b">
+            <legend class="q-head"><span class="q-num">02</span><span class="q-text">ซอฟต์แวร์ประกอบด้วยองค์ประกอบใดบ้างตามที่เรียน?</span></legend>
+            <div class="q-options">
+              <label class="opt"><input type="radio" name="q2" value="a" /><span class="opt-key">A</span><span class="opt-text">โค้ดโปรแกรมเท่านั้น</span></label>
+              <label class="opt"><input type="radio" name="q2" value="b" /><span class="opt-key">B</span><span class="opt-text">ชุดคำสั่ง (instructions), โครงสร้างข้อมูล (data structures), และเอกสารอธิบาย (descriptive information)</span></label>
+              <label class="opt"><input type="radio" name="q2" value="c" /><span class="opt-key">C</span><span class="opt-text">ฮาร์ดแวร์และซอฟต์แวร์</span></label>
+              <label class="opt"><input type="radio" name="q2" value="d" /><span class="opt-key">D</span><span class="opt-text">ผู้ใช้และนักพัฒนา</span></label>
+            </div>
+            <div class="q-feedback"><div class="q-feedback-inner"><p class="q-verdict" aria-live="polite"></p><p class="q-explain">ตาม Pressman ซอฟต์แวร์มี 3 องค์ประกอบ: instructions ที่ให้ feature/function/performance, data structures ที่ให้โปรแกรมจัดการข้อมูลได้ และ descriptive information (เอกสาร) ที่อธิบายการทำงานและการใช้งาน</p></div></div>
+          </fieldset>
+
+          <fieldset class="q" data-answer="b">
+            <legend class="q-head"><span class="q-num">03</span><span class="q-text">คุณลักษณะของซอฟต์แวร์ข้อใดถูกต้อง?</span></legend>
+            <div class="q-options">
+              <label class="opt"><input type="radio" name="q3" value="a" /><span class="opt-key">A</span><span class="opt-text">สึกหรอไปตามการใช้งานเหมือนฮาร์ดแวร์</span></label>
+              <label class="opt"><input type="radio" name="q3" value="b" /><span class="opt-key">B</span><span class="opt-text">ต้องถูก &quot;พัฒนา/วิศวกรรม&quot; ไม่ใช่ &quot;ผลิต&quot; แบบสายพาน ไม่สึกหรอ แต่ล้าสมัยได้</span></label>
+              <label class="opt"><input type="radio" name="q3" value="c" /><span class="opt-key">C</span><span class="opt-text">เปลี่ยนแปลงแก้ไขได้ง่ายเสมอ</span></label>
+              <label class="opt"><input type="radio" name="q3" value="d" /><span class="opt-key">D</span><span class="opt-text">เป็นสิ่งที่จับต้องได้ (tangible)</span></label>
+            </div>
+            <div class="q-feedback"><div class="q-feedback-inner"><p class="q-verdict" aria-live="polite"></p><p class="q-explain">สไลด์ Characteristics of Software: developed or engineered, not manufactured · intangible · labour intensive · difficult to make changes · does not wear out · can be obsolete — ข้ออื่นขัดกับรายการนี้ตรงๆ</p></div></div>
+          </fieldset>
+
+          <fieldset class="q" data-answer="b">
+            <legend class="q-head"><span class="q-num">04</span><span class="q-text">ปัจจัยความสำเร็จสำคัญของโปรเจกต์ซอฟต์แวร์ตามรายงาน Chaos &amp; Capers Jones คือข้อใด?</span></legend>
+            <div class="q-options">
+              <label class="opt"><input type="radio" name="q4" value="a" /><span class="opt-key">A</span><span class="opt-text">การมีงบประมาณสูง</span></label>
+              <label class="opt"><input type="radio" name="q4" value="b" /><span class="opt-key">B</span><span class="opt-text">การมีส่วนร่วมของผู้ใช้และการสนับสนุนจากผู้บริหาร</span></label>
+              <label class="opt"><input type="radio" name="q4" value="c" /><span class="opt-key">C</span><span class="opt-text">การใช้ภาษาโปรแกรมมิ่งล่าสุด</span></label>
+              <label class="opt"><input type="radio" name="q4" value="d" /><span class="opt-key">D</span><span class="opt-text">จำนวนนักพัฒนาในทีม</span></label>
+            </div>
+            <div class="q-feedback"><div class="q-feedback-inner"><p class="q-verdict" aria-live="polite"></p><p class="q-explain">Key success factors ในสไลด์มี 4 ข้อ: user involvement, executive management support, clear requirement statements และ proper planning</p></div></div>
+          </fieldset>
+
+          <fieldset class="q" data-answer="a">
+            <legend class="q-head"><span class="q-num">05</span><span class="q-text">สาเหตุความล้มเหลวอันดับต้นๆ ของโปรเจกต์ซอฟต์แวร์คือข้อใด?</span></legend>
+            <div class="q-options">
+              <label class="opt"><input type="radio" name="q5" value="a" /><span class="opt-key">A</span><span class="opt-text">Requirements ที่ไม่สมบูรณ์และขาดการมีส่วนร่วมของผู้ใช้</span></label>
+              <label class="opt"><input type="radio" name="q5" value="b" /><span class="opt-key">B</span><span class="opt-text">ทีมมีขนาดใหญ่เกินไป</span></label>
+              <label class="opt"><input type="radio" name="q5" value="c" /><span class="opt-key">C</span><span class="opt-text">ใช้เวลาพัฒนานานเกินไป</span></label>
+              <label class="opt"><input type="radio" name="q5" value="d" /><span class="opt-key">D</span><span class="opt-text">ใช้ Agile process</span></label>
+            </div>
+            <div class="q-feedback"><div class="q-feedback-inner"><p class="q-verdict" aria-live="polite"></p><p class="q-explain">Top failure reasons ในสไลด์: lack of user input, incomplete requirements และ changing requirements</p></div></div>
+          </fieldset>
+
+          <fieldset class="q" data-answer="b">
+            <legend class="q-head"><span class="q-num">06</span><span class="q-text">บทบาทใดทำหน้าที่แปลความต้องการทางธุรกิจเป็น technical specification และออกแบบสถาปัตยกรรมซอฟต์แวร์?</span></legend>
+            <div class="q-options">
+              <label class="opt"><input type="radio" name="q6" value="a" /><span class="opt-key">A</span><span class="opt-text">Business Analyst (BA)</span></label>
+              <label class="opt"><input type="radio" name="q6" value="b" /><span class="opt-key">B</span><span class="opt-text">System Analyst (SA)</span></label>
+              <label class="opt"><input type="radio" name="q6" value="c" /><span class="opt-key">C</span><span class="opt-text">Project Manager (PM)</span></label>
+              <label class="opt"><input type="radio" name="q6" value="d" /><span class="opt-key">D</span><span class="opt-text">QA Engineer</span></label>
+            </div>
+            <div class="q-feedback"><div class="q-feedback-inner"><p class="q-verdict" aria-live="polite"></p><p class="q-explain">SA แปล business/functional/non-functional requirements เป็น technical specifications ออกแบบสถาปัตยกรรม เลือกเทคโนโลยี และกำหนด coding standard — ส่วน BA รวบรวม/วิเคราะห์ requirement และเป็นสะพานกับลูกค้า</p></div></div>
+          </fieldset>
+
+          <fieldset class="q" data-answer="b">
+            <legend class="q-head"><span class="q-num">07</span><span class="q-text">เมื่อจำนวนคนในทีมเพิ่มขึ้น จำนวนช่องทางการสื่อสารจะเป็นอย่างไร?</span></legend>
+            <div class="q-options">
+              <label class="opt"><input type="radio" name="q7" value="a" /><span class="opt-key">A</span><span class="opt-text">เพิ่มขึ้นแบบเป็นสัดส่วนตรงเท่านั้น</span></label>
+              <label class="opt"><input type="radio" name="q7" value="b" /><span class="opt-key">B</span><span class="opt-text">เพิ่มขึ้นอย่างรวดเร็วกว่าจำนวนคนที่เพิ่ม</span></label>
+              <label class="opt"><input type="radio" name="q7" value="c" /><span class="opt-key">C</span><span class="opt-text">ไม่มีการเปลี่ยนแปลง</span></label>
+              <label class="opt"><input type="radio" name="q7" value="d" /><span class="opt-key">D</span><span class="opt-text">ลดลงเมื่อทีมใหญ่ขึ้น</span></label>
+            </div>
+            <div class="q-feedback"><div class="q-feedback-inner"><p class="q-verdict" aria-live="polite"></p><p class="q-explain">สไลด์ยกตัวอย่าง 2 คนมี 1 เส้นทาง, 4 คนมีได้ถึง 6 เส้นทาง, 6 คนมีได้ถึง 15 เส้นทาง — คนเพิ่ม 3 เท่าแต่เส้นทางเพิ่ม 15 เท่า และโอกาสผิดพลาดก็เพิ่มตาม</p></div></div>
+          </fieldset>
+
+          <fieldset class="q" data-answer="a">
+            <legend class="q-head"><span class="q-num">08</span><span class="q-text">Project Management Spectrum (&quot;4P's&quot;) ประกอบด้วยอะไรบ้าง?</span></legend>
+            <div class="q-options">
+              <label class="opt"><input type="radio" name="q8" value="a" /><span class="opt-key">A</span><span class="opt-text">Problem, People, Process, Project</span></label>
+              <label class="opt"><input type="radio" name="q8" value="b" /><span class="opt-key">B</span><span class="opt-text">Plan, Practice, Product, Price</span></label>
+              <label class="opt"><input type="radio" name="q8" value="c" /><span class="opt-key">C</span><span class="opt-text">People, Performance, Profit, Progress</span></label>
+              <label class="opt"><input type="radio" name="q8" value="d" /><span class="opt-key">D</span><span class="opt-text">Problem, Progress, Process, Product</span></label>
+            </div>
+            <div class="q-feedback"><div class="q-feedback-inner"><p class="q-verdict" aria-live="polite"></p><p class="q-explain">The Management Spectrum (4P's) = People (roles), Problem (objectives, scope, alternatives, constraints), Process (tasks, milestones, deliverables, QA) และ Project</p></div></div>
+          </fieldset>
+
+          <fieldset class="q" data-answer="b">
+            <legend class="q-head"><span class="q-num">09</span><span class="q-text">นิยามของ &quot;Project&quot; ตาม PMBOK Guide คือข้อใด?</span></legend>
+            <div class="q-options">
+              <label class="opt"><input type="radio" name="q9" value="a" /><span class="opt-key">A</span><span class="opt-text">งานประจำที่ทำซ้ำทุกวัน</span></label>
+              <label class="opt"><input type="radio" name="q9" value="b" /><span class="opt-key">B</span><span class="opt-text">ความพยายามชั่วคราวที่ทำขึ้นเพื่อสร้างผลิตภัณฑ์ บริการ หรือผลลัพธ์ที่มีลักษณะเฉพาะตัว</span></label>
+              <label class="opt"><input type="radio" name="q9" value="c" /><span class="opt-key">C</span><span class="opt-text">กิจกรรมที่ไม่มีวันสิ้นสุด</span></label>
+              <label class="opt"><input type="radio" name="q9" value="d" /><span class="opt-key">D</span><span class="opt-text">การดำเนินธุรกิจปกติ</span></label>
+            </div>
+            <div class="q-feedback"><div class="q-feedback-inner"><p class="q-verdict" aria-live="polite"></p><p class="q-explain">PMBOK: &quot;a temporary endeavour undertaken to create a unique product, service, or result&quot; — งานประจำเพื่อให้ธุรกิจดำเนินต่อไปคือ operations ไม่ใช่ project</p></div></div>
+          </fieldset>
+
+          <fieldset class="q" data-answer="a">
+            <legend class="q-head"><span class="q-num">10</span><span class="q-text">ข้อจำกัดหลักของโปรเจกต์ที่ต้องสร้างสมดุลกันคือข้อใด?</span></legend>
+            <div class="q-options">
+              <label class="opt"><input type="radio" name="q10" value="a" /><span class="opt-key">A</span><span class="opt-text">Scope, Cost, Time</span></label>
+              <label class="opt"><input type="radio" name="q10" value="b" /><span class="opt-key">B</span><span class="opt-text">People, Process, Tools</span></label>
+              <label class="opt"><input type="radio" name="q10" value="c" /><span class="opt-key">C</span><span class="opt-text">Design, Development, Testing</span></label>
+              <label class="opt"><input type="radio" name="q10" value="d" /><span class="opt-key">D</span><span class="opt-text">Input, Process, Output</span></label>
+            </div>
+            <div class="q-feedback"><div class="q-feedback-inner"><p class="q-verdict" aria-live="polite"></p><p class="q-explain">Project constraints (triple constraint) = Scope, Cost, Time — PM ต้องพยายามให้บรรลุทั้งสามอย่างพร้อมกัน</p></div></div>
+          </fieldset>
+
+          <fieldset class="q" data-answer="a">
+            <legend class="q-head"><span class="q-num">11</span><span class="q-text">กระบวนการบริหารโปรเจกต์ซอฟต์แวร์ (POMA) ประกอบด้วย 4 ขั้นตอนใด?</span></legend>
+            <div class="q-options">
+              <label class="opt"><input type="radio" name="q11" value="a" /><span class="opt-key">A</span><span class="opt-text">Plan, Organize, Monitor, Adjust</span></label>
+              <label class="opt"><input type="radio" name="q11" value="b" /><span class="opt-key">B</span><span class="opt-text">Plan, Operate, Manage, Assess</span></label>
+              <label class="opt"><input type="radio" name="q11" value="c" /><span class="opt-key">C</span><span class="opt-text">Prepare, Optimize, Measure, Analyze</span></label>
+              <label class="opt"><input type="radio" name="q11" value="d" /><span class="opt-key">D</span><span class="opt-text">Predict, Organize, Model, Act</span></label>
+            </div>
+            <div class="q-feedback"><div class="q-feedback-inner"><p class="q-verdict" aria-live="polite"></p><p class="q-explain">POMA = Project Planning, Project Organizing, Project Monitoring, Project Adjusting</p></div></div>
+          </fieldset>
+
+          <fieldset class="q" data-answer="a">
+            <legend class="q-head"><span class="q-num">12</span><span class="q-text">ในขั้นตอน Monitoring (POMA) มีองค์ประกอบหลัก 3 อย่างคือข้อใด?</span></legend>
+            <div class="q-options">
+              <label class="opt"><input type="radio" name="q12" value="a" /><span class="opt-key">A</span><span class="opt-text">การเก็บข้อมูลสถานะ, การวิเคราะห์และประเมินผล, การนำเสนอ/สื่อสารสถานะ</span></label>
+              <label class="opt"><input type="radio" name="q12" value="b" /><span class="opt-key">B</span><span class="opt-text">การวางแผน, การจัดทีม, การประเมินความเสี่ยง</span></label>
+              <label class="opt"><input type="radio" name="q12" value="c" /><span class="opt-key">C</span><span class="opt-text">การเขียนโค้ด, การทดสอบ, การ deploy</span></label>
+              <label class="opt"><input type="radio" name="q12" value="d" /><span class="opt-key">D</span><span class="opt-text">การประชุม, การรายงาน, การอนุมัติ</span></label>
+            </div>
+            <div class="q-feedback"><div class="q-feedback-inner"><p class="q-verdict" aria-live="polite"></p><p class="q-explain">3 main components of project monitoring: project status information collection → analysis and evaluation of collected information → presentation and communication of the project status</p></div></div>
+          </fieldset>
+
+          <fieldset class="q" data-answer="b">
+            <legend class="q-head"><span class="q-num">13</span><span class="q-text">Software Project Management Process เหมือนหรือต่างจาก Software Development Process/Life Cycle?</span></legend>
+            <div class="q-options">
+              <label class="opt"><input type="radio" name="q13" value="a" /><span class="opt-key">A</span><span class="opt-text">เป็นสิ่งเดียวกันทุกประการ</span></label>
+              <label class="opt"><input type="radio" name="q13" value="b" /><span class="opt-key">B</span><span class="opt-text">เป็นคนละกระบวนการกัน ไม่ใช่สิ่งเดียวกัน</span></label>
+              <label class="opt"><input type="radio" name="q13" value="c" /><span class="opt-key">C</span><span class="opt-text">Software Development Process เป็นส่วนย่อยของ POMA เท่านั้น</span></label>
+              <label class="opt"><input type="radio" name="q13" value="d" /><span class="opt-key">D</span><span class="opt-text">ใช้แทนกันได้เสมอ</span></label>
+            </div>
+            <div class="q-feedback"><div class="q-feedback-inner"><p class="q-verdict" aria-live="polite"></p><p class="q-explain">สไลด์ย้ำเป็นหน้าแยกว่า &quot;Software Project Management Process is not the same as Software Development Process or Software Life Cycle&quot;</p></div></div>
+          </fieldset>
+
+          <fieldset class="q" data-answer="b">
+            <legend class="q-head"><span class="q-num">14</span><span class="q-text">Work Breakdown Structure (WBS) มีประโยชน์อย่างไร?</span></legend>
+            <div class="q-options">
+              <label class="opt"><input type="radio" name="q14" value="a" /><span class="opt-key">A</span><span class="opt-text">ใช้แทนการทดสอบซอฟต์แวร์</span></label>
+              <label class="opt"><input type="radio" name="q14" value="b" /><span class="opt-key">B</span><span class="opt-text">แตกย่อยขอบเขตงาน (scope) เป็น deliverable ย่อย เพื่อวางแผนลำดับงาน ประมาณเวลา และมอบหมายผู้รับผิดชอบ</span></label>
+              <label class="opt"><input type="radio" name="q14" value="c" /><span class="opt-key">C</span><span class="opt-text">ใช้ตรวจสอบคุณภาพโค้ดเท่านั้น</span></label>
+              <label class="opt"><input type="radio" name="q14" value="d" /><span class="opt-key">D</span><span class="opt-text">เป็นเทคนิคการออกแบบ UI</span></label>
+            </div>
+            <div class="q-feedback"><div class="q-feedback-inner"><p class="q-verdict" aria-live="polite"></p><p class="q-explain">ขั้นตอนสร้าง WBS: กำหนด scope → แตกเป็น major deliverables → sub-deliverables → เรียงลำดับงาน ประมาณเวลา มอบหมายคน และวาง timeline ผลลัพธ์คือ initial schedule estimate</p></div></div>
+          </fieldset>
+
+          <fieldset class="q" data-answer="b">
+            <legend class="q-head"><span class="q-num">15</span><span class="q-text">PERT ใช้เพื่ออะไรเป็นหลัก?</span></legend>
+            <div class="q-options">
+              <label class="opt"><input type="radio" name="q15" value="a" /><span class="opt-key">A</span><span class="opt-text">ออกแบบหน้าจอผู้ใช้</span></label>
+              <label class="opt"><input type="radio" name="q15" value="b" /><span class="opt-key">B</span><span class="opt-text">วางแผนและประเมินระยะเวลาของงานที่มี dependency ระหว่างกัน</span></label>
+              <label class="opt"><input type="radio" name="q15" value="c" /><span class="opt-key">C</span><span class="opt-text">เขียนเอกสาร requirement</span></label>
+              <label class="opt"><input type="radio" name="q15" value="d" /><span class="opt-key">D</span><span class="opt-text">ทดสอบซอฟต์แวร์แบบ black-box</span></label>
+            </div>
+            <div class="q-feedback"><div class="q-feedback-inner"><p class="q-verdict" aria-live="polite"></p><p class="q-explain">PERT (Program Evaluation and Review Technique) เป็นแผนภาพที่แสดงงานแต่ละงาน ระยะเวลา และลำดับที่งานต้องต่อกัน ใช้วางแผนตารางเวลาของโปรเจกต์</p></div></div>
+          </fieldset>
+
+          <fieldset class="q" data-answer="b">
+            <legend class="q-head"><span class="q-num">16</span><span class="q-text">Gantt chart ใช้แสดงข้อมูลประเภทใดเป็นหลัก?</span></legend>
+            <div class="q-options">
+              <label class="opt"><input type="radio" name="q16" value="a" /><span class="opt-key">A</span><span class="opt-text">ความสัมพันธ์ระหว่างคลาส</span></label>
+              <label class="opt"><input type="radio" name="q16" value="b" /><span class="opt-key">B</span><span class="opt-text">ระยะเวลาและลำดับของงานต่างๆ ในโปรเจกต์ตามช่วงเวลา</span></label>
+              <label class="opt"><input type="radio" name="q16" value="c" /><span class="opt-key">C</span><span class="opt-text">โครงสร้างฐานข้อมูล</span></label>
+              <label class="opt"><input type="radio" name="q16" value="d" /><span class="opt-key">D</span><span class="opt-text">ผลการทดสอบซอฟต์แวร์</span></label>
+            </div>
+            <div class="q-feedback"><div class="q-feedback-inner"><p class="q-verdict" aria-live="polite"></p><p class="q-explain">Gantt chart วางงานแต่ละงานเป็นแท่งบนแกนเวลา จึงเห็นทั้งระยะเวลาและลำดับของงาน</p></div></div>
+          </fieldset>
+
+          <fieldset class="q" data-answer="b">
+            <legend class="q-head"><span class="q-num">17</span><span class="q-text">&quot;Black-box testing&quot; มีลักษณะอย่างไร?</span></legend>
+            <div class="q-options">
+              <label class="opt"><input type="radio" name="q17" value="a" /><span class="opt-key">A</span><span class="opt-text">ทดสอบโดยรู้โครงสร้างโค้ดภายในทั้งหมด</span></label>
+              <label class="opt"><input type="radio" name="q17" value="b" /><span class="opt-key">B</span><span class="opt-text">ทดสอบโดยไม่รู้โครงสร้างโค้ดภายใน เน้น data validation</span></label>
+              <label class="opt"><input type="radio" name="q17" value="c" /><span class="opt-key">C</span><span class="opt-text">ทดสอบเฉพาะ performance เท่านั้น</span></label>
+              <label class="opt"><input type="radio" name="q17" value="d" /><span class="opt-key">D</span><span class="opt-text">ทดสอบโดยผู้ใช้ปลายทางเท่านั้น</span></label>
+            </div>
+            <div class="q-feedback"><div class="q-feedback-inner"><p class="q-verdict" aria-live="polite"></p><p class="q-explain">Black-box: assume no knowledge of code, check the data validation · ส่วน white-box ทดสอบตาม code path ที่เขียนจริง</p></div></div>
+          </fieldset>
+
+          <fieldset class="q" data-answer="a">
+            <legend class="q-head"><span class="q-num">18</span><span class="q-text">ตัวชี้วัดคุณภาพซอฟต์แวร์ที่กล่าวถึงมีอะไรบ้าง?</span></legend>
+            <div class="q-options">
+              <label class="opt"><input type="radio" name="q18" value="a" /><span class="opt-key">A</span><span class="opt-text">Usability, Efficiency, Testability, Maintainability, Reusability</span></label>
+              <label class="opt"><input type="radio" name="q18" value="b" /><span class="opt-key">B</span><span class="opt-text">ราคา, ความเร็วในการพัฒนา, จำนวนบรรทัดโค้ด</span></label>
+              <label class="opt"><input type="radio" name="q18" value="c" /><span class="opt-key">C</span><span class="opt-text">จำนวนนักพัฒนา, งบประมาณ, ระยะเวลา</span></label>
+              <label class="opt"><input type="radio" name="q18" value="d" /><span class="opt-key">D</span><span class="opt-text">สีของ UI, จำนวนปุ่มกด, ฟอนต์ที่ใช้</span></label>
+            </div>
+            <div class="q-feedback"><div class="q-feedback-inner"><p class="q-verdict" aria-live="polite"></p><p class="q-explain">Examples of software quality indicators ในสไลด์มี 5 ตัว: Usability, Efficiency, Testability, Maintainability, Reusability</p></div></div>
+          </fieldset>
+
+          <fieldset class="q" data-answer="b">
+            <legend class="q-head"><span class="q-num">19</span><span class="q-text">Software Process หมายถึงอะไร?</span></legend>
+            <div class="q-options">
+              <label class="opt"><input type="radio" name="q19" value="a" /><span class="opt-key">A</span><span class="opt-text">ผลลัพธ์สุดท้ายที่ส่งมอบให้ลูกค้า</span></label>
+              <label class="opt"><input type="radio" name="q19" value="b" /><span class="opt-key">B</span><span class="opt-text">ชุดกิจกรรมที่มีโครงสร้างชัดเจนซึ่งจำเป็นต่อการพัฒนาระบบซอฟต์แวร์</span></label>
+              <label class="opt"><input type="radio" name="q19" value="c" /><span class="opt-key">C</span><span class="opt-text">เอกสารข้อกำหนดความต้องการ</span></label>
+              <label class="opt"><input type="radio" name="q19" value="d" /><span class="opt-key">D</span><span class="opt-text">ทีมงานที่รับผิดชอบโปรเจกต์</span></label>
+            </div>
+            <div class="q-feedback"><div class="q-feedback-inner"><p class="q-verdict" aria-live="polite"></p><p class="q-explain">Software Process = the structured set of activities required to develop a software system · ผลลัพธ์สุดท้าย (ระบบที่ deploy + เอกสาร) คือ Software Product</p></div></div>
+          </fieldset>
+
+          <fieldset class="q" data-answer="a">
+            <legend class="q-head"><span class="q-num">20</span><span class="q-text">Business Process ประกอบด้วยองค์ประกอบใดบ้าง?</span></legend>
+            <div class="q-options">
+              <label class="opt"><input type="radio" name="q20" value="a" /><span class="opt-key">A</span><span class="opt-text">Actors, Tasks/Activities, Rules, Inputs and Outputs</span></label>
+              <label class="opt"><input type="radio" name="q20" value="b" /><span class="opt-key">B</span><span class="opt-text">Classes, Objects, Methods, Attributes</span></label>
+              <label class="opt"><input type="radio" name="q20" value="c" /><span class="opt-key">C</span><span class="opt-text">Servers, Clients, Networks</span></label>
+              <label class="opt"><input type="radio" name="q20" value="d" /><span class="opt-key">D</span><span class="opt-text">Requirements, Design, Code, Test</span></label>
+            </div>
+            <div class="q-feedback"><div class="q-feedback-inner"><p class="q-verdict" aria-live="polite"></p><p class="q-explain">Components ของ business process: actors, tasks or activities, rules, inputs and outputs — และวาดได้ด้วย BPMN</p></div></div>
+          </fieldset>
+
+          <div class="quiz-result" id="quiz-result" hidden tabindex="-1">
+            <div class="score-ring" aria-hidden="true">
+              <svg viewBox="0 0 120 120">
+                <circle class="ring-track" cx="60" cy="60" r="52" />
+                <circle class="ring-fill" cx="60" cy="60" r="52" pathLength="100" />
+              </svg>
+              <span class="score-pct"><span id="score-pct">0</span>%</span>
+            </div>
+            <div class="score-body">
+              <p class="score-line" role="status">ได้ <strong id="score-num">0</strong> / 20 คะแนน</p>
+              <p class="score-msg" id="score-msg"></p>
+              <div class="score-actions">
+                <button class="btn btn--ghost btn--sm" type="button" id="toggle-wrong" aria-pressed="false">ดูเฉพาะข้อที่ผิด</button>
+              </div>
+            </div>
+          </div>
+
+          <div class="quiz-bar">
+            <div class="quiz-progress">
+              <span class="quiz-count"><span id="answered">0</span> / 20 ข้อ</span>
+              <span class="progress" aria-hidden="true"><span class="progress-fill" id="progress-fill"></span></span>
+              <span class="quiz-hint" id="quiz-hint" aria-live="polite"></span>
+            </div>
+            <div class="quiz-actions">
+              <button class="btn btn--ghost" type="reset" id="quiz-reset">ทำใหม่</button>
+              <button class="btn btn--primary" type="submit" id="quiz-submit">ตรวจคำตอบ</button>
+            </div>
+          </div>
+        </form>
+      </section>
+
+    </div>
+  </main>
+  <footer class="site-footer">
+    <div class="wrap">
+      <p>สรุปจากสไลด์ ITDS261 Introduction to Software Engineering (Faculty of ICT, Mahidol University) เพื่อใช้ทบทวนส่วนตัว — ถ้าเนื้อหาขัดกับสไลด์ ให้ยึดสไลด์เป็นหลัก</p>
+    </div>
+  </footer>
+
+  <script src="assets/js/widgets.js" defer></script>
+  <script src="assets/js/network.js" defer></script>
+</body>
+</html>

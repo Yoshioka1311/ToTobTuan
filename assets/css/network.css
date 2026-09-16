@@ -1463,3 +1463,19 @@ html:not(.js) [data-widget="flex-lab"] .flex-controls { display: none; }
   .acc-item, .sheet-card, .q, .compare-col, .worked, .table-scroll th { background: #fff !important; box-shadow: none !important; }
   .acc-name, .topic h4, .topic strong, .sheet strong { color: #111 !important; }
 }
+
+/* ---- SE: เส้นทางการสื่อสาร (comm-paths) ---- */
+.cp-stage { display: grid; place-items: center; margin-top: var(--space-2); }
+.cp-stage svg { display: block; width: 100%; max-width: 260px; height: auto; }
+.cp-picks { display: flex; flex-wrap: wrap; gap: var(--space-2); }
+
+/* ---- SE: แท่งเปอร์เซ็นต์ (ใช้ตัวเลขกำกับเสมอ ไม่พึ่งความยาวแท่งอย่างเดียว) ---- */
+.pct-bars { list-style: none; display: grid; gap: var(--space-2); margin: var(--space-2) 0 var(--space-3); padding: 0 !important; }
+.pct-bars li { display: grid; grid-template-columns: minmax(150px, 34%) 1fr 4.5em; align-items: center; gap: var(--space-3); margin: 0; font-size: var(--fs-sm); }
+.pct-track { height: 10px; border-radius: var(--radius-pill); background: var(--surface-750); overflow: hidden; }
+.pct-fill { display: block; height: 100%; width: var(--pct); border-radius: inherit; background: var(--accent-400); }
+.pct-val { font-family: var(--font-mono); font-size: var(--fs-xs); color: var(--accent-200); text-align: right; }
+@media (max-width: 560px) {
+  .pct-bars li { grid-template-columns: 1fr 4.5em; }
+  .pct-track { grid-column: 1 / -1; grid-row: 2; }
+}
