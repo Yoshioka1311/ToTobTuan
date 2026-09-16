@@ -464,6 +464,9 @@ ol.frame {
 .sheet-card .table-scroll table { min-width: 0; }
 .sheet-card--wide .table-scroll table { min-width: 520px; }
 .sheet-card p { margin-bottom: var(--space-2); }
+.sheet-card ol { margin: 0; padding-left: 1.5em; font-size: var(--fs-sm); }
+.sheet-card ol li { margin-bottom: 2px; }
+.sheet-card ol li::marker { color: var(--iris-400); font-family: var(--font-mono); }
 .sheet-card .formula--wrap { white-space: normal; } /* สูตรในการ์ดแคบ: ตัดบรรทัดแทนการเลื่อน */
 .tight { margin: 0 0 var(--space-2); padding-left: 1.2em; }
 .tight li { margin-bottom: 4px; }

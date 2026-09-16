@@ -1,0 +1,1148 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>ITDS241 บทที่ 5: JavaScript Fundamentals · โต๊ะทบทวน</title>
+<meta name="description" content="ITDS241 Web Technologies and Applications บทที่ 5: JavaScript เบื้องต้น ตัวแปร var/let/const, data types, built-in objects, operators, precedence, if/switch/ternary และ loops พร้อมโค้ดตัวอย่างที่กดรันได้ cheat sheet แบบฝึกหัด 20 ข้อ และโจทย์เขียนโค้ด" />
+<meta name="theme-color" content="#17151a" />
+<link rel="icon" href="assets/favicon.svg" type="image/svg+xml" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link
+  href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500..700&family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans+Thai:wght@500;600&family=IBM+Plex+Sans+Thai+Looped:wght@400;500;600&display=swap"
+  rel="stylesheet"
+/>
+<link rel="stylesheet" href="assets/css/tokens.css" />
+<link rel="stylesheet" href="assets/css/base.css" />
+<link rel="stylesheet" href="assets/css/network.css" />
+<link rel="stylesheet" href="assets/css/exercise.css" />
+<link rel="stylesheet" href="assets/css/motion.css" />
+<script>document.documentElement.classList.add("js");</script>
+</head>
+<body>
+  <a class="skip-link" href="#tabs">ข้ามไปที่เนื้อหา</a>
+
+  <svg class="dg-defs" aria-hidden="true" focusable="false">
+    <defs>
+      <marker id="arr" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path class="dg-arrow" d="M0 0L10 5L0 10z" /></marker>
+      <marker id="arr-muted" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path class="dg-arrow--muted" d="M0 0L10 5L0 10z" /></marker>
+      <marker id="arr-ok" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path class="dg-arrow--ok" d="M0 0L10 5L0 10z" /></marker>
+      <marker id="arr-bad" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path class="dg-arrow--bad" d="M0 0L10 5L0 10z" /></marker>
+    </defs>
+  </svg>
+
+  <header class="site-header">
+    <div class="wrap">
+      <a class="wordmark" href="index.html" aria-label="โต๊ะทบทวน หน้าแรก">
+        <img class="wordmark-mark" src="assets/favicon.svg" alt="" width="26" height="26" />
+        <span class="wordmark-text">โต๊ะ<span>ทบทวน</span></span>
+      </a>
+      <a class="crumb" href="index.html"><span class="arrow" aria-hidden="true">←</span> รายวิชาทั้งหมด</a>
+    </div>
+  </header>
+
+  <main>
+    <section class="course-hero wrap">
+      <nav class="course-nav" aria-label="เลือกวิชาและบท">
+        <div class="subject-switch">
+          <button class="subject-btn" type="button" data-subject="network" aria-pressed="false"><span class="subject-code">ITDS231</span> Network</button>
+          <button class="subject-btn" type="button" data-subject="web" aria-pressed="true"><span class="subject-code">ITDS241</span> Web</button>
+        </div>
+        <div class="chapter-nav" data-subject="network" data-label="ITDS231 Computer Networks" role="group" aria-label="บทของวิชา ITDS231 Computer Networks">
+          <a class="chapter-link" href="network.html"><span class="chapter-num">บทที่ 1</span><span class="chapter-name">Intro &amp; Topology</span></a>
+          <a class="chapter-link" href="network-application-layer.html"><span class="chapter-num">บทที่ 2</span><span class="chapter-name">Application Layer</span></a>
+          <a class="chapter-link" href="network-data-link-layer.html"><span class="chapter-num">บทที่ 3</span><span class="chapter-name">Data Link Layer</span></a>
+          <a class="chapter-link" href="network-mac-ethernet.html"><span class="chapter-num">บทที่ 4</span><span class="chapter-name">MAC + Ethernet</span></a>
+        </div>
+        <div class="chapter-nav" data-subject="web" data-label="ITDS241 Web Technologies and Applications" role="group" aria-label="บทของวิชา ITDS241 Web Technologies and Applications">
+          <a class="chapter-link" href="web-intro-html-basics.html"><span class="chapter-num">บทที่ 1</span><span class="chapter-name">Internet &amp; HTML Basics</span></a>
+          <a class="chapter-link" href="web-media-forms-semantic.html"><span class="chapter-num">บทที่ 2</span><span class="chapter-name">Media, Forms &amp; Semantic</span></a>
+          <a class="chapter-link" href="web-css-fundamentals.html"><span class="chapter-num">บทที่ 3</span><span class="chapter-name">CSS Fundamentals</span></a>
+          <a class="chapter-link" href="web-css-layout-responsive.html"><span class="chapter-num">บทที่ 4</span><span class="chapter-name">CSS Layout &amp; Responsive</span></a>
+          <a class="chapter-link" href="web-js-fundamentals.html" aria-current="page"><span class="chapter-num">บทที่ 5</span><span class="chapter-name">JavaScript Fundamentals</span></a>
+          <a class="chapter-link" href="web-js-functions-oop-dom.html"><span class="chapter-num">บทที่ 6</span><span class="chapter-name">Functions, OOP &amp; DOM</span></a>
+          <a class="chapter-link" href="web-ecmascript-features.html"><span class="chapter-num">บทที่ 7</span><span class="chapter-name">ECMAScript Features</span></a>
+        </div>
+      </nav>
+      <span class="eyebrow">ITDS241 · บทที่ 5 · Lecture 06</span>
+      <h1>JavaScript Fundamentals</h1>
+      <p class="course-lede">JavaScript ส่วนที่ 1 — ใส่ script ในหน้าเว็บ, ประกาศตัวแปรด้วย var / let / const, รู้จักชนิดข้อมูลและ built-in objects, ใช้ operator ให้ถูกลำดับ แล้วควบคุมการทำงานด้วย if, switch และ loop · โค้ดตัวอย่างทุกกล่องกดรันได้</p>
+      <ul class="course-meta" aria-label="ข้อมูลบทเรียน">
+        <li class="chip chip--accent">ITDS241 Web Technologies and Applications</li>
+        <li class="chip">1 ไฟล์สไลด์ · Lecture06 JavaScript Part 1</li>
+        <li class="chip">แบบฝึกหัด 20 ข้อ</li>
+        <li class="chip">โจทย์เขียนโค้ด 6 ข้อ</li>
+      </ul>
+    </section>
+
+    <div class="tabbar" id="tabs">
+      <div class="wrap">
+        <div class="tabs tabs--4" role="tablist" aria-label="ส่วนของหน้า">
+          <button class="tab" role="tab" id="tab-content" aria-controls="content" aria-selected="true" type="button">
+            <svg class="tab-icon" viewBox="0 0 20 20" aria-hidden="true"><path d="M4 3.5h8.5L16 7v9.5H4z M12 3.5V7h4 M7 10h6 M7 13h4" /></svg>
+            เนื้อหา
+          </button>
+          <button class="tab" role="tab" id="tab-summary" aria-controls="summary" aria-selected="false" type="button">
+            <svg class="tab-icon" viewBox="0 0 20 20" aria-hidden="true"><path d="M3.5 4h13v12h-13z M3.5 8h13 M8.5 8v8" /></svg>
+            สรุป
+          </button>
+          <button class="tab" role="tab" id="tab-quiz" aria-controls="quiz" aria-selected="false" type="button">
+            <svg class="tab-icon" viewBox="0 0 20 20" aria-hidden="true"><path d="M10 17a7 7 0 1 0 0-14 7 7 0 0 0 0 14z M6.8 10.2l2.2 2.2 4.2-4.6" /></svg>
+            แบบฝึกหัด
+          </button>
+          <button class="tab" role="tab" id="tab-code" aria-controls="code" aria-selected="false" type="button">
+            <svg class="tab-icon" viewBox="0 0 20 20" aria-hidden="true"><path d="M7 6l-4 4 4 4 M13 6l4 4-4 4 M11.2 4.5l-2.4 11" /></svg>
+            เขียนโค้ด
+          </button>
+          <span class="tab-indicator" aria-hidden="true"></span>
+        </div>
+      </div>
+    </div>
+
+    <div class="wrap panels">
+
+      <!-- =============================================================
+           แท็บ 1: เนื้อหา
+           ============================================================= -->
+      <section class="panel" id="content" role="tabpanel" aria-labelledby="tab-content" tabindex="-1">
+        <div class="panel-head">
+          <h2>เนื้อหาแยกตามหัวข้อในสไลด์</h2>
+          <div class="panel-actions">
+            <button class="btn btn--ghost btn--sm" type="button" data-acc-all="open">เปิดทั้งหมด</button>
+            <button class="btn btn--ghost btn--sm" type="button" data-acc-all="close">ปิดทั้งหมด</button>
+          </div>
+        </div>
+
+        <div class="acc">
+
+<!-- ================= 01 What is JS ================= -->
+          <div class="acc-item is-open">
+            <h3 class="acc-heading">
+              <button class="acc-trigger" type="button" aria-expanded="true" aria-controls="acc-j5-intro" id="acc-j5-intro-btn">
+                <span class="acc-index">01</span>
+                <span class="acc-title">
+                  <span class="acc-name">JavaScript คืออะไร วิธีใช้ในหน้าเว็บ และการแสดงผล</span>
+                  <span class="acc-file">ITDS241-Lecture06-JavaScript Part 1 · ส่วน A, B, D</span>
+                </span>
+                <svg class="acc-chevron" viewBox="0 0 20 20" aria-hidden="true"><path d="M5 7.5l5 5 5-5" /></svg>
+              </button>
+            </h3>
+            <div class="acc-panel" id="acc-j5-intro" role="region" aria-labelledby="acc-j5-intro-btn">
+              <div class="acc-panel-inner">
+                <div class="acc-body">
+
+                  <nav class="toc" aria-label="หัวข้อในการ์ด JavaScript คืออะไร">
+                    <a href="#j5-what">JavaScript คืออะไร</a>
+                    <a href="#j5-use">วิธีใช้ในหน้าเว็บ</a>
+                    <a href="#j5-output">Displaying Output</a>
+                  </nav>
+
+                  <section class="topic" id="j5-what">
+                    <h4>JavaScript คืออะไร</h4>
+                    <p>JavaScript ถูกออกแบบมาเพื่อ<strong>เพิ่มความ interactive ให้หน้า HTML</strong> เป็น <strong>scripting language แบบ lightweight</strong> ที่โดยทั่วไปฝังอยู่ในหน้า HTML โดยตรง</p>
+                    <div class="callout callout--def">
+                      <span class="callout-label">Interpreted language</span>
+                      <p>JavaScript เป็น <b>interpreted language</b> — script <b>ทำงานได้เลยโดยไม่ต้อง compile ล่วงหน้า</b> และมาพร้อม library สำเร็จรูปจำนวนมากที่เรียกว่า <b>API (Application Programming Interfaces)</b></p>
+                    </div>
+                    <p><strong>ความสามารถของ JavaScript</strong></p>
+                    <ul>
+                      <li>ใส่ข้อความ dynamic ลงในหน้า HTML</li>
+                      <li>ตอบสนองต่อ event</li>
+                      <li>อ่าน/เขียน HTML element</li>
+                      <li>validate ข้อมูล</li>
+                      <li>ตรวจจับ browser ของผู้เข้าชม</li>
+                      <li>สร้าง cookie</li>
+                    </ul>
+                  </section>
+
+                  <section class="topic" id="j5-use">
+                    <h4>วิธีใช้ JavaScript ในหน้าเว็บ</h4>
+                    <div class="compare">
+                      <div class="compare-col">
+                        <h5>แทรกในไฟล์ HTML โดยตรง</h5>
+                        <p>เขียนโค้ดไว้ใน <code>&lt;script&gt;...&lt;/script&gt;</code> วาง<strong>ตรงไหนของ <code>&lt;head&gt;</code> หรือ <code>&lt;body&gt;</code> ก็ได้</strong></p>
+                      </div>
+                      <div class="compare-col">
+                        <h5>import จากไฟล์ .js แยก</h5>
+                        <p>ใช้ <code>&lt;script src="myScript.js"&gt;&lt;/script&gt;</code></p>
+                      </div>
+                    </div>
+                    <pre class="code-block" data-lang="html"><code>&lt;body&gt;
+  &lt;!-- 1. แทรกโดยตรง --&gt;
+  &lt;script&gt;
+    console.log("Hello from inline script");
+  &lt;/script&gt;
+
+  &lt;!-- 2. import จากไฟล์แยก --&gt;
+  &lt;script src="myScript.js"&gt;&lt;/script&gt;
+&lt;/body&gt;</code></pre>
+                    <pre class="code-block" data-lang="js"><code>// ไฟล์ myScript.js — เขียนโค้ด JS ธรรมดาได้เลย
+console.log("Hello from myScript.js");</code></pre>
+                    <div class="callout callout--warn">
+                      <span class="callout-label">ข้อสำคัญ</span>
+                      <p>ไฟล์ .js <b>ไม่ต้องมี tag &lt;script&gt; ครอบ</b> — เขียนโค้ด JS ธรรมดาได้เลย</p>
+                    </div>
+                  </section>
+
+                  <section class="topic" id="j5-output">
+                    <h4>การแสดงผล (Displaying Output)</h4>
+                    <p>แสดงผลได้ 2 ทาง: ผ่าน <strong>console</strong> (developer ใช้เป็นหลัก) ด้วย <code>console.log(...)</code> หรือแสดงบนหน้าเว็บโดยตรง</p>
+                    <dl class="defs defs--stack">
+                      <div><dt>Windows</dt><dd>กด <kbd>F12</kbd> เพื่อเปิด console</dd></div>
+                      <div><dt>macOS</dt><dd>กด <kbd>option</kbd> + <kbd>cmd</kbd> + <kbd>J</kbd></dd></div>
+                    </dl>
+                    <p>โค้ดตัวอย่างในหน้านี้กดปุ่ม ▶ เพื่อรันได้ ผลของ <code>console.log</code> จะแสดงในกล่องด้านล่างโค้ด</p>
+                    <pre class="code-block" data-lang="js" data-run><code>console.log("Hello, JavaScript!");
+console.log(2 + 3);
+console.log("ผลรวม", 10 + 20);</code></pre>
+                  </section>
+
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- ================= 02 Variables & data types ================= -->
+          <div class="acc-item">
+            <h3 class="acc-heading">
+              <button class="acc-trigger" type="button" aria-expanded="false" aria-controls="acc-j5-var" id="acc-j5-var-btn">
+                <span class="acc-index">02</span>
+                <span class="acc-title">
+                  <span class="acc-name">ตัวแปร (var / let / const) และ Data Types</span>
+                  <span class="acc-file">ITDS241-Lecture06-JavaScript Part 1 · ส่วน C, E</span>
+                </span>
+                <svg class="acc-chevron" viewBox="0 0 20 20" aria-hidden="true"><path d="M5 7.5l5 5 5-5" /></svg>
+              </button>
+            </h3>
+            <div class="acc-panel" id="acc-j5-var" role="region" aria-labelledby="acc-j5-var-btn">
+              <div class="acc-panel-inner">
+                <div class="acc-body">
+
+                  <nav class="toc" aria-label="หัวข้อในการ์ดตัวแปร">
+                    <a href="#j5-variable">Variable</a>
+                    <a href="#j5-naming">กฎการตั้งชื่อ</a>
+                    <a href="#j5-var-let-const">var vs let vs const</a>
+                    <a href="#j5-types">6 Data Types</a>
+                    <a href="#j5-weak">Weakly typed &amp; typeof</a>
+                  </nav>
+
+                  <section class="topic" id="j5-variable">
+                    <h4>ตัวแปร (Variables)</h4>
+                    <p><strong>Variable</strong> คือกลไกให้โปรแกรม<strong>เก็บข้อมูลชั่วคราวแล้วอ้างอิงด้วยชื่อ</strong>ในภายหลัง คำสำคัญ <code>var</code> บ่งบอกว่ากำลังประกาศตัวแปร</p>
+                    <div class="callout callout--warn">
+                      <span class="callout-label">= ไม่ใช่เครื่องหมายเท่ากับ</span>
+                      <p>เครื่องหมาย <code>=</code> ใน JS <b>ไม่ใช่</b>เครื่องหมายเท่ากันแบบคณิตศาสตร์ แต่เป็น <b>assignment operator</b> (ตัวดำเนินการกำหนดค่า) — <code>x = x + 1</code> จึงแปลว่า "เอาค่า x บวก 1 แล้วเก็บกลับลงใน x"</p>
+                    </div>
+                  </section>
+
+                  <section class="topic" id="j5-naming">
+                    <h4>กฎการตั้งชื่อตัวแปร</h4>
+                    <ol class="steps">
+                      <li>ต้อง<strong>ขึ้นต้นด้วยตัวอักษร</strong></li>
+                      <li>ประกอบด้วยตัวอักษรและตัวเลขผสมกัน — <strong>ห้ามมีช่องว่าง</strong></li>
+                      <li><strong>ห้ามใช้คำสงวน</strong> (keyword เช่น <code>var</code>) เป็นชื่อตัวแปร</li>
+                    </ol>
+                    <div class="compare">
+                      <div class="compare-col"><h5>ชื่อที่ใช้ได้</h5><p><code>score</code> · <code>player1</code> · <code>totalPrice</code></p></div>
+                      <div class="compare-col"><h5>ชื่อที่ใช้ไม่ได้</h5><p><code>1player</code> (ขึ้นต้นด้วยตัวเลข) · <code>total price</code> (มีช่องว่าง) · <code>var</code> (คำสงวน)</p></div>
+                    </div>
+                  </section>
+
+                  <section class="topic" id="j5-var-let-const">
+                    <h4>var vs let vs const (ES6)</h4>
+                    <div class="table-scroll">
+                      <table>
+                        <thead><tr><th></th><th>Scope</th><th>อัปเดตค่า</th><th>ประกาศซ้ำ (ชื่อเดียวกัน)</th></tr></thead>
+                        <tbody>
+                          <tr><td><code>var</code></td><td><strong>ไม่ใช่ block-scoped</strong> — scope คือทั้งฟังก์ชันหรือ global</td><td>ได้</td><td>ได้ (ตัวแปรใน block ย่อยเขียนทับตัวนอก)</td></tr>
+                          <tr><td><code>let</code></td><td><strong>block-scoped</strong></td><td>ได้</td><td><strong>ไม่ได้</strong> ในขอบเขตเดียวกัน</td></tr>
+                          <tr><td><code>const</code></td><td>block-scoped</td><td><strong>ไม่ได้</strong></td><td><strong>ไม่ได้</strong></td></tr>
+                        </tbody>
+                      </table>
+                    </div>
+                    <p><strong>ปัญหาของ var:</strong> ตัวแปรชื่อเดียวกันที่ประกาศซ้ำใน code block ย่อยจะไป<strong>เขียนทับค่าเดิม</strong>ของตัวแปรนอก block เพราะ scope ของ var คือทั้งฟังก์ชันหรือ global ไม่ใช่แค่ block นั้น — ส่วน <code>let</code> ใน block ย่อยเป็นตัวแปรคนละตัวกัน</p>
+                    <pre class="code-block" data-lang="js" data-run><code>var x = 10;
+if (true) {
+  var x = 20;   // ประกาศซ้ำใน block ย่อย
+}
+console.log("var x =", x);   // 20 — ค่าเดิมถูกเขียนทับ
+
+let y = 10;
+if (true) {
+  let y = 20;   // เป็นตัวแปรของ block นี้เท่านั้น
+}
+console.log("let y =", y);   // 10 — ค่าเดิมไม่ถูกแตะ</code></pre>
+                    <p><strong>let อัปเดตค่าได้ แต่ประกาศซ้ำในขอบเขตเดียวกันไม่ได้</strong> — รันแล้วจะเกิด SyntaxError ทั้ง script</p>
+                    <pre class="code-block" data-lang="js" data-run><code>let a = 1;
+a = 2;        // อัปเดตค่าได้
+let a = 3;    // ประกาศซ้ำชื่อเดิม → error</code></pre>
+                    <p><strong>const อัปเดตค่าไม่ได้เลย</strong>หลังกำหนดค่าเริ่มต้น</p>
+                    <pre class="code-block" data-lang="js" data-run><code>const RATE = 7;
+console.log(RATE);
+RATE = 10;    // เปลี่ยนค่าคงที่ → TypeError</code></pre>
+                  </section>
+
+                  <section class="topic" id="j5-types">
+                    <h4>JavaScript Data Types (6 ประเภท)</h4>
+                    <div class="table-scroll">
+                      <table>
+                        <thead><tr><th>Type</th><th>ความหมาย</th><th>ตัวอย่าง</th></tr></thead>
+                        <tbody>
+                          <tr><td>Boolean</td><td>ค่าตรรกะ มี 2 ค่า</td><td><code>true</code>, <code>false</code></td></tr>
+                          <tr><td>Number</td><td>ค่าตัวเลข ช่วง -(2<sup>53</sup>-1) ถึง 2<sup>53</sup>-1</td><td><code>42</code>, <code>3.14</code></td></tr>
+                          <tr><td>String</td><td>ข้อมูลข้อความ</td><td><code>"hello"</code></td></tr>
+                          <tr><td>Null</td><td>การไม่มีค่าใดๆ <strong>โดยตั้งใจ</strong> ("Nothing")</td><td><code>null</code></td></tr>
+                          <tr><td>Undefined</td><td>ตัวแปรที่<strong>ประกาศแล้วแต่ยังไม่กำหนดค่า</strong> จะมีค่าเป็น undefined อัตโนมัติ</td><td><code>let u;</code></td></tr>
+                          <tr><td>Object</td><td>ทั้ง user-defined และ built-in (เช่น Number, Math, Date, Array, String)</td><td><code>{ name: "A" }</code></td></tr>
+                        </tbody>
+                      </table>
+                    </div>
+                    <div class="callout callout--warn">
+                      <span class="callout-label">null กับ undefined</span>
+                      <p><b>null</b> = ตั้งใจให้ไม่มีค่า · <b>undefined</b> = ประกาศตัวแปรแล้ว<b>แต่ยังไม่ได้กำหนดค่า</b></p>
+                    </div>
+                  </section>
+
+                  <section class="topic" id="j5-weak">
+                    <h4>Weakly typed และ typeof</h4>
+                    <p>JavaScript เป็นภาษาแบบ <strong>"weakly typed"</strong> — ตัวแปรหนึ่งตัว<strong>เก็บค่าต่างชนิดข้อมูลกันได้ในแต่ละช่วงเวลา</strong>ของการรันโปรแกรม เช่น ตัวแปรที่เก็บตัวเลขอยู่ถูก assign เป็น string ทีหลังได้ ใช้ <code>typeof</code> ตรวจชนิดข้อมูลของตัวแปร ณ ขณะนั้น</p>
+                    <pre class="code-block" data-lang="js" data-run><code>let value = 42;
+console.log(value, typeof value);     // number
+
+value = "forty-two";                  // เปลี่ยนเป็น string ได้
+console.log(value, typeof value);     // string
+
+value = true;
+console.log(value, typeof value);     // boolean
+
+let nothing;
+console.log(nothing, typeof nothing); // undefined</code></pre>
+                  </section>
+
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- ================= 03 Built-in objects ================= -->
+          <div class="acc-item">
+            <h3 class="acc-heading">
+              <button class="acc-trigger" type="button" aria-expanded="false" aria-controls="acc-j5-obj" id="acc-j5-obj-btn">
+                <span class="acc-index">03</span>
+                <span class="acc-title">
+                  <span class="acc-name">Built-in Objects: Number, Math, Date, Array, String</span>
+                  <span class="acc-file">ITDS241-Lecture06-JavaScript Part 1 · ส่วน F</span>
+                </span>
+                <svg class="acc-chevron" viewBox="0 0 20 20" aria-hidden="true"><path d="M5 7.5l5 5 5-5" /></svg>
+              </button>
+            </h3>
+            <div class="acc-panel" id="acc-j5-obj" role="region" aria-labelledby="acc-j5-obj-btn">
+              <div class="acc-panel-inner">
+                <div class="acc-body">
+
+                  <nav class="toc" aria-label="หัวข้อในการ์ด built-in objects">
+                    <a href="#j5-number">Number</a>
+                    <a href="#j5-math">Math</a>
+                    <a href="#j5-date">Date</a>
+                    <a href="#j5-array">Array</a>
+                    <a href="#j5-string">String</a>
+                  </nav>
+
+                  <section class="topic" id="j5-number">
+                    <h4>Number</h4>
+                    <p><strong>wrapper object</strong> สำหรับค่าตัวเลข มี method เช่น <code>Number.isNaN()</code>, <code>Number.isInteger()</code>, <code>Number.parseInt()</code>, <code>Number.parseFloat()</code></p>
+                    <pre class="code-block" data-lang="js" data-run><code>console.log(Number.isInteger(5));        // true
+console.log(Number.isInteger(5.5));      // false
+console.log(Number.parseInt("42px"));    // 42
+console.log(Number.parseFloat("3.75"));  // 3.75
+console.log(Number.isNaN(Number.parseInt("abc")));  // true</code></pre>
+                  </section>
+
+                  <section class="topic" id="j5-math">
+                    <h4>Math</h4>
+                    <p>มี property เช่น <code>Math.PI</code> และ method เช่น <code>Math.pow(x, y)</code>, <code>Math.round(x)</code>, <code>Math.abs(x)</code></p>
+                    <div class="callout callout--warn">
+                      <span class="callout-label">ข้อควรจำ</span>
+                      <p><b>Math ไม่มี constructor</b> — เรียกใช้ผ่าน <code>Math.ชื่อ</code> ได้เลย ไม่ต้อง <code>new Math()</code></p>
+                    </div>
+                    <pre class="code-block" data-lang="js" data-run><code>console.log(Math.PI);          // 3.141592653589793
+console.log(Math.pow(2, 10));  // 1024
+console.log(Math.round(4.6));  // 5
+console.log(Math.abs(-7));     // 7</code></pre>
+                  </section>
+
+                  <section class="topic" id="j5-date">
+                    <h4>Date</h4>
+                    <p>แทน<strong>ช่วงเวลาหนึ่งจุด</strong> คำนวณจาก<strong>มิลลิวินาทีนับจาก 1 มกราคม 1970 UTC</strong> มี method เช่น <code>dateObj.getDate()</code>, <code>getDay()</code>, <code>getFullYear()</code></p>
+                    <pre class="code-block" data-lang="js" data-run><code>const now = new Date();
+console.log(now.getDate());      // วันที่ของเดือน
+console.log(now.getDay());       // วันในสัปดาห์ (ตัวเลข)
+console.log(now.getFullYear());  // ปี ค.ศ.</code></pre>
+                  </section>
+
+                  <section class="topic" id="j5-array">
+                    <h4>Array</h4>
+                    <p>object แบบ <strong>list</strong> มี property <code>length</code> บอกจำนวนสมาชิก และ method สำคัญ</p>
+                    <div class="table-scroll">
+                      <table>
+                        <thead><tr><th>Method</th><th>ทำอะไร</th></tr></thead>
+                        <tbody>
+                          <tr><td><code>push()</code></td><td>เพิ่มสมาชิกท้าย array</td></tr>
+                          <tr><td><code>pop()</code></td><td>ลบและคืนค่าสมาชิกตัวสุดท้าย</td></tr>
+                          <tr><td><code>indexOf()</code></td><td>หาตำแหน่งแรกของค่าที่ระบุ</td></tr>
+                          <tr><td><code>forEach()</code></td><td>รันฟังก์ชันกับทุกสมาชิก</td></tr>
+                          <tr><td><code>map()</code></td><td>สร้าง array ใหม่จากผลลัพธ์การรันฟังก์ชันกับทุกสมาชิก</td></tr>
+                          <tr><td><code>filter()</code>, <code>reduce()</code></td><td>method อื่นที่ใช้บ่อย</td></tr>
+                        </tbody>
+                      </table>
+                    </div>
+                    <pre class="code-block" data-lang="js" data-run><code>const fruits = ["apple", "banana"];
+fruits.push("cherry");
+console.log(fruits, fruits.length);        // 3 สมาชิก
+
+const last = fruits.pop();
+console.log(last, fruits);                 // cherry ถูกลบออก
+
+console.log(fruits.indexOf("banana"));     // 1 (นับจาก 0)
+
+fruits.forEach(function (f) { console.log("-", f); });
+
+const lengths = fruits.map(function (f) { return f.length; });
+console.log(lengths);                      // array ใหม่</code></pre>
+                  </section>
+
+                  <section class="topic" id="j5-string">
+                    <h4>String</h4>
+                    <p>มี property <code>length</code> และ method เช่น <code>charAt()</code> (ตัวอักษรที่ตำแหน่งที่ระบุ), <code>split()</code> (แยก string เป็น array ตาม delimiter), <code>substring()</code> (ตัด string ช่วงที่ระบุ)</p>
+                    <pre class="code-block" data-lang="js" data-run><code>const text = "Hello World";
+console.log(text.length);            // 11
+console.log(text.charAt(0));         // H
+console.log(text.split(" "));        // ["Hello", "World"]
+console.log(text.substring(0, 5));   // Hello</code></pre>
+                  </section>
+
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- ================= 04 Operators ================= -->
+          <div class="acc-item">
+            <h3 class="acc-heading">
+              <button class="acc-trigger" type="button" aria-expanded="false" aria-controls="acc-j5-op" id="acc-j5-op-btn">
+                <span class="acc-index">04</span>
+                <span class="acc-title">
+                  <span class="acc-name">JavaScript Operators และ Precedence</span>
+                  <span class="acc-file">ITDS241-Lecture06-JavaScript Part 1 · ส่วน G</span>
+                </span>
+                <svg class="acc-chevron" viewBox="0 0 20 20" aria-hidden="true"><path d="M5 7.5l5 5 5-5" /></svg>
+              </button>
+            </h3>
+            <div class="acc-panel" id="acc-j5-op" role="region" aria-labelledby="acc-j5-op-btn">
+              <div class="acc-panel-inner">
+                <div class="acc-body">
+
+                  <nav class="toc" aria-label="หัวข้อในการ์ด operators">
+                    <a href="#j5-arith">Arithmetic</a>
+                    <a href="#j5-assign">Assignment</a>
+                    <a href="#j5-compare">Comparison</a>
+                    <a href="#j5-logical">Logical</a>
+                    <a href="#j5-precedence">Precedence</a>
+                  </nav>
+
+                  <section class="topic" id="j5-arith">
+                    <h4>Arithmetic operators</h4>
+                    <div class="table-scroll">
+                      <table>
+                        <thead><tr><th>Operator</th><th>ความหมาย</th><th>ตัวอย่าง → ผล</th></tr></thead>
+                        <tbody>
+                          <tr><td><code>+</code></td><td>บวก</td><td><code>5 + 3</code> → 8</td></tr>
+                          <tr><td><code>-</code></td><td>ลบ</td><td><code>5 - 3</code> → 2</td></tr>
+                          <tr><td><code>*</code></td><td>คูณ</td><td><code>5 * 3</code> → 15</td></tr>
+                          <tr><td><code>/</code></td><td>หาร</td><td><code>6 / 3</code> → 2</td></tr>
+                          <tr><td><code>%</code></td><td>หารเอาเศษ (remainder)</td><td><code>5 % 3</code> → <strong>2</strong></td></tr>
+                          <tr><td><code>**</code></td><td>ยกกำลัง</td><td><code>2 ** 3</code> → 8</td></tr>
+                          <tr><td><code>++</code> / <code>--</code></td><td>เพิ่ม / ลดค่าทีละ 1</td><td><code>x++</code></td></tr>
+                        </tbody>
+                      </table>
+                    </div>
+                    <p><strong>ลำดับการคำนวณ:</strong> คูณ / หาร / มอดูโล <strong>ก่อน</strong> บวก / ลบ ทีหลัง และใช้<strong>วงเล็บจัดกลุ่มนิพจน์</strong>ได้เหมือนพีชคณิต</p>
+                    <pre class="code-block" data-lang="js" data-run><code>console.log(5 % 3);        // 2  (5 หาร 3 ได้ 1 เศษ 2)
+console.log(2 + 3 * 4);    // 14 (คูณก่อน: 3*4 = 12 แล้ว +2)
+console.log((2 + 3) * 4);  // 20 (วงเล็บก่อน: 2+3 = 5 แล้ว *4)
+let count = 0;
+count++;
+count++;
+console.log(count);        // 2</code></pre>
+                  </section>
+
+                  <section class="topic" id="j5-assign">
+                    <h4>Assignment operators</h4>
+                    <p><code>=</code> กำหนดค่า และมี <strong>assignment แบบย่อ</strong> <code>+=</code> <code>-=</code> <code>*=</code> <code>/=</code> <code>%=</code></p>
+                    <code class="formula">x += y  เทียบเท่า  x = x + y</code>
+                    <pre class="code-block" data-lang="js" data-run><code>let x = 10;
+x += 5;   console.log(x);   // 15  (x = 10 + 5)
+x -= 3;   console.log(x);   // 12
+x *= 2;   console.log(x);   // 24
+x /= 4;   console.log(x);   // 6
+x %= 4;   console.log(x);   // 2</code></pre>
+                  </section>
+
+                  <section class="topic" id="j5-compare">
+                    <h4>Comparison operators</h4>
+                    <div class="compare">
+                      <div class="compare-col">
+                        <h5>Strict comparison <code>===</code> / <code>!==</code></h5>
+                        <p>เปรียบเทียบ<strong>ทั้งชนิดข้อมูลและค่า</strong></p>
+                      </div>
+                      <div class="compare-col">
+                        <h5>Type-converting <code>==</code> / <code>!=</code></h5>
+                        <p><strong>แปลงชนิดข้อมูลก่อน</strong>แล้วจึงเปรียบเทียบ</p>
+                      </div>
+                    </div>
+                    <pre class="code-block" data-lang="js" data-run><code>console.log("1" === 1);   // false — string กับ number คนละชนิด
+console.log("1" == 1);    // true  — แปลงชนิดก่อนเปรียบเทียบ
+console.log("1" !== 1);   // true
+console.log(5 > 3, 5 <= 3);</code></pre>
+                    <div class="callout callout--warn">
+                      <span class="callout-label">จุดที่ข้อสอบชอบถาม</span>
+                      <p><code>"1" === 1</code> → <b>false</b> (คนละชนิดข้อมูล) แต่ <code>"1" == 1</code> → <b>true</b> (แปลงชนิดก่อน)</p>
+                    </div>
+                  </section>
+
+                  <section class="topic" id="j5-logical">
+                    <h4>Logical operators</h4>
+                    <p><code>&amp;&amp;</code> (AND), <code>||</code> (OR), <code>!</code> (NOT) ใช้กับค่า Boolean</p>
+                    <pre class="code-block" data-lang="js" data-run><code>const age = 20;
+const hasTicket = true;
+console.log(age >= 18 && hasTicket);   // true  — จริงทั้งคู่
+console.log(age < 18 || hasTicket);    // true  — จริงอย่างน้อยหนึ่ง
+console.log(!hasTicket);               // false — กลับค่า</code></pre>
+                  </section>
+
+                  <section class="topic" id="j5-precedence">
+                    <h4>Operator precedence (ลำดับความสำคัญ จากสูงไปต่ำ)</h4>
+                    <ol class="steps">
+                      <li>วงเล็บ <code>()</code></li>
+                      <li>postfix increment / decrement (<code>x++</code>, <code>x--</code>)</li>
+                      <li>logical NOT / unary (<code>!</code>)</li>
+                      <li>exponentiation (<code>**</code>)</li>
+                      <li>คูณ / หาร / มอดูโล (<code>*</code> <code>/</code> <code>%</code>)</li>
+                      <li>บวก / ลบ (<code>+</code> <code>-</code>)</li>
+                      <li>comparison (<code>&lt;</code> <code>&gt;</code> <code>&lt;=</code> <code>&gt;=</code>)</li>
+                      <li>equality (<code>==</code> <code>===</code> <code>!=</code> <code>!==</code>)</li>
+                      <li>logical AND (<code>&amp;&amp;</code>)</li>
+                      <li>logical OR (<code>||</code>)</li>
+                      <li>assignment (<code>=</code> <code>+=</code> …)</li>
+                    </ol>
+                    <p><strong>ตัวอย่างไล่ลำดับ:</strong> <code>let r = 2 + 3 * 4 &gt; 10 &amp;&amp; true;</code></p>
+                    <ol class="steps">
+                      <li>คูณก่อน: <code>3 * 4</code> = 12 → <code>2 + 12 &gt; 10 &amp;&amp; true</code></li>
+                      <li>บวก: <code>2 + 12</code> = 14 → <code>14 &gt; 10 &amp;&amp; true</code></li>
+                      <li>comparison: <code>14 &gt; 10</code> = true → <code>true &amp;&amp; true</code></li>
+                      <li>logical AND: true → assignment ทำเป็นขั้นสุดท้าย <code>r = true</code></li>
+                    </ol>
+                    <pre class="code-block" data-lang="js" data-run><code>let r = 2 + 3 * 4 > 10 && true;
+console.log(r);   // true</code></pre>
+                  </section>
+
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- ================= 05 Control structures ================= -->
+          <div class="acc-item">
+            <h3 class="acc-heading">
+              <button class="acc-trigger" type="button" aria-expanded="false" aria-controls="acc-j5-ctrl" id="acc-j5-ctrl-btn">
+                <span class="acc-index">05</span>
+                <span class="acc-title">
+                  <span class="acc-name">Execution Control Structures</span>
+                  <span class="acc-file">ITDS241-Lecture06-JavaScript Part 1 · ส่วน H</span>
+                </span>
+                <svg class="acc-chevron" viewBox="0 0 20 20" aria-hidden="true"><path d="M5 7.5l5 5 5-5" /></svg>
+              </button>
+            </h3>
+            <div class="acc-panel" id="acc-j5-ctrl" role="region" aria-labelledby="acc-j5-ctrl-btn">
+              <div class="acc-panel-inner">
+                <div class="acc-body">
+
+                  <nav class="toc" aria-label="หัวข้อในการ์ด control structures">
+                    <a href="#j5-if">if / if-else / if-else-if</a>
+                    <a href="#j5-ternary">Ternary</a>
+                    <a href="#j5-switch">switch</a>
+                    <a href="#j5-loops">while / do-while / for</a>
+                    <a href="#j5-break">break &amp; continue</a>
+                    <a href="#j5-label">Label</a>
+                    <a href="#j5-counter">Counter vs Sentinel</a>
+                    <a href="#j5-iterate">วนซ้ำ array &amp; object</a>
+                  </nav>
+
+                  <section class="topic" id="j5-if">
+                    <h4>Decision: if, if-else, if-else-if</h4>
+                    <p>โครงสร้างการตัดสินใจเลือกทำคำสั่งตามเงื่อนไข — <strong>if-else-if</strong> คือการซ้อน if-else หลายชั้นในส่วน else</p>
+                    <pre class="code-block" data-lang="js" data-run><code>const score = 72;
+
+if (score >= 50) {
+  console.log("ผ่าน");            // if
+}
+
+if (score >= 80) {
+  console.log("ดีมาก");
+} else {
+  console.log("ยังไม่ถึง 80");     // if-else
+}
+
+if (score >= 80) {
+  console.log("A");
+} else if (score >= 70) {
+  console.log("B");               // if-else-if: เงื่อนไขแรกที่จริงถูกเลือก
+} else {
+  console.log("C");
+}</code></pre>
+                  </section>
+
+                  <section class="topic" id="j5-ternary">
+                    <h4>Ternary operator</h4>
+                    <code class="formula">condition ? expr1 : expr2</code>
+                    <p>เป็น<strong>ทางลัดของ if-else</strong> — ถ้า condition จริงได้ expr1 ถ้าเท็จได้ expr2</p>
+                    <pre class="code-block" data-lang="js" data-run><code>const age = 16;
+const status = age >= 18 ? "adult" : "minor";
+console.log(status);   // minor</code></pre>
+                  </section>
+
+                  <section class="topic" id="j5-switch">
+                    <h4>switch</h4>
+                    <p>switch <strong>จับคู่ค่าของนิพจน์กับ case</strong> แล้วรันโค้ดของ case นั้น</p>
+                    <div class="callout callout--warn">
+                      <span class="callout-label">Fall through</span>
+                      <p>ถ้า case ไม่มี <code>break</code> โค้ดจะ<b>ทำงานต่อเนื่องไปยัง case ถัดไป</b> (fall through) จนกว่าจะเจอ break</p>
+                    </div>
+                    <pre class="code-block" data-lang="js" data-run><code>const fruit = "apple";
+switch (fruit) {
+  case "apple":
+    console.log("apple");
+    // ไม่มี break → fall through
+  case "banana":
+    console.log("banana (ทำงานต่อเพราะ case ก่อนหน้าไม่มี break)");
+    break;
+  case "cherry":
+    console.log("cherry (ไม่ถูกรัน เพราะเจอ break ก่อน)");
+    break;
+  default:
+    console.log("unknown");
+}</code></pre>
+                  </section>
+
+                  <section class="topic" id="j5-loops">
+                    <h4>Repetition: while, do-while, for</h4>
+                    <div class="callout callout--def">
+                      <span class="callout-label">หลักการเขียนลูป</span>
+                      <p>ต้องมั่นใจว่า<b>เงื่อนไขของลูปเป็นจริงก่อนรอบแรก</b> และ<b>โค้ดในลูปต้องเปลี่ยนแปลงเงื่อนไข</b>เพื่อให้ลูปจบได้ — ป้องกัน <b>infinite loop</b></p>
+                    </div>
+                    <div class="table-scroll">
+                      <table>
+                        <thead><tr><th>ลูป</th><th>ลักษณะ</th></tr></thead>
+                        <tbody>
+                          <tr><td><code>while</code></td><td>ทำซ้ำจนกว่าเงื่อนไขเป็นเท็จ — <strong>อาจไม่ทำงานเลย</strong>ถ้าเงื่อนไขเป็นเท็จตั้งแต่แรก</td></tr>
+                          <tr><td><code>do-while</code></td><td><strong>ทำงานอย่างน้อย 1 ครั้งเสมอ</strong>ก่อนตรวจเงื่อนไข</td></tr>
+                          <tr><td><code>for</code></td><td><code>for ([initialization]; [condition]; [final-expression]) { statement }</code></td></tr>
+                        </tbody>
+                      </table>
+                    </div>
+                    <pre class="code-block" data-lang="js" data-run><code>let n = 10;
+while (n < 5) {
+  console.log("while รอบนี้ไม่เกิด");   // เงื่อนไขเท็จตั้งแต่แรก
+}
+
+do {
+  console.log("do-while ทำ 1 ครั้ง แม้เงื่อนไขเท็จ");
+} while (n < 5);
+
+for (let i = 1; i <= 3; i++) {
+  console.log("for รอบที่", i);
+}</code></pre>
+                  </section>
+
+                  <section class="topic" id="j5-break">
+                    <h4>break และ continue</h4>
+                    <div class="compare">
+                      <div class="compare-col"><h5><code>break</code></h5><p><strong>หยุด</strong>การทำงานของ loop / switch / label ปัจจุบัน<strong>ทันที</strong></p></div>
+                      <div class="compare-col"><h5><code>continue</code></h5><p><strong>ข้ามคำสั่งที่เหลือในรอบปัจจุบัน</strong> แล้วไปเริ่มรอบถัดไปทันที</p></div>
+                    </div>
+                    <pre class="code-block" data-lang="js" data-run><code>for (let i = 1; i <= 10; i++) {
+  if (i % 2 === 0) continue;   // ข้ามเลขคู่
+  if (i > 7) break;            // เจอเลขเกิน 7 → หยุดลูป
+  console.log(i);              // 1 3 5 7
+}</code></pre>
+                  </section>
+
+                  <section class="topic" id="j5-label">
+                    <h4>Label และ Nesting</h4>
+                    <p><strong>Label</strong> ใช้ระบุชื่อ code block เพื่ออ้างอิงร่วมกับ break / continue ได้ มีประโยชน์เมื่อ<strong>มี loop ซ้อนกันหลายชั้น</strong> — และโครงสร้างควบคุม<strong>ซ้อนกัน (nesting) ได้ไม่จำกัดชั้น</strong></p>
+                    <pre class="code-block" data-lang="js" data-run><code>outer: for (let i = 1; i <= 3; i++) {
+  for (let j = 1; j <= 3; j++) {
+    if (i === 2 && j === 2) break outer;   // หยุดลูปนอกทั้งหมด
+    console.log(i, j);
+  }
+}</code></pre>
+                  </section>
+
+                  <section class="topic" id="j5-counter">
+                    <h4>Counter-controlled vs Sentinel-controlled loop</h4>
+                    <div class="compare">
+                      <div class="compare-col">
+                        <h5>Counter-controlled</h5>
+                        <p>ลูปที่ควบคุมด้วย<strong>ตัวนับ</strong>ที่อัปเดตทุกรอบจนกว่าจะถึงค่าที่กำหนด (มักใช้กับ for / while)</p>
+                      </div>
+                      <div class="compare-col">
+                        <h5>Sentinel-controlled</h5>
+                        <p>ลูปที่จบเมื่อพบ<strong>ค่า sentinel</strong> — ใช้เมื่อ<strong>คาดเดาจำนวนรอบล่วงหน้าไม่ได้</strong> (มักใช้กับ while)</p>
+                      </div>
+                    </div>
+                    <pre class="code-block" data-lang="js" data-run><code>// counter-controlled: รู้จำนวนรอบ (5 รอบ)
+let sum = 0;
+for (let i = 1; i <= 5; i++) sum += i;
+console.log("sum 1..5 =", sum);       // 15
+
+// sentinel-controlled: อ่านไปจนเจอค่า -1
+const inputs = [8, 3, 5, -1, 9];
+let k = 0;
+let total = 0;
+while (inputs[k] !== -1) {
+  total += inputs[k];
+  k++;
+}
+console.log("total ก่อนเจอ -1 =", total);  // 16</code></pre>
+                  </section>
+
+                  <section class="topic" id="j5-iterate">
+                    <h4>การวนซ้ำกับ Array และ Object</h4>
+                    <div class="compare">
+                      <div class="compare-col">
+                        <h5>Array</h5>
+                        <p><code>for (var i = 0; i &lt; arr.length; i++)</code> เข้าถึงสมาชิกทีละตัวด้วย <code>arr[i]</code></p>
+                      </div>
+                      <div class="compare-col">
+                        <h5>User-defined object</h5>
+                        <p><code>for (var prop in obj) { ... }</code> วนเข้าถึง<strong>ชื่อ property ทั้งหมด</strong>ของ object</p>
+                      </div>
+                    </div>
+                    <pre class="code-block" data-lang="js" data-run><code>var arr = ["HTML", "CSS", "JS"];
+for (var i = 0; i < arr.length; i++) {
+  console.log(i, arr[i]);
+}
+
+var student = { id: "6601", name: "Nida", major: "ICT" };
+for (var prop in student) {
+  console.log(prop, "=", student[prop]);   // prop คือชื่อ property
+}</code></pre>
+                  </section>
+
+                </div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </section>
+
+      <!-- =============================================================
+           แท็บ 2: สรุป (cheat sheet)
+           ============================================================= -->
+      <section class="panel" id="summary" role="tabpanel" aria-labelledby="tab-summary" tabindex="-1">
+        <div class="panel-head">
+          <h2>Cheat sheet</h2>
+          <p class="panel-sub">operator, var/let/const, data types, precedence, loop และ if/switch ของบทที่ 5 รวมไว้ในหน้าเดียว</p>
+        </div>
+
+        <div class="sheet">
+
+<article class="sheet-card sheet-card--wide">
+            <h3><span class="sheet-num">01</span> Operators 4 กลุ่ม</h3>
+            <div class="table-scroll">
+              <table>
+                <thead><tr><th>กลุ่ม</th><th>Symbol</th><th>จุดจำ</th></tr></thead>
+                <tbody>
+                  <tr><td class="nowrap">Arithmetic</td><td><code>+ - * / % ** ++ --</code></td><td><code>5 % 3</code> = <strong>2</strong> (เศษ) · คูณ/หาร/มอดูโล ก่อน บวก/ลบ</td></tr>
+                  <tr><td class="nowrap">Assignment</td><td><code>= += -= *= /= %=</code></td><td><code>x += y</code> = <code>x = x + y</code> · <code>=</code> คือกำหนดค่า ไม่ใช่เท่ากับ</td></tr>
+                  <tr><td class="nowrap">Comparison</td><td><code>=== !== == !=</code></td><td><code>"1" === 1</code> → <strong>false</strong> · <code>"1" == 1</code> → <strong>true</strong> (== แปลงชนิดก่อน)</td></tr>
+                  <tr><td class="nowrap">Logical</td><td><code>&amp;&amp; || !</code></td><td>AND · OR · NOT ใช้กับ Boolean</td></tr>
+                </tbody>
+              </table>
+            </div>
+          </article>
+
+          <article class="sheet-card">
+            <h3><span class="sheet-num">02</span> var / let / const</h3>
+            <div class="table-scroll">
+              <table>
+                <thead><tr><th></th><th>scope</th><th>อัปเดต</th><th>ประกาศซ้ำ</th></tr></thead>
+                <tbody>
+                  <tr><td><code>var</code></td><td>function / global</td><td>✓</td><td>✓ (block ย่อยเขียนทับ)</td></tr>
+                  <tr><td><code>let</code></td><td><strong>block</strong></td><td>✓</td><td>✗</td></tr>
+                  <tr><td><code>const</code></td><td><strong>block</strong></td><td>✗</td><td>✗</td></tr>
+                </tbody>
+              </table>
+            </div>
+            <p class="note">ชื่อตัวแปร: ขึ้นต้นด้วยตัวอักษร · ไม่มีช่องว่าง · ห้ามใช้คำสงวน</p>
+          </article>
+
+          <article class="sheet-card sheet-card--wide">
+            <h3><span class="sheet-num">03</span> 6 Data Types</h3>
+            <div class="table-scroll">
+              <table>
+                <thead><tr><th>Type</th><th>ความหมาย</th></tr></thead>
+                <tbody>
+                  <tr><td class="nowrap">Boolean</td><td>true / false</td></tr>
+                  <tr><td class="nowrap">Number</td><td>ตัวเลข ช่วง -(2<sup>53</sup>-1) ถึง 2<sup>53</sup>-1</td></tr>
+                  <tr><td class="nowrap">String</td><td>ข้อความ</td></tr>
+                  <tr><td class="nowrap">Null</td><td>ไม่มีค่าโดยตั้งใจ ("Nothing")</td></tr>
+                  <tr><td class="nowrap">Undefined</td><td>ประกาศแล้วแต่ยังไม่กำหนดค่า</td></tr>
+                  <tr><td class="nowrap">Object</td><td>user-defined + built-in (Number, Math, Date, Array, String)</td></tr>
+                </tbody>
+              </table>
+            </div>
+            <p class="note"><strong>weakly typed</strong> = ตัวแปรเปลี่ยนชนิดข้อมูลที่เก็บได้ระหว่างรัน · ตรวจด้วย <code>typeof</code> · JS = interpreted (ไม่ต้อง compile) · <code>&lt;script&gt;</code> หรือ <code>&lt;script src="x.js"&gt;</code> (ไฟล์ .js ไม่มี tag script)</p>
+          </article>
+
+          <article class="sheet-card">
+            <h3><span class="sheet-num">04</span> Operator precedence</h3>
+            <ol class="steps sheet-precedence">
+              <li><code>()</code></li>
+              <li>postfix <code>x++ x--</code></li>
+              <li><code>!</code> / unary</li>
+              <li><code>**</code></li>
+              <li><code>* / %</code></li>
+              <li><code>+ -</code></li>
+              <li>comparison <code>&lt; &gt;</code></li>
+              <li>equality <code>== ===</code></li>
+              <li><code>&amp;&amp;</code></li>
+              <li><code>||</code></li>
+              <li>assignment <code>=</code></li>
+            </ol>
+          </article>
+
+          <article class="sheet-card sheet-card--wide">
+            <h3><span class="sheet-num">05</span> Loops + break / continue</h3>
+            <div class="table-scroll">
+              <table>
+                <thead><tr><th>ลูป</th><th>ตรวจเงื่อนไข</th><th>จำนวนครั้งขั้นต่ำ</th></tr></thead>
+                <tbody>
+                  <tr><td class="nowrap"><code>while</code></td><td>ก่อนทำ</td><td><strong>0</strong> (อาจไม่ทำเลย) · มักใช้กับ sentinel</td></tr>
+                  <tr><td class="nowrap"><code>do-while</code></td><td>หลังทำ</td><td><strong>1</strong> ครั้งเสมอ</td></tr>
+                  <tr><td class="nowrap"><code>for</code></td><td>ก่อนทำ</td><td>0 · <code>for (init; condition; final-expression)</code> · มักใช้กับ counter</td></tr>
+                  <tr><td class="nowrap"><code>for...in</code></td><td>—</td><td>วนชื่อ property ของ object</td></tr>
+                </tbody>
+              </table>
+            </div>
+            <dl class="defs defs--stack">
+              <div><dt>break</dt><dd>หยุด loop / switch / label ปัจจุบันทันที</dd></div>
+              <div><dt>continue</dt><dd>ข้ามคำสั่งที่เหลือของรอบนี้ ไปรอบถัดไป</dd></div>
+              <div><dt>label</dt><dd>ตั้งชื่อ block ใช้กับ break/continue ในลูปซ้อน</dd></div>
+            </dl>
+          </article>
+
+          <article class="sheet-card">
+            <h3><span class="sheet-num">06</span> if / ternary / switch</h3>
+            <dl class="defs defs--stack">
+              <div><dt>if-else-if</dt><dd>ซ้อน if-else หลายชั้นในส่วน else</dd></div>
+              <div><dt>ternary</dt><dd><code>cond ? expr1 : expr2</code> = ทางลัด if-else</dd></div>
+              <div><dt>switch</dt><dd>จับคู่ค่ากับ case · <strong>ไม่มี break → fall through</strong> ไป case ถัดไป</dd></div>
+            </dl>
+          </article>
+
+        </div>
+      </section>
+
+      <!-- =============================================================
+           แท็บ 3: แบบฝึกหัด (20 ข้อ)
+           data-answer = ตัวเลือกที่ถูก (ก=a, ข=b, ค=c, ง=d ตามเฉลยที่ผู้ใช้กำหนด)
+           ============================================================= -->
+      <section class="panel" id="quiz" role="tabpanel" aria-labelledby="tab-quiz" tabindex="-1">
+        <div class="panel-head">
+          <h2>แบบฝึกหัด 20 ข้อ</h2>
+          <p class="panel-sub">เลือกคำตอบให้ครบแล้วกด "ตรวจคำตอบ" ด้านล่าง ระบบจะเฉลยพร้อมคำอธิบายทุกข้อ</p>
+        </div>
+
+        <form class="quiz" id="quiz-form" novalidate>
+
+          <fieldset class="q" data-answer="b">
+            <legend class="q-head"><span class="q-num">01</span><span class="q-text">JavaScript เป็นภาษาประเภทใด?</span></legend>
+            <div class="q-options">
+              <label class="opt"><input type="radio" name="q1" value="a" /><span class="opt-key">A</span><span class="opt-text">Compiled language ที่ต้องคอมไพล์ก่อนรันเสมอ</span></label>
+              <label class="opt"><input type="radio" name="q1" value="b" /><span class="opt-key">B</span><span class="opt-text">Scripting/Interpreted language ที่ทำงานโดยไม่ต้อง compile ล่วงหน้า</span></label>
+              <label class="opt"><input type="radio" name="q1" value="c" /><span class="opt-key">C</span><span class="opt-text">ภาษา Markup เหมือน HTML</span></label>
+              <label class="opt"><input type="radio" name="q1" value="d" /><span class="opt-key">D</span><span class="opt-text">ภาษาสำหรับฐานข้อมูลเท่านั้น</span></label>
+            </div>
+            <div class="q-feedback"><div class="q-feedback-inner"><p class="q-verdict" aria-live="polite"></p><p class="q-explain">JS เป็น scripting language แบบ lightweight และเป็น interpreted language — script ทำงานได้เลยโดยไม่ต้อง compile</p></div></div>
+          </fieldset>
+
+          <fieldset class="q" data-answer="b">
+            <legend class="q-head"><span class="q-num">02</span><span class="q-text">การแทรก JavaScript ในไฟล์ HTML โดยตรงใช้ tag ใด?</span></legend>
+            <div class="q-options">
+              <label class="opt"><input type="radio" name="q2" value="a" /><span class="opt-key">A</span><span class="opt-text">&lt;javascript&gt;</span></label>
+              <label class="opt"><input type="radio" name="q2" value="b" /><span class="opt-key">B</span><span class="opt-text">&lt;script&gt;</span></label>
+              <label class="opt"><input type="radio" name="q2" value="c" /><span class="opt-key">C</span><span class="opt-text">&lt;js&gt;</span></label>
+              <label class="opt"><input type="radio" name="q2" value="d" /><span class="opt-key">D</span><span class="opt-text">&lt;code&gt;</span></label>
+            </div>
+            <div class="q-feedback"><div class="q-feedback-inner"><p class="q-verdict" aria-live="polite"></p><p class="q-explain">เขียนใน &lt;script&gt;...&lt;/script&gt; วางไว้ใน &lt;head&gt; หรือ &lt;body&gt; ก็ได้</p></div></div>
+          </fieldset>
+
+          <fieldset class="q" data-answer="a">
+            <legend class="q-head"><span class="q-num">03</span><span class="q-text">การเชื่อมไฟล์ JS ภายนอกเข้ากับ HTML ใช้วิธีใด?</span></legend>
+            <div class="q-options">
+              <label class="opt"><input type="radio" name="q3" value="a" /><span class="opt-key">A</span><span class="opt-text">&lt;script src=&quot;myScript.js&quot;&gt;&lt;/script&gt;</span></label>
+              <label class="opt"><input type="radio" name="q3" value="b" /><span class="opt-key">B</span><span class="opt-text">&lt;link href=&quot;myScript.js&quot; /&gt;</span></label>
+              <label class="opt"><input type="radio" name="q3" value="c" /><span class="opt-key">C</span><span class="opt-text">&lt;import src=&quot;myScript.js&quot; /&gt;</span></label>
+              <label class="opt"><input type="radio" name="q3" value="d" /><span class="opt-key">D</span><span class="opt-text">&lt;js file=&quot;myScript.js&quot; /&gt;</span></label>
+            </div>
+            <div class="q-feedback"><div class="q-feedback-inner"><p class="q-verdict" aria-live="polite"></p><p class="q-explain">ใช้ attribute src ของ &lt;script&gt; · ส่วนไฟล์ .js เองไม่ต้องมี tag &lt;script&gt; ครอบ</p></div></div>
+          </fieldset>
+
+          <fieldset class="q" data-answer="b">
+            <legend class="q-head"><span class="q-num">04</span><span class="q-text">ตัวแปรที่ประกาศด้วย var ใน block ย่อยที่ซ้อนอยู่ข้างในจะมีผลอย่างไร?</span></legend>
+            <div class="q-options">
+              <label class="opt"><input type="radio" name="q4" value="a" /><span class="opt-key">A</span><span class="opt-text">เป็นตัวแปรคนละตัวกันแยกกันเด็ดขาด</span></label>
+              <label class="opt"><input type="radio" name="q4" value="b" /><span class="opt-key">B</span><span class="opt-text">ตัวแปรใน block ย่อยจะเขียนทับค่าตัวแปรเดิม เพราะ var ไม่ใช่ block-scoped</span></label>
+              <label class="opt"><input type="radio" name="q4" value="c" /><span class="opt-key">C</span><span class="opt-text">เกิด error ทันทีที่ compile</span></label>
+              <label class="opt"><input type="radio" name="q4" value="d" /><span class="opt-key">D</span><span class="opt-text">ไม่มีผลอะไรเลย</span></label>
+            </div>
+            <div class="q-feedback"><div class="q-feedback-inner"><p class="q-verdict" aria-live="polite"></p><p class="q-explain">scope ของ var คือทั้งฟังก์ชันหรือ global ไม่ใช่แค่ block → การประกาศซ้ำใน block ย่อยเขียนทับค่าตัวนอก</p></div></div>
+          </fieldset>
+
+          <fieldset class="q" data-answer="a">
+            <legend class="q-head"><span class="q-num">05</span><span class="q-text">let ต่างจาก var อย่างไรในเรื่อง scope?</span></legend>
+            <div class="q-options">
+              <label class="opt"><input type="radio" name="q5" value="a" /><span class="opt-key">A</span><span class="opt-text">let เป็น block-scoped ในขณะที่ var เป็น function-scoped</span></label>
+              <label class="opt"><input type="radio" name="q5" value="b" /><span class="opt-key">B</span><span class="opt-text">let กับ var มี scope เหมือนกันทุกประการ</span></label>
+              <label class="opt"><input type="radio" name="q5" value="c" /><span class="opt-key">C</span><span class="opt-text">let ใช้ได้เฉพาะในฟังก์ชันเท่านั้น</span></label>
+              <label class="opt"><input type="radio" name="q5" value="d" /><span class="opt-key">D</span><span class="opt-text">var เป็น block-scoped แต่ let ไม่ใช่</span></label>
+            </div>
+            <div class="q-feedback"><div class="q-feedback-inner"><p class="q-verdict" aria-live="polite"></p><p class="q-explain">let เป็น block-scoped (อัปเดตค่าได้ แต่ประกาศซ้ำในขอบเขตเดียวกันไม่ได้) ส่วน var ผูกกับฟังก์ชันหรือ global</p></div></div>
+          </fieldset>
+
+          <fieldset class="q" data-answer="b">
+            <legend class="q-head"><span class="q-num">06</span><span class="q-text">const ต่างจาก let อย่างไร?</span></legend>
+            <div class="q-options">
+              <label class="opt"><input type="radio" name="q6" value="a" /><span class="opt-key">A</span><span class="opt-text">const อัปเดตค่าใหม่ได้แต่ประกาศซ้ำไม่ได้ ส่วน let ทำได้ทั้งสองอย่าง</span></label>
+              <label class="opt"><input type="radio" name="q6" value="b" /><span class="opt-key">B</span><span class="opt-text">const ไม่สามารถอัปเดตค่าหรือประกาศซ้ำได้เลยหลังกำหนดค่าเริ่มต้น</span></label>
+              <label class="opt"><input type="radio" name="q6" value="c" /><span class="opt-key">C</span><span class="opt-text">const ใช้ได้เฉพาะกับตัวเลขเท่านั้น</span></label>
+              <label class="opt"><input type="radio" name="q6" value="d" /><span class="opt-key">D</span><span class="opt-text">const กับ let ทำงานเหมือนกันทุกประการ</span></label>
+            </div>
+            <div class="q-feedback"><div class="q-feedback-inner"><p class="q-verdict" aria-live="polite"></p><p class="q-explain">const ใช้กับค่าคงที่ — อัปเดตค่าหรือประกาศซ้ำไม่ได้ ขณะที่ let อัปเดตค่าได้</p></div></div>
+          </fieldset>
+
+          <fieldset class="q" data-answer="b">
+            <legend class="q-head"><span class="q-num">07</span><span class="q-text">JavaScript มี data type พื้นฐานกี่ประเภท?</span></legend>
+            <div class="q-options">
+              <label class="opt"><input type="radio" name="q7" value="a" /><span class="opt-key">A</span><span class="opt-text">4 ประเภท</span></label>
+              <label class="opt"><input type="radio" name="q7" value="b" /><span class="opt-key">B</span><span class="opt-text">6 ประเภท</span></label>
+              <label class="opt"><input type="radio" name="q7" value="c" /><span class="opt-key">C</span><span class="opt-text">8 ประเภท</span></label>
+              <label class="opt"><input type="radio" name="q7" value="d" /><span class="opt-key">D</span><span class="opt-text">3 ประเภท</span></label>
+            </div>
+            <div class="q-feedback"><div class="q-feedback-inner"><p class="q-verdict" aria-live="polite"></p><p class="q-explain">6 ประเภทตามที่เรียน: Boolean, Number, String, Null, Undefined และ Object</p></div></div>
+          </fieldset>
+
+          <fieldset class="q" data-answer="b">
+            <legend class="q-head"><span class="q-num">08</span><span class="q-text">ตัวแปรที่ถูกประกาศแต่ยังไม่ได้กำหนดค่าจะมีค่าเป็นชนิดข้อมูลใด?</span></legend>
+            <div class="q-options">
+              <label class="opt"><input type="radio" name="q8" value="a" /><span class="opt-key">A</span><span class="opt-text">null</span></label>
+              <label class="opt"><input type="radio" name="q8" value="b" /><span class="opt-key">B</span><span class="opt-text">undefined</span></label>
+              <label class="opt"><input type="radio" name="q8" value="c" /><span class="opt-key">C</span><span class="opt-text">NaN</span></label>
+              <label class="opt"><input type="radio" name="q8" value="d" /><span class="opt-key">D</span><span class="opt-text">0</span></label>
+            </div>
+            <div class="q-feedback"><div class="q-feedback-inner"><p class="q-verdict" aria-live="polite"></p><p class="q-explain">ตัวแปรที่ประกาศแต่ยังไม่กำหนดค่าจะเป็น undefined อัตโนมัติ · null คือการไม่มีค่าโดยตั้งใจ</p></div></div>
+          </fieldset>
+
+          <fieldset class="q" data-answer="a">
+            <legend class="q-head"><span class="q-num">09</span><span class="q-text">JavaScript เป็นภาษาแบบ &quot;weakly typed&quot; หมายความว่าอย่างไร?</span></legend>
+            <div class="q-options">
+              <label class="opt"><input type="radio" name="q9" value="a" /><span class="opt-key">A</span><span class="opt-text">ตัวแปรหนึ่งตัวสามารถเปลี่ยนชนิดข้อมูลที่เก็บได้ระหว่างการรันโปรแกรม</span></label>
+              <label class="opt"><input type="radio" name="q9" value="b" /><span class="opt-key">B</span><span class="opt-text">ตัวแปรต้องระบุชนิดข้อมูลตายตัวตั้งแต่ประกาศ</span></label>
+              <label class="opt"><input type="radio" name="q9" value="c" /><span class="opt-key">C</span><span class="opt-text">ภาษานี้ไม่รองรับตัวแปรเลย</span></label>
+              <label class="opt"><input type="radio" name="q9" value="d" /><span class="opt-key">D</span><span class="opt-text">ทุกตัวแปรต้องเป็น string เท่านั้น</span></label>
+            </div>
+            <div class="q-feedback"><div class="q-feedback-inner"><p class="q-verdict" aria-live="polite"></p><p class="q-explain">ตัวแปรที่เก็บตัวเลขอยู่ถูก assign เป็น string ทีหลังได้ · ตรวจชนิดปัจจุบันด้วย typeof</p></div></div>
+          </fieldset>
+
+          <fieldset class="q" data-answer="a">
+            <legend class="q-head"><span class="q-num">10</span><span class="q-text">เครื่องหมาย === ต่างจาก == อย่างไร?</span></legend>
+            <div class="q-options">
+              <label class="opt"><input type="radio" name="q10" value="a" /><span class="opt-key">A</span><span class="opt-text">=== เปรียบเทียบทั้งชนิดข้อมูลและค่า ส่วน == แปลงชนิดข้อมูลก่อนเปรียบเทียบ</span></label>
+              <label class="opt"><input type="radio" name="q10" value="b" /><span class="opt-key">B</span><span class="opt-text">=== กับ == ทำงานเหมือนกันทุกประการ</span></label>
+              <label class="opt"><input type="radio" name="q10" value="c" /><span class="opt-key">C</span><span class="opt-text">== ใช้ได้กับตัวเลขเท่านั้น</span></label>
+              <label class="opt"><input type="radio" name="q10" value="d" /><span class="opt-key">D</span><span class="opt-text">=== ใช้ได้กับ string เท่านั้น</span></label>
+            </div>
+            <div class="q-feedback"><div class="q-feedback-inner"><p class="q-verdict" aria-live="polite"></p><p class="q-explain">=== / !== คือ strict comparison · == / != คือ type-converting comparison</p></div></div>
+          </fieldset>
+
+          <fieldset class="q" data-answer="b">
+            <legend class="q-head"><span class="q-num">11</span><span class="q-text">&quot;1&quot; === 1 จะได้ผลลัพธ์เป็นอะไร?</span></legend>
+            <div class="q-options">
+              <label class="opt"><input type="radio" name="q11" value="a" /><span class="opt-key">A</span><span class="opt-text">true</span></label>
+              <label class="opt"><input type="radio" name="q11" value="b" /><span class="opt-key">B</span><span class="opt-text">false</span></label>
+              <label class="opt"><input type="radio" name="q11" value="c" /><span class="opt-key">C</span><span class="opt-text">undefined</span></label>
+              <label class="opt"><input type="radio" name="q11" value="d" /><span class="opt-key">D</span><span class="opt-text">เกิด error</span></label>
+            </div>
+            <div class="q-feedback"><div class="q-feedback-inner"><p class="q-verdict" aria-live="polite"></p><p class="q-explain">string &quot;1&quot; กับ number 1 คนละชนิดข้อมูล strict comparison จึงได้ false</p></div></div>
+          </fieldset>
+
+          <fieldset class="q" data-answer="a">
+            <legend class="q-head"><span class="q-num">12</span><span class="q-text">&quot;1&quot; == 1 จะได้ผลลัพธ์เป็นอะไร?</span></legend>
+            <div class="q-options">
+              <label class="opt"><input type="radio" name="q12" value="a" /><span class="opt-key">A</span><span class="opt-text">true</span></label>
+              <label class="opt"><input type="radio" name="q12" value="b" /><span class="opt-key">B</span><span class="opt-text">false</span></label>
+              <label class="opt"><input type="radio" name="q12" value="c" /><span class="opt-key">C</span><span class="opt-text">undefined</span></label>
+              <label class="opt"><input type="radio" name="q12" value="d" /><span class="opt-key">D</span><span class="opt-text">เกิด error</span></label>
+            </div>
+            <div class="q-feedback"><div class="q-feedback-inner"><p class="q-verdict" aria-live="polite"></p><p class="q-explain">== แปลงชนิดข้อมูลก่อนเปรียบเทียบ ค่าจึงเท่ากัน ได้ true</p></div></div>
+          </fieldset>
+
+          <fieldset class="q" data-answer="b">
+            <legend class="q-head"><span class="q-num">13</span><span class="q-text">5 % 3 (remainder operator) มีค่าเท่าใด?</span></legend>
+            <div class="q-options">
+              <label class="opt"><input type="radio" name="q13" value="a" /><span class="opt-key">A</span><span class="opt-text">1</span></label>
+              <label class="opt"><input type="radio" name="q13" value="b" /><span class="opt-key">B</span><span class="opt-text">2</span></label>
+              <label class="opt"><input type="radio" name="q13" value="c" /><span class="opt-key">C</span><span class="opt-text">1.67</span></label>
+              <label class="opt"><input type="radio" name="q13" value="d" /><span class="opt-key">D</span><span class="opt-text">15</span></label>
+            </div>
+            <div class="q-feedback"><div class="q-feedback-inner"><p class="q-verdict" aria-live="polite"></p><p class="q-explain">% คือหารเอาเศษ: 5 หาร 3 ได้ 1 เศษ 2</p></div></div>
+          </fieldset>
+
+          <fieldset class="q" data-answer="b">
+            <legend class="q-head"><span class="q-num">14</span><span class="q-text">ลำดับความสำคัญของ operator ข้อใดถูกต้อง (จากสูงไปต่ำ)?</span></legend>
+            <div class="q-options">
+              <label class="opt"><input type="radio" name="q14" value="a" /><span class="opt-key">A</span><span class="opt-text">Assignment มาก่อน Multiplication เสมอ</span></label>
+              <label class="opt"><input type="radio" name="q14" value="b" /><span class="opt-key">B</span><span class="opt-text">วงเล็บ () มาก่อน แล้วตามด้วย Multiplication/Division ก่อน Addition/Subtraction</span></label>
+              <label class="opt"><input type="radio" name="q14" value="c" /><span class="opt-key">C</span><span class="opt-text">Logical AND มาก่อน Multiplication</span></label>
+              <label class="opt"><input type="radio" name="q14" value="d" /><span class="opt-key">D</span><span class="opt-text">ไม่มีลำดับความสำคัญ คำนวณจากซ้ายไปขวาเสมอ</span></label>
+            </div>
+            <div class="q-feedback"><div class="q-feedback-inner"><p class="q-verdict" aria-live="polite"></p><p class="q-explain">ลำดับ: () → postfix → NOT/unary → ** → * / % → + - → comparison → equality → &amp;&amp; → || → assignment</p></div></div>
+          </fieldset>
+
+          <fieldset class="q" data-answer="c">
+            <legend class="q-head"><span class="q-num">15</span><span class="q-text">Ternary operator (condition ? expr1 : expr2) ใช้แทนโครงสร้างใด?</span></legend>
+            <div class="q-options">
+              <label class="opt"><input type="radio" name="q15" value="a" /><span class="opt-key">A</span><span class="opt-text">for loop</span></label>
+              <label class="opt"><input type="radio" name="q15" value="b" /><span class="opt-key">B</span><span class="opt-text">switch statement</span></label>
+              <label class="opt"><input type="radio" name="q15" value="c" /><span class="opt-key">C</span><span class="opt-text">if-else statement</span></label>
+              <label class="opt"><input type="radio" name="q15" value="d" /><span class="opt-key">D</span><span class="opt-text">while loop</span></label>
+            </div>
+            <div class="q-feedback"><div class="q-feedback-inner"><p class="q-verdict" aria-live="polite"></p><p class="q-explain">ternary operator เป็นทางลัดของ if-else</p></div></div>
+          </fieldset>
+
+          <fieldset class="q" data-answer="b">
+            <legend class="q-head"><span class="q-num">16</span><span class="q-text">switch statement ถ้าไม่มี break; ในแต่ละ case จะเกิดอะไรขึ้น?</span></legend>
+            <div class="q-options">
+              <label class="opt"><input type="radio" name="q16" value="a" /><span class="opt-key">A</span><span class="opt-text">หยุดการทำงานทันทีหลัง case แรกที่ตรง</span></label>
+              <label class="opt"><input type="radio" name="q16" value="b" /><span class="opt-key">B</span><span class="opt-text">โค้ดจะทำงานต่อเนื่อง (fall through) ไปยัง case ถัดไปจนกว่าจะเจอ break</span></label>
+              <label class="opt"><input type="radio" name="q16" value="c" /><span class="opt-key">C</span><span class="opt-text">เกิด syntax error</span></label>
+              <label class="opt"><input type="radio" name="q16" value="d" /><span class="opt-key">D</span><span class="opt-text">ทำงานเฉพาะ case สุดท้ายเท่านั้น</span></label>
+            </div>
+            <div class="q-feedback"><div class="q-feedback-inner"><p class="q-verdict" aria-live="polite"></p><p class="q-explain">ไม่มี break → fall through ไปทำ case ถัดไปต่อจนกว่าจะเจอ break</p></div></div>
+          </fieldset>
+
+          <fieldset class="q" data-answer="a">
+            <legend class="q-head"><span class="q-num">17</span><span class="q-text">while loop กับ do-while loop ต่างกันอย่างไร?</span></legend>
+            <div class="q-options">
+              <label class="opt"><input type="radio" name="q17" value="a" /><span class="opt-key">A</span><span class="opt-text">do-while จะทำงานอย่างน้อย 1 ครั้งเสมอ แม้เงื่อนไขจะเป็นเท็จตั้งแต่แรก ส่วน while อาจไม่ทำงานเลย</span></label>
+              <label class="opt"><input type="radio" name="q17" value="b" /><span class="opt-key">B</span><span class="opt-text">ทั้งสองแบบทำงานเหมือนกันทุกประการ</span></label>
+              <label class="opt"><input type="radio" name="q17" value="c" /><span class="opt-key">C</span><span class="opt-text">while ทำงานอย่างน้อย 1 ครั้งเสมอ ส่วน do-while อาจไม่ทำงานเลย</span></label>
+              <label class="opt"><input type="radio" name="q17" value="d" /><span class="opt-key">D</span><span class="opt-text">do-while ใช้กับ array เท่านั้น</span></label>
+            </div>
+            <div class="q-feedback"><div class="q-feedback-inner"><p class="q-verdict" aria-live="polite"></p><p class="q-explain">do-while ทำก่อนแล้วค่อยตรวจเงื่อนไข จึงทำอย่างน้อย 1 ครั้ง · while ตรวจก่อน ถ้าเท็จตั้งแต่แรกก็ไม่ทำเลย</p></div></div>
+          </fieldset>
+
+          <fieldset class="q" data-answer="b">
+            <legend class="q-head"><span class="q-num">18</span><span class="q-text">คำสั่ง break ในลูปมีผลอย่างไร?</span></legend>
+            <div class="q-options">
+              <label class="opt"><input type="radio" name="q18" value="a" /><span class="opt-key">A</span><span class="opt-text">ข้ามไปทำรอบถัดไปของลูปทันที</span></label>
+              <label class="opt"><input type="radio" name="q18" value="b" /><span class="opt-key">B</span><span class="opt-text">หยุดการทำงานของลูปทั้งหมดทันที</span></label>
+              <label class="opt"><input type="radio" name="q18" value="c" /><span class="opt-key">C</span><span class="opt-text">เริ่มลูปใหม่ตั้งแต่ต้น</span></label>
+              <label class="opt"><input type="radio" name="q18" value="d" /><span class="opt-key">D</span><span class="opt-text">ไม่มีผลใดๆ</span></label>
+            </div>
+            <div class="q-feedback"><div class="q-feedback-inner"><p class="q-verdict" aria-live="polite"></p><p class="q-explain">break หยุด loop / switch / label ปัจจุบันทันที · ข้อ A คือ continue</p></div></div>
+          </fieldset>
+
+          <fieldset class="q" data-answer="b">
+            <legend class="q-head"><span class="q-num">19</span><span class="q-text">คำสั่ง continue ในลูปมีผลอย่างไร?</span></legend>
+            <div class="q-options">
+              <label class="opt"><input type="radio" name="q19" value="a" /><span class="opt-key">A</span><span class="opt-text">หยุดลูปทั้งหมดทันที</span></label>
+              <label class="opt"><input type="radio" name="q19" value="b" /><span class="opt-key">B</span><span class="opt-text">ข้ามคำสั่งที่เหลือในรอบปัจจุบัน แล้วไปเริ่มรอบถัดไปของลูปทันที</span></label>
+              <label class="opt"><input type="radio" name="q19" value="c" /><span class="opt-key">C</span><span class="opt-text">ทำให้ลูปทำงานซ้ำไม่สิ้นสุด</span></label>
+              <label class="opt"><input type="radio" name="q19" value="d" /><span class="opt-key">D</span><span class="opt-text">ลบตัวแปร counter ของลูป</span></label>
+            </div>
+            <div class="q-feedback"><div class="q-feedback-inner"><p class="q-verdict" aria-live="polite"></p><p class="q-explain">continue ข้ามคำสั่งที่เหลือของรอบนี้แล้วไปรอบถัดไป · ข้อ A คือ break</p></div></div>
+          </fieldset>
+
+          <fieldset class="q" data-answer="b">
+            <legend class="q-head"><span class="q-num">20</span><span class="q-text">for (var prop in someObject) { ... } ใช้ทำอะไร?</span></legend>
+            <div class="q-options">
+              <label class="opt"><input type="radio" name="q20" value="a" /><span class="opt-key">A</span><span class="opt-text">วนลูปตามจำนวนสมาชิกใน array เท่านั้น</span></label>
+              <label class="opt"><input type="radio" name="q20" value="b" /><span class="opt-key">B</span><span class="opt-text">วนลูปเข้าถึงชื่อ property ทั้งหมดของ object</span></label>
+              <label class="opt"><input type="radio" name="q20" value="c" /><span class="opt-key">C</span><span class="opt-text">สร้าง object ใหม่</span></label>
+              <label class="opt"><input type="radio" name="q20" value="d" /><span class="opt-key">D</span><span class="opt-text">ลบ property ทั้งหมดของ object</span></label>
+            </div>
+            <div class="q-feedback"><div class="q-feedback-inner"><p class="q-verdict" aria-live="polite"></p><p class="q-explain">for...in วนผ่านชื่อ property ของ user-defined object · array ใช้ for (var i = 0; i &lt; arr.length; i++)</p></div></div>
+          </fieldset>
+
+          <div class="quiz-result" id="quiz-result" hidden tabindex="-1">
+            <div class="score-ring" aria-hidden="true">
+              <svg viewBox="0 0 120 120">
+                <circle class="ring-track" cx="60" cy="60" r="52" />
+                <circle class="ring-fill" cx="60" cy="60" r="52" pathLength="100" />
+              </svg>
+              <span class="score-pct"><span id="score-pct">0</span>%</span>
+            </div>
+            <div class="score-body">
+              <p class="score-line" role="status">ได้ <strong id="score-num">0</strong> / 20 คะแนน</p>
+              <p class="score-msg" id="score-msg"></p>
+              <div class="score-actions">
+                <button class="btn btn--ghost btn--sm" type="button" id="toggle-wrong" aria-pressed="false">ดูเฉพาะข้อที่ผิด</button>
+              </div>
+            </div>
+          </div>
+
+          <div class="quiz-bar">
+            <div class="quiz-progress">
+              <span class="quiz-count"><span id="answered">0</span> / 20 ข้อ</span>
+              <span class="progress" aria-hidden="true"><span class="progress-fill" id="progress-fill"></span></span>
+              <span class="quiz-hint" id="quiz-hint" aria-live="polite"></span>
+            </div>
+            <div class="quiz-actions">
+              <button class="btn btn--ghost" type="reset" id="quiz-reset">ทำใหม่</button>
+              <button class="btn btn--primary" type="submit" id="quiz-submit">ตรวจคำตอบ</button>
+            </div>
+          </div>
+        </form>
+      </section>
+
+      <!-- =============================================================
+           แท็บ 4: เขียนโค้ด (code exercise) — โจทย์อยู่ใน assets/js/exercises-web-5.js
+           ============================================================= -->
+      <section class="panel" id="code" role="tabpanel" aria-labelledby="tab-code" tabindex="-1">
+        <div class="panel-head">
+          <h2>แบบฝึกหัดเขียนโค้ด</h2>
+          <p class="panel-sub">เขียน JavaScript ในช่องแก้ไข กด "รันโค้ด" เพื่อดูผลใน console แล้วกด "ตรวจคำตอบ" (Ctrl + Enter) — โค้ดรันใน sandbox แยกจากหน้าเว็บ มีตัวกันลูปไม่รู้จบและจำกัดเวลา · โค้ดและความคืบหน้าบันทึกไว้ใน browser นี้</p>
+        </div>
+        <div class="cx" id="code-exercise">
+          <p class="cx-nojs">แบบฝึกหัดเขียนโค้ดต้องเปิด JavaScript ใน browser</p>
+        </div>
+      </section>
+
+    </div>
+  </main>
+  <footer class="site-footer">
+    <div class="wrap">
+      <p>สรุปจากสไลด์ ITDS241 Web Technologies and Applications (Faculty of ICT, Mahidol University) เพื่อใช้ทบทวนส่วนตัว — ถ้าเนื้อหาขัดกับสไลด์ ให้ยึดสไลด์เป็นหลัก</p>
+    </div>
+  </footer>
+
+  <script src="assets/js/widgets.js" defer></script>
+  <script src="assets/js/network.js" defer></script>
+  <script src="assets/js/exercises-web-5.js" defer></script>
+  <script src="assets/js/code-exercise.js" defer></script>
+</body>
+</html>
