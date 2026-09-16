@@ -207,6 +207,8 @@ a.subject-card:focus-visible { outline-offset: 4px; border-radius: var(--radius-
   color: var(--text-muted);
 }
 .add-slot strong { color: var(--text-muted); font-weight: 500; }
+/* ช่องท้าย grid: กินเต็มแถวแบบแถบบาง ไม่ให้เหลือการ์ดว่างใบเดียวค้างอยู่แถวล่าง */
+.subject-grid .add-slot { grid-column: 1 / -1; min-height: 0; flex-direction: row; flex-wrap: wrap; padding: var(--space-4) var(--space-5); }
 
 /* ---- Responsive ---- */
 @media (max-width: 760px) {
