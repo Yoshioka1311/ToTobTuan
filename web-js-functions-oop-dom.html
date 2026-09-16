@@ -1,0 +1,1578 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>ITDS241 บทที่ 6: Functions, OOP & DOM · โต๊ะทบทวน</title>
+<meta name="description" content="ITDS241 Web Technologies and Applications บทที่ 6: function ทุกแบบใน JavaScript, arrow function, first-class/high-order/callback, scope และ closure, OOP ด้วย class และ inheritance, HTML DOM และ events พร้อมโค้ดที่กดรันได้ cheat sheet แบบฝึกหัด 20 ข้อ และโจทย์เขียนโค้ด" />
+<meta name="theme-color" content="#17151a" />
+<link rel="icon" href="assets/favicon.svg" type="image/svg+xml" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link
+  href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500..700&family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans+Thai:wght@500;600&family=IBM+Plex+Sans+Thai+Looped:wght@400;500;600&display=swap"
+  rel="stylesheet"
+/>
+<link rel="stylesheet" href="assets/css/tokens.css" />
+<link rel="stylesheet" href="assets/css/base.css" />
+<link rel="stylesheet" href="assets/css/network.css" />
+<link rel="stylesheet" href="assets/css/exercise.css" />
+<link rel="stylesheet" href="assets/css/motion.css" />
+<script>document.documentElement.classList.add("js");</script>
+</head>
+<body>
+  <a class="skip-link" href="#tabs">ข้ามไปที่เนื้อหา</a>
+
+  <svg class="dg-defs" aria-hidden="true" focusable="false">
+    <defs>
+      <marker id="arr" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path class="dg-arrow" d="M0 0L10 5L0 10z" /></marker>
+      <marker id="arr-muted" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path class="dg-arrow--muted" d="M0 0L10 5L0 10z" /></marker>
+      <marker id="arr-ok" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path class="dg-arrow--ok" d="M0 0L10 5L0 10z" /></marker>
+      <marker id="arr-bad" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path class="dg-arrow--bad" d="M0 0L10 5L0 10z" /></marker>
+    </defs>
+  </svg>
+
+  <header class="site-header">
+    <div class="wrap">
+      <a class="wordmark" href="index.html" aria-label="โต๊ะทบทวน หน้าแรก">
+        <img class="wordmark-mark" src="assets/favicon.svg" alt="" width="26" height="26" />
+        <span class="wordmark-text">โต๊ะ<span>ทบทวน</span></span>
+      </a>
+      <a class="crumb" href="index.html"><span class="arrow" aria-hidden="true">←</span> รายวิชาทั้งหมด</a>
+    </div>
+  </header>
+
+  <main>
+    <section class="course-hero wrap">
+      <nav class="course-nav" aria-label="เลือกวิชาและบท">
+        <div class="subject-switch">
+          <button class="subject-btn" type="button" data-subject="network" aria-pressed="false"><span class="subject-code">ITDS231</span> Network</button>
+          <button class="subject-btn" type="button" data-subject="web" aria-pressed="true"><span class="subject-code">ITDS241</span> Web</button>
+        </div>
+        <div class="chapter-nav" data-subject="network" data-label="ITDS231 Computer Networks" role="group" aria-label="บทของวิชา ITDS231 Computer Networks">
+          <a class="chapter-link" href="network.html"><span class="chapter-num">บทที่ 1</span><span class="chapter-name">Intro &amp; Topology</span></a>
+          <a class="chapter-link" href="network-application-layer.html"><span class="chapter-num">บทที่ 2</span><span class="chapter-name">Application Layer</span></a>
+          <a class="chapter-link" href="network-data-link-layer.html"><span class="chapter-num">บทที่ 3</span><span class="chapter-name">Data Link Layer</span></a>
+          <a class="chapter-link" href="network-mac-ethernet.html"><span class="chapter-num">บทที่ 4</span><span class="chapter-name">MAC + Ethernet</span></a>
+        </div>
+        <div class="chapter-nav" data-subject="web" data-label="ITDS241 Web Technologies and Applications" role="group" aria-label="บทของวิชา ITDS241 Web Technologies and Applications">
+          <a class="chapter-link" href="web-intro-html-basics.html"><span class="chapter-num">บทที่ 1</span><span class="chapter-name">Internet &amp; HTML Basics</span></a>
+          <a class="chapter-link" href="web-media-forms-semantic.html"><span class="chapter-num">บทที่ 2</span><span class="chapter-name">Media, Forms &amp; Semantic</span></a>
+          <a class="chapter-link" href="web-css-fundamentals.html"><span class="chapter-num">บทที่ 3</span><span class="chapter-name">CSS Fundamentals</span></a>
+          <a class="chapter-link" href="web-css-layout-responsive.html"><span class="chapter-num">บทที่ 4</span><span class="chapter-name">CSS Layout &amp; Responsive</span></a>
+          <a class="chapter-link" href="web-js-fundamentals.html"><span class="chapter-num">บทที่ 5</span><span class="chapter-name">JavaScript Fundamentals</span></a>
+          <a class="chapter-link" href="web-js-functions-oop-dom.html" aria-current="page"><span class="chapter-num">บทที่ 6</span><span class="chapter-name">Functions, OOP &amp; DOM</span></a>
+          <a class="chapter-link" href="web-ecmascript-features.html"><span class="chapter-num">บทที่ 7</span><span class="chapter-name">ECMAScript Features</span></a>
+        </div>
+      </nav>
+      <span class="eyebrow">ITDS241 · บทที่ 6 · Lecture 07</span>
+      <h1>Functions, OOP & DOM</h1>
+      <p class="course-lede">JavaScript ส่วนที่ 2 — เขียนและใช้ function ทุกแบบ เข้าใจ scope กับ closure สร้าง class และ object แบบ OOP แล้วใช้ DOM จัดการทุก element ในหน้าเว็บผ่าน event · โค้ดตัวอย่างกดรันได้ และตัวอย่าง DOM แสดงผลจริงในกรอบ preview</p>
+      <ul class="course-meta" aria-label="ข้อมูลบทเรียน">
+        <li class="chip chip--accent">ITDS241 Web Technologies and Applications</li>
+        <li class="chip">1 ไฟล์สไลด์ · Lecture07 JavaScript Part 2</li>
+        <li class="chip">แบบฝึกหัด 20 ข้อ</li>
+        <li class="chip">โจทย์เขียนโค้ด 6 ข้อ</li>
+      </ul>
+    </section>
+
+    <div class="tabbar" id="tabs">
+      <div class="wrap">
+        <div class="tabs tabs--4" role="tablist" aria-label="ส่วนของหน้า">
+          <button class="tab" role="tab" id="tab-content" aria-controls="content" aria-selected="true" type="button">
+            <svg class="tab-icon" viewBox="0 0 20 20" aria-hidden="true"><path d="M4 3.5h8.5L16 7v9.5H4z M12 3.5V7h4 M7 10h6 M7 13h4" /></svg>
+            เนื้อหา
+          </button>
+          <button class="tab" role="tab" id="tab-summary" aria-controls="summary" aria-selected="false" type="button">
+            <svg class="tab-icon" viewBox="0 0 20 20" aria-hidden="true"><path d="M3.5 4h13v12h-13z M3.5 8h13 M8.5 8v8" /></svg>
+            สรุป
+          </button>
+          <button class="tab" role="tab" id="tab-quiz" aria-controls="quiz" aria-selected="false" type="button">
+            <svg class="tab-icon" viewBox="0 0 20 20" aria-hidden="true"><path d="M10 17a7 7 0 1 0 0-14 7 7 0 0 0 0 14z M6.8 10.2l2.2 2.2 4.2-4.6" /></svg>
+            แบบฝึกหัด
+          </button>
+          <button class="tab" role="tab" id="tab-code" aria-controls="code" aria-selected="false" type="button">
+            <svg class="tab-icon" viewBox="0 0 20 20" aria-hidden="true"><path d="M7 6l-4 4 4 4 M13 6l4 4-4 4 M11.2 4.5l-2.4 11" /></svg>
+            เขียนโค้ด
+          </button>
+          <span class="tab-indicator" aria-hidden="true"></span>
+        </div>
+      </div>
+    </div>
+
+    <div class="wrap panels">
+
+      <!-- =============================================================
+           แท็บ 1: เนื้อหา
+           ============================================================= -->
+      <section class="panel" id="content" role="tabpanel" aria-labelledby="tab-content" tabindex="-1">
+        <div class="panel-head">
+          <h2>เนื้อหาแยกตามหัวข้อในสไลด์</h2>
+          <div class="panel-actions">
+            <button class="btn btn--ghost btn--sm" type="button" data-acc-all="open">เปิดทั้งหมด</button>
+            <button class="btn btn--ghost btn--sm" type="button" data-acc-all="close">ปิดทั้งหมด</button>
+          </div>
+        </div>
+
+        <div class="acc">
+
+<!-- ================= 01 Functions ================= -->
+          <div class="acc-item is-open">
+            <h3 class="acc-heading">
+              <button class="acc-trigger" type="button" aria-expanded="true" aria-controls="acc-j6-fn" id="acc-j6-fn-btn">
+                <span class="acc-index">01</span>
+                <span class="acc-title">
+                  <span class="acc-name">Functions: ทำไมต้องใช้ พารามิเตอร์ และ Arrow function</span>
+                  <span class="acc-file">ITDS241-Lecture07-JavaScript Part 2 · slide 4–11</span>
+                </span>
+                <svg class="acc-chevron" viewBox="0 0 20 20" aria-hidden="true"><path d="M5 7.5l5 5 5-5" /></svg>
+              </button>
+            </h3>
+            <div class="acc-panel" id="acc-j6-fn" role="region" aria-labelledby="acc-j6-fn-btn">
+              <div class="acc-panel-inner">
+                <div class="acc-body">
+
+                  <nav class="toc" aria-label="หัวข้อในการ์ด Functions">
+                    <a href="#j6-why">ทำไมต้องใช้ function</a>
+                    <a href="#j6-fn-kinds">function 6 แบบในบทนี้</a>
+                    <a href="#j6-fn-types">คืนค่า vs ไม่คืนค่า</a>
+                    <a href="#j6-params">Parameters และ default</a>
+                    <a href="#j6-arrow">Arrow functions</a>
+                  </nav>
+
+                  <section class="topic" id="j6-why">
+                    <h4>ทำไมต้องใช้ function</h4>
+                    <p>สไลด์ให้เหตุผลหลักไว้ 4 ข้อ</p>
+                    <dl class="defs defs--stack">
+                      <div><dt>Code Reusability</dt><dd>function ทำให้เขียนบล็อกโค้ดที่<strong>นำกลับมาใช้ซ้ำ</strong>ได้</dd></div>
+                      <div><dt>Modularity</dt><dd>ช่วย<strong>แตกปัญหาที่ซับซ้อน</strong>ออกเป็นส่วนย่อยที่จัดการได้</dd></div>
+                      <div><dt>Code Organization</dt><dd>ให้แนวทางที่<strong>มีโครงสร้าง</strong>ในการจัดระเบียบโค้ด</dd></div>
+                      <div><dt>Code Maintainability</dt><dd>เวลาจะแก้หรือซ่อมความสามารถหนึ่ง <strong>โฟกัสเฉพาะ function ที่เกี่ยวข้อง</strong>ได้โดยไม่กระทบส่วนอื่นของ codebase</dd></div>
+                    </dl>
+                  </section>
+
+                  <section class="topic" id="j6-fn-kinds">
+                    <h4>function 6 แบบที่บทนี้พูดถึง</h4>
+                    <ul class="tight">
+                      <li>Function</li>
+                      <li>Constructor Function</li>
+                      <li>First Class Function</li>
+                      <li>High-order Function</li>
+                      <li>Callback Function</li>
+                      <li>Arrow Function</li>
+                    </ul>
+                    <p class="note">ทั้ง 6 แบบไม่ใช่ชนิดข้อมูลที่ต่างกัน แต่เป็น<strong>วิธีเขียนและวิธีใช้</strong> function ที่สไลด์แยกหัวข้อไว้</p>
+                  </section>
+
+                  <section class="topic" id="j6-fn-types">
+                    <h4>function มี 2 ประเภท: คืนค่า และ ไม่คืนค่า</h4>
+                    <div class="compare">
+                      <div class="compare-col">
+                        <h5>ไม่คืนค่า (Not return value)</h5>
+                        <pre class="code-block" data-lang="js"><code>function showMessage() {
+  alert('Hello everyone!');
+}</code></pre>
+                      </div>
+                      <div class="compare-col">
+                        <h5>คืนค่า (Return value)</h5>
+                        <pre class="code-block" data-lang="js"><code>function sum(a, b) {
+  return a + b;
+}</code></pre>
+                      </div>
+                    </div>
+                    <pre class="code-block" data-lang="js" data-run><code>function showMessage() {
+  console.log('Hello everyone!');   // สไลด์ใช้ alert() — ที่นี่ใช้ console.log เพื่อดูผลในกล่องด้านล่าง
+}
+function sum(a, b) {
+  return a + b;
+}
+
+showMessage();
+console.log(sum(3, 4));
+console.log(showMessage());   // function ที่ไม่มี return จะได้ undefined</code></pre>
+                  </section>
+
+                  <section class="topic" id="j6-params">
+                    <h4>Parameters (Arguments) และค่า default</h4>
+                    <p>function ใน JS รองรับการ<strong>ส่งข้อมูลอะไรก็ได้เข้าไป</strong> ข้อมูลนั้นเรียกว่า <strong>Parameters</strong> หรือ <strong>Arguments</strong> และ <strong>parameter ตั้งค่า default ได้</strong></p>
+                    <div class="compare">
+                      <div class="compare-col">
+                        <h5>ไม่มี default</h5>
+                        <pre class="code-block" data-lang="js"><code>function showMessagefromuser(from, text) {
+  alert(from + ': ' + text);
+}</code></pre>
+                      </div>
+                      <div class="compare-col">
+                        <h5>มี default</h5>
+                        <pre class="code-block" data-lang="js"><code>function showMessagefromuser(
+  from, text = "no message"
+) {
+  alert(from + ': ' + text);
+}</code></pre>
+                      </div>
+                    </div>
+                    <pre class="code-block" data-lang="js" data-run><code>function showMessagefromuser(from, text = "no message") {
+  console.log(from + ': ' + text);
+}
+
+showMessagefromuser("Ann", "เจอกันพรุ่งนี้");
+showMessagefromuser("Ann");            // ไม่ส่ง text → ใช้ค่า default</code></pre>
+                  </section>
+
+                  <section class="topic" id="j6-arrow">
+                    <h4>Arrow functions</h4>
+                    <p>arrow function คือ<strong>ไวยากรณ์ที่สั้นและกระชับ</strong>สำหรับสร้าง function</p>
+                    <div class="compare">
+                      <div class="compare-col">
+                        <h5>function expression เดิม</h5>
+                        <pre class="code-block" data-lang="js"><code>let func = function (arg1, arg2, ...argN) {
+  return expression;
+};</code></pre>
+                      </div>
+                      <div class="compare-col">
+                        <h5>arrow function</h5>
+                        <pre class="code-block" data-lang="js"><code>let func = (arg1, arg2, ...argN) =&gt; expression</code></pre>
+                      </div>
+                    </div>
+                    <p><strong>ตัวอย่างจากสไลด์</strong></p>
+                    <pre class="code-block" data-lang="js" data-run><code>// เขียนบรรทัดเดียว — ค่าของ expression คือค่าที่คืนออกมา (ไม่ต้องเขียน return)
+let sum = (a, b) =&gt; a + b;
+
+// ไม่มี parameter — ต้องมีวงเล็บว่าง ()
+let sayHello = () =&gt; console.log("Hello!");   // สไลด์ใช้ alert("Hello!")
+
+// หลายบรรทัด — ต้องมีปีกกา { } และเขียน return เอง
+let subtract = (a, b) =&gt; {
+  let result = a - b;
+  return result;
+};
+
+console.log(sum(2, 3));
+sayHello();
+console.log(subtract(9, 4));</code></pre>
+                    <div class="callout callout--warn">
+                      <span class="callout-label">จุดที่มักพลาด</span>
+                      <p>แบบบรรทัดเดียว <code>(a, b) =&gt; a + b</code> <b>คืนค่าให้อัตโนมัติ</b> แต่พอใส่ปีกกา <code>{ }</code> แล้ว<b>ต้องเขียน <code>return</code> เอง</b> ไม่อย่างนั้นจะได้ <code>undefined</code></p>
+                    </div>
+                  </section>
+
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- ================= 02 First-class / High-order / Callback ================= -->
+          <div class="acc-item">
+            <h3 class="acc-heading">
+              <button class="acc-trigger" type="button" aria-expanded="false" aria-controls="acc-j6-first" id="acc-j6-first-btn">
+                <span class="acc-index">02</span>
+                <span class="acc-title">
+                  <span class="acc-name">First-class, High-order และ Callback function</span>
+                  <span class="acc-file">ITDS241-Lecture07-JavaScript Part 2 · slide 18–26</span>
+                </span>
+                <svg class="acc-chevron" viewBox="0 0 20 20" aria-hidden="true"><path d="M5 7.5l5 5 5-5" /></svg>
+              </button>
+            </h3>
+            <div class="acc-panel" id="acc-j6-first" role="region" aria-labelledby="acc-j6-first-btn">
+              <div class="acc-panel-inner">
+                <div class="acc-body">
+
+                  <nav class="toc" aria-label="หัวข้อในการ์ด First-class function">
+                    <a href="#j6-first">First Class Functions</a>
+                    <a href="#j6-first-4">4 อย่างที่ทำได้</a>
+                    <a href="#j6-ho">High-order Function</a>
+                    <a href="#j6-callback">Callback Functions</a>
+                  </nav>
+
+                  <section class="topic" id="j6-first">
+                    <h4>First Class Functions</h4>
+                    <div class="callout callout--def">
+                      <span class="callout-label">นิยามจากสไลด์</span>
+                      <p>ภาษาหนึ่งจะเรียกว่ามี <b>First-class Functions</b> เมื่อ function ในภาษานั้น<b>ถูกปฏิบัติเหมือนตัวแปรอื่นๆ</b></p>
+                    </div>
+                    <p>คุณสมบัตินี้ถูกใช้ประโยชน์อย่างมากในกระบวนทัศน์การเขียนโปรแกรมที่ชื่อ <strong>functional programming</strong></p>
+                  </section>
+
+                  <section class="topic" id="j6-first-4">
+                    <h4>4 อย่างที่ first-class function ทำได้</h4>
+                    <p><strong>1. assign function เข้าตัวแปร</strong> (anonymous function หรือ expression function)</p>
+                    <pre class="code-block" data-lang="js" data-run><code>// Create an anonymous function
+var function2 = function (wide) {
+  var area;
+  area = Math.pow(wide, 2);
+  return area;
+};
+
+console.log(function2(6));</code></pre>
+                    <p><strong>2. ส่ง function เป็น argument ให้ function อื่น</strong></p>
+                    <pre class="code-block" data-lang="js" data-run><code>function flexible(fOperation, operand1, operand2) {
+  var result = fOperation(operand1, operand2);
+  return result;
+}
+
+let sumFunction = function (num1, num2) {
+  return num1 + num2;
+};
+
+let output = flexible(sumFunction, 3, 4);
+console.log(output);</code></pre>
+                    <p><strong>3. ให้ function คืนค่าเป็น function</strong></p>
+                    <pre class="code-block" data-lang="js" data-run><code>const calculateAreaofSquare2 = function (wide) {
+  var area;
+  area = Math.pow(wide, 2);
+  return () =&gt; {
+    console.log(`calculateAreaofSquare2: ${area}`);
+  };
+};
+
+let areaOfSquare = calculateAreaofSquare2(4);
+areaOfSquare();</code></pre>
+                    <p><strong>4. เก็บ function ไว้ในโครงสร้างข้อมูล</strong></p>
+                    <pre class="code-block" data-lang="js" data-run><code>function calculateAreaofSquare(wide) {
+  var area;
+  area = Math.pow(wide, 2);
+  return area;
+}
+
+let myFuncs = [calculateAreaofSquare];
+console.log(`calculateAreaofSquare: ${myFuncs[0](5)}`);</code></pre>
+                  </section>
+
+                  <section class="topic" id="j6-ho">
+                    <h4>High-order Function</h4>
+                    <div class="callout callout--def">
+                      <span class="callout-label">นิยามจากสไลด์</span>
+                      <p><b>High-order functions</b> คือ function ที่<b>รับ function อื่นเป็น argument</b> หรือ <b>คืนค่าผลลัพธ์เป็น function</b></p>
+                    </div>
+                    <p>ตัวอย่างในสไลด์ใช้ <code>map</code> และ <code>filter</code> ของ Array ซึ่งรับ function เข้าไปทำงานกับสมาชิก</p>
+                    <pre class="code-block" data-lang="js" data-run><code>function calculateAreaofSquare(wide) {
+  var area;
+  area = Math.pow(wide, 2);
+  return area;
+}
+
+let squareWide1 = [2, 7, 9, 10];
+console.log("Map: " + squareWide1.map(calculateAreaofSquare));
+
+const evenNumbers = squareWide1.filter((num) =&gt; num % 2 === 0);
+console.log(`evenNumbers: ${evenNumbers}`);</code></pre>
+                    <p class="note">ไล่ทีละขั้น — <code>map</code>: 2² = 4, 7² = 49, 9² = 81, 10² = 100 จึงได้ <code>4,49,81,100</code> · <code>filter</code> เก็บเฉพาะตัวที่ <code>num % 2 === 0</code> คือ 2 และ 10 จึงได้ <code>2,10</code></p>
+                  </section>
+
+                  <section class="topic" id="j6-callback">
+                    <h4>Callback Functions</h4>
+                    <div class="callout callout--def">
+                      <span class="callout-label">จุดประสงค์หลัก</span>
+                      <p>callback function มีไว้เป็นกลไก<b>ให้โปรแกรมตอบสนองต่อ event หรือการกระทำที่เกิดขึ้นแบบ asynchronous หรือคาดเดาเวลาไม่ได้</b></p>
+                    </div>
+                    <p><strong>APIs</strong> (Application Programming Interfaces) คือ library ของ object และ method ที่ถูก implement ไว้แล้ว บางครั้ง function ของ API <strong>ต้องการ function เป็น parameter</strong> — เราต้องเขียน function นั้นเองโดยมี parameter list ตามที่เอกสารของ API กำหนด function แบบนี้เรียกว่า <strong>Callback function</strong></p>
+                    <pre class="code-block" data-lang="js" data-run data-wait="2400"><code>function greet() {
+  console.log('Howdy!');       // สไลด์ใช้ alert('Howdy!')
+}
+
+setTimeout(greet, 2000);       // greet คือ callback ที่ setTimeout จะเรียกให้เมื่อครบ 2 วินาที
+console.log('ตั้งเวลาเรียบร้อย — บรรทัดนี้ทำงานก่อน');</code></pre>
+                    <div class="callout callout--why">
+                      <span class="callout-label">สังเกตลำดับผลลัพธ์</span>
+                      <p>บรรทัด "ตั้งเวลาเรียบร้อย" ขึ้นก่อน "Howdy!" เพราะ <code>setTimeout</code> <b>ไม่หยุดรอ</b> — ฝาก <code>greet</code> ไว้แล้วให้บรรทัดถัดไปทำงานต่อทันที นี่คือความหมายของ asynchronous ที่สไลด์พูดถึง</p>
+                    </div>
+                  </section>
+
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- ================= 03 Scope / Lifetime / Closures ================= -->
+          <div class="acc-item">
+            <h3 class="acc-heading">
+              <button class="acc-trigger" type="button" aria-expanded="false" aria-controls="acc-j6-scope" id="acc-j6-scope-btn">
+                <span class="acc-index">03</span>
+                <span class="acc-title">
+                  <span class="acc-name">Scope, Lifetime ของตัวแปร และ Closures</span>
+                  <span class="acc-file">ITDS241-Lecture07-JavaScript Part 2 · slide 27–34</span>
+                </span>
+                <svg class="acc-chevron" viewBox="0 0 20 20" aria-hidden="true"><path d="M5 7.5l5 5 5-5" /></svg>
+              </button>
+            </h3>
+            <div class="acc-panel" id="acc-j6-scope" role="region" aria-labelledby="acc-j6-scope-btn">
+              <div class="acc-panel-inner">
+                <div class="acc-body">
+
+                  <nav class="toc" aria-label="หัวข้อในการ์ด Scope">
+                    <a href="#j6-scope">Scope</a>
+                    <a href="#j6-block">Block scope</a>
+                    <a href="#j6-varscope">scope ของ let / const / var</a>
+                    <a href="#j6-global">Global และ Module scope</a>
+                    <a href="#j6-lifetime">Lifetime</a>
+                    <a href="#j6-closure">Closures</a>
+                  </nav>
+
+                  <section class="topic" id="j6-scope">
+                    <h4>Scope</h4>
+                    <p>สไลด์เปรียบว่า function เหมือน<strong>แผนกในสำนักงาน</strong></p>
+                    <ul class="tight">
+                      <li>ตัวแปรใน JavaScript เป็น <strong>lexically scoped ยกเว้น <code>var</code></strong></li>
+                      <li>ตัวแปรที่ประกาศ<strong>นอก function ใดๆ</strong> → scope คือ<strong>โค้ดทั้งหมดที่ผูกกับหน้าเว็บนั้น</strong> (Global variable)</li>
+                      <li>ตัวแปรที่ประกาศ<strong>ใน function</strong> → scope คือ<strong>ทั้ง function นั้น</strong> (Local variable)</li>
+                    </ul>
+                    <div class="callout callout--warn">
+                      <span class="callout-label">Note จากสไลด์</span>
+                      <p>ตัวแปร<b>ควรมี scope ที่เล็กที่สุด</b></p>
+                    </div>
+                  </section>
+
+                  <section class="topic" id="j6-block">
+                    <h4>Block scope: ตัวอย่างและ error ที่ได้</h4>
+                    <p><code>myName</code> ในสคริปต์นี้เป็น <strong>block-scoped กับคำสั่ง <code>if</code></strong> — เข้าถึงได้<strong>เฉพาะภายใน block</strong> เท่านั้น</p>
+                    <pre class="code-block" data-lang="html"><code>&lt;script type="text/javascript"&gt;
+  if (true) {
+    const myName = "Wudhichart";
+    console.log(myName);
+  }
+&lt;/script&gt;</code></pre>
+                    <p>ถ้าลองเข้าถึง <code>myName</code> นอก block จะได้ <strong>ReferenceError</strong> เพราะมันอยู่นอก scope</p>
+                    <pre class="code-block" data-lang="js" data-run><code>if (true) {
+  const myName = "Wudhichart";
+  console.log(myName);
+}
+console.log(myName);   // Uncaught ReferenceError: myName is not defined</code></pre>
+                  </section>
+
+                  <section class="topic" id="j6-varscope">
+                    <h4>scope ของ let, const และ var</h4>
+                    <ul class="tight">
+                      <li><code>let</code> และ <code>const</code> สร้างตัวแปรแบบ <strong>block-scoped</strong></li>
+                      <li><code>var</code> สร้างตัวแปรที่ผูกกับ <strong>function ที่ใกล้ที่สุด หรือ global scope</strong></li>
+                    </ul>
+                    <pre class="code-block" data-lang="js" data-run><code>function displayFullname() {
+  if (true) {
+    var myFullname = "Wudhichart Sawangphol";
+  }
+  console.log(myFullname);   // ไม่ error เพราะ var ผูกกับทั้ง function ไม่ใช่แค่ block
+}
+displayFullname();</code></pre>
+                    <p class="note">โค้ดชุดเดียวกันนี้ ถ้าเปลี่ยน <code>var</code> เป็น <code>let</code> หรือ <code>const</code> จะได้ ReferenceError ทันที — แก้ในช่องโค้ดแล้วกดรันเทียบได้</p>
+                  </section>
+
+                  <section class="topic" id="j6-global">
+                    <h4>Global Scope และ Module Scope</h4>
+                    <div class="compare">
+                      <div class="compare-col">
+                        <h5>Global Scope — ข้าม &lt;script&gt; ได้</h5>
+                        <pre class="code-block" data-lang="html"><code>&lt;script type="text/javascript"&gt;
+  const myFullname = "Wudhichart Sawangphol";
+&lt;/script&gt;
+&lt;script type="text/javascript"&gt;
+  console.log(myFullname);
+&lt;/script&gt;</code></pre>
+                      </div>
+                      <div class="compare-col">
+                        <h5>Module Scope — แต่ละ module มี scope ของตัวเอง</h5>
+                        <pre class="code-block" data-lang="html"><code>&lt;script type="module"&gt;
+  const jidapa = "Jidapa Kraisangka";
+&lt;/script&gt;
+&lt;script type="text/javascript"&gt;
+  console.log(jidapa);
+  // Uncaught ReferenceError: jidapa is not defined
+&lt;/script&gt;</code></pre>
+                      </div>
+                    </div>
+                  </section>
+
+                  <section class="topic" id="j6-lifetime">
+                    <h4>Lifetime (อายุของตัวแปร)</h4>
+                    <dl class="defs defs--stack">
+                      <div><dt>Global variables</dt><dd>ตั้งแต่<strong>ถูกประกาศ</strong> จนถึง<strong>หน้าเว็บถูกปิด</strong></dd></div>
+                      <div><dt>Local variables</dt><dd>ตั้งแต่ <strong>function ที่ประกาศมันถูกเรียก</strong> จนถึง <strong>function นั้นทำงานจบ</strong></dd></div>
+                    </dl>
+                    <div class="callout callout--warn">
+                      <span class="callout-label">ชื่อชนกัน</span>
+                      <p>ถ้า global variable กับ local variable <b>ชื่อเดียวกัน</b> ตัวที่ถูกใช้คือ <b>local variable</b></p>
+                    </div>
+                  </section>
+
+                  <section class="topic" id="j6-closure">
+                    <h4>Closures</h4>
+                    <div class="callout callout--def">
+                      <span class="callout-label">นิยามจากสไลด์</span>
+                      <p><b>Closure</b> คือ function ที่<b>รวมเข้ากับการอ้างอิงตัวแปรที่ถูกนิยามไว้ข้างนอกตัวมัน</b> — closure <b>รักษาการอ้างอิงตัวแปรเหล่านั้นไว้</b> ทำให้ function เข้าถึงตัวแปรนอก scope ของตัวเองได้</p>
+                    </div>
+                    <pre class="code-block" data-lang="js" data-run><code>// Closures
+function displayFullname(name) {
+  return () =&gt; console.log(name);
+}
+
+const printFullname = displayFullname("Wudhichart Sawangphol");
+printFullname();</code></pre>
+                    <p class="note">แม้ <code>displayFullname</code> จะทำงานจบไปแล้ว แต่ arrow function ที่คืนออกมา<strong>ยังอ้างถึงตัวแปร <code>name</code> ได้อยู่</strong> — นี่คือสิ่งที่ closure ทำ</p>
+                  </section>
+
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- ================= 04 OOP ================= -->
+          <div class="acc-item">
+            <h3 class="acc-heading">
+              <button class="acc-trigger" type="button" aria-expanded="false" aria-controls="acc-j6-oop" id="acc-j6-oop-btn">
+                <span class="acc-index">04</span>
+                <span class="acc-title">
+                  <span class="acc-name">Object-Oriented Programming: class, object และ inheritance</span>
+                  <span class="acc-file">ITDS241-Lecture07-JavaScript Part 2 · slide 14–17, 36–48</span>
+                </span>
+                <svg class="acc-chevron" viewBox="0 0 20 20" aria-hidden="true"><path d="M5 7.5l5 5 5-5" /></svg>
+              </button>
+            </h3>
+            <div class="acc-panel" id="acc-j6-oop" role="region" aria-labelledby="acc-j6-oop-btn">
+              <div class="acc-panel-inner">
+                <div class="acc-body">
+
+                  <nav class="toc" aria-label="หัวข้อในการ์ด OOP">
+                    <a href="#j6-oop-what">OOP คืออะไร</a>
+                    <a href="#j6-class">Class และ Object</a>
+                    <a href="#j6-class-js">ประกาศ class ใน JS</a>
+                    <a href="#j6-obj-js">สร้าง object</a>
+                    <a href="#j6-inherit">Inheritance และ Polymorphism</a>
+                    <a href="#j6-onfly">เพิ่ม property ทีหลัง</a>
+                    <a href="#j6-ctor">Constructor Functions</a>
+                  </nav>
+
+                  <section class="topic" id="j6-oop-what">
+                    <h4>OOP คืออะไร</h4>
+                    <ul class="tight">
+                      <li>ใช้แนวคิดเดียวกับที่เรา<strong>แทนสิ่งของในชีวิตจริง</strong> เช่น รถยนต์ คน บัญชีธนาคาร</li>
+                      <li>เป็นการ<strong>นิยามชนิดข้อมูลของโครงสร้างข้อมูล</strong> และ<strong>ชนิดของ function ที่ใช้กับโครงสร้างข้อมูลนั้นได้</strong></li>
+                    </ul>
+                  </section>
+
+                  <section class="topic" id="j6-class">
+                    <h4>Class และ Object</h4>
+                    <div class="compare">
+                      <div class="compare-col">
+                        <h5>Class</h5>
+                        <p><strong>แม่แบบ (template) หรือโมเดล</strong>ของ object ประกอบด้วย <strong>properties</strong> และ <strong>functions</strong></p>
+                      </div>
+                      <div class="compare-col">
+                        <h5>Object</h5>
+                        <p>คือ class ที่<strong>ถูกเติมค่าลงไปแล้ว</strong> — เมื่อ object ถูก instantiate จาก class มันจะมี properties และ methods ทั้งหมดที่นิยามไว้ใน class</p>
+                      </div>
+                    </div>
+                    <figure class="diagram">
+                      <div class="diagram-scroll">
+                        <svg viewBox="0 0 740 290" role="img" aria-labelledby="dg-j6-cls-t dg-j6-cls-d">
+                          <title id="dg-j6-cls-t">Instantiation จาก class Instructor ไปเป็น object 3 ตัว</title>
+                          <desc id="dg-j6-cls-d">ทางซ้ายคือ Class Instructor มี properties firstName lastName subjects และ methods sayHello และ teach ลูกศรชื่อ Instantiation ชี้ไปทางขวาเป็น object สามตัว ppisit มี firstName Pisit lastName Paiwattana subjects jQuery และ CSS สอง swudhichart มี firstName Wudhichart lastName Sawangphol subjects WWW และ JS สาม kjidapa มี firstName Jidapa lastName Kraisangka subjects HTML และ JS OOP ทุก object มี method sayHello และ teach เหมือนกัน</desc>
+                          <rect class="dg-box dg-box--accent" x="14" y="56" width="212" height="180" rx="8" />
+                          <text class="dg-text" x="120" y="80" text-anchor="middle">Class: Instructor</text>
+                          <path class="dg-line" d="M24 92 H216" />
+                          <text class="dg-mono dg-mono--sm" x="34" y="114">firstName</text>
+                          <text class="dg-mono dg-mono--sm" x="34" y="134">lastName</text>
+                          <text class="dg-mono dg-mono--sm" x="34" y="154">subjects</text>
+                          <text class="dg-text dg-text--sm" x="216" y="134" text-anchor="end">Properties</text>
+                          <path class="dg-line" d="M24 166 H216" />
+                          <text class="dg-mono dg-mono--sm" x="34" y="188">sayHello()</text>
+                          <text class="dg-mono dg-mono--sm" x="34" y="208">teach()</text>
+                          <text class="dg-text dg-text--sm" x="216" y="208" text-anchor="end">Methods</text>
+                          <path class="dg-line dg-line--accent" d="M230 146 H300" marker-end="url(#arr)" />
+                          <text class="dg-text dg-text--sm" x="265" y="136" text-anchor="middle">Instantiation</text>
+                          <rect class="dg-box" x="308" y="10" width="418" height="76" rx="6" />
+                          <text class="dg-text" x="322" y="34">Object: ppisit</text>
+                          <text class="dg-mono dg-mono--sm" x="322" y="56">firstName: "Pisit" · lastName: "Paiwattana"</text>
+                          <text class="dg-mono dg-mono--sm" x="322" y="76">subjects: ["jQuery","CSS"]</text>
+                          <rect class="dg-box" x="308" y="98" width="418" height="76" rx="6" />
+                          <text class="dg-text" x="322" y="122">Object: swudhichart</text>
+                          <text class="dg-mono dg-mono--sm" x="322" y="144">firstName: "Wudhichart" · lastName: "Sawangphol"</text>
+                          <text class="dg-mono dg-mono--sm" x="322" y="164">subjects: ["WWW","JS"]</text>
+                          <rect class="dg-box" x="308" y="186" width="418" height="76" rx="6" />
+                          <text class="dg-text" x="322" y="210">Object: kjidapa</text>
+                          <text class="dg-mono dg-mono--sm" x="322" y="232">firstName: "Jidapa" · lastName: "Kraisangka"</text>
+                          <text class="dg-mono dg-mono--sm" x="322" y="252">subjects: ["HTML","JS:OOP"]</text>
+                        </svg>
+                      </div>
+                      <figcaption>ทุก object ได้ <code>sayHello()</code> และ <code>teach()</code> ติดมาจาก class เหมือนกัน ต่างกันแค่ค่าของ properties · ที่มา: ITDS241-Lecture07 slide 37–38</figcaption>
+                    </figure>
+                  </section>
+
+                  <section class="topic" id="j6-class-js">
+                    <h4>ประกาศ class ใน JavaScript</h4>
+                    <pre class="code-block" data-lang="js"><code>class className {
+  constructor(prop1, prop2, …) {
+    /* Property definition and assignment */
+  }
+  /* Method definition */
+  method1() { /* do something */ }
+  method2() { /* do something */ }
+}</code></pre>
+                    <div class="callout callout--def">
+                      <span class="callout-label">constructor</span>
+                      <p>method ชื่อ <code>constructor</code> จะ<b>ถูกเรียกทุกครั้งที่ object ถูกสร้าง (initiate)</b></p>
+                    </div>
+                    <p><strong>ตัวอย่างจากสไลด์: class Instructor</strong></p>
+                    <pre class="code-block" data-lang="js"><code>class Instructor {
+  /* Constructor */
+  constructor(_firstName, _lastName, _subjects) {
+    /* Properties */
+    this.firstName = _firstName;
+    this.lastName  = _lastName;
+    this.subjects  = _subjects;
+  }
+  /* Methods */
+  sayHello() {
+    return "Hey! I'm " + this.firstName + ". Nice to meet you!!!";
+  }
+  teach() {
+    return "I teach " + this.subjects + ".";
+  }
+}</code></pre>
+                    <p class="note">Note จากสไลด์: อย่าลืมเขียนไว้ใน <code>&lt;script type="application/javascript"&gt;…&lt;/script&gt;</code></p>
+                  </section>
+
+                  <section class="topic" id="j6-obj-js">
+                    <h4>สร้าง object และเรียกใช้</h4>
+                    <ul class="tight">
+                      <li><strong>class ต้องถูกนิยามก่อน</strong>ที่ object จะถูกสร้าง</li>
+                      <li>ใช้ <code>new</code> เรียก constructor ของ class เพื่อสร้าง object พร้อมค่าที่ระบุ</li>
+                    </ul>
+                    <pre class="code-block" data-lang="js"><code>let obj = new className(prop1, prop2, …);
+
+/* Get a value of a property */
+console.log(obj.propName);
+
+/* Assign a new value to a property */
+obj.propName = newValue;
+
+/* Call a method */
+obj.methodName();</code></pre>
+                    <p><strong>ตัวอย่างเต็มจากสไลด์ — กดรันดูผลได้</strong></p>
+                    <pre class="code-block" data-lang="js" data-run><code>class Instructor {
+  constructor(_firstName, _lastName, _subjects) {
+    this.firstName = _firstName;
+    this.lastName  = _lastName;
+    this.subjects  = _subjects;
+  }
+  sayHello() { return "Hey! I'm " + this.firstName + ". Nice to meet you!!!"; }
+  teach()    { return "I teach " + this.subjects + "."; }
+}
+
+/* Initiate an object of the Instructor class */
+let jkSubjects = ["HTML", "OOP:JS"];
+let kjidapa = new Instructor("Jidapa", "Kraisangka", jkSubjects);
+
+/* Display firstName and lastName in the console */
+console.log(kjidapa.firstName + " " + kjidapa.lastName);
+
+/* Change firstName from "Jidapa" to "Aj. Pa" */
+kjidapa.firstName = "Aj. Pa";
+console.log(kjidapa.firstName);
+
+/* Call sayHello() and teach() and display in the console */
+console.log(kjidapa.sayHello());
+console.log(kjidapa.teach());</code></pre>
+                  </section>
+
+                  <section class="topic" id="j6-inherit">
+                    <h4>Inheritance และ Polymorphism</h4>
+                    <ul class="tight">
+                      <li>object อาจมี properties และ methods บางอย่าง<strong>ต่างไป</strong>จากที่ได้รับมาจาก superclass</li>
+                      <li>subclass <strong>สืบทอด properties และ methods ทั้งหมดของ superclass</strong> (inheritance) แต่<strong>มี properties และ methods เฉพาะของตัวเองได้</strong> (polymorphism)</li>
+                      <li>ใช้ <code>extends</code> เพื่อสร้าง subclass ที่สืบทอดจาก superclass</li>
+                    </ul>
+                    <pre class="code-block" data-lang="js"><code>class subclassName extends superclassName {
+  constructor(cprop1, cprop2, …, scprop1, scprop2, …) {
+    /* Properties inherited from the superclass */
+    super(cprop1, cprop2, …);
+    /* Properties of the subclass */
+    this.scprop1 = scprop1;
+    …
+  }
+  /* Superclass's methods also inherited from the superclass */
+  /* Only define methods that are unique for the subclass */
+  subclassMethod1() { /* do something here */ }
+}</code></pre>
+                    <p><strong>ตัวอย่าง UnivInstructor ที่สืบทอดจาก Instructor</strong></p>
+                    <pre class="code-block" data-lang="js" data-run><code>class Instructor {
+  constructor(_firstName, _lastName, _subjects) {
+    this.firstName = _firstName;
+    this.lastName  = _lastName;
+    this.subjects  = _subjects;
+  }
+  sayHello() { return "Hey! I'm " + this.firstName + ". Nice to meet you!!!"; }
+  teach()    { return "I teach " + this.subjects + "."; }
+}
+
+/* Superclass: Instructor, Subclass: UnivInstructor */
+class UnivInstructor extends Instructor {
+  constructor(_firstName, _lastName, _subjects, _university, _campus) {
+    /* Properties from the superclass */
+    super(_firstName, _lastName, _subjects);
+    /* Properties only in the subclass */
+    this.university = _university;
+    this.campus     = _campus;
+  }
+  /* Methods also inherited from the superclass */
+  getUniversity() {
+    return "My office is at " + this.university + ", " + this.campus + ".";
+  }
+}
+
+let jkSubjects = ["HTML", "OOP:JS"];
+let kjidapa2 = new UnivInstructor("Jidapa", "Kraisangka", jkSubjects,
+                                  "Mahidol University", "Salaya");
+
+console.log(kjidapa2.firstName + "@" + kjidapa2.university);
+/* All methods from the superclass are inherited */
+console.log(kjidapa2.sayHello());
+console.log(kjidapa2.teach());
+/* Call getUniversity() method */
+console.log(kjidapa2.getUniversity());</code></pre>
+                    <p class="note">Note จากสไลด์: class <code>Instructor</code> ต้องถูกนิยาม<strong>ก่อน</strong>นิยาม subclass <code>UnivInstructor</code></p>
+                  </section>
+
+                  <section class="topic" id="j6-onfly">
+                    <h4>เพิ่ม property และ method ให้ object ทีหลังได้</h4>
+                    <p>สไลด์ทดลองว่า ถ้าเรียก property หรือ function ที่<strong>ยังไม่ถูกนิยาม</strong> จะเกิดอะไรขึ้น</p>
+                    <pre class="code-block" data-lang="js" data-run><code>class Instructor {
+  constructor(_firstName, _lastName, _subjects) {
+    this.firstName = _firstName;
+    this.lastName  = _lastName;
+    this.subjects  = _subjects;
+  }
+  sayHello() { return "Hey! I'm " + this.firstName + ". Nice to meet you!!!"; }
+  teach()    { return "I teach " + this.subjects + "."; }
+}
+class UnivInstructor extends Instructor {
+  constructor(_firstName, _lastName, _subjects, _university, _campus) {
+    super(_firstName, _lastName, _subjects);
+    this.university = _university;
+    this.campus     = _campus;
+  }
+  getUniversity() { return "My office is at " + this.university + ", " + this.campus + "."; }
+}
+let kjidapa2 = new UnivInstructor("Jidapa", "Kraisangka", ["HTML","OOP:JS"],
+                                  "Mahidol University", "Salaya");
+
+/* What if we try adding an undefined property */
+console.log(kjidapa2.nickName);        // undefined
+kjidapa2.nickName = "Pa";              // เพิ่ม property ทีหลัง
+console.log(kjidapa2.nickName);        // Pa
+
+/* เพิ่ม function ทีหลัง */
+kjidapa2.sayMyName = function () {
+  return "I am " + this.firstName + " or " + this.nickName;
+};
+console.log(kjidapa2.sayMyName());</code></pre>
+                    <div class="callout callout--warn">
+                      <span class="callout-label">ต่างกันตรงนี้</span>
+                      <p>อ่าน property ที่ยังไม่มี → ได้ <code>undefined</code> (ไม่ error) แต่<b>เรียก function ที่ยังไม่มี</b> เช่น <code>kjidapa2.sayMyName()</code> ก่อนกำหนดค่า → เกิด error</p>
+                    </div>
+                  </section>
+
+                  <section class="topic" id="j6-ctor">
+                    <h4>Constructor Functions</h4>
+                    <p>ปกติเรามักอยากสร้าง object หลายตัวที่มี<strong>ชุด properties เหมือนกัน</strong> ใน OOP เพราะจะประมวลผลแบบเดียวกันได้โดยไม่ผิดพลาด <strong>Constructor functions</strong> คือกลไกสร้าง object ที่มีชุด properties เหมือนกัน และ<strong>สร้างได้ในแบบเดียวกับ function ปกติ</strong></p>
+                    <ul class="tight">
+                      <li>เรียกด้วย operator <code>new</code></li>
+                      <li>ใน constructor function ใช้ keyword <code>this</code> เพื่ออ้างถึง<strong>object ที่กำลังถูกสร้าง</strong></li>
+                      <li>object ที่สร้างใหม่ทุกตัวได้รับ<strong>ชุด properties ที่สอดคล้องกัน</strong></li>
+                      <li>กำหนดค่าเริ่มต้นให้ properties ได้ผ่าน parameters ของ function</li>
+                      <li>ใส่ function แบบ <strong>public (ใช้ <code>this</code>)</strong> และ <strong>private (ใช้ <code>var</code>, <code>let</code>)</strong> ใน constructor function ได้</li>
+                    </ul>
+                    <pre class="code-block" data-lang="js" data-run><code>function Person(firstName, lastName, age) {
+  this.firstName = firstName;
+  this.lastName = lastName;
+  this.age = age;
+  this.getInfo = function () {
+    return this.firstName + " " + this.lastName + " Age is " + this.age;
+  };
+}
+
+var person1 = new Person("Wudhichart", "Sawangphol", 30);
+console.log(person1.getInfo());</code></pre>
+                    <p class="note">สไลด์ระบุเพิ่มว่า properties ของ object <strong>เพิ่มได้แบบ on the fly</strong> และ constructor function <strong>สืบทอดจาก constructor function อื่นได้</strong></p>
+                  </section>
+
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- ================= 05 DOM ================= -->
+          <div class="acc-item">
+            <h3 class="acc-heading">
+              <button class="acc-trigger" type="button" aria-expanded="false" aria-controls="acc-j6-dom" id="acc-j6-dom-btn">
+                <span class="acc-index">05</span>
+                <span class="acc-title">
+                  <span class="acc-name">Document Object Model (DOM) และ Events</span>
+                  <span class="acc-file">ITDS241-Lecture07-JavaScript Part 2 · slide 51–82</span>
+                </span>
+                <svg class="acc-chevron" viewBox="0 0 20 20" aria-hidden="true"><path d="M5 7.5l5 5 5-5" /></svg>
+              </button>
+            </h3>
+            <div class="acc-panel" id="acc-j6-dom" role="region" aria-labelledby="acc-j6-dom-btn">
+              <div class="acc-panel-inner">
+                <div class="acc-body">
+
+                  <nav class="toc" aria-label="หัวข้อในการ์ด DOM">
+                    <a href="#j6-dom-what">DOM คืออะไร</a>
+                    <a href="#j6-dom-tree">HTML DOM เป็นต้นไม้</a>
+                    <a href="#j6-dom-nodes">ชนิดของ node</a>
+                    <a href="#j6-dom-methods">Document methods</a>
+                    <a href="#j6-dom-el">Element methods</a>
+                    <a href="#j6-dom-access">เข้าถึง node</a>
+                    <a href="#j6-dom-addremove">เพิ่ม / ลบ node</a>
+                    <a href="#j6-dom-attr">แก้ attribute</a>
+                    <a href="#j6-events">Events</a>
+                    <a href="#j6-listener">addEventListener</a>
+                  </nav>
+
+                  <section class="topic" id="j6-dom-what">
+                    <h4>DOM คืออะไร</h4>
+                    <ul class="tight">
+                      <li>DOM เป็น<strong>มาตรฐานของ W3C</strong> (World Wide Web Consortium)</li>
+                      <li>เป็น <strong>programming interface สำหรับเอกสารเว็บ</strong></li>
+                      <li>ทำให้โปรแกรมและ script <strong>เข้าถึงและอัปเดตเนื้อหา โครงสร้าง และ style ของเอกสารได้แบบ dynamic</strong></li>
+                    </ul>
+                    <p><strong>DOM แบ่งเป็นหลายส่วน</strong></p>
+                    <dl class="defs defs--stack">
+                      <div><dt>Core DOM</dt><dd>ชุด object มาตรฐานสำหรับ<strong>เอกสารที่มีโครงสร้างใดก็ได้</strong></dd></div>
+                      <div><dt>XML DOM</dt><dd>ชุด object มาตรฐานสำหรับ<strong>เอกสาร XML</strong></dd></div>
+                      <div><dt>HTML DOM</dt><dd>ชุด object มาตรฐานสำหรับ<strong>เอกสาร HTML</strong></dd></div>
+                    </dl>
+                    <div class="callout callout--why">
+                      <span class="callout-label">จุดเด่นที่สไลด์เน้น</span>
+                      <p>HTML DOM <b>ไม่ขึ้นกับแพลตฟอร์มและภาษา</b> — ภาษาอย่าง Java, JavaScript และ Python ใช้มันได้หมด</p>
+                    </div>
+                  </section>
+
+                  <section class="topic" id="j6-dom-tree">
+                    <h4>หน้า HTML ถูกสร้างเป็นต้นไม้ของ object</h4>
+                    <pre class="code-block" data-lang="html"><code>&lt;html&gt;
+  &lt;head&gt;
+    &lt;title&gt;DOM&lt;/title&gt;
+  &lt;/head&gt;
+  &lt;body&gt;
+    &lt;h1&gt;Document object model&lt;/h1&gt;
+    &lt;p align="left"&gt;
+      A HTML document is constructed as a tree of objects
+    &lt;/p&gt;
+  &lt;/body&gt;
+&lt;/html&gt;</code></pre>
+                    <figure class="diagram">
+                      <div class="diagram-scroll">
+                        <svg viewBox="0 0 740 400" role="img" aria-labelledby="dg-j6-dom-t dg-j6-dom-d">
+                          <title id="dg-j6-dom-t">ต้นไม้ HTML DOM ของเอกสารตัวอย่าง</title>
+                          <desc id="dg-j6-dom-d">Document อยู่บนสุด ลงมาเป็น Root element html แตกเป็นสองกิ่งคือ Element head และ Element body head มีลูกเป็น Element title ซึ่งมีลูกเป็น Text DOM body มีลูกสองตัวคือ Element h1 ซึ่งมีลูกเป็น Text Document object model และ Element p ซึ่งมีลูกเป็น Text A HTML document is และมี Attribute align h1 กับ p เป็นพี่น้องกัน html เป็นบรรพบุรุษของ text node ทุกตัว</desc>
+                          <rect class="dg-box dg-box--accent" x="296" y="10" width="148" height="38" rx="6" />
+                          <text class="dg-text" x="370" y="34" text-anchor="middle">Document</text>
+                          <path class="dg-line" d="M370 48 V74" marker-end="url(#arr-muted)" />
+                          <rect class="dg-box dg-box--accent" x="286" y="76" width="168" height="44" rx="6" />
+                          <text class="dg-text dg-text--sm" x="370" y="94" text-anchor="middle">Root element</text>
+                          <text class="dg-mono dg-mono--sm" x="370" y="112" text-anchor="middle">&lt;html&gt;</text>
+                          <path class="dg-line" d="M370 120 V142 H190 V162" marker-end="url(#arr-muted)" />
+                          <path class="dg-line" d="M370 120 V142 H550 V162" marker-end="url(#arr-muted)" />
+                          <rect class="dg-box" x="130" y="164" width="120" height="44" rx="6" />
+                          <text class="dg-text dg-text--sm" x="190" y="182" text-anchor="middle">Element</text>
+                          <text class="dg-mono dg-mono--sm" x="190" y="200" text-anchor="middle">&lt;head&gt;</text>
+                          <rect class="dg-box" x="490" y="164" width="120" height="44" rx="6" />
+                          <text class="dg-text dg-text--sm" x="550" y="182" text-anchor="middle">Element</text>
+                          <text class="dg-mono dg-mono--sm" x="550" y="200" text-anchor="middle">&lt;body&gt;</text>
+                          <path class="dg-line" d="M190 208 V244" marker-end="url(#arr-muted)" />
+                          <rect class="dg-box" x="130" y="246" width="120" height="44" rx="6" />
+                          <text class="dg-text dg-text--sm" x="190" y="264" text-anchor="middle">Element</text>
+                          <text class="dg-mono dg-mono--sm" x="190" y="282" text-anchor="middle">&lt;title&gt;</text>
+                          <path class="dg-line" d="M190 290 V326" marker-end="url(#arr-muted)" />
+                          <rect class="dg-box dg-box--ok" x="130" y="328" width="120" height="44" rx="6" />
+                          <text class="dg-text dg-text--sm dg-text--ok" x="190" y="346" text-anchor="middle">Text</text>
+                          <text class="dg-mono dg-mono--sm" x="190" y="364" text-anchor="middle">"DOM"</text>
+                          <path class="dg-line" d="M550 208 V226 H410 V244" marker-end="url(#arr-muted)" />
+                          <path class="dg-line" d="M550 208 V226 H660 V244" marker-end="url(#arr-muted)" />
+                          <rect class="dg-box" x="350" y="246" width="120" height="44" rx="6" />
+                          <text class="dg-text dg-text--sm" x="410" y="264" text-anchor="middle">Element</text>
+                          <text class="dg-mono dg-mono--sm" x="410" y="282" text-anchor="middle">&lt;h1&gt;</text>
+                          <rect class="dg-box" x="600" y="246" width="120" height="44" rx="6" />
+                          <text class="dg-text dg-text--sm" x="660" y="264" text-anchor="middle">Element</text>
+                          <text class="dg-mono dg-mono--sm" x="660" y="282" text-anchor="middle">&lt;p&gt;</text>
+                          <path class="dg-line" d="M410 290 V326" marker-end="url(#arr-muted)" />
+                          <rect class="dg-box dg-box--ok" x="330" y="328" width="160" height="44" rx="6" />
+                          <text class="dg-text dg-text--sm dg-text--ok" x="410" y="346" text-anchor="middle">Text</text>
+                          <text class="dg-mono dg-mono--sm" x="410" y="364" text-anchor="middle">"Document object model"</text>
+                          <path class="dg-line" d="M660 290 V326" marker-end="url(#arr-muted)" />
+                          <rect class="dg-box dg-box--ok" x="600" y="328" width="120" height="44" rx="6" />
+                          <text class="dg-text dg-text--sm dg-text--ok" x="660" y="346" text-anchor="middle">Text</text>
+                          <text class="dg-mono dg-mono--sm" x="660" y="364" text-anchor="middle">"A HTML …"</text>
+                          <path class="dg-line dg-line--dash" d="M600 268 H540" marker-end="url(#arr-muted)" />
+                          <rect class="dg-box dg-box--warn" x="496" y="300" width="112" height="30" rx="6" />
+                          <text class="dg-text dg-text--sm" x="552" y="320" text-anchor="middle">Attribute "align"</text>
+                        </svg>
+                      </div>
+                      <figcaption>Document node · Element node · Text node · Attribute node — <code>&lt;h1&gt;</code> กับ <code>&lt;p&gt;</code> เป็น siblings และ <code>&lt;html&gt;</code> เป็น ancestor ของ text node ทุกตัว · ที่มา: ITDS241-Lecture07 slide 52, 56–57</figcaption>
+                    </figure>
+                    <p>element ทั้งหมดของ HTML พร้อมทั้งข้อความและ attribute <strong>เข้าถึงได้ผ่าน DOM</strong> · เนื้อหา<strong>ถูกแก้ไขหรือลบได้</strong> และ<strong>สร้าง element ใหม่ได้</strong></p>
+                  </section>
+
+                  <section class="topic" id="j6-dom-nodes">
+                    <h4>ทุกอย่างในเอกสาร HTML คือ node</h4>
+                    <dl class="defs defs--stack">
+                      <div><dt>document node</dt><dd>ทั้งเอกสาร</dd></div>
+                      <div><dt>element node</dt><dd>ทุก HTML tag</dd></div>
+                      <div><dt>text node</dt><dd>ข้อความที่อยู่ใน HTML element</dd></div>
+                      <div><dt>attribute node</dt><dd>ทุก HTML attribute</dd></div>
+                      <div><dt>comment node</dt><dd>comment</dd></div>
+                    </dl>
+                    <p class="note">node ทุกตัวมี<strong>ความสัมพันธ์แบบลำดับชั้น</strong>ต่อกัน — parent, child, sibling, ancestor, descendant</p>
+                  </section>
+
+                  <section class="topic" id="j6-dom-methods">
+                    <h4>สรุป method ของ document</h4>
+                    <div class="table-scroll">
+                      <table>
+                        <thead><tr><th>Method</th><th>Description</th></tr></thead>
+                        <tbody>
+                          <tr><td><code>document.getElementById()</code></td><td>คืน element ที่มี attribute ID ตรงกับค่าที่ระบุ</td></tr>
+                          <tr><td><code>document.getElementsByClassName()</code></td><td>คืน <strong>NodeList</strong> ของ element ทั้งหมดที่มี class name ที่ระบุ</td></tr>
+                          <tr><td><code>document.getElementsByTagName()</code></td><td>คืน NodeList ของ element ทั้งหมดที่เป็น tag ที่ระบุ</td></tr>
+                          <tr><td><code>document.querySelector()</code></td><td>คืน <strong>element แรก</strong>ในเอกสารที่ตรงกับ selector หรือกลุ่มของ selector ที่ระบุ</td></tr>
+                          <tr><td><code>document.querySelectorAll()</code></td><td>คืน <strong>static NodeList</strong> ของ element ทั้งหมดที่ตรงกับกลุ่ม selector ที่ระบุ</td></tr>
+                          <tr><td><code>document.write()</code></td><td>เขียน HTML expression หรือโค้ด JavaScript ลงในเอกสาร</td></tr>
+                          <tr><td><code>document.writeln()</code></td><td>เหมือน <code>write()</code> แต่<strong>เติม newline</strong> ท้ายทุกคำสั่ง</td></tr>
+                        </tbody>
+                      </table>
+                    </div>
+                  </section>
+
+                  <section class="topic" id="j6-dom-el">
+                    <h4>Element object และ method/property ที่ใช้บ่อย</h4>
+                    <p>Element object เป็นส่วนหนึ่งของเอกสาร HTML และถูก implement เป็น node เช่นกัน ประกอบด้วย <strong>opening tag · attribute · text · closing tag</strong></p>
+                    <pre class="code-block" data-lang="html"><code>&lt;h1 style="color:blue;"&gt;DOM Lesson one&lt;/h1&gt;</code></pre>
+                    <div class="table-scroll">
+                      <table>
+                        <thead><tr><th>Method / Property</th><th>Description</th></tr></thead>
+                        <tbody>
+                          <tr><td><code>element.innerHTML</code></td><td>ตั้งค่าหรืออ่าน <strong>HTML syntax</strong> ที่อธิบาย descendants ของ element นั้น</td></tr>
+                          <tr><td><code>node.textContent</code></td><td>อ่าน/ตั้งค่า<strong>เนื้อความ</strong>ของ element และ descendants ทั้งหมด</td></tr>
+                          <tr><td><code>node.nodeValue</code></td><td>อ่าน/ตั้งค่า<strong>ค่าของ node ปัจจุบัน</strong></td></tr>
+                          <tr><td><code>node.childNodes</code></td><td>คืน <strong>live NodeList</strong> ของลูกทั้งหมดของ node นี้</td></tr>
+                          <tr><td><code>node.firstChild</code></td><td>คืน node ลูกตัวแรกโดยตรง หรือ <code>null</code> ถ้าไม่มีลูก</td></tr>
+                          <tr><td><code>node.getRootNode()</code></td><td>คืน root ของ context object (รวม shadow root ถ้ามี)</td></tr>
+                        </tbody>
+                      </table>
+                    </div>
+                  </section>
+
+                  <section class="topic" id="j6-dom-access">
+                    <h4>เข้าถึง node/element</h4>
+                    <p><strong>ตัวเดียวด้วย id</strong> — <code>document.getElementById()</code></p>
+                    <pre class="code-block" data-lang="html" data-render><code>&lt;div id="div_content"&gt;
+  This is sample text.
+&lt;/div&gt;
+&lt;script type="application/javascript"&gt;
+  /* Use this method to get the selected node with ID */
+  let divNode = document.getElementById("div_content");
+  /* After getting a node, we can access/manipulate them */
+  divNode.textContent = divNode.textContent + " (อ่านค่าและแก้ไขได้แล้ว)";
+&lt;/script&gt;</code></pre>
+                    <p><strong>ตัวเดียวด้วย CSS selector</strong> — <code>document.querySelector()</code> คืน element <strong>แรก</strong>ที่ตรง</p>
+                    <pre class="code-block" data-lang="js"><code>let selected_element = document.querySelector(selectors);
+
+let divNode = document.querySelector("#div_content");
+console.log(divNode.textContent);</code></pre>
+                    <p><strong>หลายตัวด้วย class name</strong> — คืนกลุ่มของ node ในรูปแบบ array</p>
+                    <pre class="code-block" data-lang="html" data-render><code>&lt;div id="div_content" style="background-color: yellow;"&gt; This is sample text.&lt;/div&gt;
+&lt;span class="colors"&gt;R&lt;/span&gt;
+&lt;span class="colors"&gt;G&lt;/span&gt;
+&lt;span class="colors"&gt;B&lt;/span&gt;
+&lt;script type="application/javascript"&gt;
+  let divNode = document.getElementById("div_content");
+  /* Use this method to get a collection of nodes */
+  let colorNodes = document.getElementsByClassName("colors");
+  /* After getting a node list, we can access/manipulate them */
+  let output = "Color: ";
+  for (var i = 0; i &lt; colorNodes.length; i++) {
+    output += colorNodes[i].textContent + " ";
+  }
+  divNode.textContent = divNode.textContent + output;
+&lt;/script&gt;</code></pre>
+                    <p><strong>หลายตัวด้วยชื่อ tag</strong></p>
+                    <pre class="code-block" data-lang="html" data-render><code>&lt;div id="div_content" style="background-color: yellow;"&gt; This is sample text.&lt;/div&gt;
+&lt;span class="colors"&gt;Red&lt;/span&gt;
+&lt;span class="colors"&gt;Green&lt;/span&gt;
+&lt;span class="colors"&gt;Blue&lt;/span&gt;
+&lt;script type="application/javascript"&gt;
+  let divNode = document.getElementById("div_content");
+  /* Use this method to get a collection of nodes */
+  let colorNodes = document.getElementsByTagName("span");
+  for (var i = 0; i &lt; colorNodes.length; i++) {
+    colorNodes[i].textContent = i + ":" + colorNodes[i].textContent;
+  }
+&lt;/script&gt;</code></pre>
+                  </section>
+
+                  <section class="topic" id="j6-dom-addremove">
+                    <h4>เพิ่มและลบ node</h4>
+                    <p><strong>เพิ่ม</strong> — ใช้ <code>createElement()</code> คู่กับ <code>createTextNode()</code> เพื่อสร้าง node แล้วใช้ <code>appendChild()</code> เพื่อเพิ่ม node ใหม่เป็น<strong>ลูกตัวสุดท้าย</strong>ของ parent</p>
+                    <pre class="code-block" data-lang="html" data-render><code>&lt;div id="div_demo"&gt;&lt;/div&gt;
+&lt;script type="application/javascript"&gt;
+  let divDemo = document.getElementById("div_demo");
+  /* Add &lt;p&gt; with contents in the "div_demo"
+     innerHTML gets all contents between the &lt;div&gt;...&lt;/div&gt; tag */
+  divDemo.innerHTML = "&lt;p&gt;First&lt;/p&gt;";
+  /* Add another paragraph &lt;p&gt; by another method */
+  var p2 = document.createElement("p");
+  var txtP2 = document.createTextNode("Second");
+  p2.appendChild(txtP2);    // Append text node to &lt;p&gt;
+  divDemo.appendChild(p2);  // Append &lt;p&gt; to &lt;div&gt;
+&lt;/script&gt;</code></pre>
+                    <p><strong>ลบ</strong> — ใช้ <code>removeChild()</code> โดยต้อง<strong>หาลูกที่ถูกต้องให้ได้ก่อน</strong></p>
+                    <pre class="code-block" data-lang="html" data-render><code>&lt;div id="div_color"&gt;
+  &lt;span id="color_R"&gt;Red&lt;/span&gt;
+  &lt;span id="color_G"&gt;Green&lt;/span&gt;
+  &lt;span id="color_B"&gt;Blue&lt;/span&gt;
+&lt;/div&gt;
+&lt;script type="application/javascript"&gt;
+  let divColor = document.getElementById("div_color");
+  let colorG = document.getElementById("color_G");
+  /* Delete the child from parent: Bye bye! */
+  divColor.removeChild(colorG);
+&lt;/script&gt;</code></pre>
+                  </section>
+
+                  <section class="topic" id="j6-dom-attr">
+                    <h4>แก้ attribute ของ node</h4>
+                    <p>หลังได้ node มาแล้ว ใช้ <code>setAttribute("attribute", "value")</code> เพื่อตั้งค่า attribute ของ node</p>
+                    <pre class="code-block" data-lang="html"><code>&lt;div id="div_color"&gt;
+  &lt;span id="color_R"&gt;Red&lt;/span&gt;
+  &lt;span id="color_G"&gt;Green&lt;/span&gt;
+  &lt;span id="color_B"&gt;Blue&lt;/span&gt;
+&lt;/div&gt;
+&lt;script type="application/javascript"&gt;
+  let spanColor = document.getElementsByTagName("span");
+  /* Set a "class" attribute to all &lt;span&gt; nodes */
+  for (var i = 0; i &lt; spanColor.length; i++) {
+    spanColor[i].setAttribute("class", "colors");
+  }
+&lt;/script&gt;</code></pre>
+                  </section>
+
+                  <section class="topic" id="j6-events">
+                    <h4>Events</h4>
+                    <div class="callout callout--def">
+                      <span class="callout-label">นิยามจากสไลด์</span>
+                      <p>HTML event คือ<b>สิ่งที่ browser ทำ หรือสิ่งที่ผู้ใช้ทำ</b></p>
+                    </div>
+                    <div class="table-scroll">
+                      <table>
+                        <thead><tr><th>Event</th><th>Description</th></tr></thead>
+                        <tbody>
+                          <tr><td><code>onabort</code></td><td>เกิดเมื่อผู้ใช้ขัดจังหวะการโอนย้ายรูปภาพ</td></tr>
+                          <tr><td><code>onchange</code></td><td>เกิดเมื่อเลือกค่าใหม่ใน select หรือแก้ text input แล้ว element เสีย focus</td></tr>
+                          <tr><td><code>onclick</code></td><td>เกิดเมื่อผู้ใช้คลิกเมาส์</td></tr>
+                          <tr><td><code>ondblclick</code></td><td>เกิดเมื่อดับเบิลคลิกเมาส์</td></tr>
+                          <tr><td><code>onfocus</code></td><td>เกิดเมื่อ form element ได้ focus</td></tr>
+                          <tr><td><code>onkeydown</code></td><td>เกิดเมื่อผู้ใช้กดปุ่มลง</td></tr>
+                          <tr><td><code>onkeypress</code></td><td>เกิดเมื่อผู้ใช้กดแล้วปล่อยปุ่ม</td></tr>
+                          <tr><td><code>onkeyup</code></td><td>เกิดเมื่อผู้ใช้ปล่อยปุ่ม</td></tr>
+                          <tr><td><code>onload</code></td><td>เกิดเมื่อ element และลูกทั้งหมดโหลดเสร็จ</td></tr>
+                          <tr><td><code>onsubmit</code></td><td>เกิดเมื่อ form ถูก submit</td></tr>
+                          <tr><td><code>onunload</code></td><td>เกิดเมื่อหน้ากำลังจะถูก unload</td></tr>
+                          <tr><td><code>onmousedown</code> / <code>onmouseup</code></td><td>เกิดเมื่อกดปุ่มเมาส์ลง / ปล่อยปุ่มเมาส์</td></tr>
+                          <tr><td><code>onmousemove</code></td><td>เกิดเมื่อเมาส์เคลื่อนที่</td></tr>
+                          <tr><td><code>onmouseover</code> / <code>onmouseout</code></td><td>เกิดเมื่อเมาส์เข้า / ออกจาก element</td></tr>
+                          <tr><td><code>onreset</code></td><td>เกิดเมื่อ form ถูก reset</td></tr>
+                          <tr><td><code>onresize</code></td><td>เกิดเมื่อขนาดของ object เปลี่ยน</td></tr>
+                          <tr><td><code>onselect</code></td><td>เกิดเมื่อเริ่มเลือกข้อความ (ใช้กับ input หรือ textarea)</td></tr>
+                        </tbody>
+                      </table>
+                    </div>
+                    <p><strong>ตัวอย่างจากสไลด์: บวกเลขสองจำนวน</strong> — พิมพ์เลขแล้วกดปุ่มในกรอบผลลัพธ์ได้เลย</p>
+                    <pre class="code-block" data-lang="html" data-render><code>&lt;body&gt;
+  &lt;input type="text" size="2" id="num1"&gt; +
+  &lt;input type="text" size="2" id="num2"&gt; =
+  &lt;input type="text" size="3" id="sum"&gt;
+  &lt;button onclick="sum()"&gt;Sum Me&lt;/button&gt;
+  &lt;script type="application/javascript"&gt;
+    function sum() {
+      var num1 = parseFloat(document.getElementById("num1").value);
+      var num2 = parseFloat(document.getElementById("num2").value);
+      var sum = num1 + num2;
+      document.getElementById("sum").value = sum;
+    }
+  &lt;/script&gt;
+&lt;/body&gt;</code></pre>
+                    <p><strong>ตัวอย่าง mouse events</strong> — เอาเมาส์ไปวางบนกล่องสีแดง แล้วลองกดค้าง</p>
+                    <pre class="code-block" data-lang="html" data-render><code>&lt;body&gt;
+  &lt;div id="demo" style="background-color:red; color:white; font-family:sans-serif"
+       onmouseover="myMouseOver()" onmouseout="myMouseOut()"
+       onmousedown="myPress()" onmouseup="myRelease()"&gt;
+    This is me!!!!
+  &lt;/div&gt;
+  &lt;script type="application/javascript"&gt;
+    function myMouseOver() {
+      let divDemo = document.getElementById("demo");
+      divDemo.innerHTML = "I put my mouse OVER this!"; }
+    function myMouseOut() {
+      let divDemo = document.getElementById("demo");
+      divDemo.innerHTML = "This is me!!!!"; }
+    function myPress() {
+      let divDemo = document.getElementById("demo");
+      divDemo.innerHTML = "I am pressing...";
+      divDemo.style.backgroundColor = "green"; }
+    function myRelease() {
+      let divDemo = document.getElementById("demo");
+      divDemo.innerHTML = "This is me!!!!";
+      divDemo.style.backgroundColor = "red"; }
+  &lt;/script&gt;
+&lt;/body&gt;</code></pre>
+                  </section>
+
+                  <section class="topic" id="j6-listener">
+                    <h4>เพิ่ม event ด้วย JavaScript: addEventListener</h4>
+                    <p>event <strong>เพิ่มด้วย JS ได้</strong> โดยใช้ method <code>addEventListener</code> เพื่อผูก event เข้ากับ element</p>
+                    <pre class="code-block" data-lang="js"><code>let selected_element = document.getElementById("ID");
+selected_element.addEventListener("click", MyClick);</code></pre>
+                    <pre class="code-block" data-lang="html" data-render><code>&lt;button id="btn"&gt;กดฉัน&lt;/button&gt;
+&lt;p id="out"&gt;ยังไม่ถูกกด&lt;/p&gt;
+&lt;script type="application/javascript"&gt;
+  let count = 0;
+  function MyClick() {
+    count = count + 1;
+    document.getElementById("out").textContent = "ถูกกดแล้ว " + count + " ครั้ง";
+  }
+  let selected_element = document.getElementById("btn");
+  selected_element.addEventListener("click", MyClick);
+&lt;/script&gt;</code></pre>
+                    <div class="callout callout--why">
+                      <span class="callout-label">Wrap up ของบทนี้ (จากสไลด์)</span>
+                      <p>JS เป็นหนึ่งในภาษา OOP ที่ให้เรา<b>สร้าง class ของตัวเอง</b>หรือ<b>ใช้ class/method ที่มีมาให้</b> · หน้า HTML ถูกสร้างจาก<b>ต้นไม้ของ element</b> · ด้วยแนวคิด DOM เรา<b>จัดการทุก element ได้อย่างอิสระ</b>ผ่าน method/property ที่นิยามไว้ให้แล้ว</p>
+                    </div>
+                  </section>
+
+                </div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </section>
+
+      <!-- =============================================================
+           แท็บ 2: สรุป (cheat sheet)
+           ============================================================= -->
+      <section class="panel" id="summary" role="tabpanel" aria-labelledby="tab-summary" tabindex="-1">
+        <div class="panel-head">
+          <h2>Cheat sheet</h2>
+          <p class="panel-sub">function 6 แบบ, scope/closure, class + inheritance, document/element methods และ events ของบทที่ 6 รวมไว้ในหน้าเดียว</p>
+        </div>
+
+        <div class="sheet">
+
+<article class="sheet-card sheet-card--wide">
+            <h3><span class="sheet-num">01</span> function 6 แบบ</h3>
+            <div class="table-scroll">
+              <table>
+                <thead><tr><th>แบบ</th><th>จุดจำ</th></tr></thead>
+                <tbody>
+                  <tr><td class="nowrap">Function</td><td>มี 2 ประเภท: <strong>คืนค่า</strong> (มี <code>return</code>) และ <strong>ไม่คืนค่า</strong> · parameter ตั้ง default ได้</td></tr>
+                  <tr><td class="nowrap">Constructor Function</td><td>สร้าง object ที่มีชุด properties เหมือนกัน · เรียกด้วย <code>new</code> · ใช้ <code>this</code> อ้างถึง object ที่กำลังสร้าง</td></tr>
+                  <tr><td class="nowrap">First Class Function</td><td>function ถูกปฏิบัติ<strong>เหมือนตัวแปร</strong>: assign เข้าตัวแปร · ส่งเป็น argument · คืนค่าเป็น function · เก็บในโครงสร้างข้อมูล</td></tr>
+                  <tr><td class="nowrap">High-order Function</td><td><strong>รับ function เป็น argument</strong> หรือ <strong>คืนค่าเป็น function</strong> เช่น <code>map</code>, <code>filter</code></td></tr>
+                  <tr><td class="nowrap">Callback Function</td><td>function ที่ส่งให้ API เรียกกลับ เมื่อเกิด event หรืองาน <strong>asynchronous</strong> เสร็จ</td></tr>
+                  <tr><td class="nowrap">Arrow Function</td><td><code>(a, b) =&gt; a + b</code> · ไม่มี parameter ต้องใส่ <code>()</code> · มีปีกกาแล้วต้องเขียน <code>return</code> เอง</td></tr>
+                </tbody>
+              </table>
+            </div>
+          </article>
+
+          <article class="sheet-card">
+            <h3><span class="sheet-num">02</span> Scope · Lifetime · Closure</h3>
+            <div class="table-scroll">
+              <table>
+                <thead><tr><th></th><th>scope</th></tr></thead>
+                <tbody>
+                  <tr><td><code>let</code> / <code>const</code></td><td><strong>block</strong></td></tr>
+                  <tr><td><code>var</code></td><td>function ที่ใกล้สุด หรือ global</td></tr>
+                </tbody>
+              </table>
+            </div>
+            <p>ตัวแปรใน JS เป็น <strong>lexically scoped ยกเว้น <code>var</code></strong> · ประกาศนอก function = global, ในฟังก์ชัน = local</p>
+            <p><strong>Lifetime</strong> — global: จนกว่าหน้าเว็บจะปิด · local: ตั้งแต่ function ถูกเรียกจนทำงานจบ · ชื่อชนกัน → ใช้ <strong>local</strong></p>
+            <p class="note"><strong>Closure</strong> = function + การอ้างอิงตัวแปรที่นิยามไว้ข้างนอกตัวมัน ทำให้เข้าถึงตัวแปรนอก scope ได้</p>
+          </article>
+
+          <article class="sheet-card">
+            <h3><span class="sheet-num">03</span> class · object · inheritance</h3>
+            <pre class="code-block" data-lang="js"><code>class Sub extends Super {
+  constructor(a, b, c) {
+    super(a, b);   // ของ superclass
+    this.c = c;    // ของ subclass
+  }
+  subMethod() { }
+}
+let o = new Sub(1, 2, 3);
+console.log(o.c);
+o.subMethod();</code></pre>
+            <p><strong>Class</strong> = template (properties + methods) · <strong>Object</strong> = class ที่เติมค่าแล้ว · <code>constructor</code> ถูกเรียก<strong>ทุกครั้งที่สร้าง object</strong></p>
+            <p class="note">inheritance = subclass ได้ทุกอย่างของ superclass · polymorphism = subclass มีของตัวเองเพิ่มได้ · superclass ต้องนิยาม<strong>ก่อน</strong></p>
+          </article>
+
+          <article class="sheet-card sheet-card--wide">
+            <h3><span class="sheet-num">04</span> Document methods</h3>
+            <div class="table-scroll">
+              <table>
+                <thead><tr><th>Method</th><th>คืนค่า</th></tr></thead>
+                <tbody>
+                  <tr><td><code>getElementById()</code></td><td>element ที่มี ID ตรงกับที่ระบุ (ตัวเดียว)</td></tr>
+                  <tr><td><code>getElementsByClassName()</code></td><td>NodeList ของทุก element ที่มี class นั้น</td></tr>
+                  <tr><td><code>getElementsByTagName()</code></td><td>NodeList ของทุก element ที่เป็น tag นั้น</td></tr>
+                  <tr><td><code>querySelector()</code></td><td><strong>element แรก</strong>ที่ตรงกับ CSS selector</td></tr>
+                  <tr><td><code>querySelectorAll()</code></td><td><strong>static NodeList</strong> ของทุก element ที่ตรงกับ selector</td></tr>
+                  <tr><td><code>write()</code> / <code>writeln()</code></td><td>เขียน HTML/JS ลงเอกสาร · <code>writeln</code> เติม newline</td></tr>
+                </tbody>
+              </table>
+            </div>
+          </article>
+
+          <article class="sheet-card sheet-card--wide">
+            <h3><span class="sheet-num">05</span> DOM tree · element · แก้ไข node</h3>
+            <div class="table-scroll">
+              <table>
+                <thead><tr><th>ชนิด node</th><th>คืออะไร</th></tr></thead>
+                <tbody>
+                  <tr><td class="nowrap">document node</td><td>ทั้งเอกสาร</td></tr>
+                  <tr><td class="nowrap">element node</td><td>ทุก HTML tag</td></tr>
+                  <tr><td class="nowrap">text node</td><td>ข้อความใน element</td></tr>
+                  <tr><td class="nowrap">attribute node</td><td>ทุก HTML attribute</td></tr>
+                  <tr><td class="nowrap">comment node</td><td>comment</td></tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="table-scroll">
+              <table>
+                <thead><tr><th>ทำอะไร</th><th>ใช้อะไร</th></tr></thead>
+                <tbody>
+                  <tr><td>อ่าน/เขียน HTML ข้างใน</td><td><code>element.innerHTML</code></td></tr>
+                  <tr><td>อ่าน/เขียนเนื้อความ</td><td><code>node.textContent</code> · <code>node.nodeValue</code></td></tr>
+                  <tr><td>ไล่ดูลูก</td><td><code>node.childNodes</code> · <code>node.firstChild</code></td></tr>
+                  <tr><td>สร้าง + เพิ่ม node</td><td><code>createElement()</code> + <code>createTextNode()</code> + <code>appendChild()</code></td></tr>
+                  <tr><td>ลบ node</td><td><code>parent.removeChild(child)</code></td></tr>
+                  <tr><td>ตั้ง attribute</td><td><code>setAttribute("attr", "value")</code></td></tr>
+                </tbody>
+              </table>
+            </div>
+            <p class="note">DOM = มาตรฐาน W3C · แบ่งเป็น Core DOM / XML DOM / HTML DOM · ไม่ขึ้นกับแพลตฟอร์มและภาษา</p>
+          </article>
+
+          <article class="sheet-card">
+            <h3><span class="sheet-num">06</span> Events ที่ต้องจำ</h3>
+            <div class="table-scroll">
+              <table>
+                <thead><tr><th>Event</th><th>เกิดเมื่อ</th></tr></thead>
+                <tbody>
+                  <tr><td><code>onclick</code></td><td>คลิกเมาส์</td></tr>
+                  <tr><td><code>onchange</code></td><td>เลือกค่าใหม่ / แก้ text แล้วเสีย focus</td></tr>
+                  <tr><td><code>onfocus</code></td><td>form element ได้ focus</td></tr>
+                  <tr><td><code>onload</code></td><td>element + ลูกโหลดเสร็จ</td></tr>
+                  <tr><td><code>onsubmit</code></td><td>form ถูก submit</td></tr>
+                  <tr><td><code>onmouseover</code></td><td>เมาส์เข้า element</td></tr>
+                  <tr><td><code>onmouseout</code></td><td>เมาส์ออกจาก element</td></tr>
+                  <tr><td><code>onkeydown</code> / <code>onkeyup</code></td><td>กดปุ่มลง / ปล่อยปุ่ม</td></tr>
+                </tbody>
+              </table>
+            </div>
+            <p class="note">เพิ่ม event ด้วย JS: <code>el.addEventListener("click", MyClick)</code></p>
+          </article>
+
+        </div>
+      </section>
+
+      <!-- =============================================================
+           แท็บ 3: แบบฝึกหัด (20 ข้อ)
+           data-answer = ตัวเลือกที่ถูก (ก=a, ข=b, ค=c, ง=d ตามเฉลยที่ผู้ใช้กำหนด)
+           ============================================================= -->
+      <section class="panel" id="quiz" role="tabpanel" aria-labelledby="tab-quiz" tabindex="-1">
+        <div class="panel-head">
+          <h2>แบบฝึกหัด 20 ข้อ</h2>
+          <p class="panel-sub">เลือกคำตอบให้ครบแล้วกด "ตรวจคำตอบ" ด้านล่าง ระบบจะเฉลยพร้อมคำอธิบายทุกข้อ</p>
+        </div>
+
+        <form class="quiz" id="quiz-form" novalidate>
+
+          <fieldset class="q" data-answer="b">
+            <legend class="q-head"><span class="q-num">01</span><span class="q-text">สไลด์แบ่ง function ใน JavaScript ออกเป็น 2 ประเภทตามเกณฑ์ใด?</span></legend>
+            <div class="q-options">
+              <label class="opt"><input type="radio" name="q1" value="a" /><span class="opt-key">A</span><span class="opt-text">ตามจำนวน parameter ที่รับเข้ามา</span></label>
+              <label class="opt"><input type="radio" name="q1" value="b" /><span class="opt-key">B</span><span class="opt-text">ตามการคืนค่า — function ที่ไม่คืนค่า และ function ที่คืนค่า</span></label>
+              <label class="opt"><input type="radio" name="q1" value="c" /><span class="opt-key">C</span><span class="opt-text">ตามว่าเขียนใน head หรือ body</span></label>
+              <label class="opt"><input type="radio" name="q1" value="d" /><span class="opt-key">D</span><span class="opt-text">ตามว่าเป็น arrow function หรือไม่</span></label>
+            </div>
+            <div class="q-feedback"><div class="q-feedback-inner"><p class="q-verdict" aria-live="polite"></p><p class="q-explain">สไลด์ระบุว่า there are two types of function: functions that do not return values และ functions that do return values</p></div></div>
+          </fieldset>
+
+          <fieldset class="q" data-answer="c">
+            <legend class="q-head"><span class="q-num">02</span><span class="q-text">function showMessagefromuser(from, text = &quot;no message&quot;) เมื่อเรียกด้วย showMessagefromuser(&quot;Ann&quot;) จะแสดงผลว่าอะไร?</span></legend>
+            <div class="q-options">
+              <label class="opt"><input type="radio" name="q2" value="a" /><span class="opt-key">A</span><span class="opt-text">Ann: undefined</span></label>
+              <label class="opt"><input type="radio" name="q2" value="b" /><span class="opt-key">B</span><span class="opt-text">เกิด error เพราะส่ง argument ไม่ครบ</span></label>
+              <label class="opt"><input type="radio" name="q2" value="c" /><span class="opt-key">C</span><span class="opt-text">Ann: no message</span></label>
+              <label class="opt"><input type="radio" name="q2" value="d" /><span class="opt-key">D</span><span class="opt-text">Ann: </span></label>
+            </div>
+            <div class="q-feedback"><div class="q-feedback-inner"><p class="q-verdict" aria-live="polite"></p><p class="q-explain">parameter ตั้งค่า default ได้ — เมื่อไม่ส่ง text เข้ามา ค่าที่ใช้คือ &quot;no message&quot;</p></div></div>
+          </fieldset>
+
+          <fieldset class="q" data-answer="b">
+            <legend class="q-head"><span class="q-num">03</span><span class="q-text">arrow function ที่ไม่มี parameter เลย ต้องเขียนอย่างไร?</span></legend>
+            <div class="q-options">
+              <label class="opt"><input type="radio" name="q3" value="a" /><span class="opt-key">A</span><span class="opt-text">let sayHello = =&gt; alert(&quot;Hello!&quot;);</span></label>
+              <label class="opt"><input type="radio" name="q3" value="b" /><span class="opt-key">B</span><span class="opt-text">let sayHello = () =&gt; alert(&quot;Hello!&quot;);</span></label>
+              <label class="opt"><input type="radio" name="q3" value="c" /><span class="opt-key">C</span><span class="opt-text">let sayHello = (void) =&gt; alert(&quot;Hello!&quot;);</span></label>
+              <label class="opt"><input type="radio" name="q3" value="d" /><span class="opt-key">D</span><span class="opt-text">let sayHello = arrow alert(&quot;Hello!&quot;);</span></label>
+            </div>
+            <div class="q-feedback"><div class="q-feedback-inner"><p class="q-verdict" aria-live="polite"></p><p class="q-explain">แม้ไม่มี parameter ก็ต้องมีวงเล็บว่าง () ก่อนเครื่องหมาย =&gt;</p></div></div>
+          </fieldset>
+
+          <fieldset class="q" data-answer="d">
+            <legend class="q-head"><span class="q-num">04</span><span class="q-text">arrow function ที่เขียนหลายบรรทัดด้วยปีกกา { } ต้องทำอะไรเพิ่มเมื่อเทียบกับแบบบรรทัดเดียว?</span></legend>
+            <div class="q-options">
+              <label class="opt"><input type="radio" name="q4" value="a" /><span class="opt-key">A</span><span class="opt-text">ต้องใส่ชื่อ function ด้วยเสมอ</span></label>
+              <label class="opt"><input type="radio" name="q4" value="b" /><span class="opt-key">B</span><span class="opt-text">ต้องเปลี่ยน =&gt; เป็น =&gt;&gt;</span></label>
+              <label class="opt"><input type="radio" name="q4" value="c" /><span class="opt-key">C</span><span class="opt-text">ไม่ต้องทำอะไรเพิ่ม</span></label>
+              <label class="opt"><input type="radio" name="q4" value="d" /><span class="opt-key">D</span><span class="opt-text">ต้องเขียน return เอง ไม่อย่างนั้นจะไม่มีค่าคืนออกมา</span></label>
+            </div>
+            <div class="q-feedback"><div class="q-feedback-inner"><p class="q-verdict" aria-live="polite"></p><p class="q-explain">แบบ (a, b) =&gt; a + b คืนค่าให้อัตโนมัติ แต่พอใส่ { } แล้วต้องเขียน return เอง เช่น let subtract = (a, b) =&gt; { let result = a - b; return result; };</p></div></div>
+          </fieldset>
+
+          <fieldset class="q" data-answer="a">
+            <legend class="q-head"><span class="q-num">05</span><span class="q-text">ภาษาหนึ่งจะเรียกว่ามี First-class Functions เมื่อใด?</span></legend>
+            <div class="q-options">
+              <label class="opt"><input type="radio" name="q5" value="a" /><span class="opt-key">A</span><span class="opt-text">เมื่อ function ในภาษานั้นถูกปฏิบัติเหมือนตัวแปรอื่นๆ</span></label>
+              <label class="opt"><input type="radio" name="q5" value="b" /><span class="opt-key">B</span><span class="opt-text">เมื่อภาษานั้นมี function มาให้ใช้มากกว่า 100 ตัว</span></label>
+              <label class="opt"><input type="radio" name="q5" value="c" /><span class="opt-key">C</span><span class="opt-text">เมื่อ function ในภาษานั้นทำงานเร็วกว่า loop</span></label>
+              <label class="opt"><input type="radio" name="q5" value="d" /><span class="opt-key">D</span><span class="opt-text">เมื่อภาษานั้นบังคับให้ทุก function ต้องคืนค่า</span></label>
+            </div>
+            <div class="q-feedback"><div class="q-feedback-inner"><p class="q-verdict" aria-live="polite"></p><p class="q-explain">นิยามจากสไลด์: a programming language is said to have First-class Functions when functions in that language are treated like any other variable</p></div></div>
+          </fieldset>
+
+          <fieldset class="q" data-answer="c">
+            <legend class="q-head"><span class="q-num">06</span><span class="q-text">High-order function คือ function แบบใด?</span></legend>
+            <div class="q-options">
+              <label class="opt"><input type="radio" name="q6" value="a" /><span class="opt-key">A</span><span class="opt-text">function ที่มี parameter มากกว่า 3 ตัว</span></label>
+              <label class="opt"><input type="radio" name="q6" value="b" /><span class="opt-key">B</span><span class="opt-text">function ที่ประกาศไว้นอกไฟล์ HTML</span></label>
+              <label class="opt"><input type="radio" name="q6" value="c" /><span class="opt-key">C</span><span class="opt-text">function ที่รับ function อื่นเป็น argument หรือคืนค่าผลลัพธ์เป็น function</span></label>
+              <label class="opt"><input type="radio" name="q6" value="d" /><span class="opt-key">D</span><span class="opt-text">function ที่เรียกตัวเองซ้ำ</span></label>
+            </div>
+            <div class="q-feedback"><div class="q-feedback-inner"><p class="q-verdict" aria-live="polite"></p><p class="q-explain">นิยามจากสไลด์: high-order functions are functions that can take other functions as arguments or return functions as their results เช่น map และ filter</p></div></div>
+          </fieldset>
+
+          <fieldset class="q" data-answer="b">
+            <legend class="q-head"><span class="q-num">07</span><span class="q-text">เมื่อ squareWide1 = [2, 7, 9, 10] ผลของ squareWide1.filter((num) =&gt; num % 2 === 0) คืออะไร?</span></legend>
+            <div class="q-options">
+              <label class="opt"><input type="radio" name="q7" value="a" /><span class="opt-key">A</span><span class="opt-text">4, 49, 81, 100</span></label>
+              <label class="opt"><input type="radio" name="q7" value="b" /><span class="opt-key">B</span><span class="opt-text">2, 10</span></label>
+              <label class="opt"><input type="radio" name="q7" value="c" /><span class="opt-key">C</span><span class="opt-text">7, 9</span></label>
+              <label class="opt"><input type="radio" name="q7" value="d" /><span class="opt-key">D</span><span class="opt-text">true, false, false, true</span></label>
+            </div>
+            <div class="q-feedback"><div class="q-feedback-inner"><p class="q-verdict" aria-live="polite"></p><p class="q-explain">filter เก็บเฉพาะสมาชิกที่เงื่อนไขเป็นจริง — เลขที่หาร 2 ลงตัวในชุดนี้คือ 2 และ 10</p></div></div>
+          </fieldset>
+
+          <fieldset class="q" data-answer="d">
+            <legend class="q-head"><span class="q-num">08</span><span class="q-text">จุดประสงค์หลักของ callback function ตามสไลด์คืออะไร?</span></legend>
+            <div class="q-options">
+              <label class="opt"><input type="radio" name="q8" value="a" /><span class="opt-key">A</span><span class="opt-text">เพื่อทำให้โปรแกรมทำงานเร็วขึ้น</span></label>
+              <label class="opt"><input type="radio" name="q8" value="b" /><span class="opt-key">B</span><span class="opt-text">เพื่อลดจำนวนบรรทัดของโค้ด</span></label>
+              <label class="opt"><input type="radio" name="q8" value="c" /><span class="opt-key">C</span><span class="opt-text">เพื่อป้องกันไม่ให้ตัวแปรกลายเป็น global</span></label>
+              <label class="opt"><input type="radio" name="q8" value="d" /><span class="opt-key">D</span><span class="opt-text">เพื่อเป็นกลไกให้โปรแกรมตอบสนองต่อ event หรือการกระทำที่เกิดขึ้นแบบ asynchronous หรือคาดเดาเวลาไม่ได้</span></label>
+            </div>
+            <div class="q-feedback"><div class="q-feedback-inner"><p class="q-verdict" aria-live="polite"></p><p class="q-explain">สไลด์ระบุว่า the primary purpose of a callback function is to provide a mechanism for a program to respond to events or actions that occur asynchronously or unpredictably</p></div></div>
+          </fieldset>
+
+          <fieldset class="q" data-answer="a">
+            <legend class="q-head"><span class="q-num">09</span><span class="q-text">โค้ด setTimeout(greet, 2000); console.log('ตั้งเวลาเรียบร้อย'); จะให้ผลลัพธ์ตามลำดับใด?</span></legend>
+            <div class="q-options">
+              <label class="opt"><input type="radio" name="q9" value="a" /><span class="opt-key">A</span><span class="opt-text">&quot;ตั้งเวลาเรียบร้อย&quot; ขึ้นก่อน แล้ว greet จึงทำงานเมื่อครบ 2 วินาที</span></label>
+              <label class="opt"><input type="radio" name="q9" value="b" /><span class="opt-key">B</span><span class="opt-text">greet ทำงานก่อน แล้ว &quot;ตั้งเวลาเรียบร้อย&quot; จึงขึ้นทีหลัง</span></label>
+              <label class="opt"><input type="radio" name="q9" value="c" /><span class="opt-key">C</span><span class="opt-text">ทั้งสองบรรทัดทำงานพร้อมกันเสมอ</span></label>
+              <label class="opt"><input type="radio" name="q9" value="d" /><span class="opt-key">D</span><span class="opt-text">เกิด error เพราะส่งชื่อ function โดยไม่มีวงเล็บ</span></label>
+            </div>
+            <div class="q-feedback"><div class="q-feedback-inner"><p class="q-verdict" aria-live="polite"></p><p class="q-explain">setTimeout ไม่หยุดรอ — มันฝาก greet ไว้เป็น callback แล้วให้บรรทัดถัดไปทำงานต่อทันที นี่คือความหมายของ asynchronous</p></div></div>
+          </fieldset>
+
+          <fieldset class="q" data-answer="c">
+            <legend class="q-head"><span class="q-num">10</span><span class="q-text">ข้อใดอธิบาย scope ของ let, const และ var ได้ถูกต้อง?</span></legend>
+            <div class="q-options">
+              <label class="opt"><input type="radio" name="q10" value="a" /><span class="opt-key">A</span><span class="opt-text">ทั้งสามแบบเป็น block-scoped เหมือนกัน</span></label>
+              <label class="opt"><input type="radio" name="q10" value="b" /><span class="opt-key">B</span><span class="opt-text">ทั้งสามแบบผูกกับ function เหมือนกัน</span></label>
+              <label class="opt"><input type="radio" name="q10" value="c" /><span class="opt-key">C</span><span class="opt-text">let และ const เป็น block-scoped ส่วน var ผูกกับ function ที่ใกล้ที่สุดหรือ global scope</span></label>
+              <label class="opt"><input type="radio" name="q10" value="d" /><span class="opt-key">D</span><span class="opt-text">var เป็น block-scoped ส่วน let และ const ผูกกับ function</span></label>
+            </div>
+            <div class="q-feedback"><div class="q-feedback-inner"><p class="q-verdict" aria-live="polite"></p><p class="q-explain">สไลด์ระบุว่า let and const create block-scoped variables ส่วน var creates a variable that is scoped to their nearest function or the global scope</p></div></div>
+          </fieldset>
+
+          <fieldset class="q" data-answer="b">
+            <legend class="q-head"><span class="q-num">11</span><span class="q-text">ถ้าประกาศ const myName ไว้ใน block ของ if แล้วเรียก console.log(myName) นอก block จะเกิดอะไรขึ้น?</span></legend>
+            <div class="q-options">
+              <label class="opt"><input type="radio" name="q11" value="a" /><span class="opt-key">A</span><span class="opt-text">แสดงค่าของ myName ได้ตามปกติ</span></label>
+              <label class="opt"><input type="radio" name="q11" value="b" /><span class="opt-key">B</span><span class="opt-text">เกิด ReferenceError เพราะ myName อยู่นอก scope</span></label>
+              <label class="opt"><input type="radio" name="q11" value="c" /><span class="opt-key">C</span><span class="opt-text">แสดงค่าเป็น undefined</span></label>
+              <label class="opt"><input type="radio" name="q11" value="d" /><span class="opt-key">D</span><span class="opt-text">เกิด SyntaxError ตั้งแต่ตอนโหลดหน้า</span></label>
+            </div>
+            <div class="q-feedback"><div class="q-feedback-inner"><p class="q-verdict" aria-live="polite"></p><p class="q-explain">myName เป็น block-scoped กับคำสั่ง if — เข้าถึงได้เฉพาะภายใน block เท่านั้น นอก block จะได้ Uncaught ReferenceError: myName is not defined</p></div></div>
+          </fieldset>
+
+          <fieldset class="q" data-answer="d">
+            <legend class="q-head"><span class="q-num">12</span><span class="q-text">ถ้าชื่อของ global variable กับ local variable ตรงกัน ตัวใดจะถูกใช้?</span></legend>
+            <div class="q-options">
+              <label class="opt"><input type="radio" name="q12" value="a" /><span class="opt-key">A</span><span class="opt-text">global variable เสมอ</span></label>
+              <label class="opt"><input type="radio" name="q12" value="b" /><span class="opt-key">B</span><span class="opt-text">ตัวที่ประกาศก่อน</span></label>
+              <label class="opt"><input type="radio" name="q12" value="c" /><span class="opt-key">C</span><span class="opt-text">เกิด error ทันทีเพราะชื่อซ้ำกัน</span></label>
+              <label class="opt"><input type="radio" name="q12" value="d" /><span class="opt-key">D</span><span class="opt-text">local variable</span></label>
+            </div>
+            <div class="q-feedback"><div class="q-feedback-inner"><p class="q-verdict" aria-live="polite"></p><p class="q-explain">สไลด์ระบุว่า if the names of global variable and local variable are the same, the local variable is considered</p></div></div>
+          </fieldset>
+
+          <fieldset class="q" data-answer="a">
+            <legend class="q-head"><span class="q-num">13</span><span class="q-text">Closure ใน JavaScript คืออะไร?</span></legend>
+            <div class="q-options">
+              <label class="opt"><input type="radio" name="q13" value="a" /><span class="opt-key">A</span><span class="opt-text">function ที่รวมเข้ากับการอ้างอิงตัวแปรที่ถูกนิยามไว้ข้างนอกตัวมัน ทำให้เข้าถึงตัวแปรนอก scope ได้</span></label>
+              <label class="opt"><input type="radio" name="q13" value="b" /><span class="opt-key">B</span><span class="opt-text">function ที่ปิดการเข้าถึงตัวแปรทั้งหมดจากภายนอก</span></label>
+              <label class="opt"><input type="radio" name="q13" value="c" /><span class="opt-key">C</span><span class="opt-text">คำสั่งที่ใช้ปิดการทำงานของ loop</span></label>
+              <label class="opt"><input type="radio" name="q13" value="d" /><span class="opt-key">D</span><span class="opt-text">วิธีปิดหน้าเว็บด้วย JavaScript</span></label>
+            </div>
+            <div class="q-feedback"><div class="q-feedback-inner"><p class="q-verdict" aria-live="polite"></p><p class="q-explain">นิยามจากสไลด์: a closure is a function combined with references to the variables defined outside of it — closures maintain the variable references</p></div></div>
+          </fieldset>
+
+          <fieldset class="q" data-answer="c">
+            <legend class="q-head"><span class="q-num">14</span><span class="q-text">method ชื่อ constructor ใน class ถูกเรียกเมื่อใด?</span></legend>
+            <div class="q-options">
+              <label class="opt"><input type="radio" name="q14" value="a" /><span class="opt-key">A</span><span class="opt-text">เมื่อไฟล์ JavaScript ถูกโหลด</span></label>
+              <label class="opt"><input type="radio" name="q14" value="b" /><span class="opt-key">B</span><span class="opt-text">เมื่อ class ถูกประกาศ</span></label>
+              <label class="opt"><input type="radio" name="q14" value="c" /><span class="opt-key">C</span><span class="opt-text">ทุกครั้งที่ object ถูกสร้าง (initiate)</span></label>
+              <label class="opt"><input type="radio" name="q14" value="d" /><span class="opt-key">D</span><span class="opt-text">เมื่อ object ถูกลบทิ้ง</span></label>
+            </div>
+            <div class="q-feedback"><div class="q-feedback-inner"><p class="q-verdict" aria-live="polite"></p><p class="q-explain">สไลด์ระบุว่า the constructor method is called each time the object is initiated</p></div></div>
+          </fieldset>
+
+          <fieldset class="q" data-answer="d">
+            <legend class="q-head"><span class="q-num">15</span><span class="q-text">ในการสร้าง subclass ที่สืบทอดจาก superclass ต้องใช้อะไร และ super(...) ทำหน้าที่อะไร?</span></legend>
+            <div class="q-options">
+              <label class="opt"><input type="radio" name="q15" value="a" /><span class="opt-key">A</span><span class="opt-text">ใช้ implements และ super() ใช้เรียก method ของ subclass</span></label>
+              <label class="opt"><input type="radio" name="q15" value="b" /><span class="opt-key">B</span><span class="opt-text">ใช้ inherits และ super() ใช้ลบ properties เดิม</span></label>
+              <label class="opt"><input type="radio" name="q15" value="c" /><span class="opt-key">C</span><span class="opt-text">ใช้ new และ super() ใช้สร้าง object ใหม่</span></label>
+              <label class="opt"><input type="radio" name="q15" value="d" /><span class="opt-key">D</span><span class="opt-text">ใช้ extends และ super(...) ใช้ส่งค่าให้ properties ที่สืบทอดมาจาก superclass</span></label>
+            </div>
+            <div class="q-feedback"><div class="q-feedback-inner"><p class="q-verdict" aria-live="polite"></p><p class="q-explain">สไลด์ใช้ class subclassName extends superclassName และเรียก super(cprop1, cprop2, …) ใน constructor สำหรับ properties inherited from the superclass</p></div></div>
+          </fieldset>
+
+          <fieldset class="q" data-answer="a">
+            <legend class="q-head"><span class="q-num">16</span><span class="q-text">ถ้าเรียกอ่าน property ของ object ที่ยังไม่เคยถูกนิยามไว้ เช่น console.log(kjidapa2.nickName) จะได้อะไร?</span></legend>
+            <div class="q-options">
+              <label class="opt"><input type="radio" name="q16" value="a" /><span class="opt-key">A</span><span class="opt-text">undefined</span></label>
+              <label class="opt"><input type="radio" name="q16" value="b" /><span class="opt-key">B</span><span class="opt-text">null</span></label>
+              <label class="opt"><input type="radio" name="q16" value="c" /><span class="opt-key">C</span><span class="opt-text">ข้อความว่าง</span></label>
+              <label class="opt"><input type="radio" name="q16" value="d" /><span class="opt-key">D</span><span class="opt-text">เกิด error ทันที</span></label>
+            </div>
+            <div class="q-feedback"><div class="q-feedback-inner"><p class="q-verdict" aria-live="polite"></p><p class="q-explain">อ่าน property ที่ยังไม่มีได้ undefined (และเพิ่มให้ทีหลังได้แบบ on the fly) ต่างจากการเรียก function ที่ยังไม่มี ซึ่งจะเกิด error</p></div></div>
+          </fieldset>
+
+          <fieldset class="q" data-answer="d">
+            <legend class="q-head"><span class="q-num">17</span><span class="q-text">DOM เป็นมาตรฐานขององค์กรใด และคืออะไร?</span></legend>
+            <div class="q-options">
+              <label class="opt"><input type="radio" name="q17" value="a" /><span class="opt-key">A</span><span class="opt-text">เป็นมาตรฐานของ Google เป็นภาษาโปรแกรมสำหรับเว็บ</span></label>
+              <label class="opt"><input type="radio" name="q17" value="b" /><span class="opt-key">B</span><span class="opt-text">เป็นมาตรฐานของ Mozilla เป็น browser engine</span></label>
+              <label class="opt"><input type="radio" name="q17" value="c" /><span class="opt-key">C</span><span class="opt-text">เป็นมาตรฐานของ ECMA เป็นไวยากรณ์ของ JavaScript</span></label>
+              <label class="opt"><input type="radio" name="q17" value="d" /><span class="opt-key">D</span><span class="opt-text">เป็นมาตรฐานของ W3C เป็น programming interface สำหรับเอกสารเว็บ</span></label>
+            </div>
+            <div class="q-feedback"><div class="q-feedback-inner"><p class="q-verdict" aria-live="polite"></p><p class="q-explain">สไลด์ระบุว่า the DOM is a W3C standard และ DOM is a programming interface for web documents ที่ให้เข้าถึงและอัปเดตเนื้อหา โครงสร้าง และ style ได้แบบ dynamic</p></div></div>
+          </fieldset>
+
+          <fieldset class="q" data-answer="b">
+            <legend class="q-head"><span class="q-num">18</span><span class="q-text">ในโครงสร้าง HTML DOM ทุก HTML tag ถือเป็น node ชนิดใด?</span></legend>
+            <div class="q-options">
+              <label class="opt"><input type="radio" name="q18" value="a" /><span class="opt-key">A</span><span class="opt-text">document node</span></label>
+              <label class="opt"><input type="radio" name="q18" value="b" /><span class="opt-key">B</span><span class="opt-text">element node</span></label>
+              <label class="opt"><input type="radio" name="q18" value="c" /><span class="opt-key">C</span><span class="opt-text">text node</span></label>
+              <label class="opt"><input type="radio" name="q18" value="d" /><span class="opt-key">D</span><span class="opt-text">attribute node</span></label>
+            </div>
+            <div class="q-feedback"><div class="q-feedback-inner"><p class="q-verdict" aria-live="polite"></p><p class="q-explain">ทั้งเอกสารคือ document node · ทุก HTML tag คือ element node · ข้อความใน element คือ text node · ทุก attribute คือ attribute node · comment คือ comment node</p></div></div>
+          </fieldset>
+
+          <fieldset class="q" data-answer="b">
+            <legend class="q-head"><span class="q-num">19</span><span class="q-text">document.querySelector() คืนค่าอะไร?</span></legend>
+            <div class="q-options">
+              <label class="opt"><input type="radio" name="q19" value="a" /><span class="opt-key">A</span><span class="opt-text">NodeList ของทุก element ที่ตรงกับ selector</span></label>
+              <label class="opt"><input type="radio" name="q19" value="b" /><span class="opt-key">B</span><span class="opt-text">element แรกในเอกสารที่ตรงกับ selector หรือกลุ่มของ selector ที่ระบุ</span></label>
+              <label class="opt"><input type="radio" name="q19" value="c" /><span class="opt-key">C</span><span class="opt-text">element ที่มี ID ตรงกับที่ระบุเท่านั้น</span></label>
+              <label class="opt"><input type="radio" name="q19" value="d" /><span class="opt-key">D</span><span class="opt-text">ข้อความทั้งหมดของ element ที่ตรงกับ selector</span></label>
+            </div>
+            <div class="q-feedback"><div class="q-feedback-inner"><p class="q-verdict" aria-live="polite"></p><p class="q-explain">querySelector คืน element แรกที่ตรง ส่วน querySelectorAll คืน static NodeList ของทุก element ที่ตรง</p></div></div>
+          </fieldset>
+
+          <fieldset class="q" data-answer="a">
+            <legend class="q-head"><span class="q-num">20</span><span class="q-text">ถ้าต้องการสร้าง &lt;p&gt; ใหม่พร้อมข้อความแล้วเพิ่มเข้าไปเป็นลูกตัวสุดท้ายของ &lt;div&gt; ควรใช้ชุด method ใด?</span></legend>
+            <div class="q-options">
+              <label class="opt"><input type="radio" name="q20" value="a" /><span class="opt-key">A</span><span class="opt-text">createElement() + createTextNode() + appendChild()</span></label>
+              <label class="opt"><input type="radio" name="q20" value="b" /><span class="opt-key">B</span><span class="opt-text">querySelector() + setAttribute()</span></label>
+              <label class="opt"><input type="radio" name="q20" value="c" /><span class="opt-key">C</span><span class="opt-text">getElementById() + removeChild()</span></label>
+              <label class="opt"><input type="radio" name="q20" value="d" /><span class="opt-key">D</span><span class="opt-text">write() + writeln()</span></label>
+            </div>
+            <div class="q-feedback"><div class="q-feedback-inner"><p class="q-verdict" aria-live="polite"></p><p class="q-explain">สไลด์ใช้ createElement() คู่กับ createTextNode() เพื่อสร้าง node แล้วใช้ appendChild() เพื่อเพิ่ม node ใหม่เป็นลูกตัวสุดท้ายของ parent</p></div></div>
+          </fieldset>
+
+          <div class="quiz-result" id="quiz-result" hidden tabindex="-1">
+            <div class="score-ring" aria-hidden="true">
+              <svg viewBox="0 0 120 120">
+                <circle class="ring-track" cx="60" cy="60" r="52" />
+                <circle class="ring-fill" cx="60" cy="60" r="52" pathLength="100" />
+              </svg>
+              <span class="score-pct"><span id="score-pct">0</span>%</span>
+            </div>
+            <div class="score-body">
+              <p class="score-line" role="status">ได้ <strong id="score-num">0</strong> / 20 คะแนน</p>
+              <p class="score-msg" id="score-msg"></p>
+              <div class="score-actions">
+                <button class="btn btn--ghost btn--sm" type="button" id="toggle-wrong" aria-pressed="false">ดูเฉพาะข้อที่ผิด</button>
+              </div>
+            </div>
+          </div>
+
+          <div class="quiz-bar">
+            <div class="quiz-progress">
+              <span class="quiz-count"><span id="answered">0</span> / 20 ข้อ</span>
+              <span class="progress" aria-hidden="true"><span class="progress-fill" id="progress-fill"></span></span>
+              <span class="quiz-hint" id="quiz-hint" aria-live="polite"></span>
+            </div>
+            <div class="quiz-actions">
+              <button class="btn btn--ghost" type="reset" id="quiz-reset">ทำใหม่</button>
+              <button class="btn btn--primary" type="submit" id="quiz-submit">ตรวจคำตอบ</button>
+            </div>
+          </div>
+        </form>
+      </section>
+
+      <!-- =============================================================
+           แท็บ 4: เขียนโค้ด (code exercise) — โจทย์อยู่ใน assets/js/exercises-web-6.js
+           ============================================================= -->
+      <section class="panel" id="code" role="tabpanel" aria-labelledby="tab-code" tabindex="-1">
+        <div class="panel-head">
+          <h2>แบบฝึกหัดเขียนโค้ด</h2>
+          <p class="panel-sub">เขียน JavaScript ในช่องแก้ไข กด "รันโค้ด" เพื่อดูผลใน console แล้วกด "ตรวจคำตอบ" (Ctrl + Enter) — บางข้อมี HTML ตั้งต้นให้แล้ว โค้ดของคุณจะทำงานกับ HTML ชุดนั้น · โค้ดและความคืบหน้าบันทึกไว้ใน browser นี้</p>
+        </div>
+        <div class="cx" id="code-exercise">
+          <p class="cx-nojs">แบบฝึกหัดเขียนโค้ดต้องเปิด JavaScript ใน browser</p>
+        </div>
+      </section>
+
+    </div>
+  </main>
+  <footer class="site-footer">
+    <div class="wrap">
+      <p>สรุปจากสไลด์ ITDS241 Web Technologies and Applications (Faculty of ICT, Mahidol University) เพื่อใช้ทบทวนส่วนตัว — ถ้าเนื้อหาขัดกับสไลด์ ให้ยึดสไลด์เป็นหลัก</p>
+    </div>
+  </footer>
+
+  <script src="assets/js/widgets.js" defer></script>
+  <script src="assets/js/network.js" defer></script>
+  <script src="assets/js/exercises-web-6.js" defer></script>
+  <script src="assets/js/code-exercise.js" defer></script>
+</body>
+</html>
