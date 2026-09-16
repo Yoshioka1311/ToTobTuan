@@ -45,12 +45,26 @@ HTML/CSS/JS ไม่มี framework ไม่มี build tool — ห้า�
 | `web-js-fundamentals.html` | ITDS241 **บทที่ 5: JavaScript Fundamentals** (Lecture 06) — 4 แท็บ: accordion 5 การ์ด · สรุป 6 การ์ด · quiz 20 ข้อ · เขียนโค้ด (6 ข้อ กลุ่ม 9, mode js) |
 | `web-js-functions-oop-dom.html` | ITDS241 **บทที่ 6: Functions, OOP & DOM** (Lecture 07) — 4 แท็บ: accordion 5 การ์ด · สรุป 6 การ์ด · quiz 20 ข้อ · เขียนโค้ด (6 ข้อ กลุ่ม 10, mode js + fixture) |
 | `web-ecmascript-features.html` | ITDS241 **บทที่ 7: ECMAScript Features** (ES6 → ES2026) — **3 แท็บ** (ไม่มีแท็บเขียนโค้ด): accordion 5 การ์ด · สรุป 6 การ์ด · quiz 20 ข้อ |
+| `se-foundation-pm.html` | ITDS261 **บทที่ 1: SE Foundation & Project Management** (L1) — 3 แท็บ: accordion 5 การ์ด · สรุป 7 การ์ด · quiz 20 ข้อ |
+| `se-process-models.html` | ITDS261 **บทที่ 2: Software Process Models** (L2) — accordion 5 การ์ด · สรุป 7 การ์ด · quiz 20 ข้อ |
+| `se-requirement-engineering.html` | ITDS261 **บทที่ 3: Requirement Engineering** (L3) — accordion 5 การ์ด · สรุป 7 การ์ด · quiz 20 ข้อ |
+| `se-use-case-modeling.html` | ITDS261 **บทที่ 4: Use Case Modeling** (L4 + In-class Zoo Ticketing) — accordion 5 การ์ด · สรุป 7 การ์ด · quiz 20 ข้อ |
+| `se-flow-behavior-modeling.html` | ITDS261 **บทที่ 5: Flow & Behavior Modeling (DFD)** (L6 + L7) — accordion 6 การ์ด · สรุป 7 การ์ด · quiz 20 ข้อ |
+| `se-ui-design.html` | ITDS261 **บทที่ 6: User Interface Design** (L8) — accordion 4 การ์ด · สรุป 6 การ์ด · quiz 20 ข้อ |
 
-การ์ด "การออกแบบฐานข้อมูล (7-Eleven Schema)" ใน index เป็นเนื้อหาเดิมของผู้ใช้ ยังไม่มีหน้าของตัวเอง
-การ์ด ITDS231 ใน index ลิงก์ไป `network.html` (บทที่ 1) · การ์ด ITDS241 ลิงก์ไป `web-intro-html-basics.html` — ทุกหน้าบทมี **course nav** ต้นหน้า: ปุ่มเลือกวิชา (Network / Web) แล้วตามด้วยลิงก์บทของวิชานั้น
+3 วิชา: **Network 4 บท · Web 7 บท · SE 6 บท** — การ์ดใน index ลิงก์ไปบทที่ 1 ของแต่ละวิชา (`network.html`, `web-intro-html-basics.html`, `se-foundation-pm.html`) · ทุกหน้าบทมี **course nav** ต้นหน้า: ปุ่มเลือกวิชา (Network / Web / SE) แล้วตามด้วยลิงก์บทของวิชานั้น
+- การ์ด "การออกแบบฐานข้อมูล (7-Eleven Schema)" **ถูกลบแล้ว (session 6)** ตามที่ผู้ใช้สั่ง — เป็นการ์ดตัวอย่างของคอร์สที่เลิกเรียนแล้ว คำใน ticker ที่มาจากคอร์สนั้นถูกแทนด้วยคำจาก 3 วิชาปัจจุบัน · hero SVG (รูปกล่อง 1–N) ยังคงไว้เป็นภาพตกแต่ง
 
 ### ⚠️ กฎเรื่องเนื้อหา (สำคัญ) — content lock
-- เนื้อหาวิชา, คำถาม quiz 20 ข้อ, ตัวเลือก, คำตอบ (`data-answer`) และคำอธิบายใน **ทุกหน้าบท: `network.html`, `network-application-layer.html`, `network-data-link-layer.html`, `network-mac-ethernet.html`, `web-intro-html-basics.html`, `web-media-forms-semantic.html`, `web-css-fundamentals.html`, `web-css-layout-responsive.html`, `web-js-fundamentals.html`, `web-js-functions-oop-dom.html`, `web-ecmascript-features.html`** **ห้ามแก้/ลบ** เมื่อทำงานด้าน UI — ปรับได้แค่ markup/class/ดีไซน์/interaction (เช่น course nav)
+- เนื้อหาวิชา, คำถาม quiz 20 ข้อ, ตัวเลือก, คำตอบ (`data-answer`) และคำอธิบายใน **ทุกหน้าบท: `network.html`, `network-application-layer.html`, `network-data-link-layer.html`, `network-mac-ethernet.html`, `web-intro-html-basics.html`, `web-media-forms-semantic.html`, `web-css-fundamentals.html`, `web-css-layout-responsive.html`, `web-js-fundamentals.html`, `web-js-functions-oop-dom.html`, `web-ecmascript-features.html`, `se-foundation-pm.html`, `se-process-models.html`, `se-requirement-engineering.html`, `se-use-case-modeling.html`, `se-flow-behavior-modeling.html`, `se-ui-design.html`** **ห้ามแก้/ลบ** เมื่อทำงานด้าน UI — ปรับได้แค่ markup/class/ดีไซน์/interaction (เช่น course nav)
+- **SE ITDS261 บทที่ 1–6 (session 6, lock แล้ว)**: เนื้อหาและ quiz มาจาก**สรุปที่ผู้ใช้พิมพ์ให้ในแชท** + ตรวจทานกับ PDF ต้นฉบับ (ดึงข้อความด้วย `.cache/pdftext.mjs` — ไม่ได้ render ภาพ จึงอ่านได้เฉพาะข้อความ ภาพในสไลด์อ่านไม่ได้) · คำถาม/ตัวเลือก/เฉลยตรงตัวตามผู้ใช้ (ก=a ข=b ค=c ง=d) — **ห้ามเปลี่ยนเฉลยหรือสลับตัวเลือก** · `.q-explain` เขียนโดย Claude อ้างจากสไลด์/เนื้อหาที่ผู้ใช้ให้
+  - ไฟล์ต้นฉบับใน Downloads: `2026 - ITDS261 - L1 - SE foundation SPM.pdf` (บท 1) · `L2- Process models.pdf` (บท 2) · `L3 - Requirement Engineering.pdf` (บท 3) · `L4 - Use case modeling.pdf` + `In-class - Use case modeling (Zoo Ticketing System).pdf` (บท 4) · `L6 - Requirements Modeling Flow and Behavior I.pdf` + `L7 - … II.pdf` (บท 5) · `L8 - User Interface Design.pdf` (บท 6) — ทุกไฟล์ขึ้นต้นด้วย `2026 - ITDS261 - `
+  - เฉลยบทที่ 1 = `bbbbabbabaaabbbbbaba` · บทที่ 2 = `bbbbbabbbabaabbbaaaa` · บทที่ 3 = `aaabbaabaaaaaabaaaaa` · บทที่ 4 = `babbbaabbbbbababbaba` · บทที่ 5 = `babbbabbbbabbbbabbaa` · บทที่ 6 = `abbaaaabbbbbababaaab`
+  - **Zoo Ticketing System (บท 4 การ์ด 05, บท 5 การ์ด 06) = บริบทอ้างอิงเท่านั้น** — เอกสารต้นฉบับเป็นแบบฝึกหัดเปล่าไม่มีเฉลย **ห้ามวาด use case diagram / เขียน narrative / วาด DFD ของระบบนี้** · user story + acceptance criteria ของการซื้อตั๋วสวนสัตว์ในบท 3 มาจากสไลด์ 3-43/3-44 จริง (ไม่ใช่ส่วนของแบบฝึกหัด)
+  - ตัวอย่างที่ Claude สร้างขึ้นและติดป้ายไว้ชัดเจนว่า "ไม่ได้มาจากสไลด์": use case diagram + narrative ระบบยืม-คืนหนังสือ (บท 4) · decision table ที่แปลงจาก PDL Analyze Triangle (บท 5) · ภาพ low vs high fidelity (บท 6) · แผนภาพ inheritance ใช้ชื่อสมมติ X/Y · แผนภาพ balancing และ "Don't break DFD rules" วาดใหม่อย่างย่อ
+  - สิ่งที่สไลด์เป็นภาพล้วนจึง**ไม่ได้วาด**: DFD ของ Library Query System (6-35–6-37), decision table ตัวอย่าง (7-18), Structured English constructs (7-15/16), ตาราง Spotify vs HealthCare (2-30) · ตัวอย่าง context diagram ใช้ "digital video processor" (6-21) แทน เพราะมีข้อความครบ
+  - ตาราง Agile vs Traditional: สไลด์แยก Complexity กับ Overhead เป็น 2 แถว (ค่าเหมือนกัน) — หน้าเว็บรวมเป็นแถวเดียวให้ครบ "6 มิติ" ตามที่ผู้ใช้ระบุ พร้อมหมายเหตุ
+  - Initial Schedule Estimate (บท 1) — จับคู่ task/คน/เวลาจากลำดับข้อความในสไลด์ 1-72 และตรวจเวลาแล้วตรงกับตัวเลขในแผนภาพ PERT 1-71
 - **แท็บ "แบบฝึกหัด" (quiz) ห้ามแตะเด็ดขาด** ทุกหน้า — ถ้าต้องแก้แท็บเนื้อหาให้ใช้วิธี splice เฉพาะ `<section id="content">` แล้วตรวจว่าส่วนสรุป + quiz เหมือนเดิมทุกไบต์
 - **ขยายแท็บเนื้อหา Network บทที่ 1–4 (session 4, ผู้ใช้อนุญาต)**: เนื้อหาในแท็บ "เนื้อหา" ถูกเขียนเพิ่มจาก **PDF ต้นฉบับโดยตรง** (อ่านด้วย PyMuPDF, หน้าที่เป็นรูปถูก render แล้วอ่านภาพ) — กฎคือ **ห้ามเพิ่มข้อมูลที่ไม่ได้มาจากสไลด์** (รวมถึง "เหตุผล" ที่สไลด์ไม่ได้เขียน) ตัวอย่างตัวเลขต้องมีวิธีทำทีละขั้น · แท็บสรุปและ quiz ไม่ได้แก้
   - บทที่ 2: สไลด์ HTTP พื้นฐานจริงอยู่ใน `chapter2_application layer_1-1.pdf` (slide 28–47) ไม่ใช่ไฟล์ Lecture4 — ป้ายไฟล์ของการ์ดถูกแก้ให้ตรงแล้ว
@@ -92,10 +106,16 @@ web-css-layout-responsive.html   ITDS241 บทที่ 4
 web-js-fundamentals.html         ITDS241 บทที่ 5
 web-js-functions-oop-dom.html    ITDS241 บทที่ 6
 web-ecmascript-features.html     ITDS241 บทที่ 7 (3 แท็บ ไม่มีเขียนโค้ด)
+se-foundation-pm.html            ITDS261 บทที่ 1 (3 แท็บ · data-theme="se")
+se-process-models.html           ITDS261 บทที่ 2
+se-requirement-engineering.html  ITDS261 บทที่ 3
+se-use-case-modeling.html        ITDS261 บทที่ 4
+se-flow-behavior-modeling.html   ITDS261 บทที่ 5
+se-ui-design.html                ITDS261 บทที่ 6
 assets/
   favicon.svg           โลโก้ (3 โหนดเชื่อมกัน) ใช้เป็น favicon + wordmark
   css/
-    tokens.css          design tokens (สี ฟอนต์ ระยะ radius เงา motion) — แก้สีที่นี่ที่เดียว
+    tokens.css          design tokens (palette 3 วิชา + semantic tokens + ธีมต่อวิชา, ฟอนต์ ระยะ radius เงา motion) — แก้สีที่นี่ที่เดียว
     base.css            reset, typography, header, .btn, .chip, .card, .table-scroll, .formula, footer, [hidden]
     home.css            เฉพาะ index.html (hero, ticker, subject cards)
     network.css         หน้าบททุกวิชา: course nav, tabs, accordion, topic content (.frame, callout, diagram/dg-*, code-block, render-preview),
@@ -117,7 +137,7 @@ README.md               คำอธิบายสั้น + วิธี depl
 .gitignore
 ```
 
-ลำดับการโหลด CSS: `tokens → base → (home | network [+ exercise]) → motion` · JS: `widgets.js → network.js [→ exercises-web-N.js → code-exercise.js]` (defer ทั้งหมด)
+ลำดับการโหลด CSS: `tokens → base → (home | network [+ exercise]) → motion` · ธีมเลือกด้วย `<html data-theme="network|web|se">` · JS: `widgets.js → network.js [→ exercises-web-N.js → code-exercise.js]` (defer ทั้งหมด)
 
 ## Widgets และแผนภาพ (assets/js/widgets.js)
 
@@ -135,6 +155,9 @@ README.md               คำอธิบายสั้น + วิธี depl
 | `hamming` | บทที่ 3 | `input` (7 บิต d7→d1), `.bit-row`, `.demo-status`, `.calc-steps` |
 | `crc-calc` | บทที่ 3 | `[data-input=data/divisor]`, `pre.long-division`, `.calc-steps` |
 | `backoff-sim` | บทที่ 4 | `[data-input=tprop]`, `[data-action=collide/example/reset]`, `.demo-status`, `.calc-steps` (Kmax = 15 → abort) |
+| `comm-paths` | SE บทที่ 1 | `button[data-people=2/4/6]` (เฉพาะจำนวนคนที่สไลด์ 1-35 ยกตัวอย่าง), `.cp-stage svg`, `.demo-status` — วาดเส้นทุกคู่แล้วนับ (1 / 6 / 15) |
+| `triangle-pspec` | SE บทที่ 5 | `[data-input=a/b/c]`, `.demo-status`, `ol.calc-steps` — เดินตาม PDL Analyze Triangle สไลด์ 7-13 (ติดลบ → error, ด้านยาวสุด ≥ ผลรวม → type 0) |
+- `ul.pct-bars` (SE บทที่ 1): แถบเปอร์เซ็นต์ `li > span + .pct-track > .pct-fill[style=--pct] + .pct-val` — ต้องมีตัวเลขกำกับเสมอ
 
 - โค้ดตัวอย่าง HTML: `pre.code-block[data-lang=html]` ถูก highlight อัตโนมัติ · ใส่ `data-render` จะมี iframe `sandbox=""` srcdoc แสดงผล (ไม่ใช้ lazy loading — เคยทำให้ว่าง)
 - โค้ดตัวอย่าง CSS/JS: `data-lang=css|js` highlight ได้เหมือนกัน · `pre.code-block[data-lang=js][data-run]` จะมีปุ่ม "▶ รันโค้ดนี้" + กล่อง `.run-output` (รันใน iframe sandbox ผ่าน `TotobWidgets.runJs`, มีตัวกันลูปไม่รู้จบและ timeout) · `data-wait="<ms>"` ใช้กับโค้ดที่มี `setTimeout` เพื่อรอผลก่อนสรุป · `data-fixture="<template id>"` ใส่ HTML ตั้งต้นให้กล่องนั้น
@@ -156,40 +179,36 @@ README.md               คำอธิบายสั้น + วิธี depl
 - editor: Tab/Shift+Tab ย่อหน้า (กด Esc แล้ว Tab เพื่อออกจากช่อง), Enter คงระดับย่อหน้า, Ctrl+Enter ตรวจ, live preview, รีเซ็ตข้อ/ทั้งหมด (confirm)
 - ทดสอบ: `window.TotobCodeExercise.validate(id, code)` (async) — ทุก solution ต้องผ่าน · โค้ดว่างต้องไม่ผ่าน · `starter` ต้องไม่ผ่าน · ควรทดสอบ "เฉลยปลอม" (hardcode ค่า / ใช้วิธีที่โจทย์ห้าม) ว่าไม่ผ่านด้วย
 
-## Design system — "Iris & Graphite"
+## Design system — 3 ธีมประจำวิชา บนพื้นมืดแบบเดียวกัน
 
-ธีมมืด: graphite ที่มี undertone ม่วง + ม่วง iris อมฝุ่น (จงใจไม่ใช้ม่วง Tailwind เช่น #8b5cf6/#7c3aed)
+พื้นหลังทุกวิชาเป็นโทนมืดเกือบดำ ต่างกันแค่ undertone · **accent** (ปุ่ม ลิงก์ ขอบ active ไฮไลต์ tab) แยกสีตามวิชา
 
-**Base (graphite)** — ลึก → ยก
-| token | hex | ใช้กับ |
-| --- | --- | --- |
-| `--graphite-950` | `#121015` | inset, formula block, tab track |
-| `--graphite-900` | `#17151a` | พื้นหลังหน้า |
-| `--graphite-850` | `#1d1a21` | การ์ด, accordion, คำถาม quiz |
-| `--graphite-800` | `#242028` | hover, หัวตาราง, compare box |
-| `--graphite-750` | `#2c2731` | track ของ progress/ring |
+| วิชา | ธีม | `data-theme` | พื้น (surface-900) | accent-400 | tint (accent-900) |
+| --- | --- | --- | --- | --- | --- |
+| Network ITDS231 | **Blueprint** — ink-navy + amber | `network` | `#0f151c` | amber `#e8a33d` | navy blueprint `#15304c` |
+| Web ITDS241 | **Iris & Graphite** — graphite อมม่วง + iris (จงใจไม่ใช้ม่วง Tailwind) | `web` (= ค่าเริ่มต้น, ใช้กับ index ด้วย) | `#17151a` | iris `#ab92e6` | `#241d33` |
+| SE ITDS261 | **Moss & Charcoal** — charcoal อมเขียว + sage/มอส (ไม่ใช่เขียว Tailwind) | `se` | `#121815` | sage `#7fae8f` | `#1c2a22` |
 
-**Accent (iris)**
-| token | hex | ใช้กับ |
-| --- | --- | --- |
-| `--iris-200` | `#ddd1f7` | ข้อความเน้น, หัวข้อย่อย |
-| `--iris-300` | `#c6b3ef` | ลิงก์, ตัวเลข, eyebrow |
-| `--iris-400` | `#ab92e6` | ปุ่มหลัก, tab indicator, focus ring, radio ที่เลือก |
-| `--iris-500` | `#8e71d3` | เส้นขอบ active, marker |
-| `--iris-600` | `#6e55ae` | hover border |
-| `--iris-800` | `#372b52` | ขอบของพื้น tint |
-| `--iris-900` | `#241d33` | พื้น tint (ตัวเลือกที่เลือก, chip accent) |
+**โครงสร้าง token (tokens.css)**
+- **Palette** ต่อวิชา: `--graphite-*`/`--iris-*` (Web) · `--ink-*`/`--amber-*`/`--blueprint-800|900` (Network) · `--moss-*`/`--sage-*` (SE) — ห้ามใช้ palette ตรงๆ ใน component
+- **Semantic tokens** ที่ component ใช้: `--surface-950/900/850/800/750` · `--accent-200/300/400/500/600/800/900` · `--text`, `--text-muted`, `--text-faint`, `--text-on-accent` · `--border-subtle/--border/--border-strong` · สำหรับ rgba ใช้ `rgba(var(--accent-500-rgb), a)` (มี `--accent-300/400/500/600-rgb`, `--surface-950/900/850-rgb`)
+- `:root` = ธีม Web · `:root[data-theme="network"]` และ `:root[data-theme="se"]` map semantic tokens ไป palette ของวิชานั้น (รวม text/border ที่อม undertone)
+- **สีประจำวิชา** ใช้ได้ทุกหน้า: `--subject-network` / `--subject-web` / `--subject-se` — ใช้กับแถบซ้าย + chip รหัส + ลิงก์ของการ์ดวิชาใน index (`.subject-card--network|web|se`, ผสมพื้นด้วย `color-mix`) และจุดสีในปุ่มเลือกวิชา (`.subject-btn::before`) · พื้นการ์ดทุกใบเหมือนกัน
+- หน้าบทใส่ `<html lang="th" data-theme="…">` และ `<meta name="theme-color">` = surface-900 ของวิชา (build.mjs ใส่ให้จาก `.cache/course.mjs`)
+- สิ่งที่ยังเป็นสีตายตัว: semantic success/danger/warn (เหมือนกันทุกธีม), favicon และ hero SVG ใน index (ม่วง — เป็นโลโก้ของเว็บ)
 
-**Text / Border**
-| token | hex | contrast บน graphite-900 |
-| --- | --- | --- |
-| `--text` | `#ece8f1` | 15.0:1 |
-| `--text-muted` | `#aaa2b4` | 7.4:1 |
-| `--text-faint` | `#918a9b` | 5.5:1 (4.8:1 บน graphite-800) |
-| `--text-on-accent` | `#16131b` | 7.0:1 บน iris-400 |
-| `--border-subtle` / `--border` / `--border-strong` | `#2a2630` / `#37323e` / `#4b4455` | — |
+**Contrast (WCAG) — ตรวจด้วย `.cache/contrast.mjs`, ผ่าน AA ทุกธีม**
+| คู่สี | Web | Network | SE |
+| --- | --- | --- | --- |
+| text / surface-900 | 15.0 | 15.6 | 15.1 |
+| text-muted / surface-900 · surface-800 | 7.4 · 6.5 | 8.4 · 7.2 | 8.0 · 6.9 |
+| text-faint / surface-900 · surface-800 | 5.5 · 4.8 | 6.3 · 5.4 | 5.9 · 5.1 |
+| text-on-accent / accent-400 | 7.0 | 8.5 | 7.5 |
+| accent-300 / surface-850 (ลิงก์) | 9.1 | 10.1 | 9.6 |
+| accent-200 / accent-900 (chip, ตัวเลือกที่เลือก) | 11.2 | 10.1 | 11.4 |
+| accent-500 / surface-850 (ใช้แค่ bullet marker = non-text, เกณฑ์ 3:1) | 4.5 | 5.9 | 5.2 |
 
-**Semantic (เฉลย quiz)**: success `#7fcfa6` บน `#17271f` (ขอบ `#3c6e55`) · danger `#ef9a9a` บน `#2c1a1d` (ขอบ `#7a3c43`) · warn `#e6c27a` (ข้อที่ยังไม่ตอบ, tag "Shared")
+**Semantic (เฉลย quiz)**: success `#7fcfa6` บน `#17271f` (ขอบ `#3c6e55`) · danger `#ef9a9a` บน `#2c1a1d` (ขอบ `#7a3c43`) · warn `#e6c27a` (ข้อที่ยังไม่ตอบ, tag "Shared") — ใช้เหมือนกันทุกธีม · ข้อควรรู้: ในธีม SE สี success (เขียวมิ้นต์) ใกล้ accent sage และในธีม Network สี warn ใกล้ accent amber — แยกได้ด้วยไอคอน/ข้อความที่มากับสถานะเสมอ
 
 **ฟอนต์** (Google Fonts)
 - หัวข้อ: `Bricolage Grotesque` (ละติน) + `IBM Plex Sans Thai` (ไทย, แบบไม่มีหัว)
@@ -198,7 +217,7 @@ README.md               คำอธิบายสั้น + วิธี depl
 - line-height เนื้อหา 1.75 (สระบน-ล่างภาษาไทย)
 
 **หลักการ**
-1. สีทุกค่าต้องมาจาก token — ห้าม hardcode hex ใน component (ยกเว้น SVG ตกแต่งใน index)
+1. สีทุกค่าต้องมาจาก **semantic token** (`--surface-*`, `--accent-*`, `--text-*`, `--border-*`) — ห้าม hardcode hex หรืออ้าง palette ของวิชาใดวิชาหนึ่งใน component (ยกเว้น SVG ตกแต่งใน index) ไม่อย่างนั้นธีมวิชาอื่นจะเพี้ยน
 2. ข้อความเล็กต้องผ่าน WCAG AA (≥ 4.5:1)
 3. Animation ต้อง "บอกอะไร" (สถานะเปลี่ยน/ทิศทาง/ผลลัพธ์) ไม่ใส่ตกแต่ง — ไม่ animate ตอนโหลดหน้า; การ์ดที่คลิกไม่ได้ (cheat sheet) ไม่มี hover lift
 4. เคารพ `prefers-reduced-motion` เสมอ (motion.css ตัดเหลือ 1ms, JS เช็ค `matchMedia` ก่อนนับคะแนน/เลื่อนแบบ smooth)
@@ -254,24 +273,39 @@ README.md               คำอธิบายสั้น + วิธี depl
 - **เครื่องมือที่เก็บไว้ใน `.cache/` (gitignore, ผู้ใช้อนุญาตให้เก็บ)**: `build.mjs` สร้างหน้าบทจาก config (`node .cache/build.mjs w7` อ่าน `w7.mjs` + `w7-content.html` + `w7-summary.html`) · `nav.mjs` sync `<nav class="course-nav">` ให้ทุกหน้าบทตรงกัน (แก้ลำดับบทที่ `NETWORK`/`WEB` ในไฟล์นี้ไฟล์เดียว) · `shoot.mjs` ทดสอบด้วย headless Edge + CDP (`node .cache/shoot.mjs <plan.json>`) · `plan-all.json` plan ตรวจทั้งเว็บ (quiz answers, id ซ้ำ, toc, nav, aria-current) · `pdf.py` อ่าน PDF · `w3.mjs`–`w7.mjs` config ของแต่ละบท (quiz + metadata)
 - ไฟล์ `wN-content.html` / `wN-summary.html` ถูกลบหลัง build แล้ว — ถ้าจะแก้เนื้อหาบทเดิมให้แก้ที่ไฟล์ `.html` ของบทนั้นโดยตรง (ระวัง content lock) · PyMuPDF ถูกลบออกจาก `.cache/pylib` แล้ว ถ้าต้องอ่าน PDF อีกให้ขออนุญาตติดตั้งใหม่ (`pip install --target .cache/pylib pymupdf`)
 
+**Session 6 (2026-09-16) — ลบการ์ดเก่า + ระบบสี 3 วิชา + วิชา SE ITDS261 6 บท (เสร็จครบ)**
+- สถานะตอนเริ่ม: working tree clean, `main` = `origin/main` → ไม่มีงานค้างจาก session ก่อน (ส่วนที่ 3 ของ prompt จึงไม่มีอะไรต้องทำ) · ผู้ใช้เข้าใจว่า Network ยังใช้ธีม blueprint แต่จริงๆ ถูกแทนด้วย Iris & Graphite ตั้งแต่ session 1 — session นี้จึง**นำ blueprint (navy + amber) กลับมาเป็นธีมของ Network** บนพื้นมืด
+- [x] ลบการ์ด "การออกแบบฐานข้อมูล (7-Eleven Schema)" + CSS `.subject-card--pending` + คำ ticker ของคอร์สนั้น
+- [x] ระบบสี 3 ธีม: refactor CSS ทุกไฟล์ให้ใช้ semantic tokens (`--surface-*`/`--accent-*` + `*-rgb`) แทน `--graphite-*`/`--iris-*` → `data-theme` บน `<html>` ของทุกหน้าบท · การ์ด index มีแถบสีซ้าย/chip/ลิงก์ตามวิชา · ปุ่มเลือกวิชามีจุดสีประจำวิชา · contrast ผ่าน AA ทุกธีม (ตารางในหัวข้อ Design system)
+- [x] SE บทที่ 1–6 (`se-*.html`) + การ์ด ITDS261 ใน index + course nav 3 วิชาในทุกหน้าบท 17 หน้า (มือถือ: ปุ่มวิชาเป็น grid 3 คอลัมน์) · ช่อง "เพิ่มวิชาใหม่" เป็นแถบเต็มแถว
+- [x] widget ใหม่: `comm-paths`, `triangle-pspec` · component ใหม่ `.pct-bars`
+- [x] ตรวจ content lock: หน้าเดิม 11 หน้าเปลี่ยนเฉพาะบล็อก course nav + `<html data-theme>` (+ theme-color ของ Network) · panel `#summary` และ `#quiz` เหมือนก่อน session ทุกไบต์ (เทียบ md5 กับ `c14deba`)
+- [x] ทดสอบ headless Edge ทั้ง 18 หน้า: quiz SE ทุกบทได้ 20/20 ตามเฉลยผู้ใช้, ไม่มี id ซ้ำ, toc ครบ, nav 4/7/6 + aria-current/aria-pressed ถูก, ไม่มี JS error, SE ไม่มี horizontal scroll ที่ 390px ทุกแท็บ · widget: comm-paths ได้ 1/6/15, triangle-pspec ถูกทุกกรณี (equilateral/isosceles/scalene/type 0/error)
+- **อ่าน PDF โดยไม่ต้องติดตั้งอะไร**: `.cache/pdftext.mjs` (zlib ในตัว Node + ToUnicode CMap) → `node .cache/pdftext.mjs "<pdf>" [from] [to]` ได้ข้อความทีละหน้า · ใช้ได้กับ PDF ที่ export จาก macOS/PowerPoint ที่มี text · **อ่านภาพไม่ได้** (Read tool render PDF ไม่ได้เพราะไม่มี poppler และ PDF viewer ของ Edge headless ไม่ render)
+- **เครื่องมือใน `.cache/` (เพิ่ม/เปลี่ยน)**: `course.mjs` = รายชื่อวิชา/บท/ธีม + `navHtml()` ที่เดียว (ใช้โดย `build.mjs` และ `nav.mjs`) · `build.mjs` เลือก subject/theme/footer จาก course.mjs ตามชื่อไฟล์ · `se1.mjs`–`se6.mjs` config quiz ของ SE · `se-plan.mjs` สร้าง plan ทดสอบหน้าบท (`node .cache/se-plan.mjs <file> <prefix> [selector…] > plan.json` แล้วรัน shoot.mjs) · `contrast.mjs` ตรวจ contrast 3 ธีม · ไฟล์ `seN-content.html` / `seN-summary.html`, ภาพ screenshot และข้อความที่ดึงจาก PDF ถูกลบหลังจบงาน
+
 ## สิ่งที่ยังไม่ได้ทำ / แผนต่อไป
 
 - (ถ้าผู้ใช้ต้องการ) สลับลำดับตัวเลือก quiz บทที่ 2 ให้เฉลยกระจาย A–D — ต้องได้รับอนุญาตก่อน เพราะเปลี่ยนตัวอักษรของเฉลย
-- เพิ่มหน้าวิชาอื่น (เช่น วิชาฐานข้อมูลที่มีการ์ดรออยู่แล้ว — ใน Downloads มีสไลด์ชื่อ ITDS222 ERDiagram แต่ยังไม่ได้ยืนยันกับผู้ใช้ว่าเป็นวิชาเดียวกัน) — ดู "วิธีเพิ่มวิชาใหม่" ด้านล่าง
+- เพิ่มหน้าวิชาอื่นเมื่อผู้ใช้ให้เนื้อหา — ดู "วิธีเพิ่มวิชาใหม่" ด้านล่าง (วิชาฐานข้อมูล 7-Eleven Schema ผู้ใช้แจ้งว่าเลิกเรียนแล้ว ไม่ต้องทำ)
+- **พบใน session 6 (มีมาก่อน ไม่ใช่ regression)**: ที่ 390px หน้า Web บางแท็บเลื่อนแนวนอนได้เล็กน้อย — `web-intro-html-basics.html` แท็บแบบฝึกหัด (scrollWidth 485), `web-media-forms-semantic.html` แท็บสรุป (392), `web-ecmascript-features.html` ทุกแท็บ (405) · ค่าเท่ากันเป๊ะกับ commit `c14deba` ก่อน session · ยังไม่ได้หาสาเหตุ (แก้ได้ด้วย CSS โดยไม่แตะเนื้อหา)
+- (ถ้าผู้ใช้ต้องการ) SE: ยังไม่มี widget/แบบฝึกวาดไดอะแกรม · ภาพที่อยู่ในสไลด์ (เช่น DFD Library Query System, Structured English constructs) ยังไม่ได้ใส่เพราะอ่านได้แค่ข้อความ
 - ITDS231 หัวข้อที่ยังไม่มีในเว็บ: Data & Signals, VLAN, STP — เพิ่มเป็นหน้าบทใหม่ตาม pattern หลายบทเมื่อผู้ใช้ให้เนื้อหา
 - (ถ้าผู้ใช้ต้องการ) โจทย์เขียนโค้ดของบทที่ 7 (ECMAScript) — ตอนนี้ไม่มีตามที่ผู้ใช้กำหนด
 - (ถ้าผู้ใช้ต้องการ) สลับลำดับตัวเลือก quiz บทที่ 3–4 และ Web บทที่ 1–2 ให้เฉลยกระจาย A–D (ตอนนี้ส่วนใหญ่เป็น B) — ต้องขออนุญาตก่อน
 - (ถ้าผู้ใช้ต้องการ) โจทย์เขียนโค้ดกลุ่ม media (audio/video/iframe) — ตอนนี้ไม่มีเพราะไม่อยู่ใน 6 กลุ่มที่ผู้ใช้กำหนด
-- course nav: ตอนนี้ Web มี 7 บทแล้ว — desktop ยังพอดีแบบ wrap, มือถือเรียง 2 คอลัมน์ · ถ้าเพิ่มอีกควรเปลี่ยนเป็น dropdown หรือ scroll แนวนอน
+- course nav: 3 วิชา (4/7/6 บท) — desktop ยังพอดีแบบ wrap, มือถือปุ่มวิชา 3 คอลัมน์ + บทเรียง 2 คอลัมน์ · ถ้าเพิ่มวิชา/บทอีกควรเปลี่ยนเป็น dropdown หรือ scroll แนวนอน
 - ไอเดีย (ยังไม่ได้ขอ): จำคำตอบ quiz ด้วย localStorage, ธีมสว่าง, สุ่มลำดับคำถาม
 
 ## วิธีเพิ่มบทใหม่ในวิชาเดิม (pattern หลายบท)
 
-วิชาเดียว = หลายไฟล์ .html (1 ไฟล์ต่อ 1 บท) ใช้ `network.css` + `widgets.js` + `network.js` ร่วมกัน ไม่ต้องแก้ JS (Network ใช้ prefix `network-` · Web ใช้ `web-`)
+วิชาเดียว = หลายไฟล์ .html (1 ไฟล์ต่อ 1 บท) ใช้ `network.css` + `widgets.js` + `network.js` ร่วมกัน ไม่ต้องแก้ JS (Network ใช้ prefix `network-` · Web ใช้ `web-` · SE ใช้ `se-`)
+- ทางลัด: เพิ่มบทใน `.cache/course.mjs` → เขียน `.cache/<key>.mjs` (metadata + quiz 20 ข้อ + `answers`) + `<key>-content.html` + `<key>-summary.html` → `node .cache/build.mjs <key>` → `node .cache/nav.mjs` (sync nav ทุกหน้า)
 1. ตั้งชื่อ `<subject>-<topic>.html` (lowercase, คั่นด้วย `-`) เช่น `network-transport-layer.html` · บทที่ 1 คงชื่อ `network.html` ไว้เพราะมีลิงก์จาก index และ deep link เดิม
 2. คัดลอกโครงจากหน้าบทล่าสุด: header, `.course-hero`, tabbar, 3 panel (`#content` / `#summary` / `#quiz`), `quiz-result`, `quiz-bar` — id เหล่านี้ JS ใช้ ห้ามเปลี่ยนชื่อ
 3. **course nav**: `nav.course-nav` มี `.subject-switch` (ปุ่ม `.subject-btn[data-subject]`) และ `.chapter-nav[data-subject]` ต่อวิชา — เพิ่ม `<a class="chapter-link">` ของบทใหม่ใน `.chapter-nav` ของวิชานั้นใน**ทุกหน้าบททุกวิชา** (ลำดับเดียวกัน) และใส่ `aria-current="page"` เฉพาะลิงก์ของหน้าตัวเอง · ปุ่มวิชาของหน้านั้นต้อง `aria-pressed="true"`
 4. id ของหัวข้อย่อยใช้ prefix ต่อบท (บทที่ 2 `app-*` `http-*` · บทที่ 3 `dl-*` `err-*` `fc-*` · บทที่ 4 `mac-*` `eth-*` · Web ดูในไฟล์) เพื่อไม่ชนกันเวลาลิงก์ข้ามหน้า
+   - SE: บท 1 `sef-*` `pm-*` · บท 2 `proc-*` · บท 3 `re-*` · บท 4 `uc-*` · บท 5 `dfd-*` · บท 6 `ui-*`
    - cheat sheet grid 3 คอลัมน์: จัดให้ (จำนวนการ์ดกว้าง × 2 + การ์ดปกติ) หาร 3 ลงตัว จะไม่มีช่องว่างท้าย
 5. การ์ดใน index ชี้บทที่ 1 ของวิชา — อัปเดตแค่ chip จำนวนบทและ `card-sub`
 6. เพิ่มแถวในตารางหน้าใน CLAUDE.md + README และบันทึกว่าเนื้อหาบทใหม่ถูก lock
@@ -279,9 +313,10 @@ README.md               คำอธิบายสั้น + วิธี depl
 ## วิธีเพิ่มวิชาใหม่
 
 1. คัดลอก `network.html` เป็น `<subject>.html` (lowercase, ไม่มีช่องว่าง — GitHub Pages แยกตัวพิมพ์เล็ก/ใหญ่) แล้วเปลี่ยนเนื้อหาใน 3 แท็บ
-2. ใช้ `assets/css/network.css` + `assets/js/widgets.js` + `assets/js/network.js` ได้เลย · เพิ่มปุ่มวิชาใน `.subject-switch` และ `.chapter-nav` ใหม่ในทุกหน้าบท (ถ้าไม่มี quiz ต้องปรับ JS ให้ข้ามส่วน quiz เมื่อไม่มี `#quiz-form`)
-3. เพิ่มการ์ด `<a class="subject-card" href="<subject>.html">` ใน `index.html`
-4. ลิงก์ทุกอันต้องเป็น relative path (ไม่ขึ้นต้นด้วย `/`) เพราะ Pages อยู่ใต้ `/<repo>/`
+2. ใช้ `assets/css/network.css` + `assets/js/widgets.js` + `assets/js/network.js` ได้เลย · เพิ่มวิชาใน `.cache/course.mjs` แล้วรัน `nav.mjs` (เพิ่มปุ่มวิชาและ `.chapter-nav` ในทุกหน้าบท) · ถ้าปุ่มวิชาเกิน 3 ต้องปรับ grid มือถือของ `.subject-switch` (ถ้าไม่มี quiz ต้องปรับ JS ให้ข้ามส่วน quiz เมื่อไม่มี `#quiz-form`)
+3. **ธีมสี**: เพิ่ม palette + บล็อก `:root[data-theme="<key>"]` ใน tokens.css (map `--surface-*`, `--accent-*`, `*-rgb`, text, border) และ `--subject-<key>` · ตรวจ contrast ด้วย `.cache/contrast.mjs` · เพิ่ม `.subject-card--<key>` ใน home.css และ `.subject-btn[data-subject="<key>"]` (จุดสี) ใน network.css
+4. เพิ่มการ์ด `<a class="subject-card subject-card--<key>" href="<subject>.html">` ใน `index.html`
+5. ลิงก์ทุกอันต้องเป็น relative path (ไม่ขึ้นต้นด้วย `/`) เพราะ Pages อยู่ใต้ `/<repo>/`
 
 ## คำสั่งที่ใช้บ่อย
 
