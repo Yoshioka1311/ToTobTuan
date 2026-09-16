@@ -1,34 +1,98 @@
 /* ==========================================================================
    โต๊ะทบทวน — Design tokens
-   "Iris & Graphite": graphite ที่มี undertone ม่วงเล็กน้อย + ม่วง iris
-   ที่อมฝุ่น (ไม่ใช่ม่วงไฟฟ้าแบบ SaaS) ใช้ร่วมกันทุกหน้า
+   พื้นหลังทุกวิชาเป็นโทนมืดเกือบดำเหมือนกัน ต่างกันแค่ undertone เล็กน้อย
+   ส่วน accent (ปุ่ม ลิงก์ ขอบ active ไฮไลต์) แยกสีตามวิชาให้ชัด:
+
+     Network  (ITDS231)  "Blueprint"        navy #15304c + amber #e8a33d
+     Web      (ITDS241)  "Iris & Graphite"  graphite #17151a + iris #ab92e6
+     SE       (ITDS261)  "Moss & Charcoal"  charcoal #121815 + sage #7fae8f
+
+   วิธีใช้: component ใช้เฉพาะ token กลาง --surface-* / --accent-* / --text-* /
+   --border-* เท่านั้น แล้วหน้าเลือกธีมด้วย <html data-theme="network|web|se">
+   (ไม่ใส่ = web ซึ่งเป็นธีมของหน้าแรกด้วย)
    ========================================================================== */
 
 :root {
   color-scheme: dark;
 
-  /* ---- Base: graphite (พื้นหลังและพื้นผิว เรียงจากลึก → ยกขึ้น) ---- */
-  --graphite-950: #121015;   /* พื้นหลังลึกสุด (footer, inset) */
-  --graphite-900: #17151a;   /* พื้นหลังหลักของหน้า */
-  --graphite-850: #1d1a21;   /* surface: การ์ด, accordion */
-  --graphite-800: #242028;   /* surface ยก: hover, header ของตาราง */
-  --graphite-750: #2c2731;   /* surface สูงสุด: chip, input */
+  /* ---- สีประจำวิชา (ใช้ได้ทุกหน้า เช่น แถบสีการ์ดวิชาในหน้าแรก, จุดสีในปุ่มเลือกวิชา) ---- */
+  --subject-network: #e8a33d;
+  --subject-web: #ab92e6;
+  --subject-se: #7fae8f;
 
-  /* ---- Accent: iris (ม่วงหลัก) ---- */
-  --iris-200: #ddd1f7;       /* ข้อความเน้นบนพื้นเข้ม */
-  --iris-300: #c6b3ef;       /* ลิงก์, ตัวเลขสำคัญ */
-  --iris-400: #ab92e6;       /* ปุ่มหลัก, focus ring, indicator */
-  --iris-500: #8e71d3;       /* เส้นขอบ active, กราฟิก */
-  --iris-600: #6e55ae;       /* hover ของเส้น, เงาม่วง */
-  --iris-800: #372b52;       /* พื้นเน้นแบบ tint */
-  --iris-900: #241d33;       /* พื้นเน้นอ่อนมาก (selected option) */
+  /* ==== Palette: Web — "Iris & Graphite" ================================ */
+  --graphite-950: #121015;
+  --graphite-900: #17151a;
+  --graphite-850: #1d1a21;
+  --graphite-800: #242028;
+  --graphite-750: #2c2731;
+  --iris-200: #ddd1f7;
+  --iris-300: #c6b3ef;
+  --iris-400: #ab92e6;
+  --iris-500: #8e71d3;
+  --iris-600: #6e55ae;
+  --iris-800: #372b52;
+  --iris-900: #241d33;
 
-  /* ---- Text ---- */
-  /* คอนทราสต์ (WCAG) วัดบน graphite-900 / graphite-800 */
-  --text: #ece8f1;           /* เนื้อหาหลัก  15.0:1 */
-  --text-muted: #aaa2b4;     /* คำอธิบายรอง 7.4:1 / 6.5:1 */
-  --text-faint: #918a9b;     /* caption, label เล็ก 5.5:1 / 4.8:1 */
-  --text-on-accent: #16131b; /* ข้อความบนปุ่ม iris-400 7.0:1 */
+  /* ==== Palette: Network — "Blueprint" ================================== */
+  /* พื้น ink-navy เกือบดำ · accent amber · tint ใช้ navy blueprint #15304c */
+  --ink-950: #0b1016;
+  --ink-900: #0f151c;
+  --ink-850: #141c25;
+  --ink-800: #1a242f;
+  --ink-750: #212c39;
+  --amber-200: #f6dcae;
+  --amber-300: #efbf73;
+  --amber-400: #e8a33d;
+  --amber-500: #c98a2e;
+  --amber-600: #9a6a24;
+  --blueprint-800: #1f4169;
+  --blueprint-900: #15304c;
+
+  /* ==== Palette: SE — "Moss & Charcoal" ================================= */
+  /* charcoal อมเขียวเข้ม · sage/มอสแบบ muted (ไม่ใช่เขียว Tailwind) */
+  --moss-950: #0e1311;
+  --moss-900: #121815;
+  --moss-850: #171e1a;
+  --moss-800: #1d2621;
+  --moss-750: #242e28;
+  --sage-200: #d2e5d7;
+  --sage-300: #a9cbb3;
+  --sage-400: #7fae8f;
+  --sage-500: #6a987a;
+  --sage-600: #53775f;
+  --sage-800: #2b3e32;
+  --sage-900: #1c2a22;
+
+  /* ==== Semantic tokens (ค่าเริ่มต้น = Web) ============================= */
+  /* surface: พื้นหลังและพื้นผิว เรียงจากลึก → ยกขึ้น */
+  --surface-950: var(--graphite-950);   /* พื้นลึกสุด (inset, formula, tab track) */
+  --surface-900: var(--graphite-900);   /* พื้นหลังหลักของหน้า */
+  --surface-850: var(--graphite-850);   /* การ์ด, accordion, คำถาม quiz */
+  --surface-800: var(--graphite-800);   /* hover, หัวตาราง, compare box */
+  --surface-750: var(--graphite-750);   /* track ของ progress/ring */
+  /* accent */
+  --accent-200: var(--iris-200);        /* ข้อความเน้นบนพื้นเข้ม */
+  --accent-300: var(--iris-300);        /* ลิงก์, ตัวเลขสำคัญ */
+  --accent-400: var(--iris-400);        /* ปุ่มหลัก, focus ring, indicator */
+  --accent-500: var(--iris-500);        /* เส้นขอบ active, marker */
+  --accent-600: var(--iris-600);        /* hover border */
+  --accent-800: var(--iris-800);        /* ขอบของพื้น tint */
+  --accent-900: var(--iris-900);        /* พื้น tint (ตัวเลือกที่เลือก, chip accent) */
+  /* ค่า r, g, b สำหรับ rgba(var(--x-rgb), alpha) */
+  --accent-300-rgb: 198, 179, 239;
+  --accent-400-rgb: 171, 146, 230;
+  --accent-500-rgb: 142, 113, 211;
+  --accent-600-rgb: 110, 85, 174;
+  --surface-950-rgb: 18, 16, 21;
+  --surface-900-rgb: 23, 21, 26;
+  --surface-850-rgb: 29, 26, 33;
+
+  /* ---- Text ---- (contrast ดูตารางใน CLAUDE.md — ผ่าน AA ทุกธีม) */
+  --text: #ece8f1;           /* 15.0:1 บน surface-900 */
+  --text-muted: #aaa2b4;     /* 7.4:1 */
+  --text-faint: #918a9b;     /* 5.5:1 · 4.8:1 บน surface-800 */
+  --text-on-accent: #16131b; /* 7.0:1 บน accent-400 */
 
   /* ---- Border ---- */
   --border-subtle: #2a2630;
@@ -81,7 +145,7 @@
   --radius-pill: 999px;
 
   --shadow-card: 0 1px 0 rgba(255, 255, 255, 0.03) inset, 0 10px 30px -18px rgba(0, 0, 0, 0.7);
-  --shadow-lift: 0 1px 0 rgba(255, 255, 255, 0.04) inset, 0 18px 40px -20px rgba(110, 85, 174, 0.45);
+  --shadow-lift: 0 1px 0 rgba(255, 255, 255, 0.04) inset, 0 18px 40px -20px rgba(var(--accent-600-rgb), 0.45);
 
   /* ---- Motion ---- */
   --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
@@ -91,4 +155,75 @@
   --dur-slow: 360ms;
 
   --wrap: 1080px;
+}
+
+/* ==========================================================================
+   ธีมต่อวิชา — map semantic tokens ไปยัง palette ของวิชานั้น
+   ========================================================================== */
+
+/* ---- Network: "Blueprint" ---- */
+:root[data-theme="network"] {
+  --surface-950: var(--ink-950);
+  --surface-900: var(--ink-900);
+  --surface-850: var(--ink-850);
+  --surface-800: var(--ink-800);
+  --surface-750: var(--ink-750);
+  --accent-200: var(--amber-200);
+  --accent-300: var(--amber-300);
+  --accent-400: var(--amber-400);
+  --accent-500: var(--amber-500);
+  --accent-600: var(--amber-600);
+  --accent-800: var(--blueprint-800);
+  --accent-900: var(--blueprint-900);
+  --accent-300-rgb: 239, 191, 115;
+  --accent-400-rgb: 232, 163, 61;
+  --accent-500-rgb: 201, 138, 46;
+  --accent-600-rgb: 154, 106, 36;
+  --surface-950-rgb: 11, 16, 22;
+  --surface-900-rgb: 15, 21, 28;
+  --surface-850-rgb: 20, 28, 37;
+
+  --text: #e8edf2;           /* 15.6:1 บน surface-900 */
+  --text-muted: #a3b1bf;     /* 8.4:1 · 7.2:1 บน surface-800 */
+  --text-faint: #8a99a9;     /* 6.3:1 · 5.4:1 บน surface-800 */
+  --text-on-accent: #0f151c; /* 8.5:1 บน accent-400 */
+
+  --border-subtle: #1f2934;
+  --border: #2b3744;
+  --border-strong: #3d4c5c;
+}
+
+/* ---- Web: "Iris & Graphite" = ค่าเริ่มต้นใน :root (ใส่ไว้ให้ครบ 3 ชุด) ---- */
+:root[data-theme="web"] { }
+
+/* ---- SE: "Moss & Charcoal" ---- */
+:root[data-theme="se"] {
+  --surface-950: var(--moss-950);
+  --surface-900: var(--moss-900);
+  --surface-850: var(--moss-850);
+  --surface-800: var(--moss-800);
+  --surface-750: var(--moss-750);
+  --accent-200: var(--sage-200);
+  --accent-300: var(--sage-300);
+  --accent-400: var(--sage-400);
+  --accent-500: var(--sage-500);
+  --accent-600: var(--sage-600);
+  --accent-800: var(--sage-800);
+  --accent-900: var(--sage-900);
+  --accent-300-rgb: 169, 203, 179;
+  --accent-400-rgb: 127, 174, 143;
+  --accent-500-rgb: 106, 152, 122;
+  --accent-600-rgb: 83, 119, 95;
+  --surface-950-rgb: 14, 19, 17;
+  --surface-900-rgb: 18, 24, 21;
+  --surface-850-rgb: 23, 30, 26;
+
+  --text: #e6ede8;           /* 15.1:1 บน surface-900 */
+  --text-muted: #a4b0a8;     /* 8.0:1 · 6.9:1 บน surface-800 */
+  --text-faint: #8b978f;     /* 5.9:1 · 5.1:1 บน surface-800 */
+  --text-on-accent: #0e1311; /* 7.5:1 บน accent-400 */
+
+  --border-subtle: #222b26;
+  --border: #2e3932;
+  --border-strong: #404d45;
 }

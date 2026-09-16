@@ -15,11 +15,11 @@ html {
 body {
   margin: 0;
   min-height: 100vh;
-  background-color: var(--graphite-900);
+  background-color: var(--surface-900);
   /* ลาย "node field": จุดเล็กๆ แทนโหนดในเครือข่าย จางลงด้านล่าง */
   background-image:
-    radial-gradient(1200px 520px at 85% -10%, rgba(142, 113, 211, 0.13), transparent 70%),
-    radial-gradient(circle at 1px 1px, rgba(198, 179, 239, 0.07) 1px, transparent 0);
+    radial-gradient(1200px 520px at 85% -10%, rgba(var(--accent-500-rgb), 0.13), transparent 70%),
+    radial-gradient(circle at 1px 1px, rgba(var(--accent-300-rgb), 0.07) 1px, transparent 0);
   background-size: auto, 28px 28px;
   background-attachment: fixed, fixed;
   color: var(--text);
@@ -35,8 +35,8 @@ img, svg { max-width: 100%; }
 /* attribute hidden ต้องชนะ display ของ component เสมอ (เช่น .quiz-result ที่เป็น grid) */
 [hidden] { display: none !important; }
 
-a { color: var(--iris-300); text-underline-offset: 3px; }
-a:hover { color: var(--iris-200); }
+a { color: var(--accent-300); text-underline-offset: 3px; }
+a:hover { color: var(--accent-200); }
 
 button, input, select, textarea { font: inherit; color: inherit; }
 
@@ -57,12 +57,12 @@ code, kbd, .mono {
 }
 
 :focus-visible {
-  outline: 2px solid var(--iris-400);
+  outline: 2px solid var(--accent-400);
   outline-offset: 3px;
   border-radius: 4px;
 }
 
-::selection { background: var(--iris-600); color: #fff; }
+::selection { background: var(--accent-600); color: #fff; }
 
 .visually-hidden {
   position: absolute !important;
@@ -78,7 +78,7 @@ code, kbd, .mono {
   top: -60px;
   z-index: 100;
   padding: var(--space-2) var(--space-4);
-  background: var(--iris-400);
+  background: var(--accent-400);
   color: var(--text-on-accent);
   border-radius: var(--radius-sm);
   font-weight: 600;
@@ -119,7 +119,7 @@ code, kbd, .mono {
   height: 26px;
   flex: none;
 }
-.wordmark span { color: var(--iris-300); }
+.wordmark span { color: var(--accent-300); }
 
 .crumb {
   font-size: var(--fs-sm);
@@ -136,8 +136,8 @@ code, kbd, .mono {
 }
 .crumb:hover {
   color: var(--text);
-  border-color: var(--iris-600);
-  background: var(--iris-900);
+  border-color: var(--accent-600);
+  background: var(--accent-900);
 }
 .crumb .arrow { transition: transform var(--dur) var(--ease-out); }
 .crumb:hover .arrow { transform: translateX(-3px); }
@@ -151,15 +151,15 @@ code, kbd, .mono {
   font-size: var(--fs-xs);
   letter-spacing: 0.06em;
   text-transform: uppercase;
-  color: var(--iris-300);
+  color: var(--accent-300);
 }
 .eyebrow::before {
   content: "";
   width: 7px;
   height: 7px;
   border-radius: 2px;
-  background: var(--iris-400);
-  box-shadow: 0 0 0 3px rgba(171, 146, 230, 0.18);
+  background: var(--accent-400);
+  box-shadow: 0 0 0 3px rgba(var(--accent-400-rgb), 0.18);
 }
 
 .chip {
@@ -170,14 +170,14 @@ code, kbd, .mono {
   padding: 3px 9px;
   border-radius: var(--radius-pill);
   border: 1px solid var(--border);
-  background: var(--graphite-800);
+  background: var(--surface-800);
   color: var(--text-muted);
   white-space: nowrap;
 }
 .chip--accent {
-  border-color: var(--iris-800);
-  background: var(--iris-900);
-  color: var(--iris-200);
+  border-color: var(--accent-800);
+  background: var(--accent-900);
+  color: var(--accent-200);
 }
 
 /* ---- Buttons ---- */
@@ -203,13 +203,13 @@ code, kbd, .mono {
 .btn:disabled { cursor: not-allowed; opacity: 0.5; transform: none; }
 
 .btn--primary {
-  background: var(--iris-400);
+  background: var(--accent-400);
   color: var(--text-on-accent);
 }
 .btn--primary:hover:not(:disabled) {
-  background: var(--iris-300);
+  background: var(--accent-300);
   color: var(--text-on-accent);
-  box-shadow: 0 8px 24px -10px rgba(171, 146, 230, 0.6);
+  box-shadow: 0 8px 24px -10px rgba(var(--accent-400-rgb), 0.6);
 }
 
 .btn--ghost {
@@ -218,14 +218,14 @@ code, kbd, .mono {
   color: var(--text);
 }
 .btn--ghost:hover:not(:disabled) {
-  border-color: var(--iris-500);
-  background: var(--iris-900);
+  border-color: var(--accent-500);
+  background: var(--accent-900);
   color: var(--text);
 }
 
 /* ---- Card ---- */
 .card {
-  background: var(--graphite-850);
+  background: var(--surface-850);
   border: 1px solid var(--border-subtle);
   border-radius: var(--radius-lg);
   box-shadow: var(--shadow-card);
@@ -252,24 +252,24 @@ code, kbd, .mono {
   vertical-align: top;
 }
 .table-scroll th {
-  background: var(--graphite-800);
-  color: var(--iris-200);
+  background: var(--surface-800);
+  color: var(--accent-200);
   font-weight: 600;
   white-space: nowrap;
 }
 .table-scroll tr:last-child td { border-bottom: 0; }
 .table-scroll tbody tr { transition: background-color var(--dur-fast) linear; }
-.table-scroll tbody tr:hover { background: rgba(142, 113, 211, 0.06); }
+.table-scroll tbody tr:hover { background: rgba(var(--accent-500-rgb), 0.06); }
 
 /* ---- Formula block ---- */
 .formula {
   display: block;
   font-family: var(--font-mono);
   font-size: 0.95rem;
-  color: var(--iris-200);
-  background: var(--graphite-950);
+  color: var(--accent-200);
+  background: var(--surface-950);
   border: 1px solid var(--border);
-  border-left: 3px solid var(--iris-500);
+  border-left: 3px solid var(--accent-500);
   border-radius: var(--radius-sm);
   padding: 8px 12px;
   margin-block: var(--space-2) var(--space-3);
@@ -282,7 +282,7 @@ code, kbd, .mono {
   margin-top: var(--space-8);
   padding-block: var(--space-6) var(--space-7);
   border-top: 1px solid var(--border-subtle);
-  background: linear-gradient(to bottom, transparent, rgba(18, 16, 21, 0.8));
+  background: linear-gradient(to bottom, transparent, rgba(var(--surface-950-rgb), 0.8));
 }
 .site-footer p {
   margin: 0;

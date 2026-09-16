@@ -17,7 +17,7 @@
 }
 .hero h1 em {
   font-style: normal;
-  color: var(--iris-300);
+  color: var(--accent-300);
 }
 .hero-lede {
   font-size: var(--fs-lg);
@@ -36,7 +36,7 @@
 /* ---- Ticker ---- */
 .ticker-section {
   border-block: 1px solid var(--border-subtle);
-  background: rgba(18, 16, 21, 0.55);
+  background: rgba(var(--surface-950-rgb), 0.55);
   padding-block: var(--space-4);
   overflow: hidden;
 }
@@ -66,14 +66,14 @@
   padding: 6px 14px;
   border-radius: var(--radius-pill);
   border: 1px solid var(--border);
-  background: var(--graphite-850);
+  background: var(--surface-850);
   font-family: var(--font-mono);
   font-size: var(--fs-sm);
   color: var(--text-muted);
 }
 .ticker-item b {
   font-weight: 500;
-  color: var(--iris-300);
+  color: var(--accent-300);
 }
 
 /* ---- Subjects ---- */
@@ -103,12 +103,32 @@
   padding: var(--space-5);
   color: var(--text);
   text-decoration: none;
-  background: var(--graphite-850);
+  background: var(--surface-850);
   border: 1px solid var(--border-subtle);
   border-radius: var(--radius-lg);
   box-shadow: var(--shadow-card);
   transition: transform var(--dur) var(--ease-out), border-color var(--dur) var(--ease-out),
     box-shadow var(--dur) var(--ease-out), background-color var(--dur) var(--ease-out);
+  --card-accent: var(--accent-400);
+}
+/* สีประจำวิชา: แถบซ้าย + chip รหัสวิชา + ลิงก์ ใช้ accent ของวิชานั้น (พื้นการ์ดเหมือนกันทุกใบ) */
+.subject-card--network { --card-accent: var(--subject-network); }
+.subject-card--web { --card-accent: var(--subject-web); }
+.subject-card--se { --card-accent: var(--subject-se); }
+.subject-card::before {
+  content: "";
+  position: absolute;
+  left: -1px;
+  top: var(--space-5);
+  bottom: var(--space-5);
+  width: 3px;
+  border-radius: 0 3px 3px 0;
+  background: var(--card-accent);
+}
+.subject-card .chip--accent {
+  color: var(--card-accent);
+  background: color-mix(in srgb, var(--card-accent) 10%, var(--surface-850));
+  border-color: color-mix(in srgb, var(--card-accent) 38%, var(--surface-850));
 }
 .subject-card-top {
   display: flex;
@@ -121,7 +141,7 @@
 .card-sub {
   margin: 0;
   font-size: var(--fs-sm);
-  color: var(--iris-300);
+  color: var(--card-accent);
 }
 .card-desc {
   margin: var(--space-2) 0 0;
@@ -140,10 +160,11 @@
   color: var(--text-faint);
 }
 .card-cta {
+  white-space: nowrap;
   display: inline-flex;
   align-items: center;
   gap: 6px;
-  color: var(--iris-300);
+  color: var(--card-accent);
   font-weight: 600;
 }
 .card-cta .arrow { transition: transform var(--dur) var(--ease-out); }
@@ -151,8 +172,8 @@
 a.subject-card:hover {
   color: var(--text);
   transform: translateY(-3px);
-  border-color: var(--iris-600);
-  background: linear-gradient(180deg, rgba(142, 113, 211, 0.07), transparent 60%), var(--graphite-850);
+  border-color: color-mix(in srgb, var(--card-accent) 55%, var(--surface-850));
+  background: linear-gradient(180deg, color-mix(in srgb, var(--card-accent) 7%, transparent), transparent 60%), var(--surface-850);
   box-shadow: var(--shadow-lift);
 }
 a.subject-card:hover .card-cta .arrow { transform: translateX(4px); }
