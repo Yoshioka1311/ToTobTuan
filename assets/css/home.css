@@ -159,8 +159,6 @@ a.subject-card:hover .card-cta .arrow { transform: translateX(4px); }
 a.subject-card:active { transform: translateY(-1px); }
 a.subject-card:focus-visible { outline-offset: 4px; border-radius: var(--radius-lg); }
 
-.subject-card--pending .card-foot { border-top-style: dotted; }
-
 .add-slot {
   display: flex;
   flex-direction: column;
