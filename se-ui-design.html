@@ -1,0 +1,841 @@
+<!DOCTYPE html>
+<html lang="th" data-theme="se">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>ITDS261 บทที่ 6: User Interface Design · โต๊ะทบทวน</title>
+<meta name="description" content="ITDS261 Introduction to Software Engineering บทที่ 6: 2 ประเด็นหลักของ UI, ประเภทของ user interface (CLI, text menu, GUI, touchscreen, VUI, AR/VR), กฎพื้นฐาน 5 ข้อ, UI design process 4 phase, Golden Rules ของ Theo Mandel และ low vs high fidelity prototype พร้อม cheat sheet และแบบฝึกหัด 20 ข้อ" />
+<meta name="theme-color" content="#121815" />
+<link rel="icon" href="assets/favicon.svg" type="image/svg+xml" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link
+  href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500..700&family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans+Thai:wght@500;600&family=IBM+Plex+Sans+Thai+Looped:wght@400;500;600&display=swap"
+  rel="stylesheet"
+/>
+<link rel="stylesheet" href="assets/css/tokens.css" />
+<link rel="stylesheet" href="assets/css/base.css" />
+<link rel="stylesheet" href="assets/css/network.css" />
+<link rel="stylesheet" href="assets/css/motion.css" />
+<script>document.documentElement.classList.add("js");</script>
+</head>
+<body>
+  <a class="skip-link" href="#tabs">ข้ามไปที่เนื้อหา</a>
+
+  <svg class="dg-defs" aria-hidden="true" focusable="false">
+    <defs>
+      <marker id="arr" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path class="dg-arrow" d="M0 0L10 5L0 10z" /></marker>
+      <marker id="arr-muted" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path class="dg-arrow--muted" d="M0 0L10 5L0 10z" /></marker>
+      <marker id="arr-ok" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path class="dg-arrow--ok" d="M0 0L10 5L0 10z" /></marker>
+      <marker id="arr-bad" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path class="dg-arrow--bad" d="M0 0L10 5L0 10z" /></marker>
+    </defs>
+  </svg>
+
+  <header class="site-header">
+    <div class="wrap">
+      <a class="wordmark" href="index.html" aria-label="โต๊ะทบทวน หน้าแรก">
+        <img class="wordmark-mark" src="assets/favicon.svg" alt="" width="26" height="26" />
+        <span class="wordmark-text">โต๊ะ<span>ทบทวน</span></span>
+      </a>
+      <a class="crumb" href="index.html"><span class="arrow" aria-hidden="true">←</span> รายวิชาทั้งหมด</a>
+    </div>
+  </header>
+
+  <main>
+    <section class="course-hero wrap">
+      <nav class="course-nav" aria-label="เลือกวิชาและบท">
+        <div class="subject-switch">
+          <button class="subject-btn" type="button" data-subject="network" aria-pressed="false"><span class="subject-code">ITDS231</span> Network</button>
+          <button class="subject-btn" type="button" data-subject="web" aria-pressed="false"><span class="subject-code">ITDS241</span> Web</button>
+          <button class="subject-btn" type="button" data-subject="se" aria-pressed="true"><span class="subject-code">ITDS261</span> SE</button>
+        </div>
+        <div class="chapter-nav" data-subject="network" data-label="ITDS231 Computer Networks" role="group" aria-label="บทของวิชา ITDS231 Computer Networks">
+          <a class="chapter-link" href="network.html"><span class="chapter-num">บทที่ 1</span><span class="chapter-name">Intro &amp; Topology</span></a>
+          <a class="chapter-link" href="network-application-layer.html"><span class="chapter-num">บทที่ 2</span><span class="chapter-name">Application Layer</span></a>
+          <a class="chapter-link" href="network-data-link-layer.html"><span class="chapter-num">บทที่ 3</span><span class="chapter-name">Data Link Layer</span></a>
+          <a class="chapter-link" href="network-mac-ethernet.html"><span class="chapter-num">บทที่ 4</span><span class="chapter-name">MAC + Ethernet</span></a>
+        </div>
+        <div class="chapter-nav" data-subject="web" data-label="ITDS241 Web Technologies and Applications" role="group" aria-label="บทของวิชา ITDS241 Web Technologies and Applications">
+          <a class="chapter-link" href="web-intro-html-basics.html"><span class="chapter-num">บทที่ 1</span><span class="chapter-name">Internet &amp; HTML Basics</span></a>
+          <a class="chapter-link" href="web-media-forms-semantic.html"><span class="chapter-num">บทที่ 2</span><span class="chapter-name">Media, Forms &amp; Semantic</span></a>
+          <a class="chapter-link" href="web-css-fundamentals.html"><span class="chapter-num">บทที่ 3</span><span class="chapter-name">CSS Fundamentals</span></a>
+          <a class="chapter-link" href="web-css-layout-responsive.html"><span class="chapter-num">บทที่ 4</span><span class="chapter-name">CSS Layout &amp; Responsive</span></a>
+          <a class="chapter-link" href="web-js-fundamentals.html"><span class="chapter-num">บทที่ 5</span><span class="chapter-name">JavaScript Fundamentals</span></a>
+          <a class="chapter-link" href="web-js-functions-oop-dom.html"><span class="chapter-num">บทที่ 6</span><span class="chapter-name">Functions, OOP &amp; DOM</span></a>
+          <a class="chapter-link" href="web-ecmascript-features.html"><span class="chapter-num">บทที่ 7</span><span class="chapter-name">ECMAScript Features</span></a>
+        </div>
+        <div class="chapter-nav" data-subject="se" data-label="ITDS261 Introduction to Software Engineering" role="group" aria-label="บทของวิชา ITDS261 Introduction to Software Engineering">
+          <a class="chapter-link" href="se-foundation-pm.html"><span class="chapter-num">บทที่ 1</span><span class="chapter-name">SE Foundation &amp; PM</span></a>
+          <a class="chapter-link" href="se-process-models.html"><span class="chapter-num">บทที่ 2</span><span class="chapter-name">Process Models</span></a>
+          <a class="chapter-link" href="se-requirement-engineering.html"><span class="chapter-num">บทที่ 3</span><span class="chapter-name">Requirement Engineering</span></a>
+          <a class="chapter-link" href="se-use-case-modeling.html"><span class="chapter-num">บทที่ 4</span><span class="chapter-name">Use Case Modeling</span></a>
+          <a class="chapter-link" href="se-flow-behavior-modeling.html"><span class="chapter-num">บทที่ 5</span><span class="chapter-name">Flow &amp; Behavior Modeling</span></a>
+          <a class="chapter-link" href="se-ui-design.html" aria-current="page"><span class="chapter-num">บทที่ 6</span><span class="chapter-name">UI Design</span></a>
+        </div>
+      </nav>
+      <span class="eyebrow">ITDS261 · บทที่ 6 · Lecture 8</span>
+      <h1>User Interface Design</h1>
+      <p class="course-lede">UI คือส่วนที่ผู้ใช้เห็นชัดที่สุดของซอฟต์แวร์ บทนี้ไล่ตั้งแต่ประเภทของ interface กฎพื้นฐานของ UI ที่ดี กระบวนการออกแบบ 4 phase ไปจนถึง Golden Rules 3 ข้อของ Theo Mandel และการเลือก prototype แบบ low หรือ high fidelity</p>
+      <ul class="course-meta" aria-label="ข้อมูลบทเรียน">
+        <li class="chip chip--accent">ITDS261 Introduction to Software Engineering</li>
+        <li class="chip">1 ไฟล์สไลด์ · L8 User Interface Design (25 หน้า)</li>
+        <li class="chip">แบบฝึกหัด 20 ข้อ</li>
+      </ul>
+    </section>
+
+    <div class="tabbar" id="tabs">
+      <div class="wrap">
+        <div class="tabs" role="tablist" aria-label="ส่วนของหน้า">
+          <button class="tab" role="tab" id="tab-content" aria-controls="content" aria-selected="true" type="button">
+            <svg class="tab-icon" viewBox="0 0 20 20" aria-hidden="true"><path d="M4 3.5h8.5L16 7v9.5H4z M12 3.5V7h4 M7 10h6 M7 13h4" /></svg>
+            เนื้อหา
+          </button>
+          <button class="tab" role="tab" id="tab-summary" aria-controls="summary" aria-selected="false" type="button">
+            <svg class="tab-icon" viewBox="0 0 20 20" aria-hidden="true"><path d="M3.5 4h13v12h-13z M3.5 8h13 M8.5 8v8" /></svg>
+            สรุป
+          </button>
+          <button class="tab" role="tab" id="tab-quiz" aria-controls="quiz" aria-selected="false" type="button">
+            <svg class="tab-icon" viewBox="0 0 20 20" aria-hidden="true"><path d="M10 17a7 7 0 1 0 0-14 7 7 0 0 0 0 14z M6.8 10.2l2.2 2.2 4.2-4.6" /></svg>
+            แบบฝึกหัด
+          </button>
+          <span class="tab-indicator" aria-hidden="true"></span>
+        </div>
+      </div>
+    </div>
+
+    <div class="wrap panels">
+
+      <!-- =============================================================
+           แท็บ 1: เนื้อหา
+           ============================================================= -->
+      <section class="panel" id="content" role="tabpanel" aria-labelledby="tab-content" tabindex="-1">
+        <div class="panel-head">
+          <h2>เนื้อหาแยกตามหัวข้อในสไลด์</h2>
+          <div class="panel-actions">
+            <button class="btn btn--ghost btn--sm" type="button" data-acc-all="open">เปิดทั้งหมด</button>
+            <button class="btn btn--ghost btn--sm" type="button" data-acc-all="close">ปิดทั้งหมด</button>
+          </div>
+        </div>
+
+        <div class="acc">
+
+<!-- ================= 01 UI และประเภท ================= -->
+          <div class="acc-item is-open">
+            <h3 class="acc-heading">
+              <button class="acc-trigger" type="button" aria-expanded="true" aria-controls="acc-ui-types" id="acc-ui-types-btn">
+                <span class="acc-index">01</span>
+                <span class="acc-title">
+                  <span class="acc-name">User Interface · 2 ประเด็นหลัก · ประเภทของ User Interfaces</span>
+                  <span class="acc-file">L8 User Interface Design · slide 4–8</span>
+                </span>
+                <svg class="acc-chevron" viewBox="0 0 20 20" aria-hidden="true"><path d="M5 7.5l5 5 5-5" /></svg>
+              </button>
+            </h3>
+            <div class="acc-panel" id="acc-ui-types" role="region" aria-labelledby="acc-ui-types-btn">
+              <div class="acc-panel-inner">
+                <div class="acc-body">
+
+                  <nav class="toc" aria-label="หัวข้อในการ์ดประเภท UI">
+                    <a href="#ui-issues">2 ประเด็นหลักของ UI</a>
+                    <a href="#ui-text">CLI &amp; Text menu</a>
+                    <a href="#ui-gui">GUI, Touchscreen, VUI</a>
+                    <a href="#ui-gesture">Gesture-based: AR &amp; VR</a>
+                  </nav>
+
+                  <section class="topic" id="ui-issues">
+                    <h4>User Interface (UI)</h4>
+                    <p>UI เป็นส่วนที่<strong>ผู้ใช้เห็นและสัมผัสชัดที่สุด (most apparent to the user)</strong> ของซอฟต์แวร์ — มี 2 ประเด็นหลัก:</p>
+                    <div class="compare">
+                      <div class="compare-col">
+                        <strong>1. Flow of interactions</strong>
+                        <p>ลำดับการปฏิสัมพันธ์ — ผู้ใช้ทำอะไรก่อนหลัง และระบบพาไปหน้าไหนต่อ</p>
+                      </div>
+                      <div class="compare-col">
+                        <strong>2. Look and feel</strong>
+                        <p>รูปลักษณ์และความรู้สึกเมื่อใช้งาน</p>
+                      </div>
+                    </div>
+                  </section>
+
+                  <section class="topic" id="ui-text">
+                    <h4>Interface แบบข้อความ</h4>
+                    <dl class="defs defs--stack">
+                      <div><dt>Command-Line Interface (CLI)</dt><dd>ใช้<strong>คำสั่งเชิงข้อความ (text-based commands)</strong> — มักใช้โดย<strong>นักพัฒนาและผู้ดูแลระบบ</strong>ที่ต้องการ<strong>ควบคุมการทำงานอย่างแม่นยำ</strong></dd></div>
+                      <div><dt>Text Menu Interface</dt><dd>UI เชิงข้อความชนิดหนึ่ง <strong>แสดงเมนูเป็นข้อความบนหน้าจอ</strong> นำทางให้ผู้ใช้เลือกตัวเลือก โดยมักกด<strong>ตัวเลข ตัวอักษร หรือปุ่มลูกศร</strong></dd></div>
+                    </dl>
+                  </section>
+
+                  <section class="topic" id="ui-gui">
+                    <h4>GUI, Touchscreen และ Voice</h4>
+                    <dl class="defs defs--stack">
+                      <div><dt>Graphical User Interface (GUI)</dt><dd>ใช้<strong>องค์ประกอบกราฟิก เช่น icon และ window</strong> ช่วยในการปฏิสัมพันธ์ — พบทั่วไปในระบบปฏิบัติการและแอปพลิเคชัน</dd></div>
+                      <div><dt>Touchscreen User Interface</dt><dd>โต้ตอบผ่าน<strong>การสัมผัส (touch gestures)</strong> — พบมากใน<strong>สมาร์ทโฟน แท็บเล็ต และ interactive kiosk</strong></dd></div>
+                      <div><dt>Voice User Interface (VUI)</dt><dd>โต้ตอบผ่าน<strong>คำสั่งเสียงพูดและการตอบกลับด้วยเสียง</strong> — เป็นที่นิยมจาก virtual assistant อย่าง <strong>Siri และ Alexa</strong></dd></div>
+                    </dl>
+                  </section>
+
+                  <section class="topic" id="ui-gesture">
+                    <h4>Gesture-Based Interfaces</h4>
+                    <div class="compare">
+                      <div class="compare-col">
+                        <strong>Augmented Reality (AR)</strong>
+                        <p><strong>ผสานองค์ประกอบเสมือนเข้ากับสภาพแวดล้อมจริง</strong> — พบในแอป AR ด้านการนำทาง เกม และการศึกษา</p>
+                      </div>
+                      <div class="compare-col">
+                        <strong>Virtual Reality (VR)</strong>
+                        <p><strong>สร้างสภาพแวดล้อมเสมือนที่ดื่มด่ำ (immersive)</strong> ให้ผู้ใช้โต้ตอบ — ใช้ใน VR gaming, simulation และ training program</p>
+                      </div>
+                    </div>
+                    <div class="callout callout--warn">
+                      <span class="callout-label">AR ≠ VR</span>
+                      <p><b>AR</b> ยังเห็นโลกจริงแล้ว<b>ซ้อน</b>ของเสมือนเข้าไป · <b>VR</b> สร้างโลกเสมือน<b>แทน</b>ที่โลกจริง</p>
+                    </div>
+                  </section>
+
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- ================= 02 Basic rules และ design process ================= -->
+          <div class="acc-item">
+            <h3 class="acc-heading">
+              <button class="acc-trigger" type="button" aria-expanded="false" aria-controls="acc-ui-process" id="acc-ui-process-btn">
+                <span class="acc-index">02</span>
+                <span class="acc-title">
+                  <span class="acc-name">กฎพื้นฐาน 5 ข้อ · User Interface Design Process 4 Phases</span>
+                  <span class="acc-file">L8 User Interface Design · slide 9–16</span>
+                </span>
+                <svg class="acc-chevron" viewBox="0 0 20 20" aria-hidden="true"><path d="M5 7.5l5 5 5-5" /></svg>
+              </button>
+            </h3>
+            <div class="acc-panel" id="acc-ui-process" role="region" aria-labelledby="acc-ui-process-btn">
+              <div class="acc-panel-inner">
+                <div class="acc-body">
+
+                  <nav class="toc" aria-label="หัวข้อในการ์ด design process">
+                    <a href="#ui-basic-rules">กฎพื้นฐาน 5 ข้อ</a>
+                    <a href="#ui-phases">ภาพรวม 4 phase</a>
+                    <a href="#ui-phase1">Phase 1</a>
+                    <a href="#ui-phase2">Phase 2</a>
+                    <a href="#ui-phase3">Phase 3</a>
+                    <a href="#ui-phase4">Phase 4</a>
+                  </nav>
+
+                  <section class="topic" id="ui-basic-rules">
+                    <h4>Basic Rules — ซอฟต์แวร์เป็นที่นิยมมากขึ้นถ้า UI…</h4>
+                    <div class="table-scroll">
+                      <table>
+                        <thead><tr><th>คุณสมบัติ</th><th>ในสไลด์</th></tr></thead>
+                        <tbody>
+                          <tr><td><strong>Attractive</strong></td><td>สวยงามน่าใช้</td></tr>
+                          <tr><td><strong>Simple to use</strong></td><td>ใช้งานง่าย</td></tr>
+                          <tr><td><strong>Responsive</strong></td><td>responsive in short time — ตอบสนองเร็ว</td></tr>
+                          <tr><td><strong>Clear</strong></td><td>clear to understand — เข้าใจง่าย</td></tr>
+                          <tr><td><strong>Consistent</strong></td><td>consistent on all interface screens — สอดคล้องกันทุกหน้าจอ</td></tr>
+                        </tbody>
+                      </table>
+                    </div>
+                  </section>
+
+                  <section class="topic" id="ui-phases">
+                    <h4>User Interface Design Process</h4>
+                    <figure class="diagram">
+                      <div class="diagram-scroll">
+                        <svg viewBox="0 0 720 230" role="img" aria-labelledby="ui-proc-t ui-proc-d">
+                          <title id="ui-proc-t">กระบวนการออกแบบ UI 4 phase</title>
+                          <desc id="ui-proc-d">Phase 1 user, task, environmental analysis and modeling ไป Phase 2 interface design ไป Phase 3 interface construction and implementation ไป Phase 4 interface validation และเส้นประย้อนกลับแสดงว่าออกแบบวนซ้ำได้</desc>
+                          <rect class="dg-box dg-box--accent" x="20" y="30" width="300" height="70" rx="10" />
+                          <text class="dg-mono dg-mono--sm" x="40" y="54">Phase 1</text>
+                          <text class="dg-text dg-text--sm" x="40" y="80">User, task, environmental analysis &amp; modeling</text>
+                          <rect class="dg-box dg-box--accent" x="400" y="30" width="300" height="70" rx="10" />
+                          <text class="dg-mono dg-mono--sm" x="420" y="54">Phase 2</text>
+                          <text class="dg-text dg-text--sm" x="420" y="80">Interface design</text>
+                          <rect class="dg-box dg-box--accent" x="400" y="140" width="300" height="70" rx="10" />
+                          <text class="dg-mono dg-mono--sm" x="420" y="164">Phase 3</text>
+                          <text class="dg-text dg-text--sm" x="420" y="190">Interface construction &amp; implementation</text>
+                          <rect class="dg-box dg-box--accent" x="20" y="140" width="300" height="70" rx="10" />
+                          <text class="dg-mono dg-mono--sm" x="40" y="164">Phase 4</text>
+                          <text class="dg-text dg-text--sm" x="40" y="190">Interface validation</text>
+                          <line class="dg-line dg-line--accent" x1="322" y1="65" x2="395" y2="65" marker-end="url(#arr)" />
+                          <line class="dg-line dg-line--accent" x1="550" y1="102" x2="550" y2="135" marker-end="url(#arr)" />
+                          <line class="dg-line dg-line--accent" x1="398" y1="175" x2="325" y2="175" marker-end="url(#arr)" />
+                          <line class="dg-line dg-line--dash" x1="170" y1="138" x2="170" y2="105" marker-end="url(#arr-muted)" />
+                        </svg>
+                      </div>
+                      <figcaption>เรียง phase ตามสไลด์ 8-11 ถึง 8-16 — Phase 3 ระบุว่าเป็น iterative design process (เส้นประแสดงการวนกลับ)</figcaption>
+                    </figure>
+                  </section>
+
+                  <section class="topic" id="ui-phase1">
+                    <h4>Phase 1: User, task, environmental analysis and modeling</h4>
+                    <p>อิงจาก<strong>โปรไฟล์ของผู้ใช้</strong>:</p>
+                    <ul class="tight">
+                      <li>เข้าใจ<strong>ทักษะ ความรู้ และประเภทของผู้ใช้</strong></li>
+                      <li><strong>งาน (tasks)</strong> ที่ผู้ใช้ต้องทำ</li>
+                      <li><strong>สภาพแวดล้อมการทำงานจริง (physical work environment)</strong></li>
+                    </ul>
+                    <p><strong>คำถามตัวอย่าง (สไลด์ 8-12):</strong></p>
+                    <ul class="checklist">
+                      <li>interface จะอยู่ที่ไหนทางกายภาพ?</li>
+                      <li>ผู้ใช้จะนั่ง ยืน หรือทำงานอื่นที่ไม่เกี่ยวกับ interface ไปด้วยหรือไม่?</li>
+                      <li>hardware ของ interface รองรับข้อจำกัดด้านพื้นที่ แสง หรือเสียงรบกวนหรือไม่?</li>
+                      <li>มี human factors พิเศษที่เกิดจากสภาพแวดล้อมหรือไม่?</li>
+                    </ul>
+                  </section>
+
+                  <section class="topic" id="ui-phase2">
+                    <h4>Phase 2: Interface Design</h4>
+                    <ul class="tight">
+                      <li>กำหนดชุด <strong>interface objects</strong></li>
+                      <li>กำหนดชุด <strong>interface actions</strong></li>
+                      <li>พิจารณา<strong>ประเด็นการออกแบบ (design issues)</strong>: <strong>response time</strong>, <strong>command and action structure</strong>, <strong>error handling</strong></li>
+                    </ul>
+                  </section>
+
+                  <section class="topic" id="ui-phase3">
+                    <h4>Phase 3: Interface construction and implementation</h4>
+                    <p><strong>กิจกรรม implementation เริ่มต้น</strong> — ใช้ <strong>prototype</strong> ผ่าน<strong>กระบวนการออกแบบวนซ้ำ (iterative design process)</strong></p>
+                  </section>
+
+                  <section class="topic" id="ui-phase4">
+                    <h4>Phase 4: Interface Validation</h4>
+                    <p><strong>ทดสอบ interface</strong> ว่า:</p>
+                    <ul class="checklist">
+                      <li>implement <strong>ทุก task ของผู้ใช้ได้ถูกต้อง</strong></li>
+                      <li>รองรับ <strong>task variation</strong> ทั้งหมด</li>
+                      <li>บรรลุ <strong>general user requirements</strong> ทั้งหมด</li>
+                    </ul>
+                    <p>ประเมินว่า interface <strong>ง่ายต่อการใช้ (easy to use) และง่ายต่อการเรียนรู้ (easy to learn)</strong> แค่ไหน — ผู้ใช้ควร<strong>ยอมรับ interface ว่าเป็นเครื่องมือที่มีประโยชน์ต่องาน</strong>ของตน</p>
+                  </section>
+
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- ================= 03 Golden rules ================= -->
+          <div class="acc-item">
+            <h3 class="acc-heading">
+              <button class="acc-trigger" type="button" aria-expanded="false" aria-controls="acc-ui-golden" id="acc-ui-golden-btn">
+                <span class="acc-index">03</span>
+                <span class="acc-title">
+                  <span class="acc-name">Golden Rules for Interface Design (Theo Mandel)</span>
+                  <span class="acc-file">L8 User Interface Design · slide 17–20</span>
+                </span>
+                <svg class="acc-chevron" viewBox="0 0 20 20" aria-hidden="true"><path d="M5 7.5l5 5 5-5" /></svg>
+              </button>
+            </h3>
+            <div class="acc-panel" id="acc-ui-golden" role="region" aria-labelledby="acc-ui-golden-btn">
+              <div class="acc-panel-inner">
+                <div class="acc-body">
+
+                  <nav class="toc" aria-label="หัวข้อในการ์ด Golden Rules">
+                    <a href="#ui-rule-control">1. Place the user in control</a>
+                    <a href="#ui-rule-memory">2. Reduce the user's memory load</a>
+                    <a href="#ui-rule-consistent">3. Make the interface consistent</a>
+                  </nav>
+
+                  <p>Theo Mandel เสนอ <strong>3 golden rules</strong>: <strong>Place the user in control</strong> · <strong>Reduce the user's memory load</strong> · <strong>Make the interface consistent</strong></p>
+
+                  <section class="topic" id="ui-rule-control">
+                    <h4>1. Place the user in control</h4>
+                    <div class="table-scroll">
+                      <table>
+                        <thead><tr><th>แนวทาง</th><th>ตัวอย่างในสไลด์</th></tr></thead>
+                        <tbody>
+                          <tr><td>กำหนด interaction mode <strong>โดยไม่บังคับผู้ใช้ทำสิ่งที่ไม่จำเป็นหรือไม่ต้องการ</strong></td><td>ถ้าเลือก spell check mode ใน document editor หน้าจอควรแสดงว่าอยู่ใน spell-checking mode และให้<strong>ออกจากโหมดได้ง่าย</strong></td></tr>
+                          <tr><td><strong>รองรับการปฏิสัมพันธ์ที่ยืดหยุ่น</strong></td><td>โต้ตอบได้ทั้ง keyboard command, mouse, touch screen หรือเสียง</td></tr>
+                          <tr><td>ปฏิสัมพันธ์ต้อง <strong>interrupt ได้และ undo ได้</strong></td><td>—</td></tr>
+                          <tr><td>ให้ <strong>advanced user ปรับแต่ง interface</strong> ได้</td><td>—</td></tr>
+                          <tr><td><strong>ซ่อน technical interface</strong> จากผู้ใช้ทั่วไป (casual users)</td><td>—</td></tr>
+                          <tr><td>ออกแบบให้<strong>โต้ตอบกับ object บนหน้าจอได้โดยตรง</strong></td><td>ลากไฟล์เอกสารไปที่ไอคอน "trash" เพื่อลบไฟล์</td></tr>
+                        </tbody>
+                      </table>
+                    </div>
+                  </section>
+
+                  <section class="topic" id="ui-rule-memory">
+                    <h4>2. Reduce the user's memory load</h4>
+                    <div class="table-scroll">
+                      <table>
+                        <thead><tr><th>แนวทาง</th><th>ตัวอย่างในสไลด์</th></tr></thead>
+                        <tbody>
+                          <tr><td><strong>ลดภาระความจำระยะสั้น</strong></td><td>ให้ visual clue ที่ทำให้ผู้ใช้จำ action ที่ทำไปแล้วได้</td></tr>
+                          <tr><td>กำหนด <strong>default ที่มีความหมาย</strong></td><td>ค่าเริ่มต้นชุดแรกควรเหมาะกับผู้ใช้ทั่วไป</td></tr>
+                          <tr><td>กำหนด <strong>shortcut ที่เข้าใจง่าย</strong></td><td><kbd>Ctrl</kbd>+<kbd>P</kbd> = print · <kbd>Ctrl</kbd>+<kbd>S</kbd> = save · <kbd>Cmd</kbd>+<kbd>C</kbd> = copy</td></tr>
+                          <tr><td>layout อิง <strong>real-world metaphor</strong></td><td>ใช้สัญลักษณ์บ้านสำหรับคำสั่ง "Back to home screen"</td></tr>
+                          <tr><td><strong>เปิดเผยข้อมูลเป็นชั้นๆ</strong></td><td>แสดงข้อมูลทั่วไปก่อน แล้วตามด้วยรายละเอียด</td></tr>
+                        </tbody>
+                      </table>
+                    </div>
+                  </section>
+
+                  <section class="topic" id="ui-rule-consistent">
+                    <h4>3. Make the interface consistent</h4>
+                    <div class="table-scroll">
+                      <table>
+                        <thead><tr><th>แนวทาง</th><th>ตัวอย่างในสไลด์</th></tr></thead>
+                        <tbody>
+                          <tr><td>ให้ผู้ใช้<strong>เข้าใจบริบทของงานปัจจุบัน</strong></td><td>มี indicator เช่น window title, graphical icon และ consistent color coding</td></tr>
+                          <tr><td><strong>รักษาความสอดคล้องทั่วทั้งระบบ</strong></td><td>—</td></tr>
+                          <tr><td><strong>ไม่เปลี่ยนโมเดลปฏิสัมพันธ์ที่มีอยู่เดิม</strong></td><td><kbd>Ctrl</kbd>+<kbd>S</kbd> เป็นที่รู้จักว่า save — <strong>อย่าใช้ shortcut เดียวกันทำคำสั่งอื่น</strong></td></tr>
+                        </tbody>
+                      </table>
+                    </div>
+                    <div class="callout callout--why">
+                      <span class="callout-label">สังเกตจากเว็บนี้เอง</span>
+                      <p>ทุกหน้าบทใช้แท็บ เนื้อหา · สรุป · แบบฝึกหัด ในตำแหน่งเดิม และแต่ละวิชามีสีประจำวิชาเดียวกันทุกบท — เป็นตัวอย่างของ <b>consistent color coding</b> และ <b>maintain consistency across the system</b></p>
+                    </div>
+                  </section>
+
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- ================= 04 Prototype ================= -->
+          <div class="acc-item">
+            <h3 class="acc-heading">
+              <button class="acc-trigger" type="button" aria-expanded="false" aria-controls="acc-ui-prototype" id="acc-ui-prototype-btn">
+                <span class="acc-index">04</span>
+                <span class="acc-title">
+                  <span class="acc-name">UI Design Prototype: Low Fidelity vs High Fidelity</span>
+                  <span class="acc-file">L8 User Interface Design · slide 21–25</span>
+                </span>
+                <svg class="acc-chevron" viewBox="0 0 20 20" aria-hidden="true"><path d="M5 7.5l5 5 5-5" /></svg>
+              </button>
+            </h3>
+            <div class="acc-panel" id="acc-ui-prototype" role="region" aria-labelledby="acc-ui-prototype-btn">
+              <div class="acc-panel-inner">
+                <div class="acc-body">
+
+                  <nav class="toc" aria-label="หัวข้อในการ์ด prototype">
+                    <a href="#ui-fidelity">เทียบ 2 ระดับ</a>
+                    <a href="#ui-fidelity-sketch">ภาพประกอบ</a>
+                  </nav>
+
+                  <section class="topic" id="ui-fidelity">
+                    <h4>2 ประเภทของ UI Design Prototype</h4>
+                    <div class="table-scroll">
+                      <table>
+                        <thead><tr><th></th><th>Low fidelity</th><th>High fidelity</th></tr></thead>
+                        <tbody>
+                          <tr><td><strong>ลักษณะ</strong></td><td><strong>ง่ายและหยาบ (simple and rough)</strong></td><td><strong>ละเอียดมาก</strong> — UI element เนื้อหา และปฏิสัมพันธ์สมจริง</td></tr>
+                          <tr><td><strong>เน้น</strong></td><td>โครงสร้างพื้นฐานและการทำงาน <strong>ไม่ลงรายละเอียดการออกแบบ</strong></td><td><strong>เลียนแบบผลิตภัณฑ์สุดท้ายให้ใกล้ที่สุด</strong> บางครั้งมี animation และ transition</td></tr>
+                          <tr><td><strong>เหมาะกับ</strong></td><td><strong>feedback ช่วงต้น</strong> และการระดมความคิด (brainstorming)</td><td><strong>user testing ที่แม่นยำ</strong> สาธิต design สุดท้าย และ <strong>validate design, usability, functionality ก่อนพัฒนาจริง</strong></td></tr>
+                          <tr><td><strong>ตัวอย่าง</strong></td><td><strong>paper prototypes, click-through prototypes</strong></td><td><strong>digital, code-free prototypes, coded prototypes</strong></td></tr>
+                        </tbody>
+                      </table>
+                    </div>
+                    <p class="note">บทที่ 3 (Requirement Engineering) ก็แบ่ง requirements prototyping เป็น low fidelity (กระดาษ/คาร์ดบอร์ด) และ high fidelity (เครื่องมืออัตโนมัติ) เช่นกัน</p>
+                  </section>
+
+                  <section class="topic" id="ui-fidelity-sketch">
+                    <h4>ภาพประกอบ: หน้าจอเดียวกันในสองระดับ</h4>
+                    <figure class="diagram">
+                      <div class="diagram-scroll">
+                        <svg viewBox="0 0 720 300" role="img" aria-labelledby="ui-fid-t ui-fid-d">
+                          <title id="ui-fid-t">ภาพเปรียบเทียบ low fidelity และ high fidelity</title>
+                          <desc id="ui-fid-d">ซ้าย: wireframe หยาบ มีกล่องกากบาทแทนรูป เส้นแทนข้อความ และกรอบปุ่มเปล่า ขวา: หน้าจอเดียวกันแบบละเอียด มีหัวข้อจริง ช่องกรอกที่มีป้ายชื่อ และปุ่มสีพร้อมข้อความ</desc>
+                          <text class="dg-mono dg-mono--sm" x="180" y="22" text-anchor="middle">Low fidelity</text>
+                          <rect class="dg-box" x="60" y="36" width="240" height="250" rx="6" />
+                          <rect class="dg-box" x="80" y="56" width="200" height="70" />
+                          <line class="dg-line" x1="80" y1="56" x2="280" y2="126" /><line class="dg-line" x1="280" y1="56" x2="80" y2="126" />
+                          <line class="dg-line" x1="80" y1="150" x2="230" y2="150" />
+                          <line class="dg-line" x1="80" y1="168" x2="260" y2="168" />
+                          <rect class="dg-box" x="80" y="186" width="200" height="26" />
+                          <rect class="dg-box" x="80" y="220" width="200" height="26" />
+                          <rect class="dg-box" x="130" y="254" width="100" height="22" rx="4" />
+                          <text class="dg-text dg-text--sm" x="180" y="270" text-anchor="middle">button</text>
+                          <text class="dg-mono dg-mono--sm" x="540" y="22" text-anchor="middle">High fidelity</text>
+                          <rect class="dg-box" x="420" y="36" width="240" height="250" rx="14" />
+                          <rect class="dg-box dg-box--accent" x="420" y="36" width="240" height="90" rx="14" />
+                          <text class="dg-text" x="540" y="78" text-anchor="middle">Welcome back</text>
+                          <text class="dg-text dg-text--sm" x="540" y="100" text-anchor="middle">เข้าสู่ระบบเพื่อดำเนินการต่อ</text>
+                          <text class="dg-text dg-text--sm" x="440" y="150">Email</text>
+                          <rect class="dg-box" x="440" y="156" width="200" height="28" rx="6" />
+                          <text class="dg-mono dg-mono--sm" x="450" y="175">name@example.com</text>
+                          <text class="dg-text dg-text--sm" x="440" y="204">Password</text>
+                          <rect class="dg-box" x="440" y="210" width="200" height="28" rx="6" />
+                          <text class="dg-mono dg-mono--sm" x="450" y="229">••••••••</text>
+                          <rect class="dg-box dg-box--ok" x="470" y="250" width="140" height="28" rx="14" />
+                          <text class="dg-text dg-text--sm" x="540" y="269" text-anchor="middle">Log in</text>
+                        </svg>
+                      </div>
+                      <figcaption>ภาพประกอบที่วาดขึ้นเพื่อเทียบระดับความละเอียด (ไม่ได้มาจากสไลด์ — สไลด์ 8-22 ถึง 8-25 เป็นภาพตัวอย่าง prototype จริง)</figcaption>
+                    </figure>
+                  </section>
+
+                </div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </section>
+
+      <!-- =============================================================
+           แท็บ 2: สรุป (cheat sheet)
+           ============================================================= -->
+      <section class="panel" id="summary" role="tabpanel" aria-labelledby="tab-summary" tabindex="-1">
+        <div class="panel-head">
+          <h2>Cheat sheet</h2>
+          <p class="panel-sub">ประเภท UI, กฎพื้นฐาน, design process 4 phase, Golden Rules และ prototype 2 ระดับในหน้าเดียว</p>
+        </div>
+
+        <div class="sheet">
+
+<article class="sheet-card">
+            <h3><span class="sheet-num">01</span> 2 ประเด็นหลักของ UI</h3>
+            <ol class="steps">
+              <li><strong>Flow of interactions</strong> — ลำดับการปฏิสัมพันธ์</li>
+              <li><strong>Look and feel</strong> — รูปลักษณ์และความรู้สึก</li>
+            </ol>
+            <p class="note">UI = ส่วนที่ผู้ใช้เห็นชัดที่สุด (most apparent to the user)</p>
+          </article>
+
+          <article class="sheet-card sheet-card--wide">
+            <h3><span class="sheet-num">02</span> 6 ประเภทของ UI</h3>
+            <div class="table-scroll">
+              <table>
+                <thead><tr><th>ประเภท</th><th>ลักษณะ</th><th>พบที่ / ใครใช้</th></tr></thead>
+                <tbody>
+                  <tr><td><strong>CLI</strong></td><td>คำสั่งเชิงข้อความ · ควบคุมแม่นยำ</td><td>นักพัฒนา, ผู้ดูแลระบบ</td></tr>
+                  <tr><td><strong>Text Menu</strong></td><td>เมนูข้อความ เลือกด้วยตัวเลข/ตัวอักษร/ลูกศร</td><td>UI เชิงข้อความ</td></tr>
+                  <tr><td><strong>GUI</strong></td><td>icon และ window</td><td>ระบบปฏิบัติการ, แอปพลิเคชัน</td></tr>
+                  <tr><td><strong>Touchscreen</strong></td><td>touch gestures</td><td>สมาร์ทโฟน, แท็บเล็ต, kiosk</td></tr>
+                  <tr><td><strong>VUI</strong></td><td>คำสั่งเสียงพูด + ตอบกลับด้วยเสียง</td><td>Siri, Alexa</td></tr>
+                  <tr><td><strong>AR / VR</strong> (gesture-based)</td><td>AR ซ้อนของเสมือนบนโลกจริง · VR สร้างโลกเสมือน immersive</td><td>AR: นำทาง เกม การศึกษา · VR: เกม simulation training</td></tr>
+                </tbody>
+              </table>
+            </div>
+          </article>
+
+          <article class="sheet-card sheet-card--wide">
+            <h3><span class="sheet-num">03</span> Golden Rules ของ Theo Mandel</h3>
+            <div class="table-scroll">
+              <table>
+                <thead><tr><th>Rule</th><th>แนวทางปฏิบัติ</th></tr></thead>
+                <tbody>
+                  <tr><td><strong>1. Place the user in control</strong></td><td>ไม่บังคับ action ที่ไม่ต้องการ (ออกจาก mode ได้ง่าย) · โต้ตอบได้หลายช่องทาง · <strong>interruptible &amp; undoable</strong> · advanced user ปรับแต่งได้ · ซ่อน technical interface · โต้ตอบกับ object บนจอตรงๆ (ลากไฟล์ไป trash)</td></tr>
+                  <tr><td><strong>2. Reduce the user's memory load</strong></td><td>visual clue ลดภาระความจำระยะสั้น · <strong>meaningful defaults</strong> · <strong>intuitive shortcuts</strong> (Ctrl+P, Ctrl+S, Cmd+C) · real-world metaphor (ไอคอนบ้าน) · <strong>disclose information in layers</strong></td></tr>
+                  <tr><td><strong>3. Make the interface consistent</strong></td><td>ให้รู้บริบทงาน (window title, icon, consistent color coding) · สอดคล้องทั้งระบบ · <strong>ไม่เปลี่ยน interactive model เดิม</strong> (Ctrl+S ต้องเป็น save)</td></tr>
+                </tbody>
+              </table>
+            </div>
+          </article>
+
+          <article class="sheet-card">
+            <h3><span class="sheet-num">04</span> กฎพื้นฐาน 5 ข้อ</h3>
+            <ul class="checklist">
+              <li><strong>Attractive</strong></li>
+              <li><strong>Simple</strong> to use</li>
+              <li><strong>Responsive</strong> in short time</li>
+              <li><strong>Clear</strong> to understand</li>
+              <li><strong>Consistent</strong> on all screens</li>
+            </ul>
+          </article>
+
+          <article class="sheet-card">
+            <h3><span class="sheet-num">05</span> UI Design Process 4 Phase</h3>
+            <ol class="steps">
+              <li><strong>User, task, environmental analysis &amp; modeling</strong> — โปรไฟล์ผู้ใช้ · tasks · physical work environment (ที่ตั้ง นั่ง/ยืน พื้นที่ แสง เสียง)</li>
+              <li><strong>Interface design</strong> — objects · actions · response time, command/action structure, error handling</li>
+              <li><strong>Construction &amp; implementation</strong> — prototype + iterative design</li>
+              <li><strong>Interface validation</strong> — ทุก task ถูกต้อง · task variation · easy to use/learn · ผู้ใช้ยอมรับ</li>
+            </ol>
+          </article>
+
+          <article class="sheet-card sheet-card--wide">
+            <h3><span class="sheet-num">06</span> Low fidelity vs High fidelity</h3>
+            <div class="table-scroll">
+              <table>
+                <thead><tr><th></th><th>Low fidelity</th><th>High fidelity</th></tr></thead>
+                <tbody>
+                  <tr><td>ลักษณะ</td><td>simple and rough · เน้นโครงสร้าง/ฟังก์ชัน ไม่ลงรายละเอียด design</td><td>highly detailed · เหมือนของจริง อาจมี animation/transition</td></tr>
+                  <tr><td>ใช้เมื่อ</td><td>feedback ช่วงต้น · brainstorming</td><td>user testing แม่นยำ · validate design/usability/functionality ก่อนพัฒนา</td></tr>
+                  <tr><td>ตัวอย่าง</td><td><strong>paper prototype, click-through prototype</strong></td><td><strong>digital code-free prototype, coded prototype</strong></td></tr>
+                </tbody>
+              </table>
+            </div>
+          </article>
+
+        </div>
+      </section>
+
+      <!-- =============================================================
+           แท็บ 3: แบบฝึกหัด (20 ข้อ)
+           data-answer = ตัวเลือกที่ถูก (ก=a, ข=b, ค=c, ง=d ตามเฉลยที่ผู้ใช้กำหนด)
+           ============================================================= -->
+      <section class="panel" id="quiz" role="tabpanel" aria-labelledby="tab-quiz" tabindex="-1">
+        <div class="panel-head">
+          <h2>แบบฝึกหัด 20 ข้อ</h2>
+          <p class="panel-sub">เลือกคำตอบให้ครบแล้วกด "ตรวจคำตอบ" ด้านล่าง ระบบจะเฉลยพร้อมคำอธิบายทุกข้อ</p>
+        </div>
+
+        <form class="quiz" id="quiz-form" novalidate>
+
+          <fieldset class="q" data-answer="a">
+            <legend class="q-head"><span class="q-num">01</span><span class="q-text">ประเด็นหลัก 2 อย่างของ User Interface (UI) คือข้อใด?</span></legend>
+            <div class="q-options">
+              <label class="opt"><input type="radio" name="q1" value="a" /><span class="opt-key">A</span><span class="opt-text">Flow of interactions และ Look and feel</span></label>
+              <label class="opt"><input type="radio" name="q1" value="b" /><span class="opt-key">B</span><span class="opt-text">ราคาและความเร็ว</span></label>
+              <label class="opt"><input type="radio" name="q1" value="c" /><span class="opt-key">C</span><span class="opt-text">โค้ดและฐานข้อมูล</span></label>
+              <label class="opt"><input type="radio" name="q1" value="d" /><span class="opt-key">D</span><span class="opt-text">งบประมาณและระยะเวลา</span></label>
+            </div>
+            <div class="q-feedback"><div class="q-feedback-inner"><p class="q-verdict" aria-live="polite"></p><p class="q-explain">สไลด์ 8-4: UI is most apparent to the user และมี two main issues: 1. flow of interactions 2. look and feel</p></div></div>
+          </fieldset>
+
+          <fieldset class="q" data-answer="b">
+            <legend class="q-head"><span class="q-num">02</span><span class="q-text">Command-Line Interface (CLI) เหมาะกับผู้ใช้กลุ่มใดเป็นพิเศษ?</span></legend>
+            <div class="q-options">
+              <label class="opt"><input type="radio" name="q2" value="a" /><span class="opt-key">A</span><span class="opt-text">ผู้ใช้ทั่วไปที่ไม่มีความรู้ด้านเทคนิค</span></label>
+              <label class="opt"><input type="radio" name="q2" value="b" /><span class="opt-key">B</span><span class="opt-text">นักพัฒนาและผู้ดูแลระบบที่ต้องการควบคุมการทำงานอย่างแม่นยำ</span></label>
+              <label class="opt"><input type="radio" name="q2" value="c" /><span class="opt-key">C</span><span class="opt-text">เด็กเล็ก</span></label>
+              <label class="opt"><input type="radio" name="q2" value="d" /><span class="opt-key">D</span><span class="opt-text">ผู้สูงอายุเท่านั้น</span></label>
+            </div>
+            <div class="q-feedback"><div class="q-feedback-inner"><p class="q-verdict" aria-live="polite"></p><p class="q-explain">CLI relies on text-based commands, often used by developers and system administrators for precise control over operations</p></div></div>
+          </fieldset>
+
+          <fieldset class="q" data-answer="b">
+            <legend class="q-head"><span class="q-num">03</span><span class="q-text">Voice User Interface (VUI) คืออะไร?</span></legend>
+            <div class="q-options">
+              <label class="opt"><input type="radio" name="q3" value="a" /><span class="opt-key">A</span><span class="opt-text">อินเทอร์เฟซที่ใช้การสัมผัสหน้าจอ</span></label>
+              <label class="opt"><input type="radio" name="q3" value="b" /><span class="opt-key">B</span><span class="opt-text">อินเทอร์เฟซที่ให้ผู้ใช้โต้ตอบผ่านคำสั่งเสียงพูดและการตอบสนองด้วยเสียง เช่น Siri, Alexa</span></label>
+              <label class="opt"><input type="radio" name="q3" value="c" /><span class="opt-key">C</span><span class="opt-text">อินเทอร์เฟซแบบข้อความเมนู</span></label>
+              <label class="opt"><input type="radio" name="q3" value="d" /><span class="opt-key">D</span><span class="opt-text">อินเทอร์เฟซบรรทัดคำสั่ง</span></label>
+            </div>
+            <div class="q-feedback"><div class="q-feedback-inner"><p class="q-verdict" aria-live="polite"></p><p class="q-explain">VUI enables interaction through spoken commands and responses, popularised by virtual assistants like Siri and Alexa</p></div></div>
+          </fieldset>
+
+          <fieldset class="q" data-answer="a">
+            <legend class="q-head"><span class="q-num">04</span><span class="q-text">คุณสมบัติพื้นฐานที่ทำให้ซอฟต์แวร์เป็นที่นิยมมากขึ้น (ด้าน UI) คือข้อใด?</span></legend>
+            <div class="q-options">
+              <label class="opt"><input type="radio" name="q4" value="a" /><span class="opt-key">A</span><span class="opt-text">Attractive, Simple to use, Responsive, Clear, Consistent</span></label>
+              <label class="opt"><input type="radio" name="q4" value="b" /><span class="opt-key">B</span><span class="opt-text">ราคาถูกที่สุด</span></label>
+              <label class="opt"><input type="radio" name="q4" value="c" /><span class="opt-key">C</span><span class="opt-text">มีสีสันมากที่สุด</span></label>
+              <label class="opt"><input type="radio" name="q4" value="d" /><span class="opt-key">D</span><span class="opt-text">มีฟีเจอร์เยอะที่สุด</span></label>
+            </div>
+            <div class="q-feedback"><div class="q-feedback-inner"><p class="q-verdict" aria-live="polite"></p><p class="q-explain">Basic rules: software becomes more popular if its UI is attractive, simple to use, responsive in short time, clear to understand, consistent on all interface screens</p></div></div>
+          </fieldset>
+
+          <fieldset class="q" data-answer="a">
+            <legend class="q-head"><span class="q-num">05</span><span class="q-text">User Interface Design Process มีกี่ phase อะไรบ้าง?</span></legend>
+            <div class="q-options">
+              <label class="opt"><input type="radio" name="q5" value="a" /><span class="opt-key">A</span><span class="opt-text">4 phase: User/task/environmental analysis &amp; modeling, Interface design, Construction &amp; implementation, Interface validation</span></label>
+              <label class="opt"><input type="radio" name="q5" value="b" /><span class="opt-key">B</span><span class="opt-text">2 phase เท่านั้น: Design และ Test</span></label>
+              <label class="opt"><input type="radio" name="q5" value="c" /><span class="opt-key">C</span><span class="opt-text">6 phase รวม Marketing และ Sales</span></label>
+              <label class="opt"><input type="radio" name="q5" value="d" /><span class="opt-key">D</span><span class="opt-text">1 phase เท่านั้น</span></label>
+            </div>
+            <div class="q-feedback"><div class="q-feedback-inner"><p class="q-verdict" aria-live="polite"></p><p class="q-explain">Phase 1 user, task, environmental analysis and modeling · Phase 2 interface design · Phase 3 interface construction and implementation · Phase 4 interface validation</p></div></div>
+          </fieldset>
+
+          <fieldset class="q" data-answer="a">
+            <legend class="q-head"><span class="q-num">06</span><span class="q-text">Phase แรกของ UI Design Process พิจารณาสิ่งใดบ้าง?</span></legend>
+            <div class="q-options">
+              <label class="opt"><input type="radio" name="q6" value="a" /><span class="opt-key">A</span><span class="opt-text">โปรไฟล์ผู้ใช้ (ทักษะ ความรู้ ประเภทผู้ใช้), งานที่ต้องทำ, และสภาพแวดล้อมการทำงานจริง</span></label>
+              <label class="opt"><input type="radio" name="q6" value="b" /><span class="opt-key">B</span><span class="opt-text">ราคาของฮาร์ดแวร์เท่านั้น</span></label>
+              <label class="opt"><input type="radio" name="q6" value="c" /><span class="opt-key">C</span><span class="opt-text">จำนวนบรรทัดโค้ดที่ต้องเขียน</span></label>
+              <label class="opt"><input type="radio" name="q6" value="d" /><span class="opt-key">D</span><span class="opt-text">โครงสร้างฐานข้อมูลเท่านั้น</span></label>
+            </div>
+            <div class="q-feedback"><div class="q-feedback-inner"><p class="q-verdict" aria-live="polite"></p><p class="q-explain">Phase 1 based on the profile of user: skill, knowledge, and type of user · tasks that user need to perform · physical work environment</p></div></div>
+          </fieldset>
+
+          <fieldset class="q" data-answer="a">
+            <legend class="q-head"><span class="q-num">07</span><span class="q-text">Golden Rule ข้อแรกของ Theo Mandel คือข้อใด?</span></legend>
+            <div class="q-options">
+              <label class="opt"><input type="radio" name="q7" value="a" /><span class="opt-key">A</span><span class="opt-text">Place the user in control</span></label>
+              <label class="opt"><input type="radio" name="q7" value="b" /><span class="opt-key">B</span><span class="opt-text">Maximize the number of colors</span></label>
+              <label class="opt"><input type="radio" name="q7" value="c" /><span class="opt-key">C</span><span class="opt-text">Hide all options from the user</span></label>
+              <label class="opt"><input type="radio" name="q7" value="d" /><span class="opt-key">D</span><span class="opt-text">Force the user into fixed workflows</span></label>
+            </div>
+            <div class="q-feedback"><div class="q-feedback-inner"><p class="q-verdict" aria-live="polite"></p><p class="q-explain">Three golden rules by Theo Mandel: place the user in control · reduce the user's memory load · make the interface consistent</p></div></div>
+          </fieldset>
+
+          <fieldset class="q" data-answer="b">
+            <legend class="q-head"><span class="q-num">08</span><span class="q-text">หลักการ &quot;Place the user in control&quot; มีแนวทางปฏิบัติอย่างไร?</span></legend>
+            <div class="q-options">
+              <label class="opt"><input type="radio" name="q8" value="a" /><span class="opt-key">A</span><span class="opt-text">บังคับให้ผู้ใช้ทำตามลำดับขั้นตอนที่ตายตัวเท่านั้น</span></label>
+              <label class="opt"><input type="radio" name="q8" value="b" /><span class="opt-key">B</span><span class="opt-text">ให้ผู้ใช้ปฏิสัมพันธ์ได้หลายช่องทาง และทำ interaction ที่ interrupt/undo ได้</span></label>
+              <label class="opt"><input type="radio" name="q8" value="c" /><span class="opt-key">C</span><span class="opt-text">ซ่อนทุก option จากผู้ใช้เสมอ</span></label>
+              <label class="opt"><input type="radio" name="q8" value="d" /><span class="opt-key">D</span><span class="opt-text">ไม่อนุญาตให้ผู้ใช้ปรับแต่ง interface</span></label>
+            </div>
+            <div class="q-feedback"><div class="q-feedback-inner"><p class="q-verdict" aria-live="polite"></p><p class="q-explain">Place the user in control: provide for flexible interaction (keyboard, mouse, touch, voice) · allow interaction to be interruptible and undoable · allow advanced users to customize · hide technical interfaces from casual users</p></div></div>
+          </fieldset>
+
+          <fieldset class="q" data-answer="b">
+            <legend class="q-head"><span class="q-num">09</span><span class="q-text">หลักการ &quot;Reduce the user's memory load&quot; มีแนวทางปฏิบัติอย่างไร?</span></legend>
+            <div class="q-options">
+              <label class="opt"><input type="radio" name="q9" value="a" /><span class="opt-key">A</span><span class="opt-text">ให้ผู้ใช้จำทุกคำสั่งด้วยตัวเอง</span></label>
+              <label class="opt"><input type="radio" name="q9" value="b" /><span class="opt-key">B</span><span class="opt-text">กำหนดค่า default ที่สมเหตุสมผล ใช้ shortcut ที่เข้าใจง่าย และเปิดเผยข้อมูลเป็นชั้นๆ</span></label>
+              <label class="opt"><input type="radio" name="q9" value="c" /><span class="opt-key">C</span><span class="opt-text">ซ่อน visual clue ทั้งหมด</span></label>
+              <label class="opt"><input type="radio" name="q9" value="d" /><span class="opt-key">D</span><span class="opt-text">เปลี่ยน layout บ่อยๆ เพื่อความสดใหม่</span></label>
+            </div>
+            <div class="q-feedback"><div class="q-feedback-inner"><p class="q-verdict" aria-live="polite"></p><p class="q-explain">Reduce memory load: reduce demand on short-term memory (visual clues) · establish meaningful defaults · define intuitive shortcuts · real-world metaphor · disclose information in layers</p></div></div>
+          </fieldset>
+
+          <fieldset class="q" data-answer="b">
+            <legend class="q-head"><span class="q-num">10</span><span class="q-text">หลักการ &quot;Make the interface consistent&quot; หมายถึงอะไร?</span></legend>
+            <div class="q-options">
+              <label class="opt"><input type="radio" name="q10" value="a" /><span class="opt-key">A</span><span class="opt-text">เปลี่ยน shortcut คำสั่งเดิมไปทำคำสั่งใหม่ได้ตลอดเวลา</span></label>
+              <label class="opt"><input type="radio" name="q10" value="b" /><span class="opt-key">B</span><span class="opt-text">รักษาความสอดคล้องกันทั่วทั้งระบบ และไม่เปลี่ยนแปลงโมเดลการโต้ตอบที่มีอยู่เดิม</span></label>
+              <label class="opt"><input type="radio" name="q10" value="c" /><span class="opt-key">C</span><span class="opt-text">ใช้สีที่แตกต่างกันในทุกหน้าจอ</span></label>
+              <label class="opt"><input type="radio" name="q10" value="d" /><span class="opt-key">D</span><span class="opt-text">ไม่ต้องมี indicator บอกบริบทงาน</span></label>
+            </div>
+            <div class="q-feedback"><div class="q-feedback-inner"><p class="q-verdict" aria-live="polite"></p><p class="q-explain">Make the interface consistent: put the current task into a meaningful context (window titles, icons, consistent color coding) · maintain consistency across the system · do not make changes to existing interactive models เช่น Ctrl+S ต้องเป็น save</p></div></div>
+          </fieldset>
+
+          <fieldset class="q" data-answer="b">
+            <legend class="q-head"><span class="q-num">11</span><span class="q-text">Low Fidelity Prototype มีลักษณะอย่างไร?</span></legend>
+            <div class="q-options">
+              <label class="opt"><input type="radio" name="q11" value="a" /><span class="opt-key">A</span><span class="opt-text">เหมือนผลิตภัณฑ์จริงทุกประการ รวมแอนิเมชัน</span></label>
+              <label class="opt"><input type="radio" name="q11" value="b" /><span class="opt-key">B</span><span class="opt-text">ง่ายและหยาบ เน้นโครงสร้างพื้นฐาน ไม่เน้นรายละเอียดการออกแบบ เหมาะกับ feedback ช่วงต้น</span></label>
+              <label class="opt"><input type="radio" name="q11" value="c" /><span class="opt-key">C</span><span class="opt-text">ใช้โค้ดจริงในการสร้างเสมอ</span></label>
+              <label class="opt"><input type="radio" name="q11" value="d" /><span class="opt-key">D</span><span class="opt-text">ใช้สำหรับ user testing ขั้นสุดท้ายเท่านั้น</span></label>
+            </div>
+            <div class="q-feedback"><div class="q-feedback-inner"><p class="q-verdict" aria-live="polite"></p><p class="q-explain">Low fidelity: simple and rough · focus on basic structure and functionality, avoiding design details · useful for early-stage feedback and brainstorming</p></div></div>
+          </fieldset>
+
+          <fieldset class="q" data-answer="b">
+            <legend class="q-head"><span class="q-num">12</span><span class="q-text">High Fidelity Prototype เหมาะกับการใช้งานใด?</span></legend>
+            <div class="q-options">
+              <label class="opt"><input type="radio" name="q12" value="a" /><span class="opt-key">A</span><span class="opt-text">การระดมความคิดขั้นต้นเท่านั้น</span></label>
+              <label class="opt"><input type="radio" name="q12" value="b" /><span class="opt-key">B</span><span class="opt-text">การตรวจสอบความถูกต้องของ design, usability และ functionality ก่อนพัฒนาจริง</span></label>
+              <label class="opt"><input type="radio" name="q12" value="c" /><span class="opt-key">C</span><span class="opt-text">การเขียนเอกสาร requirement</span></label>
+              <label class="opt"><input type="radio" name="q12" value="d" /><span class="opt-key">D</span><span class="opt-text">การวางแผนงบประมาณ</span></label>
+            </div>
+            <div class="q-feedback"><div class="q-feedback-inner"><p class="q-verdict" aria-live="polite"></p><p class="q-explain">High fidelity: highly detailed, mimics the final product · allows accurate user testing · useful for validating design, usability, and functionality before development</p></div></div>
+          </fieldset>
+
+          <fieldset class="q" data-answer="a">
+            <legend class="q-head"><span class="q-num">13</span><span class="q-text">ตัวอย่างของ Low Fidelity Prototype คือข้อใด?</span></legend>
+            <div class="q-options">
+              <label class="opt"><input type="radio" name="q13" value="a" /><span class="opt-key">A</span><span class="opt-text">Paper prototype และ Click-through prototype</span></label>
+              <label class="opt"><input type="radio" name="q13" value="b" /><span class="opt-key">B</span><span class="opt-text">Coded prototype ที่สมบูรณ์</span></label>
+              <label class="opt"><input type="radio" name="q13" value="c" /><span class="opt-key">C</span><span class="opt-text">ระบบที่ deploy ขึ้น production แล้ว</span></label>
+              <label class="opt"><input type="radio" name="q13" value="d" /><span class="opt-key">D</span><span class="opt-text">Use Case Diagram</span></label>
+            </div>
+            <div class="q-feedback"><div class="q-feedback-inner"><p class="q-verdict" aria-live="polite"></p><p class="q-explain">สไลด์ 8-21: low fidelity e.g., paper prototypes, click-through prototypes · ส่วน coded prototypes เป็นตัวอย่างของ high fidelity</p></div></div>
+          </fieldset>
+
+          <fieldset class="q" data-answer="b">
+            <legend class="q-head"><span class="q-num">14</span><span class="q-text">Graphical User Interface (GUI) มีลักษณะเด่นอย่างไร?</span></legend>
+            <div class="q-options">
+              <label class="opt"><input type="radio" name="q14" value="a" /><span class="opt-key">A</span><span class="opt-text">ใช้ข้อความคำสั่งเท่านั้น</span></label>
+              <label class="opt"><input type="radio" name="q14" value="b" /><span class="opt-key">B</span><span class="opt-text">ใช้องค์ประกอบกราฟิก เช่น icon และ window ในการปฏิสัมพันธ์</span></label>
+              <label class="opt"><input type="radio" name="q14" value="c" /><span class="opt-key">C</span><span class="opt-text">ใช้เฉพาะเสียงพูดเท่านั้น</span></label>
+              <label class="opt"><input type="radio" name="q14" value="d" /><span class="opt-key">D</span><span class="opt-text">ใช้ได้เฉพาะบนมือถือเท่านั้น</span></label>
+            </div>
+            <div class="q-feedback"><div class="q-feedback-inner"><p class="q-verdict" aria-live="polite"></p><p class="q-explain">GUI uses graphical elements like icons and windows to facilitate interaction, commonly found in operating systems and applications</p></div></div>
+          </fieldset>
+
+          <fieldset class="q" data-answer="a">
+            <legend class="q-head"><span class="q-num">15</span><span class="q-text">Phase 4 (&quot;Interface Validation&quot;) ตรวจสอบเรื่องใด?</span></legend>
+            <div class="q-options">
+              <label class="opt"><input type="radio" name="q15" value="a" /><span class="opt-key">A</span><span class="opt-text">ว่า interface implement task ของผู้ใช้ได้ถูกต้อง รองรับ task variation และง่ายต่อการเรียนรู้/ใช้งาน</span></label>
+              <label class="opt"><input type="radio" name="q15" value="b" /><span class="opt-key">B</span><span class="opt-text">ราคาของฮาร์ดแวร์ที่ใช้พัฒนา</span></label>
+              <label class="opt"><input type="radio" name="q15" value="c" /><span class="opt-key">C</span><span class="opt-text">จำนวนนักพัฒนาในทีม</span></label>
+              <label class="opt"><input type="radio" name="q15" value="d" /><span class="opt-key">D</span><span class="opt-text">ระยะเวลาของโปรเจกต์</span></label>
+            </div>
+            <div class="q-feedback"><div class="q-feedback-inner"><p class="q-verdict" aria-live="polite"></p><p class="q-explain">Phase 4: can implement every user task correctly · accommodate all task variations · achieve general user requirements · assess ease of use and ease of learning · users accept the interface as a useful tool</p></div></div>
+          </fieldset>
+
+          <fieldset class="q" data-answer="b">
+            <legend class="q-head"><span class="q-num">16</span><span class="q-text">Touchscreen User Interface พบได้บ่อยในอุปกรณ์ประเภทใด?</span></legend>
+            <div class="q-options">
+              <label class="opt"><input type="radio" name="q16" value="a" /><span class="opt-key">A</span><span class="opt-text">เซิร์ฟเวอร์ห้อง data center</span></label>
+              <label class="opt"><input type="radio" name="q16" value="b" /><span class="opt-key">B</span><span class="opt-text">สมาร์ทโฟน แท็บเล็ต และ kiosk แบบโต้ตอบ</span></label>
+              <label class="opt"><input type="radio" name="q16" value="c" /><span class="opt-key">C</span><span class="opt-text">เฉพาะคอมพิวเตอร์ตั้งโต๊ะรุ่นเก่าเท่านั้น</span></label>
+              <label class="opt"><input type="radio" name="q16" value="d" /><span class="opt-key">D</span><span class="opt-text">เฉพาะเครื่องพิมพ์เท่านั้น</span></label>
+            </div>
+            <div class="q-feedback"><div class="q-feedback-inner"><p class="q-verdict" aria-live="polite"></p><p class="q-explain">Touchscreen UIs allow interaction through touch gestures, prevalent in smartphones, tablets, and interactive kiosks</p></div></div>
+          </fieldset>
+
+          <fieldset class="q" data-answer="a">
+            <legend class="q-head"><span class="q-num">17</span><span class="q-text">Augmented Reality (AR) User Interface มีลักษณะอย่างไร?</span></legend>
+            <div class="q-options">
+              <label class="opt"><input type="radio" name="q17" value="a" /><span class="opt-key">A</span><span class="opt-text">ผสานองค์ประกอบเสมือนเข้ากับสภาพแวดล้อมจริง เช่น แอปนำทาง หรือเกม</span></label>
+              <label class="opt"><input type="radio" name="q17" value="b" /><span class="opt-key">B</span><span class="opt-text">สร้างสภาพแวดล้อมเสมือนทั้งหมดแยกจากโลกจริง</span></label>
+              <label class="opt"><input type="radio" name="q17" value="c" /><span class="opt-key">C</span><span class="opt-text">ใช้เฉพาะข้อความเท่านั้น</span></label>
+              <label class="opt"><input type="radio" name="q17" value="d" /><span class="opt-key">D</span><span class="opt-text">ใช้เฉพาะเสียงพูดเท่านั้น</span></label>
+            </div>
+            <div class="q-feedback"><div class="q-feedback-inner"><p class="q-verdict" aria-live="polite"></p><p class="q-explain">AR integrates virtual elements into the natural environment (navigation, gaming, education) · การสร้างสภาพแวดล้อมเสมือนทั้งหมดคือ VR</p></div></div>
+          </fieldset>
+
+          <fieldset class="q" data-answer="a">
+            <legend class="q-head"><span class="q-num">18</span><span class="q-text">Text Menu Interface มีลักษณะอย่างไร?</span></legend>
+            <div class="q-options">
+              <label class="opt"><input type="radio" name="q18" value="a" /><span class="opt-key">A</span><span class="opt-text">แสดงเมนูเป็นข้อความบนหน้าจอ นำทางผู้ใช้ให้เลือกตัวเลือกผ่านตัวเลข ตัวอักษร หรือปุ่มลูกศร</span></label>
+              <label class="opt"><input type="radio" name="q18" value="b" /><span class="opt-key">B</span><span class="opt-text">ใช้ icon กราฟิกเท่านั้น</span></label>
+              <label class="opt"><input type="radio" name="q18" value="c" /><span class="opt-key">C</span><span class="opt-text">ใช้การสัมผัสหน้าจอเท่านั้น</span></label>
+              <label class="opt"><input type="radio" name="q18" value="d" /><span class="opt-key">D</span><span class="opt-text">ไม่มีการโต้ตอบกับผู้ใช้เลย</span></label>
+            </div>
+            <div class="q-feedback"><div class="q-feedback-inner"><p class="q-verdict" aria-live="polite"></p><p class="q-explain">Text menu interfaces: a type of text-based UI that displays menus as text; users select options by pressing numbers, letters, or arrow keys</p></div></div>
+          </fieldset>
+
+          <fieldset class="q" data-answer="a">
+            <legend class="q-head"><span class="q-num">19</span><span class="q-text">Phase 3 (&quot;Interface construction and implementation&quot;) เกี่ยวข้องกับอะไร?</span></legend>
+            <div class="q-options">
+              <label class="opt"><input type="radio" name="q19" value="a" /><span class="opt-key">A</span><span class="opt-text">การเริ่มกิจกรรม implementation ผ่านกระบวนการออกแบบซ้ำโดยใช้ prototype</span></label>
+              <label class="opt"><input type="radio" name="q19" value="b" /><span class="opt-key">B</span><span class="opt-text">การเก็บ requirement ครั้งแรก</span></label>
+              <label class="opt"><input type="radio" name="q19" value="c" /><span class="opt-key">C</span><span class="opt-text">การปิดโปรเจกต์</span></label>
+              <label class="opt"><input type="radio" name="q19" value="d" /><span class="opt-key">D</span><span class="opt-text">การวางแผนงบประมาณ</span></label>
+            </div>
+            <div class="q-feedback"><div class="q-feedback-inner"><p class="q-verdict" aria-live="polite"></p><p class="q-explain">Phase 3: the implementation activity begins — prototype และ iterative design process</p></div></div>
+          </fieldset>
+
+          <fieldset class="q" data-answer="b">
+            <legend class="q-head"><span class="q-num">20</span><span class="q-text">เหตุใดจึงควรเข้าใจ &quot;physical work environment&quot; ของผู้ใช้ (Phase 1)?</span></legend>
+            <div class="q-options">
+              <label class="opt"><input type="radio" name="q20" value="a" /><span class="opt-key">A</span><span class="opt-text">ไม่มีความสำคัญเลย</span></label>
+              <label class="opt"><input type="radio" name="q20" value="b" /><span class="opt-key">B</span><span class="opt-text">เพราะสภาพแวดล้อม เช่น พื้นที่ แสง เสียงรบกวน หรือผู้ใช้ยืน/นั่ง มีผลต่อ human factors ในการออกแบบ interface</span></label>
+              <label class="opt"><input type="radio" name="q20" value="c" /><span class="opt-key">C</span><span class="opt-text">เพื่อกำหนดราคาสินค้า</span></label>
+              <label class="opt"><input type="radio" name="q20" value="d" /><span class="opt-key">D</span><span class="opt-text">เพื่อเลือกภาษาโปรแกรมมิ่ง</span></label>
+            </div>
+            <div class="q-feedback"><div class="q-feedback-inner"><p class="q-verdict" aria-live="polite"></p><p class="q-explain">คำถามตัวอย่าง Phase 1: interface อยู่ที่ไหน · ผู้ใช้นั่ง/ยืน/ทำงานอื่นไปด้วยไหม · hardware รองรับข้อจำกัดพื้นที่ แสง เสียงไหม · มี human factors พิเศษจากสภาพแวดล้อมไหม</p></div></div>
+          </fieldset>
+
+          <div class="quiz-result" id="quiz-result" hidden tabindex="-1">
+            <div class="score-ring" aria-hidden="true">
+              <svg viewBox="0 0 120 120">
+                <circle class="ring-track" cx="60" cy="60" r="52" />
+                <circle class="ring-fill" cx="60" cy="60" r="52" pathLength="100" />
+              </svg>
+              <span class="score-pct"><span id="score-pct">0</span>%</span>
+            </div>
+            <div class="score-body">
+              <p class="score-line" role="status">ได้ <strong id="score-num">0</strong> / 20 คะแนน</p>
+              <p class="score-msg" id="score-msg"></p>
+              <div class="score-actions">
+                <button class="btn btn--ghost btn--sm" type="button" id="toggle-wrong" aria-pressed="false">ดูเฉพาะข้อที่ผิด</button>
+              </div>
+            </div>
+          </div>
+
+          <div class="quiz-bar">
+            <div class="quiz-progress">
+              <span class="quiz-count"><span id="answered">0</span> / 20 ข้อ</span>
+              <span class="progress" aria-hidden="true"><span class="progress-fill" id="progress-fill"></span></span>
+              <span class="quiz-hint" id="quiz-hint" aria-live="polite"></span>
+            </div>
+            <div class="quiz-actions">
+              <button class="btn btn--ghost" type="reset" id="quiz-reset">ทำใหม่</button>
+              <button class="btn btn--primary" type="submit" id="quiz-submit">ตรวจคำตอบ</button>
+            </div>
+          </div>
+        </form>
+      </section>
+
+    </div>
+  </main>
+  <footer class="site-footer">
+    <div class="wrap">
+      <p>สรุปจากสไลด์ ITDS261 Introduction to Software Engineering (Faculty of ICT, Mahidol University) เพื่อใช้ทบทวนส่วนตัว — ถ้าเนื้อหาขัดกับสไลด์ ให้ยึดสไลด์เป็นหลัก</p>
+    </div>
+  </footer>
+
+  <script src="assets/js/widgets.js" defer></script>
+  <script src="assets/js/network.js" defer></script>
+</body>
+</html>
