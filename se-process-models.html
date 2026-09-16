@@ -1,0 +1,1122 @@
+<!DOCTYPE html>
+<html lang="th" data-theme="se">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>ITDS261 บทที่ 2: Software Process Models · โต๊ะทบทวน</title>
+<meta name="description" content="ITDS261 Introduction to Software Engineering บทที่ 2: กรณีศึกษา CrowdStrike และ Knight Capital, layered technology, process framework, process model แบบดั้งเดิม (Code and Fix, Waterfall, Incremental, Spiral) กับ Agile/Scrum, กรณีศึกษา Spotify และ HealthCare.gov และ process assessment พร้อม cheat sheet และแบบฝึกหัด 20 ข้อ" />
+<meta name="theme-color" content="#121815" />
+<link rel="icon" href="assets/favicon.svg" type="image/svg+xml" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link
+  href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500..700&family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans+Thai:wght@500;600&family=IBM+Plex+Sans+Thai+Looped:wght@400;500;600&display=swap"
+  rel="stylesheet"
+/>
+<link rel="stylesheet" href="assets/css/tokens.css" />
+<link rel="stylesheet" href="assets/css/base.css" />
+<link rel="stylesheet" href="assets/css/network.css" />
+<link rel="stylesheet" href="assets/css/motion.css" />
+<script>document.documentElement.classList.add("js");</script>
+</head>
+<body>
+  <a class="skip-link" href="#tabs">ข้ามไปที่เนื้อหา</a>
+
+  <svg class="dg-defs" aria-hidden="true" focusable="false">
+    <defs>
+      <marker id="arr" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path class="dg-arrow" d="M0 0L10 5L0 10z" /></marker>
+      <marker id="arr-muted" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path class="dg-arrow--muted" d="M0 0L10 5L0 10z" /></marker>
+      <marker id="arr-ok" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path class="dg-arrow--ok" d="M0 0L10 5L0 10z" /></marker>
+      <marker id="arr-bad" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path class="dg-arrow--bad" d="M0 0L10 5L0 10z" /></marker>
+    </defs>
+  </svg>
+
+  <header class="site-header">
+    <div class="wrap">
+      <a class="wordmark" href="index.html" aria-label="โต๊ะทบทวน หน้าแรก">
+        <img class="wordmark-mark" src="assets/favicon.svg" alt="" width="26" height="26" />
+        <span class="wordmark-text">โต๊ะ<span>ทบทวน</span></span>
+      </a>
+      <a class="crumb" href="index.html"><span class="arrow" aria-hidden="true">←</span> รายวิชาทั้งหมด</a>
+    </div>
+  </header>
+
+  <main>
+    <section class="course-hero wrap">
+      <nav class="course-nav" aria-label="เลือกวิชาและบท">
+        <div class="subject-switch">
+          <button class="subject-btn" type="button" data-subject="network" aria-pressed="false"><span class="subject-code">ITDS231</span> Network</button>
+          <button class="subject-btn" type="button" data-subject="web" aria-pressed="false"><span class="subject-code">ITDS241</span> Web</button>
+          <button class="subject-btn" type="button" data-subject="se" aria-pressed="true"><span class="subject-code">ITDS261</span> SE</button>
+        </div>
+        <div class="chapter-nav" data-subject="network" data-label="ITDS231 Computer Networks" role="group" aria-label="บทของวิชา ITDS231 Computer Networks">
+          <a class="chapter-link" href="network.html"><span class="chapter-num">บทที่ 1</span><span class="chapter-name">Intro &amp; Topology</span></a>
+          <a class="chapter-link" href="network-application-layer.html"><span class="chapter-num">บทที่ 2</span><span class="chapter-name">Application Layer</span></a>
+          <a class="chapter-link" href="network-data-link-layer.html"><span class="chapter-num">บทที่ 3</span><span class="chapter-name">Data Link Layer</span></a>
+          <a class="chapter-link" href="network-mac-ethernet.html"><span class="chapter-num">บทที่ 4</span><span class="chapter-name">MAC + Ethernet</span></a>
+        </div>
+        <div class="chapter-nav" data-subject="web" data-label="ITDS241 Web Technologies and Applications" role="group" aria-label="บทของวิชา ITDS241 Web Technologies and Applications">
+          <a class="chapter-link" href="web-intro-html-basics.html"><span class="chapter-num">บทที่ 1</span><span class="chapter-name">Internet &amp; HTML Basics</span></a>
+          <a class="chapter-link" href="web-media-forms-semantic.html"><span class="chapter-num">บทที่ 2</span><span class="chapter-name">Media, Forms &amp; Semantic</span></a>
+          <a class="chapter-link" href="web-css-fundamentals.html"><span class="chapter-num">บทที่ 3</span><span class="chapter-name">CSS Fundamentals</span></a>
+          <a class="chapter-link" href="web-css-layout-responsive.html"><span class="chapter-num">บทที่ 4</span><span class="chapter-name">CSS Layout &amp; Responsive</span></a>
+          <a class="chapter-link" href="web-js-fundamentals.html"><span class="chapter-num">บทที่ 5</span><span class="chapter-name">JavaScript Fundamentals</span></a>
+          <a class="chapter-link" href="web-js-functions-oop-dom.html"><span class="chapter-num">บทที่ 6</span><span class="chapter-name">Functions, OOP &amp; DOM</span></a>
+          <a class="chapter-link" href="web-ecmascript-features.html"><span class="chapter-num">บทที่ 7</span><span class="chapter-name">ECMAScript Features</span></a>
+        </div>
+        <div class="chapter-nav" data-subject="se" data-label="ITDS261 Introduction to Software Engineering" role="group" aria-label="บทของวิชา ITDS261 Introduction to Software Engineering">
+          <a class="chapter-link" href="se-foundation-pm.html"><span class="chapter-num">บทที่ 1</span><span class="chapter-name">SE Foundation &amp; PM</span></a>
+          <a class="chapter-link" href="se-process-models.html" aria-current="page"><span class="chapter-num">บทที่ 2</span><span class="chapter-name">Process Models</span></a>
+          <a class="chapter-link" href="se-requirement-engineering.html"><span class="chapter-num">บทที่ 3</span><span class="chapter-name">Requirement Engineering</span></a>
+          <a class="chapter-link" href="se-use-case-modeling.html"><span class="chapter-num">บทที่ 4</span><span class="chapter-name">Use Case Modeling</span></a>
+          <a class="chapter-link" href="se-flow-behavior-modeling.html"><span class="chapter-num">บทที่ 5</span><span class="chapter-name">Flow &amp; Behavior Modeling</span></a>
+          <a class="chapter-link" href="se-ui-design.html"><span class="chapter-num">บทที่ 6</span><span class="chapter-name">UI Design</span></a>
+        </div>
+      </nav>
+      <span class="eyebrow">ITDS261 · บทที่ 2 · Lecture 2</span>
+      <h1>Software Process Models</h1>
+      <p class="course-lede">ทีมพัฒนาซอฟต์แวร์ต้องมีแบบแผนว่าจะทำงานอะไร ตามลำดับไหน และใครทำ บทนี้เทียบ process model แบบดั้งเดิมอย่าง Code and Fix, Waterfall, Incremental และ Spiral กับ Agile/Scrum พร้อมกรณีศึกษาที่สำเร็จและล้มเหลว</p>
+      <ul class="course-meta" aria-label="ข้อมูลบทเรียน">
+        <li class="chip chip--accent">ITDS261 Introduction to Software Engineering</li>
+        <li class="chip">1 ไฟล์สไลด์ · L2 Process models (32 หน้า)</li>
+        <li class="chip">แบบฝึกหัด 20 ข้อ</li>
+      </ul>
+    </section>
+
+    <div class="tabbar" id="tabs">
+      <div class="wrap">
+        <div class="tabs" role="tablist" aria-label="ส่วนของหน้า">
+          <button class="tab" role="tab" id="tab-content" aria-controls="content" aria-selected="true" type="button">
+            <svg class="tab-icon" viewBox="0 0 20 20" aria-hidden="true"><path d="M4 3.5h8.5L16 7v9.5H4z M12 3.5V7h4 M7 10h6 M7 13h4" /></svg>
+            เนื้อหา
+          </button>
+          <button class="tab" role="tab" id="tab-summary" aria-controls="summary" aria-selected="false" type="button">
+            <svg class="tab-icon" viewBox="0 0 20 20" aria-hidden="true"><path d="M3.5 4h13v12h-13z M3.5 8h13 M8.5 8v8" /></svg>
+            สรุป
+          </button>
+          <button class="tab" role="tab" id="tab-quiz" aria-controls="quiz" aria-selected="false" type="button">
+            <svg class="tab-icon" viewBox="0 0 20 20" aria-hidden="true"><path d="M10 17a7 7 0 1 0 0-14 7 7 0 0 0 0 14z M6.8 10.2l2.2 2.2 4.2-4.6" /></svg>
+            แบบฝึกหัด
+          </button>
+          <span class="tab-indicator" aria-hidden="true"></span>
+        </div>
+      </div>
+    </div>
+
+    <div class="wrap panels">
+
+      <!-- =============================================================
+           แท็บ 1: เนื้อหา
+           ============================================================= -->
+      <section class="panel" id="content" role="tabpanel" aria-labelledby="tab-content" tabindex="-1">
+        <div class="panel-head">
+          <h2>เนื้อหาแยกตามหัวข้อในสไลด์</h2>
+          <div class="panel-actions">
+            <button class="btn btn--ghost btn--sm" type="button" data-acc-all="open">เปิดทั้งหมด</button>
+            <button class="btn btn--ghost btn--sm" type="button" data-acc-all="close">ปิดทั้งหมด</button>
+          </div>
+        </div>
+
+        <div class="acc">
+
+<!-- ================= 01 กรณีศึกษา กิจกรรม framework ================= -->
+          <div class="acc-item is-open">
+            <h3 class="acc-heading">
+              <button class="acc-trigger" type="button" aria-expanded="true" aria-controls="acc-proc-base" id="acc-proc-base-btn">
+                <span class="acc-index">01</span>
+                <span class="acc-title">
+                  <span class="acc-name">กรณีศึกษาความล้มเหลว · กิจกรรมการพัฒนา · Layered Technology · Process Framework</span>
+                  <span class="acc-file">L2 Process models · slide 4–10</span>
+                </span>
+                <svg class="acc-chevron" viewBox="0 0 20 20" aria-hidden="true"><path d="M5 7.5l5 5 5-5" /></svg>
+              </button>
+            </h3>
+            <div class="acc-panel" id="acc-proc-base" role="region" aria-labelledby="acc-proc-base-btn">
+              <div class="acc-panel-inner">
+                <div class="acc-body">
+
+                  <nav class="toc" aria-label="หัวข้อในการ์ดพื้นฐานของ process">
+                    <a href="#proc-cases">CrowdStrike &amp; Knight Capital</a>
+                    <a href="#proc-activities">กิจกรรมทั่วไป 6 ขั้น</a>
+                    <a href="#proc-layers">A Layered Technology</a>
+                    <a href="#proc-framework">Process Framework</a>
+                    <a href="#proc-devframework">Development Framework</a>
+                  </nav>
+
+                  <section class="topic" id="proc-cases">
+                    <h4>กรณีศึกษาความล้มเหลว</h4>
+                    <div class="compare">
+                      <div class="compare-col">
+                        <strong>Case 1: CrowdStrike Outage</strong>
+                        <p>เกิดจาก <strong>validator ที่บกพร่อง (buggy validator)</strong> ใน software update ทำให้ระบบทั่วโลกล่มพร้อมกันเป็นวงกว้าง</p>
+                        <p class="note">อ้างอิงในสไลด์: TechRepublic (2024) "CrowdStrike: Buggy Validator Started Massive Outage"</p>
+                      </div>
+                      <div class="compare-col">
+                        <strong>Case 2: Knight Capital</strong>
+                        <ul class="tight">
+                          <li>ระบบเทรดส่งคำสั่งซื้อขายที่ไม่ได้ตั้งใจจำนวนมหาศาล</li>
+                          <li>algorithm ที่ผิดพลาดเทรดต่อเนื่อง<strong>ประมาณ 45 นาที</strong>ก่อนระบบถูกปิด</li>
+                          <li>สูญเสีย<strong>มากกว่า 440 ล้านดอลลาร์</strong></li>
+                        </ul>
+                      </div>
+                    </div>
+                    <div class="callout callout--warn">
+                      <span class="callout-label">สาเหตุหลักของ Knight Capital</span>
+                      <p><b>ไม่ใช่แค่ software bug</b> แต่คือ<b>ความล้มเหลวใน software deployment และ operational controls</b> — การทดสอบ มาตรการป้องกัน (safeguards) และ risk management ไม่เพียงพอ จนโค้ดที่ผิดหลุดไปถึงระบบเทรดจริง</p>
+                    </div>
+                  </section>
+
+                  <section class="topic" id="proc-activities">
+                    <h4>กิจกรรมทั่วไปในการพัฒนาซอฟต์แวร์</h4>
+                    <ol class="steps">
+                      <li><strong>Requirements analysis</strong> — หาว่าผู้ใช้ต้องการอะไร และกำหนดว่าซอฟต์แวร์ควรทำอะไร</li>
+                      <li><strong>System and software design</strong> — วางโครงสร้างระบบและวิธีที่ component ทำงานร่วมกัน</li>
+                      <li><strong>Implementation (coding)</strong> — เขียนโค้ดสร้างซอฟต์แวร์</li>
+                      <li><strong>Testing and quality assurance</strong> — ตรวจหา error และตรวจว่าตรง requirement</li>
+                      <li><strong>Deployment and release</strong> — ส่งมอบซอฟต์แวร์ไปใช้ในสภาพแวดล้อมจริง</li>
+                      <li><strong>Maintenance and evolution</strong> — แก้ปัญหา อัปเดตฟีเจอร์ และปรับซอฟต์แวร์ตามเวลา</li>
+                    </ol>
+                  </section>
+
+                  <section class="topic" id="proc-layers">
+                    <h4>A Layered Technology</h4>
+                    <figure class="diagram">
+                      <div class="diagram-scroll">
+                        <svg viewBox="0 0 600 250" role="img" aria-labelledby="proc-layer-t proc-layer-d">
+                          <title id="proc-layer-t">Software engineering เป็นเทคโนโลยีแบบชั้น</title>
+                          <desc id="proc-layer-d">ชั้นล่างสุดคือ a quality focus ถัดขึ้นไปคือ process model, methods และ tools อยู่บนสุด ทั้งหมดรวมกันคือ Software Engineering</desc>
+                          <text class="dg-mono" x="300" y="26" text-anchor="middle">Software Engineering</text>
+                          <rect class="dg-box" x="200" y="42" width="200" height="40" rx="8" />
+                          <text class="dg-text" x="300" y="67" text-anchor="middle">tools</text>
+                          <rect class="dg-box" x="160" y="88" width="280" height="40" rx="8" />
+                          <text class="dg-text" x="300" y="113" text-anchor="middle">methods</text>
+                          <rect class="dg-box" x="120" y="134" width="360" height="40" rx="8" />
+                          <text class="dg-text" x="300" y="159" text-anchor="middle">process model</text>
+                          <rect class="dg-box dg-box--accent" x="80" y="180" width="440" height="40" rx="8" />
+                          <text class="dg-text" x="300" y="205" text-anchor="middle">a "quality" focus</text>
+                        </svg>
+                      </div>
+                      <figcaption>สไลด์ 2-7 — ฐานล่างสุดคือการมุ่งเน้นคุณภาพ แล้วซ้อนด้วย process model, methods และ tools</figcaption>
+                    </figure>
+                  </section>
+
+                  <section class="topic" id="proc-framework">
+                    <h4>A Process Framework</h4>
+                    <figure class="diagram">
+                      <div class="diagram-scroll">
+                        <svg viewBox="0 0 720 260" role="img" aria-labelledby="proc-fw-t proc-fw-d">
+                          <title id="proc-fw-t">Process framework</title>
+                          <desc id="proc-fw-d">กรอบใหญ่ Common Process Framework มี Framework Activities ซึ่งแต่ละอันมี Task Sets ประกอบด้วย work tasks, work products, milestones and deliverables และ QA checkpoints ส่วนด้านล่างคือ Umbrella Activities ที่ครอบทุกกิจกรรม</desc>
+                          <rect class="dg-box" x="20" y="14" width="680" height="170" rx="12" />
+                          <text class="dg-mono" x="40" y="40">Common Process Framework</text>
+                          <rect class="dg-box dg-box--accent" x="40" y="54" width="200" height="110" rx="10" />
+                          <text class="dg-text" x="140" y="114" text-anchor="middle">Framework Activities</text>
+                          <line class="dg-line dg-line--accent" x1="242" y1="109" x2="290" y2="109" marker-end="url(#arr)" />
+                          <rect class="dg-box" x="295" y="54" width="385" height="110" rx="10" />
+                          <text class="dg-text" x="315" y="78">Task Sets</text>
+                          <text class="dg-text dg-text--sm" x="315" y="104">• work tasks</text>
+                          <text class="dg-text dg-text--sm" x="315" y="126">• work products</text>
+                          <text class="dg-text dg-text--sm" x="495" y="104">• milestones, deliverables</text>
+                          <text class="dg-text dg-text--sm" x="495" y="126">• QA checkpoints</text>
+                          <rect class="dg-box dg-box--warn" x="20" y="198" width="680" height="46" rx="12" />
+                          <text class="dg-text" x="360" y="227" text-anchor="middle">Umbrella Activities (ครอบทุก framework activity)</text>
+                        </svg>
+                      </div>
+                      <figcaption>สไลด์ 2-8 A Process Framework</figcaption>
+                    </figure>
+                    <p><strong>Umbrella activities</strong> ในสไลด์ 2-10 มี 8 อย่าง:</p>
+                    <ul class="tight">
+                      <li>Software project management</li>
+                      <li>Formal technical reviews</li>
+                      <li>Software quality assurance</li>
+                      <li>Software configuration management</li>
+                      <li>Work product preparation and production</li>
+                      <li>Reusability management</li>
+                      <li>Measurement</li>
+                      <li>Risk management</li>
+                    </ul>
+                  </section>
+
+                  <section class="topic" id="proc-devframework">
+                    <h4>A Development Framework ให้อะไร</h4>
+                    <dl class="defs defs--stack">
+                      <div><dt>Foundation</dt><dd>โครงสร้างพื้นฐาน/template เริ่มต้น นักพัฒนาไม่ต้องเริ่มจากศูนย์</dd></div>
+                      <div><dt>Components and Tools</dt><dd>component และเครื่องมือสำเร็จรูปที่ทำให้พัฒนาเร็วและง่ายขึ้น</dd></div>
+                      <div><dt>Best Practices and Guidelines</dt><dd>แนวปฏิบัติที่ทำให้สร้างซอฟต์แวร์อย่างเป็นระเบียบและมีประสิทธิภาพ</dd></div>
+                      <div><dt>Customization</dt><dd>ปรับและเพิ่มฟังก์ชันให้ตรงกับความต้องการเฉพาะได้</dd></div>
+                    </dl>
+                  </section>
+
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- ================= 02 Process model, Code and Fix, Waterfall ================= -->
+          <div class="acc-item">
+            <h3 class="acc-heading">
+              <button class="acc-trigger" type="button" aria-expanded="false" aria-controls="acc-proc-classic" id="acc-proc-classic-btn">
+                <span class="acc-index">02</span>
+                <span class="acc-title">
+                  <span class="acc-name">Process Model คืออะไร · Code and Fix · Waterfall</span>
+                  <span class="acc-file">L2 Process models · slide 11–15</span>
+                </span>
+                <svg class="acc-chevron" viewBox="0 0 20 20" aria-hidden="true"><path d="M5 7.5l5 5 5-5" /></svg>
+              </button>
+            </h3>
+            <div class="acc-panel" id="acc-proc-classic" role="region" aria-labelledby="acc-proc-classic-btn">
+              <div class="acc-panel-inner">
+                <div class="acc-body">
+
+                  <nav class="toc" aria-label="หัวข้อในการ์ด process model">
+                    <a href="#proc-definition">นิยาม process model</a>
+                    <a href="#proc-codefix">Code and Fix</a>
+                    <a href="#proc-waterfall">Waterfall</a>
+                  </nav>
+
+                  <section class="topic" id="proc-definition">
+                    <h4>Process Models คืออะไร</h4>
+                    <ul class="tight">
+                      <li>เป็น<strong>กรอบมาตรฐาน (standardised frameworks)</strong></li>
+                      <li>ให้แนวทาง<strong>ประสานงานและควบคุม task และบุคลากรที่ทำ task</strong> อย่างเป็นระบบ</li>
+                      <li>บรรยาย<strong>ลำดับกิจกรรม บทบาท artifact และ workflow</strong> ในการพัฒนาและดูแลระบบซอฟต์แวร์</li>
+                    </ul>
+                    <p><strong>เพื่อ:</strong> นำทีมในการวางแผน ลงมือ และบริหารโปรเจกต์ · ทำให้ work product มีความสม่ำเสมอและมีคุณภาพ · ช่วยการสื่อสารและประสานงานระหว่าง stakeholder</p>
+                    <div class="callout callout--def">
+                      <span class="callout-label">หัวใจของ process model</span>
+                      <p><b>coordination, tasks, people</b></p>
+                    </div>
+                    <p><strong>สิ่งที่ process model ต้องนิยาม:</strong></p>
+                    <ul class="checklist">
+                      <li>ชุด task ที่ต้องทำ</li>
+                      <li>input และ output ของ task</li>
+                      <li>pre-condition และ post-condition ของ task</li>
+                      <li>ลำดับ flow ของ task</li>
+                      <li>บุคลากรที่ทำ task</li>
+                    </ul>
+                    <p class="note">ตัวอย่างที่เรียน: Code and Fix · Waterfall · Incremental · Spiral · Agile</p>
+                  </section>
+
+                  <section class="topic" id="proc-codefix">
+                    <h4>Code and Fix Model</h4>
+                    <figure class="diagram">
+                      <div class="diagram-scroll">
+                        <svg viewBox="0 0 720 170" role="img" aria-labelledby="proc-cf-t proc-cf-d">
+                          <title id="proc-cf-t">Code and Fix model</title>
+                          <desc id="proc-cf-d">Problem statement ไป Code ไป Compile ไป Debug ไป Unit test ไป Release และเมื่อพบปัญหาจะวนกลับไปแก้โค้ด</desc>
+                          <rect class="dg-box dg-box--warn" x="10" y="50" width="110" height="46" rx="8" />
+                          <text class="dg-text dg-text--sm" x="65" y="70" text-anchor="middle">Problem</text>
+                          <text class="dg-text dg-text--sm" x="65" y="86" text-anchor="middle">Statement</text>
+                          <rect class="dg-box dg-box--accent" x="150" y="50" width="90" height="46" rx="8" />
+                          <text class="dg-text" x="195" y="78" text-anchor="middle">Code</text>
+                          <rect class="dg-box" x="270" y="50" width="100" height="46" rx="8" />
+                          <text class="dg-text" x="320" y="78" text-anchor="middle">Compile</text>
+                          <rect class="dg-box" x="400" y="50" width="90" height="46" rx="8" />
+                          <text class="dg-text" x="445" y="78" text-anchor="middle">Debug</text>
+                          <rect class="dg-box" x="520" y="50" width="90" height="46" rx="8" />
+                          <text class="dg-text" x="565" y="78" text-anchor="middle">Unit Test</text>
+                          <rect class="dg-box dg-box--ok" x="630" y="50" width="80" height="46" rx="8" />
+                          <text class="dg-text" x="670" y="78" text-anchor="middle">Release</text>
+                          <line class="dg-line" x1="122" y1="73" x2="146" y2="73" marker-end="url(#arr-muted)" />
+                          <line class="dg-line" x1="242" y1="73" x2="266" y2="73" marker-end="url(#arr-muted)" />
+                          <line class="dg-line" x1="372" y1="73" x2="396" y2="73" marker-end="url(#arr-muted)" />
+                          <line class="dg-line" x1="492" y1="73" x2="516" y2="73" marker-end="url(#arr-muted)" />
+                          <line class="dg-line" x1="612" y1="73" x2="627" y2="73" marker-end="url(#arr-muted)" />
+                          <path class="dg-line dg-line--bad dg-line--dash" d="M565 98 V140 H195 V100" marker-end="url(#arr-bad)" />
+                          <text class="dg-text dg-text--sm dg-text--bad" x="380" y="160" text-anchor="middle">problem → กลับไปแก้โค้ด</text>
+                        </svg>
+                      </div>
+                      <figcaption>วาดอย่างย่อตามสไลด์ 2-13 (ในสไลด์มีลูกศร "problem" ย้อนกลับไปที่การแก้โค้ด)</figcaption>
+                    </figure>
+                    <div class="callout callout--warn">
+                      <span class="callout-label">ปัญหาของ Code and Fix</span>
+                      <p>1) คนส่วนใหญ่ทำตาม process นี้ แต่<b>บางคนข้าม unit testing หรือ debugging</b> · 2) บางคน<b>เริ่มโดยไม่เข้าใจ "problem statement" ให้ชัด</b> — ซึ่ง problem statement ก็คือ requirement</p>
+                    </div>
+                  </section>
+
+                  <section class="topic" id="proc-waterfall">
+                    <h4>Waterfall Model</h4>
+                    <figure class="diagram">
+                      <div class="diagram-scroll">
+                        <svg viewBox="0 0 720 260" role="img" aria-labelledby="proc-wf-t proc-wf-d">
+                          <title id="proc-wf-t">Waterfall model</title>
+                          <desc id="proc-wf-d">ขั้นบันไดลงจากซ้ายบนไปขวาล่าง: Requirement, Design, Implementation, Testing, Deployment, Maintenance ลูกศรไปทางเดียว</desc>
+                          <rect class="dg-box dg-box--accent" x="20" y="14" width="150" height="34" rx="8" />
+                          <text class="dg-text" x="95" y="36" text-anchor="middle">Requirement</text>
+                          <rect class="dg-box dg-box--accent" x="130" y="54" width="150" height="34" rx="8" />
+                          <text class="dg-text" x="205" y="76" text-anchor="middle">Design</text>
+                          <rect class="dg-box dg-box--accent" x="240" y="94" width="150" height="34" rx="8" />
+                          <text class="dg-text" x="315" y="116" text-anchor="middle">Implementation</text>
+                          <rect class="dg-box dg-box--accent" x="350" y="134" width="150" height="34" rx="8" />
+                          <text class="dg-text" x="425" y="156" text-anchor="middle">Testing</text>
+                          <rect class="dg-box dg-box--accent" x="460" y="174" width="150" height="34" rx="8" />
+                          <text class="dg-text" x="535" y="196" text-anchor="middle">Deployment</text>
+                          <rect class="dg-box dg-box--accent" x="570" y="214" width="140" height="34" rx="8" />
+                          <text class="dg-text" x="640" y="236" text-anchor="middle">Maintenance</text>
+                          <path class="dg-line dg-line--accent" d="M172 31 H205 V50" marker-end="url(#arr)" />
+                          <path class="dg-line dg-line--accent" d="M282 71 H315 V90" marker-end="url(#arr)" />
+                          <path class="dg-line dg-line--accent" d="M392 111 H425 V130" marker-end="url(#arr)" />
+                          <path class="dg-line dg-line--accent" d="M502 151 H535 V170" marker-end="url(#arr)" />
+                          <path class="dg-line dg-line--accent" d="M612 191 H640 V210" marker-end="url(#arr)" />
+                        </svg>
+                      </div>
+                      <figcaption>สไลด์ 2-14 — Traditional, linear and sequential</figcaption>
+                    </figure>
+                    <p><strong>Key characteristics:</strong> แต่ละ phase <strong>ไม่ทับซ้อนกัน</strong> · แต่ละ phase สร้าง <strong>deliverable ที่เป็น input ของ phase ถัดไป</strong> · <strong>เน้นเอกสารและการวางแผน</strong></p>
+                    <div class="compare">
+                      <div class="compare-col">
+                        <strong>Pros</strong>
+                        <ul class="tight">
+                          <li>เข้าใจง่าย</li>
+                          <li>เหมาะกับโปรเจกต์เล็กที่ requirement ชัดเจนและคงที่</li>
+                          <li>เอกสารดี ช่วยการดูแลระยะยาว</li>
+                        </ul>
+                      </div>
+                      <div class="compare-col">
+                        <strong>Cons</strong>
+                        <ul class="tight">
+                          <li>ใช้เวลาพัฒนานาน</li>
+                          <li>ปรับเปลี่ยนยากเมื่อเริ่มพัฒนาแล้ว</li>
+                          <li>พบปัญหาช้า (testing มาหลัง coding)</li>
+                          <li>ไม่เหมาะกับ requirement ที่เปลี่ยนไปเรื่อยๆ หรือมีความไม่แน่นอนสูง</li>
+                        </ul>
+                      </div>
+                    </div>
+                  </section>
+
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- ================= 03 Incremental และ Spiral ================= -->
+          <div class="acc-item">
+            <h3 class="acc-heading">
+              <button class="acc-trigger" type="button" aria-expanded="false" aria-controls="acc-proc-iter" id="acc-proc-iter-btn">
+                <span class="acc-index">03</span>
+                <span class="acc-title">
+                  <span class="acc-name">Incremental Model (แบบ A / B) · Spiral Model</span>
+                  <span class="acc-file">L2 Process models · slide 16–20</span>
+                </span>
+                <svg class="acc-chevron" viewBox="0 0 20 20" aria-hidden="true"><path d="M5 7.5l5 5 5-5" /></svg>
+              </button>
+            </h3>
+            <div class="acc-panel" id="acc-proc-iter" role="region" aria-labelledby="acc-proc-iter-btn">
+              <div class="acc-panel-inner">
+                <div class="acc-body">
+
+                  <nav class="toc" aria-label="หัวข้อในการ์ด Incremental และ Spiral">
+                    <a href="#proc-incremental">Incremental แบบ A</a>
+                    <a href="#proc-multirelease">Incremental แบบ B (Multiple Release)</a>
+                    <a href="#proc-spiral">Spiral</a>
+                  </nav>
+
+                  <section class="topic" id="proc-incremental">
+                    <h4>Incremental Model (แบบ A)</h4>
+                    <p>แต่ละ requirement/item หลัก<strong>ถูกพัฒนาแยกกัน</strong>ผ่านลำดับเดียวกัน <strong>requirement → design → code → unit test</strong> แล้วชิ้นที่เสร็จถูกรวมเข้า <strong>integration bucket</strong> อย่างต่อเนื่องเพื่อทำ <strong>system test</strong></p>
+                    <figure class="diagram">
+                      <div class="diagram-scroll">
+                        <svg viewBox="0 0 720 230" role="img" aria-labelledby="proc-inc-t proc-inc-d">
+                          <title id="proc-inc-t">Incremental model แบบ A</title>
+                          <desc id="proc-inc-d">Req 1, Req 2 จนถึง Req n แต่ละแถวผ่าน Design, Code, Test แล้วรวมเข้า Integration Bucket และจบที่ System Test</desc>
+                          <g>
+                            <rect class="dg-box dg-box--accent" x="20" y="20" width="80" height="34" rx="6" /><text class="dg-text" x="60" y="42" text-anchor="middle">Req. 1</text>
+                            <rect class="dg-box" x="130" y="20" width="80" height="34" rx="6" /><text class="dg-text" x="170" y="42" text-anchor="middle">Des.</text>
+                            <rect class="dg-box" x="240" y="20" width="80" height="34" rx="6" /><text class="dg-text" x="280" y="42" text-anchor="middle">Code</text>
+                            <rect class="dg-box" x="350" y="20" width="80" height="34" rx="6" /><text class="dg-text" x="390" y="42" text-anchor="middle">Test</text>
+                            <line class="dg-line" x1="102" y1="37" x2="126" y2="37" marker-end="url(#arr-muted)" /><line class="dg-line" x1="212" y1="37" x2="236" y2="37" marker-end="url(#arr-muted)" /><line class="dg-line" x1="322" y1="37" x2="346" y2="37" marker-end="url(#arr-muted)" />
+                          </g>
+                          <g>
+                            <rect class="dg-box dg-box--accent" x="20" y="80" width="80" height="34" rx="6" /><text class="dg-text" x="60" y="102" text-anchor="middle">Req. 2</text>
+                            <rect class="dg-box" x="130" y="80" width="80" height="34" rx="6" /><text class="dg-text" x="170" y="102" text-anchor="middle">Des.</text>
+                            <rect class="dg-box" x="240" y="80" width="80" height="34" rx="6" /><text class="dg-text" x="280" y="102" text-anchor="middle">Code</text>
+                            <rect class="dg-box" x="350" y="80" width="80" height="34" rx="6" /><text class="dg-text" x="390" y="102" text-anchor="middle">Test</text>
+                            <line class="dg-line" x1="102" y1="97" x2="126" y2="97" marker-end="url(#arr-muted)" /><line class="dg-line" x1="212" y1="97" x2="236" y2="97" marker-end="url(#arr-muted)" /><line class="dg-line" x1="322" y1="97" x2="346" y2="97" marker-end="url(#arr-muted)" />
+                          </g>
+                          <text class="dg-mono dg-mono--sm" x="225" y="140" text-anchor="middle">⋮</text>
+                          <g>
+                            <rect class="dg-box dg-box--accent" x="20" y="160" width="80" height="34" rx="6" /><text class="dg-text" x="60" y="182" text-anchor="middle">Req. n</text>
+                            <rect class="dg-box" x="130" y="160" width="80" height="34" rx="6" /><text class="dg-text" x="170" y="182" text-anchor="middle">Des.</text>
+                            <rect class="dg-box" x="240" y="160" width="80" height="34" rx="6" /><text class="dg-text" x="280" y="182" text-anchor="middle">Code</text>
+                            <rect class="dg-box" x="350" y="160" width="80" height="34" rx="6" /><text class="dg-text" x="390" y="182" text-anchor="middle">Test</text>
+                            <line class="dg-line" x1="102" y1="177" x2="126" y2="177" marker-end="url(#arr-muted)" /><line class="dg-line" x1="212" y1="177" x2="236" y2="177" marker-end="url(#arr-muted)" /><line class="dg-line" x1="322" y1="177" x2="346" y2="177" marker-end="url(#arr-muted)" />
+                          </g>
+                          <rect class="dg-box dg-box--warn" x="480" y="60" width="110" height="94" rx="10" />
+                          <text class="dg-text" x="535" y="102" text-anchor="middle">Integration</text>
+                          <text class="dg-text" x="535" y="122" text-anchor="middle">Bucket</text>
+                          <line class="dg-line dg-line--accent" x1="432" y1="37" x2="478" y2="80" marker-end="url(#arr)" />
+                          <line class="dg-line dg-line--accent" x1="432" y1="97" x2="476" y2="104" marker-end="url(#arr)" />
+                          <line class="dg-line dg-line--accent" x1="432" y1="177" x2="478" y2="138" marker-end="url(#arr)" />
+                          <rect class="dg-box dg-box--ok" x="620" y="84" width="90" height="46" rx="8" />
+                          <text class="dg-text" x="665" y="102" text-anchor="middle">System</text>
+                          <text class="dg-text" x="665" y="120" text-anchor="middle">Test</text>
+                          <line class="dg-line dg-line--accent" x1="592" y1="107" x2="616" y2="107" marker-end="url(#arr)" />
+                        </svg>
+                      </div>
+                      <figcaption>สไลด์ 2-16 Incremental Model</figcaption>
+                    </figure>
+                  </section>
+
+                  <section class="topic" id="proc-multirelease">
+                    <h4>Incremental Model B — Multiple Release</h4>
+                    <p><strong>requirement ชุดเล็กๆ</strong> แต่ละชุดถูก<strong>พัฒนา บรรจุ (package) และปล่อย (release) เป็นหลายรอบ</strong> — แต่ละรอบผ่าน Requirements → Design → Code → Test → Package → Rel. 1, … , Rel. n</p>
+                    <figure class="diagram">
+                      <div class="diagram-scroll">
+                        <svg viewBox="0 0 720 150" role="img" aria-labelledby="proc-mr-t proc-mr-d">
+                          <title id="proc-mr-t">Incremental model แบบ Multiple Release</title>
+                          <desc id="proc-mr-d">แถวบน Requirements, Design, Code, Test, Package แล้วได้ Release 1 แถวล่างทำซ้ำจนได้ Release n</desc>
+                          <g>
+                            <rect class="dg-box" x="20" y="20" width="110" height="34" rx="6" /><text class="dg-text" x="75" y="42" text-anchor="middle">Requirements</text>
+                            <rect class="dg-box" x="150" y="20" width="90" height="34" rx="6" /><text class="dg-text" x="195" y="42" text-anchor="middle">Design</text>
+                            <rect class="dg-box" x="260" y="20" width="90" height="34" rx="6" /><text class="dg-text" x="305" y="42" text-anchor="middle">Code</text>
+                            <rect class="dg-box" x="370" y="20" width="90" height="34" rx="6" /><text class="dg-text" x="415" y="42" text-anchor="middle">Test</text>
+                            <rect class="dg-box" x="480" y="20" width="90" height="34" rx="6" /><text class="dg-text" x="525" y="42" text-anchor="middle">Package</text>
+                            <rect class="dg-box dg-box--ok" x="600" y="20" width="100" height="34" rx="6" /><text class="dg-text" x="650" y="42" text-anchor="middle">Rel. 1</text>
+                            <line class="dg-line" x1="132" y1="37" x2="146" y2="37" marker-end="url(#arr-muted)" /><line class="dg-line" x1="242" y1="37" x2="256" y2="37" marker-end="url(#arr-muted)" /><line class="dg-line" x1="352" y1="37" x2="366" y2="37" marker-end="url(#arr-muted)" /><line class="dg-line" x1="462" y1="37" x2="476" y2="37" marker-end="url(#arr-muted)" /><line class="dg-line dg-line--accent" x1="572" y1="37" x2="596" y2="37" marker-end="url(#arr)" />
+                          </g>
+                          <text class="dg-mono dg-mono--sm" x="360" y="80" text-anchor="middle">⋮</text>
+                          <g>
+                            <rect class="dg-box" x="20" y="96" width="110" height="34" rx="6" /><text class="dg-text" x="75" y="118" text-anchor="middle">Requirements</text>
+                            <rect class="dg-box" x="150" y="96" width="90" height="34" rx="6" /><text class="dg-text" x="195" y="118" text-anchor="middle">Design</text>
+                            <rect class="dg-box" x="260" y="96" width="90" height="34" rx="6" /><text class="dg-text" x="305" y="118" text-anchor="middle">Code</text>
+                            <rect class="dg-box" x="370" y="96" width="90" height="34" rx="6" /><text class="dg-text" x="415" y="118" text-anchor="middle">Test</text>
+                            <rect class="dg-box" x="480" y="96" width="90" height="34" rx="6" /><text class="dg-text" x="525" y="118" text-anchor="middle">Package</text>
+                            <rect class="dg-box dg-box--ok" x="600" y="96" width="100" height="34" rx="6" /><text class="dg-text" x="650" y="118" text-anchor="middle">Rel. n</text>
+                            <line class="dg-line" x1="132" y1="113" x2="146" y2="113" marker-end="url(#arr-muted)" /><line class="dg-line" x1="242" y1="113" x2="256" y2="113" marker-end="url(#arr-muted)" /><line class="dg-line" x1="352" y1="113" x2="366" y2="113" marker-end="url(#arr-muted)" /><line class="dg-line" x1="462" y1="113" x2="476" y2="113" marker-end="url(#arr-muted)" /><line class="dg-line dg-line--accent" x1="572" y1="113" x2="596" y2="113" marker-end="url(#arr)" />
+                          </g>
+                        </svg>
+                      </div>
+                      <figcaption>สไลด์ 2-17 Incremental Model B – Multiple Release</figcaption>
+                    </figure>
+                    <div class="compare">
+                      <div class="compare-col">
+                        <strong>Pros (Incremental)</strong>
+                        <ul class="tight">
+                          <li>Divide and conquer — แบ่งงานเป็นส่วนย่อยจัดการง่าย</li>
+                          <li>เหมาะกับระบบขนาดใหญ่มากและซับซ้อน</li>
+                        </ul>
+                      </div>
+                      <div class="compare-col">
+                        <strong>Cons (Incremental)</strong>
+                        <ul class="tight">
+                          <li>Parallel execution — ทำหลายส่วนพร้อมกัน</li>
+                          <li>อาจต้องบริหารจัดการมากขึ้น</li>
+                          <li>ความท้าทายเรื่อง integration</li>
+                        </ul>
+                      </div>
+                    </div>
+                  </section>
+
+                  <section class="topic" id="proc-spiral">
+                    <h4>Spiral Model</h4>
+                    <p>พัฒนาเป็นรอบวน แต่ละรอบผ่าน 4 quadrant และทำ <strong>prototype / model และ risk analysis</strong> ทุกรอบ ยิ่งวนออกไปยิ่งใกล้ผลิตภัณฑ์จริง (จาก requirement plan → design → code → unit test → system test)</p>
+                    <figure class="diagram">
+                      <div class="diagram-scroll">
+                        <svg viewBox="0 0 720 330" role="img" aria-labelledby="proc-sp-t proc-sp-d">
+                          <title id="proc-sp-t">Spiral model 4 quadrant</title>
+                          <desc id="proc-sp-d">เส้นแบ่งเป็น 4 ช่อง: ซ้ายบน 1 Determine objectives, alternatives, constraints; ขวาบน 2 Evaluate alternatives, identify, resolve risks; ขวาล่าง 3 Develop, verify next-level product; ซ้ายล่าง 4 Plan next phase และมีเส้นก้นหอยวนออกจากกลาง</desc>
+                          <line class="dg-line" x1="360" y1="20" x2="360" y2="310" />
+                          <line class="dg-line" x1="40" y1="165" x2="680" y2="165" />
+                          <path class="dg-line dg-line--accent" d="M360 165 m0 -20 a20 20 0 1 1 -20 20 a45 45 0 0 1 45 -45 a70 70 0 0 1 70 70 a95 95 0 0 1 -95 95 a125 125 0 0 1 -125 -125 a150 150 0 0 1 150 -150" marker-end="url(#arr)" />
+                          <text class="dg-mono" x="60" y="44">1</text>
+                          <text class="dg-text" x="60" y="68">Determine objectives,</text>
+                          <text class="dg-text" x="60" y="88">alternatives, constraints</text>
+                          <text class="dg-mono" x="660" y="44" text-anchor="end">2</text>
+                          <text class="dg-text" x="660" y="68" text-anchor="end">Evaluate alternatives,</text>
+                          <text class="dg-text" x="660" y="88" text-anchor="end">identify, resolve risks</text>
+                          <text class="dg-mono" x="660" y="258" text-anchor="end">3</text>
+                          <text class="dg-text" x="660" y="282" text-anchor="end">Develop, verify</text>
+                          <text class="dg-text" x="660" y="302" text-anchor="end">next-level product</text>
+                          <text class="dg-mono" x="60" y="258">4</text>
+                          <text class="dg-text" x="60" y="282">Plan next phase</text>
+                        </svg>
+                      </div>
+                      <figcaption>วาดอย่างย่อตามสไลด์ 2-19 — ในสไลด์มีงานกำกับตามรอบ เช่น risk analysis, prototype, req. plan, dev plan, design validation, code, unit test, sys. test</figcaption>
+                    </figure>
+                    <div class="compare">
+                      <div class="compare-col">
+                        <strong>Pros</strong>
+                        <ul class="tight">
+                          <li>ต้องทำ prototyping และ modeling</li>
+                          <li>วนซ้ำและวิวัฒนาการทุกกิจกรรมตามจำนวนความเสี่ยงที่มี</li>
+                          <li>แก้ไขสิ่งที่พัฒนาในรอบก่อนได้</li>
+                        </ul>
+                      </div>
+                      <div class="compare-col">
+                        <strong>Cons</strong>
+                        <ul class="tight">
+                          <li>ต้องการ<strong>ความเชี่ยวชาญด้าน risk assessment</strong></li>
+                        </ul>
+                      </div>
+                    </div>
+                  </section>
+
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- ================= 04 Agile ================= -->
+          <div class="acc-item">
+            <h3 class="acc-heading">
+              <button class="acc-trigger" type="button" aria-expanded="false" aria-controls="acc-proc-agile" id="acc-proc-agile-btn">
+                <span class="acc-index">04</span>
+                <span class="acc-title">
+                  <span class="acc-name">Agile: Manifesto · Agile Processes · Scrum · Agile vs Traditional</span>
+                  <span class="acc-file">L2 Process models · slide 21–25</span>
+                </span>
+                <svg class="acc-chevron" viewBox="0 0 20 20" aria-hidden="true"><path d="M5 7.5l5 5 5-5" /></svg>
+              </button>
+            </h3>
+            <div class="acc-panel" id="acc-proc-agile" role="region" aria-labelledby="acc-proc-agile-btn">
+              <div class="acc-panel-inner">
+                <div class="acc-body">
+
+                  <nav class="toc" aria-label="หัวข้อในการ์ด Agile">
+                    <a href="#proc-manifesto">Agile Manifesto</a>
+                    <a href="#proc-agile-process">Agile processes &amp; Scrum</a>
+                    <a href="#proc-agile-proscons">Pros &amp; Cons</a>
+                    <a href="#proc-agile-vs">Agile vs Traditional</a>
+                  </nav>
+
+                  <section class="topic" id="proc-manifesto">
+                    <h4>Agile Manifesto</h4>
+                    <div class="table-scroll">
+                      <table>
+                        <thead><tr><th>ให้ความสำคัญกับ (ซ้าย)</th><th></th><th>มากกว่า (ขวา)</th></tr></thead>
+                        <tbody>
+                          <tr><td><strong>Individuals and interactions</strong></td><td>over</td><td>processes and tools</td></tr>
+                          <tr><td><strong>Working software</strong></td><td>over</td><td>comprehensive documentation</td></tr>
+                          <tr><td><strong>Customer collaboration</strong></td><td>over</td><td>contract negotiation</td></tr>
+                          <tr><td><strong>Responding to change</strong></td><td>over</td><td>following a plan</td></tr>
+                        </tbody>
+                      </table>
+                    </div>
+                    <div class="callout callout--warn">
+                      <span class="callout-label">อ่านให้ถูกทิศ</span>
+                      <p>ข้อสอบมักสลับซ้าย–ขวา — ฝั่ง<b>ซ้ายคือสิ่งที่ Agile ให้ความสำคัญมากกว่า</b> ไม่ได้แปลว่าฝั่งขวาไม่สำคัญเลย</p>
+                    </div>
+                  </section>
+
+                  <section class="topic" id="proc-agile-process">
+                    <h4>Agile Processes และ Scrum</h4>
+                    <div class="compare">
+                      <div class="compare-col">
+                        <strong>Agile processes</strong>
+                        <p>ตระกูลของ software development methodologies ที่มีลักษณะ:</p>
+                        <ul class="tight">
+                          <li>release และ iteration สั้น</li>
+                          <li>incremental design</li>
+                          <li>ผู้ใช้มีส่วนร่วม (user involvement)</li>
+                          <li>เอกสารน้อยที่สุด</li>
+                          <li>สื่อสารแบบไม่เป็นทางการ</li>
+                          <li>รองรับการเปลี่ยนแปลง (change)</li>
+                        </ul>
+                      </div>
+                      <div class="compare-col">
+                        <strong>Scrum — key characteristics</strong>
+                        <ul class="tight">
+                          <li>Iterative development</li>
+                          <li>Incremental delivery</li>
+                          <li>Customer collaboration</li>
+                          <li>Responding to change</li>
+                          <li>Cross-functional teams</li>
+                          <li>Minimal documentation</li>
+                        </ul>
+                      </div>
+                    </div>
+                  </section>
+
+                  <section class="topic" id="proc-agile-proscons">
+                    <h4>Pros and Cons: Agile</h4>
+                    <div class="compare">
+                      <div class="compare-col">
+                        <strong>Pros</strong>
+                        <ul class="tight">
+                          <li>ยืดหยุ่นและปรับตัวได้สูง</li>
+                          <li>ส่งมอบซอฟต์แวร์ที่ใช้งานได้เร็วกว่า</li>
+                          <li>ลูกค้าพอใจมากขึ้นจาก feedback สม่ำเสมอ</li>
+                          <li>ตรวจพบปัญหาเร็ว</li>
+                        </ul>
+                      </div>
+                      <div class="compare-col">
+                        <strong>Cons</strong>
+                        <ul class="tight">
+                          <li>ต้องการทีมที่มีประสบการณ์และมีวินัย</li>
+                          <li>ต้นทุนและเวลาคาดเดาได้ยากกว่า</li>
+                          <li>ท้าทายกับโปรเจกต์ใหญ่ที่ scope ตายตัว</li>
+                          <li>เอกสารอาจไม่พอถ้าจัดการไม่ดี</li>
+                        </ul>
+                      </div>
+                    </div>
+                  </section>
+
+                  <section class="topic" id="proc-agile-vs">
+                    <h4>Agile vs Traditional / Heavy</h4>
+                    <div class="table-scroll">
+                      <table>
+                        <thead><tr><th>มิติ</th><th>Agile</th><th>Traditional / Heavy</th></tr></thead>
+                        <tbody>
+                          <tr><td><strong>Requirements</strong></td><td>สมมติว่าเปลี่ยนแปลง · ไม่เป็นทางการ · ผู้ใช้โต้ตอบตลอด</td><td>สมมติว่าไม่เปลี่ยน · เอกสาร requirement ครบ ละเอียด เป็นทางการ</td></tr>
+                          <tr><td><strong>Design</strong></td><td>informal · iterative</td><td>formal · upfront</td></tr>
+                          <tr><td><strong>User involvement</strong></td><td>สำคัญมาก (crucial) · บ่อย (frequent)</td><td>ต้นโปรเจกต์ (requirements) และท้ายโปรเจกต์ (acceptance testing)</td></tr>
+                          <tr><td><strong>Documentation</strong></td><td>น้อยที่สุดเท่าที่จำเป็น · source code</td><td>เอกสารหนักและเป็นทางการ</td></tr>
+                          <tr><td><strong>Communication</strong></td><td>ไม่เป็นทางการ · ตลอดโปรเจกต์</td><td>เอกสาร · memo และประชุมแบบเป็นทางการ</td></tr>
+                          <tr><td><strong>Complexity / Overhead</strong></td><td>ต่ำ / ต่ำ</td><td>สูง / สูง</td></tr>
+                        </tbody>
+                      </table>
+                    </div>
+                    <p class="note">สไลด์ 2-25 แยก Complexity และ Overhead เป็น 2 แถว แต่ทั้งคู่ให้ค่าเหมือนกัน (Agile = Low, Traditional = High) จึงรวมไว้แถวเดียว</p>
+                  </section>
+
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- ================= 05 กรณีศึกษา Agile และ Process Assessment ================= -->
+          <div class="acc-item">
+            <h3 class="acc-heading">
+              <button class="acc-trigger" type="button" aria-expanded="false" aria-controls="acc-proc-cases" id="acc-proc-cases-btn">
+                <span class="acc-index">05</span>
+                <span class="acc-title">
+                  <span class="acc-name">กรณีศึกษา Spotify vs HealthCare.gov · Process Assessment</span>
+                  <span class="acc-file">L2 Process models · slide 26–31</span>
+                </span>
+                <svg class="acc-chevron" viewBox="0 0 20 20" aria-hidden="true"><path d="M5 7.5l5 5 5-5" /></svg>
+              </button>
+            </h3>
+            <div class="acc-panel" id="acc-proc-cases" role="region" aria-labelledby="acc-proc-cases-btn">
+              <div class="acc-panel-inner">
+                <div class="acc-body">
+
+                  <nav class="toc" aria-label="หัวข้อในการ์ดกรณีศึกษา Agile">
+                    <a href="#proc-spotify">Spotify's Squad model</a>
+                    <a href="#proc-healthcare">HealthCare.gov</a>
+                    <a href="#proc-assessment">Process assessment</a>
+                  </nav>
+
+                  <section class="topic" id="proc-spotify">
+                    <h4>Case Study: Spotify's "Squad" Model</h4>
+                    <p>ต้องการปล่อยฟีเจอร์ใหม่ให้เร็วในตลาดที่แข่งขันสูง จึงใช้ Agile แบบมีจุดเฉพาะ:</p>
+                    <dl class="defs defs--stack">
+                      <div><dt>Squads</dt><dd>ทีม<strong>เล็ก อิสระ ข้ามสายงาน (small, autonomous, cross-functional)</strong> ที่เป็นเจ้าของ feature area เฉพาะ</dd></div>
+                      <div><dt>Tribes</dt><dd>กลุ่มของ squad ที่เกี่ยวข้องกัน เพื่อให้มีทิศทางร่วมกัน</dd></div>
+                    </dl>
+                    <p>เน้นหนักที่ <strong>continuous delivery, A/B testing และ rapid feedback</strong></p>
+                    <p><strong>ทำไมสำเร็จ:</strong></p>
+                    <ul class="checklist">
+                      <li><strong>Fast iteration</strong> — ฟีเจอร์จาก concept ถึง release ในไม่กี่สัปดาห์</li>
+                      <li><strong>Autonomy</strong> — squad ปรับงานได้เองโดยไม่ต้องรออนุมัติจากบนลงล่าง</li>
+                      <li><strong>Data-driven decisions</strong> — user analytics แบบ real-time ใช้กำหนดลำดับความสำคัญ</li>
+                    </ul>
+                  </section>
+
+                  <section class="topic" id="proc-healthcare">
+                    <h4>Case Study: HealthCare.gov</h4>
+                    <p>ต้องการเปิด HealthCare.gov เป็น portal กลางให้คนอเมริกันสมัครประกันสุขภาพ — <strong>อ้างว่าใช้ Agile</strong>: มีผู้รับเหมาหลายรายทำคนละ module และประชุม/ติดตามความคืบหน้าบ่อย</p>
+                    <p><strong>ทำไมล้มเหลว:</strong></p>
+                    <ul class="tight">
+                      <li><strong>Fake Agile</strong> — ยังคง deadline ตายตัวและ scope ใหญ่แบบ Waterfall แต่<strong>ไม่มีวินัยในการประสานงาน</strong></li>
+                      <li><strong>Poor integration</strong> — component ทำงานร่วมกันไม่ได้เมื่อนำมารวม</li>
+                      <li><strong>Late testing</strong> — system testing เกิดขึ้นเพียงไม่กี่สัปดาห์ก่อน launch</li>
+                      <li><strong>No real user feedback cycles</strong> — ประชาชนไม่ได้ลองใช้จนถึงวันเปิดตัวจริง</li>
+                    </ul>
+                    <div class="callout callout--why">
+                      <span class="callout-label">บทเรียนจากการเทียบสองกรณี</span>
+                      <p>สไลด์ 2-30 เทียบทั้งสองกรณีใน 5 ปัจจัย: <b>Iteration &amp; Delivery, User Feedback, Team Autonomy, Integration, Testing</b> — Spotify iterate เร็ว ใช้ feedback จริง และทีมมีอิสระ ส่วน HealthCare.gov ใช้ชื่อ Agile แต่รวมระบบไม่ได้ ทดสอบช้า และไม่มี feedback จากผู้ใช้จริง</p>
+                    </div>
+                  </section>
+
+                  <section class="topic" id="proc-assessment">
+                    <h4>Process Assessment</h4>
+                    <p>คำถามหลัก: <strong>องค์กรวิศวกรรมซอฟต์แวร์ของเรามีความเป็นผู้ใหญ่ (mature) แค่ไหน และต้องปรับปรุงหรือไม่?</strong></p>
+                    <p><strong>ISO (ISO 9000 series)</strong> และ <strong>SEI (at Carnegie Mellon)</strong> เป็น 2 องค์กรหลักที่ช่วยประเมิน</p>
+                    <figure class="diagram">
+                      <div class="diagram-scroll">
+                        <svg viewBox="0 0 720 110" role="img" aria-labelledby="proc-mat-t proc-mat-d">
+                          <title id="proc-mat-t">สเปกตรัมความเป็นผู้ใหญ่ของ process</title>
+                          <desc id="proc-mat-d">เส้นลูกศรจากซ้าย No Process ไปขวา Matured Process พร้อมคำถามว่าองค์กรอยู่ตรงไหน</desc>
+                          <line class="dg-line dg-line--accent" x1="60" y1="50" x2="660" y2="50" marker-end="url(#arr)" />
+                          <circle class="dg-box dg-box--bad" cx="60" cy="50" r="8" />
+                          <circle class="dg-box dg-box--ok" cx="650" cy="50" r="8" />
+                          <text class="dg-text" x="60" y="86" text-anchor="middle">No Process</text>
+                          <text class="dg-text" x="650" y="86" text-anchor="middle">Matured Process</text>
+                          <text class="dg-text dg-text--sm" x="360" y="34" text-anchor="middle">Where are you in this wide spectrum?</text>
+                        </svg>
+                      </div>
+                      <figcaption>สไลด์ 2-31 Process Assessment</figcaption>
+                    </figure>
+                  </section>
+
+                </div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </section>
+
+      <!-- =============================================================
+           แท็บ 2: สรุป (cheat sheet)
+           ============================================================= -->
+      <section class="panel" id="summary" role="tabpanel" aria-labelledby="tab-summary" tabindex="-1">
+        <div class="panel-head">
+          <h2>Cheat sheet</h2>
+          <p class="panel-sub">เทียบ process model 5 แบบ, Agile vs Traditional, Agile Manifesto, กรณีศึกษา และ process framework ในหน้าเดียว</p>
+        </div>
+
+        <div class="sheet">
+
+<article class="sheet-card sheet-card--wide">
+            <h3><span class="sheet-num">01</span> เทียบ Process Model 5 แบบ</h3>
+            <div class="table-scroll">
+              <table>
+                <thead><tr><th>Model</th><th>ลักษณะ</th><th>Pros</th><th>Cons</th></tr></thead>
+                <tbody>
+                  <tr><td><strong>Code and Fix</strong></td><td>code → compile → debug → unit test → release วนแก้เมื่อพบปัญหา</td><td>—</td><td>บางคนข้าม unit test/debug · เริ่มโดยไม่เข้าใจ problem statement (requirement)</td></tr>
+                  <tr><td><strong>Waterfall</strong></td><td>linear, sequential · phase ไม่ทับซ้อน · output เป็น input ของ phase ถัดไป</td><td>เข้าใจง่าย · เหมาะ requirement ชัด/คงที่ · เอกสารดี</td><td>นาน · เปลี่ยนยาก · พบปัญหาช้า (test หลัง code)</td></tr>
+                  <tr><td><strong>Incremental</strong></td><td>แต่ละ requirement ผ่าน req → design → code → test แล้วรวม · แบบ B ปล่อยหลาย release</td><td>divide and conquer · เหมาะระบบใหญ่ซับซ้อน</td><td>parallel execution · บริหารมากขึ้น · integration ยาก</td></tr>
+                  <tr><td><strong>Spiral</strong></td><td>วน 4 quadrant · prototype + <strong>risk analysis</strong> ทุกรอบ</td><td>prototyping/modeling · iterative · แก้งานรอบก่อนได้</td><td>ต้องเชี่ยวชาญ risk assessment</td></tr>
+                  <tr><td><strong>Agile</strong></td><td>iteration สั้น · incremental · user involvement · เอกสารน้อย · รับการเปลี่ยนแปลง</td><td>ยืดหยุ่น · ส่งมอบเร็ว · ลูกค้าพอใจ · พบปัญหาเร็ว</td><td>ทีมต้องเก่ง/มีวินัย · คาดเดาต้นทุน/เวลายาก · ยากกับ fixed scope ใหญ่ · เอกสารอาจไม่พอ</td></tr>
+                </tbody>
+              </table>
+            </div>
+          </article>
+
+          <article class="sheet-card">
+            <h3><span class="sheet-num">02</span> Agile Manifesto</h3>
+            <dl class="defs defs--stack">
+              <div><dt>Individuals and interactions</dt><dd>over processes and tools</dd></div>
+              <div><dt>Working software</dt><dd>over comprehensive documentation</dd></div>
+              <div><dt>Customer collaboration</dt><dd>over contract negotiation</dd></div>
+              <div><dt>Responding to change</dt><dd>over following a plan</dd></div>
+            </dl>
+            <p class="note"><strong>Scrum:</strong> iterative development · incremental delivery · customer collaboration · responding to change · cross-functional teams · minimal documentation</p>
+          </article>
+
+          <article class="sheet-card sheet-card--wide">
+            <h3><span class="sheet-num">03</span> Agile vs Traditional / Heavy</h3>
+            <div class="table-scroll">
+              <table>
+                <thead><tr><th>มิติ</th><th>Agile</th><th>Traditional / Heavy</th></tr></thead>
+                <tbody>
+                  <tr><td><strong>Requirements</strong></td><td>assumes change · informal · user interaction ตลอด</td><td>assumes no change · เอกสารครบ ละเอียด เป็นทางการ</td></tr>
+                  <tr><td><strong>Design</strong></td><td>informal · iterative</td><td>formal · upfront</td></tr>
+                  <tr><td><strong>User involvement</strong></td><td>crucial · frequent</td><td>ต้น (requirements) + ท้าย (acceptance testing)</td></tr>
+                  <tr><td><strong>Documentation</strong></td><td>minimal, only as needed · source code</td><td>heavy, formal documents</td></tr>
+                  <tr><td><strong>Communication</strong></td><td>informal · throughout the project</td><td>documents · formal memos and meetings</td></tr>
+                  <tr><td><strong>Complexity / Overhead</strong></td><td>low / low</td><td>high / high</td></tr>
+                </tbody>
+              </table>
+            </div>
+          </article>
+
+          <article class="sheet-card">
+            <h3><span class="sheet-num">04</span> Spotify vs HealthCare.gov</h3>
+            <p><strong>Spotify สำเร็จ</strong> — Squads (ทีมเล็ก อิสระ ข้ามสายงาน) + Tribes · fast iteration (หลักสัปดาห์) · autonomy · data-driven decisions</p>
+            <p><strong>HealthCare.gov ล้มเหลว</strong> — <strong>Fake Agile</strong> (deadline/scope ตายตัวแบบ Waterfall แต่ไม่มีวินัยประสานงาน) · poor integration · late testing · ไม่มี user feedback จริงจนวัน launch</p>
+            <p class="note">ปัจจัยเทียบ: Iteration &amp; Delivery · User Feedback · Team Autonomy · Integration · Testing</p>
+          </article>
+
+          <article class="sheet-card">
+            <h3><span class="sheet-num">05</span> Layers &amp; Process Framework</h3>
+            <p><strong>Layered technology</strong> (ล่าง → บน): a "quality" focus → process model → methods → tools</p>
+            <p><strong>Process framework</strong> = Common Process Framework (framework activities → task sets: work tasks, work products, milestones/deliverables, QA checkpoints) + <strong>Umbrella Activities</strong></p>
+            <p class="note">Umbrella: project management · formal technical reviews · SQA · SCM · work product preparation · reusability management · measurement · risk management</p>
+          </article>
+
+          <article class="sheet-card">
+            <h3><span class="sheet-num">06</span> กรณีศึกษาความล้มเหลว</h3>
+            <dl class="defs defs--stack">
+              <div><dt>CrowdStrike Outage</dt><dd><strong>buggy validator</strong> ใน software update → ระบบทั่วโลกล่มพร้อมกัน</dd></div>
+              <div><dt>Knight Capital</dt><dd>ส่งคำสั่งผิด ~45 นาที เสียหาย &gt; $440 ล้าน · สาเหตุ<strong>ไม่ใช่แค่ bug</strong> แต่คือ <strong>deployment และ operational controls</strong> ล้มเหลว</dd></div>
+            </dl>
+            <p class="note">กิจกรรมทั่วไป: requirements → design → implementation → testing &amp; QA → deployment → maintenance</p>
+          </article>
+
+          <article class="sheet-card">
+            <h3><span class="sheet-num">07</span> Process Model &amp; Assessment</h3>
+            <p><strong>Process model</strong> = กรอบมาตรฐานประสาน/ควบคุม task และคน บรรยายลำดับกิจกรรม บทบาท artifact workflow · หัวใจ: <strong>coordination, tasks, people</strong></p>
+            <p>ต้องนิยาม: tasks · input/output · pre/post-conditions · ลำดับ flow · ผู้ทำ</p>
+            <p class="note"><strong>Process assessment:</strong> องค์กร mature แค่ไหน (No Process → Matured Process) · ผู้ช่วยประเมิน <strong>ISO 9000 series</strong> และ <strong>SEI (Carnegie Mellon)</strong></p>
+          </article>
+
+        </div>
+      </section>
+
+      <!-- =============================================================
+           แท็บ 3: แบบฝึกหัด (20 ข้อ)
+           data-answer = ตัวเลือกที่ถูก (ก=a, ข=b, ค=c, ง=d ตามเฉลยที่ผู้ใช้กำหนด)
+           ============================================================= -->
+      <section class="panel" id="quiz" role="tabpanel" aria-labelledby="tab-quiz" tabindex="-1">
+        <div class="panel-head">
+          <h2>แบบฝึกหัด 20 ข้อ</h2>
+          <p class="panel-sub">เลือกคำตอบให้ครบแล้วกด "ตรวจคำตอบ" ด้านล่าง ระบบจะเฉลยพร้อมคำอธิบายทุกข้อ</p>
+        </div>
+
+        <form class="quiz" id="quiz-form" novalidate>
+
+          <fieldset class="q" data-answer="b">
+            <legend class="q-head"><span class="q-num">01</span><span class="q-text">โมเดล &quot;Code and Fix&quot; มีปัญหาหลักคืออะไร?</span></legend>
+            <div class="q-options">
+              <label class="opt"><input type="radio" name="q1" value="a" /><span class="opt-key">A</span><span class="opt-text">ใช้เวลานานเกินไปเสมอ</span></label>
+              <label class="opt"><input type="radio" name="q1" value="b" /><span class="opt-key">B</span><span class="opt-text">บางคนข้าม unit testing/debugging หรือเริ่มโดยไม่เข้าใจ &quot;problem statement&quot; ให้ชัดเจนก่อน</span></label>
+              <label class="opt"><input type="radio" name="q1" value="c" /><span class="opt-key">C</span><span class="opt-text">ต้องใช้ทีมขนาดใหญ่เท่านั้น</span></label>
+              <label class="opt"><input type="radio" name="q1" value="d" /><span class="opt-key">D</span><span class="opt-text">ไม่สามารถใช้กับโปรเจกต์เล็กได้</span></label>
+            </div>
+            <div class="q-feedback"><div class="q-feedback-inner"><p class="q-verdict" aria-live="polite"></p><p class="q-explain">สไลด์ 2-13 ระบุ 2 ปัญหา: คนส่วนใหญ่ทำตาม process นี้แต่บางคนข้าม unit testing หรือ debugging และบางคนเริ่มโดยไม่เข้าใจ problem statement (ซึ่งก็คือ requirement) ให้ชัดก่อน</p></div></div>
+          </fieldset>
+
+          <fieldset class="q" data-answer="b">
+            <legend class="q-head"><span class="q-num">02</span><span class="q-text">ลักษณะเด่นของ Waterfall Model คือข้อใด?</span></legend>
+            <div class="q-options">
+              <label class="opt"><input type="radio" name="q2" value="a" /><span class="opt-key">A</span><span class="opt-text">แต่ละ phase ทับซ้อนกันได้ตลอดเวลา</span></label>
+              <label class="opt"><input type="radio" name="q2" value="b" /><span class="opt-key">B</span><span class="opt-text">แต่ละ phase ไม่ทับซ้อนกัน และผลลัพธ์ของแต่ละ phase เป็น input ของ phase ถัดไป</span></label>
+              <label class="opt"><input type="radio" name="q2" value="c" /><span class="opt-key">C</span><span class="opt-text">ไม่เน้นเอกสารหรือการวางแผน</span></label>
+              <label class="opt"><input type="radio" name="q2" value="d" /><span class="opt-key">D</span><span class="opt-text">เหมาะกับโปรเจกต์ที่ requirement เปลี่ยนแปลงบ่อย</span></label>
+            </div>
+            <div class="q-feedback"><div class="q-feedback-inner"><p class="q-verdict" aria-live="polite"></p><p class="q-explain">Key characteristics ของ Waterfall: phases do not overlap · each phase produces deliverables that are inputs to the next · emphasizes documentation and planning (linear and sequential)</p></div></div>
+          </fieldset>
+
+          <fieldset class="q" data-answer="b">
+            <legend class="q-head"><span class="q-num">03</span><span class="q-text">ข้อเสียของ Waterfall Model คือข้อใด?</span></legend>
+            <div class="q-options">
+              <label class="opt"><input type="radio" name="q3" value="a" /><span class="opt-key">A</span><span class="opt-text">ใช้เวลาพัฒนาสั้นเกินไป</span></label>
+              <label class="opt"><input type="radio" name="q3" value="b" /><span class="opt-key">B</span><span class="opt-text">ปรับเปลี่ยนยากเมื่อเริ่มพัฒนาไปแล้ว และค้นพบปัญหาช้า</span></label>
+              <label class="opt"><input type="radio" name="q3" value="c" /><span class="opt-key">C</span><span class="opt-text">เอกสารน้อยเกินไป</span></label>
+              <label class="opt"><input type="radio" name="q3" value="d" /><span class="opt-key">D</span><span class="opt-text">ไม่มีข้อเสียเลย</span></label>
+            </div>
+            <div class="q-feedback"><div class="q-feedback-inner"><p class="q-verdict" aria-live="polite"></p><p class="q-explain">Cons ของ Waterfall: lengthy development time · inflexible to changes once development begins · late discovery of issues (testing comes after coding) · ไม่เหมาะกับ requirement ที่เปลี่ยนไปเรื่อยๆ</p></div></div>
+          </fieldset>
+
+          <fieldset class="q" data-answer="b">
+            <legend class="q-head"><span class="q-num">04</span><span class="q-text">Incremental Model มีลักษณะเด่นอย่างไร?</span></legend>
+            <div class="q-options">
+              <label class="opt"><input type="radio" name="q4" value="a" /><span class="opt-key">A</span><span class="opt-text">พัฒนาทุก requirement พร้อมกันในครั้งเดียว</span></label>
+              <label class="opt"><input type="radio" name="q4" value="b" /><span class="opt-key">B</span><span class="opt-text">แต่ละ requirement หลักถูกพัฒนาแยกผ่านลำดับ req→design→code→test เดียวกัน แล้วรวมเข้าด้วยกัน</span></label>
+              <label class="opt"><input type="radio" name="q4" value="c" /><span class="opt-key">C</span><span class="opt-text">ไม่มีการทดสอบระบบรวม</span></label>
+              <label class="opt"><input type="radio" name="q4" value="d" /><span class="opt-key">D</span><span class="opt-text">ใช้ได้กับโปรเจกต์ขนาดเล็กเท่านั้น</span></label>
+            </div>
+            <div class="q-feedback"><div class="q-feedback-inner"><p class="q-verdict" aria-live="polite"></p><p class="q-explain">Each major requirement/item is developed separately through the same sequence of requirement, design, code, and unit test แล้วชิ้นที่เสร็จถูกรวมเข้า integration bucket เพื่อทำ system test</p></div></div>
+          </fieldset>
+
+          <fieldset class="q" data-answer="b">
+            <legend class="q-head"><span class="q-num">05</span><span class="q-text">Spiral Model เน้นความสำคัญของสิ่งใดเป็นพิเศษเมื่อเทียบกับโมเดลอื่น?</span></legend>
+            <div class="q-options">
+              <label class="opt"><input type="radio" name="q5" value="a" /><span class="opt-key">A</span><span class="opt-text">เอกสารที่เป็นทางการ</span></label>
+              <label class="opt"><input type="radio" name="q5" value="b" /><span class="opt-key">B</span><span class="opt-text">การวิเคราะห์และจัดการความเสี่ยงในแต่ละรอบของการพัฒนา</span></label>
+              <label class="opt"><input type="radio" name="q5" value="c" /><span class="opt-key">C</span><span class="opt-text">ความเร็วในการ deploy</span></label>
+              <label class="opt"><input type="radio" name="q5" value="d" /><span class="opt-key">D</span><span class="opt-text">การใช้ทีมขนาดเล็ก</span></label>
+            </div>
+            <div class="q-feedback"><div class="q-feedback-inner"><p class="q-verdict" aria-live="polite"></p><p class="q-explain">ทุกรอบของ Spiral มี quadrant &quot;Evaluate alternatives, identify, resolve risks&quot; และทำ risk analysis/prototype — ข้อเสียจึงเป็นการต้องมีความเชี่ยวชาญด้าน risk assessment</p></div></div>
+          </fieldset>
+
+          <fieldset class="q" data-answer="a">
+            <legend class="q-head"><span class="q-num">06</span><span class="q-text">Agile Manifesto ให้ความสำคัญกับข้อใดมากกว่าฝั่งขวา?</span></legend>
+            <div class="q-options">
+              <label class="opt"><input type="radio" name="q6" value="a" /><span class="opt-key">A</span><span class="opt-text">Individuals and interactions &gt; processes and tools; Working software &gt; comprehensive documentation</span></label>
+              <label class="opt"><input type="radio" name="q6" value="b" /><span class="opt-key">B</span><span class="opt-text">เอกสารที่ครบถ้วน &gt; ซอฟต์แวร์ที่ใช้งานได้</span></label>
+              <label class="opt"><input type="radio" name="q6" value="c" /><span class="opt-key">C</span><span class="opt-text">การเจรจาสัญญา &gt; ความร่วมมือกับลูกค้า</span></label>
+              <label class="opt"><input type="radio" name="q6" value="d" /><span class="opt-key">D</span><span class="opt-text">การทำตามแผน &gt; การตอบสนองต่อการเปลี่ยนแปลง</span></label>
+            </div>
+            <div class="q-feedback"><div class="q-feedback-inner"><p class="q-verdict" aria-live="polite"></p><p class="q-explain">Manifesto: individuals and interactions over processes and tools · working software over comprehensive documentation · customer collaboration over contract negotiation · responding to change over following a plan — ตัวเลือกอื่นสลับฝั่งกัน</p></div></div>
+          </fieldset>
+
+          <fieldset class="q" data-answer="b">
+            <legend class="q-head"><span class="q-num">07</span><span class="q-text">ข้อดีของ Agile เมื่อเทียบกับ Traditional/Waterfall คือข้อใด?</span></legend>
+            <div class="q-options">
+              <label class="opt"><input type="radio" name="q7" value="a" /><span class="opt-key">A</span><span class="opt-text">คาดเดาต้นทุนและเวลาได้แม่นยำกว่าเสมอ</span></label>
+              <label class="opt"><input type="radio" name="q7" value="b" /><span class="opt-key">B</span><span class="opt-text">มีความยืดหยุ่นสูง ส่งมอบซอฟต์แวร์ที่ใช้งานได้เร็วกว่า และตรวจพบปัญหาได้เร็ว</span></label>
+              <label class="opt"><input type="radio" name="q7" value="c" /><span class="opt-key">C</span><span class="opt-text">ต้องการเอกสารที่เป็นทางการมากกว่า</span></label>
+              <label class="opt"><input type="radio" name="q7" value="d" /><span class="opt-key">D</span><span class="opt-text">เหมาะกับโปรเจกต์ที่ scope คงที่ตายตัวมากที่สุด</span></label>
+            </div>
+            <div class="q-feedback"><div class="q-feedback-inner"><p class="q-verdict" aria-live="polite"></p><p class="q-explain">Pros ของ Agile: high flexibility and adaptability · faster delivery of functional software · greater customer satisfaction · early detection of problems — ส่วน &quot;less predictable costs and timelines&quot; และ &quot;challenging for large, fixed-scope projects&quot; เป็นข้อเสีย</p></div></div>
+          </fieldset>
+
+          <fieldset class="q" data-answer="b">
+            <legend class="q-head"><span class="q-num">08</span><span class="q-text">ในกรณีศึกษา Spotify's &quot;Squad&quot; Model, &quot;Squad&quot; คืออะไร?</span></legend>
+            <div class="q-options">
+              <label class="opt"><input type="radio" name="q8" value="a" /><span class="opt-key">A</span><span class="opt-text">ทีมขนาดใหญ่รวมศูนย์ทั้งบริษัท</span></label>
+              <label class="opt"><input type="radio" name="q8" value="b" /><span class="opt-key">B</span><span class="opt-text">ทีมขนาดเล็ก อิสระ ข้ามสายงาน รับผิดชอบ feature area เฉพาะของตัวเอง</span></label>
+              <label class="opt"><input type="radio" name="q8" value="c" /><span class="opt-key">C</span><span class="opt-text">กลุ่มลูกค้าที่ทดสอบระบบ</span></label>
+              <label class="opt"><input type="radio" name="q8" value="d" /><span class="opt-key">D</span><span class="opt-text">แผนกขายของ Spotify</span></label>
+            </div>
+            <div class="q-feedback"><div class="q-feedback-inner"><p class="q-verdict" aria-live="polite"></p><p class="q-explain">Squads: small, autonomous, cross-functional teams owning a specific feature area · ส่วนกลุ่มของ squad ที่เกี่ยวข้องกันเรียกว่า Tribes</p></div></div>
+          </fieldset>
+
+          <fieldset class="q" data-answer="b">
+            <legend class="q-head"><span class="q-num">09</span><span class="q-text">เหตุใดโปรเจกต์ HealthCare.gov จึงล้มเหลว แม้จะอ้างว่าใช้ Agile?</span></legend>
+            <div class="q-options">
+              <label class="opt"><input type="radio" name="q9" value="a" /><span class="opt-key">A</span><span class="opt-text">ใช้ Agile อย่างถูกต้องสมบูรณ์แบบ</span></label>
+              <label class="opt"><input type="radio" name="q9" value="b" /><span class="opt-key">B</span><span class="opt-text">เป็น &quot;Fake Agile&quot; — ยังคง deadline/scope ตายตัวแบบ Waterfall แต่ขาดวินัยประสานงาน ผสาน component ไม่สำเร็จ ทดสอบช้า</span></label>
+              <label class="opt"><input type="radio" name="q9" value="c" /><span class="opt-key">C</span><span class="opt-text">ทีมมีขนาดเล็กเกินไป</span></label>
+              <label class="opt"><input type="radio" name="q9" value="d" /><span class="opt-key">D</span><span class="opt-text">ไม่มีผู้รับเหมาช่วยเลย</span></label>
+            </div>
+            <div class="q-feedback"><div class="q-feedback-inner"><p class="q-verdict" aria-live="polite"></p><p class="q-explain">Why it failed: fake Agile (rigid deadlines + massive scope แบบ Waterfall แต่ไม่มีวินัยประสานงาน) · poor integration · late testing (weeks before launch) · no real user feedback cycles — และมีผู้รับเหมาหลายราย ไม่ใช่ไม่มี</p></div></div>
+          </fieldset>
+
+          <fieldset class="q" data-answer="a">
+            <legend class="q-head"><span class="q-num">10</span><span class="q-text">องค์กรใดที่ช่วยในการประเมิน process assessment?</span></legend>
+            <div class="q-options">
+              <label class="opt"><input type="radio" name="q10" value="a" /><span class="opt-key">A</span><span class="opt-text">ISO (ISO 9000 series) และ SEI (Carnegie Mellon)</span></label>
+              <label class="opt"><input type="radio" name="q10" value="b" /><span class="opt-key">B</span><span class="opt-text">W3C และ ECMA</span></label>
+              <label class="opt"><input type="radio" name="q10" value="c" /><span class="opt-key">C</span><span class="opt-text">IEEE และ ACM เท่านั้น</span></label>
+              <label class="opt"><input type="radio" name="q10" value="d" /><span class="opt-key">D</span><span class="opt-text">PMI เท่านั้น</span></label>
+            </div>
+            <div class="q-feedback"><div class="q-feedback-inner"><p class="q-verdict" aria-live="polite"></p><p class="q-explain">สไลด์ 2-31: ISO (ISO 9000 series) และ SEI (at Carnegie Mellon) are two leading organizations that help in the process assessment</p></div></div>
+          </fieldset>
+
+          <fieldset class="q" data-answer="b">
+            <legend class="q-head"><span class="q-num">11</span><span class="q-text">กิจกรรมทั่วไปในการพัฒนาซอฟต์แวร์ เรียงลำดับใดถูกต้องที่สุด?</span></legend>
+            <div class="q-options">
+              <label class="opt"><input type="radio" name="q11" value="a" /><span class="opt-key">A</span><span class="opt-text">Testing → Design → Coding → Requirements</span></label>
+              <label class="opt"><input type="radio" name="q11" value="b" /><span class="opt-key">B</span><span class="opt-text">Requirements analysis → Design → Implementation → Testing → Deployment → Maintenance</span></label>
+              <label class="opt"><input type="radio" name="q11" value="c" /><span class="opt-key">C</span><span class="opt-text">Deployment → Requirements → Design → Testing</span></label>
+              <label class="opt"><input type="radio" name="q11" value="d" /><span class="opt-key">D</span><span class="opt-text">Maintenance → Requirements → Coding → Testing</span></label>
+            </div>
+            <div class="q-feedback"><div class="q-feedback-inner"><p class="q-verdict" aria-live="polite"></p><p class="q-explain">Common activities: requirements analysis → system and software design → implementation (coding) → testing and QA → deployment and release → maintenance and evolution</p></div></div>
+          </fieldset>
+
+          <fieldset class="q" data-answer="a">
+            <legend class="q-head"><span class="q-num">12</span><span class="q-text">&quot;A Process Framework&quot; มีองค์ประกอบใดบ้าง?</span></legend>
+            <div class="q-options">
+              <label class="opt"><input type="radio" name="q12" value="a" /><span class="opt-key">A</span><span class="opt-text">Common Process Framework (Framework Activities, Task Sets) และ Umbrella Activities</span></label>
+              <label class="opt"><input type="radio" name="q12" value="b" /><span class="opt-key">B</span><span class="opt-text">เฉพาะ Coding และ Testing เท่านั้น</span></label>
+              <label class="opt"><input type="radio" name="q12" value="c" /><span class="opt-key">C</span><span class="opt-text">Requirements และ Design เท่านั้น</span></label>
+              <label class="opt"><input type="radio" name="q12" value="d" /><span class="opt-key">D</span><span class="opt-text">Scope, Cost, Time</span></label>
+            </div>
+            <div class="q-feedback"><div class="q-feedback-inner"><p class="q-verdict" aria-live="polite"></p><p class="q-explain">สไลด์ 2-8: Process framework = Common Process Framework (framework activities → task sets ที่มี work tasks, work products, milestones/deliverables, QA checkpoints) + Umbrella Activities · Scope/Cost/Time คือ triple constraint ของบทที่ 1</p></div></div>
+          </fieldset>
+
+          <fieldset class="q" data-answer="a">
+            <legend class="q-head"><span class="q-num">13</span><span class="q-text">Case Study CrowdStrike Outage เกี่ยวข้องกับปัญหาประเภทใดเป็นหลัก?</span></legend>
+            <div class="q-options">
+              <label class="opt"><input type="radio" name="q13" value="a" /><span class="opt-key">A</span><span class="opt-text">ปัญหาจาก validator/software update ที่บกพร่อง</span></label>
+              <label class="opt"><input type="radio" name="q13" value="b" /><span class="opt-key">B</span><span class="opt-text">การขาดงบประมาณ</span></label>
+              <label class="opt"><input type="radio" name="q13" value="c" /><span class="opt-key">C</span><span class="opt-text">ทีมพัฒนาที่มีขนาดใหญ่เกินไป</span></label>
+              <label class="opt"><input type="radio" name="q13" value="d" /><span class="opt-key">D</span><span class="opt-text">การไม่มีระบบเลย</span></label>
+            </div>
+            <div class="q-feedback"><div class="q-feedback-inner"><p class="q-verdict" aria-live="polite"></p><p class="q-explain">แหล่งอ้างอิงในสไลด์ 2-4 คือ &quot;CrowdStrike: Buggy Validator Started Massive Outage&quot; (TechRepublic, 2024)</p></div></div>
+          </fieldset>
+
+          <fieldset class="q" data-answer="b">
+            <legend class="q-head"><span class="q-num">14</span><span class="q-text">เหตุการณ์ Knight Capital มีสาเหตุหลักมาจากอะไร?</span></legend>
+            <div class="q-options">
+              <label class="opt"><input type="radio" name="q14" value="a" /><span class="opt-key">A</span><span class="opt-text">เพียงแค่ bug ในโค้ดเท่านั้น</span></label>
+              <label class="opt"><input type="radio" name="q14" value="b" /><span class="opt-key">B</span><span class="opt-text">ความล้มเหลวใน software deployment และการควบคุมการปฏิบัติงาน เช่นขาดการทดสอบที่เพียงพอ</span></label>
+              <label class="opt"><input type="radio" name="q14" value="c" /><span class="opt-key">C</span><span class="opt-text">ทีมงานลาออกกะทันหัน</span></label>
+              <label class="opt"><input type="radio" name="q14" value="d" /><span class="opt-key">D</span><span class="opt-text">เซิร์ฟเวอร์ล่ม</span></label>
+            </div>
+            <div class="q-feedback"><div class="q-feedback-inner"><p class="q-verdict" aria-live="polite"></p><p class="q-explain">สไลด์ระบุว่า root cause was not simply a software bug but a failure in software deployment and operational controls — การทดสอบ safeguard และ risk management ไม่พอ ทำให้โค้ดผิดหลุดขึ้นระบบเทรดจริง</p></div></div>
+          </fieldset>
+
+          <fieldset class="q" data-answer="b">
+            <legend class="q-head"><span class="q-num">15</span><span class="q-text">Incremental Model แบบ &quot;Multiple Release&quot; มีลักษณะเด่นอย่างไร?</span></legend>
+            <div class="q-options">
+              <label class="opt"><input type="radio" name="q15" value="a" /><span class="opt-key">A</span><span class="opt-text">requirement ทั้งหมดถูกพัฒนาและปล่อยพร้อมกันครั้งเดียว</span></label>
+              <label class="opt"><input type="radio" name="q15" value="b" /><span class="opt-key">B</span><span class="opt-text">requirement ชุดเล็กๆ แต่ละชุดถูกพัฒนา บรรจุ และปล่อยเป็นหลายรอบ</span></label>
+              <label class="opt"><input type="radio" name="q15" value="c" /><span class="opt-key">C</span><span class="opt-text">ไม่มีขั้นตอน testing เลย</span></label>
+              <label class="opt"><input type="radio" name="q15" value="d" /><span class="opt-key">D</span><span class="opt-text">ใช้เฉพาะกับระบบขนาดเล็กมากเท่านั้น</span></label>
+            </div>
+            <div class="q-feedback"><div class="q-feedback-inner"><p class="q-verdict" aria-live="polite"></p><p class="q-explain">Incremental Model B: each small set of requirements is developed, packaged, and released in a multiple release fashion (Rel. 1 … Rel. n) — แต่ละรอบมี requirements → design → code → test → package</p></div></div>
+          </fieldset>
+
+          <fieldset class="q" data-answer="b">
+            <legend class="q-head"><span class="q-num">16</span><span class="q-text">ข้อเสียของ Spiral Model คือข้อใด?</span></legend>
+            <div class="q-options">
+              <label class="opt"><input type="radio" name="q16" value="a" /><span class="opt-key">A</span><span class="opt-text">ไม่รองรับการทำ prototype</span></label>
+              <label class="opt"><input type="radio" name="q16" value="b" /><span class="opt-key">B</span><span class="opt-text">ต้องการความเชี่ยวชาญด้านการประเมินความเสี่ยง</span></label>
+              <label class="opt"><input type="radio" name="q16" value="c" /><span class="opt-key">C</span><span class="opt-text">ไม่สามารถแก้ไขสิ่งที่พัฒนาไปแล้วในรอบก่อนหน้า</span></label>
+              <label class="opt"><input type="radio" name="q16" value="d" /><span class="opt-key">D</span><span class="opt-text">เหมาะกับโปรเจกต์ที่ requirement ชัดเจนตายตัวเท่านั้น</span></label>
+            </div>
+            <div class="q-feedback"><div class="q-feedback-inner"><p class="q-verdict" aria-live="polite"></p><p class="q-explain">Cons ของ Spiral มีข้อเดียวในสไลด์: require expertise in risk assessment · ส่วน prototyping และการ revise สิ่งที่ทำในรอบก่อนเป็นข้อดี</p></div></div>
+          </fieldset>
+
+          <fieldset class="q" data-answer="a">
+            <legend class="q-head"><span class="q-num">17</span><span class="q-text">ข้อดีของ Incremental Model คือข้อใด?</span></legend>
+            <div class="q-options">
+              <label class="opt"><input type="radio" name="q17" value="a" /><span class="opt-key">A</span><span class="opt-text">แบ่งงานเป็นส่วนย่อยจัดการได้ง่ายขึ้น เหมาะกับระบบขนาดใหญ่ซับซ้อน</span></label>
+              <label class="opt"><input type="radio" name="q17" value="b" /><span class="opt-key">B</span><span class="opt-text">ไม่ต้องมีการบริหารจัดการเพิ่มเติม</span></label>
+              <label class="opt"><input type="radio" name="q17" value="c" /><span class="opt-key">C</span><span class="opt-text">ไม่มีความท้าทายเรื่อง integration</span></label>
+              <label class="opt"><input type="radio" name="q17" value="d" /><span class="opt-key">D</span><span class="opt-text">ใช้ได้เฉพาะระบบขนาดเล็กเท่านั้น</span></label>
+            </div>
+            <div class="q-feedback"><div class="q-feedback-inner"><p class="q-verdict" aria-live="polite"></p><p class="q-explain">Pros: divide and conquer · suitable for a very large complex system — ส่วน more management efforts และ integration challenges เป็นข้อเสีย</p></div></div>
+          </fieldset>
+
+          <fieldset class="q" data-answer="a">
+            <legend class="q-head"><span class="q-num">18</span><span class="q-text">Scrum มีลักษณะเด่นอะไรบ้าง?</span></legend>
+            <div class="q-options">
+              <label class="opt"><input type="radio" name="q18" value="a" /><span class="opt-key">A</span><span class="opt-text">Iterative development, incremental delivery, customer collaboration, cross-functional teams</span></label>
+              <label class="opt"><input type="radio" name="q18" value="b" /><span class="opt-key">B</span><span class="opt-text">เอกสารที่เป็นทางการจำนวนมาก</span></label>
+              <label class="opt"><input type="radio" name="q18" value="c" /><span class="opt-key">C</span><span class="opt-text">พัฒนาแบบ sequential ไม่มีการวนซ้ำ</span></label>
+              <label class="opt"><input type="radio" name="q18" value="d" /><span class="opt-key">D</span><span class="opt-text">ไม่มีการสื่อสารกับลูกค้าเลย</span></label>
+            </div>
+            <div class="q-feedback"><div class="q-feedback-inner"><p class="q-verdict" aria-live="polite"></p><p class="q-explain">Key characteristics ของ Scrum: iterative development · incremental delivery · customer collaboration · responding to change · cross-functional teams · minimal documentation</p></div></div>
+          </fieldset>
+
+          <fieldset class="q" data-answer="a">
+            <legend class="q-head"><span class="q-num">19</span><span class="q-text">ข้อเสียของแนวทาง Agile คือข้อใด?</span></legend>
+            <div class="q-options">
+              <label class="opt"><input type="radio" name="q19" value="a" /><span class="opt-key">A</span><span class="opt-text">ต้องการทีมที่มีประสบการณ์และมีวินัยสูง ต้นทุน/เวลาคาดเดายากกว่า</span></label>
+              <label class="opt"><input type="radio" name="q19" value="b" /><span class="opt-key">B</span><span class="opt-text">ไม่สามารถตรวจพบปัญหาได้เร็ว</span></label>
+              <label class="opt"><input type="radio" name="q19" value="c" /><span class="opt-key">C</span><span class="opt-text">ลูกค้าไม่มีส่วนร่วมเลย</span></label>
+              <label class="opt"><input type="radio" name="q19" value="d" /><span class="opt-key">D</span><span class="opt-text">เอกสารต้องครบถ้วนสมบูรณ์เสมอ</span></label>
+            </div>
+            <div class="q-feedback"><div class="q-feedback-inner"><p class="q-verdict" aria-live="polite"></p><p class="q-explain">Cons ของ Agile: requires experienced and disciplined teams · less predictable costs and timelines · challenging for large, fixed-scope projects · documentation may be insufficient if not properly managed</p></div></div>
+          </fieldset>
+
+          <fieldset class="q" data-answer="a">
+            <legend class="q-head"><span class="q-num">20</span><span class="q-text">Process Assessment มีเป้าหมายเพื่ออะไร?</span></legend>
+            <div class="q-options">
+              <label class="opt"><input type="radio" name="q20" value="a" /><span class="opt-key">A</span><span class="opt-text">เพื่อประเมินว่าองค์กรวิศวกรรมซอฟต์แวร์มีความเป็นผู้ใหญ่ของกระบวนการมากน้อยเพียงใด และควรปรับปรุงหรือไม่</span></label>
+              <label class="opt"><input type="radio" name="q20" value="b" /><span class="opt-key">B</span><span class="opt-text">เพื่อประเมินเงินเดือนพนักงาน</span></label>
+              <label class="opt"><input type="radio" name="q20" value="c" /><span class="opt-key">C</span><span class="opt-text">เพื่อเลือกภาษาโปรแกรมมิ่ง</span></label>
+              <label class="opt"><input type="radio" name="q20" value="d" /><span class="opt-key">D</span><span class="opt-text">เพื่อออกแบบ UI</span></label>
+            </div>
+            <div class="q-feedback"><div class="q-feedback-inner"><p class="q-verdict" aria-live="polite"></p><p class="q-explain">คำถามของ process assessment คือ &quot;How mature is your software engineering organization and do you need to improve?&quot; — องค์กรอยู่ตรงไหนบนสเปกตรัม No Process → Matured Process</p></div></div>
+          </fieldset>
+
+          <div class="quiz-result" id="quiz-result" hidden tabindex="-1">
+            <div class="score-ring" aria-hidden="true">
+              <svg viewBox="0 0 120 120">
+                <circle class="ring-track" cx="60" cy="60" r="52" />
+                <circle class="ring-fill" cx="60" cy="60" r="52" pathLength="100" />
+              </svg>
+              <span class="score-pct"><span id="score-pct">0</span>%</span>
+            </div>
+            <div class="score-body">
+              <p class="score-line" role="status">ได้ <strong id="score-num">0</strong> / 20 คะแนน</p>
+              <p class="score-msg" id="score-msg"></p>
+              <div class="score-actions">
+                <button class="btn btn--ghost btn--sm" type="button" id="toggle-wrong" aria-pressed="false">ดูเฉพาะข้อที่ผิด</button>
+              </div>
+            </div>
+          </div>
+
+          <div class="quiz-bar">
+            <div class="quiz-progress">
+              <span class="quiz-count"><span id="answered">0</span> / 20 ข้อ</span>
+              <span class="progress" aria-hidden="true"><span class="progress-fill" id="progress-fill"></span></span>
+              <span class="quiz-hint" id="quiz-hint" aria-live="polite"></span>
+            </div>
+            <div class="quiz-actions">
+              <button class="btn btn--ghost" type="reset" id="quiz-reset">ทำใหม่</button>
+              <button class="btn btn--primary" type="submit" id="quiz-submit">ตรวจคำตอบ</button>
+            </div>
+          </div>
+        </form>
+      </section>
+
+    </div>
+  </main>
+  <footer class="site-footer">
+    <div class="wrap">
+      <p>สรุปจากสไลด์ ITDS261 Introduction to Software Engineering (Faculty of ICT, Mahidol University) เพื่อใช้ทบทวนส่วนตัว — ถ้าเนื้อหาขัดกับสไลด์ ให้ยึดสไลด์เป็นหลัก</p>
+    </div>
+  </footer>
+
+  <script src="assets/js/widgets.js" defer></script>
+  <script src="assets/js/network.js" defer></script>
+</body>
+</html>
