@@ -1,0 +1,1081 @@
+<!DOCTYPE html>
+<html lang="th" data-theme="se">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>ITDS261 บทที่ 3: Requirement Engineering · โต๊ะทบทวน</title>
+<meta name="description" content="ITDS261 Introduction to Software Engineering บทที่ 3: software requirements, user/system และ functional/non-functional requirements, feasibility study, กระบวนการ RE (elicitation, specification, validation, change), user story และ acceptance criteria, SRS และ requirements management พร้อม cheat sheet และแบบฝึกหัด 20 ข้อ" />
+<meta name="theme-color" content="#121815" />
+<link rel="icon" href="assets/favicon.svg" type="image/svg+xml" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link
+  href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500..700&family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans+Thai:wght@500;600&family=IBM+Plex+Sans+Thai+Looped:wght@400;500;600&display=swap"
+  rel="stylesheet"
+/>
+<link rel="stylesheet" href="assets/css/tokens.css" />
+<link rel="stylesheet" href="assets/css/base.css" />
+<link rel="stylesheet" href="assets/css/network.css" />
+<link rel="stylesheet" href="assets/css/motion.css" />
+<script>document.documentElement.classList.add("js");</script>
+</head>
+<body>
+  <a class="skip-link" href="#tabs">ข้ามไปที่เนื้อหา</a>
+
+  <svg class="dg-defs" aria-hidden="true" focusable="false">
+    <defs>
+      <marker id="arr" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path class="dg-arrow" d="M0 0L10 5L0 10z" /></marker>
+      <marker id="arr-muted" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path class="dg-arrow--muted" d="M0 0L10 5L0 10z" /></marker>
+      <marker id="arr-ok" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path class="dg-arrow--ok" d="M0 0L10 5L0 10z" /></marker>
+      <marker id="arr-bad" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path class="dg-arrow--bad" d="M0 0L10 5L0 10z" /></marker>
+    </defs>
+  </svg>
+
+  <header class="site-header">
+    <div class="wrap">
+      <a class="wordmark" href="index.html" aria-label="โต๊ะทบทวน หน้าแรก">
+        <img class="wordmark-mark" src="assets/favicon.svg" alt="" width="26" height="26" />
+        <span class="wordmark-text">โต๊ะ<span>ทบทวน</span></span>
+      </a>
+      <a class="crumb" href="index.html"><span class="arrow" aria-hidden="true">←</span> รายวิชาทั้งหมด</a>
+    </div>
+  </header>
+
+  <main>
+    <section class="course-hero wrap">
+      <nav class="course-nav" aria-label="เลือกวิชาและบท">
+        <div class="subject-switch">
+          <button class="subject-btn" type="button" data-subject="network" aria-pressed="false"><span class="subject-code">ITDS231</span> Network</button>
+          <button class="subject-btn" type="button" data-subject="web" aria-pressed="false"><span class="subject-code">ITDS241</span> Web</button>
+          <button class="subject-btn" type="button" data-subject="se" aria-pressed="true"><span class="subject-code">ITDS261</span> SE</button>
+        </div>
+        <div class="chapter-nav" data-subject="network" data-label="ITDS231 Computer Networks" role="group" aria-label="บทของวิชา ITDS231 Computer Networks">
+          <a class="chapter-link" href="network.html"><span class="chapter-num">บทที่ 1</span><span class="chapter-name">Intro &amp; Topology</span></a>
+          <a class="chapter-link" href="network-application-layer.html"><span class="chapter-num">บทที่ 2</span><span class="chapter-name">Application Layer</span></a>
+          <a class="chapter-link" href="network-data-link-layer.html"><span class="chapter-num">บทที่ 3</span><span class="chapter-name">Data Link Layer</span></a>
+          <a class="chapter-link" href="network-mac-ethernet.html"><span class="chapter-num">บทที่ 4</span><span class="chapter-name">MAC + Ethernet</span></a>
+        </div>
+        <div class="chapter-nav" data-subject="web" data-label="ITDS241 Web Technologies and Applications" role="group" aria-label="บทของวิชา ITDS241 Web Technologies and Applications">
+          <a class="chapter-link" href="web-intro-html-basics.html"><span class="chapter-num">บทที่ 1</span><span class="chapter-name">Internet &amp; HTML Basics</span></a>
+          <a class="chapter-link" href="web-media-forms-semantic.html"><span class="chapter-num">บทที่ 2</span><span class="chapter-name">Media, Forms &amp; Semantic</span></a>
+          <a class="chapter-link" href="web-css-fundamentals.html"><span class="chapter-num">บทที่ 3</span><span class="chapter-name">CSS Fundamentals</span></a>
+          <a class="chapter-link" href="web-css-layout-responsive.html"><span class="chapter-num">บทที่ 4</span><span class="chapter-name">CSS Layout &amp; Responsive</span></a>
+          <a class="chapter-link" href="web-js-fundamentals.html"><span class="chapter-num">บทที่ 5</span><span class="chapter-name">JavaScript Fundamentals</span></a>
+          <a class="chapter-link" href="web-js-functions-oop-dom.html"><span class="chapter-num">บทที่ 6</span><span class="chapter-name">Functions, OOP &amp; DOM</span></a>
+          <a class="chapter-link" href="web-ecmascript-features.html"><span class="chapter-num">บทที่ 7</span><span class="chapter-name">ECMAScript Features</span></a>
+        </div>
+        <div class="chapter-nav" data-subject="se" data-label="ITDS261 Introduction to Software Engineering" role="group" aria-label="บทของวิชา ITDS261 Introduction to Software Engineering">
+          <a class="chapter-link" href="se-foundation-pm.html"><span class="chapter-num">บทที่ 1</span><span class="chapter-name">SE Foundation &amp; PM</span></a>
+          <a class="chapter-link" href="se-process-models.html"><span class="chapter-num">บทที่ 2</span><span class="chapter-name">Process Models</span></a>
+          <a class="chapter-link" href="se-requirement-engineering.html" aria-current="page"><span class="chapter-num">บทที่ 3</span><span class="chapter-name">Requirement Engineering</span></a>
+          <a class="chapter-link" href="se-use-case-modeling.html"><span class="chapter-num">บทที่ 4</span><span class="chapter-name">Use Case Modeling</span></a>
+          <a class="chapter-link" href="se-flow-behavior-modeling.html"><span class="chapter-num">บทที่ 5</span><span class="chapter-name">Flow &amp; Behavior Modeling</span></a>
+          <a class="chapter-link" href="se-ui-design.html"><span class="chapter-num">บทที่ 6</span><span class="chapter-name">UI Design</span></a>
+        </div>
+      </nav>
+      <span class="eyebrow">ITDS261 · บทที่ 3 · Lecture 3</span>
+      <h1>Requirement Engineering</h1>
+      <p class="course-lede">requirement คือคำอธิบายว่าระบบต้องทำอะไรและมีข้อจำกัดอะไร บทนี้ไล่ตั้งแต่ประเภทของ requirement, feasibility study ไปจนถึง 4 กระบวนการของ requirements engineering: การรวบรวม การเขียนเป็นเอกสาร การตรวจสอบ และการจัดการเมื่อ requirement เปลี่ยน</p>
+      <ul class="course-meta" aria-label="ข้อมูลบทเรียน">
+        <li class="chip chip--accent">ITDS261 Introduction to Software Engineering</li>
+        <li class="chip">1 ไฟล์สไลด์ · L3 Requirement Engineering (67 หน้า)</li>
+        <li class="chip">แบบฝึกหัด 20 ข้อ</li>
+      </ul>
+    </section>
+
+    <div class="tabbar" id="tabs">
+      <div class="wrap">
+        <div class="tabs" role="tablist" aria-label="ส่วนของหน้า">
+          <button class="tab" role="tab" id="tab-content" aria-controls="content" aria-selected="true" type="button">
+            <svg class="tab-icon" viewBox="0 0 20 20" aria-hidden="true"><path d="M4 3.5h8.5L16 7v9.5H4z M12 3.5V7h4 M7 10h6 M7 13h4" /></svg>
+            เนื้อหา
+          </button>
+          <button class="tab" role="tab" id="tab-summary" aria-controls="summary" aria-selected="false" type="button">
+            <svg class="tab-icon" viewBox="0 0 20 20" aria-hidden="true"><path d="M3.5 4h13v12h-13z M3.5 8h13 M8.5 8v8" /></svg>
+            สรุป
+          </button>
+          <button class="tab" role="tab" id="tab-quiz" aria-controls="quiz" aria-selected="false" type="button">
+            <svg class="tab-icon" viewBox="0 0 20 20" aria-hidden="true"><path d="M10 17a7 7 0 1 0 0-14 7 7 0 0 0 0 14z M6.8 10.2l2.2 2.2 4.2-4.6" /></svg>
+            แบบฝึกหัด
+          </button>
+          <span class="tab-indicator" aria-hidden="true"></span>
+        </div>
+      </div>
+    </div>
+
+    <div class="wrap panels">
+
+      <!-- =============================================================
+           แท็บ 1: เนื้อหา
+           ============================================================= -->
+      <section class="panel" id="content" role="tabpanel" aria-labelledby="tab-content" tabindex="-1">
+        <div class="panel-head">
+          <h2>เนื้อหาแยกตามหัวข้อในสไลด์</h2>
+          <div class="panel-actions">
+            <button class="btn btn--ghost btn--sm" type="button" data-acc-all="open">เปิดทั้งหมด</button>
+            <button class="btn btn--ghost btn--sm" type="button" data-acc-all="close">ปิดทั้งหมด</button>
+          </div>
+        </div>
+
+        <div class="acc">
+
+<!-- ================= 01 Requirements คืออะไร และประเภท ================= -->
+          <div class="acc-item is-open">
+            <h3 class="acc-heading">
+              <button class="acc-trigger" type="button" aria-expanded="true" aria-controls="acc-re-types" id="acc-re-types-btn">
+                <span class="acc-index">01</span>
+                <span class="acc-title">
+                  <span class="acc-name">Software Requirements คืออะไร และประเภทของ Requirements</span>
+                  <span class="acc-file">L3 Requirement Engineering · slide 5–16</span>
+                </span>
+                <svg class="acc-chevron" viewBox="0 0 20 20" aria-hidden="true"><path d="M5 7.5l5 5 5-5" /></svg>
+              </button>
+            </h3>
+            <div class="acc-panel" id="acc-re-types" role="region" aria-labelledby="acc-re-types-btn">
+              <div class="acc-panel-inner">
+                <div class="acc-body">
+
+                  <nav class="toc" aria-label="หัวข้อในการ์ดประเภท requirement">
+                    <a href="#re-what">Software requirements คืออะไร</a>
+                    <a href="#re-user-system">User vs System</a>
+                    <a href="#re-fr-nfr">Functional vs Non-functional</a>
+                  </nav>
+
+                  <section class="topic" id="re-what">
+                    <h4>Software Requirements คืออะไร</h4>
+                    <ul class="tight">
+                      <li><strong>คำอธิบายบริการ (services) ที่ระบบควรมอบให้ และข้อจำกัด (constraints) ในการดำเนินงานของระบบ</strong></li>
+                      <li>สะท้อน<strong>ความต้องการของลูกค้า</strong>สำหรับระบบที่มีวัตถุประสงค์เฉพาะ</li>
+                      <li>มักมี<strong>นิยามเชิงฟังก์ชันแบบละเอียดและเป็นทางการ</strong></li>
+                    </ul>
+                    <p class="note">วัสดุประกอบการสอนดัดแปลงจาก Sommerville, <em>Software Engineering</em> (2015) — ตัวอย่างหลักในสไลด์คือระบบข้อมูลผู้ป่วยสุขภาพจิต <strong>Mentcare</strong> ซึ่งมี stakeholder เช่น patients, doctors, nurses, medical receptionists, IT staff, medical ethics manager, health care managers และ medical records staff</p>
+                  </section>
+
+                  <section class="topic" id="re-user-system">
+                    <h4>User requirements vs System requirements</h4>
+                    <div class="compare">
+                      <div class="compare-col">
+                        <strong>User requirements</strong>
+                        <ul class="tight">
+                          <li>ระบุบริการที่คาดว่าจะมอบให้ผู้ใช้ และข้อจำกัดที่ระบบต้องทำงานภายใต้</li>
+                          <li>อาจเป็น<strong>ข้อความกว้างๆ</strong> ไปจนถึงรายละเอียดเจาะจง</li>
+                        </ul>
+                      </div>
+                      <div class="compare-col">
+                        <strong>System requirements</strong>
+                        <ul class="tight">
+                          <li>อธิบายฟังก์ชัน บริการ และข้อจำกัดในการดำเนินงาน<strong>อย่างละเอียด</strong></li>
+                          <li><strong>กำหนดสิ่งที่ต้อง implement อย่างแน่ชัด</strong> (define exactly what is to be implemented)</li>
+                        </ul>
+                      </div>
+                    </div>
+                  </section>
+
+                  <section class="topic" id="re-fr-nfr">
+                    <h4>Functional vs Non-functional requirements</h4>
+                    <div class="compare">
+                      <div class="compare-col">
+                        <strong>Functional requirements</strong>
+                        <ul class="tight">
+                          <li>ระบุ<strong>บริการ</strong>ที่ระบบต้องให้ — ระบบควรทำอะไร</li>
+                          <li>ระบบควร<strong>ตอบสนองต่อ input</strong> เฉพาะอย่างไร</li>
+                          <li>ระบบควร<strong>ทำงานอย่างไรในสถานการณ์</strong>ต่างๆ</li>
+                        </ul>
+                      </div>
+                      <div class="compare-col">
+                        <strong>Non-functional requirements</strong>
+                        <ul class="tight">
+                          <li>ระบุ<strong>ข้อจำกัดของบริการหรือฟังก์ชัน</strong> เช่น response time, compatibility, memory use</li>
+                          <li>มัก<strong>ครอบคลุมทั้งระบบ</strong> มากกว่าฟีเจอร์เดียว</li>
+                        </ul>
+                      </div>
+                    </div>
+                    <p><strong>ตัวอย่าง functional requirements (Mentcare, สไลด์ 3-13):</strong></p>
+                    <ul class="tight">
+                      <li>A user <strong>shall</strong> be able to search the appointments lists for all clinics.</li>
+                      <li>The system <strong>shall</strong> generate each day, for each clinic, a list of patients who are expected to attend appointments that day.</li>
+                      <li>Each staff member using the system <strong>shall</strong> be uniquely identified by his or her eight-digit employee number.</li>
+                    </ul>
+                    <div class="callout callout--warn">
+                      <span class="callout-label">Non-functional ต้องวัดผลได้</span>
+                      <p>สไลด์ 3-15 เน้นว่า non-functional requirement <b>must be measurable and testable</b> — เช่น "handle up to 10,000 concurrent users without significant performance degradation" หรือ "load within 2 seconds for 95% of user requests" (ตัวอย่างจากแบบฝึกหัดในสไลด์ 3-16) มีตัวเลขให้ทดสอบได้ ต่างจาก "should be easy-to-use" ที่ไม่มีเกณฑ์วัด</p>
+                    </div>
+                  </section>
+
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- ================= 02 Feasibility, RE process, Elicitation ================= -->
+          <div class="acc-item">
+            <h3 class="acc-heading">
+              <button class="acc-trigger" type="button" aria-expanded="false" aria-controls="acc-re-elicit" id="acc-re-elicit-btn">
+                <span class="acc-index">02</span>
+                <span class="acc-title">
+                  <span class="acc-name">Feasibility Study · กระบวนการ RE · Requirements Elicitation</span>
+                  <span class="acc-file">L3 Requirement Engineering · slide 17–32</span>
+                </span>
+                <svg class="acc-chevron" viewBox="0 0 20 20" aria-hidden="true"><path d="M5 7.5l5 5 5-5" /></svg>
+              </button>
+            </h3>
+            <div class="acc-panel" id="acc-re-elicit" role="region" aria-labelledby="acc-re-elicit-btn">
+              <div class="acc-panel-inner">
+                <div class="acc-body">
+
+                  <nav class="toc" aria-label="หัวข้อในการ์ด elicitation">
+                    <a href="#re-feasibility">Feasibility study</a>
+                    <a href="#re-process">กระบวนการ RE</a>
+                    <a href="#re-elicitation">Elicitation: เป้าหมายและความท้าทาย</a>
+                    <a href="#re-dimensions">6 มิติของ elicitation</a>
+                    <a href="#re-interview">Interviewing</a>
+                    <a href="#re-ethnography">Ethnography</a>
+                    <a href="#re-other-tech">เทคนิคอื่น</a>
+                  </nav>
+
+                  <section class="topic" id="re-feasibility">
+                    <h4>Feasibility Study</h4>
+                    <p>การศึกษา<strong>สั้นๆ และเจาะจง</strong> ที่ควรทำ<strong>ตั้งแต่ต้น</strong>ของกระบวนการ RE เพื่อตอบ 3 คำถาม:</p>
+                    <ol class="steps">
+                      <li>ระบบ<strong>ช่วยให้บรรลุเป้าหมายโดยรวมขององค์กร</strong>หรือไม่</li>
+                      <li>ระบบ<strong>ทำได้ภายในตารางเวลาและงบประมาณ ด้วยเทคโนโลยีปัจจุบัน</strong>หรือไม่</li>
+                      <li>ระบบ<strong>รวมเข้ากับระบบอื่นที่ใช้อยู่</strong>ได้หรือไม่</li>
+                    </ol>
+                    <div class="callout callout--warn">
+                      <span class="callout-label">กฎตัดสินใจ</span>
+                      <p>ถ้าคำตอบ<b>ข้อใดข้อหนึ่งเป็น "ไม่"</b> ก็ไม่ควรเดินหน้าโปรเจกต์ต่อ</p>
+                    </div>
+                  </section>
+
+                  <section class="topic" id="re-process">
+                    <h4>กระบวนการ Requirements Engineering (RE)</h4>
+                    <p>กระบวนการ<strong>ค้นหา วิเคราะห์ จัดทำเอกสาร และตรวจสอบ</strong> software requirements เรียกว่า Requirements Engineering — เป็นกระบวนการ<strong>วนซ้ำ (iterative)</strong> และให้ผลลัพธ์เป็น <strong>System requirements document</strong></p>
+                    <figure class="diagram">
+                      <div class="diagram-scroll">
+                        <svg viewBox="0 0 720 200" role="img" aria-labelledby="re-proc-t re-proc-d">
+                          <title id="re-proc-t">กระบวนการ requirements engineering</title>
+                          <desc id="re-proc-d">Feasibility study มาก่อน จากนั้น Elicitation, Specification, Validation ต่อกัน ได้ System requirements document และ Change วนกลับไปที่ elicitation</desc>
+                          <rect class="dg-box dg-box--warn" x="10" y="40" width="120" height="50" rx="8" />
+                          <text class="dg-text dg-text--sm" x="70" y="70" text-anchor="middle">Feasibility study</text>
+                          <rect class="dg-box dg-box--accent" x="160" y="40" width="120" height="50" rx="8" />
+                          <text class="dg-text" x="220" y="70" text-anchor="middle">Elicitation</text>
+                          <rect class="dg-box dg-box--accent" x="310" y="40" width="130" height="50" rx="8" />
+                          <text class="dg-text" x="375" y="70" text-anchor="middle">Specification</text>
+                          <rect class="dg-box dg-box--accent" x="470" y="40" width="110" height="50" rx="8" />
+                          <text class="dg-text" x="525" y="70" text-anchor="middle">Validation</text>
+                          <rect class="dg-box dg-box--ok" x="600" y="30" width="110" height="70" rx="8" />
+                          <text class="dg-text dg-text--sm" x="655" y="58" text-anchor="middle">System</text>
+                          <text class="dg-text dg-text--sm" x="655" y="76" text-anchor="middle">requirements doc</text>
+                          <line class="dg-line" x1="132" y1="65" x2="156" y2="65" marker-end="url(#arr-muted)" />
+                          <line class="dg-line dg-line--accent" x1="282" y1="65" x2="306" y2="65" marker-end="url(#arr)" />
+                          <line class="dg-line dg-line--accent" x1="442" y1="65" x2="466" y2="65" marker-end="url(#arr)" />
+                          <line class="dg-line dg-line--accent" x1="582" y1="65" x2="596" y2="65" marker-end="url(#arr)" />
+                          <rect class="dg-box dg-box--accent" x="310" y="130" width="130" height="46" rx="8" />
+                          <text class="dg-text" x="375" y="158" text-anchor="middle">Change</text>
+                          <path class="dg-line dg-line--dash" d="M525 92 V153 H444" marker-end="url(#arr-muted)" />
+                          <path class="dg-line dg-line--dash" d="M306 153 H220 V94" marker-end="url(#arr-muted)" />
+                        </svg>
+                      </div>
+                      <figcaption>สรุปจากสไลด์ 3-18 ถึง 3-20 — 4 processes: elicitation, specification, validation, change (เส้นประแสดงการวนซ้ำ)</figcaption>
+                    </figure>
+                  </section>
+
+                  <section class="topic" id="re-elicitation">
+                    <h4>Requirements Elicitation</h4>
+                    <p><strong>เป้าหมาย:</strong> เข้าใจงานที่ stakeholder ทำ และวิธีที่ระบบใหม่จะช่วยสนับสนุนงานนั้น — software engineer ทำงานร่วมกับ stakeholder เพื่อหา application domain, work activities, บริการและฟีเจอร์ที่ต้องการ, performance ที่ต้องการ, ข้อจำกัดด้าน hardware ฯลฯ</p>
+                    <p><strong>ความท้าทาย:</strong></p>
+                    <ul class="tight">
+                      <li>stakeholder มัก<strong>ไม่รู้ว่าตัวเองต้องการอะไร</strong></li>
+                      <li>stakeholder <strong>อธิบายสิ่งที่ต้องการได้ยาก</strong></li>
+                      <li>stakeholder อาจ<strong>เรียกร้องสิ่งที่ทำไม่ได้จริง</strong> เพราะไม่รู้ว่าอะไรเป็นไปได้</li>
+                      <li>stakeholder <strong>ต่างกลุ่มกัน</strong> มี requirement หลากหลาย และ<strong>พูดความต้องการต่างรูปแบบกัน</strong></li>
+                    </ul>
+                  </section>
+
+                  <section class="topic" id="re-dimensions">
+                    <h4>6 มิติของ Detailed Requirements Elicitation</h4>
+                    <div class="table-scroll">
+                      <table>
+                        <thead><tr><th>#</th><th>มิติ</th></tr></thead>
+                        <tbody>
+                          <tr><td>1</td><td>Business Workflow</td></tr>
+                          <tr><td>2</td><td>Individual Functionality</td></tr>
+                          <tr><td>3</td><td>Data and Data formats</td></tr>
+                          <tr><td>4</td><td>Existing &amp; Systems Interfaces</td></tr>
+                          <tr><td>5</td><td>User Interfaces</td></tr>
+                          <tr><td>6</td><td>Other Constraints: Performance, Reliability, etc.</td></tr>
+                        </tbody>
+                      </table>
+                    </div>
+                  </section>
+
+                  <section class="topic" id="re-interview">
+                    <h4>เทคนิคพื้นฐานที่ 1: Interviewing</h4>
+                    <p>Elicitation คือการพบ stakeholder หลายแบบเพื่อค้นหาข้อมูลของระบบ — เข้าใจว่าคนทำงานอย่างไร ผลิตอะไร ใช้ระบบอื่นอย่างไร และต้องเปลี่ยนอย่างไรเพื่อรับระบบใหม่ <strong>มี 2 วิธีพื้นฐาน: Interviewing และ Observation/Ethnography</strong></p>
+                    <p><strong>Interviewing</strong> = คุยกับคนเกี่ยวกับสิ่งที่เขาทำ (แบบ formal หรือ informal) ถามเรื่องระบบที่ใช้อยู่และระบบที่จะพัฒนา — มี 2 แบบ: <strong>closed interviews</strong> และ <strong>open interviews</strong></p>
+                    <div class="compare">
+                      <div class="compare-col">
+                        <strong>ข้อจำกัดของการสัมภาษณ์</strong>
+                        <ul class="tight">
+                          <li>stakeholder อาจใช้<strong>ศัพท์เฉพาะ (jargon)</strong> ของสายงาน</li>
+                          <li>stakeholder <strong>คุ้นเคยกับงานจนอธิบายยาก</strong> หรือคิดว่าพื้นฐานเกินกว่าจะพูดถึง</li>
+                          <li>อาจไม่ได้ผลกับ requirement ระดับองค์กร เพราะมี<strong>ความสัมพันธ์เชิงอำนาจที่ซ่อนอยู่</strong>ระหว่างคนในองค์กร</li>
+                        </ul>
+                      </div>
+                      <div class="compare-col">
+                        <strong>เคล็ดลับผู้สัมภาษณ์ที่ดี</strong>
+                        <ul class="checklist">
+                          <li>เปิดใจ (be open-minded)</li>
+                          <li>หลีกเลี่ยงความคิดที่ตั้งไว้ล่วงหน้า</li>
+                          <li>ตั้งใจฟัง</li>
+                          <li>กระตุ้นให้เกิดการสนทนา</li>
+                          <li><strong>ไม่ถามว่า "tell me what you want"</strong></li>
+                        </ul>
+                      </div>
+                    </div>
+                  </section>
+
+                  <section class="topic" id="re-ethnography">
+                    <h4>เทคนิคพื้นฐานที่ 2: Observation / Ethnography</h4>
+                    <ul class="tight">
+                      <li>เป็น<strong>เทคนิคเชิงสังเกต (observational technique)</strong> ใช้ทำความเข้าใจ operational process และหา requirement ของซอฟต์แวร์ที่จะรองรับ process นั้น</li>
+                      <li>analyst <strong>เข้าไปอยู่ในสภาพแวดล้อมการทำงานจริง</strong>ที่จะใช้ระบบ สังเกตงานประจำวัน และจดงานจริงที่ผู้ใช้ทำ</li>
+                      <li>ช่วยค้นพบ <strong>implicit requirements</strong> ที่สะท้อน<strong>วิธีทำงานจริง</strong> ไม่ใช่แค่กระบวนการที่องค์กรนิยามไว้เป็นทางการ</li>
+                    </ul>
+                  </section>
+
+                  <section class="topic" id="re-other-tech">
+                    <h4>เทคนิค elicitation อื่นๆ</h4>
+                    <ul class="tight">
+                      <li>สุ่มตัวอย่างเอกสาร แบบฟอร์ม และฐานข้อมูลที่มีอยู่ (sampling of existing documentation, forms, and databases)</li>
+                      <li>การวิจัยและเยี่ยมชมสถานที่ (research and site visits)</li>
+                      <li>แบบสอบถาม (questionnaires)</li>
+                      <li>Joint Requirements Planning (JRP)</li>
+                    </ul>
+                    <p class="note">แต่ละเทคนิคมีจุดแข็งและเหมาะกับสถานการณ์ต่างกัน</p>
+                  </section>
+
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- ================= 03 Specification ================= -->
+          <div class="acc-item">
+            <h3 class="acc-heading">
+              <button class="acc-trigger" type="button" aria-expanded="false" aria-controls="acc-re-spec" id="acc-re-spec-btn">
+                <span class="acc-index">03</span>
+                <span class="acc-title">
+                  <span class="acc-name">Requirements Specification: Natural Language · Structured · User Story · Use Case · Prototype</span>
+                  <span class="acc-file">L3 Requirement Engineering · slide 33–51</span>
+                </span>
+                <svg class="acc-chevron" viewBox="0 0 20 20" aria-hidden="true"><path d="M5 7.5l5 5 5-5" /></svg>
+              </button>
+            </h3>
+            <div class="acc-panel" id="acc-re-spec" role="region" aria-labelledby="acc-re-spec-btn">
+              <div class="acc-panel-inner">
+                <div class="acc-body">
+
+                  <nav class="toc" aria-label="หัวข้อในการ์ด specification">
+                    <a href="#re-spec">Specification คืออะไร</a>
+                    <a href="#re-natural">Natural language</a>
+                    <a href="#re-structured">Structured specification</a>
+                    <a href="#re-userstory">User story &amp; acceptance criteria</a>
+                    <a href="#re-usecase">Use cases</a>
+                    <a href="#re-prototype">Prototyping</a>
+                    <a href="#re-dfd-erd">DFD &amp; ERD</a>
+                  </nav>
+
+                  <section class="topic" id="re-spec">
+                    <h4>Requirements Specification คืออะไร</h4>
+                    <ul class="tight">
+                      <li>กระบวนการ<strong>เขียน user และ system requirements ลงในเอกสาร requirement</strong></li>
+                      <li>requirement ต้อง<strong>ชัดเจน ไม่กำกวม เข้าใจง่าย ครบถ้วน และสอดคล้องกัน</strong> (clear, unambiguous, easy to understand, complete, consistent)</li>
+                      <li>ควรเขียนเป็น<strong>ประโยคที่มีหมายเลขกำกับ</strong>ในภาษาธรรมชาติ อาจมีตารางง่ายๆ และไดอะแกรมที่เข้าใจง่ายประกอบ</li>
+                    </ul>
+                    <p><strong>ประเภทของ requirements specification:</strong> Natural language specification · Structured specifications · Use case specification · Prototyping</p>
+                  </section>
+
+                  <section class="topic" id="re-natural">
+                    <h4>แนวทางเขียน Natural Language Specification</h4>
+                    <ol class="steps">
+                      <li><strong>กำหนดรูปแบบมาตรฐาน</strong> และให้ทุก requirement ใช้รูปแบบนั้น</li>
+                      <li>ใช้ภาษา<strong>อย่างสม่ำเสมอ</strong>เพื่อแยก mandatory (must have) กับ desirable (nice to have) — <strong>"Shall" สำหรับ mandatory / "Should" สำหรับ desirable</strong></li>
+                      <li><strong>เน้นข้อความสำคัญ</strong>ด้วย bold, italic หรือสี</li>
+                      <li><strong>หลีกเลี่ยง jargon คำย่อ และ acronym</strong></li>
+                      <li>พยายามระบุ<strong>เหตุผล (rationale)</strong> ของแต่ละ requirement — อธิบายว่าทำไมต้องมีและใครเสนอ</li>
+                    </ol>
+                    <p><strong>ตัวอย่างในสไลด์ 3-36:</strong></p>
+                    <ul class="tight">
+                      <li>The application <strong>shall</strong> allow users to view their account balance.</li>
+                      <li>The application <strong>shall</strong> send a real-time notification to users via emails.</li>
+                      <li>The application <strong>shall</strong> require users to securely log in using multi-factor authentication (MFA).</li>
+                    </ul>
+                  </section>
+
+                  <section class="topic" id="re-structured">
+                    <h4>Structured Specifications</h4>
+                    <div class="table-scroll">
+                      <table>
+                        <thead><tr><th>#</th><th>Field</th><th>คำอธิบาย</th></tr></thead>
+                        <tbody>
+                          <tr><td>1</td><td><strong>Requirement ID</strong></td><td>รหัสไม่ซ้ำของแต่ละ requirement เพื่ออ้างอิงและติดตาม</td></tr>
+                          <tr><td>2</td><td><strong>Requirement type</strong></td><td>ประเภท เช่น functional, non-functional</td></tr>
+                          <tr><td>3</td><td><strong>Description</strong></td><td>คำอธิบายละเอียดว่า requirement คืออะไร</td></tr>
+                          <tr><td>4</td><td><strong>Rationale</strong></td><td>เหตุผลว่าทำไมจำเป็น หรือสนับสนุนเป้าหมายอย่างไร</td></tr>
+                          <tr><td>5</td><td><strong>Source</strong></td><td>ที่มาของ requirement (ใครให้มา)</td></tr>
+                          <tr><td>6</td><td><strong>Input(s)</strong></td><td>ข้อมูลหรือเงื่อนไขที่ต้องใช้เพื่อทำ requirement</td></tr>
+                          <tr><td>7</td><td><strong>Output(s)</strong></td><td>ผลลัพธ์ที่คาดว่าจะได้เมื่อ implement แล้ว</td></tr>
+                          <tr><td>8</td><td><strong>Action</strong></td><td>ขั้นตอนการทำ requirement นี้</td></tr>
+                          <tr><td>9</td><td><strong>Precondition</strong></td><td>สถานะที่ต้องเป็นจริงก่อนทำ requirement</td></tr>
+                          <tr><td>10</td><td><strong>Postcondition</strong></td><td>สถานะของระบบหลังทำ requirement สะท้อนการเปลี่ยนแปลงที่คาดไว้</td></tr>
+                        </tbody>
+                      </table>
+                    </div>
+                  </section>
+
+                  <section class="topic" id="re-userstory">
+                    <h4>User Story และ Acceptance Criteria</h4>
+                    <p><strong>User story</strong> ใช้บันทึก requirement และกำหนด scope ของฟังก์ชัน รูปแบบ:</p>
+                    <p class="quote"><strong>ในฐานะ (As a)</strong> … บุคคล/ตำแหน่ง/บทบาทในระบบ · <strong>ฉันต้องการ (I want)</strong> … พฤติกรรมหรือความสามารถในระบบ · <strong>เพื่อที่ (So that)</strong> … เมื่อสร้างแล้วได้ประโยชน์ / มีคุณค่ากับธุรกิจอย่างไร</p>
+                    <p>user story ถูกวัดผลด้วย <strong>เงื่อนไขการยอมรับ (Acceptance Criteria)</strong> หรือ <strong>Definition of Done (DoD)</strong></p>
+                    <dl class="defs defs--stack">
+                      <div><dt>Acceptance criteria</dt><dd>เงื่อนไข/เกณฑ์ที่ต้องทำให้สำเร็จ เพื่อให้ user story เสร็จสมบูรณ์และได้รับการยอมรับจาก stakeholder</dd></div>
+                      <div><dt>คุณลักษณะ</dt><dd>เขียนเป็นข้อๆ เนื้อหาชัดเจน<strong>ไม่กำกวม</strong> · ต้อง<strong>วัดผลได้ (measurable)</strong> · มักเขียนแบบ <strong>กำหนดให้ (Given) – เมื่อ (When) – จึง (Then)</strong> ซึ่งเป็น <strong>Gherkin syntax</strong> หรือแบบ bullet point</dd></div>
+                    </dl>
+                    <div class="worked">
+                      <p class="worked-q"><strong>ตัวอย่างจากสไลด์ 3-43 และ 3-44 — ระบบขายตั๋วสวนสัตว์</strong></p>
+                      <p><strong>User story:</strong> ในฐานะ<strong>ผู้เข้าชมสวนสัตว์</strong> ฉันต้องการ<strong>ซื้อตั๋วออนไลน์ผ่านเว็บไซต์</strong> เพื่อที่ฉันจะได้<strong>ไม่ต้องต่อคิวยาวที่หน้าทางเข้า</strong></p>
+                      <div class="table-scroll">
+                        <table>
+                          <thead><tr><th>#</th><th>Given</th><th>When</th><th>Then</th></tr></thead>
+                          <tbody>
+                            <tr><td>1</td><td>ผู้เข้าชมเข้าสู่หน้าเว็บขายตั๋ว</td><td>ผู้เข้าชมเลือกจำนวนตั๋ว (ผู้ใหญ่/เด็ก)</td><td>ระบบแสดงราคารวมทั้งหมดให้เห็นทันที</td></tr>
+                            <tr><td>2</td><td>ผู้เข้าชมเลือกจำนวนตั๋วเรียบร้อยแล้ว</td><td>ผู้เข้าชมชำระเงินผ่านช่องทางที่รองรับ (บัตรเครดิต หรือ QR Payment)</td><td>ระบบยืนยันการชำระเงินสำเร็จ</td></tr>
+                            <tr><td>3</td><td>การชำระเงินสำเร็จ</td><td>ระบบทำการออกตั๋ว</td><td>ผู้เข้าชมได้รับอีเมลยืนยันการซื้อตั๋ว พร้อม QR Code</td></tr>
+                            <tr><td>4</td><td>ผู้เข้าชมมี QR Code ตั๋วจากอีเมล</td><td>ผู้เข้าชมไปที่ทางเข้าสวนสัตว์และสแกน QR Code</td><td>ระบบตรวจสอบและอนุญาตให้เข้าสวนสัตว์ได้</td></tr>
+                          </tbody>
+                        </table>
+                      </div>
+                    </div>
+                    <div class="callout callout--warn">
+                      <span class="callout-label">อย่าสลับสองรูปแบบนี้</span>
+                      <p><b>As a – I want – So that</b> = รูปแบบของ <b>user story</b> · <b>Given – When – Then</b> = รูปแบบของ <b>acceptance criteria</b></p>
+                    </div>
+                  </section>
+
+                  <section class="topic" id="re-usecase">
+                    <h4>Use Cases</h4>
+                    <ul class="tight">
+                      <li>อธิบาย<strong>ปฏิสัมพันธ์ระหว่างผู้ใช้กับระบบ</strong>ด้วย graphical model และ structured text</li>
+                      <li>ชุดของ use case แทนปฏิสัมพันธ์ทั้งหมดที่เป็นไปได้ใน system requirements</li>
+                      <li>บันทึกด้วย <strong>high-level use case diagram</strong> และแต่ละ use case ควรมี<strong>คำอธิบายเชิงข้อความ</strong></li>
+                    </ul>
+                    <p><strong>องค์ประกอบของ use case diagram:</strong> actor (คนหรือระบบอื่น) เป็น <strong>stick figure</strong> · interaction แต่ละแบบเป็น <strong>วงรีที่มีชื่อ (named ellipse)</strong> · <strong>เส้น</strong>เชื่อม actor กับ interaction</p>
+                    <p class="note">รายละเอียด use case modeling อยู่ในบทที่ 4</p>
+                  </section>
+
+                  <section class="topic" id="re-prototype">
+                    <h4>Prototyping</h4>
+                    <p>requirements prototyping ส่วนใหญ่เน้นส่วน <strong>User Interface (UI)</strong> ของ requirement ใน 2 ด้าน:</p>
+                    <ul class="tight">
+                      <li><strong>Visual looks</strong> — size, shape, position, color</li>
+                      <li><strong>Flow</strong> — control and logical flow</li>
+                    </ul>
+                    <div class="compare">
+                      <div class="compare-col">
+                        <strong>Low fidelity</strong>
+                        <p>ใช้<strong>กระดาษ/คาร์ดบอร์ด</strong>แทนหน้าจอ และให้คนเลื่อนบอร์ด</p>
+                      </div>
+                      <div class="compare-col">
+                        <strong>High fidelity</strong>
+                        <p>ใช้<strong>เครื่องมืออัตโนมัติ</strong> เช่น Visual Basic เขียนหน้าจอและควบคุม logical flow ของหน้าจอ</p>
+                      </div>
+                    </div>
+                  </section>
+
+                  <section class="topic" id="re-dfd-erd">
+                    <h4>ประเภทอื่นของ requirements specification</h4>
+                    <ul class="tight">
+                      <li><strong>Data Flow Diagrams (DFD)</strong> — เรียนละเอียดในบทที่ 5</li>
+                      <li><strong>Entity Relation Diagram (ERD)</strong></li>
+                    </ul>
+                  </section>
+
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- ================= 04 SRS และ Validation ================= -->
+          <div class="acc-item">
+            <h3 class="acc-heading">
+              <button class="acc-trigger" type="button" aria-expanded="false" aria-controls="acc-re-srs" id="acc-re-srs-btn">
+                <span class="acc-index">04</span>
+                <span class="acc-title">
+                  <span class="acc-name">Software Requirements Document (SRS) · Requirements Validation</span>
+                  <span class="acc-file">L3 Requirement Engineering · slide 52–60</span>
+                </span>
+                <svg class="acc-chevron" viewBox="0 0 20 20" aria-hidden="true"><path d="M5 7.5l5 5 5-5" /></svg>
+              </button>
+            </h3>
+            <div class="acc-panel" id="acc-re-srs" role="region" aria-labelledby="acc-re-srs-btn">
+              <div class="acc-panel-inner">
+                <div class="acc-body">
+
+                  <nav class="toc" aria-label="หัวข้อในการ์ด SRS และ validation">
+                    <a href="#re-srs">SRS</a>
+                    <a href="#re-why-doc">ทำไมต้องมีเอกสาร</a>
+                    <a href="#re-validation">Requirements validation</a>
+                    <a href="#re-criteria">7 เกณฑ์ตรวจสอบ</a>
+                  </nav>
+
+                  <section class="topic" id="re-srs">
+                    <h4>Software Requirements Document (SRS)</h4>
+                    <ul class="tight">
+                      <li>บางครั้งเรียกว่า <strong>software requirements specification (SRS)</strong></li>
+                      <li>เป็น<strong>ข้อความทางการ (official statement) ของสิ่งที่นักพัฒนาต้อง implement</strong></li>
+                      <li>รวม<strong>ทั้ง user และ system requirements</strong> — user requirements อยู่ในบทนำของ SRS</li>
+                      <li>ผู้อ่านหลากหลาย ตั้งแต่<strong>ผู้บริหารระดับสูง</strong>จนถึง<strong>วิศวกรที่พัฒนาซอฟต์แวร์</strong></li>
+                    </ul>
+                  </section>
+
+                  <section class="topic" id="re-why-doc">
+                    <h4>ทำไมต้องจัดทำเอกสาร requirement</h4>
+                    <ul class="checklist">
+                      <li>requirement ที่ชัดเจนจำเป็นต่อการ <strong>design และ implementation</strong></li>
+                      <li>ใช้สร้าง <strong>test case และ test scenario</strong> — โดยเฉพาะระบบใหญ่ที่ทีม test แยกจากนักพัฒนา</li>
+                      <li>ใช้<strong>ควบคุม scope creep</strong></li>
+                      <li>ใช้สร้าง<strong>เอกสารฝึกอบรม การตลาด และเอกสาร support/maintenance</strong></li>
+                      <li>ช่วย<strong>แบ่งโปรเจกต์ใหญ่ จัดลำดับ release</strong> และบริหารโปรเจกต์ง่ายขึ้น</li>
+                    </ul>
+                  </section>
+
+                  <section class="topic" id="re-validation">
+                    <h4>Requirements Validation</h4>
+                    <ul class="tight">
+                      <li>กระบวนการ<strong>ตรวจว่า requirement นิยามระบบที่ลูกค้าต้องการจริง</strong></li>
+                      <li>สำคัญมาก เพราะ error ในเอกสาร requirement ทำให้<strong>ต้องแก้งานย้อนหลังจำนวนมาก (extensive rework costs)</strong> ถ้าพบระหว่างพัฒนาหรือหลังระบบใช้งานแล้ว</li>
+                      <li>การเปลี่ยน requirement มักหมายถึง<strong>ต้องเปลี่ยน design และ implementation ด้วย และต้องทดสอบระบบใหม่</strong></li>
+                    </ul>
+                  </section>
+
+                  <section class="topic" id="re-criteria">
+                    <h4>7 เกณฑ์ Requirements Validation</h4>
+                    <div class="table-scroll">
+                      <table>
+                        <thead><tr><th>Check</th><th>ตรวจอะไร</th></tr></thead>
+                        <tbody>
+                          <tr><td><strong>Validity</strong></td><td>requirement สะท้อนความต้องการจริงของผู้ใช้ระบบ</td></tr>
+                          <tr><td><strong>Consistency</strong></td><td>ไม่มีความขัดแย้ง (ไม่มีข้อจำกัดที่ขัดกัน หรือคำอธิบายฟังก์ชันเดียวกันที่ต่างกัน)</td></tr>
+                          <tr><td><strong>Completeness</strong></td><td>นิยามทุกฟังก์ชันและข้อจำกัดครบ</td></tr>
+                          <tr><td><strong>Realism</strong></td><td>requirement implement และส่งมอบได้จริง</td></tr>
+                          <tr><td><strong>Clarity</strong></td><td>ไม่มีความกำกวม</td></tr>
+                          <tr><td><strong>Verifiability</strong></td><td>เมื่อสร้างระบบแล้ว ออกแบบการทดสอบที่ทำซ้ำได้เพื่อพิสูจน์ว่าระบบตรง requirement</td></tr>
+                          <tr><td><strong>Traceability</strong></td><td>functional requirement สอดคล้องและสืบย้อนกลับไปยังฟังก์ชันของระบบที่นิยามไว้ได้</td></tr>
+                        </tbody>
+                      </table>
+                    </div>
+                  </section>
+
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- ================= 05 Requirements change และ management ================= -->
+          <div class="acc-item">
+            <h3 class="acc-heading">
+              <button class="acc-trigger" type="button" aria-expanded="false" aria-controls="acc-re-change" id="acc-re-change-btn">
+                <span class="acc-index">05</span>
+                <span class="acc-title">
+                  <span class="acc-name">Requirements Change · Requirements Management</span>
+                  <span class="acc-file">L3 Requirement Engineering · slide 61–66</span>
+                </span>
+                <svg class="acc-chevron" viewBox="0 0 20 20" aria-hidden="true"><path d="M5 7.5l5 5 5-5" /></svg>
+              </button>
+            </h3>
+            <div class="acc-panel" id="acc-re-change" role="region" aria-labelledby="acc-re-change-btn">
+              <div class="acc-panel-inner">
+                <div class="acc-body">
+
+                  <nav class="toc" aria-label="หัวข้อในการ์ด requirements change">
+                    <a href="#re-wicked">ทำไม requirement เปลี่ยน</a>
+                    <a href="#re-management">Requirements management</a>
+                    <a href="#re-mgmt-planning">Management planning</a>
+                    <a href="#re-change-mgmt">Change management</a>
+                  </nav>
+
+                  <section class="topic" id="re-wicked">
+                    <h4>Requirements เปลี่ยนได้ — "wicked problems"</h4>
+                    <figure class="diagram">
+                      <div class="diagram-scroll">
+                        <svg viewBox="0 0 720 200" role="img" aria-labelledby="re-wick-t re-wick-d">
+                          <title id="re-wick-t">เหตุที่ requirement เปลี่ยน</title>
+                          <desc id="re-wick-d">แถวบน: ปัญหาเป็น wicked problem นิยามได้ไม่ครบ ทำให้ requirement ที่ผูกกับปัญหาอาจไม่สมบูรณ์ นำไปสู่การเปลี่ยน requirement แถวล่าง: ความเข้าใจเริ่มต้นของ stakeholder ได้ requirement เริ่มต้น เมื่อความเข้าใจเปลี่ยน requirement ก็เปลี่ยน</desc>
+                          <rect class="dg-box" x="10" y="20" width="160" height="56" rx="8" />
+                          <text class="dg-text dg-text--sm" x="90" y="44" text-anchor="middle">Problems are</text>
+                          <text class="dg-text dg-text--sm" x="90" y="62" text-anchor="middle">"wicked" problems</text>
+                          <rect class="dg-box" x="195" y="20" width="160" height="56" rx="8" />
+                          <text class="dg-text dg-text--sm" x="275" y="44" text-anchor="middle">Problem cannot be</text>
+                          <text class="dg-text dg-text--sm" x="275" y="62" text-anchor="middle">fully defined</text>
+                          <rect class="dg-box" x="380" y="20" width="170" height="56" rx="8" />
+                          <text class="dg-text dg-text--sm" x="465" y="44" text-anchor="middle">Requirements bound to</text>
+                          <text class="dg-text dg-text--sm" x="465" y="62" text-anchor="middle">problems may be incomplete</text>
+                          <rect class="dg-box dg-box--accent" x="575" y="20" width="135" height="56" rx="8" />
+                          <text class="dg-text" x="642" y="53" text-anchor="middle">Changes</text>
+                          <line class="dg-line" x1="172" y1="48" x2="191" y2="48" marker-end="url(#arr-muted)" />
+                          <line class="dg-line" x1="357" y1="48" x2="376" y2="48" marker-end="url(#arr-muted)" />
+                          <line class="dg-line dg-line--accent" x1="552" y1="48" x2="571" y2="48" marker-end="url(#arr)" />
+                          <rect class="dg-box" x="10" y="120" width="190" height="56" rx="8" />
+                          <text class="dg-text dg-text--sm" x="105" y="144" text-anchor="middle">Stakeholders' initial</text>
+                          <text class="dg-text dg-text--sm" x="105" y="162" text-anchor="middle">understanding of problem</text>
+                          <rect class="dg-box" x="225" y="120" width="140" height="56" rx="8" />
+                          <text class="dg-text dg-text--sm" x="295" y="144" text-anchor="middle">Derive initial</text>
+                          <text class="dg-text dg-text--sm" x="295" y="162" text-anchor="middle">requirements</text>
+                          <rect class="dg-box" x="390" y="120" width="160" height="56" rx="8" />
+                          <text class="dg-text dg-text--sm" x="470" y="144" text-anchor="middle">Stakeholders' changed</text>
+                          <text class="dg-text dg-text--sm" x="470" y="162" text-anchor="middle">understanding</text>
+                          <rect class="dg-box dg-box--accent" x="575" y="120" width="135" height="56" rx="8" />
+                          <text class="dg-text" x="642" y="153" text-anchor="middle">Changes</text>
+                          <line class="dg-line" x1="202" y1="148" x2="221" y2="148" marker-end="url(#arr-muted)" />
+                          <line class="dg-line" x1="367" y1="148" x2="386" y2="148" marker-end="url(#arr-muted)" />
+                          <line class="dg-line dg-line--accent" x1="552" y1="148" x2="571" y2="148" marker-end="url(#arr)" />
+                        </svg>
+                      </div>
+                      <figcaption>สไลด์ 3-62 Requirements can change…</figcaption>
+                    </figure>
+                    <p>เมื่อ requirement วิวัฒนาการ ต้อง<strong>ติดตาม requirement แต่ละข้อ และรักษาลิงก์ระหว่าง requirement ที่พึ่งพากัน</strong> เพื่อประเมินผลกระทบของการเปลี่ยนแปลง — กระบวนการนี้เรียกว่า <strong>Requirements Management</strong></p>
+                  </section>
+
+                  <section class="topic" id="re-management">
+                    <h4>Requirements Management</h4>
+                    <p>กระบวนการ<strong>ทางการ</strong>สำหรับเสนอการเปลี่ยนแปลง และเชื่อมโยงการเปลี่ยนแปลงเหล่านั้นกับ system requirements — ประกอบด้วย <strong>2 กระบวนการ</strong>:</p>
+                    <div class="compare">
+                      <div class="compare-col">
+                        <strong>1. Requirements management planning</strong>
+                        <p>กำหนดว่าจะจัดการชุด requirement ที่วิวัฒนาการอย่างไร</p>
+                      </div>
+                      <div class="compare-col">
+                        <strong>2. Requirements change management</strong>
+                        <p>จัดการข้อเสนอเปลี่ยนแปลงทั้งหมด<strong>หลังเอกสาร requirement ได้รับอนุมัติแล้ว</strong></p>
+                      </div>
+                    </div>
+                  </section>
+
+                  <section class="topic" id="re-mgmt-planning">
+                    <h4>Requirements management planning — ต้องพิจารณา</h4>
+                    <dl class="defs defs--stack">
+                      <div><dt>Requirements identification</dt><dd>requirement แต่ละข้อต้องมีรหัสไม่ซ้ำ เพื่ออ้างอิงข้ามกันและใช้ประเมิน traceability</dd></div>
+                      <div><dt>Change management process</dt><dd>ชุดกิจกรรมที่ประเมินผลกระทบและต้นทุนของการเปลี่ยนแปลง</dd></div>
+                      <div><dt>Traceability policies</dt><dd>นิยามความสัมพันธ์ระหว่าง requirement แต่ละข้อ และระหว่าง requirement กับ system design</dd></div>
+                      <div><dt>Tool support</dt><dd>เครื่องมืออัตโนมัติสำหรับดูแล requirement</dd></div>
+                    </dl>
+                  </section>
+
+                  <section class="topic" id="re-change-mgmt">
+                    <h4>Requirements change management — 3 ขั้น</h4>
+                    <figure class="diagram">
+                      <div class="diagram-scroll">
+                        <svg viewBox="0 0 720 120" role="img" aria-labelledby="re-chg-t re-chg-d">
+                          <title id="re-chg-t">ขั้นตอน requirements change management</title>
+                          <desc id="re-chg-d">Problem analysis and change specification ไป Change analysis and costing ไป Change implementation</desc>
+                          <rect class="dg-box dg-box--accent" x="10" y="30" width="210" height="60" rx="10" />
+                          <text class="dg-text dg-text--sm" x="115" y="56" text-anchor="middle">Problem analysis and</text>
+                          <text class="dg-text dg-text--sm" x="115" y="74" text-anchor="middle">change specification</text>
+                          <rect class="dg-box dg-box--accent" x="255" y="30" width="210" height="60" rx="10" />
+                          <text class="dg-text dg-text--sm" x="360" y="56" text-anchor="middle">Change analysis</text>
+                          <text class="dg-text dg-text--sm" x="360" y="74" text-anchor="middle">and costing</text>
+                          <rect class="dg-box dg-box--accent" x="500" y="30" width="210" height="60" rx="10" />
+                          <text class="dg-text" x="605" y="65" text-anchor="middle">Change implementation</text>
+                          <line class="dg-line dg-line--accent" x1="222" y1="60" x2="251" y2="60" marker-end="url(#arr)" />
+                          <line class="dg-line dg-line--accent" x1="467" y1="60" x2="496" y2="60" marker-end="url(#arr)" />
+                        </svg>
+                      </div>
+                      <figcaption>สไลด์ 3-66 Requirements change management</figcaption>
+                    </figure>
+                    <ol class="steps">
+                      <li><strong>Problem analysis and change specification</strong> — ระบุปัญหาหรือข้อเสนอเปลี่ยนแปลง ตรวจว่าถูกต้องหรือไม่ แล้วตัดสินว่ารับหรือถอน</li>
+                      <li><strong>Change analysis and costing</strong> — ประเมินการเปลี่ยนแปลงโดยใช้ข้อมูล traceability และความรู้เรื่อง system requirements แล้วประมาณต้นทุนการแก้ไข</li>
+                      <li><strong>Change implementation</strong> — แก้ system design และ implementation</li>
+                    </ol>
+                  </section>
+
+                </div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </section>
+
+      <!-- =============================================================
+           แท็บ 2: สรุป (cheat sheet)
+           ============================================================= -->
+      <section class="panel" id="summary" role="tabpanel" aria-labelledby="tab-summary" tabindex="-1">
+        <div class="panel-head">
+          <h2>Cheat sheet</h2>
+          <p class="panel-sub">ประเภท requirement, 4 กระบวนการ RE, เทคนิค elicitation, user story, เกณฑ์ validation และ requirements management ในหน้าเดียว</p>
+        </div>
+
+        <div class="sheet">
+
+<article class="sheet-card">
+            <h3><span class="sheet-num">01</span> User vs System requirements</h3>
+            <div class="table-scroll">
+              <table>
+                <thead><tr><th></th><th>User</th><th>System</th></tr></thead>
+                <tbody>
+                  <tr><td>บอกอะไร</td><td>บริการที่ผู้ใช้คาดหวัง + ข้อจำกัด</td><td>function / service / operational constraint อย่างละเอียด</td></tr>
+                  <tr><td>ระดับ</td><td>กว้าง → ละเอียดได้</td><td>define exactly what is to be implemented</td></tr>
+                </tbody>
+              </table>
+            </div>
+            <p class="note"><strong>Requirement</strong> = คำอธิบาย services ที่ระบบควรให้ + constraints ในการทำงาน</p>
+          </article>
+
+          <article class="sheet-card sheet-card--wide">
+            <h3><span class="sheet-num">02</span> Functional vs Non-functional</h3>
+            <div class="table-scroll">
+              <table>
+                <thead><tr><th></th><th>Functional</th><th>Non-functional</th></tr></thead>
+                <tbody>
+                  <tr><td>ระบุ</td><td><strong>บริการ</strong>ที่ระบบต้องทำ · ตอบสนอง input / สถานการณ์อย่างไร</td><td><strong>ข้อจำกัด</strong>ของบริการ เช่น response time, compatibility, memory use</td></tr>
+                  <tr><td>ขอบเขต</td><td>ฟีเจอร์/บริการเฉพาะ</td><td>มักครอบคลุม<strong>ทั้งระบบ</strong> · ต้อง <strong>measurable &amp; testable</strong></td></tr>
+                  <tr><td>ตัวอย่าง</td><td>"A user shall be able to search the appointments lists for all clinics."</td><td>"handle up to 10,000 concurrent users without significant performance degradation"</td></tr>
+                </tbody>
+              </table>
+            </div>
+            <p class="note">เขียนแบบ natural language: <strong>Shall</strong> = mandatory · <strong>Should</strong> = desirable</p>
+          </article>
+
+          <article class="sheet-card">
+            <h3><span class="sheet-num">03</span> 4 กระบวนการ RE</h3>
+            <ol class="steps">
+              <li><strong>Elicitation</strong> — เข้าใจงานของ stakeholder</li>
+              <li><strong>Specification</strong> — เขียนลงเอกสาร (natural language, structured, use case, prototype)</li>
+              <li><strong>Validation</strong> — ตรวจว่าตรงที่ลูกค้าต้องการจริง</li>
+              <li><strong>Change</strong> — จัดการเมื่อ requirement เปลี่ยน</li>
+            </ol>
+            <p class="note">iterative · output = <strong>system requirements document</strong> · ก่อนเริ่มทำ <strong>feasibility study</strong> (เป้าหมายองค์กร / เวลา-งบ-เทคโนโลยี / integrate ได้ไหม)</p>
+          </article>
+
+          <article class="sheet-card">
+            <h3><span class="sheet-num">04</span> 2 เทคนิค Elicitation</h3>
+            <dl class="defs defs--stack">
+              <div><dt>Interviewing</dt><dd>คุยกับคนเรื่องงานที่ทำ · closed / open · ระวัง jargon, คนคุ้นงานจนอธิบายยาก, อำนาจในองค์กร · ห้ามถาม "tell me what you want"</dd></div>
+              <div><dt>Observation / Ethnography</dt><dd>analyst เข้าไปอยู่ในที่ทำงานจริง สังเกตงานประจำวัน → เจอ <strong>implicit requirements</strong></dd></div>
+            </dl>
+            <p class="note">อื่นๆ: สุ่มเอกสาร/ฟอร์ม/ฐานข้อมูล · site visits · questionnaires · JRP</p>
+          </article>
+
+          <article class="sheet-card">
+            <h3><span class="sheet-num">05</span> User Story + Acceptance Criteria</h3>
+            <p><strong>User story:</strong> As a [role] · I want [feature] · So that [benefit]</p>
+            <p><strong>Acceptance criteria</strong> (Gherkin): <strong>Given</strong> สถานการณ์ · <strong>When</strong> ผู้ใช้ทำอะไร · <strong>Then</strong> ผลลัพธ์ของระบบ</p>
+            <p class="note">ต้องชัดเจน ไม่กำกวม และวัดผลได้ · หรือเรียก Definition of Done (DoD)</p>
+          </article>
+
+          <article class="sheet-card sheet-card--wide">
+            <h3><span class="sheet-num">06</span> 7 เกณฑ์ Requirements Validation</h3>
+            <div class="table-scroll">
+              <table>
+                <thead><tr><th>Check</th><th>ตรวจ</th><th>Check</th><th>ตรวจ</th></tr></thead>
+                <tbody>
+                  <tr><td><strong>Validity</strong></td><td>สะท้อนความต้องการจริง</td><td><strong>Clarity</strong></td><td>ไม่กำกวม</td></tr>
+                  <tr><td><strong>Consistency</strong></td><td>ไม่ขัดแย้งกัน</td><td><strong>Verifiability</strong></td><td>ออกแบบ test ซ้ำได้เพื่อพิสูจน์</td></tr>
+                  <tr><td><strong>Completeness</strong></td><td>ครบทุกฟังก์ชัน/ข้อจำกัด</td><td><strong>Traceability</strong></td><td>functional req. สืบย้อนไปยังฟังก์ชันของระบบได้</td></tr>
+                  <tr><td><strong>Realism</strong></td><td>implement/ส่งมอบได้จริง</td><td></td><td></td></tr>
+                </tbody>
+              </table>
+            </div>
+            <p class="note"><strong>SRS</strong> = เอกสารทางการของสิ่งที่ต้อง implement รวม user + system requirements · ผู้อ่านตั้งแต่ผู้บริหารถึงวิศวกร</p>
+          </article>
+
+          <article class="sheet-card">
+            <h3><span class="sheet-num">07</span> Requirements Management</h3>
+            <p>requirement เปลี่ยนเพราะปัญหาเป็น <strong>"wicked problem"</strong> นิยามไม่ครบ + ความเข้าใจ stakeholder เปลี่ยน</p>
+            <ol class="steps">
+              <li><strong>Management planning</strong> — identification · change management process · traceability policies · tool support</li>
+              <li><strong>Change management</strong> (หลังอนุมัติเอกสาร) — problem analysis &amp; change spec → change analysis &amp; costing → change implementation</li>
+            </ol>
+          </article>
+
+        </div>
+      </section>
+
+      <!-- =============================================================
+           แท็บ 3: แบบฝึกหัด (20 ข้อ)
+           data-answer = ตัวเลือกที่ถูก (ก=a, ข=b, ค=c, ง=d ตามเฉลยที่ผู้ใช้กำหนด)
+           ============================================================= -->
+      <section class="panel" id="quiz" role="tabpanel" aria-labelledby="tab-quiz" tabindex="-1">
+        <div class="panel-head">
+          <h2>แบบฝึกหัด 20 ข้อ</h2>
+          <p class="panel-sub">เลือกคำตอบให้ครบแล้วกด "ตรวจคำตอบ" ด้านล่าง ระบบจะเฉลยพร้อมคำอธิบายทุกข้อ</p>
+        </div>
+
+        <form class="quiz" id="quiz-form" novalidate>
+
+          <fieldset class="q" data-answer="a">
+            <legend class="q-head"><span class="q-num">01</span><span class="q-text">Software Requirements คืออะไร?</span></legend>
+            <div class="q-options">
+              <label class="opt"><input type="radio" name="q1" value="a" /><span class="opt-key">A</span><span class="opt-text">คำอธิบายบริการที่ระบบควรมอบให้ และข้อจำกัดในการดำเนินงานของระบบ</span></label>
+              <label class="opt"><input type="radio" name="q1" value="b" /><span class="opt-key">B</span><span class="opt-text">โค้ดต้นฉบับของโปรแกรม</span></label>
+              <label class="opt"><input type="radio" name="q1" value="c" /><span class="opt-key">C</span><span class="opt-text">ผลการทดสอบซอฟต์แวร์</span></label>
+              <label class="opt"><input type="radio" name="q1" value="d" /><span class="opt-key">D</span><span class="opt-text">เอกสารสัญญาจ้างงาน</span></label>
+            </div>
+            <div class="q-feedback"><div class="q-feedback-inner"><p class="q-verdict" aria-live="polite"></p><p class="q-explain">สไลด์ 3-5: software requirements are the descriptions of the services that a system should provide and the constraints on its operations</p></div></div>
+          </fieldset>
+
+          <fieldset class="q" data-answer="a">
+            <legend class="q-head"><span class="q-num">02</span><span class="q-text">User Requirements ต่างจาก System Requirements อย่างไร?</span></legend>
+            <div class="q-options">
+              <label class="opt"><input type="radio" name="q2" value="a" /><span class="opt-key">A</span><span class="opt-text">User requirements ระบุบริการในภาพกว้าง ส่วน System requirements ระบุรายละเอียดฟังก์ชัน/บริการ/ข้อจำกัดที่ต้อง implement อย่างชัดเจน</span></label>
+              <label class="opt"><input type="radio" name="q2" value="b" /><span class="opt-key">B</span><span class="opt-text">เป็นสิ่งเดียวกันทุกประการ</span></label>
+              <label class="opt"><input type="radio" name="q2" value="c" /><span class="opt-key">C</span><span class="opt-text">System requirements เขียนโดยผู้ใช้เท่านั้น</span></label>
+              <label class="opt"><input type="radio" name="q2" value="d" /><span class="opt-key">D</span><span class="opt-text">User requirements ละเอียดกว่าเสมอ</span></label>
+            </div>
+            <div class="q-feedback"><div class="q-feedback-inner"><p class="q-verdict" aria-live="polite"></p><p class="q-explain">User requirements บอกบริการที่ผู้ใช้คาดหวังและข้อจำกัด (กว้างไปจนละเอียดได้) · System requirements อธิบาย function/service/constraint อย่างละเอียดและ define exactly what is to be implemented</p></div></div>
+          </fieldset>
+
+          <fieldset class="q" data-answer="a">
+            <legend class="q-head"><span class="q-num">03</span><span class="q-text">Functional Requirements ต่างจาก Non-functional Requirements อย่างไร?</span></legend>
+            <div class="q-options">
+              <label class="opt"><input type="radio" name="q3" value="a" /><span class="opt-key">A</span><span class="opt-text">Functional ระบุ &quot;บริการ&quot; ที่ระบบต้องทำ ส่วน Non-functional ระบุ &quot;ข้อจำกัด&quot; ของบริการนั้น เช่น เวลาตอบสนอง</span></label>
+              <label class="opt"><input type="radio" name="q3" value="b" /><span class="opt-key">B</span><span class="opt-text">Functional เขียนโดยลูกค้าเท่านั้น</span></label>
+              <label class="opt"><input type="radio" name="q3" value="c" /><span class="opt-key">C</span><span class="opt-text">Non-functional สำคัญน้อยกว่าเสมอ</span></label>
+              <label class="opt"><input type="radio" name="q3" value="d" /><span class="opt-key">D</span><span class="opt-text">ทั้งสองแบบเหมือนกันทุกประการ</span></label>
+            </div>
+            <div class="q-feedback"><div class="q-feedback-inner"><p class="q-verdict" aria-live="polite"></p><p class="q-explain">Functional = services ที่ระบบต้องให้ และระบบตอบสนอง input/สถานการณ์อย่างไร · Non-functional = constraints on the services เช่น response time, compatibility, memory use มักครอบคลุมทั้งระบบ</p></div></div>
+          </fieldset>
+
+          <fieldset class="q" data-answer="b">
+            <legend class="q-head"><span class="q-num">04</span><span class="q-text">&quot;ระบบต้องรองรับผู้ใช้พร้อมกันได้ถึง 10,000 คนโดยประสิทธิภาพไม่ลดลงอย่างมีนัยสำคัญ&quot; เป็น requirement ประเภทใด?</span></legend>
+            <div class="q-options">
+              <label class="opt"><input type="radio" name="q4" value="a" /><span class="opt-key">A</span><span class="opt-text">Functional requirement</span></label>
+              <label class="opt"><input type="radio" name="q4" value="b" /><span class="opt-key">B</span><span class="opt-text">Non-functional requirement (ด้าน performance)</span></label>
+              <label class="opt"><input type="radio" name="q4" value="c" /><span class="opt-key">C</span><span class="opt-text">Design constraint เท่านั้น</span></label>
+              <label class="opt"><input type="radio" name="q4" value="d" /><span class="opt-key">D</span><span class="opt-text">User story</span></label>
+            </div>
+            <div class="q-feedback"><div class="q-feedback-inner"><p class="q-verdict" aria-live="polite"></p><p class="q-explain">ประโยคนี้ไม่ได้เพิ่มบริการใหม่ แต่กำหนดข้อจำกัดด้านประสิทธิภาพของระบบทั้งระบบ และวัดผลได้ (10,000 concurrent users) จึงเป็น non-functional</p></div></div>
+          </fieldset>
+
+          <fieldset class="q" data-answer="b">
+            <legend class="q-head"><span class="q-num">05</span><span class="q-text">Feasibility Study มีวัตถุประสงค์หลักเพื่ออะไร?</span></legend>
+            <div class="q-options">
+              <label class="opt"><input type="radio" name="q5" value="a" /><span class="opt-key">A</span><span class="opt-text">เขียนโค้ดต้นแบบ</span></label>
+              <label class="opt"><input type="radio" name="q5" value="b" /><span class="opt-key">B</span><span class="opt-text">ตอบคำถามว่าระบบสนับสนุนเป้าหมายองค์กร ทำได้ภายในเวลา/งบประมาณ และรวมกับระบบอื่นได้หรือไม่</span></label>
+              <label class="opt"><input type="radio" name="q5" value="c" /><span class="opt-key">C</span><span class="opt-text">ทดสอบระบบหลัง deploy</span></label>
+              <label class="opt"><input type="radio" name="q5" value="d" /><span class="opt-key">D</span><span class="opt-text">ฝึกอบรมผู้ใช้</span></label>
+            </div>
+            <div class="q-feedback"><div class="q-feedback-inner"><p class="q-verdict" aria-live="polite"></p><p class="q-explain">Feasibility study ตอบ 3 คำถาม: ช่วยเป้าหมายองค์กรไหม · ทำได้ในเวลา/งบด้วยเทคโนโลยีปัจจุบันไหม · integrate กับระบบที่ใช้อยู่ได้ไหม — ถ้าข้อใดตอบว่าไม่ ไม่ควรทำต่อ</p></div></div>
+          </fieldset>
+
+          <fieldset class="q" data-answer="a">
+            <legend class="q-head"><span class="q-num">06</span><span class="q-text">Requirements Engineering (RE) ประกอบด้วย 4 กระบวนการหลักใด?</span></legend>
+            <div class="q-options">
+              <label class="opt"><input type="radio" name="q6" value="a" /><span class="opt-key">A</span><span class="opt-text">Elicitation, Specification, Validation, Change</span></label>
+              <label class="opt"><input type="radio" name="q6" value="b" /><span class="opt-key">B</span><span class="opt-text">Design, Code, Test, Deploy</span></label>
+              <label class="opt"><input type="radio" name="q6" value="c" /><span class="opt-key">C</span><span class="opt-text">Plan, Organize, Monitor, Adjust</span></label>
+              <label class="opt"><input type="radio" name="q6" value="d" /><span class="opt-key">D</span><span class="opt-text">Analysis, Design, Implementation, Maintenance</span></label>
+            </div>
+            <div class="q-feedback"><div class="q-feedback-inner"><p class="q-verdict" aria-live="polite"></p><p class="q-explain">RE เป็น iterative process ผลลัพธ์คือ system requirements document มี 4 processes: requirements elicitation, specification, validation และ change · Plan/Organize/Monitor/Adjust คือ POMA ของบทที่ 1</p></div></div>
+          </fieldset>
+
+          <fieldset class="q" data-answer="a">
+            <legend class="q-head"><span class="q-num">07</span><span class="q-text">เทคนิคพื้นฐาน 2 แบบของ Requirements Elicitation คือข้อใด?</span></legend>
+            <div class="q-options">
+              <label class="opt"><input type="radio" name="q7" value="a" /><span class="opt-key">A</span><span class="opt-text">Interviewing และ Observation/Ethnography</span></label>
+              <label class="opt"><input type="radio" name="q7" value="b" /><span class="opt-key">B</span><span class="opt-text">Coding และ Testing</span></label>
+              <label class="opt"><input type="radio" name="q7" value="c" /><span class="opt-key">C</span><span class="opt-text">Design และ Prototyping เท่านั้น</span></label>
+              <label class="opt"><input type="radio" name="q7" value="d" /><span class="opt-key">D</span><span class="opt-text">Voting และ Surveying เท่านั้น</span></label>
+            </div>
+            <div class="q-feedback"><div class="q-feedback-inner"><p class="q-verdict" aria-live="polite"></p><p class="q-explain">Two fundamental approaches: (1) interviewing — คุยกับคนเรื่องงานที่ทำ (2) observation or ethnography — ดูคนทำงานจริงว่าใช้ artifact อะไรอย่างไร</p></div></div>
+          </fieldset>
+
+          <fieldset class="q" data-answer="b">
+            <legend class="q-head"><span class="q-num">08</span><span class="q-text">Ethnography ในบริบท requirements elicitation คืออะไร?</span></legend>
+            <div class="q-options">
+              <label class="opt"><input type="radio" name="q8" value="a" /><span class="opt-key">A</span><span class="opt-text">การสัมภาษณ์ผู้ใช้แบบเป็นทางการ</span></label>
+              <label class="opt"><input type="radio" name="q8" value="b" /><span class="opt-key">B</span><span class="opt-text">เทคนิคเชิงสังเกต โดย analyst เข้าไปอยู่ในสภาพแวดล้อมการทำงานจริงเพื่อสังเกตงานประจำวันของผู้ใช้</span></label>
+              <label class="opt"><input type="radio" name="q8" value="c" /><span class="opt-key">C</span><span class="opt-text">การส่งแบบสอบถามออนไลน์</span></label>
+              <label class="opt"><input type="radio" name="q8" value="d" /><span class="opt-key">D</span><span class="opt-text">การทดสอบระบบ</span></label>
+            </div>
+            <div class="q-feedback"><div class="q-feedback-inner"><p class="q-verdict" aria-live="polite"></p><p class="q-explain">Ethnography is an observational technique — analyst immerses himself or herself in the working environment, observe day-to-day work และช่วยค้นพบ implicit requirements ที่สะท้อนวิธีทำงานจริง</p></div></div>
+          </fieldset>
+
+          <fieldset class="q" data-answer="a">
+            <legend class="q-head"><span class="q-num">09</span><span class="q-text">User Story ประกอบด้วยรูปแบบใด?</span></legend>
+            <div class="q-options">
+              <label class="opt"><input type="radio" name="q9" value="a" /><span class="opt-key">A</span><span class="opt-text">As a [role], I want [feature], so that [benefit/value]</span></label>
+              <label class="opt"><input type="radio" name="q9" value="b" /><span class="opt-key">B</span><span class="opt-text">Given-When-Then เท่านั้น</span></label>
+              <label class="opt"><input type="radio" name="q9" value="c" /><span class="opt-key">C</span><span class="opt-text">Input-Process-Output</span></label>
+              <label class="opt"><input type="radio" name="q9" value="d" /><span class="opt-key">D</span><span class="opt-text">Actor-System-Boundary</span></label>
+            </div>
+            <div class="q-feedback"><div class="q-feedback-inner"><p class="q-verdict" aria-live="polite"></p><p class="q-explain">User story template: ในฐานะ (As a) บทบาท · ฉันต้องการ (I want) ความสามารถ · เพื่อที่ (So that) ได้ประโยชน์อะไร — ส่วน Given-When-Then ใช้เขียน acceptance criteria</p></div></div>
+          </fieldset>
+
+          <fieldset class="q" data-answer="a">
+            <legend class="q-head"><span class="q-num">10</span><span class="q-text">Acceptance Criteria มักเขียนในรูปแบบใด (Gherkin syntax)?</span></legend>
+            <div class="q-options">
+              <label class="opt"><input type="radio" name="q10" value="a" /><span class="opt-key">A</span><span class="opt-text">Given-When-Then (กำหนดให้-เมื่อ-จึง)</span></label>
+              <label class="opt"><input type="radio" name="q10" value="b" /><span class="opt-key">B</span><span class="opt-text">As-I want-So that</span></label>
+              <label class="opt"><input type="radio" name="q10" value="c" /><span class="opt-key">C</span><span class="opt-text">If-Then-Else เท่านั้น</span></label>
+              <label class="opt"><input type="radio" name="q10" value="d" /><span class="opt-key">D</span><span class="opt-text">Input-Output</span></label>
+            </div>
+            <div class="q-feedback"><div class="q-feedback-inner"><p class="q-verdict" aria-live="polite"></p><p class="q-explain">สไลด์ 3-42: acceptance criteria มักเขียนในรูป กำหนดให้ (Given) – เมื่อ (When) – จึง (Then) ซึ่งเป็น Gherkin syntax หรือเขียนเป็น bullet point</p></div></div>
+          </fieldset>
+
+          <fieldset class="q" data-answer="a">
+            <legend class="q-head"><span class="q-num">11</span><span class="q-text">Use Case Diagram ประกอบด้วยองค์ประกอบหลักใดบ้าง?</span></legend>
+            <div class="q-options">
+              <label class="opt"><input type="radio" name="q11" value="a" /><span class="opt-key">A</span><span class="opt-text">Actors (stick figure), Use cases (ellipse), และเส้นเชื่อมความสัมพันธ์</span></label>
+              <label class="opt"><input type="radio" name="q11" value="b" /><span class="opt-key">B</span><span class="opt-text">เฉพาะ Class และ Attribute</span></label>
+              <label class="opt"><input type="radio" name="q11" value="c" /><span class="opt-key">C</span><span class="opt-text">เฉพาะ Data flow และ Process</span></label>
+              <label class="opt"><input type="radio" name="q11" value="d" /><span class="opt-key">D</span><span class="opt-text">Entity และ Relationship เท่านั้น</span></label>
+            </div>
+            <div class="q-feedback"><div class="q-feedback-inner"><p class="q-verdict" aria-live="polite"></p><p class="q-explain">สไลด์ 3-46: actors (คนหรือระบบอื่น) เป็น stick figures · แต่ละ interaction เป็น named ellipse · lines link the actors with the interaction</p></div></div>
+          </fieldset>
+
+          <fieldset class="q" data-answer="a">
+            <legend class="q-head"><span class="q-num">12</span><span class="q-text">Requirements Prototyping (ด้าน UI) มี 2 ระดับความสมจริงคือข้อใด?</span></legend>
+            <div class="q-options">
+              <label class="opt"><input type="radio" name="q12" value="a" /><span class="opt-key">A</span><span class="opt-text">Low fidelity (กระดาษ/คาร์ดบอร์ด) และ High fidelity (เครื่องมืออัตโนมัติ)</span></label>
+              <label class="opt"><input type="radio" name="q12" value="b" /><span class="opt-key">B</span><span class="opt-text">Fast fidelity และ Slow fidelity</span></label>
+              <label class="opt"><input type="radio" name="q12" value="c" /><span class="opt-key">C</span><span class="opt-text">Static และ Dynamic เท่านั้น</span></label>
+              <label class="opt"><input type="radio" name="q12" value="d" /><span class="opt-key">D</span><span class="opt-text">Manual และ Automatic เท่านั้น</span></label>
+            </div>
+            <div class="q-feedback"><div class="q-feedback-inner"><p class="q-verdict" aria-live="polite"></p><p class="q-explain">Low fidelity ใช้กระดาษ/คาร์ดบอร์ดแทนหน้าจอและให้คนเลื่อนบอร์ด · High fidelity ใช้เครื่องมืออัตโนมัติ เช่น Visual Basic เขียนหน้าจอและควบคุม logical flow</p></div></div>
+          </fieldset>
+
+          <fieldset class="q" data-answer="a">
+            <legend class="q-head"><span class="q-num">13</span><span class="q-text">Software Requirements Document (SRS) คืออะไร?</span></legend>
+            <div class="q-options">
+              <label class="opt"><input type="radio" name="q13" value="a" /><span class="opt-key">A</span><span class="opt-text">เอกสารทางการที่ระบุสิ่งที่นักพัฒนาระบบต้อง implement รวมทั้ง user และ system requirements</span></label>
+              <label class="opt"><input type="radio" name="q13" value="b" /><span class="opt-key">B</span><span class="opt-text">เอกสารบันทึกการประชุมทีม</span></label>
+              <label class="opt"><input type="radio" name="q13" value="c" /><span class="opt-key">C</span><span class="opt-text">คู่มือการใช้งานสำหรับผู้ใช้ปลายทางเท่านั้น</span></label>
+              <label class="opt"><input type="radio" name="q13" value="d" /><span class="opt-key">D</span><span class="opt-text">รายงานผลการทดสอบ</span></label>
+            </div>
+            <div class="q-feedback"><div class="q-feedback-inner"><p class="q-verdict" aria-live="polite"></p><p class="q-explain">SRS is an official statement of what the system developers should implement และรวมทั้ง user และ system requirements (user requirements อยู่ในบทนำของ SRS)</p></div></div>
+          </fieldset>
+
+          <fieldset class="q" data-answer="a">
+            <legend class="q-head"><span class="q-num">14</span><span class="q-text">Requirements Validation ตรวจสอบเกณฑ์ใดบ้าง?</span></legend>
+            <div class="q-options">
+              <label class="opt"><input type="radio" name="q14" value="a" /><span class="opt-key">A</span><span class="opt-text">Validity, Consistency, Completeness, Realism, Clarity, Verifiability, Traceability</span></label>
+              <label class="opt"><input type="radio" name="q14" value="b" /><span class="opt-key">B</span><span class="opt-text">ความเร็วในการเขียนโค้ดเท่านั้น</span></label>
+              <label class="opt"><input type="radio" name="q14" value="c" /><span class="opt-key">C</span><span class="opt-text">จำนวนหน้าของเอกสารเท่านั้น</span></label>
+              <label class="opt"><input type="radio" name="q14" value="d" /><span class="opt-key">D</span><span class="opt-text">งบประมาณของโปรเจกต์เท่านั้น</span></label>
+            </div>
+            <div class="q-feedback"><div class="q-feedback-inner"><p class="q-verdict" aria-live="polite"></p><p class="q-explain">สไลด์ 3-59 และ 3-60 มี 7 เกณฑ์: validity, consistency, completeness, realism, clarity, verifiability และ traceability</p></div></div>
+          </fieldset>
+
+          <fieldset class="q" data-answer="b">
+            <legend class="q-head"><span class="q-num">15</span><span class="q-text">Traceability check ตรวจสอบเรื่องใด?</span></legend>
+            <div class="q-options">
+              <label class="opt"><input type="radio" name="q15" value="a" /><span class="opt-key">A</span><span class="opt-text">Requirement แต่ละข้อไม่มีความขัดแย้งกัน</span></label>
+              <label class="opt"><input type="radio" name="q15" value="b" /><span class="opt-key">B</span><span class="opt-text">Functional requirement สืบย้อนกลับไปยังฟังก์ชันของระบบที่นิยามไว้ได้</span></label>
+              <label class="opt"><input type="radio" name="q15" value="c" /><span class="opt-key">C</span><span class="opt-text">เอกสารเขียนด้วยภาษาที่ชัดเจน</span></label>
+              <label class="opt"><input type="radio" name="q15" value="d" /><span class="opt-key">D</span><span class="opt-text">Requirement ทำได้จริงตามเทคโนโลยีปัจจุบัน</span></label>
+            </div>
+            <div class="q-feedback"><div class="q-feedback-inner"><p class="q-verdict" aria-live="polite"></p><p class="q-explain">Traceability: functional requirements correspond and can be traced back to defined system functions · ตัวเลือกอื่นคือ consistency, clarity และ realism ตามลำดับ</p></div></div>
+          </fieldset>
+
+          <fieldset class="q" data-answer="a">
+            <legend class="q-head"><span class="q-num">16</span><span class="q-text">Requirements Management ประกอบด้วย 2 กระบวนการใด?</span></legend>
+            <div class="q-options">
+              <label class="opt"><input type="radio" name="q16" value="a" /><span class="opt-key">A</span><span class="opt-text">Requirements management planning และ Requirements change management</span></label>
+              <label class="opt"><input type="radio" name="q16" value="b" /><span class="opt-key">B</span><span class="opt-text">Coding และ Testing</span></label>
+              <label class="opt"><input type="radio" name="q16" value="c" /><span class="opt-key">C</span><span class="opt-text">Design และ Implementation</span></label>
+              <label class="opt"><input type="radio" name="q16" value="d" /><span class="opt-key">D</span><span class="opt-text">Elicitation และ Validation เท่านั้น</span></label>
+            </div>
+            <div class="q-feedback"><div class="q-feedback-inner"><p class="q-verdict" aria-live="polite"></p><p class="q-explain">Requirements management consists of two processes: requirements management planning (วางวิธีจัดการ requirement ที่วิวัฒนาการ) และ requirements change management (จัดการข้อเสนอเปลี่ยนหลังเอกสารอนุมัติแล้ว)</p></div></div>
+          </fieldset>
+
+          <fieldset class="q" data-answer="a">
+            <legend class="q-head"><span class="q-num">17</span><span class="q-text">เหตุใด Requirements จึงต้องมีการจัดการการเปลี่ยนแปลง?</span></legend>
+            <div class="q-options">
+              <label class="opt"><input type="radio" name="q17" value="a" /><span class="opt-key">A</span><span class="opt-text">เพราะปัญหาที่ requirements สะท้อนอยู่มักเป็น &quot;wicked problem&quot; ที่นิยามได้ไม่สมบูรณ์ตั้งแต่แรก ความเข้าใจของ stakeholder เปลี่ยนไปได้เรื่อยๆ</span></label>
+              <label class="opt"><input type="radio" name="q17" value="b" /><span class="opt-key">B</span><span class="opt-text">เพราะกฎหมายบังคับ</span></label>
+              <label class="opt"><input type="radio" name="q17" value="c" /><span class="opt-key">C</span><span class="opt-text">เพราะนักพัฒนาต้องการงานเพิ่ม</span></label>
+              <label class="opt"><input type="radio" name="q17" value="d" /><span class="opt-key">D</span><span class="opt-text">เพราะลูกค้าต้องจ่ายเงินเพิ่มเสมอ</span></label>
+            </div>
+            <div class="q-feedback"><div class="q-feedback-inner"><p class="q-verdict" aria-live="polite"></p><p class="q-explain">สไลด์ 3-62: problems are &quot;wicked&quot; problems ที่นิยามได้ไม่ครบ → requirement ที่ผูกกับปัญหาอาจไม่สมบูรณ์ และเมื่อความเข้าใจของ stakeholder เปลี่ยน requirement ก็เปลี่ยน</p></div></div>
+          </fieldset>
+
+          <fieldset class="q" data-answer="a">
+            <legend class="q-head"><span class="q-num">18</span><span class="q-text">การเขียน Natural Language Specification ควรใช้คำใดแยกระหว่าง requirement ที่จำเป็นและที่พึงประสงค์?</span></legend>
+            <div class="q-options">
+              <label class="opt"><input type="radio" name="q18" value="a" /><span class="opt-key">A</span><span class="opt-text">&quot;Shall&quot; สำหรับ mandatory และ &quot;Should&quot; สำหรับ desirable</span></label>
+              <label class="opt"><input type="radio" name="q18" value="b" /><span class="opt-key">B</span><span class="opt-text">&quot;Must&quot; และ &quot;Can&quot; เท่านั้น</span></label>
+              <label class="opt"><input type="radio" name="q18" value="c" /><span class="opt-key">C</span><span class="opt-text">&quot;Will&quot; และ &quot;May&quot; เท่านั้น</span></label>
+              <label class="opt"><input type="radio" name="q18" value="d" /><span class="opt-key">D</span><span class="opt-text">ไม่มีข้อกำหนดเรื่องคำที่ใช้</span></label>
+            </div>
+            <div class="q-feedback"><div class="q-feedback-inner"><p class="q-verdict" aria-live="polite"></p><p class="q-explain">Guideline ข้อ 2 ในสไลด์ 3-35: use language consistently — &quot;Shall&quot; for mandatory requirements / &quot;Should&quot; for desirable requirements</p></div></div>
+          </fieldset>
+
+          <fieldset class="q" data-answer="a">
+            <legend class="q-head"><span class="q-num">19</span><span class="q-text">Data Flow Diagram (DFD) และ Entity Relation Diagram (ERD) จัดเป็นเทคนิคประเภทใด?</span></legend>
+            <div class="q-options">
+              <label class="opt"><input type="radio" name="q19" value="a" /><span class="opt-key">A</span><span class="opt-text">ประเภทของ Requirements Specification (การเขียนบันทึก requirement เชิงกราฟิก)</span></label>
+              <label class="opt"><input type="radio" name="q19" value="b" /><span class="opt-key">B</span><span class="opt-text">เทคนิคการทดสอบซอฟต์แวร์</span></label>
+              <label class="opt"><input type="radio" name="q19" value="c" /><span class="opt-key">C</span><span class="opt-text">เทคนิคการบริหารโปรเจกต์</span></label>
+              <label class="opt"><input type="radio" name="q19" value="d" /><span class="opt-key">D</span><span class="opt-text">ประเภทของ UI prototype</span></label>
+            </div>
+            <div class="q-feedback"><div class="q-feedback-inner"><p class="q-verdict" aria-live="polite"></p><p class="q-explain">สไลด์ 3-50 และ 3-51 จัด DFD และ ERD ไว้ใต้หัวข้อ &quot;Other types of requirements specification&quot;</p></div></div>
+          </fieldset>
+
+          <fieldset class="q" data-answer="a">
+            <legend class="q-head"><span class="q-num">20</span><span class="q-text">Structured Specification (แบบตาราง) มีฟิลด์ใดบ้าง (ตัวอย่างบางส่วน)?</span></legend>
+            <div class="q-options">
+              <label class="opt"><input type="radio" name="q20" value="a" /><span class="opt-key">A</span><span class="opt-text">Requirement ID, Type, Description, Rationale, Source, Input/Output, Precondition, Postcondition</span></label>
+              <label class="opt"><input type="radio" name="q20" value="b" /><span class="opt-key">B</span><span class="opt-text">ชื่อผู้เขียนโค้ดเท่านั้น</span></label>
+              <label class="opt"><input type="radio" name="q20" value="c" /><span class="opt-key">C</span><span class="opt-text">ราคาซอฟต์แวร์เท่านั้น</span></label>
+              <label class="opt"><input type="radio" name="q20" value="d" /><span class="opt-key">D</span><span class="opt-text">วันที่ release เท่านั้น</span></label>
+            </div>
+            <div class="q-feedback"><div class="q-feedback-inner"><p class="q-verdict" aria-live="polite"></p><p class="q-explain">Structured specification มี 10 ฟิลด์: requirement ID, requirement type, description, rationale, source, input(s), output(s), action, precondition, postcondition</p></div></div>
+          </fieldset>
+
+          <div class="quiz-result" id="quiz-result" hidden tabindex="-1">
+            <div class="score-ring" aria-hidden="true">
+              <svg viewBox="0 0 120 120">
+                <circle class="ring-track" cx="60" cy="60" r="52" />
+                <circle class="ring-fill" cx="60" cy="60" r="52" pathLength="100" />
+              </svg>
+              <span class="score-pct"><span id="score-pct">0</span>%</span>
+            </div>
+            <div class="score-body">
+              <p class="score-line" role="status">ได้ <strong id="score-num">0</strong> / 20 คะแนน</p>
+              <p class="score-msg" id="score-msg"></p>
+              <div class="score-actions">
+                <button class="btn btn--ghost btn--sm" type="button" id="toggle-wrong" aria-pressed="false">ดูเฉพาะข้อที่ผิด</button>
+              </div>
+            </div>
+          </div>
+
+          <div class="quiz-bar">
+            <div class="quiz-progress">
+              <span class="quiz-count"><span id="answered">0</span> / 20 ข้อ</span>
+              <span class="progress" aria-hidden="true"><span class="progress-fill" id="progress-fill"></span></span>
+              <span class="quiz-hint" id="quiz-hint" aria-live="polite"></span>
+            </div>
+            <div class="quiz-actions">
+              <button class="btn btn--ghost" type="reset" id="quiz-reset">ทำใหม่</button>
+              <button class="btn btn--primary" type="submit" id="quiz-submit">ตรวจคำตอบ</button>
+            </div>
+          </div>
+        </form>
+      </section>
+
+    </div>
+  </main>
+  <footer class="site-footer">
+    <div class="wrap">
+      <p>สรุปจากสไลด์ ITDS261 Introduction to Software Engineering (Faculty of ICT, Mahidol University) เพื่อใช้ทบทวนส่วนตัว — ถ้าเนื้อหาขัดกับสไลด์ ให้ยึดสไลด์เป็นหลัก</p>
+    </div>
+  </footer>
+
+  <script src="assets/js/widgets.js" defer></script>
+  <script src="assets/js/network.js" defer></script>
+</body>
+</html>
