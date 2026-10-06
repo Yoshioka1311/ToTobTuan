@@ -51,8 +51,9 @@ HTML/CSS/JS ไม่มี framework ไม่มี build tool — ห้า�
 | `se-use-case-modeling.html` | ITDS261 **บทที่ 4: Use Case Modeling** (L4 + In-class Zoo Ticketing) — accordion 5 การ์ด · สรุป 7 การ์ด · quiz 20 ข้อ |
 | `se-flow-behavior-modeling.html` | ITDS261 **บทที่ 5: Flow & Behavior Modeling (DFD)** (L6 + L7) — accordion 6 การ์ด · สรุป 7 การ์ด · quiz 20 ข้อ |
 | `se-ui-design.html` | ITDS261 **บทที่ 6: User Interface Design** (L8) — accordion 4 การ์ด · สรุป 6 การ์ด · quiz 20 ข้อ |
+| `se-midterm.html` | ITDS261 **เตรียมสอบ Midterm** (Midterm guideline) — 3 แท็บ: accordion 5 การ์ด (แผนที่ข้อสอบ + workshop Part 2 + เช็กลิสต์) · สรุปขนาด A4 9 การ์ด · ข้อสอบจำลอง Part 1 20 ข้อ · ใน course nav ป้าย "Midterm" ต่อท้ายบทที่ 6 |
 
-3 วิชา: **Network 4 บท · Web 7 บท · SE 6 บท** — การ์ดใน index ลิงก์ไปบทที่ 1 ของแต่ละวิชา (`network.html`, `web-intro-html-basics.html`, `se-foundation-pm.html`) · ทุกหน้าบทมี **course nav** ต้นหน้า: ปุ่มเลือกวิชา (Network / Web / SE) แล้วตามด้วยลิงก์บทของวิชานั้น
+3 วิชา: **Network 4 บท · Web 7 บท · SE 6 บท + หน้าเตรียมสอบ Midterm** — การ์ดใน index ลิงก์ไปบทที่ 1 ของแต่ละวิชา (`network.html`, `web-intro-html-basics.html`, `se-foundation-pm.html`) · ทุกหน้าบทมี **course nav** ต้นหน้า: ปุ่มเลือกวิชา (Network / Web / SE) แล้วตามด้วยลิงก์บทของวิชานั้น
 - การ์ด "การออกแบบฐานข้อมูล (7-Eleven Schema)" **ถูกลบแล้ว (session 6)** ตามที่ผู้ใช้สั่ง — เป็นการ์ดตัวอย่างของคอร์สที่เลิกเรียนแล้ว คำใน ticker ที่มาจากคอร์สนั้นถูกแทนด้วยคำจาก 3 วิชาปัจจุบัน · hero SVG (รูปกล่อง 1–N) ยังคงไว้เป็นภาพตกแต่ง
 
 ### ⚠️ กฎเรื่องเนื้อหา (สำคัญ) — content lock
@@ -65,6 +66,10 @@ HTML/CSS/JS ไม่มี framework ไม่มี build tool — ห้า�
   - สิ่งที่สไลด์เป็นภาพล้วนจึง**ไม่ได้วาด**: DFD ของ Library Query System (6-35–6-37), decision table ตัวอย่าง (7-18), Structured English constructs (7-15/16), ตาราง Spotify vs HealthCare (2-30) · ตัวอย่าง context diagram ใช้ "digital video processor" (6-21) แทน เพราะมีข้อความครบ
   - ตาราง Agile vs Traditional: สไลด์แยก Complexity กับ Overhead เป็น 2 แถว (ค่าเหมือนกัน) — หน้าเว็บรวมเป็นแถวเดียวให้ครบ "6 มิติ" ตามที่ผู้ใช้ระบุ พร้อมหมายเหตุ
   - Initial Schedule Estimate (บท 1) — จับคู่ task/คน/เวลาจากลำดับข้อความในสไลด์ 1-72 และตรวจเวลาแล้วตรงกับตัวเลขในแผนภาพ PERT 1-71
+- **SE rework (session 7, ผู้ใช้สั่งให้ rework เพื่อเตรียม Midterm)**: แท็บ**เนื้อหา**ของ SE บท 1–6 ถูก**แทรกเพิ่ม** (ไม่ได้ลบ/แก้ของเดิม) ด้วย `.cache/se-rework.mjs`: กล่อง `aside.focus-box` "บทนี้ใน 30 วินาที" + ลิงก์หัวข้อที่อยู่ใน Midterm guideline และ widget `classify` 11 ชุด (marker `<!-- rework:<topic id> -->`) · แท็บสรุปและ quiz ของ 6 บทไม่เปลี่ยน (ตรวจ md5)
+  - **Midterm guideline** (`2026 - ITDS261 - Midterm guideline.pdf` ใน `DownloadsSoftware En`): Midterm 40% · Part 1 = 15 คะแนน (Foundation & PM, Process, RE, Interface Design) · **Part 2 = 25 คะแนน (use case diagram, use case narrative, context DFD — วาดมือ)** · นำ A4 เข้าได้ 1 แผ่น · หน้า 2–46 คือสไลด์ที่อาจารย์คัดจาก L1–L4, L6–L7 (ไม่มีสไลด์ L8) — ในเว็บเรียกว่า "สไลด์ที่อาจารย์คัดไว้" **ห้ามเขียนว่าออกสอบแน่นอน**
+  - `se-midterm.html`: ระบบตัวอย่าง **Canteen Pre-order System** (use case diagram 6 ขั้น, narrative Place Order / Cancel Order, context DFD 5 ขั้น) เป็น**ของที่ Claude สร้างขึ้น** ติดป้ายไว้ทุกจุดว่าไม่ได้มาจากสไลด์และไม่ใช่เฉลย Zoo · ข้อสอบจำลอง 20 ข้อเขียนโดย Claude จากสไลด์ เฉลย = `cadbdacbcadbabcdcadb` (A–D อย่างละ 5) · คำตอบของแบบฝึก classify FR/NFR (ประโยคจากสไลด์ 3-16 ซึ่งไม่มีเฉลย) จัดตามนิยามในสไลด์ 3-12
+  - **Zoo Ticketing System ยังคงไม่มีเฉลย** (รวม Ex3 DFD Level 1/2 ที่เพิ่งได้ไฟล์มา) — มีแค่เช็กลิสต์ตรวจงานตัวเอง (`ul.self-check`) · ถ้าผู้ใช้ขอให้ลองทำ Zoo ต้องยืนยันก่อนและติดป้ายว่าเป็นแนวคำตอบของ Claude ไม่ใช่เฉลยอาจารย์
 - **แท็บ "แบบฝึกหัด" (quiz) ห้ามแตะเด็ดขาด** ทุกหน้า — ถ้าต้องแก้แท็บเนื้อหาให้ใช้วิธี splice เฉพาะ `<section id="content">` แล้วตรวจว่าส่วนสรุป + quiz เหมือนเดิมทุกไบต์
 - **ขยายแท็บเนื้อหา Network บทที่ 1–4 (session 4, ผู้ใช้อนุญาต)**: เนื้อหาในแท็บ "เนื้อหา" ถูกเขียนเพิ่มจาก **PDF ต้นฉบับโดยตรง** (อ่านด้วย PyMuPDF, หน้าที่เป็นรูปถูก render แล้วอ่านภาพ) — กฎคือ **ห้ามเพิ่มข้อมูลที่ไม่ได้มาจากสไลด์** (รวมถึง "เหตุผล" ที่สไลด์ไม่ได้เขียน) ตัวอย่างตัวเลขต้องมีวิธีทำทีละขั้น · แท็บสรุปและ quiz ไม่ได้แก้
   - บทที่ 2: สไลด์ HTTP พื้นฐานจริงอยู่ใน `chapter2_application layer_1-1.pdf` (slide 28–47) ไม่ใช่ไฟล์ Lecture4 — ป้ายไฟล์ของการ์ดถูกแก้ให้ตรงแล้ว
@@ -112,6 +117,7 @@ se-requirement-engineering.html  ITDS261 บทที่ 3
 se-use-case-modeling.html        ITDS261 บทที่ 4
 se-flow-behavior-modeling.html   ITDS261 บทที่ 5
 se-ui-design.html                ITDS261 บทที่ 6
+se-midterm.html                  ITDS261 เตรียมสอบ Midterm (workshop Part 2 + A4 + ข้อสอบจำลอง)
 assets/
   favicon.svg           โลโก้ (3 โหนดเชื่อมกัน) ใช้เป็น favicon + wordmark
   css/
@@ -157,6 +163,9 @@ README.md               คำอธิบายสั้น + วิธี depl
 | `backoff-sim` | บทที่ 4 | `[data-input=tprop]`, `[data-action=collide/example/reset]`, `.demo-status`, `.calc-steps` (Kmax = 15 → abort) |
 | `comm-paths` | SE บทที่ 1 | `button[data-people=2/4/6]` (เฉพาะจำนวนคนที่สไลด์ 1-35 ยกตัวอย่าง), `.cp-stage svg`, `.demo-status` — วาดเส้นทุกคู่แล้วนับ (1 / 6 / 15) |
 | `triangle-pspec` | SE บทที่ 5 | `[data-input=a/b/c]`, `.demo-status`, `ol.calc-steps` — เดินตาม PDL Analyze Triangle สไลด์ 7-13 (ติดลบ → error, ด้านยาวสุด ≥ ผลรวม → type 0) |
+| `classify` | SE บท 1–6 | root `[data-options="key:ป้าย|key:ป้าย"]` · `ol.cls-list > li.cls-item[data-answer=key] > p.cls-text + p.cls-answer` (เฉลย + เหตุผล — ไม่มี JS จะแสดงเลย) · `.cls-foot > .demo-status + button[data-action=reset]` — JS สร้างปุ่มตัวเลือกให้ ตอบผิดลองใหม่ได้ |
+| `stepper` | SE Midterm | `svg` ที่ element มี `data-step="n"` + `ol.stp-notes > li.stp-note[data-step]` — JS สร้างปุ่ม ก่อนหน้า/ถัดไป/แสดงครบ · ขั้นอนาคตซ่อน ขั้นก่อนหน้าจาง · ไม่มี JS เห็นครบทุกขั้น |
+- component ใหม่ (session 7): `aside.focus-box` + `ul.focus-links` · `details.reveal` (เปิดดูตัวอย่างคำตอบ) · `ul.self-check` (checkbox ไม่บันทึกสถานะ) · `.scenario` (กล่องโจทย์)
 - `ul.pct-bars` (SE บทที่ 1): แถบเปอร์เซ็นต์ `li > span + .pct-track > .pct-fill[style=--pct] + .pct-val` — ต้องมีตัวเลขกำกับเสมอ
 
 - โค้ดตัวอย่าง HTML: `pre.code-block[data-lang=html]` ถูก highlight อัตโนมัติ · ใส่ `data-render` จะมี iframe `sandbox=""` srcdoc แสดงผล (ไม่ใช้ lazy loading — เคยทำให้ว่าง)
@@ -284,7 +293,19 @@ README.md               คำอธิบายสั้น + วิธี depl
 - **อ่าน PDF โดยไม่ต้องติดตั้งอะไร**: `.cache/pdftext.mjs` (zlib ในตัว Node + ToUnicode CMap) → `node .cache/pdftext.mjs "<pdf>" [from] [to]` ได้ข้อความทีละหน้า · ใช้ได้กับ PDF ที่ export จาก macOS/PowerPoint ที่มี text · **อ่านภาพไม่ได้** (Read tool render PDF ไม่ได้เพราะไม่มี poppler และ PDF viewer ของ Edge headless ไม่ render)
 - **เครื่องมือใน `.cache/` (เพิ่ม/เปลี่ยน)**: `course.mjs` = รายชื่อวิชา/บท/ธีม + `navHtml()` ที่เดียว (ใช้โดย `build.mjs` และ `nav.mjs`) · `build.mjs` เลือก subject/theme/footer จาก course.mjs ตามชื่อไฟล์ · `se1.mjs`–`se6.mjs` config quiz ของ SE · `se-plan.mjs` สร้าง plan ทดสอบหน้าบท (`node .cache/se-plan.mjs <file> <prefix> [selector…] > plan.json` แล้วรัน shoot.mjs) · `contrast.mjs` ตรวจ contrast 3 ธีม · ไฟล์ `seN-content.html` / `seN-summary.html`, ภาพ screenshot และข้อความที่ดึงจาก PDF ถูกลบหลังจบงาน
 
+**Session 7 (2026-10-06) — rework SE เพื่อเตรียม Midterm (เสร็จครบ)**
+- ผู้ใช้ให้โฟลเดอร์ `C:UsersosszDownloadsSoftware En` (L1–L4, L6–L8 เนื้อหาเดิม + ไฟล์ใหม่ **Midterm guideline** และ **Ex3 Flow Modeling (Zoo)**) ขอให้สรุปให้เข้าใจ เห็นภาพ มีแบบฝึก และ interact ได้
+- [x] widget ใหม่ `classify` (ตอบทันทีทีละข้อ) และ `stepper` (วาดไดอะแกรมทีละขั้น) + component `focus-box`, `reveal`, `self-check`, `scenario`
+- [x] SE บท 1–6: แทรกกล่อง "บทนี้ใน 30 วินาที" + ลิงก์หัวข้อใน guideline และแบบฝึก classify 11 ชุด (82 ข้อ) ในแท็บเนื้อหา
+- [x] หน้าใหม่ `se-midterm.html`: โครงข้อสอบ + แผนที่หัวข้อ, workshop use case diagram / narrative / context DFD (ระบบตัวอย่าง Canteen Pre-order), เช็กลิสต์ตรวจงาน Zoo, สรุปขนาด A4, ข้อสอบจำลอง Part 1 20 ข้อ · course nav SE เป็น 7 รายการ · การ์ด index เป็น "6 บท + Midterm"
+- [x] ทดสอบ headless Edge 19 หน้า: quiz 20/20, ไม่มี id ซ้ำ, ลิงก์ toc/focus ครบ, nav 4/7/7, classify ทุกชุดกดคำตอบตาม `data-answer` แล้วครบ, SE ไม่มี horizontal scroll ที่ 390px, ไม่มี JS error · หน้า Network/Web เปลี่ยนเฉพาะบรรทัด chapter-link ใน nav
+- เครื่องมือ `.cache/` เพิ่ม: `se-rework.mjs` (แทรก focus/classify — รันซ้ำได้), `se7.mjs` + `se7-gen.mjs` (สร้าง content ของหน้า Midterm พร้อม helper วาด SVG; รัน gen → build se7) · `course.mjs` รองรับป้ายบทแบบกำหนดเอง (element ที่ 3)
+- ยังอ่านได้เฉพาะข้อความใน PDF (ภาพในสไลด์/guideline อ่านไม่ได้ เช่น Project Management Framework, Data Flow Hierarchy)
+
 ## สิ่งที่ยังไม่ได้ทำ / แผนต่อไป
+
+- (รอผู้ใช้ตัดสินใจ) แนวคำตอบของ Zoo Ticketing System (use case diagram / narrative / context DFD / DFD Level 1–2 ของ Ex3) — ยังไม่ทำเพราะไม่มีเฉลยอ้างอิง ต้องถามก่อน
+- (ถ้าผู้ใช้ต้องการ) ปุ่มพิมพ์/หน้า print-friendly ของสรุป A4 · บันทึกสถานะเช็กลิสต์และคะแนน classify ด้วย localStorage
 
 - (ถ้าผู้ใช้ต้องการ) สลับลำดับตัวเลือก quiz บทที่ 2 ให้เฉลยกระจาย A–D — ต้องได้รับอนุญาตก่อน เพราะเปลี่ยนตัวอักษรของเฉลย
 - เพิ่มหน้าวิชาอื่นเมื่อผู้ใช้ให้เนื้อหา — ดู "วิธีเพิ่มวิชาใหม่" ด้านล่าง (วิชาฐานข้อมูล 7-Eleven Schema ผู้ใช้แจ้งว่าเลิกเรียนแล้ว ไม่ต้องทำ)

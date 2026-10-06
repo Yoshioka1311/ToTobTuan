@@ -25,10 +25,11 @@
 | ITDS261 บทที่ 4: Use Case Modeling | `se-use-case-modeling.html` | สัญลักษณ์ use case, includes / extends, use case narrative |
 | ITDS261 บทที่ 5: Flow & Behavior Modeling | `se-flow-behavior-modeling.html` | DFD, context diagram, balancing, consistency rules, PSPEC, control flow |
 | ITDS261 บทที่ 6: User Interface Design | `se-ui-design.html` | ประเภท UI, design process, Golden Rules, low / high fidelity prototype |
+| ITDS261 เตรียมสอบ Midterm | `se-midterm.html` | โครงข้อสอบ, workshop วาด use case diagram / context DFD ทีละขั้น, ตัวอย่าง use case narrative, สรุปขนาด A4, ข้อสอบจำลอง 20 ข้อ |
 
 ทุกหน้าบทเลือกวิชา (Network / Web / SE) และบทได้ที่ต้นหน้า · แต่ละวิชามีสีประจำวิชาของตัวเอง (Network = amber บนพื้น navy, Web = ม่วง iris, SE = เขียว sage) บนพื้นมืดแบบเดียวกัน · ลิงก์ตรงไปแต่ละแท็บได้ด้วย `#content`, `#summary`, `#quiz` (หน้า Web มี `#code` เพิ่ม)
 
-แท็บเนื้อหามีแผนภาพ SVG และตัวช่วยคำนวณแบบ interactive เช่น delay calculator (Network บทที่ 1), HTTP timeline และ web cache (บทที่ 2), CRC / Hamming / sliding window (บทที่ 3), binary exponential backoff (บทที่ 4) · ฝั่ง SE มีตัวนับเส้นทางการสื่อสารในทีม (บทที่ 1) และตัวรัน PSPEC Analyze Triangle (บทที่ 5) · ฝั่ง Web มี URL anatomy, layout demo, pattern tester, flexbox lab และ media query lab · โค้ดตัวอย่าง JavaScript กดรันได้ในกล่อง sandbox และโค้ด HTML บางกล่องแสดงผลจริงในกรอบ preview
+แท็บเนื้อหามีแผนภาพ SVG และตัวช่วยคำนวณแบบ interactive เช่น delay calculator (Network บทที่ 1), HTTP timeline และ web cache (บทที่ 2), CRC / Hamming / sliding window (บทที่ 3), binary exponential backoff (บทที่ 4) · ฝั่ง SE มีตัวนับเส้นทางการสื่อสารในทีม (บทที่ 1), ตัวรัน PSPEC Analyze Triangle (บทที่ 5), แบบฝึกตอบทันทีในทุกบท และ workshop วาดไดอะแกรมทีละขั้นในหน้าเตรียมสอบ · ฝั่ง Web มี URL anatomy, layout demo, pattern tester, flexbox lab และ media query lab · โค้ดตัวอย่าง JavaScript กดรันได้ในกล่อง sandbox และโค้ด HTML บางกล่องแสดงผลจริงในกรอบ preview
 ความคืบหน้าของแท็บเขียนโค้ดเก็บใน localStorage ของเบราว์เซอร์เท่านั้น
 
 ## เปิดดูบนเครื่อง
@@ -65,6 +66,7 @@ se-requirement-engineering.html  ITDS261 บทที่ 3
 se-use-case-modeling.html        ITDS261 บทที่ 4
 se-flow-behavior-modeling.html   ITDS261 บทที่ 5
 se-ui-design.html                ITDS261 บทที่ 6
+se-midterm.html                  ITDS261 เตรียมสอบ Midterm
 assets/
   css/  tokens.css · base.css · home.css · network.css · exercise.css · motion.css
   js/   network.js · widgets.js · code-exercise.js · exercises-web-1.js … exercises-web-6.js
