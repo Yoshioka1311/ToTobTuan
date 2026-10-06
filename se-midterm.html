@@ -1,0 +1,1019 @@
+<!DOCTYPE html>
+<html lang="th" data-theme="se">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>ITDS261 เตรียมสอบ Midterm: แผนที่ข้อสอบ + ฝึกวาด Part 2 · โต๊ะทบทวน</title>
+<meta name="description" content="ITDS261 Introduction to Software Engineering เตรียมสอบ Midterm: โครงข้อสอบจาก Midterm guideline, แผนที่หัวข้อที่อาจารย์คัดไว้, workshop ฝึกวาด use case diagram / เขียน use case narrative / วาด context DFD ทีละขั้น, สรุปสำหรับจดลง A4 และข้อสอบจำลอง Part 1 จำนวน 20 ข้อ" />
+<meta name="theme-color" content="#121815" />
+<link rel="icon" href="assets/favicon.svg" type="image/svg+xml" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link
+  href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500..700&family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans+Thai:wght@500;600&family=IBM+Plex+Sans+Thai+Looped:wght@400;500;600&display=swap"
+  rel="stylesheet"
+/>
+<link rel="stylesheet" href="assets/css/tokens.css" />
+<link rel="stylesheet" href="assets/css/base.css" />
+<link rel="stylesheet" href="assets/css/network.css" />
+<link rel="stylesheet" href="assets/css/motion.css" />
+<script>document.documentElement.classList.add("js");</script>
+</head>
+<body>
+  <a class="skip-link" href="#tabs">ข้ามไปที่เนื้อหา</a>
+
+  <svg class="dg-defs" aria-hidden="true" focusable="false">
+    <defs>
+      <marker id="arr" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path class="dg-arrow" d="M0 0L10 5L0 10z" /></marker>
+      <marker id="arr-muted" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path class="dg-arrow--muted" d="M0 0L10 5L0 10z" /></marker>
+      <marker id="arr-ok" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path class="dg-arrow--ok" d="M0 0L10 5L0 10z" /></marker>
+      <marker id="arr-bad" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path class="dg-arrow--bad" d="M0 0L10 5L0 10z" /></marker>
+    </defs>
+  </svg>
+
+  <header class="site-header">
+    <div class="wrap">
+      <a class="wordmark" href="index.html" aria-label="โต๊ะทบทวน หน้าแรก">
+        <img class="wordmark-mark" src="assets/favicon.svg" alt="" width="26" height="26" />
+        <span class="wordmark-text">โต๊ะ<span>ทบทวน</span></span>
+      </a>
+      <a class="crumb" href="index.html"><span class="arrow" aria-hidden="true">←</span> รายวิชาทั้งหมด</a>
+    </div>
+  </header>
+
+  <main>
+    <section class="course-hero wrap">
+      <nav class="course-nav" aria-label="เลือกวิชาและบท">
+        <div class="subject-switch">
+          <button class="subject-btn" type="button" data-subject="network" aria-pressed="false"><span class="subject-code">ITDS231</span> Network</button>
+          <button class="subject-btn" type="button" data-subject="web" aria-pressed="false"><span class="subject-code">ITDS241</span> Web</button>
+          <button class="subject-btn" type="button" data-subject="se" aria-pressed="true"><span class="subject-code">ITDS261</span> SE</button>
+        </div>
+        <div class="chapter-nav" data-subject="network" data-label="ITDS231 Computer Networks" role="group" aria-label="บทของวิชา ITDS231 Computer Networks">
+          <a class="chapter-link" href="network.html"><span class="chapter-num">บทที่ 1</span><span class="chapter-name">Intro &amp; Topology</span></a>
+          <a class="chapter-link" href="network-application-layer.html"><span class="chapter-num">บทที่ 2</span><span class="chapter-name">Application Layer</span></a>
+          <a class="chapter-link" href="network-data-link-layer.html"><span class="chapter-num">บทที่ 3</span><span class="chapter-name">Data Link Layer</span></a>
+          <a class="chapter-link" href="network-mac-ethernet.html"><span class="chapter-num">บทที่ 4</span><span class="chapter-name">MAC + Ethernet</span></a>
+        </div>
+        <div class="chapter-nav" data-subject="web" data-label="ITDS241 Web Technologies and Applications" role="group" aria-label="บทของวิชา ITDS241 Web Technologies and Applications">
+          <a class="chapter-link" href="web-intro-html-basics.html"><span class="chapter-num">บทที่ 1</span><span class="chapter-name">Internet &amp; HTML Basics</span></a>
+          <a class="chapter-link" href="web-media-forms-semantic.html"><span class="chapter-num">บทที่ 2</span><span class="chapter-name">Media, Forms &amp; Semantic</span></a>
+          <a class="chapter-link" href="web-css-fundamentals.html"><span class="chapter-num">บทที่ 3</span><span class="chapter-name">CSS Fundamentals</span></a>
+          <a class="chapter-link" href="web-css-layout-responsive.html"><span class="chapter-num">บทที่ 4</span><span class="chapter-name">CSS Layout &amp; Responsive</span></a>
+          <a class="chapter-link" href="web-js-fundamentals.html"><span class="chapter-num">บทที่ 5</span><span class="chapter-name">JavaScript Fundamentals</span></a>
+          <a class="chapter-link" href="web-js-functions-oop-dom.html"><span class="chapter-num">บทที่ 6</span><span class="chapter-name">Functions, OOP &amp; DOM</span></a>
+          <a class="chapter-link" href="web-ecmascript-features.html"><span class="chapter-num">บทที่ 7</span><span class="chapter-name">ECMAScript Features</span></a>
+        </div>
+        <div class="chapter-nav" data-subject="se" data-label="ITDS261 Introduction to Software Engineering" role="group" aria-label="บทของวิชา ITDS261 Introduction to Software Engineering">
+          <a class="chapter-link" href="se-foundation-pm.html"><span class="chapter-num">บทที่ 1</span><span class="chapter-name">SE Foundation &amp; PM</span></a>
+          <a class="chapter-link" href="se-process-models.html"><span class="chapter-num">บทที่ 2</span><span class="chapter-name">Process Models</span></a>
+          <a class="chapter-link" href="se-requirement-engineering.html"><span class="chapter-num">บทที่ 3</span><span class="chapter-name">Requirement Engineering</span></a>
+          <a class="chapter-link" href="se-use-case-modeling.html"><span class="chapter-num">บทที่ 4</span><span class="chapter-name">Use Case Modeling</span></a>
+          <a class="chapter-link" href="se-flow-behavior-modeling.html"><span class="chapter-num">บทที่ 5</span><span class="chapter-name">Flow &amp; Behavior Modeling</span></a>
+          <a class="chapter-link" href="se-ui-design.html"><span class="chapter-num">บทที่ 6</span><span class="chapter-name">UI Design</span></a>
+          <a class="chapter-link" href="se-midterm.html" aria-current="page"><span class="chapter-num">Midterm</span><span class="chapter-name">เตรียมสอบ + ฝึกวาด</span></a>
+        </div>
+      </nav>
+      <span class="eyebrow">ITDS261 · Midterm (40%) · Part 1 = 15 คะแนน · Part 2 = 25 คะแนน</span>
+      <h1>เตรียมสอบ Midterm</h1>
+      <p class="course-lede">หน้านี้รวมทุกอย่างสำหรับสอบกลางภาค: ข้อสอบมีอะไรบ้าง หัวข้อไหนที่อาจารย์คัดไว้ใน guideline และ workshop ฝึก Part 2 ซึ่งต้องวาด use case diagram, เขียน use case narrative และวาด context DFD ด้วยมือ — กดดูทีละขั้นแล้วลองวาดตามบนกระดาษ</p>
+      <ul class="course-meta" aria-label="ข้อมูลบทเรียน">
+        <li class="chip chip--accent">ITDS261 Introduction to Software Engineering</li>
+        <li class="chip">Midterm guideline (46 หน้า)</li>
+        <li class="chip">workshop วาดทีละขั้น 2 ชุด</li>
+        <li class="chip">ข้อสอบจำลอง Part 1 · 20 ข้อ</li>
+      </ul>
+    </section>
+
+    <div class="tabbar" id="tabs">
+      <div class="wrap">
+        <div class="tabs" role="tablist" aria-label="ส่วนของหน้า">
+          <button class="tab" role="tab" id="tab-content" aria-controls="content" aria-selected="true" type="button">
+            <svg class="tab-icon" viewBox="0 0 20 20" aria-hidden="true"><path d="M4 3.5h8.5L16 7v9.5H4z M12 3.5V7h4 M7 10h6 M7 13h4" /></svg>
+            เนื้อหา
+          </button>
+          <button class="tab" role="tab" id="tab-summary" aria-controls="summary" aria-selected="false" type="button">
+            <svg class="tab-icon" viewBox="0 0 20 20" aria-hidden="true"><path d="M3.5 4h13v12h-13z M3.5 8h13 M8.5 8v8" /></svg>
+            สรุป
+          </button>
+          <button class="tab" role="tab" id="tab-quiz" aria-controls="quiz" aria-selected="false" type="button">
+            <svg class="tab-icon" viewBox="0 0 20 20" aria-hidden="true"><path d="M10 17a7 7 0 1 0 0-14 7 7 0 0 0 0 14z M6.8 10.2l2.2 2.2 4.2-4.6" /></svg>
+            แบบฝึกหัด
+          </button>
+          <span class="tab-indicator" aria-hidden="true"></span>
+        </div>
+      </div>
+    </div>
+
+    <div class="wrap panels">
+
+      <!-- =============================================================
+           แท็บ 1: เนื้อหา
+           ============================================================= -->
+      <section class="panel" id="content" role="tabpanel" aria-labelledby="tab-content" tabindex="-1">
+        <div class="panel-head">
+          <h2>แผนที่ข้อสอบ + Workshop Part 2</h2>
+          <div class="panel-actions">
+            <button class="btn btn--ghost btn--sm" type="button" data-acc-all="open">เปิดทั้งหมด</button>
+            <button class="btn btn--ghost btn--sm" type="button" data-acc-all="close">ปิดทั้งหมด</button>
+          </div>
+        </div>
+
+        <div class="acc">
+
+<!-- ================= 01 ข้อสอบมีอะไรบ้าง และหัวข้อไหนอยู่ใน guideline ================= -->
+          <div class="acc-item is-open">
+            <h3 class="acc-heading">
+              <button class="acc-trigger" type="button" aria-expanded="true" aria-controls="acc-mid-exam" id="acc-mid-exam-btn">
+                <span class="acc-index">01</span>
+                <span class="acc-title">
+                  <span class="acc-name">ข้อสอบมีอะไรบ้าง และหัวข้อไหนอยู่ใน guideline</span>
+                  <span class="acc-file">Midterm guideline · slide 1–46</span>
+                </span>
+                <svg class="acc-chevron" viewBox="0 0 20 20" aria-hidden="true"><path d="M5 7.5l5 5 5-5" /></svg>
+              </button>
+            </h3>
+            <div class="acc-panel" id="acc-mid-exam" role="region" aria-labelledby="acc-mid-exam-btn">
+              <div class="acc-panel-inner">
+                <div class="acc-body">
+
+                  <nav class="toc" aria-label="หัวข้อในการ์ดโครงข้อสอบ">
+                    <a href="#mid-exam">โครงข้อสอบ</a>
+                    <a href="#mid-map">แผนที่หัวข้อ</a>
+                    <a href="#mid-plan">ลำดับการทบทวน</a>
+                  </nav>
+
+                  <section class="topic" id="mid-exam">
+                    <h4>โครงข้อสอบ Midterm (40%)</h4>
+                    <div class="compare">
+                      <div class="compare-col">
+                        <strong>Part 1 — 15 คะแนน</strong>
+                        <ul class="tight">
+                          <li>Software Engineering Foundation &amp; Project Management</li>
+                          <li>Software Process</li>
+                          <li>Requirements Engineering</li>
+                          <li>Interface Design</li>
+                        </ul>
+                      </div>
+                      <div class="compare-col">
+                        <strong>Part 2 — 25 คะแนน</strong>
+                        <p>Requirements Analysis with Use Case Modeling and Data Modeling</p>
+                        <ul class="tight">
+                          <li><strong>Use case diagram</strong></li>
+                          <li><strong>Use case narrative</strong></li>
+                          <li><strong>Context DFD</strong></li>
+                        </ul>
+                      </div>
+                    </div>
+                    <ul class="pct-bars">
+                      <li><span>Part 1 (ความรู้ 4 หัวข้อ)</span><span class="pct-track" aria-hidden="true"><span class="pct-fill" style="--pct: 37.5%"></span></span><span class="pct-val">15 / 40</span></li>
+                      <li><span>Part 2 (วาด + เขียน)</span><span class="pct-track" aria-hidden="true"><span class="pct-fill" style="--pct: 62.5%"></span></span><span class="pct-val">25 / 40</span></li>
+                    </ul>
+                    <div class="callout callout--warn">
+                      <span class="callout-label">ข้อปฏิบัติในห้องสอบ (จาก guideline หน้าแรก)</span>
+                      <p>นำ<b>กระดาษ A4 หนึ่งแผ่น</b>เข้าห้องสอบได้ — ต้องเขียนชื่อและรหัสนักศึกษาลงบน A4 และ<b>ส่งคืนก่อนออกจากห้องสอบ</b></p>
+                      <p><b>เตรียมเครื่องเขียนสำหรับ Part 2 ให้พร้อม</b> ไม่มีอุปกรณ์ให้ยืมในห้องสอบ</p>
+                    </div>
+                    <p class="note">Part 2 มีน้ำหนัก 25 จาก 40 คะแนน (62.5%) และต้องวาดด้วยมือ — การฝึกวาดจริงบนกระดาษจึงคุ้มกว่าการอ่านอย่างเดียว</p>
+                  </section>
+
+                  <section class="topic" id="mid-map">
+                    <h4>แผนที่หัวข้อ: สไลด์ที่อาจารย์คัดไว้ใน guideline</h4>
+                    <p>guideline คัดสไลด์จากแต่ละ lecture มารวมไว้ 45 หน้า ตารางนี้บอกว่าแต่ละหัวข้ออยู่บทไหนของเว็บ (กดเพื่อไปอ่าน):</p>
+                    <div class="table-scroll">
+                      <table>
+                        <thead><tr><th>Lecture</th><th>หัวข้อที่อยู่ใน guideline</th><th>Part</th></tr></thead>
+                        <tbody>
+                          <tr><td><a href="se-foundation-pm.html"><strong>L1</strong> Foundation &amp; PM</a></td><td><a href="se-foundation-pm.html#sef-components">3 องค์ประกอบของซอฟต์แวร์ + interaction hierarchy</a> · <a href="se-foundation-pm.html#sef-characteristics">คุณลักษณะ</a> · <a href="se-foundation-pm.html#sef-definition">นิยาม SE</a> · <a href="se-foundation-pm.html#sef-aspects">5 aspects</a> · <a href="se-foundation-pm.html#sef-success">software project ต้องมีอะไร</a> · Project Management Framework (ภาพ) · <a href="se-foundation-pm.html#pm-poma">POMA ทั้ง 4 ขั้น</a> · <a href="se-foundation-pm.html#pm-wbs">WBS</a> · <a href="se-foundation-pm.html#pm-goals">เป้าหมายของ SPM</a></td><td>1</td></tr>
+                          <tr><td><a href="se-process-models.html"><strong>L2</strong> Process models</a></td><td><a href="se-process-models.html#proc-activities">กิจกรรมทั่วไป 6 ขั้น</a> · <a href="se-process-models.html#proc-definition">process model คืออะไร</a> · <a href="se-process-models.html#proc-codefix">Code and Fix</a> · <a href="se-process-models.html#proc-waterfall">Waterfall</a> · <a href="se-process-models.html#proc-incremental">Incremental A</a> / <a href="se-process-models.html#proc-multirelease">B</a> · <a href="se-process-models.html#proc-spiral">Spiral</a> · <a href="se-process-models.html#proc-manifesto">Agile Manifesto</a> · <a href="se-process-models.html#proc-agile-process">Scrum</a></td><td>1</td></tr>
+                          <tr><td><a href="se-requirement-engineering.html"><strong>L3</strong> Requirement Engineering</a></td><td><a href="se-requirement-engineering.html#re-user-system">User / System requirements</a> · <a href="se-requirement-engineering.html#re-fr-nfr">Functional / Non-functional</a> · <a href="se-requirement-engineering.html#re-process">4 กระบวนการ RE</a> · <a href="se-requirement-engineering.html#re-dimensions">6 มิติของ elicitation</a> · <a href="se-requirement-engineering.html#re-interview">เทคนิค elicitation 6 แบบ</a></td><td>1</td></tr>
+                          <tr><td><a href="se-ui-design.html"><strong>L8</strong> Interface Design</a></td><td>อยู่ในรายการ Part 1 แต่ guideline <strong>ไม่ได้คัดสไลด์มา</strong> → ทบทวนทั้งบท: <a href="se-ui-design.html#ui-issues">2 ประเด็นหลัก</a> · <a href="se-ui-design.html#ui-phases">4 phase</a> · <a href="se-ui-design.html#ui-rule-control">Golden Rules</a> · <a href="se-ui-design.html#ui-fidelity">prototype</a></td><td>1</td></tr>
+                          <tr><td><a href="se-use-case-modeling.html"><strong>L4</strong> Use case modeling</a></td><td><a href="se-use-case-modeling.html#uc-approaches">5 แนวทาง modeling</a> · <a href="se-use-case-modeling.html#uc-scenario">scenario-based models</a> · <a href="se-use-case-modeling.html#uc-symbols">สัญลักษณ์พื้นฐาน</a> · <a href="se-use-case-modeling.html#uc-rel-overview">4 ความสัมพันธ์</a> · <a href="se-use-case-modeling.html#uc-narrative">8 ส่วนของ narrative</a></td><td><strong>2</strong></td></tr>
+                          <tr><td><a href="se-flow-behavior-modeling.html"><strong>L6–L7</strong> Flow modeling</a></td><td><a href="se-flow-behavior-modeling.html#dfd-notation">สัญลักษณ์ DFD</a> · <a href="se-flow-behavior-modeling.html#dfd-flow-store">data flow + packet concept</a> · <a href="se-flow-behavior-modeling.html#dfd-context">context diagram</a> · <a href="se-flow-behavior-modeling.html#dfd-numbering">hierarchy + numbering</a> · <a href="se-flow-behavior-modeling.html#dfd-flow-rules">rules for data flows</a> · <a href="se-flow-behavior-modeling.html#dfd-dont-break">don't break DFD rules</a></td><td><strong>2</strong></td></tr>
+                        </tbody>
+                      </table>
+                    </div>
+                    <p class="note">สิ่งที่สอนในห้องแต่ guideline ไม่ได้คัดมา เช่น กรณีศึกษา CrowdStrike / Spotify, pros-cons ของแต่ละ model, user story, SRS, requirements validation, PSPEC และ control flow — ยังอยู่ในหน้าบทครบ ถ้าเวลาน้อยให้เริ่มจากหัวข้อในตารางก่อน</p>
+                  </section>
+
+                  <section class="topic" id="mid-plan">
+                    <h4>ลำดับการทบทวนที่แนะนำ</h4>
+                    <ol class="steps">
+                      <li><strong>ฝึก Part 2 ก่อน</strong> (25 คะแนน): ทำ workshop ในการ์ด 02–04 ของหน้านี้ โดยวาดตามบนกระดาษจริงทีละขั้น</li>
+                      <li><strong>ลองทำเองกับ Zoo Ticketing System</strong> แล้วตรวจด้วยเช็กลิสต์ในการ์ด 05</li>
+                      <li><strong>ทบทวน Part 1</strong>: อ่านกล่อง "บทนี้ใน 30 วินาที" และทำแบบฝึก "ฝึกทันที" ในแต่ละบท</li>
+                      <li><strong>ทำข้อสอบจำลอง</strong> ในแท็บแบบฝึกหัดของหน้านี้ (20 ข้อ) และ quiz 20 ข้อของแต่ละบท</li>
+                      <li><strong>จด A4</strong> โดยใช้แท็บสรุปของหน้านี้เป็นต้นแบบ — เลือกจดเฉพาะส่วนที่ยังจำไม่ได้</li>
+                    </ol>
+                    <p class="note">ลำดับนี้เป็นคำแนะนำของผู้ทำสรุป ไม่ได้มาจากสไลด์</p>
+                  </section>
+
+                </div>
+              </div>
+            </div>
+          </div>
+
+<!-- ================= 02 Workshop 1: วาด Use Case Diagram ทีละขั้น ================= -->
+          <div class="acc-item">
+            <h3 class="acc-heading">
+              <button class="acc-trigger" type="button" aria-expanded="false" aria-controls="acc-mid-uc-card" id="acc-mid-uc-card-btn">
+                <span class="acc-index">02</span>
+                <span class="acc-title">
+                  <span class="acc-name">Workshop 1: วาด Use Case Diagram ทีละขั้น</span>
+                  <span class="acc-file">ตามขั้นตอน L4 slide 21–22 · ระบบตัวอย่าง Canteen Pre-order</span>
+                </span>
+                <svg class="acc-chevron" viewBox="0 0 20 20" aria-hidden="true"><path d="M5 7.5l5 5 5-5" /></svg>
+              </button>
+            </h3>
+            <div class="acc-panel" id="acc-mid-uc-card" role="region" aria-labelledby="acc-mid-uc-card-btn">
+              <div class="acc-panel-inner">
+                <div class="acc-body">
+
+                  <nav class="toc" aria-label="หัวข้อใน workshop use case diagram">
+                    <a href="#mid-scenario">โจทย์ตัวอย่าง</a>
+                    <a href="#mid-uc">วาดทีละขั้น</a>
+                    <a href="#mid-uc-why">ทำไมเลือกแบบนี้</a>
+                  </nav>
+
+                  <section class="topic" id="mid-scenario">
+                    <h4>โจทย์ตัวอย่าง</h4>
+                    <div class="callout callout--def">
+                      <span class="callout-label">ระบบตัวอย่างนี้สร้างขึ้นเพื่อฝึก</span>
+                      <p>Canteen Pre-order System และคำตอบทั้งหมดใน workshop <b>ไม่ได้มาจากสไลด์</b> และ<b>ไม่ใช่เฉลยของแบบฝึกหัด Zoo Ticketing System</b> — เป็นตัวอย่างที่ทำตามขั้นตอนและกฎในสไลด์ L4 / L6 เพื่อให้เห็นวิธีคิด คำตอบของโจทย์แบบนี้มีได้มากกว่าหนึ่งแบบ ให้ยึดแนวที่อาจารย์สอนในห้องเป็นหลัก</p>
+                    </div>
+                    <p>อ่านคำอธิบายระบบ แล้ว<strong>ลองวาด use case diagram บนกระดาษก่อน</strong> จากนั้นค่อยกดดูทีละขั้น:</p>
+                    <div class="scenario">
+                      <p><strong>ระบบสั่งอาหารล่วงหน้าของโรงอาหาร (Canteen Pre-order System)</strong> ให้ลูกค้าสั่งอาหารจากร้านในโรงอาหารล่วงหน้า แล้วมารับเมื่ออาหารพร้อม ผู้ใช้งานหลักคือ ลูกค้า ร้านค้า และผู้ดูแลระบบ</p>
+                      <p><strong>ลูกค้า</strong>สั่งอาหารโดยเลือกร้าน เมนู จำนวน และเวลารับ ระบบแสดงราคารวมตามราคาที่ร้านค้ากำหนด จากนั้นลูกค้าชำระเงินด้วย QR Code ผ่านผู้ให้บริการชำระเงินภายนอก (Payment Gateway) เมื่อชำระเงินสำเร็จ ระบบออกหมายเลขคำสั่งซื้อ (Order ID) ให้ลูกค้า ลูกค้าตรวจสอบสถานะคำสั่งซื้อได้ และยกเลิกคำสั่งซื้อได้ก่อนที่ร้านจะเริ่มทำอาหาร โดยระบบจะตรวจเงื่อนไขและคืนเงินหากเป็นไปตามนโยบาย</p>
+                      <p><strong>ร้านค้า</strong>ดูรายการคำสั่งซื้อที่เข้ามา อัปเดตสถานะคำสั่งซื้อ (กำลังทำ / พร้อมรับ) และจัดการเมนูกับราคาของร้าน</p>
+                      <p><strong>ผู้ดูแลระบบ</strong>จัดการบัญชีของร้านค้า และเรียกดูรายงานยอดขาย</p>
+                    </div>
+                  </section>
+
+                  <section class="topic" id="mid-uc">
+                    <h4>วาดทีละขั้น (6 ขั้นตอนจากสไลด์)</h4>
+                    <div class="demo-box" data-widget="stepper">
+                      <span class="demo-box-title">กด "ขั้นถัดไป" เพื่อดูว่าแต่ละขั้นเพิ่มอะไรลงในไดอะแกรม</span>
+                      <figure class="diagram">
+                        <div class="diagram-scroll">
+                          <svg viewBox="0 0 790 580" role="img" aria-labelledby="mid-uc-t mid-uc-d">
+                            <title id="mid-uc-t">Use case diagram ของระบบตัวอย่าง Canteen Pre-order System</title>
+                            <desc id="mid-uc-d">กล่องระบบ Canteen Pre-order System มี use case: Place Order, Check Order Status, Cancel Order, View Orders, Update Order Status, Manage Menu, Manage Shop Accounts, View Sales Report, Make Payment และ Process Refund · actor ลูกค้าเชื่อมกับ Place Order, Check Order Status, Cancel Order · actor ร้านค้าเชื่อมกับ View Orders, Update Order Status, Manage Menu · actor ผู้ดูแลระบบเชื่อมกับ Manage Shop Accounts และ View Sales Report · actor Payment Gateway (secondary) เชื่อมกับ Make Payment และ Process Refund · Place Order includes Make Payment · Process Refund extends Cancel Order</desc>
+                            <g data-step="1"><rect class="dg-box" x="170" y="14" width="460" height="552" rx="4" /><text class="dg-text" x="400" y="38" text-anchor="middle">Canteen Pre-order System</text></g>
+                            <g data-step="2"><circle class="dg-box" cx="70" cy="100" r="11" /><path class="dg-line" d="M70 111 V145 M52 125 H88 M70 145 L56 170 M70 145 L84 170" /><text class="dg-text dg-text--sm" x="70" y="190" text-anchor="middle">ลูกค้า</text></g>
+                            <g data-step="2"><circle class="dg-box" cx="70" cy="296" r="11" /><path class="dg-line" d="M70 307 V341 M52 321 H88 M70 341 L56 366 M70 341 L84 366" /><text class="dg-text dg-text--sm" x="70" y="386" text-anchor="middle">ร้านค้า</text></g>
+                            <g data-step="2"><circle class="dg-box" cx="70" cy="448" r="11" /><path class="dg-line" d="M70 459 V493 M52 473 H88 M70 493 L56 518 M70 493 L84 518" /><text class="dg-text dg-text--sm" x="70" y="538" text-anchor="middle">ผู้ดูแลระบบ</text></g>
+                            <g data-step="2"><circle class="dg-box" cx="718" cy="96" r="11" /><path class="dg-line" d="M718 107 V141 M700 121 H736 M718 141 L704 166 M718 141 L732 166" /><text class="dg-text dg-text--sm" x="718" y="186" text-anchor="middle">Payment Gateway</text><text class="dg-mono dg-mono--sm" x="718" y="202" text-anchor="middle">secondary</text></g>
+                            <g data-step="3"><ellipse class="dg-box dg-box--accent" cx="300" cy="84" rx="88" ry="22" /><text class="dg-text dg-text--sm" x="300" y="89" text-anchor="middle">Place Order</text></g>
+                            <g data-step="3"><ellipse class="dg-box dg-box--accent" cx="300" cy="140" rx="88" ry="22" /><text class="dg-text dg-text--sm" x="300" y="145" text-anchor="middle">Check Order Status</text></g>
+                            <g data-step="3"><ellipse class="dg-box dg-box--accent" cx="300" cy="196" rx="88" ry="22" /><text class="dg-text dg-text--sm" x="300" y="201" text-anchor="middle">Cancel Order</text></g>
+                            <g data-step="3"><ellipse class="dg-box dg-box--accent" cx="300" cy="284" rx="88" ry="22" /><text class="dg-text dg-text--sm" x="300" y="289" text-anchor="middle">View Orders</text></g>
+                            <g data-step="3"><ellipse class="dg-box dg-box--accent" cx="300" cy="340" rx="88" ry="22" /><text class="dg-text dg-text--sm" x="300" y="345" text-anchor="middle">Update Order Status</text></g>
+                            <g data-step="3"><ellipse class="dg-box dg-box--accent" cx="300" cy="396" rx="88" ry="22" /><text class="dg-text dg-text--sm" x="300" y="401" text-anchor="middle">Manage Menu</text></g>
+                            <g data-step="3"><ellipse class="dg-box dg-box--accent" cx="300" cy="466" rx="88" ry="22" /><text class="dg-text dg-text--sm" x="300" y="471" text-anchor="middle">Manage Shop Accounts</text></g>
+                            <g data-step="3"><ellipse class="dg-box dg-box--accent" cx="300" cy="522" rx="88" ry="22" /><text class="dg-text dg-text--sm" x="300" y="527" text-anchor="middle">View Sales Report</text></g>
+                            <line data-step="4" class="dg-line " x1="90" y1="122" x2="213" y2="88" />
+                            <line data-step="4" class="dg-line " x1="90" y1="128" x2="212" y2="140" />
+                            <line data-step="4" class="dg-line " x1="90" y1="134" x2="213" y2="192" />
+                            <line data-step="4" class="dg-line " x1="90" y1="318" x2="213" y2="288" />
+                            <line data-step="4" class="dg-line " x1="90" y1="324" x2="212" y2="340" />
+                            <line data-step="4" class="dg-line " x1="90" y1="330" x2="213" y2="392" />
+                            <line data-step="4" class="dg-line " x1="90" y1="474" x2="212" y2="468" />
+                            <line data-step="4" class="dg-line " x1="90" y1="482" x2="213" y2="518" />
+                            <g data-step="5"><ellipse class="dg-box " cx="512" cy="84" rx="80" ry="22" /><text class="dg-text dg-text--sm" x="512" y="89" text-anchor="middle">Make Payment</text></g>
+                            <g data-step="5"><ellipse class="dg-box " cx="512" cy="196" rx="80" ry="22" /><text class="dg-text dg-text--sm" x="512" y="201" text-anchor="middle">Process Refund</text></g>
+                            <line data-step="5" class="dg-line dg-line--dash" x1="390" y1="84" x2="428" y2="84" marker-end="url(#arr-muted)" />
+                            <text data-step="5" class="dg-mono dg-mono--sm" x="410" y="56" text-anchor="middle">&lt;&lt;includes&gt;&gt;</text>
+                            <line data-step="5" class="dg-line dg-line--dash" x1="431" y1="196" x2="392" y2="196" marker-end="url(#arr-muted)" />
+                            <text data-step="5" class="dg-mono dg-mono--sm" x="410" y="172" text-anchor="middle">&lt;&lt;extends&gt;&gt;</text>
+                            <line data-step="5" class="dg-line " x1="698" y1="122" x2="593" y2="88" />
+                            <line data-step="5" class="dg-line " x1="698" y1="130" x2="593" y2="192" />
+                          </svg>
+                        </div>
+                        <figcaption>ตัวอย่างที่สร้างขึ้นเพื่อฝึก (ไม่ได้มาจากสไลด์) — เส้นทึบ = association · เส้นประ = includes / extends</figcaption>
+                      </figure>
+                      <ol class="stp-notes">
+                        <li class="stp-note" data-step="1"><strong>ขั้นที่ 1 — Identify the system boundary</strong>วาดกล่อง แล้วเขียนชื่อระบบ "Canteen Pre-order System" ไว้ในกล่อง ทุกอย่างที่ระบบทำจะอยู่ในกล่องนี้</li>
+                        <li class="stp-note" data-step="2"><strong>ขั้นที่ 2 — Identify the actors</strong>หาว่า "ใคร" ใช้ระบบ จากคำนามในโจทย์: ลูกค้า ร้านค้า ผู้ดูแลระบบ เป็น <b>primary actor</b> (ใช้ระบบตรงเพื่อบรรลุเป้าหมาย) · Payment Gateway เป็น <b>secondary actor</b> (บทบาทสนับสนุน) · วาดทุกตัวไว้<b>นอกกล่อง</b></li>
+                        <li class="stp-note" data-step="3"><strong>ขั้นที่ 3 — Identify use cases</strong>หา "ทำอะไร" จากคำกริยาในโจทย์ แล้วตั้งชื่อ<b>ขึ้นต้นด้วย verb</b>: สั่งอาหาร → Place Order · ตรวจสอบสถานะ → Check Order Status · ยกเลิก → Cancel Order · ดูรายการ → View Orders · อัปเดตสถานะ → Update Order Status · จัดการเมนูกับราคา → Manage Menu · จัดการบัญชีร้านค้า → Manage Shop Accounts · เรียกดูรายงาน → View Sales Report · วาดเป็นวงรี<b>ในกล่อง</b></li>
+                        <li class="stp-note" data-step="4"><strong>ขั้นที่ 4 — Establish relationships (association)</strong>ลากเส้นทึบจาก actor ไปยัง use case ที่เขาเริ่มหรือมีส่วนร่วม: ลูกค้า 3 เส้น · ร้านค้า 3 เส้น · ผู้ดูแลระบบ 2 เส้น</li>
+                        <li class="stp-note" data-step="5"><strong>ขั้นที่ 5 — พิจารณา includes / extends แล้ววาดให้ครบ</strong>การสั่งอาหาร<b>ต้องชำระเงินทุกครั้ง</b> → Place Order <b>&lt;&lt;includes&gt;&gt;</b> Make Payment (ลูกศรจาก Place Order ชี้ไป Make Payment) · การคืนเงินเกิด<b>เฉพาะเมื่อเข้าเงื่อนไข</b> และ Cancel Order จบได้เองแม้ไม่คืนเงิน → Process Refund <b>&lt;&lt;extends&gt;&gt;</b> Cancel Order (ลูกศรจาก Process Refund ชี้ไป Cancel Order) · Payment Gateway เชื่อมกับสอง use case ที่เกี่ยวกับเงิน</li>
+                        <li class="stp-note" data-step="6"><strong>ขั้นที่ 6 — Review and refine</strong>ไล่อ่านโจทย์ทีละประโยคแล้วชี้ว่าอยู่ตรงไหนของไดอะแกรม: ทุก functional requirement มี use case รองรับหรือยัง · actor ทุกตัวมีเส้นอย่างน้อยหนึ่งเส้นหรือยัง · ชื่อ use case ขึ้นต้นด้วยกริยาทุกอันหรือยัง</li>
+                      </ol>
+                    </div>
+                  </section>
+
+                  <section class="topic" id="mid-uc-why">
+                    <h4>ทำไมเลือกแบบนี้ (และทางเลือกอื่นที่เป็นไปได้)</h4>
+                    <div class="table-scroll">
+                      <table>
+                        <thead><tr><th>จุดที่ต้องตัดสินใจ</th><th>ที่เลือก</th><th>เหตุผลตามนิยามในสไลด์</th></tr></thead>
+                        <tbody>
+                          <tr><td>Payment Gateway เป็น actor ไหม</td><td>เป็น secondary actor</td><td>สไลด์ยกตัวอย่าง secondary actor ว่า "a payment service" — เป็นระบบภายนอกที่สนับสนุน ไม่ได้ใช้ระบบเพื่อเป้าหมายของตัวเอง</td></tr>
+                          <tr><td>ชำระเงิน: includes หรือ extends</td><td>includes</td><td>เป็นพฤติกรรมที่ Place Order ต้องใช้ทุกครั้ง จึงแยกออกมาเป็น use case ที่ถูกใช้</td></tr>
+                          <tr><td>คืนเงิน: includes หรือ extends</td><td>extends</td><td>เป็น optional behaviour — เกิดเฉพาะเมื่อเข้านโยบาย และ base use case (Cancel Order) สมบูรณ์ในตัวเอง</td></tr>
+                          <tr><td>ควรใช้ inheritance ไหม</td><td>ไม่ได้ใช้</td><td>inheritance ใช้เมื่อ actor หลายตัวมี<b>พฤติกรรมร่วมกัน</b> — ในโจทย์นี้ไม่มี use case ที่ actor สองตัวทำซ้ำกัน ถ้าโจทย์บอกว่า "ทั้งร้านค้าและผู้ดูแลระบบดูรายงานได้" จึงค่อยย้ายไปไว้ที่ abstract actor</td></tr>
+                        </tbody>
+                      </table>
+                    </div>
+                    <p class="note">บางคนอาจรวม View Orders กับ Update Order Status เป็น use case เดียว หรือแยก Manage Menu เป็น Add / Edit / Delete — ไม่ผิด ตราบใดที่ครอบคลุม requirement ครบและใช้สัญลักษณ์ถูก</p>
+                  </section>
+
+                </div>
+              </div>
+            </div>
+          </div>
+
+<!-- ================= 03 Workshop 2: เขียน Use Case Narrative ================= -->
+          <div class="acc-item">
+            <h3 class="acc-heading">
+              <button class="acc-trigger" type="button" aria-expanded="false" aria-controls="acc-mid-narr-card" id="acc-mid-narr-card-btn">
+                <span class="acc-index">03</span>
+                <span class="acc-title">
+                  <span class="acc-name">Workshop 2: เขียน Use Case Narrative</span>
+                  <span class="acc-file">ตามองค์ประกอบ L4 slide 24 · ระบบตัวอย่าง Canteen Pre-order</span>
+                </span>
+                <svg class="acc-chevron" viewBox="0 0 20 20" aria-hidden="true"><path d="M5 7.5l5 5 5-5" /></svg>
+              </button>
+            </h3>
+            <div class="acc-panel" id="acc-mid-narr-card" role="region" aria-labelledby="acc-mid-narr-card-btn">
+              <div class="acc-panel-inner">
+                <div class="acc-body">
+
+                  <nav class="toc" aria-label="หัวข้อใน workshop narrative">
+                    <a href="#mid-narrative">วิธีเขียน 8 ช่อง</a>
+                    <a href="#mid-narr-1">ตัวอย่าง 1: Place Order</a>
+                    <a href="#mid-narr-2">ตัวอย่าง 2: Cancel Order</a>
+                  </nav>
+
+                  <section class="topic" id="mid-narrative">
+                    <h4>วิธีเขียน 8 ช่อง</h4>
+                    <p>ข้อสอบ Part 2 ให้เขียน narrative ของ use case ที่อยู่ในไดอะแกรมของเราเอง ใช้คำถามนำแต่ละช่องดังนี้:</p>
+                    <div class="table-scroll">
+                      <table>
+                        <thead><tr><th>ช่อง</th><th>ถามตัวเองว่า</th><th>ข้อควรระวัง</th></tr></thead>
+                        <tbody>
+                          <tr><td><strong>Use Case Name</strong></td><td>use case นี้ชื่ออะไรในไดอะแกรม</td><td><b>ต้องสะกดตรงกับในไดอะแกรม</b></td></tr>
+                          <tr><td><strong>Primary Actor</strong></td><td>ใครเป็นคนใช้ use case นี้</td><td>ชื่อ actor ตรงกับในไดอะแกรม</td></tr>
+                          <tr><td><strong>Goal in Context</strong></td><td>actor ต้องการให้ได้อะไร</td><td>เขียนเป็นเป้าหมาย ไม่ใช่ขั้นตอน</td></tr>
+                          <tr><td><strong>Precondition</strong></td><td>อะไรต้อง<b>เป็นจริงอยู่แล้ว</b>ก่อนเริ่ม</td><td>เป็น<b>สถานะ</b> เช่น "เข้าสู่ระบบแล้ว"</td></tr>
+                          <tr><td><strong>Trigger</strong></td><td><b>เหตุการณ์</b>อะไรทำให้เริ่ม</td><td>เป็น<b>การกระทำ</b> เช่น "ลูกค้ากดปุ่ม…"</td></tr>
+                          <tr><td><strong>Scenario</strong></td><td>ถ้าทุกอย่างราบรื่น เกิดอะไรตามลำดับ</td><td>ใส่เลขข้อ สลับ actor ทำ / ระบบตอบ</td></tr>
+                          <tr><td><strong>Exception</strong></td><td>แต่ละขั้นผิดพลาดได้อย่างไร แล้วระบบทำอะไร</td><td>อ้างเลขขั้นของ scenario เช่น 5a</td></tr>
+                          <tr><td><strong>Postcondition</strong></td><td>จบแล้วระบบ<b>อยู่ในสถานะใด</b></td><td>เป็นสถานะ ไม่ใช่ขั้นตอนสุดท้าย</td></tr>
+                        </tbody>
+                      </table>
+                    </div>
+                    <p class="note">คอลัมน์ "องค์ประกอบ" และความหมายมาจากสไลด์ 4-24 · คำถามนำและการอ้างเลขขั้น (5a) เป็นเทคนิคของผู้ทำสรุป</p>
+                  </section>
+
+                  <section class="topic" id="mid-narr-1">
+                    <h4>ตัวอย่าง 1: Place Order</h4>
+                    <p>ลองเขียนเองทั้ง 8 ช่องจากโจทย์ในการ์ด 02 ก่อน แล้วค่อยเปิดเทียบ:</p>
+                    <details class="reveal">
+                      <summary>เปิดดูตัวอย่างคำตอบ: Place Order</summary>
+                      <div class="table-scroll">
+                        <table>
+                          <thead><tr><th>องค์ประกอบ</th><th>ตัวอย่างคำตอบ</th></tr></thead>
+                          <tbody>
+                            <tr><td><strong>Use Case Name</strong></td><td>Place Order</td></tr>
+                            <tr><td><strong>Primary Actor</strong></td><td>ลูกค้า</td></tr>
+                            <tr><td><strong>Goal in Context</strong></td><td>สั่งอาหารล่วงหน้าและชำระเงินให้สำเร็จ เพื่อมารับอาหารตามเวลาที่เลือก</td></tr>
+                            <tr><td><strong>Precondition</strong></td><td>ร้านที่ลูกค้าต้องการเปิดรับคำสั่งซื้อ และมีเมนูที่ร้านกำหนดราคาไว้แล้ว</td></tr>
+                            <tr><td><strong>Trigger</strong></td><td>ลูกค้าเลือกคำสั่ง "สั่งอาหาร"</td></tr>
+                            <tr><td><strong>Scenario</strong></td><td>1. ลูกค้าเลือกร้าน<br>2. ระบบแสดงเมนูและราคาของร้าน<br>3. ลูกค้าเลือกเมนู จำนวน และเวลารับ<br>4. ระบบแสดงราคารวม<br>5. ลูกค้ายืนยันและชำระเงินด้วย QR Code (Make Payment)<br>6. Payment Gateway แจ้งผลชำระเงินสำเร็จ<br>7. ระบบบันทึกคำสั่งซื้อและแสดง Order ID ให้ลูกค้า</td></tr>
+                            <tr><td><strong>Exception</strong></td><td>3a. เมนูที่เลือกหมด → ระบบแจ้งและให้เลือกเมนูอื่น<br>5a. ชำระเงินไม่สำเร็จหรือหมดเวลา → ระบบแจ้งผล ไม่สร้างคำสั่งซื้อ และให้ชำระใหม่</td></tr>
+                            <tr><td><strong>Postcondition</strong></td><td>มีคำสั่งซื้อสถานะ "ชำระเงินแล้ว" พร้อม Order ID และคำสั่งซื้อปรากฏในรายการของร้านค้า</td></tr>
+                          </tbody>
+                        </table>
+                      </div>
+                    </details>
+                  </section>
+
+                  <section class="topic" id="mid-narr-2">
+                    <h4>ตัวอย่าง 2: Cancel Order</h4>
+                    <details class="reveal">
+                      <summary>เปิดดูตัวอย่างคำตอบ: Cancel Order</summary>
+                      <div class="table-scroll">
+                        <table>
+                          <thead><tr><th>องค์ประกอบ</th><th>ตัวอย่างคำตอบ</th></tr></thead>
+                          <tbody>
+                            <tr><td><strong>Use Case Name</strong></td><td>Cancel Order</td></tr>
+                            <tr><td><strong>Primary Actor</strong></td><td>ลูกค้า</td></tr>
+                            <tr><td><strong>Goal in Context</strong></td><td>ยกเลิกคำสั่งซื้อที่ร้านยังไม่เริ่มทำ และได้รับเงินคืนตามนโยบาย</td></tr>
+                            <tr><td><strong>Precondition</strong></td><td>ลูกค้ามีคำสั่งซื้อที่ชำระเงินแล้ว</td></tr>
+                            <tr><td><strong>Trigger</strong></td><td>ลูกค้ากด "ยกเลิกคำสั่งซื้อ" ในหน้ารายละเอียดคำสั่งซื้อ</td></tr>
+                            <tr><td><strong>Scenario</strong></td><td>1. ลูกค้าเลือกคำสั่งซื้อที่ต้องการยกเลิก<br>2. ระบบตรวจว่าร้านยังไม่เริ่มทำอาหาร<br>3. ระบบขอให้ลูกค้ายืนยัน<br>4. ลูกค้ายืนยันการยกเลิก<br>5. ระบบเปลี่ยนสถานะคำสั่งซื้อเป็น "ยกเลิก"<br>6. ระบบตรวจเงื่อนไขการคืนเงิน และคืนเงินผ่าน Payment Gateway (Process Refund)<br>7. ระบบแจ้งผลการยกเลิกและการคืนเงิน</td></tr>
+                            <tr><td><strong>Exception</strong></td><td>2a. ร้านเริ่มทำอาหารแล้ว → ระบบแจ้งว่ายกเลิกไม่ได้ และคงคำสั่งซื้อไว้<br>6a. ไม่เข้าเงื่อนไขการคืนเงิน → ระบบยกเลิกคำสั่งซื้อโดยไม่คืนเงิน และแจ้งเหตุผล</td></tr>
+                            <tr><td><strong>Postcondition</strong></td><td>คำสั่งซื้อมีสถานะ "ยกเลิก" และไม่อยู่ในคิวของร้านค้า · ถ้ามีการคืนเงิน มีบันทึกการคืนเงินผูกกับคำสั่งซื้อ</td></tr>
+                          </tbody>
+                        </table>
+                      </div>
+                    </details>
+                    <div class="callout callout--why">
+                      <span class="callout-label">สังเกตความเชื่อมโยงกับไดอะแกรม</span>
+                      <p>ขั้นที่ 6 ของ scenario ทำ Process Refund และ exception 6a บอกว่า<b>ไม่ทำก็ได้</b> — ตรงกับที่วาดเป็น <b>&lt;&lt;extends&gt;&gt;</b> · ส่วน Place Order ขั้นที่ 5 <b>ต้อง</b>ผ่าน Make Payment เสมอ — ตรงกับ <b>&lt;&lt;includes&gt;&gt;</b></p>
+                    </div>
+                  </section>
+
+                </div>
+              </div>
+            </div>
+          </div>
+
+<!-- ================= 04 Workshop 3: วาด Context DFD ทีละขั้น ================= -->
+          <div class="acc-item">
+            <h3 class="acc-heading">
+              <button class="acc-trigger" type="button" aria-expanded="false" aria-controls="acc-mid-dfd-card" id="acc-mid-dfd-card-btn">
+                <span class="acc-index">04</span>
+                <span class="acc-title">
+                  <span class="acc-name">Workshop 3: วาด Context DFD ทีละขั้น</span>
+                  <span class="acc-file">ตามกฎ L6 slide 18–20, 27–30 · ระบบตัวอย่าง Canteen Pre-order</span>
+                </span>
+                <svg class="acc-chevron" viewBox="0 0 20 20" aria-hidden="true"><path d="M5 7.5l5 5 5-5" /></svg>
+              </button>
+            </h3>
+            <div class="acc-panel" id="acc-mid-dfd-card" role="region" aria-labelledby="acc-mid-dfd-card-btn">
+              <div class="acc-panel-inner">
+                <div class="acc-body">
+
+                  <nav class="toc" aria-label="หัวข้อใน workshop context DFD">
+                    <a href="#mid-dfd">วาดทีละขั้น</a>
+                    <a href="#mid-dfd-map">จากประโยคในโจทย์ → data flow</a>
+                    <a href="#mid-dfd-vs">ต่างจาก use case diagram อย่างไร</a>
+                  </nav>
+
+                  <section class="topic" id="mid-dfd">
+                    <h4>วาดทีละขั้น</h4>
+                    <p>ใช้โจทย์เดิมจากการ์ด 02 (Canteen Pre-order System) — ลองวาด context DFD บนกระดาษก่อน:</p>
+                    <div class="demo-box" data-widget="stepper">
+                      <span class="demo-box-title">กด "ขั้นถัดไป" เพื่อดูว่าแต่ละขั้นเพิ่มอะไรลงใน context DFD</span>
+                      <figure class="diagram">
+                        <div class="diagram-scroll">
+                          <svg viewBox="0 0 860 540" role="img" aria-labelledby="mid-dfd-t mid-dfd-d">
+                            <title id="mid-dfd-t">Context DFD ของระบบตัวอย่าง Canteen Pre-order System</title>
+                            <desc id="mid-dfd-d">Process 0 Canteen Pre-order System อยู่ตรงกลาง มี external entity สี่ตัว · ลูกค้าส่งรายละเอียดคำสั่งซื้อและคำขอยกเลิก และได้รับราคารวมกับ Order ID และสถานะคำสั่งซื้อกับผลการคืนเงิน · ร้านค้าส่งข้อมูลเมนูและราคาและสถานะการทำอาหาร และได้รับรายการคำสั่งซื้อ · ผู้ดูแลระบบส่งข้อมูลบัญชีร้านค้า และได้รับรายงานยอดขาย · Payment Gateway ได้รับคำขอชำระเงินหรือคืนเงิน และส่งผลการชำระเงินหรือคืนเงินกลับ</desc>
+                            <g data-step="1"><circle class="dg-box dg-box--accent" cx="430" cy="265" r="85" /><text class="dg-mono" x="430" y="244" text-anchor="middle">0</text><text class="dg-text" x="430" y="270" text-anchor="middle">Canteen Pre-order</text><text class="dg-text" x="430" y="290" text-anchor="middle">System</text></g>
+                            <g data-step="2"><rect class="dg-box" x="10" y="215" width="130" height="110" /><text class="dg-text" x="75" y="275" text-anchor="middle">ลูกค้า</text></g>
+                            <g data-step="2"><rect class="dg-box" x="720" y="215" width="130" height="110" /><text class="dg-text" x="785" y="275" text-anchor="middle">ร้านค้า</text></g>
+                            <g data-step="2"><rect class="dg-box" x="355" y="14" width="150" height="52" /><text class="dg-text" x="430" y="46" text-anchor="middle">ผู้ดูแลระบบ</text></g>
+                            <g data-step="2"><rect class="dg-box" x="355" y="474" width="150" height="52" /><text class="dg-text" x="430" y="506" text-anchor="middle">Payment Gateway</text></g>
+                            <line data-step="3" class="dg-line dg-line--accent" x1="142" y1="232" x2="349" y2="232" marker-end="url(#arr)" /><text data-step="3" class="dg-mono dg-mono--sm" x="245.5" y="225" text-anchor="middle">รายละเอียดคำสั่งซื้อ</text>
+                            <line data-step="3" class="dg-line dg-line--accent" x1="142" y1="258" x2="343" y2="258" marker-end="url(#arr)" /><text data-step="3" class="dg-mono dg-mono--sm" x="242.5" y="251" text-anchor="middle">คำขอยกเลิก</text>
+                            <line data-step="3" class="dg-line dg-line--accent" x1="718" y1="235" x2="512" y2="235" marker-end="url(#arr)" /><text data-step="3" class="dg-mono dg-mono--sm" x="615" y="228" text-anchor="middle">ข้อมูลเมนูและราคา</text>
+                            <line data-step="3" class="dg-line dg-line--accent" x1="718" y1="265" x2="518" y2="265" marker-end="url(#arr)" /><text data-step="3" class="dg-mono dg-mono--sm" x="618" y="258" text-anchor="middle">สถานะการทำอาหาร</text>
+                            <line data-step="3" class="dg-line dg-line--accent" x1="400" y1="68" x2="400" y2="182" marker-end="url(#arr)" /><text data-step="3" class="dg-mono dg-mono--sm" x="392" y="128" text-anchor="end">ข้อมูลบัญชีร้านค้า</text>
+                            <line data-step="3" class="dg-line dg-line--accent" x1="460" y1="472" x2="460" y2="349" marker-end="url(#arr)" /><text data-step="3" class="dg-mono dg-mono--sm" x="468" y="418" text-anchor="start">ผลการชำระเงิน / คืนเงิน</text>
+                            <line data-step="4" class="dg-line dg-line--ok" x1="346" y1="284" x2="144" y2="284" marker-end="url(#arr-ok)" /><text data-step="4" class="dg-mono dg-mono--sm" x="245" y="277" text-anchor="middle">ราคารวม + Order ID</text>
+                            <line data-step="4" class="dg-line dg-line--ok" x1="357" y1="310" x2="144" y2="310" marker-end="url(#arr-ok)" /><text data-step="4" class="dg-mono dg-mono--sm" x="250.5" y="303" text-anchor="middle">สถานะคำสั่งซื้อ / ผลการคืนเงิน</text>
+                            <line data-step="4" class="dg-line dg-line--ok" x1="510" y1="297" x2="716" y2="297" marker-end="url(#arr-ok)" /><text data-step="4" class="dg-mono dg-mono--sm" x="613" y="290" text-anchor="middle">รายการคำสั่งซื้อ</text>
+                            <line data-step="4" class="dg-line dg-line--ok" x1="460" y1="184" x2="460" y2="70" marker-end="url(#arr-ok)" /><text data-step="4" class="dg-mono dg-mono--sm" x="468" y="128" text-anchor="start">รายงานยอดขาย</text>
+                            <line data-step="4" class="dg-line dg-line--ok" x1="400" y1="347" x2="400" y2="470" marker-end="url(#arr-ok)" /><text data-step="4" class="dg-mono dg-mono--sm" x="392" y="418" text-anchor="end">คำขอชำระเงิน / คืนเงิน</text>
+                          </svg>
+                        </div>
+                        <figcaption>ตัวอย่างที่สร้างขึ้นเพื่อฝึก (ไม่ได้มาจากสไลด์) — ลูกศรสี accent = ข้อมูลเข้าระบบ · ลูกศรสีเขียว = ข้อมูลออกจากระบบ (สีใช้แยกในหน้านี้เท่านั้น ตอนสอบวาดเส้นธรรมดา)</figcaption>
+                      </figure>
+                      <ol class="stp-notes">
+                        <li class="stp-note" data-step="1"><strong>ขั้นที่ 1 — วาด process เดียวตรงกลาง ใส่เลข 0</strong>context diagram แสดงทั้งระบบเป็น <b>process 'zero' เพียงตัวเดียว</b> ตั้งชื่อเป็นชื่อระบบ</li>
+                        <li class="stp-note" data-step="2"><strong>ขั้นที่ 2 — วาง external entity รอบๆ</strong>ใครหรือระบบใด<b>ส่งข้อมูลเข้า หรือรับข้อมูลออก</b>: ลูกค้า ร้านค้า ผู้ดูแลระบบ และ Payment Gateway · วาดเป็นสี่เหลี่ยม เขียนชื่อทุกกล่อง</li>
+                        <li class="stp-note" data-step="3"><strong>ขั้นที่ 3 — ลาก data flow ขาเข้า</strong>แต่ละ entity ส่งข้อมูลอะไรให้ระบบ: ลูกค้าส่ง "รายละเอียดคำสั่งซื้อ" และ "คำขอยกเลิก" · ร้านค้าส่ง "ข้อมูลเมนูและราคา" และ "สถานะการทำอาหาร" · ผู้ดูแลระบบส่ง "ข้อมูลบัญชีร้านค้า" · Payment Gateway ส่ง "ผลการชำระเงิน / คืนเงิน" · <b>ทุกเส้นต้องมีชื่อ</b></li>
+                        <li class="stp-note" data-step="4"><strong>ขั้นที่ 4 — ลาก data flow ขาออก</strong>ระบบส่งอะไรกลับไป: ลูกค้าได้ "ราคารวม + Order ID" และ "สถานะคำสั่งซื้อ / ผลการคืนเงิน" · ร้านค้าได้ "รายการคำสั่งซื้อ" · ผู้ดูแลระบบได้ "รายงานยอดขาย" · Payment Gateway ได้ "คำขอชำระเงิน / คืนเงิน"</li>
+                        <li class="stp-note" data-step="5"><strong>ขั้นที่ 5 — ตรวจกับกฎ</strong>มี process เดียวเลข 0 ✓ · มี input จาก entity และ output ไป entity ✓ · ทุกเส้นมีชื่อที่บอก<b>ตัวข้อมูล</b> (ไม่ใช่วิธีส่ง) ✓ · ทุกเส้นแตะ process — ไม่มีเส้นตรงจาก entity ถึง entity ✓ · ไม่มี data store เพราะ data store ต้องอยู่ระหว่าง 2 process ซึ่งระดับนี้มี process เดียว ✓</li>
+                      </ol>
+                    </div>
+                  </section>
+
+                  <section class="topic" id="mid-dfd-map">
+                    <h4>จากประโยคในโจทย์ → data flow</h4>
+                    <div class="table-scroll">
+                      <table>
+                        <thead><tr><th>ประโยคในโจทย์</th><th>ทิศ</th><th>ชื่อ data flow</th></tr></thead>
+                        <tbody>
+                          <tr><td>ลูกค้าเลือกร้าน เมนู จำนวน และเวลารับ</td><td>ลูกค้า → 0</td><td>รายละเอียดคำสั่งซื้อ</td></tr>
+                          <tr><td>ระบบแสดงราคารวม … ออก Order ID</td><td>0 → ลูกค้า</td><td>ราคารวม + Order ID</td></tr>
+                          <tr><td>ชำระเงินด้วย QR Code ผ่านผู้ให้บริการภายนอก</td><td>0 → Payment Gateway แล้ว Payment Gateway → 0</td><td>คำขอชำระเงิน · ผลการชำระเงิน</td></tr>
+                          <tr><td>ลูกค้าตรวจสอบสถานะ … ยกเลิก … ระบบคืนเงิน</td><td>ลูกค้า → 0 แล้ว 0 → ลูกค้า</td><td>คำขอยกเลิก · สถานะคำสั่งซื้อ / ผลการคืนเงิน</td></tr>
+                          <tr><td>ร้านค้าดูรายการคำสั่งซื้อ</td><td>0 → ร้านค้า</td><td>รายการคำสั่งซื้อ</td></tr>
+                          <tr><td>ร้านค้าอัปเดตสถานะ และจัดการเมนูกับราคา</td><td>ร้านค้า → 0</td><td>สถานะการทำอาหาร · ข้อมูลเมนูและราคา</td></tr>
+                          <tr><td>ผู้ดูแลระบบจัดการบัญชีร้านค้า และเรียกดูรายงาน</td><td>ผู้ดูแลระบบ → 0 แล้ว 0 → ผู้ดูแลระบบ</td><td>ข้อมูลบัญชีร้านค้า · รายงานยอดขาย</td></tr>
+                        </tbody>
+                      </table>
+                    </div>
+                    <div class="callout callout--def">
+                      <span class="callout-label">Data flow packet concept (สไลด์ 6-15)</span>
+                      <p>ข้อมูลที่เดินทางไปด้วยกันให้วาดเป็น<b>เส้นเดียว</b> — เช่น ร้าน + เมนู + จำนวน + เวลารับ รวมเป็น "รายละเอียดคำสั่งซื้อ" เส้นเดียว ไม่ต้องแยก 4 เส้น</p>
+                    </div>
+                    <p class="note">ตัวอย่างนี้ละ flow ประเภท "คำขอดูข้อมูล" บางเส้นไว้เพื่อให้อ่านง่าย (เช่น คำขอดูรายงาน) ถ้าจะใส่เพิ่มก็ได้ ขอแค่ทุกเส้นมีชื่อและแตะ process</p>
+                  </section>
+
+                  <section class="topic" id="mid-dfd-vs">
+                    <h4>Use case diagram กับ Context DFD ต่างกันอย่างไร</h4>
+                    <div class="table-scroll">
+                      <table>
+                        <thead><tr><th></th><th>Use case diagram</th><th>Context DFD</th></tr></thead>
+                        <tbody>
+                          <tr><td>ตอบคำถาม</td><td><b>ใคร</b>ใช้ระบบทำ<b>อะไร</b></td><td><b>ข้อมูลอะไร</b>ไหลเข้า-ออกระบบ</td></tr>
+                          <tr><td>ของที่อยู่นอกระบบ</td><td>actor (stickman)</td><td>external entity (สี่เหลี่ยม)</td></tr>
+                          <tr><td>ตัวระบบ</td><td>กล่อง system boundary ที่มี<b>หลายวงรี</b></td><td><b>process เดียว</b> เลข 0</td></tr>
+                          <tr><td>เส้น</td><td>association <b>ไม่มีชื่อ ไม่มีหัวลูกศร</b></td><td>data flow <b>มีชื่อ มีหัวลูกศร</b>บอกทิศ</td></tr>
+                          <tr><td>ชื่อที่เขียน</td><td>use case = <b>กริยา</b> (Place Order)</td><td>data flow = <b>คำนามของข้อมูล</b> (รายละเอียดคำสั่งซื้อ)</td></tr>
+                        </tbody>
+                      </table>
+                    </div>
+                    <p class="note">ตารางเทียบนี้เรียบเรียงจากนิยามในสไลด์ L4 และ L6 — actor ของ use case diagram มักกลายเป็น external entity ของ context DFD ของระบบเดียวกัน (ในตัวอย่างนี้ตรงกันทั้ง 4 ตัว)</p>
+                  </section>
+
+                </div>
+              </div>
+            </div>
+          </div>
+
+<!-- ================= 05 ฝึกเองกับ Zoo Ticketing System + เช็กลิสต์ตรวจงาน ================= -->
+          <div class="acc-item">
+            <h3 class="acc-heading">
+              <button class="acc-trigger" type="button" aria-expanded="false" aria-controls="acc-mid-zoo-card" id="acc-mid-zoo-card-btn">
+                <span class="acc-index">05</span>
+                <span class="acc-title">
+                  <span class="acc-name">ฝึกเองกับ Zoo Ticketing System + เช็กลิสต์ตรวจงาน</span>
+                  <span class="acc-file">In-class exercise · L6 slide 43 · Ex3</span>
+                </span>
+                <svg class="acc-chevron" viewBox="0 0 20 20" aria-hidden="true"><path d="M5 7.5l5 5 5-5" /></svg>
+              </button>
+            </h3>
+            <div class="acc-panel" id="acc-mid-zoo-card" role="region" aria-labelledby="acc-mid-zoo-card-btn">
+              <div class="acc-panel-inner">
+                <div class="acc-body">
+
+                  <nav class="toc" aria-label="หัวข้อในการ์ดฝึกเอง">
+                    <a href="#mid-zoo">ทำอะไรบ้าง</a>
+                    <a href="#mid-check-uc">เช็กลิสต์ use case diagram</a>
+                    <a href="#mid-check-narr">เช็กลิสต์ narrative</a>
+                    <a href="#mid-check-dfd">เช็กลิสต์ context DFD</a>
+                  </nav>
+
+                  <section class="topic" id="mid-zoo">
+                    <h4>ลองทำเองกับระบบที่อาจารย์ใช้ในห้อง</h4>
+                    <div class="callout callout--warn">
+                      <span class="callout-label">หน้านี้ไม่มีเฉลยของ Zoo Ticketing System</span>
+                      <p>เอกสารของอาจารย์เป็นแบบฝึกหัดเปล่า ไม่มีเฉลยให้อ้างอิง จึงไม่ได้วาดคำตอบของระบบนี้ไว้ — ใช้วิธีคิดจาก workshop ข้างบน แล้วตรวจงานตัวเองด้วยเช็กลิสต์ด้านล่าง (ทุกข้อมาจากกฎในสไลด์)</p>
+                    </div>
+                    <ol class="steps">
+                      <li>อ่านคำอธิบายระบบใน <a href="se-use-case-modeling.html#uc-zoo-system">บทที่ 4 การ์ด 05</a></li>
+                      <li>วาด <strong>use case diagram</strong> ของทั้งระบบ (ผู้เยี่ยมชม เจ้าหน้าที่ขายตั๋ว ผู้ดูแลระบบ)</li>
+                      <li>เขียน <strong>use case narrative 2 กรณี</strong> จาก use case ในไดอะแกรมของตัวเอง</li>
+                      <li>วาด <strong>context DFD</strong> (โจทย์ L6 ให้วาดสำหรับส่วนของผู้เยี่ยมชม)</li>
+                      <li>ถ้ามีเวลา: Ex3 ให้วาด DFD Level 1 ครอบคลุมทุก process และ Level 2 ของ 1 process — ดูกฎการแตกระดับใน <a href="se-flow-behavior-modeling.html#dfd-numbering">บทที่ 5</a></li>
+                    </ol>
+                    <p class="note">ติ๊กเช็กลิสต์ได้เลย (ไม่ถูกบันทึก — โหลดหน้าใหม่แล้วจะหาย)</p>
+                  </section>
+
+                  <section class="topic" id="mid-check-uc">
+                    <h4>เช็กลิสต์: use case diagram</h4>
+                    <ul class="self-check">
+                      <li><label><input type="checkbox" /><span>มีกล่อง system boundary และเขียนชื่อระบบกำกับ</span></label></li>
+                      <li><label><input type="checkbox" /><span>actor ทุกตัวอยู่<b>นอก</b>กล่อง วาดเป็น stickman และมีชื่อกำกับ</span></label></li>
+                      <li><label><input type="checkbox" /><span>use case ทุกอันอยู่<b>ใน</b>กล่อง วาดเป็นวงรี</span></label></li>
+                      <li><label><input type="checkbox" /><span>ชื่อ use case ทุกอัน<b>ขึ้นต้นด้วยกริยา</b></span></label></li>
+                      <li><label><input type="checkbox" /><span>actor ทุกตัวมี association อย่างน้อย 1 เส้น และ use case หลักทุกอันมี actor</span></label></li>
+                      <li><label><input type="checkbox" /><span>ถ้าใช้ &lt;&lt;includes&gt;&gt;: ลูกศรเส้นประจาก use case ต้นทาง → use case ที่ถูกใช้ และเป็นพฤติกรรมที่ต้องทำทุกครั้ง</span></label></li>
+                      <li><label><input type="checkbox" /><span>ถ้าใช้ &lt;&lt;extends&gt;&gt;: ลูกศรเส้นประจาก use case เสริม → base use case และ base จบได้เองโดยไม่ต้องมีส่วนเสริม</span></label></li>
+                      <li><label><input type="checkbox" /><span>ไล่อ่านโจทย์ทีละประโยคแล้ว ทุก functional requirement มี use case รองรับ</span></label></li>
+                    </ul>
+                  </section>
+
+                  <section class="topic" id="mid-check-narr">
+                    <h4>เช็กลิสต์: use case narrative</h4>
+                    <ul class="self-check">
+                      <li><label><input type="checkbox" /><span>Use Case Name และ Primary Actor <b>ตรงกับในไดอะแกรม</b>ทุกตัวอักษร</span></label></li>
+                      <li><label><input type="checkbox" /><span>Goal in Context บอกเป้าหมาย ไม่ใช่ขั้นตอน</span></label></li>
+                      <li><label><input type="checkbox" /><span>Precondition เป็น<b>สถานะ</b>ที่จริงอยู่ก่อนเริ่ม</span></label></li>
+                      <li><label><input type="checkbox" /><span>Trigger เป็น<b>เหตุการณ์</b>ที่ทำให้เริ่ม</span></label></li>
+                      <li><label><input type="checkbox" /><span>Scenario มีเลขข้อ เรียงตามลำดับ และเห็นว่าใครทำอะไร (actor / ระบบ)</span></label></li>
+                      <li><label><input type="checkbox" /><span>Exception อย่างน้อย 1 กรณี บอกทั้งสิ่งที่ผิดพลาดและสิ่งที่ระบบทำ</span></label></li>
+                      <li><label><input type="checkbox" /><span>Postcondition เป็น<b>สถานะของระบบ</b>หลังจบ</span></label></li>
+                      <li><label><input type="checkbox" /><span>ครบทั้ง 8 ช่อง ไม่มีช่องว่าง</span></label></li>
+                    </ul>
+                  </section>
+
+                  <section class="topic" id="mid-check-dfd">
+                    <h4>เช็กลิสต์: context DFD</h4>
+                    <ul class="self-check">
+                      <li><label><input type="checkbox" /><span>มี process <b>เพียงตัวเดียว</b> และเขียนเลข <b>0</b></span></label></li>
+                      <li><label><input type="checkbox" /><span>มี external entity ครบทุกตัวที่ส่งหรือรับข้อมูลกับระบบ และมีชื่อทุกกล่อง</span></label></li>
+                      <li><label><input type="checkbox" /><span>มี input จาก external entity อย่างน้อย 1 เส้น และ output ไป external entity อย่างน้อย 1 เส้น</span></label></li>
+                      <li><label><input type="checkbox" /><span><b>data flow ทุกเส้นมีชื่อ</b></span></label></li>
+                      <li><label><input type="checkbox" /><span>ชื่อ data flow บอก<b>ตัวข้อมูล</b> ไม่ใช่วิธีส่ง (เช่น "รายละเอียดการจอง" ไม่ใช่ "กรอกฟอร์ม")</span></label></li>
+                      <li><label><input type="checkbox" /><span>ทุกเส้นเริ่มหรือจบที่ process — ไม่มีเส้นจาก entity ถึง entity โดยตรง</span></label></li>
+                      <li><label><input type="checkbox" /><span>ไม่มี data flow ที่แตกเป็นหลายเส้นกลางทาง</span></label></li>
+                      <li><label><input type="checkbox" /><span>ทุกเส้นมีหัวลูกศรบอกทิศ</span></label></li>
+                    </ul>
+                  </section>
+
+                </div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </section>
+
+      <!-- =============================================================
+           แท็บ 2: สรุป (cheat sheet)
+           ============================================================= -->
+      <section class="panel" id="summary" role="tabpanel" aria-labelledby="tab-summary" tabindex="-1">
+        <div class="panel-head">
+          <h2>Cheat sheet</h2>
+          <p class="panel-sub">ย่อทุกหัวข้อใน guideline ให้พอดีกับกระดาษ A4 หนึ่งแผ่นที่นำเข้าห้องสอบได้ — ใช้เป็นต้นแบบจดด้วยลายมือตัวเอง</p>
+        </div>
+
+        <div class="sheet">
+
+<article class="sheet-card">
+            <h3><span class="sheet-num">01</span> โครงข้อสอบ</h3>
+            <dl class="defs defs--codes">
+              <div><dt>P1</dt><dd><strong>15 คะแนน</strong> — Foundation &amp; PM · Process · RE · Interface Design</dd></div>
+              <div><dt>P2</dt><dd><strong>25 คะแนน</strong> — use case diagram · use case narrative · context DFD</dd></div>
+            </dl>
+            <p class="note">A4 ได้ 1 แผ่น (เขียนชื่อ + รหัส, ส่งคืน) · เตรียมเครื่องเขียนเอง</p>
+          </article>
+
+          <article class="sheet-card">
+            <h3><span class="sheet-num">02</span> SE Foundation</h3>
+            <p><strong>Software</strong> = instructions + data structures + descriptive information (document)</p>
+            <p><strong>ลักษณะ:</strong> engineered ไม่ใช่ manufactured · intangible · labour intensive · แก้ยาก · ไม่ wear out แต่ obsolete ได้</p>
+            <p><strong>SE</strong> (Lethbridge) = แก้ปัญหาลูกค้า · systematic development &amp; evolution · large, high-quality · ภายใต้ cost/time/constraints</p>
+            <p class="note"><strong>5 aspects:</strong> processes · methodologies/techniques · metrics · people &amp; teamwork · project coordination/management<br><strong>Hierarchy:</strong> User → Application → OS → Hardware</p>
+          </article>
+
+          <article class="sheet-card">
+            <h3><span class="sheet-num">03</span> POMA + WBS</h3>
+            <dl class="defs defs--codes">
+              <div><dt>P</dt><dd>เข้าใจ req · เป้าหมายวัดได้ · ประมาณ effort/schedule/resources · risk → <strong>Project Plan</strong></dd></div>
+              <div><dt>O</dt><dd>โครงสร้างองค์กร · hire · training · <strong>initiate tracking</strong></dd></div>
+              <div><dt>M</dt><dd>collect status → analyze → present</dd></div>
+              <div><dt>A</dt><dd>ปรับ resources / schedule / project content</dd></div>
+            </dl>
+            <p class="note"><strong>WBS:</strong> System name → Module → Function → Task<br><strong>Project needs:</strong> clear objectives · clear requirements · stakeholder involvement · executive support · realistic planning · good management</p>
+          </article>
+
+          <article class="sheet-card sheet-card--wide">
+            <h3><span class="sheet-num">04</span> Process Models</h3>
+            <div class="table-scroll">
+              <table>
+                <thead><tr><th>Model</th><th>จำว่า</th></tr></thead>
+                <tbody>
+                  <tr><td><strong>Code and Fix</strong></td><td>code → compile → debug → unit test → release · ปัญหา: ข้าม test/debug, ไม่เข้าใจ problem statement (= requirement)</td></tr>
+                  <tr><td><strong>Waterfall</strong></td><td>Requirement → Design → Implementation → Testing → Deployment → Maintenance · phase ไม่ทับซ้อน · output เป็น input ถัดไป · เน้นเอกสาร</td></tr>
+                  <tr><td><strong>Incremental A</strong></td><td>แต่ละ req ผ่าน req → design → code → unit test แยกกัน → <strong>integration bucket</strong> → system test</td></tr>
+                  <tr><td><strong>Incremental B</strong></td><td>req ชุดเล็ก → develop → package → <strong>Rel. 1 … Rel. n</strong></td></tr>
+                  <tr><td><strong>Spiral</strong></td><td>(1) objectives/alternatives/constraints (2) evaluate, <strong>resolve risks</strong> (3) develop, verify (4) plan next phase</td></tr>
+                </tbody>
+              </table>
+            </div>
+            <p class="note"><strong>กิจกรรมทั่วไป:</strong> requirements analysis → design → implementation → testing &amp; QA → deployment → maintenance · <strong>Process model</strong> = standardised framework: <strong>coordination, tasks, people</strong></p>
+          </article>
+
+          <article class="sheet-card">
+            <h3><span class="sheet-num">05</span> Agile + Scrum</h3>
+            <dl class="defs defs--stack">
+              <div><dt>Individuals &amp; interactions</dt><dd>over processes &amp; tools</dd></div>
+              <div><dt>Working software</dt><dd>over comprehensive documentation</dd></div>
+              <div><dt>Customer collaboration</dt><dd>over contract negotiation</dd></div>
+              <div><dt>Responding to change</dt><dd>over following a plan</dd></div>
+            </dl>
+            <p class="note"><strong>Scrum:</strong> iterative · incremental delivery · customer collaboration · responding to change · cross-functional teams · minimal documentation</p>
+          </article>
+
+          <article class="sheet-card sheet-card--wide">
+            <h3><span class="sheet-num">06</span> Requirements Engineering</h3>
+            <div class="table-scroll">
+              <table>
+                <thead><tr><th></th><th>นิยามสั้น</th></tr></thead>
+                <tbody>
+                  <tr><td><strong>User req.</strong></td><td>บริการที่ผู้ใช้คาดหวัง + ข้อจำกัด · กว้างไปถึงละเอียดได้</td></tr>
+                  <tr><td><strong>System req.</strong></td><td>ละเอียด · define exactly what is to be implemented</td></tr>
+                  <tr><td><strong>Functional</strong></td><td>services ที่ระบบให้ · react to inputs · behave in situations</td></tr>
+                  <tr><td><strong>Non-functional</strong></td><td>constraints on services (response time, compatibility, memory) · มักทั้งระบบ</td></tr>
+                </tbody>
+              </table>
+            </div>
+            <p><strong>RE (iterative → system requirements document):</strong> Elicitation → Specification → Validation → Change</p>
+            <p class="note"><strong>6 dimensions:</strong> individual functionality · business workflow · data &amp; formats · user interfaces · existing &amp; systems interfaces · other constraints<br><strong>Techniques:</strong> interview · ethnography · sampling documents/forms/DB · research &amp; site visits · questionnaires · JRP</p>
+          </article>
+
+          <article class="sheet-card">
+            <h3><span class="sheet-num">07</span> Interface Design</h3>
+            <p><strong>2 issues:</strong> flow of interactions · look and feel</p>
+            <p><strong>4 phases:</strong> (1) user/task/environment analysis (2) interface design (3) construction with prototype (4) validation</p>
+            <p><strong>Golden rules (Mandel):</strong> user in control · reduce memory load · consistent</p>
+            <p class="note"><strong>UI ดี:</strong> attractive · simple · responsive · clear · consistent<br><strong>Low-fi</strong> paper / click-through (ช่วงต้น) · <strong>High-fi</strong> code-free / coded (validate ก่อนพัฒนา)</p>
+          </article>
+
+          <article class="sheet-card sheet-card--wide">
+            <h3><span class="sheet-num">08</span> Part 2: Use Case Diagram + Narrative</h3>
+            <div class="table-scroll">
+              <table>
+                <thead><tr><th>ความสัมพันธ์</th><th>ระหว่าง</th><th>ใช้เมื่อ</th><th>วาด</th></tr></thead>
+                <tbody>
+                  <tr><td><strong>Association</strong></td><td>actor – use case</td><td>actor ใช้ use case</td><td>เส้นทึบ</td></tr>
+                  <tr><td><strong>Inheritance</strong></td><td>actor – actor</td><td>หลาย actor มีพฤติกรรมร่วม → abstract actor</td><td>ลูกศรชี้ไป abstract actor</td></tr>
+                  <tr><td><strong>Includes</strong></td><td>use case → use case</td><td>พฤติกรรมร่วม <strong>ทำทุกครั้ง</strong></td><td>ต้นทาง ⇢ ที่ถูกใช้</td></tr>
+                  <tr><td><strong>Extends</strong></td><td>use case → use case</td><td><strong>ทางเลือก</strong> · base จบเองได้</td><td>ส่วนเสริม ⇢ base</td></tr>
+                </tbody>
+              </table>
+            </div>
+            <p><strong>สัญลักษณ์:</strong> use case = วงรี ชื่อขึ้นต้นด้วย verb (ในกล่อง) · actor = stickman (นอกกล่อง) · system boundary = กล่อง + ชื่อระบบ</p>
+            <p class="note"><strong>Narrative 8 ช่อง:</strong> Use Case Name (ตรงกับ diagram) · Primary Actor · Goal in Context · Precondition (สถานะก่อน) · Trigger (เหตุการณ์) · Scenario (main/basic flow) · Exception · Postcondition (สถานะหลัง)</p>
+          </article>
+
+          <article class="sheet-card">
+            <h3><span class="sheet-num">09</span> Part 2: Context DFD</h3>
+            <p><strong>4 สัญลักษณ์:</strong> external entity · process · data flow · data store</p>
+            <ol class="steps">
+              <li><strong>process เดียว เลข 0</strong> = ทั้งระบบ</li>
+              <li>external entity <strong>ครบทุกตัว</strong></li>
+              <li>ทุก data flow <strong>มีชื่อ</strong> (ชื่อข้อมูล ไม่ใช่วิธีส่ง)</li>
+              <li>ทุกเส้น<strong>เริ่มหรือจบที่ process</strong></li>
+              <li>flow ห้ามแตกกลางทาง · process ต้องมี input ≥ 1 และ output ≥ 1</li>
+            </ol>
+            <p class="note"><strong>Packet concept:</strong> ข้อมูลที่ไปด้วยกัน = เส้นเดียว · <strong>เลข:</strong> L0 = 0 · L1 = 1, 2, 3 · L2 = 1.1, 1.2</p>
+          </article>
+
+        </div>
+      </section>
+
+      <!-- =============================================================
+           แท็บ 3: แบบฝึกหัด (20 ข้อ)
+           data-answer = ตัวเลือกที่ถูก (ก=a, ข=b, ค=c, ง=d ตามเฉลยที่ผู้ใช้กำหนด)
+           ============================================================= -->
+      <section class="panel" id="quiz" role="tabpanel" aria-labelledby="tab-quiz" tabindex="-1">
+        <div class="panel-head">
+          <h2>แบบฝึกหัด 20 ข้อ</h2>
+          <p class="panel-sub">เลือกคำตอบให้ครบแล้วกด "ตรวจคำตอบ" ด้านล่าง ระบบจะเฉลยพร้อมคำอธิบายทุกข้อ</p>
+        </div>
+
+        <form class="quiz" id="quiz-form" novalidate>
+
+          <fieldset class="q" data-answer="c">
+            <legend class="q-head"><span class="q-num">01</span><span class="q-text">บริษัทหนึ่งบอกว่า &quot;ซอฟต์แวร์ของเราก็คือไฟล์โปรแกรมที่รันได้&quot; ตามนิยามในสไลด์ บริษัทนี้มองข้ามองค์ประกอบใดไป?</span></legend>
+            <div class="q-options">
+              <label class="opt"><input type="radio" name="q1" value="a" /><span class="opt-key">A</span><span class="opt-text">ฮาร์ดแวร์และระบบปฏิบัติการ</span></label>
+              <label class="opt"><input type="radio" name="q1" value="b" /><span class="opt-key">B</span><span class="opt-text">ผู้ใช้และลูกค้า</span></label>
+              <label class="opt"><input type="radio" name="q1" value="c" /><span class="opt-key">C</span><span class="opt-text">โครงสร้างข้อมูล (data structures) และเอกสารอธิบาย (descriptive information)</span></label>
+              <label class="opt"><input type="radio" name="q1" value="d" /><span class="opt-key">D</span><span class="opt-text">งบประมาณและตารางเวลา</span></label>
+            </div>
+            <div class="q-feedback"><div class="q-feedback-inner"><p class="q-verdict" aria-live="polite"></p><p class="q-explain">ซอฟต์แวร์มี 3 ส่วน: instructions, data structures ที่ให้โปรแกรมจัดการข้อมูลได้ และ descriptive information (document) ที่อธิบายการทำงานและการใช้งาน — ไฟล์โปรแกรมเป็นแค่ส่วนแรก</p></div></div>
+          </fieldset>
+
+          <fieldset class="q" data-answer="a">
+            <legend class="q-head"><span class="q-num">02</span><span class="q-text">ข้อใด &quot;ไม่ใช่&quot; คุณลักษณะของซอฟต์แวร์?</span></legend>
+            <div class="q-options">
+              <label class="opt"><input type="radio" name="q2" value="a" /><span class="opt-key">A</span><span class="opt-text">สึกหรอ (wear out) ตามอายุการใช้งาน</span></label>
+              <label class="opt"><input type="radio" name="q2" value="b" /><span class="opt-key">B</span><span class="opt-text">จับต้องไม่ได้ (intangible)</span></label>
+              <label class="opt"><input type="radio" name="q2" value="c" /><span class="opt-key">C</span><span class="opt-text">ใช้แรงงานคนเข้มข้น (labour intensive)</span></label>
+              <label class="opt"><input type="radio" name="q2" value="d" /><span class="opt-key">D</span><span class="opt-text">ล้าสมัยได้ (can be obsolete)</span></label>
+            </div>
+            <div class="q-feedback"><div class="q-feedback-inner"><p class="q-verdict" aria-live="polite"></p><p class="q-explain">สไลด์ระบุว่าซอฟต์แวร์ does not wear out แต่ can be obsolete — เช่น Windows XP ไม่ได้พัง แต่ล้าสมัยในปี 2014</p></div></div>
+          </fieldset>
+
+          <fieldset class="q" data-answer="d">
+            <legend class="q-head"><span class="q-num">03</span><span class="q-text">ข้อใด &quot;ไม่อยู่&quot; ใน 5 aspects ที่ต้องพิจารณาในการพัฒนาและดูแลระบบซอฟต์แวร์ (Tsui and Karam)?</span></legend>
+            <div class="q-options">
+              <label class="opt"><input type="radio" name="q3" value="a" /><span class="opt-key">A</span><span class="opt-text">Technical and business processes</span></label>
+              <label class="opt"><input type="radio" name="q3" value="b" /><span class="opt-key">B</span><span class="opt-text">People skills and teamwork</span></label>
+              <label class="opt"><input type="radio" name="q3" value="c" /><span class="opt-key">C</span><span class="opt-text">Project coordination and management</span></label>
+              <label class="opt"><input type="radio" name="q3" value="d" /><span class="opt-key">D</span><span class="opt-text">Marketing and sales strategy</span></label>
+            </div>
+            <div class="q-feedback"><div class="q-feedback-inner"><p class="q-verdict" aria-live="polite"></p><p class="q-explain">5 aspects: technical and business processes · specific methodologies and techniques · product characterization and metrics · people skills and teamwork · project coordination and management</p></div></div>
+          </fieldset>
+
+          <fieldset class="q" data-answer="b">
+            <legend class="q-head"><span class="q-num">04</span><span class="q-text">PM ได้ Project Plan มาแล้ว และกำลังออกแบบโครงสร้างทีม จ้างคน จัดฝึกอบรม และเริ่มกลไก risk tracking งานช่วงนี้คือขั้นใดของ POMA?</span></legend>
+            <div class="q-options">
+              <label class="opt"><input type="radio" name="q4" value="a" /><span class="opt-key">A</span><span class="opt-text">Planning</span></label>
+              <label class="opt"><input type="radio" name="q4" value="b" /><span class="opt-key">B</span><span class="opt-text">Organizing</span></label>
+              <label class="opt"><input type="radio" name="q4" value="c" /><span class="opt-key">C</span><span class="opt-text">Monitoring</span></label>
+              <label class="opt"><input type="radio" name="q4" value="d" /><span class="opt-key">D</span><span class="opt-text">Adjusting</span></label>
+            </div>
+            <div class="q-feedback"><div class="q-feedback-inner"><p class="q-verdict" aria-live="polite"></p><p class="q-explain">Organizing รับ Project Plan มาแล้ว design organization structure, hire human resources, complete required education and training และ initiate tracking mechanisms</p></div></div>
+          </fieldset>
+
+          <fieldset class="q" data-answer="d">
+            <legend class="q-head"><span class="q-num">05</span><span class="q-text">ข้อมูลสถานะชี้ว่าโปรเจกต์ช้ากว่าแผนมาก ทีมจึงตัดสินใจตัดฟีเจอร์รองออก การกระทำนี้คือข้อใด?</span></legend>
+            <div class="q-options">
+              <label class="opt"><input type="radio" name="q5" value="a" /><span class="opt-key">A</span><span class="opt-text">Monitoring — การเก็บข้อมูลสถานะ</span></label>
+              <label class="opt"><input type="radio" name="q5" value="b" /><span class="opt-key">B</span><span class="opt-text">Planning — การประมาณ schedule</span></label>
+              <label class="opt"><input type="radio" name="q5" value="c" /><span class="opt-key">C</span><span class="opt-text">Organizing — การจัดทีม</span></label>
+              <label class="opt"><input type="radio" name="q5" value="d" /><span class="opt-key">D</span><span class="opt-text">Adjusting — ปรับด้าน project content</span></label>
+            </div>
+            <div class="q-feedback"><div class="q-feedback-inner"><p class="q-verdict" aria-live="polite"></p><p class="q-explain">Adjusting มี 3 ด้านที่ปรับได้ (หรือผสมกัน): resources, schedule และ project content — การตัดฟีเจอร์คือการปรับ project content</p></div></div>
+          </fieldset>
+
+          <fieldset class="q" data-answer="a">
+            <legend class="q-head"><span class="q-num">06</span><span class="q-text">ลำดับชั้นของ WBS ตามสไลด์เรียงจากบนลงล่างอย่างไร?</span></legend>
+            <div class="q-options">
+              <label class="opt"><input type="radio" name="q6" value="a" /><span class="opt-key">A</span><span class="opt-text">System name → Module → Function → Task</span></label>
+              <label class="opt"><input type="radio" name="q6" value="b" /><span class="opt-key">B</span><span class="opt-text">Task → Function → Module → System name</span></label>
+              <label class="opt"><input type="radio" name="q6" value="c" /><span class="opt-key">C</span><span class="opt-text">Module → System name → Task → Function</span></label>
+              <label class="opt"><input type="radio" name="q6" value="d" /><span class="opt-key">D</span><span class="opt-text">System name → Task → Module → Function</span></label>
+            </div>
+            <div class="q-feedback"><div class="q-feedback-inner"><p class="q-verdict" aria-live="polite"></p><p class="q-explain">สไลด์ WBS แสดง 4 ระดับ: System name → Module → Function → Task (แตกจากใหญ่ไปเล็ก)</p></div></div>
+          </fieldset>
+
+          <fieldset class="q" data-answer="c">
+            <legend class="q-head"><span class="q-num">07</span><span class="q-text">ใน UI design process phase ใดเป็นการทดสอบว่า interface ทำทุก task ของผู้ใช้ได้ถูกต้อง รองรับ task variation และง่ายต่อการเรียนรู้?</span></legend>
+            <div class="q-options">
+              <label class="opt"><input type="radio" name="q7" value="a" /><span class="opt-key">A</span><span class="opt-text">Phase 1: User, task, environmental analysis and modeling</span></label>
+              <label class="opt"><input type="radio" name="q7" value="b" /><span class="opt-key">B</span><span class="opt-text">Phase 2: Interface design</span></label>
+              <label class="opt"><input type="radio" name="q7" value="c" /><span class="opt-key">C</span><span class="opt-text">Phase 4: Interface validation</span></label>
+              <label class="opt"><input type="radio" name="q7" value="d" /><span class="opt-key">D</span><span class="opt-text">Phase 3: Interface construction and implementation</span></label>
+            </div>
+            <div class="q-feedback"><div class="q-feedback-inner"><p class="q-verdict" aria-live="polite"></p><p class="q-explain">Phase 4 Interface validation: testing the interface, ทุก task ถูกต้อง, รองรับ task variations, ประเมิน easy to use / easy to learn และผู้ใช้ยอมรับว่าเป็นเครื่องมือที่มีประโยชน์</p></div></div>
+          </fieldset>
+
+          <fieldset class="q" data-answer="b">
+            <legend class="q-head"><span class="q-num">08</span><span class="q-text">โปรเจกต์ขนาดเล็ก requirement ชัดเจนและไม่เปลี่ยน ลูกค้าต้องการเอกสารครบถ้วนเพื่อดูแลระยะยาว process model ใดเหมาะที่สุด?</span></legend>
+            <div class="q-options">
+              <label class="opt"><input type="radio" name="q8" value="a" /><span class="opt-key">A</span><span class="opt-text">Code and Fix</span></label>
+              <label class="opt"><input type="radio" name="q8" value="b" /><span class="opt-key">B</span><span class="opt-text">Waterfall</span></label>
+              <label class="opt"><input type="radio" name="q8" value="c" /><span class="opt-key">C</span><span class="opt-text">Spiral</span></label>
+              <label class="opt"><input type="radio" name="q8" value="d" /><span class="opt-key">D</span><span class="opt-text">Scrum</span></label>
+            </div>
+            <div class="q-feedback"><div class="q-feedback-inner"><p class="q-verdict" aria-live="polite"></p><p class="q-explain">Pros ของ Waterfall: simple, well-suited for small projects with clear &amp; fixed requirements และ strong documentation supports long-term maintenance</p></div></div>
+          </fieldset>
+
+          <fieldset class="q" data-answer="c">
+            <legend class="q-head"><span class="q-num">09</span><span class="q-text">ในโมเดลใดที่ requirement หลักแต่ละตัวถูกพัฒนาแยกกันผ่าน requirement → design → code → unit test แล้วนำมารวมใน &quot;integration bucket&quot; เพื่อทำ system test?</span></legend>
+            <div class="q-options">
+              <label class="opt"><input type="radio" name="q9" value="a" /><span class="opt-key">A</span><span class="opt-text">Waterfall</span></label>
+              <label class="opt"><input type="radio" name="q9" value="b" /><span class="opt-key">B</span><span class="opt-text">Spiral</span></label>
+              <label class="opt"><input type="radio" name="q9" value="c" /><span class="opt-key">C</span><span class="opt-text">Incremental</span></label>
+              <label class="opt"><input type="radio" name="q9" value="d" /><span class="opt-key">D</span><span class="opt-text">Code and Fix</span></label>
+            </div>
+            <div class="q-feedback"><div class="q-feedback-inner"><p class="q-verdict" aria-live="polite"></p><p class="q-explain">นี่คือ key characteristics ของ Incremental Model (แบบ A) — ต่างจากแบบ B ที่ปล่อยเป็นหลาย release</p></div></div>
+          </fieldset>
+
+          <fieldset class="q" data-answer="a">
+            <legend class="q-head"><span class="q-num">10</span><span class="q-text">Spiral model วนผ่าน 4 quadrant ตามลำดับใด?</span></legend>
+            <div class="q-options">
+              <label class="opt"><input type="radio" name="q10" value="a" /><span class="opt-key">A</span><span class="opt-text">Determine objectives/alternatives/constraints → Evaluate alternatives, identify &amp; resolve risks → Develop, verify next-level product → Plan next phase</span></label>
+              <label class="opt"><input type="radio" name="q10" value="b" /><span class="opt-key">B</span><span class="opt-text">Plan next phase → Develop → Determine objectives → Evaluate risks</span></label>
+              <label class="opt"><input type="radio" name="q10" value="c" /><span class="opt-key">C</span><span class="opt-text">Develop → Test → Deploy → Maintain</span></label>
+              <label class="opt"><input type="radio" name="q10" value="d" /><span class="opt-key">D</span><span class="opt-text">Evaluate risks → Plan next phase → Determine objectives → Develop</span></label>
+            </div>
+            <div class="q-feedback"><div class="q-feedback-inner"><p class="q-verdict" aria-live="polite"></p><p class="q-explain">ในสไลด์กำกับเลข 1–4: (1) determine objectives, alternatives, constraints (2) evaluate alternatives, identify, resolve risks (3) develop, verify next-level product (4) plan next phase</p></div></div>
+          </fieldset>
+
+          <fieldset class="q" data-answer="d">
+            <legend class="q-head"><span class="q-num">11</span><span class="q-text">ข้อใดจับคู่ตาม Agile Manifesto ได้ถูกต้อง?</span></legend>
+            <div class="q-options">
+              <label class="opt"><input type="radio" name="q11" value="a" /><span class="opt-key">A</span><span class="opt-text">Processes and tools over individuals and interactions</span></label>
+              <label class="opt"><input type="radio" name="q11" value="b" /><span class="opt-key">B</span><span class="opt-text">Following a plan over responding to change</span></label>
+              <label class="opt"><input type="radio" name="q11" value="c" /><span class="opt-key">C</span><span class="opt-text">Comprehensive documentation over working software</span></label>
+              <label class="opt"><input type="radio" name="q11" value="d" /><span class="opt-key">D</span><span class="opt-text">Customer collaboration over contract negotiation</span></label>
+            </div>
+            <div class="q-feedback"><div class="q-feedback-inner"><p class="q-verdict" aria-live="polite"></p><p class="q-explain">Manifesto: individuals and interactions over processes and tools · working software over comprehensive documentation · customer collaboration over contract negotiation · responding to change over following a plan — ตัวเลือกอื่นสลับฝั่ง</p></div></div>
+          </fieldset>
+
+          <fieldset class="q" data-answer="b">
+            <legend class="q-head"><span class="q-num">12</span><span class="q-text">ข้อใด &quot;ไม่ใช่&quot; key characteristic ของ Scrum?</span></legend>
+            <div class="q-options">
+              <label class="opt"><input type="radio" name="q12" value="a" /><span class="opt-key">A</span><span class="opt-text">Iterative development</span></label>
+              <label class="opt"><input type="radio" name="q12" value="b" /><span class="opt-key">B</span><span class="opt-text">เอกสารครบถ้วนและเป็นทางการตั้งแต่ต้นโปรเจกต์</span></label>
+              <label class="opt"><input type="radio" name="q12" value="c" /><span class="opt-key">C</span><span class="opt-text">Cross-functional teams</span></label>
+              <label class="opt"><input type="radio" name="q12" value="d" /><span class="opt-key">D</span><span class="opt-text">Incremental delivery</span></label>
+            </div>
+            <div class="q-feedback"><div class="q-feedback-inner"><p class="q-verdict" aria-live="polite"></p><p class="q-explain">Scrum: iterative development, incremental delivery, customer collaboration, responding to change, cross-functional teams และ minimal documentation — เอกสารหนักเป็นลักษณะของ traditional</p></div></div>
+          </fieldset>
+
+          <fieldset class="q" data-answer="a">
+            <legend class="q-head"><span class="q-num">13</span><span class="q-text">สไลด์สรุปหัวใจของ process model ไว้ด้วย 3 คำใด?</span></legend>
+            <div class="q-options">
+              <label class="opt"><input type="radio" name="q13" value="a" /><span class="opt-key">A</span><span class="opt-text">coordination, tasks, people</span></label>
+              <label class="opt"><input type="radio" name="q13" value="b" /><span class="opt-key">B</span><span class="opt-text">scope, cost, time</span></label>
+              <label class="opt"><input type="radio" name="q13" value="c" /><span class="opt-key">C</span><span class="opt-text">plan, organize, monitor</span></label>
+              <label class="opt"><input type="radio" name="q13" value="d" /><span class="opt-key">D</span><span class="opt-text">input, process, output</span></label>
+            </div>
+            <div class="q-feedback"><div class="q-feedback-inner"><p class="q-verdict" aria-live="polite"></p><p class="q-explain">Process models ให้แนวทางประสานและควบคุม task และคนที่ทำ task — สไลด์เน้นว่า *** coordination, tasks, people ***</p></div></div>
+          </fieldset>
+
+          <fieldset class="q" data-answer="b">
+            <legend class="q-head"><span class="q-num">14</span><span class="q-text">&quot;ระบบต้องส่งอีเมลยืนยันให้ผู้ใช้ทันทีหลังสมัครสมาชิกสำเร็จ&quot; เป็น requirement ประเภทใด?</span></legend>
+            <div class="q-options">
+              <label class="opt"><input type="radio" name="q14" value="a" /><span class="opt-key">A</span><span class="opt-text">Non-functional requirement</span></label>
+              <label class="opt"><input type="radio" name="q14" value="b" /><span class="opt-key">B</span><span class="opt-text">Functional requirement</span></label>
+              <label class="opt"><input type="radio" name="q14" value="c" /><span class="opt-key">C</span><span class="opt-text">Design constraint</span></label>
+              <label class="opt"><input type="radio" name="q14" value="d" /><span class="opt-key">D</span><span class="opt-text">Project constraint</span></label>
+            </div>
+            <div class="q-feedback"><div class="q-feedback-inner"><p class="q-verdict" aria-live="polite"></p><p class="q-explain">เป็นบริการที่ระบบต้องทำ และบอกว่าระบบตอบสนองต่อสถานการณ์หนึ่งอย่างไร → functional · ถ้าเขียนว่า &quot;ต้องส่งภายใน 5 วินาที&quot; ส่วนนั้นจึงจะเป็น non-functional</p></div></div>
+          </fieldset>
+
+          <fieldset class="q" data-answer="c">
+            <legend class="q-head"><span class="q-num">15</span><span class="q-text">requirement แบบใดที่ &quot;define exactly what is to be implemented&quot;?</span></legend>
+            <div class="q-options">
+              <label class="opt"><input type="radio" name="q15" value="a" /><span class="opt-key">A</span><span class="opt-text">User requirements</span></label>
+              <label class="opt"><input type="radio" name="q15" value="b" /><span class="opt-key">B</span><span class="opt-text">Business needs</span></label>
+              <label class="opt"><input type="radio" name="q15" value="c" /><span class="opt-key">C</span><span class="opt-text">System requirements</span></label>
+              <label class="opt"><input type="radio" name="q15" value="d" /><span class="opt-key">D</span><span class="opt-text">Acceptance criteria</span></label>
+            </div>
+            <div class="q-feedback"><div class="q-feedback-inner"><p class="q-verdict" aria-live="polite"></p><p class="q-explain">System requirements อธิบาย function, service และ operational constraint อย่างละเอียด และกำหนดสิ่งที่ต้อง implement อย่างแน่ชัด ส่วน user requirements อาจเป็นข้อความกว้างๆ</p></div></div>
+          </fieldset>
+
+          <fieldset class="q" data-answer="d">
+            <legend class="q-head"><span class="q-num">16</span><span class="q-text">ทีมสงสัยว่าพนักงานทำงานจริงไม่ตรงกับขั้นตอนที่องค์กรเขียนไว้ และอยากค้นหา requirement ที่ไม่มีใครพูดออกมา ควรใช้เทคนิค elicitation ใด?</span></legend>
+            <div class="q-options">
+              <label class="opt"><input type="radio" name="q16" value="a" /><span class="opt-key">A</span><span class="opt-text">Closed interview</span></label>
+              <label class="opt"><input type="radio" name="q16" value="b" /><span class="opt-key">B</span><span class="opt-text">Questionnaires</span></label>
+              <label class="opt"><input type="radio" name="q16" value="c" /><span class="opt-key">C</span><span class="opt-text">Sampling of existing forms</span></label>
+              <label class="opt"><input type="radio" name="q16" value="d" /><span class="opt-key">D</span><span class="opt-text">Ethnography (observation)</span></label>
+            </div>
+            <div class="q-feedback"><div class="q-feedback-inner"><p class="q-verdict" aria-live="polite"></p><p class="q-explain">Ethnography ให้ analyst เข้าไปอยู่ในที่ทำงานจริงและสังเกตงานประจำวัน จึงพบ implicit requirements ที่สะท้อนวิธีทำงานจริง ไม่ใช่กระบวนการที่นิยามไว้เป็นทางการ</p></div></div>
+          </fieldset>
+
+          <fieldset class="q" data-answer="c">
+            <legend class="q-head"><span class="q-num">17</span><span class="q-text">ข้อใด &quot;ไม่อยู่&quot; ใน 6 dimensions of detailed requirements elicitation?</span></legend>
+            <div class="q-options">
+              <label class="opt"><input type="radio" name="q17" value="a" /><span class="opt-key">A</span><span class="opt-text">Business Workflow</span></label>
+              <label class="opt"><input type="radio" name="q17" value="b" /><span class="opt-key">B</span><span class="opt-text">Data and Data formats</span></label>
+              <label class="opt"><input type="radio" name="q17" value="c" /><span class="opt-key">C</span><span class="opt-text">Project Budget</span></label>
+              <label class="opt"><input type="radio" name="q17" value="d" /><span class="opt-key">D</span><span class="opt-text">User Interfaces</span></label>
+            </div>
+            <div class="q-feedback"><div class="q-feedback-inner"><p class="q-verdict" aria-live="polite"></p><p class="q-explain">6 มิติ: individual functionality, business workflow, data and data formats, user interfaces, existing &amp; systems interfaces และ other constraints (performance, reliability ฯลฯ)</p></div></div>
+          </fieldset>
+
+          <fieldset class="q" data-answer="a">
+            <legend class="q-head"><span class="q-num">18</span><span class="q-text">ข้อใดอธิบาย requirements engineering process ได้ถูกต้อง?</span></legend>
+            <div class="q-options">
+              <label class="opt"><input type="radio" name="q18" value="a" /><span class="opt-key">A</span><span class="opt-text">เป็นกระบวนการวนซ้ำ (iterative) ที่ให้ผลลัพธ์เป็น system requirements document</span></label>
+              <label class="opt"><input type="radio" name="q18" value="b" /><span class="opt-key">B</span><span class="opt-text">ทำครั้งเดียวจบก่อนเริ่มออกแบบ และไม่ย้อนกลับ</span></label>
+              <label class="opt"><input type="radio" name="q18" value="c" /><span class="opt-key">C</span><span class="opt-text">มี 2 กระบวนการคือ coding และ testing</span></label>
+              <label class="opt"><input type="radio" name="q18" value="d" /><span class="opt-key">D</span><span class="opt-text">ผลลัพธ์คือ source code ที่พร้อม deploy</span></label>
+            </div>
+            <div class="q-feedback"><div class="q-feedback-inner"><p class="q-verdict" aria-live="polite"></p><p class="q-explain">RE is an iterative process · output: system requirements document · 4 processes: elicitation, specification, validation, change</p></div></div>
+          </fieldset>
+
+          <fieldset class="q" data-answer="d">
+            <legend class="q-head"><span class="q-num">19</span><span class="q-text">แอปเวอร์ชันใหม่เปลี่ยนให้ Ctrl+S หมายถึง &quot;ส่งอีเมล&quot; แทนการบันทึก การออกแบบนี้ขัดกับ Golden Rule ข้อใดของ Theo Mandel?</span></legend>
+            <div class="q-options">
+              <label class="opt"><input type="radio" name="q19" value="a" /><span class="opt-key">A</span><span class="opt-text">Place the user in control</span></label>
+              <label class="opt"><input type="radio" name="q19" value="b" /><span class="opt-key">B</span><span class="opt-text">Reduce the user's memory load</span></label>
+              <label class="opt"><input type="radio" name="q19" value="c" /><span class="opt-key">C</span><span class="opt-text">ไม่ขัดกับข้อใดเลย</span></label>
+              <label class="opt"><input type="radio" name="q19" value="d" /><span class="opt-key">D</span><span class="opt-text">Make the interface consistent</span></label>
+            </div>
+            <div class="q-feedback"><div class="q-feedback-inner"><p class="q-verdict" aria-live="polite"></p><p class="q-explain">Make the interface consistent: do not make changes to the existing interactive models — Ctrl+S is well known for saving files, do not use the same shortcut to execute another command</p></div></div>
+          </fieldset>
+
+          <fieldset class="q" data-answer="b">
+            <legend class="q-head"><span class="q-num">20</span><span class="q-text">ทีมอยากได้ feedback เร็วๆ ช่วงต้นเกี่ยวกับโครงหน้าจอ โดยยังไม่สนใจรายละเอียดการออกแบบ ควรใช้ prototype แบบใด?</span></legend>
+            <div class="q-options">
+              <label class="opt"><input type="radio" name="q20" value="a" /><span class="opt-key">A</span><span class="opt-text">High fidelity แบบ coded prototype</span></label>
+              <label class="opt"><input type="radio" name="q20" value="b" /><span class="opt-key">B</span><span class="opt-text">Low fidelity เช่น paper prototype</span></label>
+              <label class="opt"><input type="radio" name="q20" value="c" /><span class="opt-key">C</span><span class="opt-text">ระบบจริงบน production</span></label>
+              <label class="opt"><input type="radio" name="q20" value="d" /><span class="opt-key">D</span><span class="opt-text">High fidelity ที่มี animation ครบ</span></label>
+            </div>
+            <div class="q-feedback"><div class="q-feedback-inner"><p class="q-verdict" aria-live="polite"></p><p class="q-explain">Low fidelity: simple and rough, เน้น basic structure and functionality, เหมาะกับ early-stage feedback and brainstorming เช่น paper prototypes, click-through prototypes</p></div></div>
+          </fieldset>
+
+          <div class="quiz-result" id="quiz-result" hidden tabindex="-1">
+            <div class="score-ring" aria-hidden="true">
+              <svg viewBox="0 0 120 120">
+                <circle class="ring-track" cx="60" cy="60" r="52" />
+                <circle class="ring-fill" cx="60" cy="60" r="52" pathLength="100" />
+              </svg>
+              <span class="score-pct"><span id="score-pct">0</span>%</span>
+            </div>
+            <div class="score-body">
+              <p class="score-line" role="status">ได้ <strong id="score-num">0</strong> / 20 คะแนน</p>
+              <p class="score-msg" id="score-msg"></p>
+              <div class="score-actions">
+                <button class="btn btn--ghost btn--sm" type="button" id="toggle-wrong" aria-pressed="false">ดูเฉพาะข้อที่ผิด</button>
+              </div>
+            </div>
+          </div>
+
+          <div class="quiz-bar">
+            <div class="quiz-progress">
+              <span class="quiz-count"><span id="answered">0</span> / 20 ข้อ</span>
+              <span class="progress" aria-hidden="true"><span class="progress-fill" id="progress-fill"></span></span>
+              <span class="quiz-hint" id="quiz-hint" aria-live="polite"></span>
+            </div>
+            <div class="quiz-actions">
+              <button class="btn btn--ghost" type="reset" id="quiz-reset">ทำใหม่</button>
+              <button class="btn btn--primary" type="submit" id="quiz-submit">ตรวจคำตอบ</button>
+            </div>
+          </div>
+        </form>
+      </section>
+
+    </div>
+  </main>
+  <footer class="site-footer">
+    <div class="wrap">
+      <p>สรุปจากสไลด์ ITDS261 Introduction to Software Engineering (Faculty of ICT, Mahidol University) เพื่อใช้ทบทวนส่วนตัว — ถ้าเนื้อหาขัดกับสไลด์ ให้ยึดสไลด์เป็นหลัก</p>
+    </div>
+  </footer>
+
+  <script src="assets/js/widgets.js" defer></script>
+  <script src="assets/js/network.js" defer></script>
+</body>
+</html>
