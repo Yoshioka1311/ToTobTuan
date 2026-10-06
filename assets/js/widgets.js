@@ -1095,6 +1095,112 @@ body { background-color: black; margin: 0; font: 600 18px/140px system-ui, sans-
     render();
   });
 
+  /* ------------------------------------ จัดกลุ่ม / ตอบทันที (classify) */
+  // root[data-options="key:ป้าย|key:ป้าย"] · li.cls-item[data-answer=key] > .cls-text + .cls-answer
+  // ไม่มี JS: .cls-answer แสดงเฉลยไว้เลย · มี JS: ซ่อนจนกว่าจะตอบถูก
+  document.querySelectorAll('[data-widget="classify"]').forEach((root) => {
+    const options = root.dataset.options.split("|").map((s) => {
+      const i = s.indexOf(":");
+      return [s.slice(0, i), s.slice(i + 1)];
+    });
+    const items = Array.from(root.querySelectorAll(".cls-item"));
+    const status = root.querySelector(".demo-status");
+    const update = () => {
+      const done = items.filter((i) => i.classList.contains("is-done")).length;
+      const first = items.filter((i) => i.classList.contains("is-done") && !i.classList.contains("was-wrong")).length;
+      status.className = `demo-status${done === items.length ? " is-ok" : ""}`;
+      status.textContent = done === items.length
+        ? `ครบ ${items.length} ข้อแล้ว — ถูกตั้งแต่ครั้งแรก ${first} ข้อ`
+        : `ตอบถูกแล้ว ${done} / ${items.length} ข้อ`;
+    };
+    items.forEach((item) => {
+      const row = document.createElement("div");
+      row.className = "cls-options";
+      options.forEach(([key, label]) => {
+        const b = document.createElement("button");
+        b.type = "button";
+        b.className = "btn btn--ghost btn--sm";
+        b.dataset.key = key;
+        b.dataset.label = label;
+        b.textContent = label;
+        b.addEventListener("click", () => {
+          if (key === item.dataset.answer) {
+            item.classList.add("is-done");
+            b.classList.add("is-right");
+            b.textContent = `✓ ${label}`;
+            row.querySelectorAll("button").forEach((x) => { x.disabled = true; });
+          } else {
+            item.classList.add("was-wrong");
+            b.classList.add("is-wrong");
+            b.textContent = `✗ ${label}`;
+            b.disabled = true;
+          }
+          update();
+        });
+        row.append(b);
+      });
+      item.insertBefore(row, item.querySelector(".cls-answer"));
+    });
+    const reset = root.querySelector('[data-action="reset"]');
+    if (reset) {
+      reset.addEventListener("click", () => {
+        items.forEach((item) => {
+          item.classList.remove("is-done", "was-wrong");
+          item.querySelectorAll(".cls-options button").forEach((b) => {
+            b.disabled = false;
+            b.classList.remove("is-right", "is-wrong");
+            b.textContent = b.dataset.label;
+          });
+        });
+        update();
+      });
+    }
+    update();
+  });
+
+  /* ------------------------------------ วาดทีละขั้น (stepper) */
+  // ทุก element ที่มี data-step="n" (ใน SVG และ li.stp-note) จะโผล่เมื่อถึงขั้น n · ไม่มี JS: เห็นครบทุกขั้น
+  document.querySelectorAll('[data-widget="stepper"]').forEach((root) => {
+    const parts = Array.from(root.querySelectorAll("svg [data-step]"));
+    const notes = Array.from(root.querySelectorAll(".stp-note[data-step]"));
+    const max = Math.max(...parts.concat(notes).map((e) => Number(e.dataset.step)));
+    const controls = document.createElement("div");
+    controls.className = "stp-controls";
+    const mk = (label, cls) => {
+      const b = document.createElement("button");
+      b.type = "button";
+      b.className = `btn btn--sm ${cls}`;
+      b.textContent = label;
+      controls.append(b);
+      return b;
+    };
+    const prev = mk("← ก่อนหน้า", "btn--ghost");
+    const next = mk("ขั้นถัดไป →", "btn--primary");
+    const all = mk("แสดงครบทุกขั้น", "btn--ghost");
+    const label = document.createElement("span");
+    label.className = "stp-count";
+    label.setAttribute("aria-live", "polite");
+    controls.append(label);
+    root.querySelector(".stp-notes").before(controls);
+    let k = 1;
+    const render = () => {
+      parts.forEach((e) => {
+        const s = Number(e.dataset.step);
+        e.classList.toggle("is-future", s > k);
+        e.classList.toggle("is-past", s < k && k < max);
+      });
+      notes.forEach((e) => { e.hidden = Number(e.dataset.step) !== k; });
+      prev.disabled = k === 1;
+      next.disabled = k === max;
+      all.disabled = k === max;
+      label.textContent = `ขั้นที่ ${k} / ${max}`;
+    };
+    prev.addEventListener("click", () => { k = Math.max(1, k - 1); render(); });
+    next.addEventListener("click", () => { k = Math.min(max, k + 1); render(); });
+    all.addEventListener("click", () => { k = max; render(); });
+    render();
+  });
+
   /* -------------------------------------------- Form validation demo */
   document.querySelectorAll('form[data-widget="validation-demo"]').forEach((form) => {
     const status = form.querySelector(".demo-status");

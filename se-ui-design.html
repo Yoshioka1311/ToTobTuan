@@ -71,6 +71,7 @@
           <a class="chapter-link" href="se-use-case-modeling.html"><span class="chapter-num">บทที่ 4</span><span class="chapter-name">Use Case Modeling</span></a>
           <a class="chapter-link" href="se-flow-behavior-modeling.html"><span class="chapter-num">บทที่ 5</span><span class="chapter-name">Flow &amp; Behavior Modeling</span></a>
           <a class="chapter-link" href="se-ui-design.html" aria-current="page"><span class="chapter-num">บทที่ 6</span><span class="chapter-name">UI Design</span></a>
+          <a class="chapter-link" href="se-midterm.html"><span class="chapter-num">Midterm</span><span class="chapter-name">เตรียมสอบ + ฝึกวาด</span></a>
         </div>
       </nav>
       <span class="eyebrow">ITDS261 · บทที่ 6 · Lecture 8</span>
@@ -116,6 +117,20 @@
             <button class="btn btn--ghost btn--sm" type="button" data-acc-all="close">ปิดทั้งหมด</button>
           </div>
         </div>
+
+        <aside class="focus-box" aria-label="โฟกัสสำหรับ Midterm">
+          <h3><span class="focus-tag">Midterm</span>บทนี้ใน 30 วินาที</h3>
+          <p>UI มี 2 เรื่องหลัก: <strong>flow of interactions</strong> กับ <strong>look and feel</strong> · ออกแบบเป็น 4 phase (วิเคราะห์ผู้ใช้/งาน/สภาพแวดล้อม → ออกแบบ → สร้างด้วย prototype → validate) · ยึด <strong>Golden Rules 3 ข้อ</strong>: ให้ผู้ใช้ควบคุม · ลดภาระความจำ · ทำให้สอดคล้องกัน</p>
+          <ul class="focus-links">
+            <li><a href="#ui-issues">2 ประเด็นหลัก</a></li>
+            <li><a href="#ui-text">ประเภทของ UI</a></li>
+            <li><a href="#ui-basic-rules">กฎพื้นฐาน 5 ข้อ</a></li>
+            <li><a href="#ui-phases">4 phase</a></li>
+            <li><a href="#ui-rule-control">Golden Rules</a></li>
+            <li><a href="#ui-fidelity">Low vs High fidelity</a></li>
+          </ul>
+          <p class="note"><strong>Interface Design อยู่ใน Part 1</strong> ตาม Midterm guideline แต่ guideline ไม่ได้คัดสไลด์ของบทนี้มาให้ จึงควรทบทวนทั้งบท — ลิงก์ด้านบนคือหัวข้อหลักของสไลด์ L8</p>
+        </aside>
 
         <div class="acc">
 
@@ -189,6 +204,22 @@
                     <div class="callout callout--warn">
                       <span class="callout-label">AR ≠ VR</span>
                       <p><b>AR</b> ยังเห็นโลกจริงแล้ว<b>ซ้อน</b>ของเสมือนเข้าไป · <b>VR</b> สร้างโลกเสมือน<b>แทน</b>ที่โลกจริง</p>
+                    </div>
+                    <!-- rework:ui-gesture -->
+                    <div class="demo-box" data-widget="classify" data-options="cli:CLI|gui:GUI|touch:Touchscreen|vui:VUI|arvr:AR / VR">
+                      <span class="demo-box-title">ฝึกทันที: นี่คือ interface ประเภทไหน?</span>
+                      <ol class="cls-list">
+                        <li class="cls-item" data-answer="cli"><p class="cls-text">ผู้ดูแลระบบพิมพ์คำสั่งข้อความเพื่อควบคุมการทำงานอย่างแม่นยำ</p><p class="cls-answer"><b>CLI</b> — text-based commands สำหรับ developers และ system administrators</p></li>
+                        <li class="cls-item" data-answer="vui"><p class="cls-text">สั่งงานด้วยเสียงผ่าน Siri หรือ Alexa</p><p class="cls-answer"><b>VUI</b> — spoken commands and responses</p></li>
+                        <li class="cls-item" data-answer="touch"><p class="cls-text">kiosk แบบโต้ตอบที่ใช้นิ้วแตะเลือกเมนู</p><p class="cls-answer"><b>Touchscreen</b> — touch gestures — smartphones, tablets, interactive kiosks</p></li>
+                        <li class="cls-item" data-answer="arvr"><p class="cls-text">แอปนำทางที่ซ้อนลูกศรเสมือนลงบนภาพถนนจริง</p><p class="cls-answer"><b>AR / VR</b> — AR ผสานของเสมือนเข้ากับสภาพแวดล้อมจริง</p></li>
+                        <li class="cls-item" data-answer="gui"><p class="cls-text">ระบบปฏิบัติการที่ใช้ icon และ window</p><p class="cls-answer"><b>GUI</b> — graphical elements like icons and windows</p></li>
+                        <li class="cls-item" data-answer="arvr"><p class="cls-text">โปรแกรมฝึกอบรมในสภาพแวดล้อมเสมือนแบบ immersive</p><p class="cls-answer"><b>AR / VR</b> — VR สร้างสภาพแวดล้อมเสมือนทั้งหมด</p></li>
+                      </ol>
+                      <div class="cls-foot">
+                        <p class="demo-status" aria-live="polite"></p>
+                        <button class="btn btn--ghost btn--sm" type="button" data-action="reset">เริ่มใหม่</button>
+                      </div>
                     </div>
                   </section>
 
@@ -386,6 +417,26 @@
                     <div class="callout callout--why">
                       <span class="callout-label">สังเกตจากเว็บนี้เอง</span>
                       <p>ทุกหน้าบทใช้แท็บ เนื้อหา · สรุป · แบบฝึกหัด ในตำแหน่งเดิม และแต่ละวิชามีสีประจำวิชาเดียวกันทุกบท — เป็นตัวอย่างของ <b>consistent color coding</b> และ <b>maintain consistency across the system</b></p>
+                    </div>
+                    <!-- rework:ui-rule-consistent -->
+                    <div class="demo-box" data-widget="classify" data-options="c:1 User in control|m:2 Reduce memory load|k:3 Consistent">
+                      <span class="demo-box-title">ฝึกทันที: แนวทางนี้อยู่ใต้ Golden Rule ข้อไหน?</span>
+                      <ol class="cls-list">
+                        <li class="cls-item" data-answer="c"><p class="cls-text">ทำให้ action ถูกขัดจังหวะ (interrupt) และ undo ได้</p><p class="cls-answer"><b>1 User in control</b> — ผู้ใช้เป็นคนคุม ไม่ใช่ระบบ</p></li>
+                        <li class="cls-item" data-answer="m"><p class="cls-text">ตั้งค่า default ที่เหมาะกับผู้ใช้ทั่วไปไว้ให้</p><p class="cls-answer"><b>2 Reduce memory load</b> — establish meaningful defaults — ผู้ใช้ไม่ต้องจำ/ตั้งเอง</p></li>
+                        <li class="cls-item" data-answer="k"><p class="cls-text">Ctrl+S หมายถึง save เสมอ ไม่เอาไปทำคำสั่งอื่น</p><p class="cls-answer"><b>3 Consistent</b> — do not make changes to the existing interactive models</p></li>
+                        <li class="cls-item" data-answer="c"><p class="cls-text">ลากไฟล์ไปที่ไอคอน trash เพื่อลบ</p><p class="cls-answer"><b>1 User in control</b> — design for direct interaction with objects on the screen</p></li>
+                        <li class="cls-item" data-answer="m"><p class="cls-text">แสดงข้อมูลทั่วไปก่อน แล้วค่อยเปิดรายละเอียด</p><p class="cls-answer"><b>2 Reduce memory load</b> — disclose information in layers</p></li>
+                        <li class="cls-item" data-answer="k"><p class="cls-text">ใช้ window title, icon และสีแบบเดียวกันบอกว่ากำลังอยู่งานไหน</p><p class="cls-answer"><b>3 Consistent</b> — put the current task into a meaningful context</p></li>
+                        <li class="cls-item" data-answer="m"><p class="cls-text">ใช้ไอคอนรูปบ้านแทนคำสั่งกลับหน้าหลัก</p><p class="cls-answer"><b>2 Reduce memory load</b> — real-world metaphor — ไม่ต้องจำว่าปุ่มไหนคืออะไร</p></li>
+                        <li class="cls-item" data-answer="c"><p class="cls-text">โต้ตอบได้ทั้ง keyboard, mouse, touch และเสียง</p><p class="cls-answer"><b>1 User in control</b> — provide for flexible interaction</p></li>
+                        <li class="cls-item" data-answer="c"><p class="cls-text">ซ่อน technical interface จากผู้ใช้ทั่วไป</p><p class="cls-answer"><b>1 User in control</b> — hide technical interfaces from casual users</p></li>
+                      </ol>
+                      <div class="cls-foot">
+                        <p class="demo-status" aria-live="polite"></p>
+                        <button class="btn btn--ghost btn--sm" type="button" data-action="reset">เริ่มใหม่</button>
+                      </div>
+                      <p class="demo-hint">ข้อที่สับสนบ่อย: <strong>shortcut ที่เข้าใจง่าย</strong> (Ctrl+P = print) อยู่ข้อ 2 แต่ <strong>ห้ามเปลี่ยนความหมาย shortcut เดิม</strong> อยู่ข้อ 3</p>
                     </div>
                   </section>
 

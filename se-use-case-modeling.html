@@ -71,6 +71,7 @@
           <a class="chapter-link" href="se-use-case-modeling.html" aria-current="page"><span class="chapter-num">บทที่ 4</span><span class="chapter-name">Use Case Modeling</span></a>
           <a class="chapter-link" href="se-flow-behavior-modeling.html"><span class="chapter-num">บทที่ 5</span><span class="chapter-name">Flow &amp; Behavior Modeling</span></a>
           <a class="chapter-link" href="se-ui-design.html"><span class="chapter-num">บทที่ 6</span><span class="chapter-name">UI Design</span></a>
+          <a class="chapter-link" href="se-midterm.html"><span class="chapter-num">Midterm</span><span class="chapter-name">เตรียมสอบ + ฝึกวาด</span></a>
         </div>
       </nav>
       <span class="eyebrow">ITDS261 · บทที่ 4 · Lecture 4 + In-class exercise</span>
@@ -117,6 +118,19 @@
             <button class="btn btn--ghost btn--sm" type="button" data-acc-all="close">ปิดทั้งหมด</button>
           </div>
         </div>
+
+        <aside class="focus-box" aria-label="โฟกัสสำหรับ Midterm">
+          <h3><span class="focus-tag">Midterm</span>บทนี้ใน 30 วินาที</h3>
+          <p>Use case modeling มอง requirement <strong>จากมุมของ actor</strong>: <strong>ใคร (actor)</strong> อยู่นอกกล่อง · <strong>ทำอะไร (use case = วงรี ชื่อขึ้นต้นด้วยกริยา)</strong> อยู่ในกล่อง · แล้วเชื่อมด้วยความสัมพันธ์ 4 แบบ · ทุก use case มี <strong>narrative 8 ส่วน</strong> อธิบายรายละเอียด</p>
+          <ul class="focus-links">
+            <li><a href="#uc-approaches">5 แนวทาง modeling</a></li>
+            <li><a href="#uc-scenario">Scenario-based models</a></li>
+            <li><a href="#uc-symbols">สัญลักษณ์พื้นฐาน</a></li>
+            <li><a href="#uc-rel-overview">4 ความสัมพันธ์</a></li>
+            <li><a href="#uc-narrative">8 ส่วนของ narrative</a></li>
+          </ul>
+          <p class="note">หัวข้อด้านบนคือสไลด์ที่อาจารย์คัดไว้ใน <strong>Midterm guideline</strong> (กดเพื่อกระโดดไปอ่าน) · บทนี้คือ <strong>Part 2 (25 คะแนน, ต้องวาดและเขียนเอง)</strong>: Use case diagram + Use case narrative · ฝึกวาดทีละขั้นได้ที่ <a href="se-midterm.html#mid-uc">workshop ในหน้าเตรียมสอบ</a></p>
+        </aside>
 
         <div class="acc">
 
@@ -451,6 +465,24 @@
                       <span class="callout-label">ทิศลูกศร includes vs extends</span>
                       <p><b>Includes:</b> ลูกศรออกจาก use case <b>ต้นทาง (ใหญ่)</b> → ชี้ไปที่ use case <b>ที่ถูกใช้ (พฤติกรรมร่วม)</b> · <b>Extends:</b> ลูกศรออกจาก use case <b>ที่ขยาย (ทางเลือก)</b> → ชี้ไปที่ <b>base use case</b> — ทั้งคู่ใช้เส้นประและกำกับ stereotype</p>
                     </div>
+                    <!-- rework:uc-extends -->
+                    <div class="demo-box" data-widget="classify" data-options="as:Association|inh:Inheritance|inc:Includes|ext:Extends">
+                      <span class="demo-box-title">ฝึกทันที: สถานการณ์นี้คือความสัมพันธ์แบบไหน?</span>
+                      <ol class="cls-list">
+                        <li class="cls-item" data-answer="as"><p class="cls-text">ลูกค้าเป็นผู้เริ่มใช้งาน use case "Book a ticket"</p><p class="cls-answer"><b>Association</b> — ปฏิสัมพันธ์ระหว่าง actor กับ use case</p></li>
+                        <li class="cls-item" data-answer="inc"><p class="cls-text">Deposit Funds และ Withdraw Cash ต่างต้องทำ Customer Authentication ทุกครั้ง</p><p class="cls-answer"><b>Includes</b> — พฤติกรรมร่วมที่ถูกแยกออกมา</p></li>
+                        <li class="cls-item" data-answer="ext"><p class="cls-text">Registration ทำงานจบได้เอง แต่บางครั้งผู้ใช้เปิด Get Help On Registration</p><p class="cls-answer"><b>Extends</b> — พฤติกรรมเสริมที่เป็นทางเลือกของ base use case</p></li>
+                        <li class="cls-item" data-answer="inh"><p class="cls-text">actor สองตัวทำ use case ชุดเดียวกันซ้ำกัน จึงย้ายพฤติกรรมร่วมไปไว้ที่ abstract actor</p><p class="cls-answer"><b>Inheritance</b> — ความสัมพันธ์ระหว่าง actor เพื่อลดความซ้ำซ้อน</p></li>
+                        <li class="cls-item" data-answer="inc"><p class="cls-text">Checkout ต้องทำ Scan Item, Calculate Total and Tax และ Payment เสมอ</p><p class="cls-answer"><b>Includes</b> — ตัวอย่างในสไลด์ 4-19</p></li>
+                        <li class="cls-item" data-answer="ext"><p class="cls-text">ลูกศรเริ่มจาก use case เสริมที่เป็นทางเลือก แล้วชี้ไปที่ base use case</p><p class="cls-answer"><b>Extends</b> — ทิศลูกศรของ &lt;&lt;extends&gt;&gt;</p></li>
+                        <li class="cls-item" data-answer="inc"><p class="cls-text">ลูกศรเริ่มจาก use case ต้นทาง แล้วชี้ไปที่ use case ที่ถูกใช้</p><p class="cls-answer"><b>Includes</b> — ทิศลูกศรของ &lt;&lt;includes&gt;&gt;</p></li>
+                      </ol>
+                      <div class="cls-foot">
+                        <p class="demo-status" aria-live="polite"></p>
+                        <button class="btn btn--ghost btn--sm" type="button" data-action="reset">เริ่มใหม่</button>
+                      </div>
+                      <p class="demo-hint">คำถามเช็กเร็ว: "ต้องทำทุกครั้งไหม?" ใช่ → includes · "ทำเป็นบางครั้ง และตัวหลักจบเองได้" → extends</p>
+                    </div>
                   </section>
 
                 </div>
@@ -562,6 +594,24 @@
                         </tbody>
                       </table>
                     </div>
+                    <!-- rework:uc-example -->
+                    <div class="demo-box" data-widget="classify" data-options="pre:Precondition|tr:Trigger|sc:Scenario|ex:Exception|post:Postcondition">
+                      <span class="demo-box-title">ฝึกทันที: ข้อความนี้ควรอยู่ช่องไหนของ narrative?</span>
+                      <ol class="cls-list">
+                        <li class="cls-item" data-answer="pre"><p class="cls-text">บรรณารักษ์เข้าสู่ระบบแล้ว และหนังสือมีสถานะ "ว่าง"</p><p class="cls-answer"><b>Precondition</b> — สถานะที่ต้องจริงก่อนเริ่ม</p></li>
+                        <li class="cls-item" data-answer="tr"><p class="cls-text">สมาชิกนำหนังสือมาขอยืมที่เคาน์เตอร์</p><p class="cls-answer"><b>Trigger</b> — เหตุการณ์ที่จุดให้ use case เริ่ม</p></li>
+                        <li class="cls-item" data-answer="sc"><p class="cls-text">บรรณารักษ์สแกนบัตรสมาชิก → ระบบตรวจสอบสมาชิก → สแกนบาร์โค้ดหนังสือ</p><p class="cls-answer"><b>Scenario</b> — ลำดับปกติ (main flow / basic flow)</p></li>
+                        <li class="cls-item" data-answer="ex"><p class="cls-text">บัตรสมาชิกหมดอายุ → ระบบแจ้งเตือนและไม่บันทึกการยืม</p><p class="cls-answer"><b>Exception</b> — สิ่งที่เกิดเมื่อมีบางอย่างผิดพลาด</p></li>
+                        <li class="cls-item" data-answer="post"><p class="cls-text">หนังสือมีสถานะ "ถูกยืม" และมีรายการยืมผูกกับสมาชิก</p><p class="cls-answer"><b>Postcondition</b> — สถานะของระบบหลังจบ</p></li>
+                        <li class="cls-item" data-answer="tr"><p class="cls-text">ผู้ใช้กดปุ่ม "ยืนยันการชำระเงิน"</p><p class="cls-answer"><b>Trigger</b> — เป็น<em>เหตุการณ์</em> ไม่ใช่สถานะ</p></li>
+                        <li class="cls-item" data-answer="ex"><p class="cls-text">ชำระเงินไม่สำเร็จ → ระบบแจ้งให้ลองใหม่</p><p class="cls-answer"><b>Exception</b> — error / invalid input</p></li>
+                      </ol>
+                      <div class="cls-foot">
+                        <p class="demo-status" aria-live="polite"></p>
+                        <button class="btn btn--ghost btn--sm" type="button" data-action="reset">เริ่มใหม่</button>
+                      </div>
+                      <p class="demo-hint">แยก 3 ตัวที่สับสนบ่อย: Precondition กับ Postcondition เป็น<strong>สถานะ</strong> (ก่อน/หลัง) · Trigger เป็น<strong>เหตุการณ์</strong></p>
+                    </div>
                   </section>
 
                 </div>
@@ -603,6 +653,8 @@
                       <li>เขียน <strong>Use case narrative จำนวน 2 กรณี</strong> เพื่ออธิบาย 2 use cases ที่อยู่ใน use case diagram</li>
                     </ol>
                     <p class="note">ระบบเดียวกันนี้ถูกใช้ต่อในบทที่ 5 สำหรับฝึกวาด DFD</p>
+                    <!-- rework:uc-zoo-task -->
+                    <p><a class="btn btn--ghost btn--sm" href="se-midterm.html#mid-uc">ฝึกวาด use case diagram ทีละขั้นกับระบบตัวอย่าง →</a></p>
                   </section>
 
                   <section class="topic" id="uc-zoo-system">

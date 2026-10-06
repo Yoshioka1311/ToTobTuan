@@ -71,6 +71,7 @@
           <a class="chapter-link" href="se-use-case-modeling.html"><span class="chapter-num">บทที่ 4</span><span class="chapter-name">Use Case Modeling</span></a>
           <a class="chapter-link" href="se-flow-behavior-modeling.html" aria-current="page"><span class="chapter-num">บทที่ 5</span><span class="chapter-name">Flow &amp; Behavior Modeling</span></a>
           <a class="chapter-link" href="se-ui-design.html"><span class="chapter-num">บทที่ 6</span><span class="chapter-name">UI Design</span></a>
+          <a class="chapter-link" href="se-midterm.html"><span class="chapter-num">Midterm</span><span class="chapter-name">เตรียมสอบ + ฝึกวาด</span></a>
         </div>
       </nav>
       <span class="eyebrow">ITDS261 · บทที่ 5 · Lecture 6 + 7</span>
@@ -117,6 +118,20 @@
             <button class="btn btn--ghost btn--sm" type="button" data-acc-all="close">ปิดทั้งหมด</button>
           </div>
         </div>
+
+        <aside class="focus-box" aria-label="โฟกัสสำหรับ Midterm">
+          <h3><span class="focus-tag">Midterm</span>บทนี้ใน 30 วินาที</h3>
+          <p>DFD ตอบคำถามว่า <strong>ข้อมูลไหลจากไหนไปไหน และถูกแปลงอย่างไร</strong> ด้วยสัญลักษณ์ 4 อย่าง: external entity, process, data flow, data store · เริ่มที่ <strong>context diagram</strong> เสมอ (process เดียว เลข 0 + external entity ทั้งหมด) แล้วค่อยแตกเป็น Level 1, 2 · กฎทอง: <strong>ทุกเส้นมีชื่อ และทุกเส้นต้องแตะ process</strong></p>
+          <ul class="focus-links">
+            <li><a href="#dfd-notation">สัญลักษณ์ 4 แบบ</a></li>
+            <li><a href="#dfd-flow-store">Data flow + packet concept</a></li>
+            <li><a href="#dfd-context">Context diagram</a></li>
+            <li><a href="#dfd-numbering">Hierarchy + numbering</a></li>
+            <li><a href="#dfd-flow-rules">Rules for data flows</a></li>
+            <li><a href="#dfd-dont-break">Don't break DFD rules</a></li>
+          </ul>
+          <p class="note">หัวข้อด้านบนคือสไลด์ที่อาจารย์คัดไว้ใน <strong>Midterm guideline</strong> (กดเพื่อกระโดดไปอ่าน) · <strong>Context DFD อยู่ใน Part 2 (ต้องวาดเอง)</strong> · guideline ไม่ได้คัดสไลด์ PSPEC, decision table และ control flow มา · ฝึกวาด context DFD ทีละขั้นได้ที่ <a href="se-midterm.html#mid-dfd">workshop ในหน้าเตรียมสอบ</a></p>
+        </aside>
 
         <div class="acc">
 
@@ -266,6 +281,25 @@
                       </div>
                       <figcaption>สไลด์ 6-14 — ข้อมูลเริ่มเป็น input แล้วถูกแปลงเป็น output</figcaption>
                     </figure>
+                    <!-- rework:dfd-flow-store -->
+                    <div class="demo-box" data-widget="classify" data-options="ee:External entity|pr:Process|df:Data flow|ds:Data store">
+                      <span class="demo-box-title">ฝึกทันที: สิ่งนี้คือสัญลักษณ์อะไรใน DFD?</span>
+                      <ol class="cls-list">
+                        <li class="cls-item" data-answer="ee"><p class="cls-text">ลูกค้าที่ส่งคำสั่งซื้อเข้ามาในระบบ</p><p class="cls-answer"><b>External entity</b> — ผู้ผลิตข้อมูลที่อยู่นอกระบบ</p></li>
+                        <li class="cls-item" data-answer="pr"><p class="cls-text">คำนวณราคารวมของคำสั่งซื้อ</p><p class="cls-answer"><b>Process</b> — perform computations — แปลง input เป็น output</p></li>
+                        <li class="cls-item" data-answer="df"><p class="cls-text">รายละเอียดคำสั่งซื้อที่กำลังถูกส่งไปคำนวณ</p><p class="cls-answer"><b>Data flow</b> — data in motion</p></li>
+                        <li class="cls-item" data-answer="ds"><p class="cls-text">แฟ้มคำสั่งซื้อที่เก็บไว้ใช้ภายหลัง</p><p class="cls-answer"><b>Data store</b> — ข้อมูลถาวรที่ process ใช้หรือสร้าง</p></li>
+                        <li class="cls-item" data-answer="ee"><p class="cls-text">ระบบชำระเงินของธนาคารที่อยู่นอกระบบเรา</p><p class="cls-answer"><b>External entity</b> — external entity เป็นระบบอื่นก็ได้ ไม่ต้องเป็นคน</p></li>
+                        <li class="cls-item" data-answer="pr"><p class="cls-text">ตรวจสอบว่าสินค้ามีพร้อมส่งหรือไม่</p><p class="cls-answer"><b>Process</b> — make decisions ก็เป็น process</p></li>
+                        <li class="cls-item" data-answer="df"><p class="cls-text">ผลการชำระเงินที่ธนาคารส่งกลับมา</p><p class="cls-answer"><b>Data flow</b> — ข้อมูลที่ไหลเข้าระบบ</p></li>
+                        <li class="cls-item" data-answer="ee"><p class="cls-text">sensor ที่ส่งค่าอุณหภูมิเข้ามา</p><p class="cls-answer"><b>External entity</b> — ตัวอย่าง external entity ในสไลด์: a person, a device, a sensor</p></li>
+                      </ol>
+                      <div class="cls-foot">
+                        <p class="demo-status" aria-live="polite"></p>
+                        <button class="btn btn--ghost btn--sm" type="button" data-action="reset">เริ่มใหม่</button>
+                      </div>
+                      <p class="demo-hint">เทคนิค: <strong>คำนาม</strong>ที่เป็นคน/ระบบภายนอก → entity · <strong>คำกริยา</strong> → process · <strong>คำนามที่เป็นข้อมูลกำลังเดินทาง</strong> → data flow · <strong>ข้อมูลที่เก็บไว้</strong> → data store</p>
+                    </div>
                   </section>
 
                 </div>
@@ -509,6 +543,26 @@
                           <tr><td><strong>Data store</strong></td><td>ต้องเป็น <strong>interface ระหว่าง 2 process</strong> · ต้องมีชื่อ</td></tr>
                         </tbody>
                       </table>
+                    </div>
+                    <!-- rework:dfd-internal -->
+                    <div class="demo-box" data-widget="classify" data-options="ok:ถูกกฎ|bad:ผิดกฎ">
+                      <span class="demo-box-title">ฝึกทันที: ถูกกฎ หรือ ผิดกฎ?</span>
+                      <ol class="cls-list">
+                        <li class="cls-item" data-answer="ok"><p class="cls-text">context diagram มี process เดียว และ process นั้นเลข 0</p><p class="cls-answer"><b>ถูกกฎ</b> — internal consistency ของ context diagram</p></li>
+                        <li class="cls-item" data-answer="bad"><p class="cls-text">data flow ลากจาก external entity ไปที่ data store โดยตรง</p><p class="cls-answer"><b>ผิดกฎ</b> — ทุก data flow ต้องเริ่มหรือจบที่ process</p></li>
+                        <li class="cls-item" data-answer="bad"><p class="cls-text">process หนึ่งมีแต่ input ไม่มี output เลย</p><p class="cls-answer"><b>ผิดกฎ</b> — process ต้องมีอย่างน้อย 1 input และ 1 output</p></li>
+                        <li class="cls-item" data-answer="bad"><p class="cls-text">data flow เส้นหนึ่งไม่ได้เขียนชื่อ เพราะเห็นชัดอยู่แล้วว่าคืออะไร</p><p class="cls-answer"><b>ผิดกฎ</b> — a data flow should never go unnamed</p></li>
+                        <li class="cls-item" data-answer="bad"><p class="cls-text">detailed DFD แผ่นหนึ่งมี process 9 ตัว</p><p class="cls-answer"><b>ผิดกฎ</b> — detailed DFD มีได้ไม่เกิน 7 process</p></li>
+                        <li class="cls-item" data-answer="ok"><p class="cls-text">process ระดับ 2 ที่แตกจาก process 3 ใช้เลข 3.1, 3.2</p><p class="cls-answer"><b>ถูกกฎ</b> — Level 2 = เลข parent จุด เลขเฉพาะ</p></li>
+                        <li class="cls-item" data-answer="bad"><p class="cls-text">data flow แยกเป็นสองเส้นกลางทางโดยไม่ผ่าน process</p><p class="cls-answer"><b>ผิดกฎ</b> — data flows should not split</p></li>
+                        <li class="cls-item" data-answer="ok"><p class="cls-text">child diagram มี process และ data flow ใหม่ที่ parent ไม่มี</p><p class="cls-answer"><b>ถูกกฎ</b> — balancing อนุญาตให้ child เพิ่มของใหม่ได้ ขอแค่ flow เข้า-ออกของ parent ต้องอยู่ครบ</p></li>
+                        <li class="cls-item" data-answer="bad"><p class="cls-text">flow ที่เข้า process 3 บน parent ไม่ปรากฏบน child diagram ของ process 3</p><p class="cls-answer"><b>ผิดกฎ</b> — ผิด hierarchical consistency — input ของ parent ต้องปรากฏบน child</p></li>
+                        <li class="cls-item" data-answer="bad"><p class="cls-text">ตั้งชื่อ data flow ว่า "ส่งไฟล์ทางอีเมล"</p><p class="cls-answer"><b>ผิดกฎ</b> — ชื่อควรอธิบาย<em>ตัวข้อมูล</em> ไม่ใช่วิธี implement</p></li>
+                      </ol>
+                      <div class="cls-foot">
+                        <p class="demo-status" aria-live="polite"></p>
+                        <button class="btn btn--ghost btn--sm" type="button" data-action="reset">เริ่มใหม่</button>
+                      </div>
                     </div>
                   </section>
 
@@ -811,6 +865,8 @@ else output type = 0,
                       <li><strong>L7 (สไลด์ 7-25):</strong> ใช้ zoo ticketing system วาด <strong>DFD Level 1</strong> ของระบบ</li>
                       <li><strong>L7 (สไลด์ 7-25):</strong> วาด <strong>DFD Level 2</strong> ของ process หนึ่งที่นิยามไว้ใน DFD Level 1</li>
                     </ol>
+                    <!-- rework:dfd-zoo-task -->
+                    <p><a class="btn btn--ghost btn--sm" href="se-midterm.html#mid-dfd">ฝึกวาด context DFD ทีละขั้นกับระบบตัวอย่าง →</a></p>
                   </section>
 
                   <section class="topic" id="dfd-zoo-context">

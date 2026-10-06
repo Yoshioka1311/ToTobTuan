@@ -71,6 +71,7 @@
           <a class="chapter-link" href="se-use-case-modeling.html"><span class="chapter-num">บทที่ 4</span><span class="chapter-name">Use Case Modeling</span></a>
           <a class="chapter-link" href="se-flow-behavior-modeling.html"><span class="chapter-num">บทที่ 5</span><span class="chapter-name">Flow &amp; Behavior Modeling</span></a>
           <a class="chapter-link" href="se-ui-design.html"><span class="chapter-num">บทที่ 6</span><span class="chapter-name">UI Design</span></a>
+          <a class="chapter-link" href="se-midterm.html"><span class="chapter-num">Midterm</span><span class="chapter-name">เตรียมสอบ + ฝึกวาด</span></a>
         </div>
       </nav>
       <span class="eyebrow">ITDS261 · บทที่ 3 · Lecture 3</span>
@@ -116,6 +117,21 @@
             <button class="btn btn--ghost btn--sm" type="button" data-acc-all="close">ปิดทั้งหมด</button>
           </div>
         </div>
+
+        <aside class="focus-box" aria-label="โฟกัสสำหรับ Midterm">
+          <h3><span class="focus-tag">Midterm</span>บทนี้ใน 30 วินาที</h3>
+          <p>Requirement = <strong>บริการที่ระบบต้องให้ + ข้อจำกัด</strong> · แบ่งได้ 2 แกน: <strong>User / System</strong> (กว้างหรือละเอียด) และ <strong>Functional / Non-functional</strong> (ทำอะไร หรือทำได้ดีแค่ไหน) · RE เป็นวงวนซ้ำ 4 กระบวนการ: <strong>Elicitation → Specification → Validation → Change</strong></p>
+          <ul class="focus-links">
+            <li><a href="#re-user-system">User vs System</a></li>
+            <li><a href="#re-fr-nfr">Functional vs Non-functional</a></li>
+            <li><a href="#re-process">4 กระบวนการ RE</a></li>
+            <li><a href="#re-dimensions">6 มิติของ elicitation</a></li>
+            <li><a href="#re-interview">Interview</a></li>
+            <li><a href="#re-ethnography">Ethnography</a></li>
+            <li><a href="#re-other-tech">เทคนิคอื่น (JRP ฯลฯ)</a></li>
+          </ul>
+          <p class="note">หัวข้อด้านบนคือสไลด์ที่อาจารย์คัดไว้ใน <strong>Midterm guideline</strong> (กดเพื่อกระโดดไปอ่าน) · อยู่ใน <strong>Part 1</strong> หัวข้อ Requirements Engineering</p>
+        </aside>
 
         <div class="acc">
 
@@ -199,6 +215,23 @@
                     <div class="callout callout--warn">
                       <span class="callout-label">Non-functional ต้องวัดผลได้</span>
                       <p>สไลด์ 3-15 เน้นว่า non-functional requirement <b>must be measurable and testable</b> — เช่น "handle up to 10,000 concurrent users without significant performance degradation" หรือ "load within 2 seconds for 95% of user requests" (ตัวอย่างจากแบบฝึกหัดในสไลด์ 3-16) มีตัวเลขให้ทดสอบได้ ต่างจาก "should be easy-to-use" ที่ไม่มีเกณฑ์วัด</p>
+                    </div>
+                    <!-- rework:re-fr-nfr -->
+                    <div class="demo-box" data-widget="classify" data-options="fr:Functional|nfr:Non-functional">
+                      <span class="demo-box-title">ฝึกทันที: Functional หรือ Non-functional?</span>
+                      <ol class="cls-list">
+                        <li class="cls-item" data-answer="nfr"><p class="cls-text">The application should be easy-to-use.</p><p class="cls-answer"><b>Non-functional</b> — พูดถึงคุณภาพ (usability) ไม่ใช่บริการ — แต่สังเกตว่าเขียนแบบนี้<strong>ยังวัดผลไม่ได้</strong> จึงเป็น NFR ที่เขียนไม่ดี</p></li>
+                        <li class="cls-item" data-answer="fr"><p class="cls-text">The system shall allow users to create accounts.</p><p class="cls-answer"><b>Functional</b> — เป็นบริการที่ระบบต้องทำให้ผู้ใช้</p></li>
+                        <li class="cls-item" data-answer="fr"><p class="cls-text">The system shall allow users to add products to a shopping cart.</p><p class="cls-answer"><b>Functional</b> — บอกว่าระบบต้องทำอะไร</p></li>
+                        <li class="cls-item" data-answer="nfr"><p class="cls-text">The system should be able to handle up to 10,000 concurrent users without significant performance degradation.</p><p class="cls-answer"><b>Non-functional</b> — ข้อจำกัดด้าน performance ของทั้งระบบ และมีตัวเลขวัดได้</p></li>
+                        <li class="cls-item" data-answer="fr"><p class="cls-text">Users shall be able to search for products by keywords.</p><p class="cls-answer"><b>Functional</b> — บริการที่ผู้ใช้เรียกใช้ได้</p></li>
+                        <li class="cls-item" data-answer="nfr"><p class="cls-text">The website should load within 2 seconds for 95% of user requests.</p><p class="cls-answer"><b>Non-functional</b> — response time — measurable and testable</p></li>
+                      </ol>
+                      <div class="cls-foot">
+                        <p class="demo-status" aria-live="polite"></p>
+                        <button class="btn btn--ghost btn--sm" type="button" data-action="reset">เริ่มใหม่</button>
+                      </div>
+                      <p class="demo-hint">ประโยคทั้ง 6 มาจากสไลด์ 3-16 ซึ่งถามไว้โดยไม่มีเฉลย คำตอบด้านบนจัดตามนิยามในสไลด์ 3-12 (FR = services ที่ระบบให้ · NFR = constraints on the services)</p>
                     </div>
                   </section>
 
@@ -699,6 +732,22 @@
                       <li><strong>Change analysis and costing</strong> — ประเมินการเปลี่ยนแปลงโดยใช้ข้อมูล traceability และความรู้เรื่อง system requirements แล้วประมาณต้นทุนการแก้ไข</li>
                       <li><strong>Change implementation</strong> — แก้ system design และ implementation</li>
                     </ol>
+                    <!-- rework:re-change-mgmt -->
+                    <div class="demo-box" data-widget="classify" data-options="el:Elicitation|sp:Specification|va:Validation|ch:Change">
+                      <span class="demo-box-title">ฝึกทันที: กิจกรรมนี้อยู่ในกระบวนการไหนของ RE?</span>
+                      <ol class="cls-list">
+                        <li class="cls-item" data-answer="el"><p class="cls-text">สัมภาษณ์เจ้าหน้าที่ และไปสังเกตการทำงานจริงที่หน้างาน</p><p class="cls-answer"><b>Elicitation</b> — interviewing + ethnography = 2 เทคนิคพื้นฐานของ elicitation</p></li>
+                        <li class="cls-item" data-answer="sp"><p class="cls-text">เขียน user story พร้อม acceptance criteria ลงในเอกสาร requirement</p><p class="cls-answer"><b>Specification</b> — specification = การเขียน requirement ลงเอกสาร</p></li>
+                        <li class="cls-item" data-answer="va"><p class="cls-text">ตรวจว่า requirement ไม่ขัดแย้งกัน และครบทุกฟังก์ชัน</p><p class="cls-answer"><b>Validation</b> — consistency + completeness checks</p></li>
+                        <li class="cls-item" data-answer="ch"><p class="cls-text">เอกสารอนุมัติแล้ว แต่ลูกค้าขอเพิ่มฟีเจอร์ จึงประเมินผลกระทบและต้นทุน</p><p class="cls-answer"><b>Change</b> — requirements change management: change analysis and costing</p></li>
+                        <li class="cls-item" data-answer="el"><p class="cls-text">ส่งแบบสอบถาม และสุ่มดูแบบฟอร์มที่องค์กรใช้อยู่</p><p class="cls-answer"><b>Elicitation</b> — questionnaires + sampling of existing documentation</p></li>
+                        <li class="cls-item" data-answer="va"><p class="cls-text">ตรวจว่า requirement สะท้อนความต้องการจริงของผู้ใช้ และทำได้จริง</p><p class="cls-answer"><b>Validation</b> — validity + realism checks</p></li>
+                      </ol>
+                      <div class="cls-foot">
+                        <p class="demo-status" aria-live="polite"></p>
+                        <button class="btn btn--ghost btn--sm" type="button" data-action="reset">เริ่มใหม่</button>
+                      </div>
+                    </div>
                   </section>
 
                 </div>

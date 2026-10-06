@@ -71,6 +71,7 @@
           <a class="chapter-link" href="se-use-case-modeling.html"><span class="chapter-num">บทที่ 4</span><span class="chapter-name">Use Case Modeling</span></a>
           <a class="chapter-link" href="se-flow-behavior-modeling.html"><span class="chapter-num">บทที่ 5</span><span class="chapter-name">Flow &amp; Behavior Modeling</span></a>
           <a class="chapter-link" href="se-ui-design.html"><span class="chapter-num">บทที่ 6</span><span class="chapter-name">UI Design</span></a>
+          <a class="chapter-link" href="se-midterm.html"><span class="chapter-num">Midterm</span><span class="chapter-name">เตรียมสอบ + ฝึกวาด</span></a>
         </div>
       </nav>
       <span class="eyebrow">ITDS261 · บทที่ 1 · Lecture 1</span>
@@ -116,6 +117,22 @@
             <button class="btn btn--ghost btn--sm" type="button" data-acc-all="close">ปิดทั้งหมด</button>
           </div>
         </div>
+
+        <aside class="focus-box" aria-label="โฟกัสสำหรับ Midterm">
+          <h3><span class="focus-tag">Midterm</span>บทนี้ใน 30 วินาที</h3>
+          <p>ซอฟต์แวร์ = <strong>คำสั่ง + โครงสร้างข้อมูล + เอกสาร</strong> ต้องถูก "วิศวกรรม" ไม่ใช่ "ผลิต" · Software engineering คือการ<strong>แก้ปัญหาให้ลูกค้าอย่างเป็นระบบ ภายใต้ข้อจำกัด</strong> · การบริหารโปรเจกต์เดินเป็นวง <strong>P → O → M → A</strong> และเริ่มวางแผนด้วยการแตกงานแบบ <strong>WBS</strong></p>
+          <ul class="focus-links">
+            <li><a href="#sef-components">3 องค์ประกอบ + interaction hierarchy</a></li>
+            <li><a href="#sef-characteristics">คุณลักษณะของซอฟต์แวร์</a></li>
+            <li><a href="#sef-definition">นิยาม SE (Lethbridge)</a></li>
+            <li><a href="#sef-aspects">5 aspects ใน SE</a></li>
+            <li><a href="#sef-success">โปรเจกต์ต้องมีอะไร</a></li>
+            <li><a href="#pm-poma">POMA 4 ขั้น</a></li>
+            <li><a href="#pm-wbs">WBS</a></li>
+            <li><a href="#pm-goals">เป้าหมายของ SPM</a></li>
+          </ul>
+          <p class="note">หัวข้อด้านบนคือสไลด์ที่อาจารย์คัดไว้ใน <strong>Midterm guideline</strong> (กดเพื่อกระโดดไปอ่าน) · อยู่ใน <strong>Part 1 (15 คะแนน)</strong> หัวข้อ Software Engineering Foundation &amp; Project Management · ฝึกรวมทุกบทได้ที่หน้า <a href="se-midterm.html">เตรียมสอบ Midterm</a></p>
+        </aside>
 
         <div class="acc">
 
@@ -395,6 +412,22 @@
                     <div class="callout callout--warn">
                       <span class="callout-label">BA กับ SA ต่างกันตรงไหน</span>
                       <p><b>BA</b> อยู่ฝั่ง "ต้องการอะไร" — รวบรวมและเขียน requirement เป็นสะพานกับลูกค้า · <b>SA</b> อยู่ฝั่ง "จะสร้างอย่างไร" — แปล requirement เป็น technical specification และออกแบบสถาปัตยกรรม</p>
+                    </div>
+                    <!-- rework:sef-roles -->
+                    <div class="demo-box" data-widget="classify" data-options="pm:PM|ba:BA|sa:SA|qa:QA">
+                      <span class="demo-box-title">ฝึกทันที: งานนี้เป็นหน้าที่ของใคร?</span>
+                      <ol class="cls-list">
+                        <li class="cls-item" data-answer="sa"><p class="cls-text">แปล requirement เป็น technical specification และเลือกเทคโนโลยี</p><p class="cls-answer"><b>SA</b> — SA อยู่ฝั่ง "จะสร้างอย่างไร"</p></li>
+                        <li class="cls-item" data-answer="ba"><p class="cls-text">รวบรวมและตรวจสอบ requirement แล้วจัดทำเอกสาร requirement specification</p><p class="cls-answer"><b>BA</b> — BA elicit / analyse / validate requirement และทำเอกสาร</p></li>
+                        <li class="cls-item" data-answer="pm"><p class="cls-text">กำหนด scope จัดตารางงาน จัดสรรทรัพยากร และจัดการความเสี่ยง</p><p class="cls-answer"><b>PM</b> — PM วางแผนและบริหารโปรเจกต์</p></li>
+                        <li class="cls-item" data-answer="qa"><p class="cls-text">ทำ test plan และ test case แล้วรายงาน defect</p><p class="cls-answer"><b>QA</b> — QA Engineer / Tester</p></li>
+                        <li class="cls-item" data-answer="ba"><p class="cls-text">เป็นสะพานระหว่างลูกค้า/ผู้ใช้กับทีมพัฒนา</p><p class="cls-answer"><b>BA</b> — สไลด์ใช้คำว่า acts as the bridge กับ BA</p></li>
+                        <li class="cls-item" data-answer="sa"><p class="cls-text">กำหนด coding standard และ architectural pattern</p><p class="cls-answer"><b>SA</b> — SA ออกแบบสถาปัตยกรรมและกำหนดมาตรฐาน</p></li>
+                      </ol>
+                      <div class="cls-foot">
+                        <p class="demo-status" aria-live="polite"></p>
+                        <button class="btn btn--ghost btn--sm" type="button" data-action="reset">เริ่มใหม่</button>
+                      </div>
                     </div>
                   </section>
 
@@ -783,6 +816,25 @@
                     <div class="callout callout--warn">
                       <span class="callout-label">ข้อสำคัญ (สไลด์ 1-63)</span>
                       <p>Software Project Management Process <b>ไม่ใช่สิ่งเดียวกับ</b> Software Development Process หรือ Software Life Cycle</p>
+                    </div>
+                    <!-- rework:pm-poma -->
+                    <div class="demo-box" data-widget="classify" data-options="p:Planning|o:Organizing|m:Monitoring|a:Adjusting">
+                      <span class="demo-box-title">ฝึกทันที: กิจกรรมนี้อยู่ขั้นไหนของ POMA?</span>
+                      <ol class="cls-list">
+                        <li class="cls-item" data-answer="p"><p class="cls-text">ประมาณ work effort และ schedule ของโปรเจกต์</p><p class="cls-answer"><b>Planning</b> — การประมาณทั้งหมดอยู่ใน Planning และได้ Project Plan ออกมา</p></li>
+                        <li class="cls-item" data-answer="o"><p class="cls-text">ออกแบบโครงสร้างองค์กร และจ้างคนเข้าทีม</p><p class="cls-answer"><b>Organizing</b> — design organization structure + hire human resources</p></li>
+                        <li class="cls-item" data-answer="m"><p class="cls-text">เก็บข้อมูลสถานะโปรเจกต์ วิเคราะห์ แล้วนำเสนอให้ทุกคนรู้</p><p class="cls-answer"><b>Monitoring</b> — 3 องค์ประกอบของ monitoring: collection → analysis → presentation</p></li>
+                        <li class="cls-item" data-answer="a"><p class="cls-text">สถานะบอกว่ามีปัญหา จึงเลื่อนกำหนดส่งและเพิ่มคน</p><p class="cls-answer"><b>Adjusting</b> — ปรับ schedule และ resources</p></li>
+                        <li class="cls-item" data-answer="p"><p class="cls-text">ระบุและวิเคราะห์ความเสี่ยงด้าน people, process, tools, facilities</p><p class="cls-answer"><b>Planning</b> — identify and analyze the project risks อยู่ใน Planning</p></li>
+                        <li class="cls-item" data-answer="o"><p class="cls-text">เริ่มกลไก risk tracking และ project goal monitoring</p><p class="cls-answer"><b>Organizing</b> — ข้อนี้หลอกง่าย — <em>initiate</em> tracking mechanisms อยู่ใน Organizing ส่วนการติดตามจริงคือ Monitoring</p></li>
+                        <li class="cls-item" data-answer="a"><p class="cls-text">ตัดฟีเจอร์บางส่วนออกจากเนื้อหาของโปรเจกต์</p><p class="cls-answer"><b>Adjusting</b> — ปรับ project content — 1 ใน 3 ด้านของ Adjusting</p></li>
+                        <li class="cls-item" data-answer="o"><p class="cls-text">จัดการฝึกอบรมที่จำเป็นให้ทีมจนเสร็จ</p><p class="cls-answer"><b>Organizing</b> — complete required education and training</p></li>
+                      </ol>
+                      <div class="cls-foot">
+                        <p class="demo-status" aria-live="polite"></p>
+                        <button class="btn btn--ghost btn--sm" type="button" data-action="reset">เริ่มใหม่</button>
+                      </div>
+                      <p class="demo-hint">จำแบบสั้น: P = คิดและประมาณ · O = ตั้งทีมและตั้งระบบติดตาม · M = ดูสถานะ · A = แก้ (resources / schedule / content)</p>
                     </div>
                   </section>
 

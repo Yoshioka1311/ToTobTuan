@@ -71,6 +71,7 @@
           <a class="chapter-link" href="se-use-case-modeling.html"><span class="chapter-num">บทที่ 4</span><span class="chapter-name">Use Case Modeling</span></a>
           <a class="chapter-link" href="se-flow-behavior-modeling.html"><span class="chapter-num">บทที่ 5</span><span class="chapter-name">Flow &amp; Behavior Modeling</span></a>
           <a class="chapter-link" href="se-ui-design.html"><span class="chapter-num">บทที่ 6</span><span class="chapter-name">UI Design</span></a>
+          <a class="chapter-link" href="se-midterm.html"><span class="chapter-num">Midterm</span><span class="chapter-name">เตรียมสอบ + ฝึกวาด</span></a>
         </div>
       </nav>
       <span class="eyebrow">ITDS261 · บทที่ 2 · Lecture 2</span>
@@ -116,6 +117,23 @@
             <button class="btn btn--ghost btn--sm" type="button" data-acc-all="close">ปิดทั้งหมด</button>
           </div>
         </div>
+
+        <aside class="focus-box" aria-label="โฟกัสสำหรับ Midterm">
+          <h3><span class="focus-tag">Midterm</span>บทนี้ใน 30 วินาที</h3>
+          <p>ทุกโปรเจกต์มีกิจกรรมเดิม 6 อย่าง (requirements → design → implementation → testing → deployment → maintenance) · <strong>process model</strong> คือแบบแผนว่าจะเรียงและวนกิจกรรมพวกนี้อย่างไร: <strong>Code and Fix</strong> ทำไปแก้ไป · <strong>Waterfall</strong> เรียงทีละ phase · <strong>Incremental</strong> แบ่งชิ้น · <strong>Spiral</strong> วนรอบโดยดูความเสี่ยง · <strong>Agile/Scrum</strong> รอบสั้นและรับการเปลี่ยนแปลง</p>
+          <ul class="focus-links">
+            <li><a href="#proc-activities">กิจกรรมทั่วไป 6 ขั้น</a></li>
+            <li><a href="#proc-definition">Process model คืออะไร</a></li>
+            <li><a href="#proc-codefix">Code and Fix</a></li>
+            <li><a href="#proc-waterfall">Waterfall</a></li>
+            <li><a href="#proc-incremental">Incremental A</a></li>
+            <li><a href="#proc-multirelease">Incremental B</a></li>
+            <li><a href="#proc-spiral">Spiral</a></li>
+            <li><a href="#proc-manifesto">Agile Manifesto</a></li>
+            <li><a href="#proc-agile-process">Scrum</a></li>
+          </ul>
+          <p class="note">หัวข้อด้านบนคือสไลด์ที่อาจารย์คัดไว้ใน <strong>Midterm guideline</strong> (กดเพื่อกระโดดไปอ่าน) · อยู่ใน <strong>Part 1</strong> หัวข้อ Software Process · guideline ไม่ได้คัดสไลด์ pros/cons, กรณีศึกษา และ process assessment มา แต่ยังอยู่ในบทเรียน</p>
+        </aside>
 
         <div class="acc">
 
@@ -667,6 +685,25 @@
                       </table>
                     </div>
                     <p class="note">สไลด์ 2-25 แยก Complexity และ Overhead เป็น 2 แถว แต่ทั้งคู่ให้ค่าเหมือนกัน (Agile = Low, Traditional = High) จึงรวมไว้แถวเดียว</p>
+                    <!-- rework:proc-agile-vs -->
+                    <div class="demo-box" data-widget="classify" data-options="cf:Code and Fix|wf:Waterfall|inc:Incremental|sp:Spiral|ag:Agile">
+                      <span class="demo-box-title">ฝึกทันที: ข้อความนี้พูดถึง process model ไหน?</span>
+                      <ol class="cls-list">
+                        <li class="cls-item" data-answer="wf"><p class="cls-text">แต่ละ phase ไม่ทับซ้อนกัน และ deliverable ของ phase หนึ่งเป็น input ของ phase ถัดไป</p><p class="cls-answer"><b>Waterfall</b> — key characteristics ของ Waterfall</p></li>
+                        <li class="cls-item" data-answer="sp"><p class="cls-text">ทุกรอบต้องประเมินทางเลือก ระบุและแก้ความเสี่ยง พร้อมทำ prototype</p><p class="cls-answer"><b>Spiral</b> — quadrant ที่ 2 ของ Spiral: evaluate alternatives, identify, resolve risks</p></li>
+                        <li class="cls-item" data-answer="inc"><p class="cls-text">requirement ชุดเล็กๆ ถูกพัฒนา package แล้วปล่อยเป็น Rel. 1 … Rel. n</p><p class="cls-answer"><b>Incremental</b> — Incremental Model B – Multiple Release</p></li>
+                        <li class="cls-item" data-answer="ag"><p class="cls-text">ให้ความสำคัญกับ working software มากกว่า comprehensive documentation</p><p class="cls-answer"><b>Agile</b> — ข้อ 2 ของ Agile Manifesto</p></li>
+                        <li class="cls-item" data-answer="cf"><p class="cls-text">code → compile → debug → unit test → release และบางคนเริ่มทั้งที่ยังไม่เข้าใจ problem statement</p><p class="cls-answer"><b>Code and Fix</b> — ปัญหา 2 ข้อของ Code and Fix</p></li>
+                        <li class="cls-item" data-answer="inc"><p class="cls-text">ชิ้นงานของแต่ละ requirement ถูกรวมเข้า integration bucket เพื่อทำ system test</p><p class="cls-answer"><b>Incremental</b> — Incremental Model แบบ A</p></li>
+                        <li class="cls-item" data-answer="wf"><p class="cls-text">testing มาหลัง coding จึงพบปัญหาช้า และเปลี่ยนยากเมื่อเริ่มพัฒนาแล้ว</p><p class="cls-answer"><b>Waterfall</b> — cons ของ Waterfall</p></li>
+                        <li class="cls-item" data-answer="sp"><p class="cls-text">ข้อเสียคือต้องการความเชี่ยวชาญด้าน risk assessment</p><p class="cls-answer"><b>Spiral</b> — cons ข้อเดียวของ Spiral ในสไลด์</p></li>
+                        <li class="cls-item" data-answer="ag"><p class="cls-text">iteration สั้น ผู้ใช้มีส่วนร่วมบ่อย เอกสารน้อย สื่อสารแบบไม่เป็นทางการ</p><p class="cls-answer"><b>Agile</b> — ลักษณะของ Agile processes</p></li>
+                      </ol>
+                      <div class="cls-foot">
+                        <p class="demo-status" aria-live="polite"></p>
+                        <button class="btn btn--ghost btn--sm" type="button" data-action="reset">เริ่มใหม่</button>
+                      </div>
+                    </div>
                   </section>
 
                 </div>
