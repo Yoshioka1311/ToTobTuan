@@ -6,7 +6,7 @@ const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&
 const pad=n=>String(n).padStart(2,'0');
 const paths={home:'M3 10 12 3l9 7v10H3z M9 20v-7h6v7',book:'M3 4h6q3 0 3 3v14q-2-3-5-3H3z M21 4h-6q-3 0-3 3v14q2-3 5-3h4z',list:'M8 5h13M8 12h13M8 19h13M3 5h.1M3 12h.1M3 19h.1',pen:'m14 4 6 6M4 20l4-1L21 6l-3-3L5 16z',code:'m8 5-6 7 6 7m8-14 6 7-6 7m-3-17-3 20',file:'M5 2h9l5 5v15H5z M14 2v6h5M8 13h8M8 17h6',search:'M20 20l-5-5 M17 10a7 7 0 1 1-14 0 7 7 0 0 1 14 0',arrow:'M4 12h16m-6-6 6 6-6 6',bookmark:'M6 3h12v18l-6-4-6 4z',check:'m5 12 4 4L19 6',sun:'M12 3v-2m0 22v-2M3 12H1m22 0h-2M5 5 3 3m18 18-2-2M5 19l-2 2M21 3l-2 2 M16 12a4 4 0 1 1-8 0 4 4 0 0 1 8 0',moon:'M21 14A9 9 0 0 1 10 3a9 9 0 1 0 11 11',focus:'M8 3H3v5m13-5h5v5M3 16v5h5m13-5v5h-5',menu:'M4 6h16M4 12h16M4 18h16',download:'M12 3v12m-5-5 5 5 5-5M4 17v4h16v-4',print:'M6 8V3h12v5M6 17H3V8h18v9h-3M6 14h12v8H6z',clock:'M12 7v5l3 2M22 12a10 10 0 1 1-20 0 10 10 0 0 1 20 0',chevron:'m9 5 7 7-7 7',play:'m7 4 14 8-14 8z',stop:'M5 5h14v14H5z'};
 const icon=n=>`<svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="${paths[n]||paths.book}"/></svg>`;
-const blank=()=>({read:[],bookmarks:[],answers:{},notes:{},drafts:{},last:'runtime',theme:'paper',font:18});
+const blank=()=>({read:[],bookmarks:[],answers:{},notes:{},drafts:{},last:'runtime',theme:'paper',font:18,questionFont:34,review:{},training:null,coachPrefs:{source:'l06',topic:'variables',size:3}});
 let state=blank(), storageOK=true, refQuery='', pendingLab=null, currentTopic=null, routeKind='home', currentExamSource=null, pendingExamReset=null, toastTimer;
 try{
  const saved=JSON.parse(localStorage.getItem(KEY)||'null');
@@ -16,11 +16,16 @@ try{
   if(topics.some(t=>t.id===saved.last))state.last=saved.last;
   if(saved.theme==='night')state.theme='night';
   if(Number.isFinite(saved.font))state.font=Math.max(16,Math.min(24,saved.font));
+  if(Number.isFinite(saved.questionFont))state.questionFont=Math.max(24,Math.min(52,saved.questionFont));
+  const known=topics.flatMap(t=>D.questions[t.id].map((_,i)=>t.id+':'+i));
+  if(saved.review&&typeof saved.review==='object')for(const key of known){const r=saved.review[key];if(r&&Number.isFinite(r.dueAt)&&r.dueAt>=0)state.review[key]=r;}
+  state.training=window.StudyMemory.restoreRound(saved.training,known);
+  if(saved.coachPrefs&&['l06','l07','es'].includes(saved.coachPrefs.source))state.coachPrefs={source:saved.coachPrefs.source,topic:typeof saved.coachPrefs.topic==='string'?saved.coachPrefs.topic:'all',size:saved.coachPrefs.size===5?5:3};
  }
 }catch{storageOK=false;}
 function save(){try{localStorage.setItem(KEY,JSON.stringify(state));storageOK=true;}catch{storageOK=false;toast('เบราว์เซอร์บล็อกการบันทึก ข้อมูลรอบนี้จะอยู่จนปิดหน้า');}}
 function toast(text){$('#toast').textContent=text;$('#toast').classList.add('visible');clearTimeout(toastTimer);toastTimer=setTimeout(()=>$('#toast').classList.remove('visible'),3200);}
-function settings(){document.body.dataset.theme=state.theme;document.documentElement.style.setProperty('--reading-size',state.font+'px');}
+function settings(){document.body.dataset.theme=state.theme;document.documentElement.style.setProperty('--reading-size',state.font+'px');document.documentElement.style.setProperty('--question-size',state.questionFont+'px');}
 const source=t=>D.sources.find(s=>s.id===t.source);
 const index=t=>topics.findIndex(x=>x.id===t.id)+1;
 const url=(t,tab='read')=>`#/lesson/${typeof t==='string'?t:t.id}/${tab}`;
@@ -31,12 +36,17 @@ const external=(href,label,cls='text-link')=>`<a class="${cls}" href="${esc(href
 const code=s=>`<pre class="code-block"><code>${esc(s)}</code></pre>`;
 const empty=(title,desc)=>`<div class="empty-state"><h2>${title}</h2><p>${desc}</p></div>`;
 const heading=(tag,title,desc)=>`<div class="page-heading"><div class="eyebrow">${tag}</div><h1>${title}</h1><p>${desc}</p></div>`;
+function questionSize(){
+ const values=[...new Set([28,34,42,50,state.questionFont])].sort((a,b)=>a-b);
+ return `<label class="question-size-label">ขนาดคำถาม <select class="question-size" aria-label="ขนาดคำถาม">${values.map(n=>`<option value="${n}" ${n===state.questionFont?'selected':''}>${n}px${n===34?' · ใหญ่มาก':n>=42?' · ใหญ่พิเศษ':''}</option>`).join('')}</select></label>`;
+}
+const coach=window.createStudyCoach({data:D,getState:()=>state,save,esc,icon,code,sizeControl:questionSize,render,toast});
 function shell(){
- const nav=[['home','home','ห้องอ่าน',''],['summary','list','สรุปก่อนสอบ','17'],['practice','pen','แบบฝึกหัด','153'],['reference','code','Cheatsheet',''],['library','file','เอกสารต้นฉบับ','4']];
+ const nav=[['home','home','ห้องอ่าน',''],['train','focus','ฝึกทีละข้อ',''],['summary','list','สรุปก่อนสอบ','17'],['practice','pen','แบบฝึกหัด','153'],['reference','code','Cheatsheet',''],['library','file','เอกสารต้นฉบับ','4']];
  const groups=[['l06','01 / JavaScript พื้นฐาน'],['l07','02 / Functions, OOP & DOM'],['es','03 / ECMAScript']];
  const opens=[...document.querySelectorAll('.chapter-group[open]')].map(e=>e.dataset.group);
  $('#sidebar').innerHTML=`<a href="#/home" class="brand"><img src="assets/favicon.svg" alt="" width="35" height="35"><span><strong>โต๊ะทบทวน</strong><small>THE STUDY DESK</small></span></a><div class="side-scroll"><nav class="main-nav">${nav.map(([k,i,label,n])=>`<a class="nav-link ${routeKind===k?'active':''}" href="#/${k}" ${routeKind===k?'aria-current="page"':''}>${icon(i)}${label}${n?`<span class="nav-count">${n}</span>`:''}</a>`).join('')}</nav><span class="side-label">บทเรียนของคุณ</span>${groups.map(([k,label],i)=>`<details class="chapter-group" data-group="${k}" ${(currentTopic?.source===k||opens.includes(k)||(!currentTopic&&!opens.length&&i===0))?'open':''}><summary>${label}</summary>${topics.filter(t=>t.source===k).map(t=>`<a href="${url(t)}" class="${currentTopic?.id===t.id?'active':''}" ${currentTopic?.id===t.id?'aria-current="page"':''}><span class="num">${pad(index(t))}</span><span>${esc(t.title)}</span>${state.read.includes(t.id)?'<span class="done-dot" aria-label="อ่านแล้ว">✓</span>':''}</a>`).join('')}</details>`).join('')}</div><div class="side-bottom"><span class="storage-label"><span class="status-dot"></span>${storageOK?'บันทึกในเครื่องนี้':'บันทึกชั่วคราวในรอบนี้'}</span><progress max="17" value="${state.read.length}" aria-label="ความคืบหน้าบทเรียน"></progress><span>อ่านแล้ว ${state.read.length} / 17 หัวข้อ</span><div class="mobile-font-tools"><span>ขนาดข้อความบทเรียน</span><button class="icon-button" data-action="font-down" aria-label="ลดขนาดตัวอักษร">A−</button><button class="icon-button" data-action="font-up" aria-label="เพิ่มขนาดตัวอักษร">A+</button></div></div>`;
- const labels={home:'ห้องอ่าน',summary:'สรุปก่อนสอบ',practice:'แบบฝึกหัด',reference:'Cheatsheet',library:'เอกสารต้นฉบับ',lesson:source(currentTopic||topics[0]).title,topics:'บทเรียนทั้งหมด'};
+ const labels={home:'ห้องอ่าน',summary:'สรุปก่อนสอบ',practice:'แบบฝึกหัด',reference:'Cheatsheet',library:'เอกสารต้นฉบับ',lesson:source(currentTopic||topics[0]).title,topics:'บทเรียนทั้งหมด',train:'ฝึกทีละข้อ'};
  const focus=document.body.classList.contains('focus-mode');
  $('#topbar').innerHTML=`<div class="breadcrumb"><button class="icon-button mobile-menu" data-action="menu" aria-label="เปิดสารบัญ" aria-expanded="${document.body.classList.contains('nav-open')}">${icon('menu')}</button><span class="crumb-home">โต๊ะทบทวน</span><span class="divider">/</span><b>${labels[routeKind]||'ห้องอ่าน'}</b></div><div class="top-actions"><button class="search-trigger" data-action="search" aria-label="ค้นหาบทเรียน">${icon('search')}<span>ค้นหาเรื่องที่อยากทบทวน</span><kbd class="key">Ctrl K</kbd></button><button class="icon-button font-tools" data-action="font-down" aria-label="ลดขนาดตัวอักษร">A−</button><button class="icon-button font-tools" data-action="font-up" aria-label="เพิ่มขนาดตัวอักษร">A+</button><span class="tool-divider"></span><button class="icon-button" data-action="theme" aria-label="${state.theme==='night'?'ใช้พื้นสีกระดาษ':'ใช้โหมดกลางคืน'}">${icon(state.theme==='night'?'sun':'moon')}</button><button class="icon-button" data-action="focus" aria-pressed="${focus}" aria-label="${focus?'ออกจากโหมดโฟกัส':'เปิดโหมดโฟกัส'}" title="โหมดโฟกัส">${icon('focus')}</button></div>`;
 }
@@ -46,7 +56,7 @@ function home(){
 <span class="syntax-key">const</span> b = [...a];
 
 console.log(a === b);
-<span class="syntax-comment">// คุณคิดว่าจะได้อะไร?</span></pre><div class="thought-foot"><span>ลองคิดก่อนดูคำตอบ</span><button data-action="hero-answer" aria-expanded="false">ดูเหตุผล ${icon('arrow')}</button></div><p class="thought-answer" id="thought-answer" hidden>false · spread สร้าง array ตัวใหม่ ทั้งสองจึงมีค่าข้างในเหมือนกัน แต่ไม่ใช่ object ตัวเดียวกัน</p></div></div></section><div class="home-stats"><span><strong>17</strong> หัวข้อให้อ่าน</span><span><strong>153</strong> ข้อให้ลองคิด</span><span><strong>4</strong> เอกสารต้นฉบับ</span><span class="local-note">${icon('bookmark')}เรียนตามจังหวะของตัวเอง</span></div><div class="continue-card"><div class="continue-icon">${icon('book')}</div><div class="continue-info"><div class="eyebrow">${state.read.length?'YOUR READING PLACE':'A GOOD PLACE TO START'}</div><h3>${pad(index(last))} · ${esc(last.title)}</h3><p>${esc(source(last).title)} · ${last.minutes} นาที · มีตัวอย่างให้ลองรัน</p></div><a class="button" href="${url(last)}">เปิดบทเรียน ${icon('arrow')}</a></div><div class="section-heading"><h2>เส้นทางการอ่าน</h2><a class="text-link" href="#/topics">ดูทั้ง 17 หัวข้อ ${icon('arrow')}</a></div><div class="course-grid">${D.sources.slice(0,3).map((s,i)=>{const ts=topics.filter(t=>t.source===s.id);return `<article class="course-card"><a class="course-cover" href="${url(ts[0])}" aria-label="เริ่ม ${s.title}"><span class="cover-number">${pad(i+1)}</span><span class="cover-index">STUDY NOTES</span><span class="cover-code">${['const · if · for','function · class · DOM','ES2015 → ES2026'][i]}</span></a><div class="course-card-body"><div class="eyebrow">${['LECTURE 06','LECTURE 07','ECMASCRIPT'][i]}</div><h3>${['เริ่มจากพื้นฐาน','ต่อยอดให้เว็บทำงาน','อ่านภาษารุ่นใหม่'][i]}</h3><p>${esc(s.subtitle)}</p><div class="card-footer"><span>${ts.length} หัวข้อ · ${ts.length*9} แบบฝึกหัด</span><a href="${url(ts[0])}">เริ่มอ่าน ${icon('arrow')}</a></div></div></article>`;}).join('')}</div><div class="reference-banner"><div class="reference-badge">{ }</div><div class="banner-info"><h3>ลืม syntax? เปิด Cheatsheet ข้างโต๊ะ</h3><p>รวมคำสั่งที่ใช้บ่อย แยกจากบทเรียน ค้นหาได้ทันที</p></div><a class="text-link" href="#/reference">เปิดดูคำสั่ง ${icon('arrow')}</a></div>`;
+<span class="syntax-comment">// คุณคิดว่าจะได้อะไร?</span></pre><div class="thought-foot"><span>ลองคิดก่อนดูคำตอบ</span><button data-action="hero-answer" aria-expanded="false">ดูเหตุผล ${icon('arrow')}</button></div><p class="thought-answer" id="thought-answer" hidden>false · spread สร้าง array ตัวใหม่ ทั้งสองจึงมีค่าข้างในเหมือนกัน แต่ไม่ใช่ object ตัวเดียวกัน</p></div></div></section><div class="coach-invite"><div><strong>วันนี้เริ่มแค่ 3 ข้อก็พอ</strong><p>เห็นคำถามทีละข้อ ลองนึกเองก่อนดูเฉลย พักแล้วกลับมาทำต่อได้</p></div><a class="button primary" href="#/train">ฝึกทีละข้อ ${icon('arrow')}</a></div><div class="home-stats"><span><strong>17</strong> หัวข้อให้อ่าน</span><span><strong>153</strong> ข้อให้ลองคิด</span><span><strong>4</strong> เอกสารต้นฉบับ</span><span class="local-note">${icon('bookmark')}เรียนตามจังหวะของตัวเอง</span></div><div class="continue-card"><div class="continue-icon">${icon('book')}</div><div class="continue-info"><div class="eyebrow">${state.read.length?'YOUR READING PLACE':'A GOOD PLACE TO START'}</div><h3>${pad(index(last))} · ${esc(last.title)}</h3><p>${esc(source(last).title)} · ${last.minutes} นาที · มีตัวอย่างให้ลองรัน</p></div><a class="button" href="${url(last)}">เปิดบทเรียน ${icon('arrow')}</a></div><div class="section-heading"><h2>เส้นทางการอ่าน</h2><a class="text-link" href="#/topics">ดูทั้ง 17 หัวข้อ ${icon('arrow')}</a></div><div class="course-grid">${D.sources.slice(0,3).map((s,i)=>{const ts=topics.filter(t=>t.source===s.id);return `<article class="course-card"><a class="course-cover" href="${url(ts[0])}" aria-label="เริ่ม ${s.title}"><span class="cover-number">${pad(i+1)}</span><span class="cover-index">STUDY NOTES</span><span class="cover-code">${['const · if · for','function · class · DOM','ES2015 → ES2026'][i]}</span></a><div class="course-card-body"><div class="eyebrow">${['LECTURE 06','LECTURE 07','ECMASCRIPT'][i]}</div><h3>${['เริ่มจากพื้นฐาน','ต่อยอดให้เว็บทำงาน','อ่านภาษารุ่นใหม่'][i]}</h3><p>${esc(s.subtitle)}</p><div class="card-footer"><span>${ts.length} หัวข้อ · ${ts.length*9} แบบฝึกหัด</span><a href="${url(ts[0])}">เริ่มอ่าน ${icon('arrow')}</a></div></div></article>`;}).join('')}</div><div class="reference-banner"><div class="reference-badge">{ }</div><div class="banner-info"><h3>ลืม syntax? เปิด Cheatsheet ข้างโต๊ะ</h3><p>รวมคำสั่งที่ใช้บ่อย แยกจากบทเรียน ค้นหาได้ทันที</p></div><a class="text-link" href="#/reference">เปิดดูคำสั่ง ${icon('arrow')}</a></div>`;
 }
 function lessonHead(t,tab){
  const saved=state.bookmarks.includes(t.id);
@@ -111,7 +121,7 @@ function practice(group){
  let number=0;
  return `<div class="page-heading exam-head"><div class="eyebrow">ONE TOPIC / ONE EXAM</div><h1>แบบฝึกหัด · ${group.title}</h1><p>รวมทุกชุดและทุกหัวข้อย่อยของบทนี้ไว้ในหน้าเดียว ทำต่อเนื่องได้โดยไม่ต้องเปลี่ยนชุด คำใบ้และเฉลยยังเปิดแยกตามข้อได้</p><div class="lesson-meta"><span>${ts.length} หัวข้อย่อย</span><span>${a.total} ข้อ · ง่าย กลาง ยาก</span>${external(group.file,icon('file')+' เอกสารต้นฉบับ')}</div></div>
  <nav class="filter-row exam-groups" aria-label="เลือกบทข้อสอบ">${groups.map(g=>`<a class="filter-chip ${g.id===group.id?'active':''}" href="#/practice/${g.id}" ${g.id===group.id?'aria-current="page"':''}>${g.title} <span>${topics.filter(t=>t.source===g.id).length*9} ข้อ</span></a>`).join('')}</nav>
- <details class="exam-outline"><summary>ไปยังหัวข้อย่อย <span>${ts.length} หัวข้ออยู่ในหน้านี้</span></summary><nav aria-label="สารบัญข้อสอบ">${ts.map((t,i)=>`<a class="text-link" href="${practiceURL(t)}" data-action="exam-section" data-id="${t.id}">${pad(i+1)} · ${esc(t.title)} <small>ข้อ ${i*9+1}–${(i+1)*9}</small></a>`).join('')}</nav></details>
+ <div class="coach-invite"><div><strong>อยากเริ่มสั้น ๆ โดยเห็นทีละข้อ?</strong><p>รอบละ 3 ข้อ ไม่จับเวลา และเก็บข้อที่ยังติดไว้ทวน</p></div><a class="button primary" href="#/train/${group.id}">ฝึกทีละข้อ ${icon('arrow')}</a></div><div class="question-settings">${questionSize()}</div><details class="exam-outline"><summary>ไปยังหัวข้อย่อย <span>${ts.length} หัวข้ออยู่ในหน้านี้</span></summary><nav aria-label="สารบัญข้อสอบ">${ts.map((t,i)=>`<a class="text-link" href="${practiceURL(t)}" data-action="exam-section" data-id="${t.id}">${pad(i+1)} · ${esc(t.title)} <small>ข้อ ${i*9+1}–${(i+1)*9}</small></a>`).join('')}</nav></details>
  <div class="exam-toolbar"><div><span class="eyebrow">YOUR PROGRESS</span><p id="practice-count" role="status">${examCount(group)}</p></div><button class="button primary small" data-action="check-exam">${icon('check')}ตรวจข้อที่ตอบแล้ว</button></div>
  <div class="exam-questions">${ts.map((t,i)=>`<section class="exam-topic" id="exam-topic-${t.id}"><div class="exam-topic-head"><div><div class="eyebrow">SECTION ${pad(i+1)} / ${pad(ts.length)}</div><h2>${esc(t.title)}</h2><p>9 ข้อ · ง่าย กลาง ยาก</p></div><a class="text-link" href="${url(t)}">ทวนแนวคิด ${icon('book')}</a></div>${D.questions[t.id].map((q,j)=>question(t,q,j,++number)).join('')}</section>`).join('')}</div>
  <div class="lesson-bottom"><button class="text-link" data-action="retry-exam" data-source="${group.id}">เริ่มทำบทนี้ใหม่</button>${next?`<a class="button" href="#/practice/${next.id}">บทถัดไป · ${next.title} ${icon('arrow')}</a>`:`<a class="button" href="#/summary/es">กลับไปทวนสรุป ${icon('book')}</a>`}</div>`;
@@ -119,7 +129,7 @@ function practice(group){
 function render(){
  window.StudyRunner.stop();document.body.classList.remove('nav-open');
  const parts=location.hash.replace(/^#\/?/,'').split('/'),kind=parts[0]||'home',id=parts[1],detail=parts[2];
- routeKind=kind;currentTopic=null;currentExamSource=null;let html,questionAnchor=null;
+ routeKind=kind;document.body.classList.toggle('training-view',kind==='train');currentTopic=null;currentExamSource=null;let html,questionAnchor=null;
  if(kind==='lesson'){
   currentTopic=topics.find(t=>t.id===id);
   if(currentTopic){state.last=currentTopic.id;save();html=detail==='lab'?lab(currentTopic):read(currentTopic,detail==='short');}
@@ -135,6 +145,7 @@ function render(){
  }
  if(html===undefined){
   if(kind==='home')html=home();
+  else if(kind==='train')html=coach.view(id);
   else if(kind==='topics')html=allTopics(['all','l06','l07','es','saved'].includes(id)?id:'all');
   else if(kind==='summary')html=summary(['all','l06','l07','es'].includes(id)?id:'all');
   else if(kind==='library')html=library();
@@ -142,7 +153,7 @@ function render(){
   else html=empty('ไม่พบหน้านี้','กลับไปเลือกบทเรียนจากสารบัญ หรือใช้ช่องค้นหาด้านบน');
  }
  settings();shell();$('#main').innerHTML=`<div class="page">${html}</div>`;$('#main').dataset.route=location.hash;
- document.title=`${currentExamSource?'แบบฝึกหัด · '+currentExamSource.title:currentTopic?.title||({home:'ห้องอ่าน',topics:'บทเรียนทั้งหมด',summary:'สรุปก่อนสอบ',reference:'Cheatsheet',library:'เอกสารต้นฉบับ'}[kind]||'ไม่พบหน้า')} · โต๊ะทบทวน`;
+ document.title=`${currentExamSource?'แบบฝึกหัด · '+currentExamSource.title:currentTopic?.title||({home:'ห้องอ่าน',topics:'บทเรียนทั้งหมด',summary:'สรุปก่อนสอบ',reference:'Cheatsheet',library:'เอกสารต้นฉบับ',train:'ฝึกทีละข้อ'}[kind]||'ไม่พบหน้า')} · โต๊ะทบทวน`;
  window.scrollTo({top:0,behavior:'instant'});$('#main').focus({preventScroll:true});
  if(questionAnchor)document.getElementById(questionAnchor)?.scrollIntoView({behavior:'instant',block:'start'});
 }
@@ -181,13 +192,14 @@ document.addEventListener('click',event=>{
  const result=event.target.closest('.search-result');
  if(result){if(result.dataset.refQuery)refQuery=result.dataset.refQuery;$('#search-dialog').close();if(location.hash===result.getAttribute('href'))render();return;}
  const b=event.target.closest('[data-action]');if(!b)return;const action=b.dataset.action;
+ if(coach.act(action,b))return;
  if(action==='section'){event.preventDefault();$('#section-'+b.dataset.index)?.scrollIntoView({behavior:'smooth'});return;}
  if(action==='menu'){document.body.classList.toggle('nav-open');b.setAttribute('aria-expanded',document.body.classList.contains('nav-open'));return;}
  if(action==='search'){openSearch();return;}
  if(action==='close-search'){$('#search-dialog').close();return;}
  if(action==='theme'){state.theme=state.theme==='night'?'paper':'night';save();settings();shell();return;}
  if(action==='focus'){document.body.classList.toggle('focus-mode');shell();toast(document.body.classList.contains('focus-mode')?'โหมดโฟกัส · กดไอคอนเดิมเพื่อกลับ':'กลับสู่มุมอ่านปกติ');return;}
- if(action==='font-up'||action==='font-down'){state.font=Math.max(16,Math.min(24,state.font+(action==='font-up'?1:-1)));save();settings();toast(`ขนาดข้อความบทเรียน ${state.font}px`);return;}
+ if(action==='font-up'||action==='font-down'){if(routeKind==='practice'||routeKind==='train'){state.questionFont=Math.max(24,Math.min(52,state.questionFont+(action==='font-up'?2:-2)));save();settings();document.querySelectorAll('.question-size').forEach(select=>{if(![...select.options].some(o=>Number(o.value)===state.questionFont))select.add(new Option(state.questionFont+'px',String(state.questionFont)));select.value=String(state.questionFont);});toast(`ขนาดคำถาม ${state.questionFont}px`);}else{state.font=Math.max(16,Math.min(24,state.font+(action==='font-up'?1:-1)));save();settings();toast(`ขนาดข้อความบทเรียน ${state.font}px`);}return;}
  if(action==='hero-answer'){const a=$('#thought-answer');a.hidden=!a.hidden;b.setAttribute('aria-expanded',!a.hidden);b.innerHTML=`${a.hidden?'ดูเหตุผล':'ซ่อนคำตอบ'} ${icon('arrow')}`;return;}
  if(action==='bookmark'||action==='read-done'){
   const list=action==='bookmark'?state.bookmarks:state.read,id=b.dataset.id,i=list.indexOf(id);if(i<0)list.push(id);else list.splice(i,1);save();shell();b.setAttribute('aria-pressed',i<0);
@@ -234,6 +246,7 @@ document.addEventListener('click',event=>{
 $('#mobile-shade').addEventListener('click',()=>document.body.classList.remove('nav-open'));
 document.addEventListener('input',event=>{
  const e=event.target;
+ if(coach.input(e))return;
  if(e.id==='search-input'){search(e.value);return;}
  if(e.id==='reference-search'){refQuery=e.value;$('#reference-list').innerHTML=referenceList(refQuery);return;}
  if(e.id==='topic-note'){state.notes[e.dataset.topic]=e.value;save();$('#note-status').textContent=storageOK?'บันทึกแล้วในเครื่องนี้':'ยังบันทึกไม่ได้ ข้อความอยู่ในรอบนี้';return;}
@@ -242,6 +255,8 @@ document.addEventListener('input',event=>{
 });
 document.addEventListener('change',event=>{
  const e=event.target;
+ if(coach.change(e))return;
+ if(e.matches('.question-size')){state.questionFont=Math.max(24,Math.min(52,Number(e.value)||34));save();settings();return;}
  if(e.id==='lab-mode'){window.StudyRunner.stop();$('#fixture-wrap').hidden=e.value!=='dom';$('#dom-preview').hidden=e.value!=='dom';$('#run-code').disabled=false;$('#run-status').textContent='พร้อมให้ลอง';saveDraft();}
  if(e.matches('.option input')){const card=e.closest('.question'),id=card.dataset.question.split(':')[0],q=D.questions[id][Number(e.dataset.index)];state.answers[card.dataset.question]={response:q.options[Number(e.value)],revealed:false,status:'draft'};card.querySelector('.feedback-slot').innerHTML='';save();refreshCounter();}
 });
