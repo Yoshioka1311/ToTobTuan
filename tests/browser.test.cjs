@@ -31,15 +31,13 @@ function pass(label){checks++;console.log('PASS',label);}
    assert.ok(await page.locator('.reading-section').count()>=3);
    await go(`#/lesson/${id}/short`);
    assert.ok(await page.locator('.takeaways li').count()>=3);
-   for(const set of [1,2,3]){
-    await go(`#/practice/${id}/${set}`);
-    assert.equal(await page.locator('.question').count(),3);
-    assert.equal(await page.locator('.difficulty.easy').count(),1);
-    assert.equal(await page.locator('.difficulty.medium').count(),1);
-    assert.equal(await page.locator('.difficulty.hard').count(),1);
-   }
   }
-  pass('17 full lessons, 17 summaries and all 51 exercise sets');
+  for(const [group,total] of [['l06',54],['l07',36],['es',63]]){
+   await go('#/practice/'+group);
+   assert.equal(await page.locator('.question').count(),total);
+   for(const level of ['easy','medium','hard'])assert.equal(await page.locator('.difficulty.'+level).count(),total/3);
+  }
+  pass('17 full lessons, 17 summaries and three complete main-topic exams');
   await go('#/lesson/operators/lab');
   for(const id of ids){
    const t=await page.evaluate(id=>STUDY.topics.find(t=>t.id===id),id);
@@ -114,22 +112,23 @@ function pass(label){checks++;console.log('PASS',label);}
   await go('#/practice/variables/1');
   const opts=await page.evaluate(()=>STUDY.questions.variables[0]);
   const correct=opts.options.indexOf(opts.answer),wrong=opts.options.findIndex(o=>o!==opts.answer);
-  await page.locator('#question-0 input').nth(wrong).check();
-  await page.locator('#question-0 [data-action=check-answer]').click();
-  assert.equal(await page.locator('#question-0 .feedback.incorrect').count(),1);
-  await page.locator('#question-0 input').nth(correct).check();
-  assert.equal(await page.locator('#question-0 .feedback').count(),0);
-  await page.locator('#question-0 [data-action=check-answer]').click();
-  assert.match(await page.locator('#question-0 .feedback').textContent(),/ตอบถูกแล้ว/);
-  await page.locator('#question-2 textarea').fill('เก็บเป็น string เพื่อรักษาศูนย์นำหน้า และไม่แปลงเป็น Number');
-  await page.locator('#question-2 [data-action=check-answer]').click();
-  assert.match(await page.locator('#question-2 .feedback').textContent(),/ไม่ได้ตรวจข้อความนี้อัตโนมัติ/);
-  await page.locator('#question-2 [data-score=self-correct]').click();
+  await page.locator('#question-variables-0 input').nth(wrong).check();
+  await page.locator('#question-variables-0 [data-action=check-answer]').click();
+  assert.equal(await page.locator('#question-variables-0 .feedback.incorrect').count(),1);
+  await page.locator('#question-variables-0 input').nth(correct).check();
+  assert.equal(await page.locator('#question-variables-0 .feedback').count(),0);
+  await page.locator('#question-variables-0 [data-action=check-answer]').click();
+  assert.match(await page.locator('#question-variables-0 .feedback').textContent(),/ตอบถูกแล้ว/);
+  await page.locator('#question-variables-2 textarea').fill('เก็บเป็น string เพื่อรักษาศูนย์นำหน้า และไม่แปลงเป็น Number');
+  await page.locator('#question-variables-2 [data-action=check-answer]').click();
+  assert.match(await page.locator('#question-variables-2 .feedback').textContent(),/ไม่ได้ตรวจข้อความนี้อัตโนมัติ/);
+  await page.locator('#question-variables-2 [data-score=self-correct]').click();
   await page.reload();
-  assert.equal(await page.locator('#question-0 input').nth(correct).isChecked(),true);
-  assert.match(await page.locator('#practice-count').textContent(),/ตรวจถูก 1\/6/);
-  assert.match(await page.locator('#practice-count').textContent(),/เข้าใจ 1\/3/);
-  await page.locator('[data-action=retry-set]').click();
+  assert.equal(await page.locator('#question-variables-0 input').nth(correct).isChecked(),true);
+  assert.match(await page.locator('#practice-count').textContent(),/ตรวจถูก 1\/36/);
+  assert.match(await page.locator('#practice-count').textContent(),/เข้าใจ 1\/18/);
+  await page.locator('[data-action=retry-exam]').click();
+  await page.locator('[data-action=confirm-exam-reset]').click();
   assert.equal(await page.locator('.feedback').count(),0);
   pass('automatic choice grading, self assessment, saved answers and retry');
   await page.keyboard.press('Control+k');
