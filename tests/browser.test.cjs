@@ -1,0 +1,187 @@
+const assert = require('node:assert/strict');
+const path = require('node:path');
+const fs = require('node:fs');
+const runtime = process.env.STUDY_PLAYWRIGHT || path.join(process.env.USERPROFILE, '.cache/codex-runtimes/codex-primary-runtime/dependencies/node/node_modules/playwright');
+const { chromium } = require(runtime);
+const { pathToFileURL } = require('node:url');
+const root = path.resolve(__dirname, '..');
+const base = pathToFileURL(path.join(root,'index.html')).href;
+const cache = path.join(root,'.cache');
+fs.mkdirSync(cache,{recursive:true});
+let checks=0;
+function pass(label){checks++;console.log('PASS',label);}
+(async()=>{
+ const browser=await chromium.launch({headless:true,...(process.env.STUDY_BROWSER?{executablePath:process.env.STUDY_BROWSER}:{channel:'msedge'})});
+ try{
+  const context=await browser.newContext({viewport:{width:1440,height:1000},reducedMotion:'reduce'});
+  const page=await context.newPage(),errors=[],remote=[];
+  page.on('pageerror',e=>errors.push(e.message));
+  page.on('request',r=>{if(/^https?:/.test(r.url()))remote.push(r.url());});
+  const go=async hash=>{await page.goto(base+hash);await page.waitForFunction(h=>document.querySelector('#main')?.dataset.route===h,hash);await page.locator('h1').waitFor();};
+  await go('#/home');
+  assert.equal(await page.locator('.course-card').count(),3);
+  assert.equal(await page.locator('#thought-answer').isVisible(),false);
+  await page.locator('[data-action=hero-answer]').click();
+  assert.match(await page.locator('#thought-answer').textContent(),/false/);
+  await page.screenshot({path:path.join(cache,'home-desktop.png'),fullPage:true});
+  pass('home, reveal and original course navigation');
+  const ids=await page.evaluate(()=>STUDY.topics.map(t=>t.id));
+  for(const id of ids){
+   await go(`#/lesson/${id}/read`);
+   assert.ok(await page.locator('.reading-section').count()>=3);
+   await go(`#/lesson/${id}/short`);
+   assert.ok(await page.locator('.takeaways li').count()>=3);
+   for(const set of [1,2,3]){
+    await go(`#/practice/${id}/${set}`);
+    assert.equal(await page.locator('.question').count(),3);
+    assert.equal(await page.locator('.difficulty.easy').count(),1);
+    assert.equal(await page.locator('.difficulty.medium').count(),1);
+    assert.equal(await page.locator('.difficulty.hard').count(),1);
+   }
+  }
+  pass('17 full lessons, 17 summaries and all 51 exercise sets');
+  await go('#/lesson/operators/lab');
+  for(const id of ids){
+   const t=await page.evaluate(id=>STUDY.topics.find(t=>t.id===id),id);
+   if(t.example.mode==='dom')continue;
+   for(const which of ['code','solution']){
+    const events=await page.evaluate(({code})=>new Promise(resolve=>{
+     const result=[];StudyRunner.runJS(code,e=>{result.push(e);if(e.type==='done')resolve(result);});
+    }),{code:t.example[which]});
+    assert.equal(events.filter(e=>e.type==='error').length,0,`${id}:${which}: ${JSON.stringify(events)}`);
+    assert.ok(events.some(e=>e.type==='log'),id+':'+which);
+   }
+  }
+  pass('all 15 console examples and their 15 suggested solutions execute');
+  await page.locator('#code-editor').fill('console.log("first");\nsetTimeout(()=>console.log("timer"),0);\nPromise.resolve().then(()=>console.log("micro"));\nconsole.log("last");');
+  await page.locator('[data-action=run]').click();
+  await page.waitForFunction(()=>!document.querySelector('#run-code').disabled);
+  assert.equal(await page.locator('#console-output').textContent(),'first\nlast\nmicro\ntimer');
+  await page.locator('#code-editor').fill('while(true) {}');
+  await page.locator('[data-action=run]').click();
+  await page.waitForFunction(()=>!document.querySelector('#run-code').disabled,{}, {timeout:5000});
+  assert.match(await page.locator('#console-output').textContent(),/2 วินาที/);
+  await page.locator('#code-editor').fill('throw new Error("practice error");');
+  await page.locator('[data-action=run]').click();
+  await page.waitForFunction(()=>!document.querySelector('#run-code').disabled);
+  assert.match(await page.locator('#console-output').textContent(),/practice error/);
+  await page.locator('#code-editor').fill('let n=0; const id=setInterval(()=>{console.log(++n);if(n===2)clearInterval(id);},10);');
+  await page.locator('[data-action=run]').click();
+  await page.waitForFunction(()=>!document.querySelector('#run-code').disabled);
+  assert.equal(await page.locator('#console-output').textContent(),'1\n2');
+  pass('microtask/timer order, error reporting and infinite-loop timeout');
+  await go('#/lesson/dom/lab');
+  await page.locator('[data-action=run]').click();
+  await page.waitForFunction(()=>!document.querySelector('#run-code').disabled);
+  assert.equal(await page.frameLocator('#dom-preview').locator('li').textContent(),'ทบทวน DOM');
+  assert.equal(await page.locator('#console-output').textContent(),'1');
+  await page.locator('details.solution summary').click();
+  await page.locator('[data-action=use-solution]').click();
+  await page.locator('[data-action=run]').click();
+  await page.waitForFunction(()=>!document.querySelector('#run-code').disabled);
+  assert.equal(await page.frameLocator('#dom-preview').locator('li').textContent(),'Operators');
+  await go('#/lesson/events/lab');
+  await page.locator('[data-action=run]').click();
+  await page.waitForFunction(()=>!document.querySelector('#run-code').disabled);
+  await page.frameLocator('#dom-preview').locator('#add span').click();
+  assert.equal(await page.frameLocator('#dom-preview').locator('#count').textContent(),'1');
+  await page.locator('details.solution summary').click();
+  await page.locator('[data-action=use-solution]').click();
+  await page.locator('[data-action=run]').click();
+  await page.waitForFunction(()=>!document.querySelector('#run-code').disabled);
+  await page.frameLocator('#dom-preview').locator('#add').click({clickCount:3});
+  assert.equal(await page.frameLocator('#dom-preview').locator('#add').isDisabled(),true);
+  pass('DOM creation/removal and interactive event examples plus solutions');
+  await go('#/lesson/variables/read');
+  await page.locator('#topic-note').fill('ทวน binding กับ object อีกครั้ง <script>test</script>');
+  await page.locator('[data-action=bookmark]').click();
+  await page.locator('[data-action=read-done]').click();
+  await page.reload();
+  assert.match(await page.locator('#topic-note').inputValue(),/binding/);
+  assert.equal(await page.locator('[data-action=read-done]').getAttribute('aria-pressed'),'true');
+  assert.equal(await page.locator('[data-action=bookmark]').getAttribute('aria-pressed'),'true');
+  await page.locator('.font-tools[data-action=font-up]').click();
+  assert.equal(await page.evaluate(()=>getComputedStyle(document.documentElement).getPropertyValue('--reading-size')),'19px');
+  await page.locator('[data-action=theme]').click();
+  assert.equal(await page.locator('body').getAttribute('data-theme'),'night');
+  await page.locator('[data-action=focus]').click();
+  assert.equal(await page.locator('body').evaluate(e=>e.classList.contains('focus-mode')),true);
+  await page.locator('[data-action=focus]').click();
+  await page.screenshot({path:path.join(cache,'lesson-night.png'),fullPage:true});
+  await page.locator('[data-action=theme]').click();
+  await page.screenshot({path:path.join(cache,'lesson-desktop.png'),fullPage:true});
+  pass('read status, bookmark, notes, font, focus and theme persistence');
+  await go('#/practice/variables/1');
+  const opts=await page.evaluate(()=>STUDY.questions.variables[0]);
+  const correct=opts.options.indexOf(opts.answer),wrong=opts.options.findIndex(o=>o!==opts.answer);
+  await page.locator('#question-0 input').nth(wrong).check();
+  await page.locator('#question-0 [data-action=check-answer]').click();
+  assert.equal(await page.locator('#question-0 .feedback.incorrect').count(),1);
+  await page.locator('#question-0 input').nth(correct).check();
+  assert.equal(await page.locator('#question-0 .feedback').count(),0);
+  await page.locator('#question-0 [data-action=check-answer]').click();
+  assert.match(await page.locator('#question-0 .feedback').textContent(),/ตอบถูกแล้ว/);
+  await page.locator('#question-2 textarea').fill('เก็บเป็น string เพื่อรักษาศูนย์นำหน้า และไม่แปลงเป็น Number');
+  await page.locator('#question-2 [data-action=check-answer]').click();
+  assert.match(await page.locator('#question-2 .feedback').textContent(),/ไม่ได้ตรวจข้อความนี้อัตโนมัติ/);
+  await page.locator('#question-2 [data-score=self-correct]').click();
+  await page.reload();
+  assert.equal(await page.locator('#question-0 input').nth(correct).isChecked(),true);
+  assert.match(await page.locator('#practice-count').textContent(),/ตรวจถูก 1\/6/);
+  assert.match(await page.locator('#practice-count').textContent(),/เข้าใจ 1\/3/);
+  await page.locator('[data-action=retry-set]').click();
+  assert.equal(await page.locator('.feedback').count(),0);
+  pass('automatic choice grading, self assessment, saved answers and retry');
+  await page.keyboard.press('Control+k');
+  await page.locator('#search-input').fill('closure');
+  assert.ok(await page.locator('.search-result').count()>0);
+  await page.locator('.search-result').first().click();
+  assert.equal(await page.locator('#search-dialog').isVisible(),false);
+  await go('#/reference');
+  assert.equal(await page.locator('.reference-section').count(),12);
+  await page.locator('#reference-search').fill('getModifierState');
+  assert.equal(await page.locator('.reference-section').count(),1);
+  assert.match(await page.locator('.reference-table').textContent(),/boolean/);
+  await page.locator('#reference-search').fill('Math');
+  await page.locator('#ref-7 [data-action=reference-lab]').click();
+  await page.waitForFunction(()=>document.querySelector('.lab')?.dataset.origin.includes('Math'));
+  assert.equal(await page.locator('details.solution').isVisible(),false);
+  await page.locator('[data-action=run]').click();
+  await page.waitForFunction(()=>!document.querySelector('#run-code').disabled);
+  await page.reload();
+  assert.match(await page.locator('.lab-task').textContent(),/Cheatsheet/);
+  await go('#/reference');
+  await page.locator('#reference-search').fill('<img src=x onerror=alert(1)>');
+  assert.equal(await page.locator('#reference-list img').count(),0);
+  pass('global search, reference filtering and escaped query text');
+  await go('#/library');
+  assert.equal(await page.locator('.document-card').count(),4);
+  for(const href of await page.locator('.document-card a').evaluateAll(els=>els.map(e=>e.getAttribute('href')).filter(h=>!h.startsWith('#')))) assert.ok(fs.existsSync(path.join(root,href)));
+  const downloadPromise=page.waitForEvent('download');await page.locator('[data-action=export]').click();const download=await downloadPromise;await download.saveAs(path.join(cache,'personal-notes-test.json'));
+  assert.ok(JSON.parse(fs.readFileSync(path.join(cache,'personal-notes-test.json'),'utf8')).data.notes.variables);
+  await page.locator('[data-action=reset]').click();await page.locator('[data-action=cancel-reset]').click();
+  assert.equal(await page.evaluate(()=>JSON.parse(localStorage.getItem('totobtuan.study.v2')).read.includes('variables')),true);
+  pass('all PDF/summary links exist, export works and cancelled reset preserves data');
+  for(const width of [390,320,768]){
+   await page.setViewportSize({width,height:900});
+   for(const hash of ['#/home','#/lesson/variables/read','#/lesson/dom/lab','#/practice/es2026/3','#/summary','#/library','#/reference']){
+    await go(hash);
+    assert.ok(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth+1),`overflow ${width} ${hash}`);
+   }
+  }
+  await page.setViewportSize({width:390,height:844});await go('#/home');
+  await page.screenshot({path:path.join(cache,'home-mobile.png'),fullPage:true});
+  await page.locator('[data-action=menu]').click();assert.equal(await page.locator('body').evaluate(e=>e.classList.contains('nav-open')),true);
+  await page.keyboard.press('Escape');
+  await go('#/lesson/variables/read');await page.screenshot({path:path.join(cache,'lesson-mobile.png'),fullPage:true});
+  pass('no horizontal overflow at 320, 390, 768px across seven main views; mobile menu');
+  assert.deepEqual(errors,[],'Unexpected page errors');assert.deepEqual(remote,[],'External network requests');
+  pass('no page errors or external network calls over file://');
+  const blocked=await browser.newContext();await blocked.addInitScript(()=>Object.defineProperty(window,'localStorage',{get(){throw new Error('blocked');}}));
+  const blockedPage=await blocked.newPage();await blockedPage.goto(base+'#/lesson/runtime/read');
+  await blockedPage.locator('h1').waitFor();await blockedPage.locator('[data-action=read-done]').click();
+  assert.equal(await blockedPage.locator('[data-action=read-done]').getAttribute('aria-pressed'),'true');
+  pass('reading remains usable with localStorage blocked');
+  console.log(`\n${checks} browser verification groups passed. Screenshots in .cache/.`);
+ }finally{await browser.close();}
+})().catch(e=>{console.error(e);process.exit(1);});

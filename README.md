@@ -1,85 +1,61 @@
-# โต๊ะทบทวน
+# โต๊ะทบทวน · JavaScript
 
-เว็บส่วนตัวสำหรับทบทวนเนื้อหาก่อนสอบ รวมสรุปสไลด์แต่ละวิชาไว้ที่เดียว
-เป็น static site ล้วน (HTML / CSS / JavaScript) ไม่มี framework และไม่ต้อง build
+เว็บอ่านสอบ ITDS241 แบบเปิดในเครื่องได้ทันที ไม่มีขั้นตอน build ไม่มีบัญชี และไม่มีระบบหลังบ้าน
 
-## หน้าในเว็บ
+## เริ่มใช้งาน
 
-| หน้า | ไฟล์ | รายละเอียด |
-| --- | --- | --- |
-| หน้าแรก | `index.html` | รายการวิชา + คำศัพท์ที่กำลังทบทวน |
-| ITDS231 บทที่ 1: Intro & Topology | `network.html` | 3 แท็บ: **เนื้อหา** (accordion สรุปแต่ละไฟล์สไลด์) · **สรุป** (cheat sheet) · **แบบฝึกหัด** (quiz 20 ข้อ ตรวจให้คะแนนพร้อมเฉลย) |
-| ITDS231 บทที่ 2: Application Layer | `network-application-layer.html` | โครง 3 แท็บเดียวกัน · สลับบทได้ที่ต้นหน้า |
-| ITDS231 บทที่ 3: Data Link Layer | `network-data-link-layer.html` | framing, error detection, flow control / ARQ, HDLC |
-| ITDS231 บทที่ 4: MAC + Ethernet | `network-mac-ethernet.html` | ALOHA, CSMA/CD, CSMA/CA, channelization, เฟรม Ethernet, switch |
-| ITDS241 บทที่ 1: Internet & HTML Basics | `web-intro-html-basics.html` | 4 แท็บ: เนื้อหา · สรุป · แบบฝึกหัด · **เขียนโค้ด** (ตรวจโค้ด HTML อัตโนมัติ 24 ข้อ) |
-| ITDS241 บทที่ 2: Media, Forms & Semantic | `web-media-forms-semantic.html` | media, forms + validation, semantic layout · เขียนโค้ด 12 ข้อ |
-| ITDS241 บทที่ 3: CSS Fundamentals | `web-css-fundamentals.html` | selector, box model, text/color, specificity · เขียนโค้ด 6 ข้อ |
-| ITDS241 บทที่ 4: CSS Layout & Responsive | `web-css-layout-responsive.html` | display, position, flexbox, media query, responsive · เขียนโค้ด 6 ข้อ |
-| ITDS241 บทที่ 5: JavaScript Fundamentals | `web-js-fundamentals.html` | var/let/const, data types, built-in objects, operator, control flow · เขียนโค้ด 6 ข้อ |
-| ITDS241 บทที่ 6: Functions, OOP & DOM | `web-js-functions-oop-dom.html` | function ทุกแบบ, scope/closure, class + inheritance, DOM และ events · เขียนโค้ด 6 ข้อ |
-| ITDS241 บทที่ 7: ECMAScript Features | `web-ecmascript-features.html` | ES6 → ES2026 · 3 แท็บ (ไม่มีแท็บเขียนโค้ด) |
-| ITDS261 บทที่ 1: SE Foundation & Project Management | `se-foundation-pm.html` | ซอฟต์แวร์และ SE, บทบาทในโปรเจกต์, 4P's, triple constraint, POMA, WBS / PERT / Gantt |
-| ITDS261 บทที่ 2: Software Process Models | `se-process-models.html` | Code and Fix, Waterfall, Incremental, Spiral, Agile/Scrum, กรณีศึกษา |
-| ITDS261 บทที่ 3: Requirement Engineering | `se-requirement-engineering.html` | ประเภท requirement, elicitation, specification, user story, validation, requirements management |
-| ITDS261 บทที่ 4: Use Case Modeling | `se-use-case-modeling.html` | สัญลักษณ์ use case, includes / extends, use case narrative |
-| ITDS261 บทที่ 5: Flow & Behavior Modeling | `se-flow-behavior-modeling.html` | DFD, context diagram, balancing, consistency rules, PSPEC, control flow |
-| ITDS261 บทที่ 6: User Interface Design | `se-ui-design.html` | ประเภท UI, design process, Golden Rules, low / high fidelity prototype |
-| ITDS261 เตรียมสอบ Midterm | `se-midterm.html` | โครงข้อสอบ, workshop วาด use case diagram / context DFD ทีละขั้น, ตัวอย่าง use case narrative, สรุปขนาด A4, ข้อสอบจำลอง 20 ข้อ |
+ดับเบิลคลิก `index.html` ด้วย Edge, Chrome หรือ browser รุ่นปัจจุบัน เปิดได้โดยไม่ใช้อินเทอร์เน็ต ตัวอักษรใช้ฟอนต์ในเครื่อง ไม่มี CDN หรือไลบรารีภายนอกที่ต้องโหลด
 
-ทุกหน้าบทเลือกวิชา (Network / Web / SE) และบทได้ที่ต้นหน้า · แต่ละวิชามีสีประจำวิชาของตัวเอง (Network = amber บนพื้น navy, Web = ม่วง iris, SE = เขียว sage) บนพื้นมืดแบบเดียวกัน · ลิงก์ตรงไปแต่ละแท็บได้ด้วย `#content`, `#summary`, `#quiz` (หน้า Web มี `#code` เพิ่ม)
+- **ห้องอ่าน** กลับไปยังหัวข้อที่เปิดล่าสุดและเลือกเส้นทางการเรียน
+- **บทเรียน** 17 หัวข้อ มีคำอธิบายภาษาไทย ตัวอย่าง จุดที่มักเข้าใจผิด และเลขหน้า PDF
+- **สรุปก่อนสอบ** รวมหลักคิด แยก Part 1 / Part 2 / ECMAScript และสั่งพิมพ์หรือบันทึกเป็น PDF ผ่าน browser ได้
+- **ลองเขียนโค้ด** แก้ JavaScript แล้วดู console หรือเลือก HTML + JavaScript เพื่อทดลอง DOM และคลิกปุ่มใน preview ได้ กด Ctrl+Enter เพื่อรัน
+- **แบบฝึกหัด** หัวข้อละ 3 ชุด ชุดละ 3 ข้อ รวม 153 ข้อ ทุกชุดเรียงง่าย กลาง ยาก มีทั้งเลือกคำตอบและอธิบาย/ออกแบบ พร้อมคำใบ้ เหตุผล และเกณฑ์เทียบคำตอบ
+- **Cheatsheet** คู่มือแยก 12 หมวด ค้นคำสั่งได้ พร้อม PDF เต็ม
+- **เอกสารต้นฉบับ** PDF ทั้ง 4 ไฟล์และสรุป Markdown ของแต่ละไฟล์
 
-แท็บเนื้อหามีแผนภาพ SVG และตัวช่วยคำนวณแบบ interactive เช่น delay calculator (Network บทที่ 1), HTTP timeline และ web cache (บทที่ 2), CRC / Hamming / sliding window (บทที่ 3), binary exponential backoff (บทที่ 4) · ฝั่ง SE มีตัวนับเส้นทางการสื่อสารในทีม (บทที่ 1), ตัวรัน PSPEC Analyze Triangle (บทที่ 5), แบบฝึกตอบทันทีในทุกบท และ workshop วาดไดอะแกรมทีละขั้นในหน้าเตรียมสอบ · ฝั่ง Web มี URL anatomy, layout demo, pattern tester, flexbox lab และ media query lab · โค้ดตัวอย่าง JavaScript กดรันได้ในกล่อง sandbox และโค้ด HTML บางกล่องแสดงผลจริงในกรอบ preview
-ความคืบหน้าของแท็บเขียนโค้ดเก็บใน localStorage ของเบราว์เซอร์เท่านั้น
+ใช้ Ctrl+K เพื่อค้นหาบทเรียนหรือโจทย์ ด้านบนมีปรับขนาดข้อความ โหมดกลางคืน และโหมดโฟกัส กด “อ่านแล้ว” เองเมื่อจบบท เก็บบุ๊กมาร์กและจดโน้ตได้
 
-## เปิดดูบนเครื่อง
+## เนื้อหาและขอบเขต
 
-ดับเบิลคลิก `index.html` ก็เปิดได้เลย หรือถ้าอยากรันผ่าน local server:
+Part 1 มี 6 หัวข้อ: browser/state, ตัวแปรและ types, operators, control flow, collections และ built-ins
+Part 2 มี 4 หัวข้อ: functions/closures, OOP, DOM และ events/browser APIs
+ECMAScript มี 7 หัวข้อ: ES6, async, ES2016–2019, ES2020–2023, ES2024 พร้อมหมายเหตุข้อเสนอ, ES2025 และ ES2026
 
-```bash
-# Python
-python -m http.server 8000
-# หรือ Node
-npx serve .
-```
+เนื้อหาบทเรียน ตัวอย่าง และโจทย์เขียนใหม่จาก PDF ที่ผู้ใช้ให้ ไม่ใช่การถอดทุกข้อความในสไลด์ แยกหมายเหตุแก้ความคลาดเคลื่อนไว้ชัดเจน ตัวอย่างสำคัญคือ const ไม่ได้ freeze object, getElementsBy* คืน HTMLCollection, top-level await เป็น ES2022, ไม่มี Atomics.waitSync และ JSON.rawJSON ไม่แก้ความแม่นยำตอน parse ฝั่งผู้รับโดยอัตโนมัติ
 
-แล้วเปิด <http://localhost:8000>
+PDF ต้นฉบับรวม 371 หน้า: Lecture 06 จำนวน 78 หน้า, Lecture 07 จำนวน 69 หน้า, ECMAScript จำนวน 124 หน้า และ cheatsheet จำนวน 100 หน้า เลขอ้างอิงใช้หน้า PDF ซึ่งอาจไม่ตรงเลขสไลด์ หน้าโฆษณาท้าย cheatsheet ไม่นำมาเป็นเนื้อหาเรียน
 
-## โครงสร้าง
+ฟีเจอร์ ECMAScript ใหม่อาจยังไม่พร้อมใน browser เก่า ตัวอย่างที่เกี่ยวข้องเช็ก method ก่อนใช้ ไม่โหลด polyfill จากภายนอก ไม่ใช้ syntax proposal ที่ parser ทั่วไปไม่รองรับเป็นตัวอย่างรันจริง
 
-```
-index.html
-network.html                     ITDS231 บทที่ 1
-network-application-layer.html   ITDS231 บทที่ 2
-network-data-link-layer.html     ITDS231 บทที่ 3
-network-mac-ethernet.html        ITDS231 บทที่ 4
-web-intro-html-basics.html       ITDS241 บทที่ 1
-web-media-forms-semantic.html    ITDS241 บทที่ 2
-web-css-fundamentals.html        ITDS241 บทที่ 3
-web-css-layout-responsive.html   ITDS241 บทที่ 4
-web-js-fundamentals.html         ITDS241 บทที่ 5
-web-js-functions-oop-dom.html    ITDS241 บทที่ 6
-web-ecmascript-features.html     ITDS241 บทที่ 7
-se-foundation-pm.html            ITDS261 บทที่ 1
-se-process-models.html           ITDS261 บทที่ 2
-se-requirement-engineering.html  ITDS261 บทที่ 3
-se-use-case-modeling.html        ITDS261 บทที่ 4
-se-flow-behavior-modeling.html   ITDS261 บทที่ 5
-se-ui-design.html                ITDS261 บทที่ 6
-se-midterm.html                  ITDS261 เตรียมสอบ Midterm
-assets/
-  css/  tokens.css · base.css · home.css · network.css · exercise.css · motion.css
-  js/   network.js · widgets.js · code-exercise.js · exercises-web-1.js … exercises-web-6.js
-  favicon.svg
-```
+## การบันทึกและพื้นที่ทดลอง
 
-## Deploy ด้วย GitHub Pages
+บันทึกอ่าน โน้ต โค้ด และคำตอบด้วย localStorage เฉพาะ browser/origin นี้ หาก browser บล็อก storage เว็บยังใช้อ่านได้แต่บันทึกอาจไม่อยู่หลังปิดหน้า การย้าย folder หรือเปลี่ยน browser อาจทำให้เห็นบันทึกคนละชุด ที่หน้าเอกสารมีปุ่มดาวน์โหลดบันทึก JSON เพื่อสำรองอ่านได้ และปุ่มล้างเฉพาะข้อมูลของเว็บนี้
 
-เว็บนี้ serve จาก **root ของ branch `main`** ได้เลย (ไม่ต้องย้ายไป `/docs` เพราะไม่มีขั้นตอน build และไฟล์ทั้งหมดคือตัวเว็บ)
+ข้อเลือกตอบตรวจอัตโนมัติ ส่วนข้ออธิบายให้เทียบแนวคำตอบและประเมินเอง ไม่ใช้การเทียบข้อความมาฟันธงว่าตอบผิด คะแนนสองแบบแสดงแยกกัน
 
-1. push repo ขึ้น GitHub
-2. ไปที่ **Settings → Pages**
-3. Source: **Deploy from a branch** → Branch: `main` / Folder: `/ (root)` → Save
-4. รอสักครู่ เว็บจะอยู่ที่ `https://<username>.github.io/<repo>/`
+โหมด JavaScript รันใน Worker ที่ทิ้งได้และจำกัดเวลา 2 วินาที ใช้ console.log ดูผล โหมดนี้ไม่มี document/window จึงต้องใช้โหมด HTML สำหรับ DOM โหมด HTML ใช้ iframe sandbox แบบไม่มี same-origin และจำกัดการโหลดเครือข่าย DOM script ที่มีลูป synchronous ไม่สิ้นสุดยังอาจทำให้แท็บค้างได้ จึงควรใช้โหมด JavaScript สำหรับทดลองลูปที่ยังไม่แน่ใจ ตัวอย่างที่ให้มาไม่มีลูปไม่สิ้นสุด
 
-ไฟล์ `.nojekyll` มีไว้บอก GitHub Pages ว่าไม่ต้องประมวลผลด้วย Jekyll
+PDF แสดงผ่านตัวอ่านของ browser โดยเปิดแท็บใหม่ หาก browser ไม่รองรับการดู PDF ให้ดาวน์โหลดไฟล์จาก `materials/` ไปเปิดในโปรแกรมอ่าน PDF
+
+## ไฟล์
+
+- `index.html` หน้าเว็บหลัก
+- `assets/css/study.css` หน้าตา responsive และ print styles
+- `assets/js/content.js` คำอธิบายและตัวอย่าง 17 หัวข้อ
+- `assets/js/questions.js` คลังโจทย์ 153 ข้อ
+- `assets/js/reference.js` cheatsheet ที่จัดหมวดใหม่
+- `assets/js/runner.js` ตัวรันโค้ดที่แยกจากหน้าอ่าน
+- `assets/js/app.js` การนำทาง ค้นหา บันทึก และตรวจแบบฝึกหัด
+- `materials/` PDF เต็ม 4 ไฟล์ เป็นสำเนาต้นฉบับไม่แก้ไข
+- `summaries/` สรุป 4 เอกสารและรวมสรุปบทเรียน `all-notes.md`
+- `tools/export-notes.cjs` สร้างสรุป Markdown ใหม่หลังแก้เนื้อหา ใช้ `node tools/export-notes.cjs`
+- `tests/` การตรวจโครงสร้างเนื้อหาและการใช้งานใน browser
+
+เอกสาร PDF ถูก ignore ใน Git เพื่อไม่เผยแพร่สไลด์อัตโนมัติ สำเนาบนเครื่องยังใช้งานได้ เก็บโฟลเดอร์ `materials/` ไปพร้อมเว็บหากย้ายไปเครื่องอื่น ไม่มีการ deploy หรือส่งไฟล์ไปบริการภายนอก
+
+## ตรวจการทำงาน
+
+`node --test tests/content.test.cjs` ตรวจเอกสาร หัวข้อ ความครบของ 3 ชุด/3 ระดับ และเลขหน้าอ้างอิง
+
+`node tests/browser.test.cjs` ตรวจตัวอย่าง คำตอบ การบันทึก ค้นหา responsive และ file:// ต้องมี Playwright ที่ติดตั้งอยู่แล้ว และ Edge หรือ browser executable ที่กำหนดด้วย `STUDY_BROWSER` และ `STUDY_PLAYWRIGHT` หากไม่ได้ใช้ bundled runtime

@@ -1,161 +1,19 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="th">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>โต๊ะทบทวน</title>
-<meta name="description" content="เว็บทบทวนเนื้อหาก่อนสอบ รวมสรุปสไลด์แต่ละวิชาไว้ที่เดียว" />
-<meta name="theme-color" content="#17151a" />
-<link rel="icon" href="assets/favicon.svg" type="image/svg+xml" />
-<link rel="preconnect" href="https://fonts.googleapis.com" />
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-<link
-  href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500..700&family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans+Thai:wght@500;600&family=IBM+Plex+Sans+Thai+Looped:wght@400;500;600&display=swap"
-  rel="stylesheet"
-/>
-<link rel="stylesheet" href="assets/css/tokens.css" />
-<link rel="stylesheet" href="assets/css/base.css" />
-<link rel="stylesheet" href="assets/css/home.css" />
-<link rel="stylesheet" href="assets/css/motion.css" />
+<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self' blob: data:; script-src 'self' blob: 'unsafe-inline' 'unsafe-eval'; style-src 'self' 'unsafe-inline'; connect-src 'none'; frame-src 'self' blob: data:; worker-src blob:; object-src 'self'; base-uri 'none'; form-action 'none'">
+<meta name="theme-color" content="#f7f6f2"><meta name="description" content="โต๊ะทบทวน JavaScript สำหรับ ITDS241 อ่านสรุป ทดลองโค้ด และฝึกคิดจากโจทย์ 3 ชุดต่อหัวข้อ ใช้ได้ในเครื่อง">
+<title>โต๊ะทบทวน · JavaScript study desk</title>
+<link rel="icon" href="assets/favicon.svg" type="image/svg+xml"><link rel="stylesheet" href="assets/css/study.css">
+<script src="assets/js/content.js" defer></script><script src="assets/js/questions.js" defer></script><script src="assets/js/reference.js" defer></script><script src="assets/js/runner.js" defer></script><script src="assets/js/app.js" defer></script>
 </head>
 <body>
-  <a class="skip-link" href="#subjects">ข้ามไปที่รายวิชา</a>
-
-  <header class="site-header">
-    <div class="wrap">
-      <a class="wordmark" href="index.html" aria-label="โต๊ะทบทวน หน้าแรก">
-        <img class="wordmark-mark" src="assets/favicon.svg" alt="" width="26" height="26" />
-        <span class="wordmark-text">โต๊ะ<span>ทบทวน</span></span>
-      </a>
-    </div>
-  </header>
-
-  <main>
-    <section class="hero wrap">
-      <div class="hero-text">
-        <span class="eyebrow">Midterm · ภาคเรียนที่ 1/2569</span>
-        <h1>ทบทวนเป็นระบบ<br /><em>ก่อนสอบ Midterm</em></h1>
-        <p class="hero-lede">รวมสไลด์แต่ละวิชา แยกตามสัปดาห์ไว้ที่เดียว หาเจอเร็ว ไม่ต้องขุดไฟล์เก่า</p>
-      </div>
-      <div class="hero-diagram" aria-hidden="true">
-        <svg viewBox="0 0 400 220" xmlns="http://www.w3.org/2000/svg">
-          <rect x="24" y="64" width="140" height="78" rx="8" fill="#1d1a21" stroke="#37323e" />
-          <path d="M24 72 a8 8 0 0 1 8 -8 h124 a8 8 0 0 1 8 8 v10 h-140 z" fill="#ab92e6" />
-          <line x1="40" y1="104" x2="148" y2="104" stroke="#4b4455" stroke-width="2" stroke-linecap="round" />
-          <line x1="40" y1="120" x2="128" y2="120" stroke="#4b4455" stroke-width="2" stroke-linecap="round" />
-          <line x1="40" y1="136" x2="140" y2="136" stroke="#37323e" stroke-width="2" stroke-linecap="round" />
-
-          <rect x="236" y="64" width="140" height="78" rx="8" fill="#1d1a21" stroke="#37323e" />
-          <path d="M236 72 a8 8 0 0 1 8 -8 h124 a8 8 0 0 1 8 8 v10 h-140 z" fill="#ddd1f7" />
-          <line x1="252" y1="104" x2="360" y2="104" stroke="#4b4455" stroke-width="2" stroke-linecap="round" />
-          <line x1="252" y1="120" x2="340" y2="120" stroke="#4b4455" stroke-width="2" stroke-linecap="round" />
-          <line x1="252" y1="136" x2="352" y2="136" stroke="#37323e" stroke-width="2" stroke-linecap="round" />
-
-          <line x1="164" y1="103" x2="236" y2="103" stroke="#aaa2b4" stroke-width="1.5" stroke-dasharray="4 4" />
-          <rect x="188" y="93" width="20" height="20" rx="3" transform="rotate(45 198 103)" fill="#8e71d3" />
-
-          <text x="170" y="94" font-family="IBM Plex Mono, monospace" font-size="12" fill="#8a8294">1</text>
-          <text x="222" y="94" font-family="IBM Plex Mono, monospace" font-size="12" fill="#8a8294">N</text>
-        </svg>
-      </div>
-    </section>
-
-    <section class="ticker-section" aria-label="คำศัพท์ที่กำลังทบทวนอยู่">
-      <div class="ticker-mask" tabindex="0">
-        <div class="ticker-track">
-          <span class="ticker-item">Packet Switching</span>
-          <span class="ticker-item">Persistent HTTP</span>
-          <span class="ticker-item">CRC</span>
-          <span class="ticker-item">Go-Back-N ARQ</span>
-          <span class="ticker-item">CSMA/CD</span>
-          <span class="ticker-item">Box Model</span>
-          <span class="ticker-item">Flexbox</span>
-          <span class="ticker-item">Media Query</span>
-          <span class="ticker-item">Promise / async</span>
-          <span class="ticker-item">DOM</span>
-          <span class="ticker-item">POMA</span>
-          <span class="ticker-item">Use Case</span>
-          <span class="ticker-item">DFD Level 0</span>
-          <span class="ticker-item">Golden Rules</span>
-          <span class="ticker-item" aria-hidden="true">Packet Switching</span>
-          <span class="ticker-item" aria-hidden="true">Persistent HTTP</span>
-          <span class="ticker-item" aria-hidden="true">CRC</span>
-          <span class="ticker-item" aria-hidden="true">Go-Back-N ARQ</span>
-          <span class="ticker-item" aria-hidden="true">CSMA/CD</span>
-          <span class="ticker-item" aria-hidden="true">Box Model</span>
-          <span class="ticker-item" aria-hidden="true">Flexbox</span>
-          <span class="ticker-item" aria-hidden="true">Media Query</span>
-          <span class="ticker-item" aria-hidden="true">Promise / async</span>
-          <span class="ticker-item" aria-hidden="true">DOM</span>
-          <span class="ticker-item" aria-hidden="true">POMA</span>
-          <span class="ticker-item" aria-hidden="true">Use Case</span>
-          <span class="ticker-item" aria-hidden="true">DFD Level 0</span>
-          <span class="ticker-item" aria-hidden="true">Golden Rules</span>
-        </div>
-      </div>
-    </section>
-
-    <section class="subjects wrap" id="subjects">
-      <div class="section-head">
-        <h2>รายวิชา</h2>
-      </div>
-      <div class="subject-grid">
-        <a class="subject-card subject-card--network" href="network.html">
-          <div class="subject-card-top">
-            <span class="chip chip--accent">ITDS231</span>
-            <span class="chip">4 บท</span>
-          </div>
-          <h3>Computer Networks</h3>
-          <p class="card-sub">Intro &amp; Topology · Application Layer · Data Link Layer · MAC + Ethernet</p>
-          <p class="card-desc">สรุปเนื้อหาแยกตามไฟล์สไลด์ cheat sheet และแบบฝึกหัดบทละ 20 ข้อพร้อมเฉลย สลับบทได้ที่ต้นหน้าวิชา</p>
-          <div class="card-foot">
-            <span>เนื้อหา · สรุป · แบบฝึกหัด</span>
-            <span class="card-cta">เปิดอ่าน <span class="arrow" aria-hidden="true">→</span></span>
-          </div>
-        </a>
-
-        <a class="subject-card subject-card--web" href="web-intro-html-basics.html">
-          <div class="subject-card-top">
-            <span class="chip chip--accent">ITDS241</span>
-            <span class="chip">7 บท</span>
-          </div>
-          <h3>Web Technologies and Applications</h3>
-          <p class="card-sub">HTML · CSS · JavaScript · ECMAScript</p>
-          <p class="card-desc">ตั้งแต่อินเทอร์เน็ตและ HTML พื้นฐาน ผ่าน CSS และ responsive layout ไปจนถึง JavaScript, OOP, DOM และฟีเจอร์ของ ECMAScript แต่ละรุ่น อธิบายละเอียดพร้อมผลลัพธ์จริงของโค้ดตัวอย่าง cheat sheet แบบฝึกหัดบทละ 20 ข้อ และโจทย์เขียนโค้ดที่ตรวจให้อัตโนมัติ</p>
-          <div class="card-foot">
-            <span>เนื้อหา · สรุป · แบบฝึกหัด · เขียนโค้ด</span>
-            <span class="card-cta">เปิดอ่าน <span class="arrow" aria-hidden="true">→</span></span>
-          </div>
-        </a>
-
-
-        <a class="subject-card subject-card--se" href="se-foundation-pm.html">
-          <div class="subject-card-top">
-            <span class="chip chip--accent">ITDS261</span>
-            <span class="chip">6 บท + Midterm</span>
-          </div>
-          <h3>Introduction to Software Engineering</h3>
-          <p class="card-sub">SE &amp; Project Management · Process Models · Requirements · Use Case · DFD · UI Design</p>
-          <p class="card-desc">ตั้งแต่พื้นฐานวิศวกรรมซอฟต์แวร์และการบริหารโปรเจกต์ process model แบบต่างๆ requirement engineering ไปจนถึงการวิเคราะห์ด้วย use case และ data flow diagram และหลักการออกแบบ UI พร้อม cheat sheet แบบฝึกโต้ตอบ และแบบฝึกหัดบทละ 20 ข้อ · มีหน้า <strong>เตรียมสอบ Midterm</strong> สำหรับฝึกวาด use case diagram และ context DFD ทีละขั้น</p>
-          <div class="card-foot">
-            <span>เนื้อหา · สรุป · แบบฝึกหัด</span>
-            <span class="card-cta">เปิดอ่าน <span class="arrow" aria-hidden="true">→</span></span>
-          </div>
-        </a>
-
-        <div class="add-slot">
-          <span class="plus" aria-hidden="true">+</span>
-          <strong>เพิ่มวิชาใหม่</strong>
-          <span>สร้างหน้า .html ของวิชาแล้วเพิ่มการ์ดตรงนี้</span>
-        </div>
-      </div>
-    </section>
-  </main>
-
-  <footer class="site-footer">
-    <div class="wrap">
-      <p>ทำไว้ทบทวนเอง — เพิ่มวิชาและสไลด์ได้เรื่อยๆ ตามที่เรียน</p>
-    </div>
-  </footer>
-</body>
-</html>
+<a class="skip-link" href="#main">ข้ามไปเนื้อหา</a><div class="mobile-shade" id="mobile-shade"></div>
+<aside class="sidebar" id="sidebar" aria-label="การนำทางหลัก"></aside>
+<div class="workspace"><header class="topbar" id="topbar"></header><main id="main" tabindex="-1"></main><footer class="footer"><span>โต๊ะทบทวน / ITDS241</span><span>อ่านทีละเรื่อง เข้าใจทีละนิด</span></footer></div>
+<dialog id="search-dialog" aria-labelledby="search-title"><div class="search-head"><label id="search-title" for="search-input">ค้นหาในโต๊ะทบทวน</label><button class="icon-button" data-action="close-search" aria-label="ปิดการค้นหา">✕</button></div><input id="search-input" type="search" placeholder="เช่น closure, const, array, DOM..." autocomplete="off"><div id="search-results" aria-live="polite"></div><p class="dialog-foot">ค้นหาบทเรียน สรุป แบบฝึกหัด และ cheatsheet · Esc เพื่อปิด</p></dialog>
+<dialog id="reset-dialog" aria-labelledby="reset-title"><div class="dialog-body"><h2 id="reset-title">เริ่มบันทึกใหม่ในเครื่องนี้?</h2><p>ล้างสถานะอ่าน คำตอบ โค้ดที่แก้ โน้ต และบุ๊กมาร์กของโต๊ะทบทวน เอกสารและบทเรียนยังเปิดได้เหมือนเดิม</p><div class="button-row"><button class="button" data-action="cancel-reset">เก็บบันทึกไว้</button><button class="button danger" data-action="confirm-reset">ล้างบันทึกของเว็บนี้</button></div></div></dialog>
+<div class="toast" id="toast" role="status"></div>
+<noscript><p class="noscript">เปิด JavaScript เพื่อใช้บทเรียนและแบบฝึกหัด หรือเปิด PDF ในโฟลเดอร์ materials เพื่ออ่านเอกสารต้นฉบับ</p></noscript>
+</body></html>
