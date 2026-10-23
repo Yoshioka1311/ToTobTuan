@@ -13,6 +13,7 @@
 
 - **ฝึกทีละข้อ** รอบละ 3 หรือ 5 ข้อ เลือกบทและหัวข้อได้ ตรวจหลังเลือกคำตอบ ไม่มีตัวจับเวลา พักแล้วกลับมาทำต่อได้ แม้เปิดวิชาอื่นระหว่างทาง
 - **ข้อสอบรวม** ทำทั้งบทหรือทุกบทในวิชาเดียวกันในหน้าเดียว มีสารบัญและตรวจข้อที่ตอบแล้วพร้อมกัน ล้างคำตอบเฉพาะข้อสอบที่เปิดได้โดยยืนยันก่อน
+- **ทำข้อสอบรายบท** ปุ่มแยกที่หน้าวิชาและเมนูด้านข้าง เปิดรายการบทแล้วเลือกทำได้ทันที แต่ละบทรวมคำถามเดิมทุกชุดเป็นข้อสอบเดียว เลขข้อเรียงต่อเนื่อง ไม่มีป้ายหรือการเลือกชุด มีปุ่มไปบทก่อนหน้า/ถัดไป และใช้คำตอบเดิมร่วมกับหน้าข้อสอบรวม
 - **คำถามตัวใหญ่** เริ่มที่ 34px เลือก 28 / 34 / 42 / 50px ได้ ขนาดบันทึกไว้ในเครื่อง ตัวเลือกอ่านได้บนมือถือและใช้คีย์บอร์ดเลือกได้
 - **ทบทวน** ข้อที่ถึงกำหนดมาก่อน ตามด้วยข้อที่เคยตอบผิดและข้อใหม่ ตอบผิด ข้าม หรือใช้คำใบ้จะนัดทวนใน 10 นาที ตอบถูกเองเว้น 1 / 3 / 7 วันตามรอบ ฝึกซ้ำก่อนกำหนดได้โดยไม่เพิ่มขั้น ผลฝึกแยกจากคะแนนข้อสอบ
 
@@ -55,4 +56,4 @@ PDF เต็ม 12 ไฟล์เก็บใน `materials/` เฉพาะ�
 
 Browser checks ใช้ Playwright และ Edge ที่ติดตั้งอยู่แล้ว กำหนด `STUDY_PLAYWRIGHT` เป็นพาธแพ็กเกจ และ `STUDY_BROWSER` เป็นพาธ browser executable ได้หากไม่ได้ใช้ bundled runtime ไม่เพิ่ม dependency ให้เว็บ
 
-แยกรันได้ด้วย `node --test tests/content.test.cjs tests/study-memory.test.cjs tests/subjects.test.cjs` หรือ `node tests/browser.test.cjs`, `node tests/exams.test.cjs`, `node tests/coach.test.cjs`, `node tests/desk.test.cjs`, `node tests/migration.test.cjs`
+แยกรันได้ด้วย `node --test tests/content.test.cjs tests/study-memory.test.cjs tests/subjects.test.cjs` หรือ `node tests/browser.test.cjs`, `node tests/exams.test.cjs`, `node tests/chapter-exams.test.cjs`, `node tests/coach.test.cjs`, `node tests/desk.test.cjs`, `node tests/migration.test.cjs`

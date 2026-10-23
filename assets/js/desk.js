@@ -60,7 +60,7 @@
  function shell(){
   const s=active(),quiet=route.kind==='train'&&state.training?.subject===s.id;
   document.body.classList.toggle('quiet',quiet);
-  $('#sidebar').innerHTML=`<a class="brand" href="#/home"><img src="assets/favicon.svg" width="34" height="34" alt=""><span>โต๊ะทบทวน</span></a><a class="subject-switch" href="#/home">← เปลี่ยนวิชา</a><div class="side-subject"><small>${s.code}</small><strong>${s.title}</strong></div><nav aria-label="เมนูวิชา"><a href="#/subject/${s.id}" ${route.kind==='subject'?'aria-current="page"':''}>บทเรียน</a><a href="#/train/${s.id}" ${route.kind==='train'?'aria-current="page"':''}>ฝึกทีละข้อ</a><a href="#/practice/${s.id}" ${route.kind==='practice'?'aria-current="page"':''}>ข้อสอบรวม</a>${s.id==='itds241'?'<a href="#/reference">Cheatsheet</a>':''}<a href="#/library/${s.id}">เอกสาร</a></nav><div class="side-chapters">${D.groups.filter(g=>g.subject===s.id).map(g=>`<a href="#/practice/${g.id}">${esc(g.short)}</a>`).join('')}</div><div class="storage-note">${storageOK?'บันทึกในเครื่อง':'บันทึกชั่วคราว'}</div>`;
+  $('#sidebar').innerHTML=`<a class="brand" href="#/home"><img src="assets/favicon.svg" width="34" height="34" alt=""><span>โต๊ะทบทวน</span></a><a class="subject-switch" href="#/home">← เปลี่ยนวิชา</a><div class="side-subject"><small>${s.code}</small><strong>${s.title}</strong></div><nav aria-label="เมนูวิชา"><a href="#/subject/${s.id}" ${route.kind==='subject'?'aria-current="page"':''}>บทเรียน</a><a href="#/train/${s.id}" ${route.kind==='train'?'aria-current="page"':''}>ฝึกทีละข้อ</a><a href="#/exams/${s.id}" ${['exam','exams'].includes(route.kind)?'aria-current="page"':''}>ข้อสอบรายบท</a><a href="#/practice/${s.id}" ${route.kind==='practice'?'aria-current="page"':''}>ข้อสอบรวม</a>${s.id==='itds241'?'<a href="#/reference">Cheatsheet</a>':''}<a href="#/library/${s.id}">เอกสาร</a></nav><div class="side-chapters">${D.groups.filter(g=>g.subject===s.id).map(g=>`<a href="#/exam/${g.id}">${esc(g.short)}</a>`).join('')}</div><div class="storage-note">${storageOK?'บันทึกในเครื่อง':'บันทึกชั่วคราว'}</div>`;
   $('#topbar').innerHTML=`<div class="top-location"><button class="icon-button mobile-menu" data-action="menu" aria-label="เปิดเมนู" aria-expanded="false">☰</button><a href="#/home">โต๊ะทบทวน</a><span>/</span><a href="#/subject/${s.id}">${s.code}</a></div><div class="top-tools"><button class="icon-button" data-action="search" aria-label="ค้นหา">⌕</button><button class="icon-button" data-action="theme" aria-label="สลับโหมดกลางคืน">${state.theme==='night'?'☀':'☾'}</button></div>`;
   $('.footer').innerHTML=`<span>โต๊ะทบทวน · ${s.code}</span><button class="text-button" data-action="export">สำรองบันทึก ↓</button>`;
  }
@@ -72,14 +72,21 @@
  }
  function subjectView(s){
   const groups=D.groups.filter(g=>g.subject===s.id);
-  return `<header class="page-head"><span class="eyebrow">${s.code}</span><h1>${s.title}</h1><div class="button-row"><a class="button primary" href="#/train/${s.id}">ฝึก 3 ข้อ →</a><a class="button" href="#/practice/${s.id}">ข้อสอบรวม</a></div></header><div class="chapter-grid">${groups.map((g,i)=>{
+  return `<header class="page-head"><span class="eyebrow">${s.code}</span><h1>${s.title}</h1><div class="button-row"><a class="button primary" href="#/train/${s.id}">ฝึก 3 ข้อ →</a><a class="button" href="#/exams/${s.id}">ทำข้อสอบรายบท</a><a class="button" href="#/practice/${s.id}">ข้อสอบรวม</a></div></header><div class="chapter-grid">${groups.map((g,i)=>{
    const ts=D.topics.filter(t=>t.group===g.id),count=ts.reduce((n,t)=>n+t.questions.length,0);
-   return `<article class="chapter-card"><span class="chapter-number">${String(i+1).padStart(2,'0')}</span><div><h2>${esc(g.short)}</h2><p>${count} ข้อ · PDF ${g.pages} หน้า</p><div class="chapter-links"><a href="${ts.length===1?'#/lesson/'+ts[0].id:'#/summary/'+g.id}">อ่านสรุป</a><a href="#/practice/${g.id}">ทำข้อสอบ →</a></div></div></article>`;
+   return `<article class="chapter-card"><span class="chapter-number">${String(i+1).padStart(2,'0')}</span><div><h2>${esc(g.short)}</h2><p>${count} ข้อ · PDF ${g.pages} หน้า</p><div class="chapter-links"><a href="${ts.length===1?'#/lesson/'+ts[0].id:'#/summary/'+g.id}">อ่านสรุป</a><a href="#/exam/${g.id}">ทำข้อสอบ →</a></div></div></article>`;
+  }).join('')}</div>`;
+ }
+ function chapterExams(){
+  const s=active(),chapters=D.groups.filter(g=>g.subject===s.id);
+  return `<header class="page-head"><span class="eyebrow">${s.code}</span><h1>ข้อสอบรายบท</h1></header><div class="chapter-grid">${chapters.map((g,i)=>{
+   const scope=scopeFor(g.id),count=scope.topics.reduce((n,t)=>n+t.questions.length,0);
+   return `<article class="chapter-card exam-chapter-card" data-chapter="${g.id}"><span class="chapter-number">${String(i+1).padStart(2,'0')}</span><div><h2>${esc(g.short)}</h2><p class="chapter-exam-count">${count} ข้อ</p><p class="chapter-exam-score">${score(scope)}</p><a class="button primary small" href="#/exam/${g.id}">เริ่มข้อสอบ →</a></div></article>`;
   }).join('')}</div>`;
  }
  function lesson(t,full=false){
   const body=full?t.sections.map((s,i)=>`<section class="reading-section"><h2>${esc(s.title)}</h2><p>${esc(s.body)}</p>${code(s.code)}${s.from?pdfLink(t,s.from,s.to):''}</section>`).join(''):`<ul class="takeaways">${t.takeaways.map(x=>`<li>${esc(x)}</li>`).join('')}</ul><div class="concept-list">${t.sections.map(s=>`<details><summary>${esc(s.title)}</summary><p>${esc(s.body)}</p>${code(s.code)}${s.from?pdfLink(t,s.from,s.to):''}</details>`).join('')}</div>`;
-  return `<header class="page-head"><span class="eyebrow">${active().code} · ${esc(t.english)}</span><h1>${esc(t.title)}</h1><div class="lesson-tools">${pdfLink(t)}<button class="text-button" data-action="bookmark" data-id="${t.id}" aria-pressed="${state.bookmarks.includes(t.id)}">${state.bookmarks.includes(t.id)?'★ เก็บไว้แล้ว':'☆ เก็บไว้อ่าน'}</button></div></header><nav class="tabs" aria-label="เนื้อหาบทเรียน"><a href="#/lesson/${t.id}/short" ${!full?'aria-current="page"':''}>สรุป</a><a href="#/lesson/${t.id}/read" ${full?'aria-current="page"':''}>เนื้อหา</a><a href="#/practice/${t.group}/${t.id}">ข้อสอบ</a></nav><article class="reading">${body}${full&&t.example?`<details class="example"><summary>${esc(t.example.title)}</summary>${code(t.example.code)}<p>${esc(t.example.expected)}</p></details>`:''}${t.pitfall?`<details class="source-note"><summary>จุดที่ควรระวัง</summary><p>${esc(t.pitfall)}</p></details>`:''}<div class="lesson-bottom"><button class="button" data-action="read" data-id="${t.id}" aria-pressed="${state.read.includes(t.id)}">${state.read.includes(t.id)?'✓ อ่านแล้ว':'ทำเครื่องหมายอ่านแล้ว'}</button><a class="button primary" href="#/train/${t.group}">ฝึก 3 ข้อ →</a></div></article>`;
+  return `<header class="page-head"><span class="eyebrow">${active().code} · ${esc(t.english)}</span><h1>${esc(t.title)}</h1><div class="lesson-tools">${pdfLink(t)}<button class="text-button" data-action="bookmark" data-id="${t.id}" aria-pressed="${state.bookmarks.includes(t.id)}">${state.bookmarks.includes(t.id)?'★ เก็บไว้แล้ว':'☆ เก็บไว้อ่าน'}</button></div></header><nav class="tabs" aria-label="เนื้อหาบทเรียน"><a href="#/lesson/${t.id}/short" ${!full?'aria-current="page"':''}>สรุป</a><a href="#/lesson/${t.id}/read" ${full?'aria-current="page"':''}>เนื้อหา</a><a href="#/exam/${t.group}/${t.id}">ข้อสอบ</a></nav><article class="reading">${body}${full&&t.example?`<details class="example"><summary>${esc(t.example.title)}</summary>${code(t.example.code)}<p>${esc(t.example.expected)}</p></details>`:''}${t.pitfall?`<details class="source-note"><summary>จุดที่ควรระวัง</summary><p>${esc(t.pitfall)}</p></details>`:''}<div class="lesson-bottom"><button class="button" data-action="read" data-id="${t.id}" aria-pressed="${state.read.includes(t.id)}">${state.read.includes(t.id)?'✓ อ่านแล้ว':'ทำเครื่องหมายอ่านแล้ว'}</button><a class="button primary" href="#/train/${t.group}">ฝึก 3 ข้อ →</a></div></article>`;
  }
  function summaries(id){
   const ts=scopedTopics().filter(t=>!id||id==='all'||t.group===id||t.id===id);
@@ -99,15 +106,18 @@
  function choices(q,value,name,disabled=false){return `<div class="options">${q.options.map((op,i)=>`<label class="option"><input type="radio" name="${esc(name)}" value="${i}" ${value===op?'checked':''} ${disabled?'disabled':''}><span class="choice-letter">${'ABCD'[i]}</span><span>${esc(op)}</span></label>`).join('')}</div>`;}
  function question(q,t,number){
   const a=state.answers[q.id]||{};
-  return `<section class="question" data-question="${q.id}" id="question-${t.id}-${q.id.split(':')[1]}"><div class="question-meta"><span>ข้อ ${number}</span><span class="difficulty ${q.level}">${levels[q.level]}</span><span>ชุด ${q.set}</span></div><fieldset><legend class="question-prompt">${esc(q.prompt)}</legend>${code(q.code)}${choices(q,a.response,q.id)}</fieldset><div class="question-actions"><button class="button small" data-action="check" data-key="${q.id}" ${q.options.includes(a.response)?'':'disabled'}>ตรวจคำตอบ</button>${pdfLink(t,q.from,q.to)}</div>${feedback(q,a)}</section>`;
+  return `<section class="question" data-question="${q.id}" id="question-${t.id}-${q.id.split(':')[1]}"><div class="question-meta"><span>ข้อ ${number}</span><span class="difficulty ${q.level}">${levels[q.level]}</span></div><fieldset><legend class="question-prompt">${esc(q.prompt)}</legend>${code(q.code)}${choices(q,a.response,q.id)}</fieldset><div class="question-actions"><button class="button small" data-action="check" data-key="${q.id}" ${q.options.includes(a.response)?'':'disabled'}>ตรวจคำตอบ</button>${pdfLink(t,q.from,q.to)}</div>${feedback(q,a)}</section>`;
  }
  function score(scope){
   const qs=scope.topics.flatMap(t=>t.questions),checked=qs.filter(q=>state.answers[q.id]?.revealed&&q.options.includes(state.answers[q.id]?.response)),correct=checked.filter(q=>state.answers[q.id].response===q.options[q.correct]);
   return `ถูก ${correct.length} / ตรวจแล้ว ${checked.length} · ทั้งหมด ${qs.length} ข้อ`;
  }
- function exams(scope){
+ function exams(scope,chapterMode=false){
   let n=0;
-  return `<header class="page-head"><span class="eyebrow">${active().code} · MULTIPLE CHOICE</span><h1>${esc(scope.title)}</h1></header><div class="exam-controls"><label>บทที่ทำ<select id="exam-scope"><option value="${active().id}" ${scope.id===active().id?'selected':''}>ทุกบท</option>${D.groups.filter(g=>g.subject===active().id).map(g=>`<option value="${g.id}" ${scope.id===g.id?'selected':''}>${esc(g.title)}</option>`).join('')}</select></label>${sizeControl()}<a class="button" href="#/train/${group(scope.id)?scope.id:active().id}">ฝึกทีละข้อ →</a></div><details class="exam-outline"><summary>สารบัญข้อสอบ</summary><div>${scope.topics.map(t=>`<a href="#/practice/${scope.id}/${t.id}" data-action="jump" data-id="${t.id}">${esc(t.title)}</a>`).join('')}</div></details><div class="exam-toolbar"><span id="exam-score" role="status">${score(scope)}</span><button class="button primary small" data-action="check-all">ตรวจข้อที่ตอบแล้ว</button></div><div class="exam-questions">${scope.topics.map(t=>`<section class="exam-topic" id="exam-topic-${t.id}"><div class="exam-topic-head"><h2>${esc(t.title)}</h2><a href="#/lesson/${t.id}">ทวนสรุป ↗</a></div>${t.questions.map(q=>question(q,t,++n)).join('')}</section>`).join('')}</div><div class="lesson-bottom"><button class="text-button" data-action="reset-exam">เริ่มข้อสอบนี้ใหม่</button></div>`;
+  const chapters=D.groups.filter(g=>g.subject===active().id),position=chapters.findIndex(g=>g.id===scope.id),prefix=chapterMode?'exam':'practice';
+  const next=chapters[position+1],previous=chapters[position-1];
+  const navigation=chapterMode?`<nav class="chapter-exam-navigation" aria-label="เปลี่ยนบทข้อสอบ">${previous?`<a class="button chapter-previous" href="#/exam/${previous.id}">← บทก่อนหน้า</a>`:''}${next?`<a class="button chapter-next" href="#/exam/${next.id}">บทถัดไป →</a>`:''}</nav>`:'';
+  return `<header class="page-head">${chapterMode?`<a class="back-to-exams" href="#/exams/${active().id}">← เลือกบทข้อสอบ</a>`:''}<span class="eyebrow">${active().code} · ${chapterMode?'ข้อสอบรายบท':'MULTIPLE CHOICE'}</span><h1>${esc(scope.title)}</h1></header><div class="exam-controls"><label>บทที่ทำ<select id="exam-scope">${chapterMode?'':`<option value="${active().id}" ${scope.id===active().id?'selected':''}>ทุกบท</option>`}${chapters.map(g=>`<option value="${g.id}" ${scope.id===g.id?'selected':''}>${esc(g.title)}</option>`).join('')}</select></label>${sizeControl()}<a class="button" href="#/train/${group(scope.id)?scope.id:active().id}">ฝึกทีละข้อ →</a></div>${chapterMode&&scope.topics.length===1?'':`<details class="exam-outline"><summary>สารบัญข้อสอบ</summary><div>${scope.topics.map(t=>`<a href="#/${prefix}/${scope.id}/${t.id}" data-action="jump" data-id="${t.id}">${esc(t.title)}</a>`).join('')}</div></details>`}<div class="exam-toolbar"><span id="exam-score" role="status">${score(scope)}</span><button class="button primary small" data-action="check-all">ตรวจข้อที่ตอบแล้ว</button></div><div class="exam-questions">${scope.topics.map(t=>`<section class="exam-topic" id="exam-topic-${t.id}"><div class="exam-topic-head"><h2>${esc(t.title)}</h2><a href="#/lesson/${t.id}">ทวนสรุป ↗</a></div>${t.questions.map(q=>question(q,t,++n)).join('')}</section>`).join('')}</div><div class="lesson-bottom"><button class="text-button" data-action="reset-exam">เริ่มข้อสอบนี้ใหม่</button></div>${navigation}`;
  }
  function trainingSetup(requested){
   const fallback=D.groups.find(g=>g.subject===active().id),pref=state.coachPrefs||{},selected=group(requested)?.subject===active().id?group(requested):group(pref.source)?.subject===active().id?group(pref.source):fallback;
@@ -144,6 +154,8 @@
   let html,title;
   if(kind==='home'){html=home();title='เลือกวิชา';}
   else if(kind==='subject'){html=subjectView(active());title=active().title;}
+  else if(kind==='exams'){html=chapterExams();title='ข้อสอบรายบท';}
+  else if(kind==='exam'&&(group(id)||topic(id))){route.scope=scopeFor(id);html=exams(route.scope,true);title='ข้อสอบรายบท · '+route.scope.title;}
   else if(kind==='lesson'&&topic(id)){html=lesson(topic(id),parts[2]==='read');title=topic(id).title;}
   else if(kind==='practice'){route.scope=scopeFor(id);html=exams(route.scope);title='ข้อสอบ · '+route.scope.title;}
   else if(kind==='train'){html=training(id);title='ฝึกทีละข้อ';}
@@ -153,7 +165,7 @@
   else{html='<h1>ไม่พบหน้านี้</h1><a href="#/home">กลับเลือกวิชา →</a>';title='ไม่พบหน้า';}
   settings();shell();$('#main').innerHTML=`<div class="page">${html}</div>`;$('#main').dataset.route=location.hash;document.title=title+' · โต๊ะทบทวน';
   document.body.classList.remove('nav-open');window.scrollTo({top:0,behavior:'instant'});$('#main').focus({preventScroll:true});
-  if(kind==='practice'){
+  if(kind==='practice'||kind==='exam'){
    let anchor=parts[2];
    if(topic(id)&&!group(id)){anchor=id;if(/^\d+$/.test(parts[2]||''))anchor='question-'+id+'-'+Math.max(0,(Number(parts[2])-1)*3);}
    if(anchor)document.getElementById(anchor.startsWith('question-')?anchor:'exam-topic-'+anchor)?.scrollIntoView({block:'start'});
@@ -205,7 +217,7 @@
  document.addEventListener('change',event=>{
   const e=event.target;
   if(e.matches('.question-size')){state.questionFont=Math.max(24,Math.min(52,Number(e.value)||34));save();settings();return;}
-  if(e.id==='exam-scope'){location.hash='#/practice/'+e.value;return;}
+  if(e.id==='exam-scope'){location.hash='#/'+(route.kind==='exam'?'exam':'practice')+'/'+e.value;return;}
   if(e.id==='coach-source'){
    const ts=D.topics.filter(t=>t.group===e.value);$('#coach-topic').innerHTML='<option value="all">ทุกหัวข้อในบท</option>'+(ts.length>1?ts.map(t=>`<option value="${t.id}">${esc(t.title)}</option>`).join(''):'');return;
   }
