@@ -7,12 +7,14 @@
  const subject=id=>D.subjects.find(s=>s.id===id),group=id=>D.groups.find(g=>g.id===id),topic=id=>D.topics.find(t=>t.id===id);
  const levels={easy:'ง่าย',medium:'กลาง',hard:'ยาก'};
  const defaults=()=>({choiceVersion:1,read:[],bookmarks:[],answers:{},notes:{},drafts:{},review:{},training:null,last:'runtime',theme:'paper',font:18,questionFont:34,activeSubject:'itds211',coachPrefs:{source:'ca01',topic:'all',size:3}});
- let state=defaults(),storageOK=true,route={},notice='',resetScope=null,timer;
+ let state=defaults(),storageOK=true,route={},notice='',resetScope=null,timer,lastRenderedHash=null;
+ const openedExams=new Set();
  try{
   const saved=JSON.parse(localStorage.getItem(KEY)||'null');
   if(saved&&typeof saved==='object'&&!Array.isArray(saved)){
    state={...state,...saved};
    for(const key of ['answers','notes','drafts','review'])if(!state[key]||typeof state[key]!=='object'||Array.isArray(state[key]))state[key]={};
+   if(!state.examRuns||typeof state.examRuns!=='object'||Array.isArray(state.examRuns))state.examRuns={};
    if(saved.choiceVersion!==1){
     state.legacyWrittenAnswers=state.legacyWrittenAnswers&&typeof state.legacyWrittenAnswers==='object'&&!Array.isArray(state.legacyWrittenAnswers)?state.legacyWrittenAnswers:{};
     state.legacyReview=state.legacyReview&&typeof state.legacyReview==='object'&&!Array.isArray(state.legacyReview)?state.legacyReview:{};
@@ -58,7 +60,7 @@
  function pdfLink(t,from=t.from||1,to=t.to||from){return `<a class="source-link" href="${esc(t.pdf)}#page=${from}" target="_blank" rel="noopener">PDF หน้า ${from}${to!==from?'–'+to:''} ↗</a>`;}
  function code(value){return value?`<pre class="code-block"><code>${esc(value)}</code></pre>`:'';}
  function shell(){
-  const s=active(),quiet=route.kind==='train'&&state.training?.subject===s.id;
+  const s=active(),quiet=['exam','practice'].includes(route.kind)||(route.kind==='train'&&state.training?.subject===s.id);
   document.body.classList.toggle('quiet',quiet);
   $('#sidebar').innerHTML=`<a class="brand" href="#/home"><img src="assets/favicon.svg" width="34" height="34" alt=""><span>โต๊ะทบทวน</span></a><a class="subject-switch" href="#/home">← เปลี่ยนวิชา</a><div class="side-subject"><small>${s.code}</small><strong>${s.title}</strong></div><nav aria-label="เมนูวิชา"><a href="#/subject/${s.id}" ${route.kind==='subject'?'aria-current="page"':''}>บทเรียน</a><a href="#/train/${s.id}" ${route.kind==='train'?'aria-current="page"':''}>ฝึกทีละข้อ</a><a href="#/exams/${s.id}" ${['exam','exams'].includes(route.kind)?'aria-current="page"':''}>ข้อสอบรายบท</a><a href="#/practice/${s.id}" ${route.kind==='practice'?'aria-current="page"':''}>ข้อสอบรวม</a>${s.id==='itds241'?'<a href="#/reference">Cheatsheet</a>':''}<a href="#/library/${s.id}">เอกสาร</a></nav><div class="side-chapters">${D.groups.filter(g=>g.subject===s.id).map(g=>`<a href="#/exam/${g.id}">${esc(g.short)}</a>`).join('')}</div><div class="storage-note">${storageOK?'บันทึกในเครื่อง':'บันทึกชั่วคราว'}</div>`;
   $('#topbar').innerHTML=`<div class="top-location"><button class="icon-button mobile-menu" data-action="menu" aria-label="เปิดเมนู" aria-expanded="false">☰</button><a href="#/home">โต๊ะทบทวน</a><span>/</span><a href="#/subject/${s.id}">${s.code}</a></div><div class="top-tools"><button class="icon-button" data-action="search" aria-label="ค้นหา">⌕</button><button class="icon-button" data-action="theme" aria-label="สลับโหมดกลางคืน">${state.theme==='night'?'☀':'☾'}</button></div>`;
@@ -103,21 +105,47 @@
   const correct=a.response===q.options[q.correct];
   return `<div class="feedback ${correct?'correct':'incorrect'}" role="status"><strong>${correct?'✓ ถูกต้อง':'ยังไม่ตรง'}</strong>${correct?'':`<p>คำตอบ: ${esc(q.options[q.correct])}</p>`}<p>${esc(q.explanation)}</p></div>`;
  }
- function choices(q,value,name,disabled=false){return `<div class="options">${q.options.map((op,i)=>`<label class="option"><input type="radio" name="${esc(name)}" value="${i}" ${value===op?'checked':''} ${disabled?'disabled':''}><span class="choice-letter">${'ABCD'[i]}</span><span>${esc(op)}</span></label>`).join('')}</div>`;}
- function question(q,t,number){
+ function choices(q,value,name,disabled=false,order=q.options.map((_,i)=>i)){return `<div class="options">${order.map((index,i)=>`<label class="option"><input type="radio" name="${esc(name)}" value="${index}" ${value===q.options[index]?'checked':''} ${disabled?'disabled':''}><span class="choice-letter">${'ABCD'[i]}</span><span>${esc(q.options[index])}</span></label>`).join('')}</div>`;}
+ function question(q,t,number,optionOrder){
   const a=state.answers[q.id]||{};
-  return `<section class="question" data-question="${q.id}" id="question-${t.id}-${q.id.split(':')[1]}"><div class="question-meta"><span>ข้อ ${number}</span><span class="difficulty ${q.level}">${levels[q.level]}</span></div><fieldset><legend class="question-prompt">${esc(q.prompt)}</legend>${code(q.code)}${choices(q,a.response,q.id)}</fieldset><div class="question-actions"><button class="button small" data-action="check" data-key="${q.id}" ${q.options.includes(a.response)?'':'disabled'}>ตรวจคำตอบ</button>${pdfLink(t,q.from,q.to)}</div>${feedback(q,a)}</section>`;
+  return `<section class="question" data-question="${q.id}" id="question-${t.id}-${q.id.split(':')[1]}"><div class="question-meta"><span>ข้อ ${number}</span><span class="difficulty ${q.level}">${levels[q.level]}</span></div><fieldset><legend class="question-prompt">${esc(q.prompt)}</legend>${code(q.code)}${choices(q,a.response,q.id,false,optionOrder)}</fieldset><div class="question-actions"><button class="button primary" data-action="check" data-key="${q.id}" ${q.options.includes(a.response)?'':'disabled'}>ตอบข้อนี้</button>${pdfLink(t,q.from,q.to)}</div>${feedback(q,a)}</section>`;
  }
  function score(scope){
   const qs=scope.topics.flatMap(t=>t.questions),checked=qs.filter(q=>state.answers[q.id]?.revealed&&q.options.includes(state.answers[q.id]?.response)),correct=checked.filter(q=>state.answers[q.id].response===q.options[q.correct]);
   return `ถูก ${correct.length} / ตรวจแล้ว ${checked.length} · ทั้งหมด ${qs.length} ข้อ`;
  }
+ function examRun(scope,restart=false){
+  state.examRuns=state.examRuns||{};
+  if(restart||!openedExams.has(scope.id)){
+   const items=scope.topics.flatMap(t=>t.questions.map(q=>({key:q.id,optionCount:q.options.length})));
+   state.examRuns[scope.id]=window.ExamSession.create(items,state.examRuns[scope.id]);
+   if(restart)state.examRuns[scope.id].position=0;
+   openedExams.add(scope.id);save();
+  }
+  return state.examRuns[scope.id];
+ }
+ function questionNumbers(scope){
+  const run=examRun(scope);
+  return run.order.map((key,i)=>{
+   const item=lookup.get(key),a=state.answers[key],answered=item.q.options.includes(a?.response),checked=answered&&a.revealed,current=i===run.position;
+   const status=checked?(a.response===item.q.answer?'correct':'incorrect'):answered?'answered':'';
+   return `<button class="exam-number ${answered?'answered':''} ${status}" data-action="exam-go" data-position="${i}" data-key="${key}" ${current?'aria-current="step"':''} aria-label="ข้อ ${i+1}${current?' กำลังทำ':''}${checked?' ตรวจแล้ว':answered?' ตอบแล้ว':' ยังไม่ตอบ'}">${i+1}</button>`;
+  }).join('');
+ }
+ function examProgress(scope){const run=examRun(scope),answered=run.order.filter(key=>lookup.get(key).q.options.includes(state.answers[key]?.response)).length;return `ข้อ ${run.position+1} / ${run.order.length} · ตอบแล้ว ${answered} ข้อ`;}
+ function updateExamStatus(){
+  $('#exam-score').textContent=score(route.scope);$('#exam-progress').textContent=examProgress(route.scope);$('#exam-number-grid').innerHTML=questionNumbers(route.scope);
+  revealExamNumber();
+ }
+ function revealExamNumber(){
+  const grid=$('#exam-number-grid'),button=$('.exam-number[aria-current=step]');if(!grid||!button)return;
+  const box=grid.getBoundingClientRect(),item=button.getBoundingClientRect();
+  if(item.top<box.top+4)grid.scrollTop-=box.top+4-item.top;
+  else if(item.bottom>box.bottom-4)grid.scrollTop+=item.bottom-box.bottom+4;
+ }
  function exams(scope,chapterMode=false){
-  let n=0;
-  const chapters=D.groups.filter(g=>g.subject===active().id),position=chapters.findIndex(g=>g.id===scope.id),prefix=chapterMode?'exam':'practice';
-  const next=chapters[position+1],previous=chapters[position-1];
-  const navigation=chapterMode?`<nav class="chapter-exam-navigation" aria-label="เปลี่ยนบทข้อสอบ">${previous?`<a class="button chapter-previous" href="#/exam/${previous.id}">← บทก่อนหน้า</a>`:''}${next?`<a class="button chapter-next" href="#/exam/${next.id}">บทถัดไป →</a>`:''}</nav>`:'';
-  return `<header class="page-head">${chapterMode?`<a class="back-to-exams" href="#/exams/${active().id}">← เลือกบทข้อสอบ</a>`:''}<span class="eyebrow">${active().code} · ${chapterMode?'ข้อสอบรายบท':'MULTIPLE CHOICE'}</span><h1>${esc(scope.title)}</h1></header><div class="exam-controls"><label>บทที่ทำ<select id="exam-scope">${chapterMode?'':`<option value="${active().id}" ${scope.id===active().id?'selected':''}>ทุกบท</option>`}${chapters.map(g=>`<option value="${g.id}" ${scope.id===g.id?'selected':''}>${esc(g.title)}</option>`).join('')}</select></label>${sizeControl()}<a class="button" href="#/train/${group(scope.id)?scope.id:active().id}">ฝึกทีละข้อ →</a></div>${chapterMode&&scope.topics.length===1?'':`<details class="exam-outline"><summary>สารบัญข้อสอบ</summary><div>${scope.topics.map(t=>`<a href="#/${prefix}/${scope.id}/${t.id}" data-action="jump" data-id="${t.id}">${esc(t.title)}</a>`).join('')}</div></details>`}<div class="exam-toolbar"><span id="exam-score" role="status">${score(scope)}</span><button class="button primary small" data-action="check-all">ตรวจข้อที่ตอบแล้ว</button></div><div class="exam-questions">${scope.topics.map(t=>`<section class="exam-topic" id="exam-topic-${t.id}"><div class="exam-topic-head"><h2>${esc(t.title)}</h2><a href="#/lesson/${t.id}">ทวนสรุป ↗</a></div>${t.questions.map(q=>question(q,t,++n)).join('')}</section>`).join('')}</div><div class="lesson-bottom"><button class="text-button" data-action="reset-exam">เริ่มข้อสอบนี้ใหม่</button></div>${navigation}`;
+  const run=examRun(scope),item=lookup.get(run.order[run.position]);
+  return `<section class="exam-player"><header class="page-head"><a class="back-to-exams" href="#/exams/${active().id}">← เลือกบทข้อสอบ</a><span class="eyebrow">${active().code} · ${chapterMode?'ข้อสอบรายบท':'ข้อสอบรวม'}</span><h1>${esc(scope.title)}</h1></header><div class="player-tools"><span id="exam-progress" role="status">${examProgress(scope)}</span>${sizeControl()}<button class="text-button" data-action="reset-exam">เริ่มใหม่ ↻</button></div><div class="exam-player-layout"><div class="exam-current">${question(item.q,item.t,run.position+1,run.options[item.key])}<nav class="exam-step-controls" aria-label="เปลี่ยนข้อ"><button class="button" data-action="exam-prev" ${run.position===0?'disabled':''}>← ข้อก่อนหน้า</button><button class="button primary" data-action="exam-next" ${run.position===run.order.length-1?'disabled':''}>ข้อถัดไป →</button></nav><div class="exam-toolbar"><span id="exam-score" role="status">${score(scope)}</span><button class="text-button" data-action="check-all">ตรวจข้อที่ตอบแล้ว</button></div></div><aside class="exam-question-map"><h2>เลขข้อ</h2><nav id="exam-number-grid" class="exam-number-grid" aria-label="เลือกข้อสอบ">${questionNumbers(scope)}</nav><p>● ตอบแล้ว <span>○ ยังไม่ตอบ</span></p></aside></div></section>`;
  }
  function trainingSetup(requested){
   const fallback=D.groups.find(g=>g.subject===active().id),pref=state.coachPrefs||{},selected=group(requested)?.subject===active().id?group(requested):group(pref.source)?.subject===active().id?group(pref.source):fallback;
@@ -147,6 +175,7 @@
  function reference(){return `<header class="page-head"><span class="eyebrow">ITDS241</span><h1>Cheatsheet</h1><a href="${D.cheatsheet.file}" target="_blank" rel="noopener">PDF เต็ม ↗</a></header><div class="reference-list">${D.reference.map(r=>`<details><summary>${esc(r.title)}</summary><div class="table-scroll"><table><tbody>${r.rows.map(row=>`<tr>${row.map(c=>`<td>${esc(c)}</td>`).join('')}</tr>`).join('')}</tbody></table></div>${code(r.example)}<small>PDF หน้า ${esc(r.pages)}</small></details>`).join('')}</div>`;}
  function render(){
   if($('#search-dialog').open)$('#search-dialog').close();
+  const applyAnchor=lastRenderedHash!==location.hash;lastRenderedHash=location.hash;
   const parts=location.hash.replace(/^#\/?/,'').split('/'),kind=parts[0]||'home',id=parts[1];route={kind,id};
   const linkedSubject=subject(id)||group(id)&&subject(group(id).subject)||topic(id)&&subject(topic(id).subject);
   if(linkedSubject){activate(linkedSubject.id);save();}
@@ -168,7 +197,13 @@
   if(kind==='practice'||kind==='exam'){
    let anchor=parts[2];
    if(topic(id)&&!group(id)){anchor=id;if(/^\d+$/.test(parts[2]||''))anchor='question-'+id+'-'+Math.max(0,(Number(parts[2])-1)*3);}
-   if(anchor)document.getElementById(anchor.startsWith('question-')?anchor:'exam-topic-'+anchor)?.scrollIntoView({block:'start'});
+   if(anchor&&applyAnchor){
+    const run=examRun(route.scope),prefix='question-';
+    const key=anchor.startsWith(prefix)?anchor.slice(prefix.length).replace(/-(\d+)$/,':$1'):null;
+    const at=key?run.order.indexOf(key):run.order.findIndex(k=>lookup.get(k).t.id===anchor);
+    if(at>=0&&at!==run.position){run.position=at;save();$('#main').innerHTML=`<div class="page">${exams(route.scope,kind==='exam')}</div>`;}
+   }
+   revealExamNumber();
   }
  }
  function gradeExam(q){
@@ -194,11 +229,15 @@
   if(a==='menu'){const open=document.body.classList.toggle('nav-open');b.setAttribute('aria-expanded',String(open));return;}
   if(a==='theme'){state.theme=state.theme==='night'?'paper':'night';save();settings();shell();return;}
   if(a==='jump'){event.preventDefault();document.getElementById('exam-topic-'+b.dataset.id)?.scrollIntoView({behavior:'smooth',block:'start'});return;}
-  if(a==='check'){const item=lookup.get(b.dataset.key);if(!item)return;gradeExam(item.q);save();const card=b.closest('.question');card.querySelector('.feedback')?.remove();card.insertAdjacentHTML('beforeend',feedback(item.q,state.answers[item.key]));$('#exam-score').textContent=score(route.scope);return;}
+  if(a==='check'){const item=lookup.get(b.dataset.key);if(!item)return;gradeExam(item.q);save();const card=b.closest('.question');card.querySelector('.feedback')?.remove();card.insertAdjacentHTML('beforeend',feedback(item.q,state.answers[item.key]));updateExamStatus();return;}
+  if(['exam-go','exam-prev','exam-next'].includes(a)){
+   const run=examRun(route.scope),at=a==='exam-go'?Number(b.dataset.position):run.position+(a==='exam-next'?1:-1);
+   if(Number.isInteger(at)&&at>=0&&at<run.order.length){run.position=at;save();render();}return;
+  }
   if(a==='check-all'){route.scope.topics.flatMap(t=>t.questions).forEach(gradeExam);save();const y=scrollY;render();window.scrollTo(0,y);return;}
   if(a==='reset-exam'){resetScope=route.scope;$('#exam-reset-name').textContent=route.scope.title;$('#exam-reset-dialog').showModal();return;}
   if(a==='cancel-exam-reset'){$('#exam-reset-dialog').close();return;}
-  if(a==='confirm-exam-reset'){if(resetScope)resetScope.topics.flatMap(t=>t.questions).forEach(q=>delete state.answers[q.id]);resetScope=null;$('#exam-reset-dialog').close();save();render();return;}
+  if(a==='confirm-exam-reset'){if(resetScope){resetScope.topics.flatMap(t=>t.questions).forEach(q=>delete state.answers[q.id]);examRun(resetScope,true);}resetScope=null;$('#exam-reset-dialog').close();save();render();return;}
   if(a==='bookmark'||a==='read'){const key=a==='read'?'read':'bookmarks',i=state[key].indexOf(b.dataset.id);if(i<0)state[key].push(b.dataset.id);else state[key].splice(i,1);save();const y=scrollY;render();window.scrollTo(0,y);return;}
   if(a==='start'){start(b);return;}
   const r=state.training;
@@ -222,7 +261,7 @@
    const ts=D.topics.filter(t=>t.group===e.value);$('#coach-topic').innerHTML='<option value="all">ทุกหัวข้อในบท</option>'+(ts.length>1?ts.map(t=>`<option value="${t.id}">${esc(t.title)}</option>`).join(''):'');return;
   }
   if(e.matches('.question input[type=radio]')){
-   const card=e.closest('.question'),item=lookup.get(card.dataset.question);state.answers[item.key]={response:item.q.options[Number(e.value)],revealed:false,status:'draft'};card.querySelector('.feedback')?.remove();card.querySelector('[data-action=check]').disabled=false;save();$('#exam-score').textContent=score(route.scope);return;
+   const card=e.closest('.question'),item=lookup.get(card.dataset.question);state.answers[item.key]={response:item.q.options[Number(e.value)],revealed:false,status:'draft'};card.querySelector('.feedback')?.remove();card.querySelector('[data-action=check]').disabled=false;save();updateExamStatus();return;
   }
   if(e.matches('.coach-round input[type=radio]')&&state.training?.phase==='question'){
    const q=lookup.get(state.training.keys[state.training.position]).q;state.training.selection=q.options[Number(e.value)];save();$('[data-action=coach-check]').disabled=false;
