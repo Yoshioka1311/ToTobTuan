@@ -6,7 +6,7 @@ const vm=require('node:vm');
 const root=path.resolve(__dirname,'..');
 function load(){
  const context={window:{}};vm.createContext(context);
- for(const name of ['content.js','questions.js','reference.js','javascript-choices.js','architecture-a.js','architecture-b.js','catalog.js']){
+ for(const name of ['content.js','questions.js','reference.js','javascript-choices.js','architecture-a.js','architecture-b.js','lecture-practice-a.js','lecture-practice-b.js','catalog.js']){
   const file=path.join(root,'assets/js',name);
   assert.ok(fs.existsSync(file),'Subject catalog requires '+name);
   vm.runInContext(fs.readFileSync(file,'utf8'),context,{filename:name});

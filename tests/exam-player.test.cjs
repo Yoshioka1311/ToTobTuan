@@ -7,9 +7,9 @@ const order=p=>p.locator('.exam-number').evaluateAll(els=>els.map(e=>e.dataset.k
   const p=await b.newPage({viewport:{width:1440,height:1000},reducedMotion:'reduce'}),errors=[];p.on('pageerror',e=>errors.push(e.message));
   await go(p,'#/exam/ca01');
   assert.equal(await p.locator('.question').count(),1,'only the current question should be on screen');
-  assert.equal(await p.locator('.exam-number').count(),27);assert.equal(await p.locator('.exam-number[aria-current=step]').textContent(),'1');
+  assert.equal(await p.locator('.exam-number').count(),36);assert.equal(await p.locator('.exam-number[aria-current=step]').textContent(),'1');
   assert.equal(await p.locator('#exam-scope').count(),0);
-  const initial=await order(p);assert.equal(new Set(initial).size,27);
+  const initial=await order(p);assert.equal(new Set(initial).size,36);
   await p.locator('.exam-number').nth(6).click();assert.equal(await p.locator('.question').getAttribute('data-question'),initial[6]);
   assert.equal(await p.locator('.exam-number[aria-current=step]').textContent(),'7');
   const key=initial[6],q=await p.evaluate(k=>window.DESK.items.find(i=>i.key===k).q,key);
@@ -24,7 +24,7 @@ const order=p=>p.locator('.exam-number').evaluateAll(els=>els.map(e=>e.dataset.k
   await p.locator('[data-action=exam-next]').click();assert.equal(await p.locator('.exam-number[aria-current=step]').count(),1);
   await p.locator('[data-action=reset-exam]').click();await p.locator('[data-action=confirm-exam-reset]').click();const restarted=await order(p);assert.ok(restarted.every((v,i)=>v!==refreshed[i]));assert.equal(await p.locator('.exam-number[aria-current=step]').textContent(),'1');
   assert.equal(await p.locator('.exam-number.answered').count(),0);assert.match(await p.locator('#exam-score').textContent(),/ตรวจแล้ว 0/);
-  await go(p,'#/practice/itds211');assert.equal(await p.locator('.question').count(),1);assert.equal(await p.locator('.exam-number').count(),252);
+  await go(p,'#/practice/itds211');assert.equal(await p.locator('.question').count(),1);assert.equal(await p.locator('.exam-number').count(),324);
   await go(p,'#/exam/ca01');await p.locator('.question-size').selectOption('50');
   for(const width of [320,390,768]){await p.setViewportSize({width,height:900});assert.ok(await p.evaluate(()=>document.documentElement.scrollWidth<=innerWidth+1),'overflow '+width);}
   await p.setViewportSize({width:320,height:844});await p.locator('.exam-number').last().click();

@@ -8,7 +8,7 @@ const {launch,go,currentQuestion}=require('./browser-helpers.cjs');
    await go(p,'#/practice/'+id);assert.equal(await p.locator('.question').count(),1);assert.equal(await p.locator('.exam-number').count(),count);assert.equal(await p.locator('textarea').count(),0);
    assert.equal(new Set(await p.locator('.exam-number').evaluateAll(els=>els.map(e=>e.dataset.key))).size,count);
   }
-  await go(p,'#/practice/itds211');assert.equal(await p.locator('.exam-number').count(),252);
+  await go(p,'#/practice/itds211');assert.equal(await p.locator('.exam-number').count(),324);
   console.log('PASS complete exam banks remain available through one-question navigation');
   await go(p,'#/practice/ca01');const q=await currentQuestion(p);
   const card=p.locator('.question');assert.equal(await card.locator('[data-action=check]').isDisabled(),true);
