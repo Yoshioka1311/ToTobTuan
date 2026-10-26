@@ -12,7 +12,7 @@ const order=p=>p.locator('.exam-number').evaluateAll(els=>els.map(e=>e.dataset.k
   for(const c of chapters){
    await go(p,'#/exam/'+c.id);assert.deepEqual((await order(p)).sort(),c.old.sort());
    await go(p,'#/exam/'+c.id+'/lecture');assert.deepEqual((await order(p)).sort(),c.fresh.sort());
-   assert.match(await p.locator('.page-head').textContent(),/แนวคาบทบทวน/);
+   assert.match(await p.locator('.exam-set-switch [aria-current=page]').textContent(),/แนวคาบทบทวน/);
   }
   await go(p,'#/exam/ca01');const old=await currentQuestion(p),oldOrder=await order(p);
   await p.locator('.question input[value="'+old.correct+'"]').check();await p.locator('[data-action=check]').click();
