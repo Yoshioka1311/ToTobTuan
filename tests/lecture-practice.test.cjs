@@ -33,3 +33,20 @@ test('audio adaptations and new style transfers have distinct traceable evidence
   assert.ok(p.anchor&&p.recordingId==='lecture-2026-10-25');assert.ok(['roles','compare','trace','cause','calculate'].includes(p.pattern));
  }
 });
+test('revised lecture practice asks for understanding and explains each possible choice',()=>{
+ const bank=data().LECTURE_PRACTICE;
+ for(const q of bank){
+  assert.equal(q.revision,2,q.id+' must mark rewritten content for saved-attempt migration');
+  assert.ok(['understand','apply','reason'].includes(q.skill),q.id+' needs a thinking objective');
+  assert.ok(q.focus&&q.focus.length<100,q.id);
+  assert.notEqual(q.provenance.pattern,'calculate',q.id+' should not require arithmetic');
+  assert.ok(q.prompt.length<=340,q.id+' prompt should stay concise');
+  assert.equal(q.optionExplanations?.length,4,q.id+' all choices need a reason');
+  assert.ok(q.optionExplanations.every(x=>typeof x==='string'&&x.length>=12),q.id);
+ }
+ for(const topic of new Set(bank.map(q=>q.topic))){
+  const questions=bank.filter(q=>q.topic===topic);
+  for(const level of ['easy','medium','hard'])assert.equal(questions.filter(q=>q.level===level).length,3,topic+' difficulty mix');
+  assert.ok(questions.filter(q=>q.skill!=='understand').length>=6,topic+' should go beyond recall');
+ }
+});
