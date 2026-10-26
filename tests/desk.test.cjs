@@ -15,7 +15,7 @@ const {currentQuestion}=require('./browser-helpers.cjs');
   assert.equal(await p.locator('.chapter-card').count(),8);
   await go(p,'#/practice/ca01');
   assert.equal(await p.locator('textarea').count(),0);
-  assert.equal(await p.locator('.question').count(),1);assert.equal(await p.locator('.exam-number').count(),36);
+  assert.equal(await p.locator('.question').count(),1);assert.equal(await p.locator('.exam-number').count(),27);
   const first=p.locator('.question').first();
   assert.equal(await first.locator('input[type=radio]').count(),4);
   await p.locator('.question-size').selectOption('50');

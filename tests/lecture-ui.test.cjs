@@ -6,7 +6,7 @@ const {launch,go}=require('./browser-helpers.cjs');
   const items=await p.evaluate(()=>['audio-adapted','style-transfer'].map(kind=>window.DESK.items.find(i=>i.q.provenance?.kind===kind)).filter(Boolean));
   assert.equal(items.length,2,'both source classes must reach the learner');
   for(const item of items){
-   await go(p,'#/exam/'+item.source);await p.locator('.exam-number[data-key="'+item.key+'"]').click();
+   await go(p,'#/exam/'+item.source+'/lecture');await p.locator('.exam-number[data-key="'+item.key+'"]').click();
    assert.equal(await p.locator('.question-origin').count(),0,'source explanation appears after attempting');
    await p.locator('.question input[value="'+item.q.correct+'"]').check();await p.locator('[data-action=check]').click();
    assert.match(await p.locator('.feedback').textContent(),/ถูกต้อง/);await p.locator('.question-origin summary').click();
@@ -20,7 +20,7 @@ const {launch,go}=require('./browser-helpers.cjs');
    s.examRuns.ca01={order:base.map(q=>q.id),position:26,options:Object.fromEntries(base.map(q=>[q.id,[0,1,2,3]]))};
    localStorage.setItem('totobtuan.study.v2',JSON.stringify(s));
   });
-  await p.reload();assert.equal(await p.locator('.exam-number').count(),36,'an old saved run must include appended questions');
+  await p.reload();assert.equal(await p.locator('.exam-number').count(),27,'an old saved run must remain in the original bank');
   await p.locator('.exam-number[data-key="ca01:0"]').click();assert.match(await p.locator('.feedback').textContent(),/ถูกต้อง/);
   const item=items[0];await p.evaluate(i=>{const s=JSON.parse(localStorage.getItem('totobtuan.study.v2'));s.training={subject:i.subject,source:i.source,topic:i.topic,keys:[i.key],position:0,phase:'question',selection:null,usedHint:false,results:{}};localStorage.setItem('totobtuan.study.v2',JSON.stringify(s));},item);
   await p.reload();await go(p,'#/train/'+item.source);await p.locator('.coach-round input[value="'+item.q.correct+'"]').check();await p.locator('[data-action=coach-check]').click();assert.equal(await p.locator('.coach-feedback .question-origin').count(),1);

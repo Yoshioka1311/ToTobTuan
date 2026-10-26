@@ -76,14 +76,15 @@
   const groups=D.groups.filter(g=>g.subject===s.id);
   return `<header class="page-head"><span class="eyebrow">${s.code}</span><h1>${s.title}</h1><div class="button-row"><a class="button primary" href="#/train/${s.id}">ฝึก 3 ข้อ →</a><a class="button" href="#/exams/${s.id}">ทำข้อสอบรายบท</a><a class="button" href="#/practice/${s.id}">ข้อสอบรวม</a></div></header><div class="chapter-grid">${groups.map((g,i)=>{
    const ts=D.topics.filter(t=>t.group===g.id),count=ts.reduce((n,t)=>n+t.questions.length,0);
-   return `<article class="chapter-card"><span class="chapter-number">${String(i+1).padStart(2,'0')}</span><div><h2>${esc(g.short)}</h2><p>${count} ข้อ · PDF ${g.pages} หน้า</p><div class="chapter-links"><a href="${ts.length===1?'#/lesson/'+ts[0].id:'#/summary/'+g.id}">อ่านสรุป</a><a href="#/exam/${g.id}">ทำข้อสอบ →</a></div></div></article>`;
+   const hasLecture=ts.some(t=>t.questions.some(q=>q.provenance));
+   return `<article class="chapter-card"><span class="chapter-number">${String(i+1).padStart(2,'0')}</span><div><h2>${esc(g.short)}</h2><p>${count} ข้อ · PDF ${g.pages} หน้า</p><div class="chapter-links"><a href="${ts.length===1?'#/lesson/'+ts[0].id:'#/summary/'+g.id}">อ่านสรุป</a><a href="#/exam/${g.id}">${hasLecture?'ข้อสอบเดิม':'ทำข้อสอบ'} →</a>${hasLecture?`<a href="#/exam/${g.id}/lecture">แนวคาบทบทวน →</a>`:''}</div></div></article>`;
   }).join('')}</div>`;
  }
  function chapterExams(){
   const s=active(),chapters=D.groups.filter(g=>g.subject===s.id);
   return `<header class="page-head"><span class="eyebrow">${s.code}</span><h1>ข้อสอบรายบท</h1></header><div class="chapter-grid">${chapters.map((g,i)=>{
-   const scope=scopeFor(g.id),count=scope.topics.reduce((n,t)=>n+t.questions.length,0);
-   return `<article class="chapter-card exam-chapter-card" data-chapter="${g.id}"><span class="chapter-number">${String(i+1).padStart(2,'0')}</span><div><h2>${esc(g.short)}</h2><p class="chapter-exam-count">${count} ข้อ</p><p class="chapter-exam-score">${score(scope)}</p><a class="button primary small" href="#/exam/${g.id}">เริ่มข้อสอบ →</a></div></article>`;
+   const banks=[scopeFor(g.id),scopeFor(g.id,'lecture')].filter(scope=>scope.topics.length);
+   return `<article class="chapter-card exam-chapter-card" data-chapter="${g.id}"><span class="chapter-number">${String(i+1).padStart(2,'0')}</span><div class="chapter-exam-body"><h2>${esc(g.short)}</h2>${banks.map(scope=>`<section class="exam-bank" data-bank="${scope.bank}"><div class="exam-bank-heading"><h3>${banks.length>1?bankLabel(scope):'ข้อสอบ'}</h3><span class="chapter-exam-count">${scope.topics.reduce((n,t)=>n+t.questions.length,0)} ข้อ</span></div><p class="chapter-exam-score">${score(scope)}</p><a class="button ${scope.bank==='lecture'?'':'primary '}small" href="#/exam/${g.id}${scope.bank==='lecture'?'/lecture':''}">เริ่มข้อสอบ →</a></section>`).join('')}</div></article>`;
   }).join('')}</div>`;
  }
  function lesson(t,full=false){
@@ -94,11 +95,12 @@
   const ts=scopedTopics().filter(t=>!id||id==='all'||t.group===id||t.id===id);
   return `<header class="page-head"><span class="eyebrow">${active().code}</span><h1>สรุปก่อนสอบ</h1><button class="text-button" data-action="print">พิมพ์ / PDF ↓</button></header><div class="summary-list">${ts.map(t=>`<details><summary>${esc(t.title)}</summary><ul>${t.takeaways.map(x=>`<li>${esc(x)}</li>`).join('')}</ul><a href="#/lesson/${t.id}">อ่านต่อ →</a></details>`).join('')}</div>`;
  }
- function scopeFor(id){
+ function bankLabel(scope){return scope.bank==='lecture'?'แนวคาบทบทวน':'ข้อสอบเดิม';}
+ function scopeFor(id,bank='original'){
   const t=topic(id),g=group(id),s=subject(id);
-  if(t)return {id:t.group,subject:t.subject,title:group(t.group).title,topics:D.topics.filter(x=>x.group===t.group)};
-  if(g)return {...g,topics:D.topics.filter(x=>x.group===g.id)};
-  const selected=s||active();return {id:selected.id,subject:selected.id,title:'ทุกบท · '+selected.code,topics:D.topics.filter(x=>x.subject===selected.id)};
+  const selected=s||active();
+  const base=t?{id:t.group,subject:t.subject,title:group(t.group).title,topics:D.topics.filter(x=>x.group===t.group)}:g?{...g,topics:D.topics.filter(x=>x.group===g.id)}:{id:selected.id,subject:selected.id,title:'ทุกบท · '+selected.code,topics:D.topics.filter(x=>x.subject===selected.id)};
+  return {...base,baseId:base.id,bank,id:base.id+(bank==='lecture'?':lecture':''),topics:base.topics.map(t=>({...t,questions:t.questions.filter(q=>Boolean(q.provenance)===(bank==='lecture'))})).filter(t=>t.questions.length)};
  }
  function feedback(q,a){
   if(!a?.revealed||!q.options.includes(a.response))return '';
@@ -150,8 +152,9 @@
   else if(item.bottom>box.bottom-4)grid.scrollTop+=item.bottom-box.bottom+4;
  }
  function exams(scope,chapterMode=false){
+  if(!scope.topics.length)return `<header class="page-head"><a class="back-to-exams" href="#/exams/${active().id}">← เลือกบทข้อสอบ</a><h1>ยังไม่มี${bankLabel(scope)}ในบทนี้</h1></header>`;
   const run=examRun(scope),item=lookup.get(run.order[run.position]);
-  return `<section class="exam-player"><header class="page-head"><a class="back-to-exams" href="#/exams/${active().id}">← เลือกบทข้อสอบ</a><span class="eyebrow">${active().code} · ${chapterMode?'ข้อสอบรายบท':'ข้อสอบรวม'}</span><h1>${esc(scope.title)}</h1></header><div class="player-tools"><span id="exam-progress" role="status">${examProgress(scope)}</span>${sizeControl()}<button class="text-button" data-action="reset-exam">เริ่มใหม่ ↻</button></div><div class="exam-player-layout"><div class="exam-current">${question(item.q,item.t,run.position+1,run.options[item.key])}<nav class="exam-step-controls" aria-label="เปลี่ยนข้อ"><button class="button" data-action="exam-prev" ${run.position===0?'disabled':''}>← ข้อก่อนหน้า</button><button class="button primary" data-action="exam-next" ${run.position===run.order.length-1?'disabled':''}>ข้อถัดไป →</button></nav><div class="exam-toolbar"><span id="exam-score" role="status">${score(scope)}</span><button class="text-button" data-action="check-all">ตรวจข้อที่ตอบแล้ว</button></div></div><aside class="exam-question-map"><h2>เลขข้อ</h2><nav id="exam-number-grid" class="exam-number-grid" aria-label="เลือกข้อสอบ">${questionNumbers(scope)}</nav><p>● ตอบแล้ว <span>○ ยังไม่ตอบ</span></p></aside></div></section>`;
+  return `<section class="exam-player"><header class="page-head"><a class="back-to-exams" href="#/exams/${active().id}">← เลือกบทข้อสอบ</a><span class="eyebrow">${active().code} · ${chapterMode?'ข้อสอบรายบท':'ข้อสอบรวม'}${scope.subject==='itds211'?' · '+bankLabel(scope):''}</span><h1>${esc(scope.title)}</h1></header><div class="player-tools"><span id="exam-progress" role="status">${examProgress(scope)}</span>${sizeControl()}<button class="text-button" data-action="reset-exam">เริ่มใหม่ ↻</button></div><div class="exam-player-layout"><div class="exam-current">${question(item.q,item.t,run.position+1,run.options[item.key])}<nav class="exam-step-controls" aria-label="เปลี่ยนข้อ"><button class="button" data-action="exam-prev" ${run.position===0?'disabled':''}>← ข้อก่อนหน้า</button><button class="button primary" data-action="exam-next" ${run.position===run.order.length-1?'disabled':''}>ข้อถัดไป →</button></nav><div class="exam-toolbar"><span id="exam-score" role="status">${score(scope)}</span><button class="text-button" data-action="check-all">ตรวจข้อที่ตอบแล้ว</button></div></div><aside class="exam-question-map"><h2>เลขข้อ</h2><nav id="exam-number-grid" class="exam-number-grid" aria-label="เลือกข้อสอบ">${questionNumbers(scope)}</nav><p>● ตอบแล้ว <span>○ ยังไม่ตอบ</span></p></aside></div></section>`;
  }
  function trainingSetup(requested){
   const fallback=D.groups.find(g=>g.subject===active().id),pref=state.coachPrefs||{},selected=group(requested)?.subject===active().id?group(requested):group(pref.source)?.subject===active().id?group(pref.source):fallback;
@@ -190,9 +193,9 @@
   if(kind==='home'){html=home();title='เลือกวิชา';}
   else if(kind==='subject'){html=subjectView(active());title=active().title;}
   else if(kind==='exams'){html=chapterExams();title='ข้อสอบรายบท';}
-  else if(kind==='exam'&&(group(id)||topic(id))){route.scope=scopeFor(id);html=exams(route.scope,true);title='ข้อสอบรายบท · '+route.scope.title;}
+  else if(kind==='exam'&&(group(id)||topic(id))){route.scope=scopeFor(id,parts[2]==='lecture'?'lecture':'original');html=exams(route.scope,true);title='ข้อสอบรายบท · '+route.scope.title;}
   else if(kind==='lesson'&&topic(id)){html=lesson(topic(id),parts[2]==='read');title=topic(id).title;}
-  else if(kind==='practice'){route.scope=scopeFor(id);html=exams(route.scope);title='ข้อสอบ · '+route.scope.title;}
+  else if(kind==='practice'){route.scope=scopeFor(id,parts[2]==='lecture'?'lecture':'original');html=exams(route.scope);title='ข้อสอบ · '+route.scope.title;}
   else if(kind==='train'){html=training(id);title='ฝึกทีละข้อ';}
   else if(kind==='summary'||kind==='topics'){html=summaries(id);title='สรุปก่อนสอบ';}
   else if(kind==='library'){html=library();title='เอกสาร';}
@@ -200,8 +203,8 @@
   else{html='<h1>ไม่พบหน้านี้</h1><a href="#/home">กลับเลือกวิชา →</a>';title='ไม่พบหน้า';}
   settings();shell();$('#main').innerHTML=`<div class="page">${html}</div>`;$('#main').dataset.route=location.hash;document.title=title+' · โต๊ะทบทวน';
   document.body.classList.remove('nav-open');window.scrollTo({top:0,behavior:'instant'});$('#main').focus({preventScroll:true});
-  if(kind==='practice'||kind==='exam'){
-   let anchor=parts[2];
+  if((kind==='practice'||kind==='exam')&&route.scope?.topics.length){
+   let anchor=parts[parts[2]==='lecture'?3:2];
    if(topic(id)&&!group(id)){anchor=id;if(/^\d+$/.test(parts[2]||''))anchor='question-'+id+'-'+Math.max(0,(Number(parts[2])-1)*3);}
    if(anchor&&applyAnchor){
     const run=examRun(route.scope),prefix='question-';
