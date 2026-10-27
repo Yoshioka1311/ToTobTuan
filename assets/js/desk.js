@@ -94,11 +94,11 @@
   const ts=scopedTopics().filter(t=>!id||id==='all'||t.group===id||t.id===id);
   return `<header class="page-head"><span class="eyebrow">${active().code}</span><h1>สรุปก่อนสอบ</h1><button class="text-button" data-action="print">พิมพ์ / PDF ↓</button></header><div class="summary-list">${ts.map(t=>`<details><summary>${esc(t.title)}</summary><ul>${t.takeaways.map(x=>`<li>${esc(x)}</li>`).join('')}</ul><a href="#/lesson/${t.id}">อ่านต่อ →</a></details>`).join('')}</div>`;
  }
- function bankName(scope){return scope.bank==='lecture'?'แนวคาบทบทวน':'ข้อสอบเดิม';}
- function bankNumber(scope){return scope.bank==='lecture'?2:1;}
+ function bankName(scope){return {original:'ข้อสอบเดิม',lecture:'แนวคาบทบทวน',direct:'ถามตรง เน้นพื้นฐาน'}[scope.bank];}
+ function bankNumber(scope){return {original:1,lecture:2,direct:3}[scope.bank];}
  function bankLabel(scope){return `ชุด ${bankNumber(scope)} · ${bankName(scope)}`;}
- function bankScopes(id){return [scopeFor(id),scopeFor(id,'lecture')].filter(scope=>scope.topics.length);}
- function examHref(scope){return '#/'+(subject(scope.baseId)?'practice':'exam')+'/'+scope.baseId+(scope.bank==='lecture'?'/lecture':'');}
+ function bankScopes(id){return ['original','lecture','direct'].map(bank=>scopeFor(id,bank)).filter(scope=>scope.topics.length);}
+ function examHref(scope){return '#/'+(subject(scope.baseId)?'practice':'exam')+'/'+scope.baseId+(scope.bank==='original'?'':'/'+scope.bank);}
  function bankButton(scope,{current=false,progress=false,chapter=false}={}){
   const count=scope.topics.reduce((n,t)=>n+t.questions.length,0);
   return `<a class="exam-set-link ${chapter?'exam-bank':''}" data-bank="${scope.bank}" href="${examHref(scope)}" ${current?'aria-current="page"':''} aria-label="${esc(bankLabel(scope)+' · '+scope.title+' · '+count+' ข้อ')}"><span class="exam-set-number">ชุด ${bankNumber(scope)}</span><span class="exam-set-name">${bankName(scope)}</span><span class="exam-set-count">${count} ข้อ</span>${progress?`<span class="chapter-exam-score">${score(scope)}</span><span class="exam-set-arrow" aria-hidden="true">→</span>`:''}</a>`;
@@ -108,7 +108,7 @@
   const t=topic(id),g=group(id),s=subject(id);
   const selected=s||active();
   const base=t?{id:t.group,subject:t.subject,title:group(t.group).title,topics:D.topics.filter(x=>x.group===t.group)}:g?{...g,topics:D.topics.filter(x=>x.group===g.id)}:{id:selected.id,subject:selected.id,title:'ทุกบท · '+selected.code,topics:D.topics.filter(x=>x.subject===selected.id)};
-  return {...base,baseId:base.id,bank,id:base.id+(bank==='lecture'?':lecture':''),topics:base.topics.map(t=>({...t,questions:t.questions.filter(q=>Boolean(q.provenance)===(bank==='lecture'))})).filter(t=>t.questions.length)};
+  return {...base,baseId:base.id,bank,id:base.id+(bank==='original'?'':':'+bank),topics:base.topics.map(t=>({...t,questions:t.questions.filter(q=>(q.bank||(q.provenance?'lecture':'original'))===bank)})).filter(t=>t.questions.length)};
  }
  function feedback(q,a){
   if(!a?.revealed||!q.options.includes(a.response))return '';
@@ -205,9 +205,9 @@
   if(kind==='home'){html=home();title='เลือกวิชา';}
   else if(kind==='subject'){html=subjectView(active());title=active().title;}
   else if(kind==='exams'){html=chapterExams();title='ข้อสอบ';}
-  else if(kind==='exam'&&(group(id)||topic(id))){route.scope=scopeFor(id,parts[2]==='lecture'?'lecture':'original');html=exams(route.scope);title='ข้อสอบ · '+route.scope.title;}
+  else if(kind==='exam'&&(group(id)||topic(id))){route.scope=scopeFor(id,['lecture','direct'].includes(parts[2])?parts[2]:'original');html=exams(route.scope);title='ข้อสอบ · '+route.scope.title;}
   else if(kind==='lesson'&&topic(id)){html=lesson(topic(id),parts[2]==='read');title=topic(id).title;}
-  else if(kind==='practice'){route.scope=scopeFor(id,parts[2]==='lecture'?'lecture':'original');html=exams(route.scope);title='ข้อสอบ · '+route.scope.title;}
+  else if(kind==='practice'){route.scope=scopeFor(id,['lecture','direct'].includes(parts[2])?parts[2]:'original');html=exams(route.scope);title='ข้อสอบ · '+route.scope.title;}
   else if(kind==='train'){html=training(id);title='ฝึกทีละข้อ';}
   else if(kind==='summary'||kind==='topics'){html=summaries(id);title='สรุปก่อนสอบ';}
   else if(kind==='library'){html=library();title='เอกสาร';}
@@ -216,7 +216,7 @@
   settings();shell();$('#main').innerHTML=`<div class="page">${html}</div>`;$('#main').dataset.route=location.hash;document.title=title+' · โต๊ะทบทวน';
   document.body.classList.remove('nav-open');window.scrollTo({top:0,behavior:'instant'});$('#main').focus({preventScroll:true});
   if((kind==='practice'||kind==='exam')&&route.scope?.topics.length){
-   let anchor=parts[parts[2]==='lecture'?3:2];
+   let anchor=parts[['lecture','direct'].includes(parts[2])?3:2];
    if(topic(id)&&!group(id)){anchor=id;if(/^\d+$/.test(parts[2]||''))anchor='question-'+id+'-'+Math.max(0,(Number(parts[2])-1)*3);}
    if(anchor&&applyAnchor){
     const run=examRun(route.scope),prefix='question-';

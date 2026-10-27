@@ -8,7 +8,7 @@ const order=p=>p.locator('.exam-number').evaluateAll(els=>els.map(e=>e.dataset.k
   await go(p,'#/exams/itds211');
   assert.equal(await p.locator('.exam-bank[data-bank=original]').count(),8);
   assert.equal(await p.locator('.exam-bank[data-bank=lecture]').count(),8);
-  const chapters=await p.evaluate(()=>window.DESK.groups.filter(g=>g.subject==='itds211').map(g=>({id:g.id,old:window.DESK.items.filter(i=>i.source===g.id&&!i.q.provenance).map(i=>i.key),fresh:window.DESK.items.filter(i=>i.source===g.id&&i.q.provenance).map(i=>i.key)})));
+  const chapters=await p.evaluate(()=>window.DESK.groups.filter(g=>g.subject==='itds211').map(g=>({id:g.id,old:window.DESK.items.filter(i=>i.source===g.id&&i.q.bank==='original').map(i=>i.key),fresh:window.DESK.items.filter(i=>i.source===g.id&&i.q.provenance).map(i=>i.key)})));
   for(const c of chapters){
    await go(p,'#/exam/'+c.id);assert.deepEqual((await order(p)).sort(),c.old.sort());
    await go(p,'#/exam/'+c.id+'/lecture');assert.deepEqual((await order(p)).sort(),c.fresh.sort());

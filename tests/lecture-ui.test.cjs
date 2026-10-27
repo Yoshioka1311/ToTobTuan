@@ -15,7 +15,7 @@ const {launch,go}=require('./browser-helpers.cjs');
   }
   await go(p,'#/exam/ca01');
   await p.evaluate(()=>{
-   const s=JSON.parse(localStorage.getItem('totobtuan.study.v2')),base=window.DESK.topics.find(t=>t.id==='ca01').questions.filter(q=>!q.provenance),old=base[0];
+   const s=JSON.parse(localStorage.getItem('totobtuan.study.v2')),base=window.DESK.topics.find(t=>t.id==='ca01').questions.filter(q=>q.bank==='original'),old=base[0];
    s.answers[old.id]={response:old.options[old.correct],revealed:true,status:'correct'};
    s.examRuns.ca01={order:base.map(q=>q.id),position:26,options:Object.fromEntries(base.map(q=>[q.id,[0,1,2,3]]))};
    localStorage.setItem('totobtuan.study.v2',JSON.stringify(s));

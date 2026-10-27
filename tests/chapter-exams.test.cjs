@@ -6,7 +6,7 @@ const {launch,go,currentQuestion}=require('./browser-helpers.cjs');
   const p=await b.newPage({viewport:{width:1440,height:1000},reducedMotion:'reduce'});
   await go(p,'#/subject/itds211');assert.equal(await p.locator('.page-head a[href="#/exams/itds211"]').count(),1);
   await p.locator('.page-head a[href="#/exams/itds211"]').click();await p.locator('.exam-chapter-card').first().waitFor();assert.equal(await p.locator('.exam-chapter-card').count(),8);
-  const chapters=await p.evaluate(()=>window.DESK.groups.filter(g=>g.subject==='itds211').map(g=>({id:g.id,keys:window.DESK.items.filter(i=>i.source===g.id&&!i.q.provenance).map(i=>i.key)})));
+  const chapters=await p.evaluate(()=>window.DESK.groups.filter(g=>g.subject==='itds211').map(g=>({id:g.id,keys:window.DESK.items.filter(i=>i.source===g.id&&i.q.bank==='original').map(i=>i.key)})));
   for(const c of chapters){
    await go(p,'#/exam/'+c.id);assert.equal(await p.locator('.question').count(),1);
    const keys=await p.locator('.exam-number').evaluateAll(els=>els.map(e=>e.dataset.key));assert.deepEqual(keys.sort(),c.keys.sort(),c.id+' must include all original sets');
