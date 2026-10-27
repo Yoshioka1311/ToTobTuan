@@ -1,7 +1,7 @@
 /* Shared view of the two curricula. Original JavaScript question keys stay stable. */
 (() => {
  const js=window.STUDY;
- const architecture=[...(window.ARCH_CHAPTERS||[])].sort((a,b)=>a.number-b.number).map(chapter=>({...chapter,questions:[...chapter.questions,...(window.LECTURE_PRACTICE||[]).filter(q=>q.topic===chapter.id),...(window.DIRECT_PRACTICE||[]).filter(q=>q.topic===chapter.id)]}));
+ const architecture=[...(window.ARCH_CHAPTERS||[])].sort((a,b)=>a.number-b.number).map(chapter=>({...chapter,questions:[...chapter.questions,...(window.LECTURE_PRACTICE||[]).filter(q=>q.topic===chapter.id),...(window.DIRECT_PRACTICE||[]).filter(q=>q.topic===chapter.id),...(window.FOURTH_PRACTICE||[]).filter(q=>q.topic===chapter.id)]}));
  const subjects=[
   {id:'itds211',code:'ITDS211',title:'Computer Architecture',thai:'สถาปัตยกรรมคอมพิวเตอร์',mark:'01',description:'CPU · RISC-V · Memory · I/O · Parallelism'},
   {id:'itds241',code:'ITDS241',title:'JavaScript',thai:'เทคโนโลยีเว็บ',mark:'02',description:'พื้นฐานภาษา · DOM · ECMAScript'}

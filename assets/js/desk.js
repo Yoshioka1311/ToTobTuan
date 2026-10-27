@@ -82,9 +82,9 @@
  }
  function chapterExams(){
   const s=active(),chapters=D.groups.filter(g=>g.subject===s.id);
-  return `<header class="page-head"><span class="eyebrow">${s.code}</span><h1>ข้อสอบ</h1></header><section class="exam-all-card"><h2>รวมทุกบท</h2><div class="exam-bank-grid">${bankScopes(s.id).map(scope=>bankButton(scope,{progress:true})).join('')}</div></section><h2 class="exam-section-title">เลือกทำรายบท</h2><div class="chapter-grid">${chapters.map((g,i)=>{
+  return `<header class="page-head"><span class="eyebrow">${s.code}</span><h1>ข้อสอบ</h1></header><h2 class="exam-section-title">เลือกทำรายบท</h2><div class="chapter-grid">${chapters.map((g,i)=>{
    return `<article class="chapter-card exam-chapter-card" data-chapter="${g.id}"><span class="chapter-number">${String(i+1).padStart(2,'0')}</span><div class="chapter-exam-body"><h2>${esc(g.short)}</h2><div class="exam-bank-grid">${bankScopes(g.id).map(scope=>bankButton(scope,{progress:true,chapter:true})).join('')}</div></div></article>`;
-  }).join('')}</div>`;
+  }).join('')}</div><section class="exam-all-card"><h2>รวมทุกบท</h2><div class="exam-bank-grid">${bankScopes(s.id).map(scope=>bankButton(scope,{progress:true})).join('')}</div></section>`;
  }
  function lesson(t,full=false){
   const body=full?t.sections.map((s,i)=>`<section class="reading-section"><h2>${esc(s.title)}</h2><p>${esc(s.body)}</p>${code(s.code)}${s.from?pdfLink(t,s.from,s.to):''}</section>`).join(''):`<ul class="takeaways">${t.takeaways.map(x=>`<li>${esc(x)}</li>`).join('')}</ul><div class="concept-list">${t.sections.map(s=>`<details><summary>${esc(s.title)}</summary><p>${esc(s.body)}</p>${code(s.code)}${s.from?pdfLink(t,s.from,s.to):''}</details>`).join('')}</div>`;
@@ -94,10 +94,10 @@
   const ts=scopedTopics().filter(t=>!id||id==='all'||t.group===id||t.id===id);
   return `<header class="page-head"><span class="eyebrow">${active().code}</span><h1>สรุปก่อนสอบ</h1><button class="text-button" data-action="print">พิมพ์ / PDF ↓</button></header><div class="summary-list">${ts.map(t=>`<details><summary>${esc(t.title)}</summary><ul>${t.takeaways.map(x=>`<li>${esc(x)}</li>`).join('')}</ul><a href="#/lesson/${t.id}">อ่านต่อ →</a></details>`).join('')}</div>`;
  }
- function bankName(scope){return {original:'ข้อสอบเดิม',lecture:'แนวคาบทบทวน',direct:'ถามตรง เน้นพื้นฐาน'}[scope.bank];}
- function bankNumber(scope){return {original:1,lecture:2,direct:3}[scope.bank];}
+ function bankName(scope){return {original:'ข้อสอบเดิม',lecture:'แนวคาบทบทวน',direct:'ถามตรง เน้นพื้นฐาน',recap:'ถามตรง ชุดเสริม'}[scope.bank];}
+ function bankNumber(scope){return {original:1,lecture:2,direct:3,recap:4}[scope.bank];}
  function bankLabel(scope){return `ชุด ${bankNumber(scope)} · ${bankName(scope)}`;}
- function bankScopes(id){return ['original','lecture','direct'].map(bank=>scopeFor(id,bank)).filter(scope=>scope.topics.length);}
+ function bankScopes(id){return ['original','lecture','direct','recap'].map(bank=>scopeFor(id,bank)).filter(scope=>scope.topics.length);}
  function examHref(scope){return '#/'+(subject(scope.baseId)?'practice':'exam')+'/'+scope.baseId+(scope.bank==='original'?'':'/'+scope.bank);}
  function bankButton(scope,{current=false,progress=false,chapter=false}={}){
   const count=scope.topics.reduce((n,t)=>n+t.questions.length,0);
@@ -205,9 +205,9 @@
   if(kind==='home'){html=home();title='เลือกวิชา';}
   else if(kind==='subject'){html=subjectView(active());title=active().title;}
   else if(kind==='exams'){html=chapterExams();title='ข้อสอบ';}
-  else if(kind==='exam'&&(group(id)||topic(id))){route.scope=scopeFor(id,['lecture','direct'].includes(parts[2])?parts[2]:'original');html=exams(route.scope);title='ข้อสอบ · '+route.scope.title;}
+  else if(kind==='exam'&&(group(id)||topic(id))){route.scope=scopeFor(id,['lecture','direct','recap'].includes(parts[2])?parts[2]:'original');html=exams(route.scope);title='ข้อสอบ · '+route.scope.title;}
   else if(kind==='lesson'&&topic(id)){html=lesson(topic(id),parts[2]==='read');title=topic(id).title;}
-  else if(kind==='practice'){route.scope=scopeFor(id,['lecture','direct'].includes(parts[2])?parts[2]:'original');html=exams(route.scope);title='ข้อสอบ · '+route.scope.title;}
+  else if(kind==='practice'){route.scope=scopeFor(id,['lecture','direct','recap'].includes(parts[2])?parts[2]:'original');html=exams(route.scope);title='ข้อสอบ · '+route.scope.title;}
   else if(kind==='train'){html=training(id);title='ฝึกทีละข้อ';}
   else if(kind==='summary'||kind==='topics'){html=summaries(id);title='สรุปก่อนสอบ';}
   else if(kind==='library'){html=library();title='เอกสาร';}
@@ -216,7 +216,7 @@
   settings();shell();$('#main').innerHTML=`<div class="page">${html}</div>`;$('#main').dataset.route=location.hash;document.title=title+' · โต๊ะทบทวน';
   document.body.classList.remove('nav-open');window.scrollTo({top:0,behavior:'instant'});$('#main').focus({preventScroll:true});
   if((kind==='practice'||kind==='exam')&&route.scope?.topics.length){
-   let anchor=parts[['lecture','direct'].includes(parts[2])?3:2];
+   let anchor=parts[['lecture','direct','recap'].includes(parts[2])?3:2];
    if(topic(id)&&!group(id)){anchor=id;if(/^\d+$/.test(parts[2]||''))anchor='question-'+id+'-'+Math.max(0,(Number(parts[2])-1)*3);}
    if(anchor&&applyAnchor){
     const run=examRun(route.scope),prefix='question-';
