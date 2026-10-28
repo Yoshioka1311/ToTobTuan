@@ -63,7 +63,7 @@
  function shell(){
   const s=active(),quiet=['exam','practice'].includes(route.kind)||(route.kind==='train'&&state.training?.subject===s.id);
   document.body.classList.toggle('quiet',quiet);
-  $('#sidebar').innerHTML=`<a class="brand" href="#/home"><img src="assets/favicon.svg" width="34" height="34" alt=""><span>โต๊ะทบทวน</span></a><a class="subject-switch" href="#/home">← เปลี่ยนวิชา</a><div class="side-subject"><small>${s.code}</small><strong>${s.title}</strong></div><nav aria-label="เมนูวิชา"><a href="#/subject/${s.id}" ${route.kind==='subject'?'aria-current="page"':''}>บทเรียน</a><a href="#/train/${s.id}" ${route.kind==='train'?'aria-current="page"':''}>ฝึกทีละข้อ</a><a href="#/exams/${s.id}" ${['exam','exams','practice'].includes(route.kind)?'aria-current="page"':''}>ข้อสอบ</a>${s.id==='itds241'?'<a href="#/reference">Cheatsheet</a>':''}<a href="#/library/${s.id}">เอกสาร</a></nav><div class="side-chapters">${D.groups.filter(g=>g.subject===s.id).map(g=>`<a href="#/exam/${g.id}">${esc(g.short)}</a>`).join('')}</div><div class="storage-note">${storageOK?'บันทึกในเครื่อง':'บันทึกชั่วคราว'}</div>`;
+  $('#sidebar').innerHTML=`<a class="brand" href="#/home"><img src="assets/favicon.svg" width="34" height="34" alt=""><span>โต๊ะทบทวน</span></a><a class="subject-switch" href="#/home">← เปลี่ยนวิชา</a><div class="side-subject"><small>${s.code}</small><strong>${s.title}</strong></div><nav aria-label="เมนูวิชา"><a href="#/subject/${s.id}" ${route.kind==='subject'?'aria-current="page"':''}>บทเรียน</a>${s.id==='itds211'?`<a href="#/summary/${s.id}" ${['summary','topics'].includes(route.kind)?'aria-current="page"':''}>สรุปรวม</a>`:''}<a href="#/train/${s.id}" ${route.kind==='train'?'aria-current="page"':''}>ฝึกทีละข้อ</a><a href="#/exams/${s.id}" ${['exam','exams','practice'].includes(route.kind)?'aria-current="page"':''}>ข้อสอบ</a>${s.id==='itds241'?'<a href="#/reference">Cheatsheet</a>':''}<a href="#/library/${s.id}">เอกสาร</a></nav><div class="side-chapters">${D.groups.filter(g=>g.subject===s.id).map(g=>`<a href="${s.id==='itds211'&&['summary','topics'].includes(route.kind)?'#/summary/itds211/'+g.id:'#/exam/'+g.id}">${esc(g.short)}</a>`).join('')}</div><div class="storage-note">${storageOK?'บันทึกในเครื่อง':'บันทึกชั่วคราว'}</div>`;
   $('#topbar').innerHTML=`<div class="top-location"><button class="icon-button mobile-menu" data-action="menu" aria-label="เปิดเมนู" aria-expanded="false">☰</button><a href="#/home">โต๊ะทบทวน</a><span>/</span><a href="#/subject/${s.id}">${s.code}</a></div><div class="top-tools"><button class="icon-button" data-action="search" aria-label="ค้นหา">⌕</button><button class="icon-button" data-action="theme" aria-label="สลับโหมดกลางคืน">${state.theme==='night'?'☀':'☾'}</button></div>`;
   $('.footer').innerHTML=`<span>โต๊ะทบทวน · ${s.code}</span><button class="text-button" data-action="export">สำรองบันทึก ↓</button>`;
  }
@@ -75,14 +75,14 @@
  }
  function subjectView(s){
   const groups=D.groups.filter(g=>g.subject===s.id);
-  return `<header class="page-head"><span class="eyebrow">${s.code}</span><h1>${s.title}</h1><div class="button-row"><a class="button primary" href="#/train/${s.id}">ฝึก 3 ข้อ →</a><a class="button" href="#/exams/${s.id}">ข้อสอบ →</a></div></header><div class="chapter-grid">${groups.map((g,i)=>{
+  return `<header class="page-head"><span class="eyebrow">${s.code}</span><h1>${s.title}</h1><div class="button-row">${s.id==='itds211'?`<a class="button primary" href="#/summary/${s.id}">อ่านสรุปรวม →</a>`:''}<a class="button ${s.id==='itds241'?'primary':''}" href="#/train/${s.id}">ฝึก 3 ข้อ →</a><a class="button" href="#/exams/${s.id}">ข้อสอบ →</a></div></header><div class="chapter-grid">${groups.map((g,i)=>{
    const ts=D.topics.filter(t=>t.group===g.id),count=ts.reduce((n,t)=>n+t.questions.length,0);
    return `<article class="chapter-card"><span class="chapter-number">${String(i+1).padStart(2,'0')}</span><div><h2>${esc(g.short)}</h2><p>${count} ข้อ · PDF ${g.pages} หน้า</p><div class="chapter-links"><a href="${ts.length===1?'#/lesson/'+ts[0].id:'#/summary/'+g.id}">อ่านสรุป</a><a href="#/exam/${g.id}">ทำข้อสอบ →</a></div></div></article>`;
   }).join('')}</div>`;
  }
  function chapterExams(){
   const s=active(),chapters=D.groups.filter(g=>g.subject===s.id);
-  return `<header class="page-head"><span class="eyebrow">${s.code}</span><h1>ข้อสอบ</h1></header><h2 class="exam-section-title">เลือกทำรายบท</h2><div class="chapter-grid">${chapters.map((g,i)=>{
+  return `<header class="page-head"><span class="eyebrow">${s.code}</span><h1>ข้อสอบ</h1>${s.id==='itds211'?`<a class="button primary" href="#/summary/${s.id}">อ่านสรุปรวม บท 1–8 →</a>`:''}</header><h2 class="exam-section-title">เลือกทำรายบท</h2><div class="chapter-grid">${chapters.map((g,i)=>{
    return `<article class="chapter-card exam-chapter-card" data-chapter="${g.id}"><span class="chapter-number">${String(i+1).padStart(2,'0')}</span><div class="chapter-exam-body"><h2>${esc(g.short)}</h2><div class="exam-bank-grid">${bankScopes(g.id).map(scope=>bankButton(scope,{progress:true,chapter:true})).join('')}</div></div></article>`;
   }).join('')}</div><section class="exam-all-card"><h2>รวมทุกบท</h2><div class="exam-bank-grid">${bankScopes(s.id).map(scope=>bankButton(scope,{progress:true})).join('')}</div></section>`;
  }
@@ -91,8 +91,14 @@
   return `<header class="page-head"><span class="eyebrow">${active().code} · ${esc(t.english)}</span><h1>${esc(t.title)}</h1><div class="lesson-tools">${pdfLink(t)}<button class="text-button" data-action="bookmark" data-id="${t.id}" aria-pressed="${state.bookmarks.includes(t.id)}">${state.bookmarks.includes(t.id)?'★ เก็บไว้แล้ว':'☆ เก็บไว้อ่าน'}</button></div></header><nav class="tabs" aria-label="เนื้อหาบทเรียน"><a href="#/lesson/${t.id}/short" ${!full?'aria-current="page"':''}>สรุป</a><a href="#/lesson/${t.id}/read" ${full?'aria-current="page"':''}>เนื้อหา</a><a href="#/exam/${t.group}/${t.id}">ข้อสอบ</a></nav><article class="reading">${body}${full&&t.example?`<details class="example"><summary>${esc(t.example.title)}</summary>${code(t.example.code)}<p>${esc(t.example.expected)}</p></details>`:''}${t.pitfall?`<details class="source-note"><summary>จุดที่ควรระวัง</summary><p>${esc(t.pitfall)}</p></details>`:''}<div class="lesson-bottom"><button class="button" data-action="read" data-id="${t.id}" aria-pressed="${state.read.includes(t.id)}">${state.read.includes(t.id)?'✓ อ่านแล้ว':'ทำเครื่องหมายอ่านแล้ว'}</button><a class="button primary" href="#/train/${t.group}">ฝึก 3 ข้อ →</a></div></article>`;
  }
  function summaries(id){
-  const ts=scopedTopics().filter(t=>!id||id==='all'||t.group===id||t.id===id);
+  const ts=scopedTopics().filter(t=>!id||id==='all'||t.subject===id||t.group===id||t.id===id);
+  if(active().id==='itds211')return continuousSummary(ts);
   return `<header class="page-head"><span class="eyebrow">${active().code}</span><h1>สรุปก่อนสอบ</h1><button class="text-button" data-action="print">พิมพ์ / PDF ↓</button></header><div class="summary-list">${ts.map(t=>`<details><summary>${esc(t.title)}</summary><ul>${t.takeaways.map(x=>`<li>${esc(x)}</li>`).join('')}</ul><a href="#/lesson/${t.id}">อ่านต่อ →</a></details>`).join('')}</div>`;
+ }
+ function continuousSummary(ts){
+  const all=ts.length>1;
+  const noteHTML=(t,n)=>`<section class="summary-note"><h3>${esc(n.title)}</h3><p>${esc(n.body)}</p>${n.formulas?'<ul class="summary-formulas">'+n.formulas.map(f=>'<li>'+esc(f)+'</li>').join('')+'</ul>':''}${n.rows?'<div class="table-scroll"><table><thead><tr>'+n.rows[0].map(cell=>'<th scope="col">'+esc(cell)+'</th>').join('')+'</tr></thead><tbody>'+n.rows.slice(1).map(row=>'<tr>'+row.map(cell=>'<td>'+esc(cell)+'</td>').join('')+'</tr>').join('')+'</tbody></table></div>':''}${n.example?'<p class="summary-example">'+esc(n.example)+'</p>':''}<div class="summary-sources">${pdfLink(t,n.from,n.to)}${n.extraFrom?pdfLink(t,n.extraFrom,n.extraTo):''}</div></section>`;
+  return `<div class="continuous-summary"><header class="page-head" id="summary-start"><span class="eyebrow">ITDS211 · COMPUTER ARCHITECTURE</span><h1>${all?'สรุปรวม บท 1–8':esc(group(ts[0]?.group)?.title||'สรุปก่อนสอบ')}</h1><div class="button-row"><button class="button" data-action="print">พิมพ์ / บันทึก PDF</button>${!all?'<a class="text-button" href="#/summary/itds211">อ่านรวมทุกบท →</a>':''}</div></header>${all?'<nav class="summary-toc" aria-label="สารบัญสรุปรวม">'+ts.map(t=>`<a href="#/summary/itds211/${t.id}"><span>${String(t.number).padStart(2,'0')}</span>${esc(t.title)}</a>`).join('')+'</nav>':''}<div class="summary-reading">${ts.map(t=>`<article class="summary-chapter" id="summary-${t.id}" data-chapter="${t.id}"><header class="summary-chapter-head"><span class="eyebrow">บท ${String(t.number).padStart(2,'0')}</span><h2 tabindex="-1">${esc(t.title)}</h2><p>${esc(t.english)}</p></header><ul class="summary-key-points">${t.takeaways.map(x=>'<li>'+esc(x)+'</li>').join('')}</ul><div class="summary-concepts">${t.sections.map(s=>`<section class="summary-concept"><h3>${esc(s.title)}</h3><p>${esc(s.body)}</p>${code(s.code)}${s.from?pdfLink(t,s.from,s.to):''}</section>`).join('')}</div><section class="summary-notes" aria-label="สูตรและจุดที่ควรจำ บท ${t.number}"><h2 class="summary-notes-title">สูตรและจุดที่ควรจำ</h2>${(window.STUDY_READING_NOTES?.[t.id]||[]).map(n=>noteHTML(t,n)).join('')}</section><div class="summary-chapter-bottom"><a class="button small" href="#/exam/${t.group}">ข้อสอบบท ${t.number} →</a><a class="text-button" href="#/summary/itds211">กลับสารบัญ ↑</a></div></article>`).join('')}</div></div>`;
  }
  function bankName(scope){return {original:'ข้อสอบเดิม',lecture:'แนวคาบทบทวน',direct:'ถามตรง เน้นพื้นฐาน',recap:'ถามตรง ชุดเสริม'}[scope.bank];}
  function bankNumber(scope){return {original:1,lecture:2,direct:3,recap:4}[scope.bank];}
@@ -225,6 +231,10 @@
     if(at>=0&&at!==run.position){run.position=at;save();$('#main').innerHTML=`<div class="page">${exams(route.scope)}</div>`;}
    }
    revealExamNumber();
+  }
+  if(['summary','topics'].includes(kind)&&parts[2]){
+   const target=document.getElementById('summary-'+parts[2]);
+   if(target){target.scrollIntoView({block:'start',behavior:'instant'});target.querySelector('h2')?.focus({preventScroll:true});}
   }
  }
  function gradeExam(q){
